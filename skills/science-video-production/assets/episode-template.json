@@ -80,6 +80,20 @@
           "file": "",
           "sha256": "",
           "note": ""
+        },
+        "visual_logic": {
+          "review_scope": "pending",
+          "orientation": {
+            "applicable": true,
+            "status": "pending",
+            "reference": "",
+            "frame_mapping": "",
+            "structures": "",
+            "transforms": "",
+            "evidence": ""
+          },
+          "graphics": [],
+          "no_graphics_reason": "待逐镜清点，尚未验收"
         }
       }
     }
@@ -148,7 +162,10 @@
       "opening_voiceover": {
         "status": "pending",
         "note": "",
-        "evidence": ""
+        "evidence": "",
+        "review_scope": "pending",
+        "heard_question": "",
+        "heard_answer_route": ""
       },
       "coverage": {
         "status": "pending",
@@ -210,7 +227,9 @@
       ],
       "shot_ids": [
         "SH1"
-      ]
+      ],
+      "spoken_question": "",
+      "answer_route": ""
     },
     "coverage": [
       {

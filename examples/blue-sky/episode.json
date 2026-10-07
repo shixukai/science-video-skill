@@ -186,7 +186,10 @@
       "opening_voiceover": {
         "status": "pending",
         "note": "",
-        "evidence": ""
+        "evidence": "",
+        "review_scope": "pending",
+        "heard_question": "",
+        "heard_answer_route": ""
       },
       "coverage": {
         "status": "pending",
@@ -244,7 +247,7 @@
     "topic_sha256": "86cfb72292d30028dfd8e3e5bde44f19b6f19cef0391f2e1d7ca2327879d8d32",
     "opening": {
       "title": "天空为什么是蓝色",
-      "voiceover": "晴朗白天，天空的蓝色从哪里来？我们看看阳光在大气中发生了什么。",
+      "voiceover": "天空为什么是蓝色？因为空气分子对短波可见光的散射更强，下面看阳光如何到达眼睛。",
       "intent": "explain_mechanism",
       "scope_ids": [
         "R1",
@@ -252,7 +255,9 @@
       ],
       "shot_ids": [
         "SH1"
-      ]
+      ],
+      "spoken_question": "天空为什么是蓝色？",
+      "answer_route": "因为空气分子对短波可见光的散射更强，下面看阳光如何到达眼睛。"
     },
     "coverage": [
       {

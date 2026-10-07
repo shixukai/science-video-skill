@@ -112,7 +112,7 @@ def check_topic(data, root, stage, shots):
         need(stage != "delivery", "local sample/chapter cannot pass complete-episode delivery")
     alignment = obj(data.get("topic_alignment"))
     need(alignment.get("topic_sha256") == current_hash, "alignment bound to wrong topic version")
-    for section, fields in (("opening", ("title", "voiceover")), ("ending", ("answer",))):
+    for section, fields in (("opening", ("title", "voiceover", "spoken_question", "answer_route")), ("ending", ("answer",))):
         record = obj(alignment.get(section))
         for field in fields:
             need(text(record.get(field)), f"{section}.{field} required")
@@ -153,6 +153,66 @@ def check_topic(data, root, stage, shots):
         for key in ("opening_title", "opening_voiceover", "coverage", "ending"):
             check = obj(review.get(key))
             need(check.get("status") == "pass" and text(check.get("note")) and text(check.get("evidence")), f"{key} recheck failed/missing evidence")
+        heard = obj(review.get("opening_voiceover"))
+        need(heard.get("review_scope") == "final_export", "opening voiceover requires actual final_export listening")
+        for key in ("heard_question", "heard_answer_route"):
+            need(text(heard.get(key)), f"opening voiceover {key} required")
+    return errors
+
+
+def check_visual_logic(shots, assets):
+    """Validate declared review records only; never inspect or approve image pixels."""
+    errors = []
+    def need(ok, message):
+        if not ok:
+            errors.append("visual_logic: " + message)
+        return bool(ok)
+    def text(value):
+        return isinstance(value, str) and bool(value.strip())
+    def obj(value):
+        return value if isinstance(value, dict) else {}
+    for ident, shot in shots.items():
+        record = obj(obj(shot.get("shotbook")).get("visual_logic"))
+        need(record.get("review_scope") == "final_export", f"{ident}: current final_export review required")
+        orientation = obj(record.get("orientation"))
+        applicable = orientation.get("applicable")
+        need(type(applicable) is bool, f"{ident}: orientation applicability must be boolean")
+        need(orientation.get("status") != "fail", f"{ident}: known orientation failure cannot be marked inapplicable")
+        if applicable is True:
+            need(orientation.get("status") == "pass", f"{ident}: orientation failed or unreviewed")
+            for key in ("reference", "frame_mapping", "structures", "transforms", "evidence"):
+                need(text(orientation.get(key)), f"{ident}: orientation.{key} required")
+        elif applicable is False:
+            need(text(orientation.get("reason")), f"{ident}: orientation non-applicability needs reason")
+        graphics = record.get("graphics")
+        if not need(isinstance(graphics, list), f"{ident}: graphics inventory required"):
+            continue
+        if not graphics:
+            need(text(record.get("no_graphics_reason")), f"{ident}: empty graphics inventory needs reason")
+        seen = set()
+        for graphic in graphics:
+            graphic = obj(graphic)
+            gid = graphic.get("id")
+            if need(text(gid) and gid not in seen, f"{ident}: graphic id missing/duplicate"):
+                seen.add(gid)
+            kind = graphic.get("kind")
+            need(kind in ("arrow", "leader"), f"{ident}: graphic kind must distinguish arrow/leader")
+            aid = graphic.get("asset_id")
+            shot_assets = shot.get("asset_ids")
+            need(isinstance(aid, str) and aid in assets and isinstance(shot_assets, list) and aid in shot_assets,
+                 f"{ident}: graphic asset must belong to this shot")
+            for key in ("component_reference", "license_evidence"):
+                need(text(graphic.get(key)), f"{ident}: graphic.{key} required")
+            checks = obj(graphic.get("checks"))
+            need(not any(obj(item).get("status") == "fail" for item in checks.values()),
+                 f"{ident}: known graphic failure cannot be hidden by changing kind")
+            required = ("visibility", "endpoints", "motion_extrema")
+            if kind == "arrow":
+                required += ("tip", "shaft_join", "direction")
+            for key in required:
+                item = obj(checks.get(key))
+                need(item.get("status") == "pass" and text(item.get("note")) and text(item.get("evidence")),
+                     f"{ident}: graphic {key} failed/missing evidence")
     return errors
 
 
@@ -346,6 +406,8 @@ def check(data, root, stage):
         require(qa_book.get("status") == "pass" and nonempty(qa_book.get("note")), "qa.shotbook: actual representative audiovisual review required")
         require(qa_book.get("reviewed_sha256") == shotbook_sha256(data), "qa.shotbook: stale audio/shotbook context; review again")
     errors.extend(check_topic(data, root, stage, shots))
+    if stage == "delivery":
+        errors.extend(check_visual_logic(shots, assets))
     if stage == "plan":
         notes.append("PLAN ONLY: no footage, rights, decoding, scientific accuracy or visual/mobile approval is established")
         return errors, notes

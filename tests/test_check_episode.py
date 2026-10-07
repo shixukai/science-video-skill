@@ -56,10 +56,12 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  for asset in x['assets']:asset['sha256']=hashlib.sha256((root/asset['file']).read_bytes()).hexdigest()
  x['narration']['audio_sha256']=hashlib.sha256((root/'v.mp4').read_bytes()).hexdigest()
  x['shots'][0]['shotbook']={'start':0,'end':1,'subject':'test shape','action':'hold','framing':'wide','claim_support':'fixture only','motion_purpose':'static comparison; no decorative motion','beats':[{'at':0,'trigger_words':'fixture','attention_subject':'test shape','action':'hold'}],'candidates':[{'source':'synthetic fixture','viewing_note':'fixture declaration only','decision_reason':'isolated test input','selected':True,'asset_id':'A1','source_interval':'full'}],'alternatives_note':'one generated fixture for deterministic tests','keyframe_review':{'status':'pass','file':'p.png','sha256':hashlib.sha256((root/'p.png').read_bytes()).hexdigest(),'note':'fixture only, no human review'}}
+ x['shots'][0]['shotbook']['visual_logic']={'review_scope':'final_export','orientation':{'applicable':False,'reason':'synthetic solid shape; no handedness or functional structure'},'graphics':[],'no_graphics_reason':'synthetic solid color contains no arrows or leaders'}
  x['qa']['shotbook']={'status':'pass','reviewed_sha256':mod.shotbook_sha256(x),'note':'software fixture declaration only, no actual audiovisual review'}
  for key in ('opening','ending'):x['topic_alignment'][key]['shot_ids']=['SH1']
  for record in x['topic_alignment']['coverage']:record['shot_ids']=['SH1']
  x['qa']['topic_alignment']={'status':'pass','reviewer_role':'independent',**{key:{'status':'pass','note':'synthetic fixture declaration; no media review claimed','evidence':'synthetic fixture only'} for key in ('opening_title','opening_voiceover','coverage','ending')}}
+ x['qa']['topic_alignment']['opening_voiceover'].update(review_scope='final_export',heard_question='synthetic question declaration only',heard_answer_route='synthetic answer declaration only')
  x['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(x)
  test('valid technical fixture dimensions and full decode',x,root,'delivery')
  for status in ['fail','pending','pass']:
@@ -144,4 +146,44 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  y=copy.deepcopy(plan);y['topic_alignment']['ending']['shot_ids']=['SH2'];test('middle shot cannot stand in for actual ending',y,root,'plan','actual boundary shot')
  for omitted in [['R2'],None,'']:
   y=copy.deepcopy(x);y['topic_alignment']['omitted_scope_ids']=omitted;y['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(y);test('complete episode cannot declare omitted scope '+str(omitted),y,root,'delivery','must declare no omitted scope')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['visual_logic']['orientation']['status']='fail';test('inapplicability cannot hide known orientation failure',y,root,'delivery','known orientation failure')
+ # Visual logic fixtures assert record handling only, never human image approval.
+ for key in ('spoken_question','answer_route'):
+  y=copy.deepcopy(x);y['topic_alignment']['opening'][key]='';test('opening requires '+key,y,root,'delivery',key+' required')
+ for key in ('heard_question','heard_answer_route'):
+  y=copy.deepcopy(x);y['qa']['topic_alignment']['opening_voiceover'][key]='';test('actual opening audio requires '+key,y,root,'delivery',key+' required')
+ y=copy.deepcopy(x);y['qa']['topic_alignment']['opening_voiceover']['review_scope']='script';test('script text cannot prove heard opening',y,root,'delivery','actual final_export listening')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook'].pop('visual_logic');test('missing per-shot visual logic blocks delivery',y,root,'delivery','visual_logic:')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['visual_logic']['review_scope']='short_sample';test('short sample cannot approve final visual logic',y,root,'delivery','current final_export review')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['visual_logic']['orientation']['reason']='';test('non-applicability needs actual reason',y,root,'delivery','non-applicability needs reason')
+ orientation={'applicable':True,'status':'pass','reference':'synthetic diagram reference','frame_mapping':'fixture object left maps to screen right in front view','structures':'fixture connection checked','transforms':'fixture front/back mapping; no reflection applied','evidence':'synthetic frame 0, fixture only'}
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['visual_logic']['orientation']=orientation
+ assert not mod.check_visual_logic({'SH1':y['shots'][0]},{a['id']:a for a in y['assets']})
+ count+=1;print('PASS complete orientation record fixture')
+ for field in ('reference','frame_mapping','structures','transforms','evidence'):
+  z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['orientation'][field]='';test('require orientation '+field,z,root,'delivery','orientation.'+field)
+ for status in ('fail','pending'):
+  z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['orientation']['status']=status;test('reject orientation '+status,z,root,'delivery','orientation failed')
+ z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['orientation']['applicable']='false';test('no truthy-string applicability',z,root,'delivery','must be boolean')
+ graphic={'id':'G1','kind':'arrow','asset_id':'A1','component_reference':'original synthetic fixture v1','license_evidence':'original test code; local fixture only','checks':{key:{'status':'pass','note':'synthetic fixture declaration only','evidence':'fixture frame 0, not actual review'} for key in ('tip','shaft_join','visibility','direction','endpoints','motion_extrema')}}
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['visual_logic']['graphics']=[graphic]
+ y['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(y);y['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(y)
+ test('complete arrow record fixture',y,root,'delivery')
+ for key in graphic['checks']:
+  z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics'][0]['checks'][key]['status']='fail';test('known arrow '+key+' failure blocks',z,root,'delivery','graphic '+key+' failed')
+  z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics'][0]['checks'][key]['evidence']='';test('arrow '+key+' needs evidence',z,root,'delivery','graphic '+key+' failed')
+ for key in ('component_reference','license_evidence'):
+  z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics'][0][key]='';test('require graphic '+key,z,root,'delivery','graphic.'+key)
+ z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics'][0]['asset_id']='VOICE';test('arrow asset must belong to shot',z,root,'delivery','asset must belong')
+ z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics'].append(copy.deepcopy(graphic));test('reject duplicate graphic ids',z,root,'delivery','id missing/duplicate')
+ z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics']=[None];test('malformed graphic record returns errors',z,root,'delivery','graphic id')
+ z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics']='arrow';test('malformed graphics inventory returns errors',z,root,'delivery','inventory required')
+ z=copy.deepcopy(x);z['shots'][0]['shotbook']['visual_logic']['no_graphics_reason']='';test('empty graphics inventory needs reason',z,root,'delivery','empty graphics inventory')
+ z=copy.deepcopy(y);g=z['shots'][0]['shotbook']['visual_logic']['graphics'][0];g['kind']='leader'
+ for key in ('tip','shaft_join','direction'):g['checks'].pop(key)
+ z['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(z);z['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(z)
+ test('undirected leader does not require arrowhead',z,root,'delivery')
+ for key in ('tip','shaft_join','direction'):
+  failed=copy.deepcopy(z);failed['shots'][0]['shotbook']['visual_logic']['graphics'][0]['checks'][key]={'status':'fail','note':'known failure before reclassification','evidence':'fixture only'};test('leader cannot hide known '+key+' failure',failed,root,'delivery','known graphic failure')
+ z=copy.deepcopy(y);z['shots'][0]['shotbook']['visual_logic']['graphics'][0]['checks']['tip']['note']='changed observation';test('edited visual review invalidates prior context',z,root,'delivery','stale audio/shotbook')
  print(f'{count} checks passed; all media fixtures were generated only in the temporary directory')
