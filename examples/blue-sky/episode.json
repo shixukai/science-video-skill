@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "episode_id": "blue-sky-paper-test",
+  "title": "天空为什么是蓝色？",
+  "description": "晴朗白天的蓝天，与空气分子对不同波长光的散射有关。这是一份待拍摄的制作计划，未生成或发布成片。",
+  "tags": [
+    "#科普",
+    "#天空",
+    "#光学"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://spaceplace.nasa.gov/blue-sky/en/",
+      "accessed_on": "2026-10-05",
+      "note": "NASA Space Place 机构解释页，页面正文文章标注更新于 2022-08-29。本例核查了白光成分、蓝光波长短于红光、空气分子散射蓝光较红光显著这三项；不是原始实验论文。只用于科学依据，不使用其图片或视频。"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "太阳光包含不同颜色的可见光。",
+      "source_ids": [
+        "S1"
+      ]
+    },
+    {
+      "id": "C2",
+      "text": "在晴朗白天，空气分子对短波长蓝光的散射比长波长红光更显著，这是天空呈蓝色的主要原因。",
+      "source_ids": [
+        "S1"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "A1",
+      "kind": "real_capture",
+      "source": "计划：作者在户外自行拍摄天空；尚未拍摄，不存在源文件。",
+      "creator": "待实际拍摄者确认",
+      "file": "",
+      "rights": {
+        "status": "pending",
+        "evidence": "待拍摄后记录创作者、拍摄时间和第三方画面权利检查",
+        "scope": "计划用于本抖音科普单集；实际取得后复核",
+        "credit": ""
+      },
+      "disclosure": "尚未拍摄；不对外声称实拍完成"
+    },
+    {
+      "id": "A2",
+      "kind": "simulation",
+      "source": "计划：自行制作光路和分子机制示意；尚未制作。",
+      "creator": "待实际制作者确认",
+      "file": "",
+      "rights": {
+        "status": "pending",
+        "evidence": "待制作后核对场景、字体及音效权利",
+        "scope": "计划用于本抖音科普单集；实际取得后复核",
+        "credit": ""
+      },
+      "disclosure": "机制示意，非真实摄影、非按比例"
+    },
+    {
+      "id": "A3",
+      "kind": "audio",
+      "source": "计划：以公开 Qwen 技术参考试制中文解说并独立试听；环境声另行自录或使用有权素材。尚未生成或录音。",
+      "creator": "待实际生成/录音后填写",
+      "file": "",
+      "rights": {
+        "status": "pending",
+        "evidence": "先核对本集文字、目的地与外传授权；完成后核对合成服务、音色及环境音权利",
+        "scope": "计划用于本抖音科普单集；实际取得后复核",
+        "credit": ""
+      },
+      "disclosure": "计划使用中文合成解说；尚未生成，不克隆真人"
+    },
+    {
+      "id": "A4",
+      "kind": "font",
+      "source": "计划：选择有对应使用权的中文字体；尚未选定。",
+      "creator": "待字体确定后填写权利人",
+      "file": "",
+      "rights": {
+        "status": "pending",
+        "evidence": "待核验具体字体许可",
+        "scope": "计划用于封面与字幕；实际使用前复核",
+        "credit": ""
+      },
+      "disclosure": ""
+    }
+  ],
+  "shots": [
+    {
+      "id": "SH1",
+      "claim_ids": [],
+      "asset_ids": [
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "visual_note": "真实天空细节开场，口播问天空的蓝色来自哪里；不把未拍镜头写成已有素材。"
+    },
+    {
+      "id": "SH2",
+      "claim_ids": [
+        "C1",
+        "C2"
+      ],
+      "asset_ids": [
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "visual_note": "切至简洁机制示意，短波长蓝光与长波长红光都展示散射；清楚标注机制示意、非按比例，不能演成红光完全不散射。"
+    },
+    {
+      "id": "SH3",
+      "claim_ids": [
+        "C2"
+      ],
+      "asset_ids": [
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "visual_note": "回到实际天空；结论只讲晴朗白天主要原因，不声称蓝光散射最强或解释了所有天空颜色。"
+    }
+  ],
+  "deliverables": {
+    "video": "",
+    "cover_3_4": "",
+    "cover_4_3": ""
+  },
+  "production_statement": "计划状态：实拍、旁白、字体选择与机制示意均尚未完成；未下载第三方媒体，未生成成片，未上传或发布。正式制作声明须按实际成片重写。",
+  "qa": {
+    "science": {
+      "status": "pending",
+      "note": ""
+    },
+    "rights": {
+      "status": "pending",
+      "note": ""
+    },
+    "visual_frames": {
+      "status": "pending",
+      "note": ""
+    },
+    "mobile_preview": {
+      "status": "pending",
+      "note": "",
+      "review_scope": "pending",
+      "surface": "",
+      "platform": "",
+      "account": "",
+      "reviewed_metadata_sha256": ""
+    },
+    "audio": {
+      "status": "pending",
+      "note": ""
+    },
+    "covers": {
+      "status": "pending",
+      "note": ""
+    },
+    "reviewed_sha256": {},
+    "narration": {
+      "status": "pending",
+      "note": "",
+      "review_scope": "pending"
+    },
+    "comprehension": {
+      "status": "pending",
+      "note": "",
+      "audience_feedback_reference": ""
+    }
+  },
+  "narration": {
+    "language": "zh-CN",
+    "status": "pending",
+    "voice_type": "synthetic",
+    "asset_id": "A3",
+    "disclosure": "中文合成解说",
+    "series_sample_reference": ""
+  }
+}

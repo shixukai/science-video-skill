@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "episode_id": "",
+  "title": "",
+  "description": "",
+  "tags": [],
+  "sources": [
+    {
+      "id": "S1",
+      "url": "",
+      "accessed_on": "",
+      "note": ""
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "",
+      "source_ids": [
+        "S1"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "A1",
+      "kind": "",
+      "source": "",
+      "creator": "",
+      "file": "",
+      "rights": {
+        "status": "pending",
+        "evidence": "",
+        "scope": "",
+        "credit": ""
+      },
+      "disclosure": ""
+    }
+  ],
+  "shots": [
+    {
+      "id": "SH1",
+      "claim_ids": [
+        "C1"
+      ],
+      "asset_ids": [
+        "A1"
+      ],
+      "visual_note": ""
+    }
+  ],
+  "deliverables": {
+    "video": "",
+    "cover_3_4": "",
+    "cover_4_3": ""
+  },
+  "production_statement": "",
+  "qa": {
+    "science": {
+      "status": "pending",
+      "note": ""
+    },
+    "rights": {
+      "status": "pending",
+      "note": ""
+    },
+    "visual_frames": {
+      "status": "pending",
+      "note": ""
+    },
+    "mobile_preview": {
+      "status": "pending",
+      "note": "",
+      "review_scope": "pending",
+      "surface": "",
+      "platform": "",
+      "account": "",
+      "reviewed_metadata_sha256": ""
+    },
+    "audio": {
+      "status": "pending",
+      "note": ""
+    },
+    "covers": {
+      "status": "pending",
+      "note": ""
+    },
+    "reviewed_sha256": {},
+    "narration": {
+      "status": "pending",
+      "note": "",
+      "review_scope": "pending"
+    },
+    "comprehension": {
+      "status": "pending",
+      "note": "",
+      "audience_feedback_reference": ""
+    }
+  },
+  "narration": {
+    "language": "zh-CN",
+    "status": "pending",
+    "voice_type": "pending",
+    "asset_id": "",
+    "disclosure": "",
+    "series_sample_reference": ""
+  }
+}
