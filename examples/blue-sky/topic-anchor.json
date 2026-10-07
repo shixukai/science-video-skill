@@ -1,0 +1,16 @@
+{
+  "version": "1",
+  "title": "天空为什么是蓝色",
+  "question": "晴朗白天的天空为什么主要呈蓝色？",
+  "intent": "explain_mechanism",
+  "required_scope": [
+    {
+      "id": "R1",
+      "answer_requirement": "解释太阳光与大气散射的关系"
+    },
+    {
+      "id": "R2",
+      "answer_requirement": "解释不同波长散射差别并说明适用条件"
+    }
+  ]
+}

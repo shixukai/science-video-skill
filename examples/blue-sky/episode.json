@@ -173,6 +173,31 @@
       "status": "pending",
       "note": "",
       "audience_feedback_reference": ""
+    },
+    "topic_alignment": {
+      "status": "pending",
+      "reviewer_role": "editor",
+      "reviewed_sha256": "",
+      "opening_title": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "opening_voiceover": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "coverage": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "ending": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      }
     }
   },
   "narration": {
@@ -182,5 +207,81 @@
     "asset_id": "A3",
     "disclosure": "中文合成解说",
     "series_sample_reference": ""
+  },
+  "topic": {
+    "anchor_file": "topic-anchor.json",
+    "anchor_sha256": "86cfb72292d30028dfd8e3e5bde44f19b6f19cef0391f2e1d7ca2327879d8d32",
+    "current": {
+      "version": "1",
+      "title": "天空为什么是蓝色",
+      "question": "晴朗白天的天空为什么主要呈蓝色？",
+      "intent": "explain_mechanism",
+      "required_scope": [
+        {
+          "id": "R1",
+          "answer_requirement": "解释太阳光与大气散射的关系"
+        },
+        {
+          "id": "R2",
+          "answer_requirement": "解释不同波长散射差别并说明适用条件"
+        }
+      ]
+    },
+    "current_sha256": "86cfb72292d30028dfd8e3e5bde44f19b6f19cef0391f2e1d7ca2327879d8d32",
+    "change_approval": {
+      "status": "not_changed",
+      "request_reference": "",
+      "from_sha256": "",
+      "to_sha256": ""
+    },
+    "origin_reference": "Synthetic blue-sky workflow example brief"
+  },
+  "scope": {
+    "kind": "episode",
+    "publication_ready": false
+  },
+  "topic_alignment": {
+    "topic_sha256": "86cfb72292d30028dfd8e3e5bde44f19b6f19cef0391f2e1d7ca2327879d8d32",
+    "opening": {
+      "title": "天空为什么是蓝色",
+      "voiceover": "晴朗白天，天空的蓝色从哪里来？我们看看阳光在大气中发生了什么。",
+      "intent": "explain_mechanism",
+      "scope_ids": [
+        "R1",
+        "R2"
+      ],
+      "shot_ids": [
+        "SH1"
+      ]
+    },
+    "coverage": [
+      {
+        "scope_id": "R1",
+        "shot_ids": [
+          "SH2"
+        ],
+        "answer_evidence": "计划示意阳光被空气分子散射；非已制成画面"
+      },
+      {
+        "scope_id": "R2",
+        "shot_ids": [
+          "SH2",
+          "SH3"
+        ],
+        "answer_evidence": "计划对比波长散射并回到晴朗白天条件；非已验收"
+      }
+    ],
+    "ending": {
+      "answer": "晴朗白天的天空主要因大气分子对较短波长可见光散射较强而呈蓝色；此处不解释所有天空颜色。",
+      "intent": "explain_mechanism",
+      "scope_ids": [
+        "R1",
+        "R2"
+      ],
+      "shot_ids": [
+        "SH3"
+      ]
+    },
+    "omitted_scope_ids": []
   }
 }

@@ -14,6 +14,7 @@ def test(label, data, root, stage, expected=None):
  count+=1;print('PASS',label)
 with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  root=Path(tmp)
+ (root/"topic-anchor.json").write_text((PROJECT/"examples/blue-sky/topic-anchor.json").read_text())
  test('plan accepts pending capture honestly',plan,root,'plan')
  for kind,label in [('graphic','2D illustration'),('simulation','2D mechanism animation')]:
   x=copy.deepcopy(plan)
@@ -56,6 +57,10 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  x['narration']['audio_sha256']=hashlib.sha256((root/'v.mp4').read_bytes()).hexdigest()
  x['shots'][0]['shotbook']={'start':0,'end':1,'subject':'test shape','action':'hold','framing':'wide','claim_support':'fixture only','motion_purpose':'static comparison; no decorative motion','beats':[{'at':0,'trigger_words':'fixture','attention_subject':'test shape','action':'hold'}],'candidates':[{'source':'synthetic fixture','viewing_note':'fixture declaration only','decision_reason':'isolated test input','selected':True,'asset_id':'A1','source_interval':'full'}],'alternatives_note':'one generated fixture for deterministic tests','keyframe_review':{'status':'pass','file':'p.png','sha256':hashlib.sha256((root/'p.png').read_bytes()).hexdigest(),'note':'fixture only, no human review'}}
  x['qa']['shotbook']={'status':'pass','reviewed_sha256':mod.shotbook_sha256(x),'note':'software fixture declaration only, no actual audiovisual review'}
+ for key in ('opening','ending'):x['topic_alignment'][key]['shot_ids']=['SH1']
+ for record in x['topic_alignment']['coverage']:record['shot_ids']=['SH1']
+ x['qa']['topic_alignment']={'status':'pass','reviewer_role':'independent',**{key:{'status':'pass','note':'synthetic fixture declaration; no media review claimed','evidence':'synthetic fixture only'} for key in ('opening_title','opening_voiceover','coverage','ending')}}
+ x['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(x)
  test('valid technical fixture dimensions and full decode',x,root,'delivery')
  for status in ['fail','pending','pass']:
   y=copy.deepcopy(x);y['qa']['comprehension']['status']=status;test(f'comprehension {status} cannot be treated as reviewed delivery',y,root,'delivery','qa.comprehension')
@@ -103,9 +108,40 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  y=copy.deepcopy(x);y['shots'][0]['shotbook']['beats'][0]['action']='changed';test('beat changes invalidate audiovisual approval',y,root,'delivery','stale audio/shotbook')
  y=copy.deepcopy(x);y['qa']['shotbook']['status']='pending';test('unseen audiovisual sample cannot pass',y,root,'delivery','actual representative audiovisual review')
  y=copy.deepcopy(x);y['shots'][0]['shotbook']['beats']=[];test('silent shot needs purpose',y,root,'delivery','silence_reason')
- y['shots'][0]['shotbook']['silence_reason']='hold for visual observation';y['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(y);test('accept documented silent observation',y,root,'delivery')
+ y['shots'][0]['shotbook']['silence_reason']='hold for visual observation';y['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(y);y['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(y);test('accept documented silent observation',y,root,'delivery')
  y=copy.deepcopy(x);y['shots'][0]['shotbook']['end']=2;y['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(y);test('reject shot beyond actual export',y,root,'delivery','exceeds actual video duration')
  y=copy.deepcopy(x);y['assets'][0]['source']='changed source';test('source changes invalidate audiovisual review',y,root,'delivery','stale audio/shotbook')
  y=copy.deepcopy(x);y['assets'][0]['file']='p.png';test('asset file changes invalidate its content approval',y,root,'delivery','stale/missing asset sha256')
  y=copy.deepcopy(x);y['assets'][0]['sha256']='0'*64;test('missing or stale asset hash blocks delivery',y,root,'delivery','stale/missing asset sha256')
+ for key in ('topic','scope','topic_alignment'):
+  y=copy.deepcopy(x);y.pop(key);test('missing '+key+' blocks complete episode',y,root,'delivery','topic:')
+ y=copy.deepcopy(x);y['topic']['current']['question']='How does this one component work?';y['topic']['current_sha256']=mod.canonical_sha256(y['topic']['current']);test('local subject cannot replace episode without permission',y,root,'delivery','explicit user request')
+ y=copy.deepcopy(x);y['topic']['anchor_sha256']='0'*64;test('reject overwritten anchor hash',y,root,'delivery','original anchor hash')
+ y=copy.deepcopy(x);y['topic']['anchor_file']='../outside.json';test('anchor cannot escape packet',y,root,'delivery','anchor path')
+ y=copy.deepcopy(x);y['scope']={'kind':'local_sample','parent_episode_id':'synthetic-parent','chapter_id':'chapter-2','purpose':'color review','delivery_context':'One chapter of the complete question','placement':'chapter_only','publication_ready':False};test('local sample cannot pass full delivery',y,root,'delivery','cannot pass complete-episode')
+ y['scope']['placement']='episode_opening';test('local sample cannot silently become opening',y,root,'plan','cannot substitute')
+ y['scope']['placement']='chapter_only';y['scope']['publication_ready']=True;test('local sample cannot claim publication readiness',y,root,'plan','publication ready')
+ y=copy.deepcopy(x);y['topic_alignment']['coverage'].pop();test('partial coverage cannot satisfy episode',y,root,'delivery','necessary answer scope missing')
+ y=copy.deepcopy(x);y['topic_alignment']['opening']['intent']='describe_function';test('different opening question type rejected',y,root,'delivery','question type differs')
+ y=copy.deepcopy(x);y['topic_alignment']['ending']['shot_ids']=['unknown'];test('conclusion must map to actual shot',y,root,'delivery','existing shot_ids')
+ for key in ('opening_title','opening_voiceover','coverage','ending'):
+  y=copy.deepcopy(x);y['qa']['topic_alignment'][key]['status']='fail';test('semantic review failure '+key+' blocks despite hashes',y,root,'delivery',key+' recheck failed')
+ y=copy.deepcopy(x);y['qa']['reviewed_sha256']['video']='0'*64;test('replaced export invalidates topic review',y,root,'delivery','stale topic/media')
+ y=copy.deepcopy(x);y['narration']['audio_sha256']='0'*64;test('changed narration invalidates topic review',y,root,'delivery','stale topic/media')
+ # Generic construction topic: a function explanation is not a manufacturing answer.
+ manufacturing={'version':'1','title':'How a ceramic cup is made','question':'How is a ceramic cup manufactured?','intent':'explain_manufacture','required_scope':[{'id':'M1','answer_requirement':'material preparation and forming'},{'id':'M2','answer_requirement':'firing and inspection'}]}
+ (root/'manufacturing-anchor.json').write_text(json.dumps(manufacturing))
+ y=copy.deepcopy(x);h=mod.canonical_sha256(manufacturing);y['topic'].update(anchor_file='manufacturing-anchor.json',anchor_sha256=h,current=manufacturing,current_sha256=h);y['topic_alignment']['topic_sha256']=h
+ for key in ('opening','ending'):y['topic_alignment'][key].update(intent='describe_function',scope_ids=['M1','M2'])
+ y['topic_alignment']['coverage']=[{'scope_id':'M1','shot_ids':['SH1'],'answer_evidence':'explains what the handle does'}]
+ test('function-only substitute misses manufacturing scope',y,root,'delivery','necessary answer scope missing')
+ y=copy.deepcopy(x);y['scope']={'kind':'local_sample','parent_episode_id':'synthetic-parent','chapter_id':'chapter-2','purpose':'illustration review','delivery_context':'Local mechanism chapter of the sky episode','placement':'chapter_only','publication_ready':False};y['topic_alignment']['coverage']=y['topic_alignment']['coverage'][:1];y['topic_alignment']['omitted_scope_ids']=['R2'];test('honest local sample plan keeps original anchor',y,root,'plan')
+ y=copy.deepcopy(x);y['topic'].pop('origin_reference');test('missing original request provenance blocks delivery',y,root,'delivery','original request reference')
+ y=copy.deepcopy(x);y['topic']['current']['version']='2';new_hash=mod.canonical_sha256(y['topic']['current']);old_hash=y['topic']['anchor_sha256'];y['topic']['current_sha256']=new_hash;y['topic']['change_approval']={'status':'explicit_user_request','request_reference':'synthetic explicit version change fixture','from_sha256':old_hash,'to_sha256':new_hash};y['topic_alignment']['topic_sha256']=new_hash;y['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(y);test('accept version-bound explicit change declaration',y,root,'delivery')
+ y['topic']['change_approval']['to_sha256']='0'*64;test('approval for other version cannot authorize change',y,root,'delivery','explicit user request')
+ y=copy.deepcopy(x);y['topic_alignment']['coverage'][0]['answer_evidence']='function-only text with matching keywords';y['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(y);y['qa']['topic_alignment']['coverage']['status']='fail';test('matching labels cannot override semantic review failure',y,root,'delivery','coverage recheck failed')
+ y=copy.deepcopy(plan);y['topic_alignment']['opening']['shot_ids']=['SH2'];test('later shot cannot stand in for actual opening',y,root,'plan','actual boundary shot')
+ y=copy.deepcopy(plan);y['topic_alignment']['ending']['shot_ids']=['SH2'];test('middle shot cannot stand in for actual ending',y,root,'plan','actual boundary shot')
+ for omitted in [['R2'],None,'']:
+  y=copy.deepcopy(x);y['topic_alignment']['omitted_scope_ids']=omitted;y['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(y);test('complete episode cannot declare omitted scope '+str(omitted),y,root,'delivery','must declare no omitted scope')
  print(f'{count} checks passed; all media fixtures were generated only in the temporary directory')

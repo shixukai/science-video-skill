@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "title": "",
+  "question": "",
+  "intent": "",
+  "required_scope": [
+    {
+      "id": "R1",
+      "answer_requirement": ""
+    }
+  ]
+}

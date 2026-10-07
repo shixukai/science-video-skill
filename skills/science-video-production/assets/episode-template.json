@@ -135,6 +135,31 @@
       "status": "pending",
       "reviewed_sha256": "",
       "note": ""
+    },
+    "topic_alignment": {
+      "status": "pending",
+      "reviewer_role": "editor",
+      "reviewed_sha256": "",
+      "opening_title": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "opening_voiceover": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "coverage": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "ending": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      }
     }
   },
   "narration": {
@@ -145,5 +170,67 @@
     "disclosure": "",
     "series_sample_reference": "",
     "audio_sha256": ""
+  },
+  "topic": {
+    "anchor_file": "topic-anchor.json",
+    "anchor_sha256": "",
+    "current": {
+      "version": "1",
+      "title": "",
+      "question": "",
+      "intent": "",
+      "required_scope": [
+        {
+          "id": "R1",
+          "answer_requirement": ""
+        }
+      ]
+    },
+    "current_sha256": "",
+    "change_approval": {
+      "status": "not_changed",
+      "request_reference": "",
+      "from_sha256": "",
+      "to_sha256": ""
+    },
+    "origin_reference": ""
+  },
+  "scope": {
+    "kind": "episode",
+    "publication_ready": false
+  },
+  "topic_alignment": {
+    "topic_sha256": "",
+    "opening": {
+      "title": "",
+      "voiceover": "",
+      "intent": "",
+      "scope_ids": [
+        "R1"
+      ],
+      "shot_ids": [
+        "SH1"
+      ]
+    },
+    "coverage": [
+      {
+        "scope_id": "R1",
+        "shot_ids": [
+          "SH1"
+        ],
+        "answer_evidence": ""
+      }
+    ],
+    "ending": {
+      "answer": "",
+      "intent": "",
+      "scope_ids": [
+        "R1"
+      ],
+      "shot_ids": [
+        "SH1"
+      ]
+    },
+    "omitted_scope_ids": []
   }
 }

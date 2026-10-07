@@ -40,6 +40,122 @@ def shotbook_sha256(data):
                                     separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
+def canonical_sha256(value):
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                    separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def topic_review_sha256(data):
+    """Version binding only; neither semantic review nor user authorization."""
+    qa = data.get("qa") if isinstance(data.get("qa"), dict) else {}
+    return canonical_sha256({"topic": data.get("topic"), "scope": data.get("scope"),
+        "alignment": data.get("topic_alignment"), "shots": data.get("shots"),
+        "narration": data.get("narration"), "assets": data.get("assets"),
+        "deliverables": data.get("deliverables"), "media_hashes": qa.get("reviewed_sha256")})
+
+
+def check_topic(data, root, stage, shots):
+    errors = []
+    def need(ok, message):
+        if not ok:
+            errors.append("topic: " + message)
+        return bool(ok)
+    def text(value):
+        return isinstance(value, str) and bool(value.strip())
+    def obj(value):
+        return value if isinstance(value, dict) else {}
+    def anchor_fields(value, label):
+        value = obj(value)
+        for key in ("version", "title", "question", "intent"):
+            need(text(value.get(key)), f"{label}.{key} required")
+        scope = value.get("required_scope")
+        result = {}
+        if need(isinstance(scope, list) and bool(scope), f"{label}.required_scope required"):
+            for item in scope:
+                item = obj(item)
+                ident = item.get("id")
+                if need(text(ident) and ident not in result and text(item.get("answer_requirement")), f"{label}: scope id/answer requirement missing or duplicate"):
+                    result[ident] = item
+        return result
+    topic = obj(data.get("topic"))
+    need(text(topic.get("origin_reference")), "original request reference required")
+    path = topic.get("anchor_file")
+    anchor = {}
+    if need(text(path), "frozen anchor_file required"):
+        target = (root / path).resolve()
+        if need(not Path(path).is_absolute() and target.is_relative_to(root), "anchor path must stay inside episode directory"):
+            if need(target.is_file(), "frozen anchor file missing"):
+                try:
+                    anchor = json.loads(target.read_text(encoding="utf-8"))
+                except (OSError, ValueError) as exc:
+                    need(False, f"unreadable anchor: {exc}")
+    anchor_fields(anchor, "original")
+    original_hash = canonical_sha256(anchor)
+    need(topic.get("anchor_sha256") == original_hash, "original anchor hash mismatch")
+    current = obj(topic.get("current"))
+    required = anchor_fields(current, "current")
+    current_hash = canonical_sha256(current)
+    need(topic.get("current_sha256") == current_hash, "current topic hash mismatch")
+    if current_hash != original_hash:
+        change = obj(topic.get("change_approval"))
+        need(change.get("status") == "explicit_user_request" and text(change.get("request_reference"))
+             and change.get("from_sha256") == original_hash and change.get("to_sha256") == current_hash,
+             "topic/scope change requires a referenced explicit user request bound to both versions")
+    scope = obj(data.get("scope"))
+    kind = scope.get("kind")
+    need(kind in ("episode", "local_sample", "chapter"), "scope.kind must distinguish episode/local_sample/chapter")
+    if kind in ("local_sample", "chapter"):
+        for key in ("parent_episode_id", "chapter_id", "purpose", "delivery_context"):
+            need(text(scope.get(key)), f"local scope.{key} required")
+        need(scope.get("placement") == "chapter_only", "local work cannot substitute for episode opening")
+        need(scope.get("publication_ready") is False, "local work cannot be marked publication ready")
+        need(stage != "delivery", "local sample/chapter cannot pass complete-episode delivery")
+    alignment = obj(data.get("topic_alignment"))
+    need(alignment.get("topic_sha256") == current_hash, "alignment bound to wrong topic version")
+    for section, fields in (("opening", ("title", "voiceover")), ("ending", ("answer",))):
+        record = obj(alignment.get(section))
+        for field in fields:
+            need(text(record.get(field)), f"{section}.{field} required")
+        need(record.get("intent") == current.get("intent"), f"{section} question type differs from anchored intent")
+        refs = record.get("scope_ids")
+        valid = isinstance(refs, list) and bool(refs) and all(isinstance(x, str) and x in required for x in refs)
+        need(valid, f"{section}: valid required-scope mapping required")
+        if kind == "episode" and valid:
+            need(set(refs) == set(required), f"{section}: incomplete episode answer scope")
+        ids = record.get("shot_ids")
+        need(isinstance(ids, list) and bool(ids) and all(isinstance(x, str) and x in shots for x in ids), f"{section}: existing shot_ids required")
+        if shots and isinstance(ids, list):
+            boundary = next(iter(shots)) if section == "opening" else next(reversed(shots))
+            need(boundary in ids, f"{section}: mapping must include actual boundary shot")
+    coverage = alignment.get("coverage")
+    covered = set()
+    if need(isinstance(coverage, list) and bool(coverage), "coverage mapping required"):
+        for record in coverage:
+            record = obj(record)
+            ident = record.get("scope_id")
+            valid = isinstance(ident, str) and ident in required and ident not in covered
+            if need(valid, "unknown/duplicate coverage scope_id"):
+                covered.add(ident)
+            ids = record.get("shot_ids")
+            need(isinstance(ids, list) and bool(ids) and all(isinstance(x, str) and x in shots for x in ids), "coverage must reference existing shots")
+            need(text(record.get("answer_evidence")), "coverage answer evidence required")
+    if kind == "episode":
+        need(alignment.get("omitted_scope_ids") == [], "complete episode must declare no omitted scope")
+        need(covered == set(required), "necessary answer scope missing from episode coverage")
+    else:
+        omitted = alignment.get("omitted_scope_ids")
+        need(isinstance(omitted, list) and all(isinstance(x, str) for x in omitted) and set(omitted) == set(required) - covered,
+             "local work must identify omitted episode scope")
+    if stage == "delivery":
+        review = obj(obj(data.get("qa")).get("topic_alignment"))
+        need(review.get("status") == "pass" and review.get("reviewer_role") in ("editor", "independent"), "actual editorial/independent topic review required")
+        need(review.get("reviewed_sha256") == topic_review_sha256(data), "stale topic/media review context")
+        for key in ("opening_title", "opening_voiceover", "coverage", "ending"):
+            check = obj(review.get(key))
+            need(check.get("status") == "pass" and text(check.get("note")) and text(check.get("evidence")), f"{key} recheck failed/missing evidence")
+    return errors
+
+
 def check(data, root, stage):
     errors, notes = [], []
 
@@ -229,6 +345,7 @@ def check(data, root, stage):
             qa_book = {}
         require(qa_book.get("status") == "pass" and nonempty(qa_book.get("note")), "qa.shotbook: actual representative audiovisual review required")
         require(qa_book.get("reviewed_sha256") == shotbook_sha256(data), "qa.shotbook: stale audio/shotbook context; review again")
+    errors.extend(check_topic(data, root, stage, shots))
     if stage == "plan":
         notes.append("PLAN ONLY: no footage, rights, decoding, scientific accuracy or visual/mobile approval is established")
         return errors, notes
