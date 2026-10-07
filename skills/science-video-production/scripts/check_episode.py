@@ -4,6 +4,7 @@ import argparse
 from datetime import date
 import hashlib
 import json
+import math
 from pathlib import Path
 import shutil
 import subprocess
@@ -22,6 +23,21 @@ def platform_metadata_sha256(data, preview):
     context.update({key: preview.get(key) for key in ("platform", "account", "surface")})
     payload = json.dumps(context, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def file_sha256(path):
+    with path.open("rb") as handle:
+        return hashlib.file_digest(handle, "sha256").hexdigest()
+
+
+def shotbook_sha256(data):
+    """Bind semantic timing and selected visuals to the declared audio revision."""
+    narration = data.get("narration")
+    narration = narration if isinstance(narration, dict) else {}
+    payload = {"audio_sha256": narration.get("audio_sha256"),
+               "shots": data.get("shots"), "assets": data.get("assets")}
+    return hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True,
+                                    separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
 def check(data, root, stage):
@@ -99,7 +115,9 @@ def check(data, root, stage):
         if stage == "delivery":
             require(rights.get("status") == "cleared", f"{ident}: rights not cleared")
             require(all(nonempty(rights.get(k)) for k in ("evidence", "scope")), f"{ident}: actual rights evidence and allowed scope required")
-            local_file(asset.get("file"), ident)
+            asset_file = local_file(asset.get("file"), ident)
+            if asset_file:
+                require(asset.get("sha256") == file_sha256(asset_file), f"{ident}: stale/missing asset sha256; review selected material again")
         else:
             if rights.get("status") != "cleared":
                 notes.append(f"{ident}: {rights.get('status')} rights; not usable as a finished asset")
@@ -138,6 +156,79 @@ def check(data, root, stage):
         require(nonempty(narration.get("series_sample_reference")), "narration: first shared series voice sample reference required")
     elif narration.get("status") != "ready":
         notes.append("narration: pending Chinese voiceover; captions/music alone are not a completed episode")
+    # Shotbook declarations constrain the packet; they never prove visual quality.
+    def seconds(value):
+        try:
+            return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0
+        except OverflowError:
+            return False
+
+    last_end = 0
+    for ident, shot in shots.items():
+        book = shot.get("shotbook")
+        if book is None and stage == "plan":
+            notes.append(f"{ident}: shotbook pending; complete after final voiceover and visual selection")
+            continue
+        if not require(isinstance(book, dict), f"{ident}: shotbook required"):
+            continue
+        start, end = book.get("start"), book.get("end")
+        timed = seconds(start) and seconds(end) and start < end
+        require(timed, f"{ident}: shotbook needs finite start < end seconds")
+        if timed:
+            require(start >= last_end, f"{ident}: shotbook shots overlap or are out of order")
+            last_end = end
+        for key in ("subject", "action", "framing", "claim_support", "motion_purpose"):
+            require(nonempty(book.get(key)), f"{ident}: shotbook.{key} required")
+        beats = book.get("beats")
+        if require(isinstance(beats, list), f"{ident}: semantic beats must be a list"):
+            if not beats:
+                require(nonempty(book.get("silence_reason")), f"{ident}: silent observation needs silence_reason")
+            previous = start if timed else 0
+            for beat in beats:
+                if not require(isinstance(beat, dict), f"{ident}: beat must be an object"):
+                    continue
+                at = beat.get("at")
+                if require(seconds(at), f"{ident}: beat.at must be finite seconds"):
+                    require(timed and start <= at < end and at >= previous, f"{ident}: beat outside shot or out of order")
+                    previous = at
+                for key in ("trigger_words", "attention_subject", "action"):
+                    require(nonempty(beat.get(key)), f"{ident}: beat.{key} required")
+        candidates = book.get("candidates")
+        chosen = []
+        if require(isinstance(candidates, list) and bool(candidates), f"{ident}: viewed candidates required"):
+            for candidate in candidates:
+                if not require(isinstance(candidate, dict), f"{ident}: candidate must be an object"):
+                    continue
+                for key in ("source", "viewing_note", "decision_reason"):
+                    require(nonempty(candidate.get(key)), f"{ident}: candidate.{key} required")
+                selected = candidate.get("selected")
+                require(isinstance(selected, bool), f"{ident}: candidate.selected must be boolean")
+                if selected is True:
+                    chosen.append(candidate)
+                    require(isinstance(shot.get("asset_ids"), list) and candidate.get("asset_id") in shot["asset_ids"], f"{ident}: chosen candidate must use a shot asset")
+                    interval = candidate.get("source_interval")
+                    require(nonempty(interval), f"{ident}: chosen candidate source_interval required (still/full or actual in-out)")
+            require(len(chosen) == 1, f"{ident}: exactly one selected primary candidate required")
+            if len(candidates) < 2:
+                require(nonempty(book.get("alternatives_note")), f"{ident}: explain unavailable alternatives")
+        if stage == "delivery":
+            keyframe = book.get("keyframe_review", {})
+            if not isinstance(keyframe, dict):
+                keyframe = {}
+            require(keyframe.get("status") == "pass" and nonempty(keyframe.get("note")), f"{ident}: finished keyframe review required before animation")
+            frame = local_file(keyframe.get("file"), f"{ident} keyframe")
+            if frame:
+                require(keyframe.get("sha256") == file_sha256(frame), f"{ident}: stale keyframe review hash")
+    if stage == "delivery":
+        audio = assets.get(narration_id) if isinstance(narration_id, str) else None
+        audio_file = local_file(audio.get("file"), "shotbook narration") if audio else None
+        if audio_file:
+            require(narration.get("audio_sha256") == file_sha256(audio_file), "shotbook: audio changed or unbound; realign beats and review")
+        qa_book = data.get("qa", {}).get("shotbook", {}) if isinstance(data.get("qa"), dict) else {}
+        if not isinstance(qa_book, dict):
+            qa_book = {}
+        require(qa_book.get("status") == "pass" and nonempty(qa_book.get("note")), "qa.shotbook: actual representative audiovisual review required")
+        require(qa_book.get("reviewed_sha256") == shotbook_sha256(data), "qa.shotbook: stale audio/shotbook context; review again")
     if stage == "plan":
         notes.append("PLAN ONLY: no footage, rights, decoding, scientific accuracy or visual/mobile approval is established")
         return errors, notes
@@ -212,7 +303,12 @@ def check(data, root, stage):
                 require(width * 3 == height * 4, "cover_4_3: incorrect aspect ratio")
             else:
                 require(any(s.get("codec_type") == "audio" for s in streams), "video: audio stream missing")
-                require(float(media.get("format", {}).get("duration", 0)) > 0, "video: duration missing/invalid")
+                duration = float(media.get("format", {}).get("duration", 0))
+                require(math.isfinite(duration) and duration > 0, "video: duration missing/invalid")
+                for shot_id, shot in shots.items():
+                    book = shot.get("shotbook")
+                    if isinstance(book, dict) and seconds(book.get("end")):
+                        require(book["end"] <= duration, f"{shot_id}: shotbook exceeds actual video duration")
                 if width >= height:
                     notes.append("video: landscape/square; manually confirm the intended destination")
             if decoder:

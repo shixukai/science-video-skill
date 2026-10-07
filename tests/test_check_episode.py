@@ -52,6 +52,10 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  x['qa']['mobile_preview'].update({'review_scope':'target_platform','surface':'desktop_platform_preview','platform':'synthetic test fixture','account':'no real account or platform accessed'})
  x['qa']['mobile_preview']['reviewed_metadata_sha256']=mod.platform_metadata_sha256(x,x['qa']['mobile_preview'])
  x['qa']['reviewed_sha256']={k:hashlib.sha256((root/f).read_bytes()).hexdigest() for k,f in x['deliverables'].items()}
+ for asset in x['assets']:asset['sha256']=hashlib.sha256((root/asset['file']).read_bytes()).hexdigest()
+ x['narration']['audio_sha256']=hashlib.sha256((root/'v.mp4').read_bytes()).hexdigest()
+ x['shots'][0]['shotbook']={'start':0,'end':1,'subject':'test shape','action':'hold','framing':'wide','claim_support':'fixture only','motion_purpose':'static comparison; no decorative motion','beats':[{'at':0,'trigger_words':'fixture','attention_subject':'test shape','action':'hold'}],'candidates':[{'source':'synthetic fixture','viewing_note':'fixture declaration only','decision_reason':'isolated test input','selected':True,'asset_id':'A1','source_interval':'full'}],'alternatives_note':'one generated fixture for deterministic tests','keyframe_review':{'status':'pass','file':'p.png','sha256':hashlib.sha256((root/'p.png').read_bytes()).hexdigest(),'note':'fixture only, no human review'}}
+ x['qa']['shotbook']={'status':'pass','reviewed_sha256':mod.shotbook_sha256(x),'note':'software fixture declaration only, no actual audiovisual review'}
  test('valid technical fixture dimensions and full decode',x,root,'delivery')
  for status in ['fail','pending','pass']:
   y=copy.deepcopy(x);y['qa']['comprehension']['status']=status;test(f'comprehension {status} cannot be treated as reviewed delivery',y,root,'delivery','qa.comprehension')
@@ -82,4 +86,26 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  y=copy.deepcopy(x);y['deliverables']['video']='../outside.mp4';test('reject traversal path',y,root,'delivery','path must stay inside')
  y=copy.deepcopy(x);(root/'bad.mp4').write_bytes(b'not a media file');y['deliverables']['video']='bad.mp4';test('reject corrupt video',y,root,'delivery','ffprobe failed')
  y=copy.deepcopy(x);y['deliverables']['video']='p.png';test('reject missing audio/duration',y,root,'delivery','audio stream missing')
+ for field in ['subject','action','framing','claim_support','motion_purpose']:
+  y=copy.deepcopy(x);y['shots'][0]['shotbook'][field]='';test('require shotbook '+field,y,root,'delivery','shotbook.'+field)
+ for end in [0,-1,float('nan'),float('inf'),True,'1',10**1000]:
+  y=copy.deepcopy(x);y['shots'][0]['shotbook']['end']=end;test('reject invalid timing '+str(end),y,root,'delivery','finite start < end')
+ y=copy.deepcopy(x);y['shots'][0].pop('shotbook');test('delivery requires shotbook',y,root,'delivery','shotbook required')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['beats'][0]['at']=2;test('reject beat outside shot',y,root,'delivery','beat outside shot')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['beats'][0]['trigger_words']='';test('require semantic trigger',y,root,'delivery','beat.trigger_words')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['candidates'][0]['viewing_note']='';test('require actual candidate viewing record',y,root,'delivery','candidate.viewing_note')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['candidates'][0]['source_interval']='';test('require selected source interval',y,root,'delivery','source_interval required')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['candidates'][0]['selected']=False;test('require one selected primary',y,root,'delivery','exactly one selected')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['alternatives_note']='';test('single candidate needs explanation',y,root,'delivery','explain unavailable alternatives')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['keyframe_review']['status']='pending';test('motion does not approve unfinished keyframe',y,root,'delivery','finished keyframe review')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['keyframe_review']['sha256']='0'*64;test('keyframe replacement invalidates review',y,root,'delivery','stale keyframe')
+ y=copy.deepcopy(x);y['narration']['audio_sha256']='0'*64;test('audio change needs realignment',y,root,'delivery','audio changed or unbound')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['beats'][0]['action']='changed';test('beat changes invalidate audiovisual approval',y,root,'delivery','stale audio/shotbook')
+ y=copy.deepcopy(x);y['qa']['shotbook']['status']='pending';test('unseen audiovisual sample cannot pass',y,root,'delivery','actual representative audiovisual review')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['beats']=[];test('silent shot needs purpose',y,root,'delivery','silence_reason')
+ y['shots'][0]['shotbook']['silence_reason']='hold for visual observation';y['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(y);test('accept documented silent observation',y,root,'delivery')
+ y=copy.deepcopy(x);y['shots'][0]['shotbook']['end']=2;y['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(y);test('reject shot beyond actual export',y,root,'delivery','exceeds actual video duration')
+ y=copy.deepcopy(x);y['assets'][0]['source']='changed source';test('source changes invalidate audiovisual review',y,root,'delivery','stale audio/shotbook')
+ y=copy.deepcopy(x);y['assets'][0]['file']='p.png';test('asset file changes invalidate its content approval',y,root,'delivery','stale/missing asset sha256')
+ y=copy.deepcopy(x);y['assets'][0]['sha256']='0'*64;test('missing or stale asset hash blocks delivery',y,root,'delivery','stale/missing asset sha256')
  print(f'{count} checks passed; all media fixtures were generated only in the temporary directory')

@@ -34,7 +34,8 @@
         "scope": "",
         "credit": ""
       },
-      "disclosure": ""
+      "disclosure": "",
+      "sha256": ""
     }
   ],
   "shots": [
@@ -46,7 +47,41 @@
       "asset_ids": [
         "A1"
       ],
-      "visual_note": ""
+      "visual_note": "",
+      "shotbook": {
+        "start": 0,
+        "end": 1,
+        "subject": "",
+        "action": "",
+        "framing": "",
+        "claim_support": "",
+        "motion_purpose": "",
+        "beats": [
+          {
+            "at": 0,
+            "trigger_words": "",
+            "attention_subject": "",
+            "action": ""
+          }
+        ],
+        "candidates": [
+          {
+            "source": "",
+            "viewing_note": "",
+            "decision_reason": "",
+            "selected": true,
+            "asset_id": "A1",
+            "source_interval": ""
+          }
+        ],
+        "alternatives_note": "",
+        "keyframe_review": {
+          "status": "pending",
+          "file": "",
+          "sha256": "",
+          "note": ""
+        }
+      }
     }
   ],
   "deliverables": {
@@ -95,6 +130,11 @@
       "status": "pending",
       "note": "",
       "audience_feedback_reference": ""
+    },
+    "shotbook": {
+      "status": "pending",
+      "reviewed_sha256": "",
+      "note": ""
     }
   },
   "narration": {
@@ -103,6 +143,7 @@
     "voice_type": "pending",
     "asset_id": "",
     "disclosure": "",
-    "series_sample_reference": ""
+    "series_sample_reference": "",
+    "audio_sha256": ""
   }
 }
