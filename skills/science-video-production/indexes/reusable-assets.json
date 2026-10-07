@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "catalog": "reusable_assets",
+  "version": "1.0.0",
+  "purpose": "Generic editable examples; project-specific media and rights records stay private.",
+  "entries": [
+    {
+      "id": "leader-arrow-example",
+      "version": "1.0.0",
+      "kind": "graphic",
+      "file": "assets/style/leader-and-arrow.svg",
+      "sha256": "05716a4381e14c7c1a866d7e0b41ab33a8460d3399cf974d67b781c3af56a116",
+      "status": "implementation_example",
+      "source": "Original generic vector constructed for this repository",
+      "rights": {
+        "basis": "original_generic_drawing",
+        "evidence": "Local SVG source contains only authored paths and text; no external image/font file embedded",
+        "scope": "Evaluation and project adaptation; verify font rights and any modified content separately"
+      },
+      "use": "Distinguish undirected object leader from directional arrow",
+      "not_for": "Automatic proof of flow, force, scientific direction or final composition",
+      "approval_scope": "code example only; final transformed placement and motion remain unreviewed"
+    }
+  ]
+}

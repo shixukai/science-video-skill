@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "catalog": "aesthetic_references",
+  "version": "1.0.0",
+  "purpose": "Observation and method reference only; no production asset clearance.",
+  "entries": [
+    {
+      "id": "ordinary-folk-process",
+      "version": "1",
+      "url": "https://www.ordinaryfolk.co/process",
+      "purpose": "Story/design/animation/sound workflow reference",
+      "media_scope": "process page; not a pure-2D clip approval",
+      "viewing_status": "project_review_required",
+      "production_use": "not_granted"
+    },
+    {
+      "id": "moth-cnn-blue",
+      "version": "1",
+      "url": "https://www.moth.studio/projects/cnn-blue",
+      "purpose": "Unified shape, palette and meaningful motion reference",
+      "media_scope": "Select and actually view a relevant 2D interval; not scientific proof",
+      "viewing_status": "project_review_required",
+      "production_use": "not_granted"
+    }
+  ]
+}

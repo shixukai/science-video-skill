@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "owners": [
+    {
+      "id": "topic",
+      "file": "references/topic-contract.md",
+      "owns": [
+        "original-question",
+        "opening-topic",
+        "scope",
+        "coverage"
+      ]
+    },
+    {
+      "id": "science-rights",
+      "file": "references/science-and-rights.md",
+      "owns": [
+        "scientific-evidence",
+        "real-video-provenance",
+        "rights",
+        "disclosure",
+        "catalog-separation"
+      ]
+    },
+    {
+      "id": "production",
+      "file": "references/production-checkpoints.md",
+      "owns": [
+        "stage-gates",
+        "prerequisites",
+        "causal-beats",
+        "whole-episode-roughcut",
+        "platform-procedure",
+        "publication-receipts"
+      ]
+    },
+    {
+      "id": "visual",
+      "file": "references/visual-system.md",
+      "owns": [
+        "style-system",
+        "scientific-color-priority",
+        "full-bleed",
+        "typography-layout",
+        "caption-geometry",
+        "text-deletion-test",
+        "covers"
+      ]
+    },
+    {
+      "id": "voice",
+      "file": "references/voice-reference.md",
+      "owns": [
+        "voice-generation",
+        "voice-transmission",
+        "listening-method"
+      ]
+    },
+    {
+      "id": "shotbook",
+      "file": "references/shotbook.md",
+      "owns": [
+        "shot-records",
+        "motion-card-binding",
+        "candidate-selection",
+        "graphic-records",
+        "version-binding"
+      ]
+    },
+    {
+      "id": "quality",
+      "file": "references/quality-acceptance.md",
+      "owns": [
+        "evidence-criteria",
+        "orientation-arrow-review",
+        "motion-quality",
+        "whole-film-comprehension",
+        "technical-check-limits",
+        "feedback-retest"
+      ]
+    }
+  ]
+}

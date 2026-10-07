@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "id": "bright-nature-series",
+  "version": "1.0.0",
+  "status": "working_baseline_v1",
+  "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
+  "design": {
+    "tokens": "../assets/style/bright-nature.tokens.json",
+    "direction": "清新明亮、通透、色彩鲜明；主体、环境和机制同一纯2D美术体系",
+    "design_board": "project_supplied_private_reference",
+    "design_board_scope": "record actual version, hash and confirmation scope in private project brief"
+  },
+  "medium": {
+    "mechanism": "pure_2d",
+    "real_anchor": "authentic_continuous_video",
+    "real_opening": "preferred_when_relevant",
+    "no_photo_motion_substitution": true
+  },
+  "audio": {
+    "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
+    "speaker": "Serena",
+    "language": "Chinese",
+    "instruct": "自然口语，像认真向朋友解释一个有趣现象。第一句带一点好奇，接着平实讲清因果。不要朗诵腔，不要逐字停顿，句子有轻重变化，普通话清晰。",
+    "runtime_parameters": "Preserve the project's verified parameter record; unspecified values are not inferred.",
+    "reuse_matching_audio": true,
+    "postprocess_example": {
+      "loudnorm": "I=-18:TP=-2:LRA=7",
+      "sample_rate_hz": 48000,
+      "mp3_bitrate_kbps": 192,
+      "status": "optional_example_after_measurement_and_listening"
+    }
+  },
+  "captions": {
+    "canvas": [
+      1080,
+      1920
+    ],
+    "revision": "raise-cumulative-200-v1",
+    "baselines": {
+      "narration": {
+        "original": 1815,
+        "previous": 1715,
+        "target": 1615
+      },
+      "real_footage": {
+        "original": 1890,
+        "previous": 1790,
+        "target": 1690
+      }
+    },
+    "increment_y": -100,
+    "total_y": -200,
+    "apply_once": true,
+    "scale_policy": "Same aspect ratio: multiply vertical values by output_height/1920, record rounding; different layout requires review.",
+    "exclude": "Published or already-approved-for-publication versions are not changed by this setting.",
+    "move_scope": "Captions and tight background only; document any necessary local label reflow."
+  },
+  "delivery": {
+    "canvas": [
+      1080,
+      1920
+    ],
+    "cover_ratios": [
+      "3:4",
+      "4:3"
+    ],
+    "title_max_codepoints": 30,
+    "description_and_tags_max_codepoints": 1000,
+    "platform_count_authoritative": true,
+    "no_friend_mentions": true
+  },
+  "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none."
+}

@@ -1,11 +1,13 @@
 # science-video-skill
 
-用于持续制作面向普通大众的自然现象与生活科学抖音系列。围绕主题相关的合法真实动态视频组织标注、剖面和2D解释；开头优先有实景但不固定位置或秒数。质量按可追溯专业参照、实际导出证据和退回条件检验，不以“精美”或自动分数代替验收。
+面向普通大众自然现象与生活科学的引用式制作Skill。真实锚点是合法连续实拍/观测视频，原理为纯2D；规范采用不代表任何成片已通过或可发布。
 
-- 入口：[science-video-production](skills/science-video-production/SKILL.md)
-- 纸上演练：[天空为什么是蓝色](examples/blue-sky/brief.md)，仅验证工作流，没有拍摄或发布成片
-- 版本：v0.5（保留原题锚点，增加实际开场自问自答、方位结构映射与逐箭头验收记录）
+- [入口与阶段路由](skills/science-video-production/SKILL.md)
+- [视觉设计系统](skills/science-video-production/references/visual-system.md)
+- [当前系列配置](skills/science-video-production/config/series-profile.json)
+- [规则唯一归属](skills/science-video-production/indexes/rule-owners.json)
+- [待拍纸上示例](examples/blue-sky/brief.md)，不是已完成视频
 
-本仓库存放制作规则、可复制模板、少量本地检查工具；不存放未经授权的素材、账号凭据或发布权限。使用时读取入口，复制模板到单集工作目录。它没有自动安装到全局配置，也不代表任何视频已获发布授权。
+本版采用引用式第一版：保留七份责任参考和三个项目模板，项目数值与通用原则分开。私有设计板、媒体、账户和反馈不入公仓；公仓不包含完整艺术素材库，也不自动安装至全局。
 
-本地检查器回归测试：`python tests/test_check_episode.py`（Python 3.11+、ffmpeg、ffprobe）。合成测试文件只在临时目录产生；测试通过不代表任何科普成片已经通过视觉或权利验收。
+验证：`python tests/test_check_episode.py`（Python3.11+、ffmpeg/ffprobe）；`python tests/test_reference_system.py`。前者145项既有包回归，后者验证引用/配置/索引；均不能代替美术、听觉、理解、权利或平台实测。

@@ -1,0 +1,141 @@
+{
+  "colors": {
+    "sky": {
+      "hex": "#A9D4F6",
+      "name": "晴空蓝",
+      "role": "天空与高明度空间"
+    },
+    "cloud": {
+      "hex": "#FFF1D1",
+      "name": "日照云白",
+      "role": "受光面与暖高光"
+    },
+    "sunleaf": {
+      "hex": "#C8D75C",
+      "name": "透光嫩绿",
+      "role": "透光叶与草地亮面"
+    },
+    "meadow": {
+      "hex": "#96AE44",
+      "name": "草甸绿",
+      "role": "大面积植物中间色"
+    },
+    "leaf": {
+      "hex": "#52733D",
+      "name": "叶面绿",
+      "role": "枝叶结构与层次"
+    },
+    "distance": {
+      "hex": "#7C9CBA",
+      "name": "远山蓝",
+      "role": "远景、空气透视"
+    },
+    "shadow": {
+      "hex": "#30483E",
+      "name": "林间暗部",
+      "role": "局部深结构"
+    },
+    "bark": {
+      "hex": "#6C5741",
+      "name": "枝干棕",
+      "role": "树干、岩土结构"
+    },
+    "sun": {
+      "hex": "#D8A532",
+      "name": "明黄强调",
+      "role": "人物衣物、少量焦点"
+    },
+    "ink": {
+      "hex": "#243840",
+      "name": "解释墨色",
+      "role": "文字、箭头与引线"
+    }
+  },
+  "surfaces": {
+    "review": "#FFFBF1",
+    "caption": "#243840",
+    "caption_text": "#FFFBF1",
+    "label": "#FFFBF1"
+  },
+  "accent_exception": {
+    "coral": "#D66B52",
+    "violet": "#7C70B8",
+    "usage": "真实物种特征、花朵或本镜头明确图例；不得无理由大面积替换主色"
+  },
+  "type": {
+    "family": "Noto Sans CJK SC",
+    "source_canvas": [
+      1080,
+      1920
+    ],
+    "title": 72,
+    "caption": 56,
+    "label": 44,
+    "disclosure": 36,
+    "weights": [
+      500,
+      700
+    ],
+    "line_height": 1.25,
+    "font_files_bundled": false
+  },
+  "lines": {
+    "source_canvas": [
+      1080,
+      1920
+    ],
+    "object_structure": 6,
+    "detail": 4,
+    "leader": 3,
+    "arrow_shaft": 6,
+    "arrow_head": 18,
+    "caps": "round",
+    "outline_policy": "Natural objects defined mainly by color/brush edges, not uniform black borders"
+  },
+  "spacing": {
+    "unit": 8,
+    "label_padding": [
+      16,
+      24
+    ],
+    "caption_padding": [
+      20,
+      28
+    ],
+    "caption_radius": 20,
+    "label_radius": 14,
+    "position_source": "config/series-profile.json"
+  },
+  "layer_order": [
+    "artwork",
+    "focus",
+    "leader_or_arrow",
+    "label",
+    "caption"
+  ],
+  "schema_version": 1,
+  "id": "bright-nature-style",
+  "version": "1.0.0",
+  "status": "working_baseline_v1",
+  "scope": "Editable style defaults, not a tested full-scene or motion library.",
+  "color_space": "sRGB preview; video color conversion not performed",
+  "palette_method": "Visual role-based working palette; not a pixel-extraction claim.",
+  "science_color_priority": true,
+  "suggested_scene_ratio": {
+    "status": "adjustable_starting_point",
+    "definition": "白昼自然场景的视觉面积起点，非基准图像素统计；每景按对象与事实调整",
+    "air_and_light": 45,
+    "vegetation": 35,
+    "structure": 15,
+    "emphasis": 5
+  },
+  "not_validated": [
+    "mechanism close-up art",
+    "continuous motion",
+    "audio",
+    "scientific mechanism",
+    "platform-safe area",
+    "real-device readability",
+    "new full scene or character variants"
+  ]
+}
