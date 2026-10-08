@@ -175,5 +175,60 @@ class ReferenceSystemTests(unittest.TestCase):
         registry_path.write_text(json.dumps(registry, ensure_ascii=False))
         self.errors("broken heading link")
 
+    def test_feedback_scope_clauses_keep_their_responsibility_owners(self):
+        """Missing scope/closure references fail; no media scope is inferred."""
+        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
+        contracts = {c["id"]: c for c in registry["failure_contracts"]}
+        owners = {o["id"]: o["file"] for o in json.loads(
+            (self.root / "indexes/rule-owners.json").read_text())["owners"]}
+        routes = [
+            ("V-allowed_stage", "production", "3-阶段推进与代表样", 2),
+            ("V-failure_scope", "quality", "失败后的处理", 1),
+            ("V-regression", "quality", "失败后的处理", 1),
+        ]
+        for ident, owner, anchor, expected_count in routes:
+            clauses = contracts[ident]["clauses"]
+            self.assertEqual(len(clauses), expected_count)
+            for clause in clauses:
+                with self.subTest(contract=ident, digest=clause["quote_sha256"]):
+                    self.assertEqual((clause["file"], clause["anchor"]), (owners[owner], anchor))
+                    p = self.root / owners[owner]
+                    original = p.read_text()
+                    try:
+                        p.write_text(original.replace(clause["quote"], ""))
+                        self.errors("failure clause text missing/stale")
+                    finally:
+                        p.write_text(original)
+        self.assertEqual(m.check(self.root), [])
+
+    def test_feedback_scope_links_fail_even_with_synchronized_quotes(self):
+        registry_path = self.root / "indexes/standard-coverage.json"
+        original_registry = registry_path.read_text()
+        routes = [
+            ("references/production-checkpoints.md", "quality-acceptance.md#失败后的处理"),
+            ("references/quality-acceptance.md", "production-checkpoints.md#3-阶段推进与代表样"),
+            ("references/quality-acceptance.md", "#记录与技术检查"),
+        ]
+        for file, target in routes:
+            with self.subTest(file=file, target=target):
+                p = self.root / file
+                original = p.read_text()
+                self.assertIn("](" + target + ")", original)
+                broken = target.split("#", 1)[0] + "#missing-feedback-scope-target"
+                registry = json.loads(original_registry)
+                try:
+                    p.write_text(original.replace(target, broken))
+                    for contract in registry["failure_contracts"]:
+                        for clause in contract["clauses"]:
+                            if clause["file"] == file and target in clause["quote"]:
+                                clause["quote"] = clause["quote"].replace(target, broken)
+                                clause["quote_sha256"] = hashlib.sha256(clause["quote"].encode()).hexdigest()
+                    registry_path.write_text(json.dumps(registry, ensure_ascii=False))
+                    self.errors("broken heading link")
+                finally:
+                    p.write_text(original)
+                    registry_path.write_text(original_registry)
+        self.assertEqual(m.check(self.root), [])
+
 if __name__ == "__main__":
     unittest.main()
