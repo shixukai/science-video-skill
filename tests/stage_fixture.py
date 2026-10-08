@@ -5,11 +5,12 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts'))
 import stage_checks as gates
 
-def upgrade(data,root):
+def upgrade(data,root,schema='canonical'):
  d=copy.deepcopy(data);root=Path(root)
  d['scope']={'kind':'episode','publication_ready':True}
  d['narration']['status']='ready';d['narration']['language']='zh-CN'
  d['brief']={'audience':'synthetic fixture','one_sentence_answer':'fixture only','must_see_change':'fixture declaration only','out_of_scope':[],'forbidden_misrepresentations':[],'production_class':'R','validation_triggers':[], 'roles':{r:'synthetic software fixture, not an actual reviewer' for r in ('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher')}}
+ d['brief'].update(audience_start={'assumed_knowledge':[],'new_knowledge':['synthetic new premise'],'deferred_knowledge':[]},understanding_targets={goal:'synthetic '+goal for goal in gates.UNDERSTANDING_GOALS},)
  (root/'script.txt').write_text('Synthetic test script only')
  d['narration']['script_file']='script.txt';d['narration']['script_sha256']=gates.file_digest(root/'script.txt')
  for asset in d.get('assets',[]):
@@ -24,6 +25,7 @@ def upgrade(data,root):
  alignment=d['topic_alignment'];alignment['main_scope_ids']=[x['id'] for x in d['topic']['current']['required_scope']]
  steps=[]
  for n,c in enumerate(alignment['coverage']):
+  for old in ('explanation_steps','explanation_type'):c.pop(old,None)
   ident='TEST'+str(n);c['causal_steps']=[{'id':ident,'before':'test initial declaration','change':'test change declaration','after':'test final declaration','handoff':'test declared handoff','shot_ids':c['shot_ids'],'requires_dynamic':True}];steps.append(ident)
  alignment['expression_cards']=[{'id':'CARD'+str(i),'step_ids':[ident],'difficulty':'synthetic relationship difficulty','prerequisites':['synthetic premise already established'],'visual_action':'hold the synthetic anchor and show its connected state change','inferable_outcome':'synthetic test conclusion','misconception':'synthetic possible confusion','boundary':'synthetic simplified model only','uncertain':False} for i,ident in enumerate(steps)]
  qa=d['qa'];sha=qa['reviewed_sha256']['video'];video=d['deliverables']['video']
@@ -66,6 +68,16 @@ def upgrade(data,root):
   qa[name]={'status':'pass','reviewer':'synthetic software fixture, not an actual reviewer','reviewed_at':'2026-01-01T00:00:00Z','note':'synthetic declared internal review only','evidence':'synthetic script/media fixture','reviewed_step_ids':steps[:],'review_scope':'final_export' if final else 'plan'}
   if name.startswith('expression'):qa[name]['expression_card_ids']=[card['id'] for card in alignment['expression_cards']]
   if final:qa[name].update(scope='full_episode',media_sha256=sha,independent_of_generation_context=True,actual_information_only=True)
+ presented={'status':'pass','basis':'presented_work_only','reviewer_kind':'agent','visual_review_capable':True,'audio_review_capable':True,'viewing':viewing('full_episode'),'responsibilities':{role:{'status':'pass','reviewer':'synthetic test','capability':'synthetic, no actual perception','evidence':'test only'} for role in ('explanation','expression')},'understanding_goals':{goal:{'status':'pass','evidence':'synthetic condition evidence'} for goal in gates.UNDERSTANDING_GOALS},'steps':[{'step_id':step['id'],'status':'pass','start':0,'end':1,'shot_ids':step['shot_ids'],'prerequisites_observed':'synthetic premise','relation_observed':'synthetic relation','derivation_observed':'synthetic derivation','boundary_observed':'synthetic boundary','visual_evidence':'synthetic observation','narration_evidence':'synthetic spoken inference','audio_visual_coherence':'synthetic coherent relation','unpresented_assumptions':[],'referent_evidence':{'object':'synthetic visual mapping'}} for coverage in alignment['coverage'] for step in gates.relation_steps(coverage)]}
+ for name in ('explanation_review','expression_review'):
+  qa[name].update(copy.deepcopy(presented))
+  qa[name].pop('responsibilities',None)
+ if schema=='coverage':
+  qa['comprehension']['logic_review']={'status':'pass','basis':'paper_logic','reviewer':'synthetic','capability':'test only','evidence':'synthetic paper logic'}
+  qa['comprehension']['internal_review']=presented
+  for name in ('explanation_logic','expression_plan','explanation_review','expression_review'):qa.pop(name)
+  alignment.pop('expression_cards')
+  d['brief'].update(difficult_step_ids=[],explanation_difficulties=[],no_special_design_reason='synthetic fixture has no specially difficult relation')
  qa['scorecard']={'scores':{k:{'score':4.5,'evidence':'synthetic test only'} for k in ('understanding','art','motion','sound','packaging')},'total':90,'media_sha256':sha}
  qa['release']={'status':'pass','authorization_reference':'synthetic authorization declaration only','authorization_scope':'no actual platform','ai_disclosure_evidence':'test','rights_evidence':'test','covers_exact_bundle':True}
  qa['release']['authorization_status']='pass'
@@ -76,10 +88,15 @@ def upgrade(data,root):
 
 def refresh(d):
  if isinstance(d.get('narration',{}).get('reuse_record'),dict):d['narration']['reuse_record']['audio_sha256']=d['narration'].get('audio_sha256')
- qa=d['qa'];qa['visual_frames']['animation']['context_sha256']=gates.context_sha256(d,'G3')
+ qa=d['qa']
+ for name,gate in (('logic_review','G1'),('internal_review','G5')):
+  if isinstance(qa['comprehension'].get(name),dict):qa['comprehension'][name]['context_sha256']=gates.context_sha256(d,gate)
+ qa['visual_frames']['animation']['context_sha256']=gates.context_sha256(d,'G3')
  if isinstance(qa['visual_frames'].get('finesse'),dict):qa['visual_frames']['finesse'].update(context_sha256=gates.context_sha256(d,'G5'),media_sha256=qa['reviewed_sha256']['video'])
  for name,gate in (('explanation_logic','G1'),('expression_plan','G2'),('explanation_review','G5'),('expression_review','G5')):
   if isinstance(qa.get(name),dict):qa[name]['context_sha256']=gates.context_sha256(d,gate)
  qa['gates']={g:{'status':'passed','reviewer':'synthetic fixture','reviewed_at':'2026-01-01T00:00:00Z','scope':'software test only','context_sha256':gates.context_sha256(d,g),'review_refs':list(gates.REQUIRED_REVIEWS[g]),'evidence':[{'file':d['deliverables']['video'],'sha256':qa['reviewed_sha256']['video']}]} for g in gates.GATES}
+ if 'explanation_logic' not in qa:
+  for record in qa['gates'].values():record['review_refs']=[ref for ref in record['review_refs'] if ref not in ('explanation_logic','expression_plan','explanation_review','expression_review')]
  qa['release']['bundle_sha256']=gates.digest({'deliverables':d['deliverables'],'hashes':qa['reviewed_sha256'],'title':d.get('title'),'description':d.get('description'),'tags':d.get('tags'),'platform':qa['mobile_preview']})
  qa['publication'].update(bundle_sha256=qa['release']['bundle_sha256'],platform=qa['mobile_preview'].get('platform','fixture'),account=qa['mobile_preview'].get('account','fixture'))

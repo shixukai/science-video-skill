@@ -8,7 +8,8 @@
         "original-question",
         "opening-topic",
         "scope",
-        "coverage"
+        "coverage",
+        "explanation-promise-E01"
       ]
     },
     {
@@ -32,7 +33,9 @@
         "platform-procedure",
         "publication-receipts",
         "explanation-structure",
-        "expression-card-design"
+        "expression-card-design",
+        "typed-explanation-path",
+        "explanation-design-E02-E07"
       ]
     },
     {
@@ -66,7 +69,8 @@
         "motion-card-binding",
         "candidate-selection",
         "graphic-records",
-        "version-binding"
+        "version-binding",
+        "explanation-step-media-binding"
       ]
     },
     {
@@ -80,7 +84,10 @@
         "technical-check-limits",
         "feedback-retest",
         "internal-explanation-review",
-        "finesse-evidence"
+        "finesse-evidence",
+        "explanation-review-E08-E12",
+        "internal-explanation-and-expression-review",
+        "optional-audience-feedback-boundary"
       ]
     }
   ]

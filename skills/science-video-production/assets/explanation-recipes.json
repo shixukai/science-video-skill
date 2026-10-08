@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "original_adaptable_recipes_not_media_approval",
-  "purpose": "Concrete expression actions for seven relationships; adapt with actual scientific sources, approved art assets and voice events. No fabricated absolute audio timing.",
+  "purpose": "Concrete expression actions for eight relationships; adapt with actual scientific sources, approved art assets and voice events. No fabricated absolute audio timing.",
   "recipes": [
     {
       "id": "causal",
@@ -118,6 +118,50 @@
         "部件命名不等于解释功能",
         "装饰色不代表真实材质",
         "所省内部细节须不影响核心功能"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "propagation",
+      "relation_type": "propagation",
+      "name": "传播载体、路径与传递",
+      "prerequisites": [
+        "传播载体、起点、路径和要传递的量或影响"
+      ],
+      "fixed": [
+        "对象身份、路径参照、有关介质与条件"
+      ],
+      "changed_or_revealed": [
+        "沿路径传播的状态及不同位置的先后响应"
+      ],
+      "sequence": [
+        "先定位起点、载体与路径",
+        "展示有依据的起始扰动或传递",
+        "沿路径追踪中间状态并保持同一参照",
+        "显示有关方向、延迟及接收端响应",
+        "区分载体运动与能量、信息或扰动的传播"
+      ],
+      "method": "anchored_path_and_successive_response",
+      "scientific_risks": [
+        "波前不自动代表物质沿路径飞出",
+        "画面先后、方向和延迟须有科学依据",
+        "时间压缩和示意颜色须说明其含义"
       ],
       "shotbook_binding": [
         "subject",

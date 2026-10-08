@@ -612,7 +612,7 @@ def check(data, root, stage):
     if comprehension_status == "audience_checked":
         require(nonempty(comprehension.get("audience_feedback_reference")), "qa.comprehension: actual audience feedback reference required")
     elif comprehension_status == "editor_reviewed":
-        notes.append("Comprehension: editorial review only; actual audience understanding remains unverified")
+        notes.append("Comprehension: internal explanation/expression acceptance is distinct from audience research; no population understanding rate is established")
     narration_review = qa.get("narration", {})
     require(isinstance(narration_review, dict) and narration_review.get("review_scope") == "final_export", "qa.narration: final_export listening scope required; short-sample approval does not approve a full episode")
     if stage != "quality":

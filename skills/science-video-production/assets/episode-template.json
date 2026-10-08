@@ -654,7 +654,23 @@
         "media_sha256": "",
         "viewers": [],
         "actual_viewer_count": 0,
-        "notes": ""
+        "notes": "",
+        "viewer_record_format": {
+          "anonymous_id": "",
+          "real_person": false,
+          "not_in_production": false,
+          "no_relevant_training": false,
+          "first_unprompted_normal_watch": false,
+          "watched_current_version": false,
+          "raw_answers": {
+            "answer": "",
+            "relationships": "",
+            "transfer": "",
+            "boundaries": ""
+          },
+          "core_misconceptions": []
+        },
+        "population_rate_claimed": false
       }
     },
     "shotbook": {
@@ -969,7 +985,68 @@
       "scope": "full_episode",
       "media_sha256": "",
       "independent_of_generation_context": false,
-      "actual_information_only": false
+      "actual_information_only": false,
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "full_episode",
+        "devices": [],
+        "tool_capability_limits": []
+      },
+      "understanding_goals": {
+        "answer": {
+          "status": "pending",
+          "evidence": ""
+        },
+        "relationships": {
+          "status": "pending",
+          "evidence": ""
+        },
+        "transfer": {
+          "status": "pending",
+          "evidence": ""
+        },
+        "boundaries": {
+          "status": "pending",
+          "evidence": ""
+        }
+      },
+      "steps": [
+        {
+          "step_id": "STEP1",
+          "status": "pending",
+          "start": null,
+          "end": null,
+          "shot_ids": [
+            "SH1"
+          ],
+          "prerequisites_observed": "",
+          "relation_observed": "",
+          "derivation_observed": "",
+          "boundary_observed": "",
+          "visual_evidence": "",
+          "narration_evidence": "",
+          "audio_visual_coherence": "",
+          "unpresented_assumptions": [],
+          "referent_evidence": {
+            "object": ""
+          }
+        }
+      ],
+      "visual_review_capable": false,
+      "audio_review_capable": false,
+      "basis": "presented_work_only",
+      "reviewer_kind": ""
     },
     "expression_review": {
       "status": "pending",
@@ -984,7 +1061,68 @@
       "scope": "full_episode",
       "media_sha256": "",
       "independent_of_generation_context": false,
-      "actual_information_only": false
+      "actual_information_only": false,
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "full_episode",
+        "devices": [],
+        "tool_capability_limits": []
+      },
+      "understanding_goals": {
+        "answer": {
+          "status": "pending",
+          "evidence": ""
+        },
+        "relationships": {
+          "status": "pending",
+          "evidence": ""
+        },
+        "transfer": {
+          "status": "pending",
+          "evidence": ""
+        },
+        "boundaries": {
+          "status": "pending",
+          "evidence": ""
+        }
+      },
+      "steps": [
+        {
+          "step_id": "STEP1",
+          "status": "pending",
+          "start": null,
+          "end": null,
+          "shot_ids": [
+            "SH1"
+          ],
+          "prerequisites_observed": "",
+          "relation_observed": "",
+          "derivation_observed": "",
+          "boundary_observed": "",
+          "visual_evidence": "",
+          "narration_evidence": "",
+          "audio_visual_coherence": "",
+          "unpresented_assumptions": [],
+          "referent_evidence": {
+            "object": ""
+          }
+        }
+      ],
+      "visual_review_capable": false,
+      "audio_review_capable": false,
+      "basis": "presented_work_only",
+      "reviewer_kind": ""
     }
   },
   "narration": {
@@ -1006,7 +1144,8 @@
       "returned_files": "pending",
       "decode": "pending",
       "evidence": "",
-      "generation": "pending"
+      "generation": "pending",
+      "local_generation": "pending"
     },
     "notes": "",
     "included_audio_files": [],
@@ -1099,8 +1238,19 @@
             "requires_dynamic": true,
             "still_reason": "",
             "relation_type": "",
-            "prerequisites": [],
-            "key_difficulty": true
+            "prerequisites": [
+              ""
+            ],
+            "key_difficulty": true,
+            "before": "",
+            "change": "",
+            "after": "",
+            "key_relation": "",
+            "derivation": "",
+            "boundary": "",
+            "referent_mappings": {
+              "object": ""
+            }
           }
         ]
       }
@@ -1148,7 +1298,9 @@
     "out_of_scope": [],
     "forbidden_misrepresentations": [],
     "production_class": "N",
-    "validation_triggers": [],
+    "validation_triggers": [
+      "new_complex_mechanism"
+    ],
     "roles": {
       "producer": "",
       "science_editor": "",
@@ -1167,6 +1319,20 @@
       "assumed": [],
       "introduced": [],
       "out_of_scope": []
+    },
+    "must_make_understandable": "",
+    "audience_start": {
+      "assumed_knowledge": [],
+      "new_knowledge": [
+        ""
+      ],
+      "deferred_knowledge": []
+    },
+    "understanding_targets": {
+      "answer": "",
+      "relationships": "",
+      "transfer": "",
+      "boundaries": ""
     }
   },
   "design": {

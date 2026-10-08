@@ -56,6 +56,30 @@ class ReferenceSystemTests(unittest.TestCase):
         p = self.root / "third-party/videozero-motion-canvas/TWEENING.md"
         p.write_text(p.read_text() + "\nAltered example\n")
         self.errors("copied external reference hash mismatch")
+    def test_explanation_navigation_required(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d.pop("explanation_standard"))
+        self.errors("E01-E12 explanation navigation")
+    def test_explanation_navigation_duplicate_rejected(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][1].update(id="E01"))
+        self.errors("E01-E12 explanation navigation")
+    def test_explanation_navigation_contract_required(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][0].update(contract_ids=["missing-contract"]))
+        self.errors("explanation navigation contract missing")
+    def test_explanation_navigation_anchor_required(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][0].update(owner_anchor="nonexistent"))
+        self.errors("explanation navigation anchor missing")
+    def test_optional_feedback_cannot_be_mandatory(self):
+        self.edit("config/production-policy.json", lambda d: d["optional_audience_feedback"].update(required=True))
+        self.errors("must not depend on audience")
+    def test_internal_perception_cannot_be_disabled(self):
+        self.edit("config/production-policy.json", lambda d: d["internal_review"].update(actual_full_audio_visual_review_required=False))
+        self.errors("actual full internal audio/visual review required")
+    def test_optional_feedback_cannot_use_synthetic_participants(self):
+        self.edit("config/production-policy.json", lambda d: d["optional_audience_feedback"].update(no_synthetic_participants=False))
+        self.errors("actual participants and authorized recruitment")
+    def test_optional_feedback_cannot_recruit_automatically(self):
+        self.edit("config/production-policy.json", lambda d: d["optional_audience_feedback"].update(no_automatic_external_recruitment=False))
+        self.errors("actual participants and authorized recruitment")
     def test_duplicate_responsibility(self):
         self.edit("indexes/rule-owners.json", lambda d: d["owners"][1]["owns"].append(d["owners"][0]["owns"][0]))
         self.errors("multiple owners")
@@ -128,6 +152,26 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_unreviewed_mapping_cannot_claim_complete(self):
         self.edit("indexes/standard-coverage.json", lambda d: d["rules"][0].update(mapping_status="pending"))
         self.errors("rule semantic mapping unresolved")
+
+    def test_requirement_count_must_match_current_registry(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d.update(rule_count=d["rule_count"] + 1))
+        self.errors("current requirement coverage count missing/duplicate")
+
+    def test_requirement_count_tracks_new_unique_rules(self):
+        def append_rule(registry):
+            rule = copy.deepcopy(registry["rules"][0])
+            rule["id"] = "TEST-unique-current-requirement"
+            registry["rules"].append(rule)
+            registry["rule_count"] = len(registry["rules"])
+        self.edit("indexes/standard-coverage.json", append_rule)
+        self.assertEqual(m.check(self.root), [])
+
+    def test_current_explanation_finesse_voice_rules_cannot_be_removed(self):
+        def remove_rule(registry):
+            registry["rules"] = [r for r in registry["rules"] if r["id"] != "VOICE-execution"]
+            registry["rule_count"] = len(registry["rules"])
+        self.edit("indexes/standard-coverage.json", remove_rule)
+        self.errors("current explanation/finesse/voice coverage missing")
 
     def test_art_handoff_rule_removal_breaks_reference_integrity(self):
         """Deleting an execution boundary must fail structurally, not judge art."""

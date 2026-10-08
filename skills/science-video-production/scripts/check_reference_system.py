@@ -111,6 +111,11 @@ def check(root):
              and policy["optional_audience_feedback"]["required"] is False
              and policy["optional_audience_feedback"]["blocks_production"] is False,
              "internal review must not depend on audience recruitment")
+        need(policy["internal_review"]["actual_full_audio_visual_review_required"] is True,
+             "actual full internal audio/visual review required")
+        need(policy["optional_audience_feedback"]["no_synthetic_participants"] is True
+             and policy["optional_audience_feedback"]["no_automatic_external_recruitment"] is True,
+             "optional feedback must preserve actual participants and authorized recruitment")
         need(policy["quality"]["finesse"]["target_level"] == "L3"
              and policy["quality"]["finesse"]["no_average_override"] is True, "L3 independent dimension target required")
         need(set(policy["listening"]["required_environments"]) == {"headphones", "phone_speaker"}, "dual listening environments required")
@@ -140,6 +145,22 @@ def check(root):
                     end = next((h.start() for h in headings[i+1:] if len(h.group(1)) <= level), len(body))
                     need(quote in body[start:end], "failure clause outside referenced section")
         need(bool(failure_contracts), "precise failure contracts missing")
+        navigation = registry.get("explanation_standard", {})
+        need(navigation.get("status") == "navigation_only" and navigation.get("authority") == "responsibility_body", "explanation navigation must defer to responsibility body")
+        entries = navigation.get("entries", [])
+        need(isinstance(entries, list) and len(entries) == 12 and {e.get("id") for e in entries if isinstance(e, dict)} == {f"E{i:02}" for i in range(1, 13)}, "E01-E12 explanation navigation missing/duplicate")
+        for entry in entries:
+            target = local_path(root, root, entry.get("owner"))
+            need(str(target) in owner_files, "explanation navigation has no canonical owner")
+            heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
+            need(entry.get("owner_anchor") in heads, "explanation navigation anchor missing")
+            contracts = entry.get("contract_ids", [])
+            valid = isinstance(contracts, list) and bool(contracts) and all(isinstance(i, str) and i in failure_contracts for i in contracts)
+            need(valid, "explanation navigation contract missing")
+            if valid:
+                for ident in contracts:
+                    clauses = failure_contracts[ident].get("clauses", [])
+                    need(bool(clauses) and all(c.get("file") == entry.get("owner") and c.get("anchor") == entry.get("owner_anchor") for c in clauses), "explanation navigation contract owner/anchor mismatch")
         rule_ids = []
         for rule in registry["rules"]:
             rule_ids.append(rule["id"])

@@ -2,7 +2,7 @@
 
 状态：选实际G1–G7阶段；版本、当前任务范围、是否暂停/取消及理由：
 制作类R/N/B、关键难点与解释类型、七岗位实际责任人、允许制作/发布范围：
-选题六项按 [制作检查点第1节](../references/production-checkpoints.md#1-先确定观众要看懂的一件事) 填写：主问题及最多一个依赖追问；目标观众与知识起点；一句话答案与理解目标；必须看清的关系或必要变化；必答范围及范围外内容；禁画/误解清单：
+选题六项按 [制作检查点第1节](../references/production-checkpoints.md#1-先确定观众要看懂的一件事) 填写：主问题及必要从属问题、主从关系和必要性（不设固定数量）；目标观众与知识起点；一句话答案与理解目标；必须看清的关系或必要变化；必答范围及范围外内容；禁画/误解清单：
 
 ## 原题与科学
 按 [主题契约](../references/topic-contract.md) 记录原题、问题类型、必答范围、首屏/口播/结尾映射及局部所属范围；复制topic-anchor-template并固定来源/哈希。
@@ -16,7 +16,7 @@
 - 美术参考索引版本与本片实际观看时段；不是素材使用授权：
 - 可用素材/组件索引版本及所用ID/版本/哈希/权利；未取得项：
 - 字幕修订ID、基准画幅、旧/新基线、已应用状态、累计偏移、换分辨率舍入、额外局部避让：
-- 当前声音方案与已有认可范围/实际音轨哈希；本次已确认的千问工程或服务位置、运行入口和用户指示引用；传输目的地和授权覆盖：
+- 当前声音方案与已有认可范围/实际音轨哈希；当前或前文上下文明确指定的千问工程/服务位置、运行入口和指示引用；实际运行环境及传输目的地/授权覆盖（纸面阶段无须另问位置，实际调用前仅补上下文缺失的信息）：
 
 ## 整期草排与逐镜
 按 [制作顺序](../references/production-checkpoints.md) 写原题简短答案、必要前提、每个新增概念用途/可见对应、首遍编辑复述断点；记录逻辑内审、表达方案内审与实际作品内审。
@@ -28,7 +28,7 @@
 ## 实际验收与反馈
 按 [质量验收](../references/quality-acceptance.md) 逐项写对象版本、证据文件/时点、结果与缺项；模板不重复规则正文：
 - 科学/权利：
-- 主题/整片理解（editor_reviewed或真实反馈，已知fail不能覆盖）：
+- 主题/内部解释与表达审查（editor_reviewed不代表真实受众理解率；可选真实反馈单记，已知fail不能覆盖）：
 - 静态美术/完整画幅/文字/方向结构及L3参照差距：
 - 连续动作、全片整合及各自L3证据：
 - 完整音轨/混音/字幕与实际试听范围：
@@ -42,5 +42,19 @@
 实际发送对象/渠道/版本；发布批准覆盖；当前状态（未上传/草稿/已提交未知/审核中/已发布/失败）；成功链接/ID与核验时间；未知查重与下一步：
 
 ## 全标准执行与运营记录
-完整条款责任见 [覆盖索引](../indexes/standard-coverage.json)，H/D及条件按 [策略](../config/production-policy.json)；该索引用于规范维护和定位，不要求每期复制全量条款表；本期在既有阶段记录中保存实际适用结果、有据不适用、证据及缺项/责任/复查。评分、解释/表达内审、L3精美程度、双环境听检、平台实机遮罩、失败历史、对应阶段命令回执保存在episode.qa及所引用私有文件，不复制另一套批准。
+完整条款责任见 [覆盖索引](../indexes/standard-coverage.json)，H/D及条件按 [策略](../config/production-policy.json)；该索引用于规范维护和定位，不要求每期复制全量条款表；本期在既有阶段记录中保存实际适用结果、有据不适用、证据及缺项/责任/复查。评分、解释/表达内审及逐步骤实际证据、可选真实反馈、L3精美程度、双环境听检、平台实机遮罩、失败历史、对应阶段命令回执保存在episode.qa及所引用私有文件，不复制另一套批准。
 [项目台账](project-ledger-template.json) 记录工时/成本/库存/唯一发布/追加任务/真实复盘及1标杆+3机制成果；这些系统里程碑不前置为首条草排条件。
+
+## 解释设计（沿用本页与episode范围记录，不另建批准）
+
+按 [E01](../references/topic-contract.md#e01解释承诺与问题范围)、[E02–E07](../references/production-checkpoints.md#e02e07精制作前的解释设计) 和 [E08–E12内审](../references/quality-acceptance.md#自主解释与表达审查) 记录；已在上方填写的信息直接引用，不重复录证据。
+
+- 主从问题与范围：引用主题锚点及全部 required_scope；每项承诺对应答案和承担解释的段落，结尾如何把现象、关系与答案整合：
+- brief.audience_start：assumed_knowledge（可合理假设）、new_knowledge（本片必须先交代）、deferred_knowledge（范围外）；先建立对象、概念、参照及必要前提：
+- brief.understanding_targets：answer（明确回答）、relationships（关键关系）、transfer（同等难度的小变化或相近情形的判断/区分）、boundaries（条件及示意边界）；每项对应本片已提供的信息，不要求收集观众回答：
+- topic_alignment.coverage[].explanation_steps：按实际 relation_type 记录完整关系路径、推导、边界、对象映射和镜头承接；所有必答范围有证据，非因果关系不套 before/change/after：
+- topic_alignment.expression_cards：关键难点四项 difficulty / prerequisites / visual_action / inferable_outcome，加 misconception、boundary、step_ids、uncertain；uncertain=true 才做低成本 variants 与基于解释效果的 selection。已有 brief.explanation_difficulties 可按兼容映射归一，不要求再填另一套卡：
+- G1相对阶段计划：无音轨时填具体相对语义阶段/观察任务和待补项；进入G2前取得实际音轨、确定真实时点并完整看听草排：
+- 简化、误导风险与对应镜头：核心关系、类比/图形与对象的映射、必要差异、不适用范围和可复用表达方法的适用条件/失败依据：
+- 内部逻辑审查、实际表达检查及修订证据：qa.explanation_logic / expression_plan / explanation_review / expression_review 引用阶段作品及同一证据；旧 comprehension.logic_review / internal_review 按同职责兼容。G5逐步骤记录实际前提、关系、推导、边界、声画与指代证据及四目标结论，不借作者未呈现知识补空：
+- 可选真实反馈：qa.comprehension.optional_audience_feedback；未收集记 not_run，不阻塞制作。取得时按实际轮次/当前版本保留真实原答及样本范围，已知误解进入修复：

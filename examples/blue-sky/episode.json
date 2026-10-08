@@ -257,7 +257,74 @@
         "media_sha256": "",
         "viewers": [],
         "actual_viewer_count": 0,
-        "notes": ""
+        "notes": "",
+        "population_rate_claimed": false
+      },
+      "logic_review": {
+        "status": "pending",
+        "basis": "paper_logic",
+        "reviewer": "",
+        "capability": "",
+        "evidence": "",
+        "context_sha256": ""
+      },
+      "internal_review": {
+        "status": "pending",
+        "context_sha256": "",
+        "basis": "presented_work_only",
+        "reviewer_kind": "agent",
+        "visual_review_capable": false,
+        "audio_review_capable": false,
+        "viewing": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "full_episode",
+          "devices": [],
+          "tool_capability_limits": []
+        },
+        "responsibilities": {
+          "explanation": {
+            "status": "pending",
+            "reviewer": "",
+            "capability": "",
+            "evidence": ""
+          },
+          "expression": {
+            "status": "pending",
+            "reviewer": "",
+            "capability": "",
+            "evidence": ""
+          }
+        },
+        "understanding_goals": {
+          "answer": {
+            "status": "pending",
+            "evidence": ""
+          },
+          "relationships": {
+            "status": "pending",
+            "evidence": ""
+          },
+          "transfer": {
+            "status": "pending",
+            "evidence": ""
+          },
+          "boundaries": {
+            "status": "pending",
+            "evidence": ""
+          }
+        },
+        "steps": []
       }
     },
     "topic_alignment": {
@@ -570,6 +637,26 @@
       "audio_caption": "",
       "reviewer": "",
       "publisher": ""
-    }
+    },
+    "must_make_understandable": "",
+    "audience_start": {
+      "assumed_knowledge": [],
+      "new_knowledge": [
+        ""
+      ],
+      "deferred_knowledge": []
+    },
+    "understanding_targets": {
+      "answer": "",
+      "relationships": "",
+      "transfer": "",
+      "boundaries": ""
+    },
+    "difficult_step_ids": [
+      "CAUSE1",
+      "CAUSE2"
+    ],
+    "explanation_difficulties": [],
+    "no_special_design_reason": ""
   }
 }

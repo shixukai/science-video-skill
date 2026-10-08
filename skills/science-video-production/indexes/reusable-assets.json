@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "catalog": "reusable_assets",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "purpose": "Generic editable examples; project-specific media and rights records stay private.",
   "entries": [
     {
@@ -23,10 +23,10 @@
     },
     {
       "id": "explanation-recipes",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "kind": "configuration",
       "file": "assets/explanation-recipes.json",
-      "sha256": "f85c0551ab837b082033908550ac1070352589a6face24fa8107834f25b950c5",
+      "sha256": "ab3b641b6940836fe6f28a9f34decb5594a30ac6abd728d51e53a28c779022a6",
       "status": "adaptable_implementation_example",
       "source": "Original relationship recipes authored for this repository",
       "rights": {
@@ -34,7 +34,7 @@
         "evidence": "Local authored JSON; no external media or font embedded",
         "scope": "Project adaptation; actual scientific sources and media rights remain separate"
       },
-      "use": "Design concrete actions for seven relationship types",
+      "use": "Design concrete actions for eight relationship types",
       "not_for": "Scientific evidence, approved art assets, actual audio timestamps or media quality approval",
       "approval_scope": "Expression skeleton only; actual work requires applicable internal review"
     }

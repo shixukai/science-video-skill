@@ -214,7 +214,15 @@
     "final_expression": "qa.expression_review",
     "actual_information_only": true,
     "independent_of_generation_context": true,
-    "real_audience_required": false
+    "real_audience_required": false,
+    "required_for_quality": true,
+    "allowed_reviewers": [
+      "capable_human",
+      "capable_agent"
+    ],
+    "basis": "presented_work_only",
+    "actual_full_audio_visual_review_required": true,
+    "paper_logic_is_not_final_media_review": true
   },
   "optional_audience_feedback": {
     "required": false,
@@ -222,5 +230,15 @@
     "no_synthetic_participants": true,
     "no_automatic_external_recruitment": true,
     "note": "Optional postproduction improvement evidence; no participant count, score or frequency gate; preserve actual responses and scope."
-  }
+  },
+  "review_triggers": [
+    "new_style",
+    "benchmark",
+    "new_complex_mechanism",
+    "major_restructure",
+    "new_concept",
+    "major_change",
+    "routine_sample",
+    "major_modification"
+  ]
 }
