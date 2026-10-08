@@ -60,7 +60,7 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.0.0", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.1.0", "unsupported profile schema/version")
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
@@ -87,6 +87,62 @@ def check(root):
              "starting ratio must sum to 100")
         need("caption_baseline_y" not in tokens["spacing"], "caption position duplicated outside series profile")
         need(tokens["type"]["font_files_bundled"] is False, "font license requires separate verification")
+
+        policy = read("config/production-policy.json")
+        need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
+        need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
+        need(policy["cold_view"]["real_viewers"] == 5 and policy["cold_view"]["no_synthetic_participants"] is True, "real cold-view requirement changed")
+        need(set(policy["listening"]["required_environments"]) == {"headphones", "phone_speaker"}, "dual listening environments required")
+        need(policy["defaults"]["semantic_sync_warning_ms"] == 150, "semantic warning starting point changed")
+        registry = read("indexes/standard-coverage.json")
+        # Exact references prove only integrity, not the semantics or actual execution.
+        failure_contracts = {}
+        for contract in registry.get("failure_contracts", []):
+            ident = contract.get("id")
+            need(isinstance(ident, str) and bool(ident) and ident not in failure_contracts, "failure contract ID missing/duplicate")
+            failure_contracts[ident] = contract
+            need(bool(contract.get("failure_condition")) and bool(contract.get("application")), "specific failure/application condition required")
+            clauses = contract.get("clauses")
+            need(isinstance(clauses, list) and bool(clauses), "precise failure clauses required")
+            for clause in clauses or []:
+                p = local_path(root, root, clause["file"])
+                body = p.read_text(encoding="utf-8")
+                quote = clause.get("quote")
+                valid = isinstance(quote, str) and bool(quote.strip())
+                need(valid and quote in body, "failure clause text missing/stale")
+                need(valid and hashlib.sha256(quote.encode()).hexdigest() == clause.get("quote_sha256"), "failure clause digest inconsistent")
+                headings = list(re.finditer(r"^(#+) (.+)$", body, re.M))
+                matching = [i for i, h in enumerate(headings) if slug(h.group(2)) == clause.get("anchor")]
+                need(bool(matching), "failure clause anchor missing")
+                if matching and valid:
+                    i = matching[0]; start = headings[i].end(); level = len(headings[i].group(1))
+                    end = next((h.start() for h in headings[i+1:] if len(h.group(1)) <= level), len(body))
+                    need(quote in body[start:end], "failure clause outside referenced section")
+        need(bool(failure_contracts), "precise failure contracts missing")
+        rule_ids = []
+        for rule in registry["rules"]:
+            rule_ids.append(rule["id"])
+            failure_ref = rule.get("failure_condition_ref", {})
+            ref_ids = failure_ref.get("contract_ids", [failure_ref.get("contract_id")]) if isinstance(failure_ref, dict) else []
+            need(isinstance(ref_ids, list) and bool(ref_ids) and all(isinstance(i, str) and i in failure_contracts for i in ref_ids) and len(set(ref_ids)) == len(ref_ids), "rule precise failure reference missing")
+            need(rule.get("action") == rule.get("rule") and bool(rule.get("action")), "rule concrete action missing")
+            need(rule.get("mapping_status") in ("verified_semantic_mapping", "source_boundary_or_conditional"), "rule semantic mapping unresolved")
+            need(bool(rule["rule"]) and rule["modality"] in ("hard", "recommended", "default", "conditional", "permission", "boundary"), "invalid standard rule")
+            target = local_path(root, root, rule["owner"])
+            need(str(target) in owner_files, "standard rule has no canonical owner")
+            heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
+            need(rule.get("owner_anchor") in heads, "standard rule anchor missing")
+            need(rule.get("applicability_contract") in registry.get("contracts", {}) and rule.get("failure_contract") in registry.get("contracts", {}), "rule conditions/failure contract missing")
+            need(rule.get("sample_reference") in registry.get("sample_references", {}), "rule sample scope missing")
+            for location in rule.get("evidence_locations", []):
+                evidence_path = local_path(root, root, location["file"])
+                value = json.loads(evidence_path.read_text())
+                for key in re.findall(r"[^.\[\]]+", location["selector"]):
+                    value = value[int(key)] if isinstance(value, list) else value[key]
+        need(len(rule_ids) == 958 and len(set(rule_ids)) == len(rule_ids), "full source requirement coverage missing/duplicate")
+        schema = read("assets/production-asset.schema.json")
+        need(schema["$schema"] == "https://json-schema.org/draft/2020-12/schema", "asset schema version required")
+        need({"name", "category", "approval", "sha256"} <= set(schema["required"]), "formal asset fields missing")
 
         refs = read("indexes/aesthetic-references.json")
         need(refs["catalog"] == "aesthetic_references", "wrong reference catalog")
@@ -130,7 +186,7 @@ def check(root):
                     if anchor and target.is_file() and target.suffix == ".md":
                         heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
                         need(anchor in heads, "broken heading link: " + link)
-    except (KeyError, TypeError, ValueError, OSError, ET.ParseError) as exc:
+    except (KeyError, IndexError, TypeError, ValueError, OSError, ET.ParseError) as exc:
         errors.append("malformed reference system: " + str(exc))
     return errors
 

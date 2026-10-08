@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "status": "not_measured",
+  "period": {
+    "start": null,
+    "end": null,
+    "timezone": "Asia/Shanghai"
+  },
+  "episodes": [],
+  "capacity": {
+    "role_to_person": {},
+    "available_minutes_by_person": {},
+    "sample_size": 0,
+    "median_by_class": {},
+    "conservative_quantiles": {},
+    "conclusion": "not_measured"
+  },
+  "publication_ledger": {
+    "daily_target": null,
+    "actual_unique": null,
+    "gap": null,
+    "approved_unpublished_inventory": null,
+    "additional_request_groups": [],
+    "inventory_start_goal": 10
+  },
+  "platform_snapshots": [],
+  "feedback": [],
+  "rule_regressions": [],
+  "validation_milestones": {
+    "benchmark_episode": null,
+    "different_mechanism_episodes": []
+  },
+  "note": "Private project evidence only; null is unknown, not zero. No scheduling, recruitment, purchase or publication authority.",
+  "record_formats": {
+    "episode": {
+      "episode_id": "",
+      "class": "",
+      "stage_work": [],
+      "stage_work_record_format": {
+        "episode_id": "",
+        "class": "",
+        "stage": "",
+        "actor": "",
+        "active_minutes": null,
+        "machine_minutes": null,
+        "queue_minutes": null,
+        "rework_minutes": null,
+        "cash_cost": null,
+        "currency": "",
+        "cost_allocation_method": ""
+      },
+      "first_full_review_pass": null,
+      "quality_pass_at": null,
+      "actual_published_at": null,
+      "platform": "",
+      "work_id": "",
+      "episode_record_reference": ""
+    },
+    "platform_snapshot": {
+      "episode_id": "",
+      "platform": "",
+      "collected_at": "",
+      "hours_since_publication": null,
+      "field_names_as_platform_shows": {},
+      "denominators": {},
+      "notes": ""
+    },
+    "experiment": {
+      "hypothesis": "",
+      "primary_variable": "",
+      "baseline_version": "",
+      "candidate_version": "",
+      "version_difference": "",
+      "result": "",
+      "evidence": "",
+      "limits": ""
+    },
+    "rule_regression": {
+      "rule_id": "",
+      "reason": "",
+      "actual_failure_evidence": "",
+      "affected_assets": [],
+      "affected_episodes": [],
+      "static_checks": [],
+      "continuous_motion": [],
+      "full_view_listen": [],
+      "decision": "proposed",
+      "actual_commit": "",
+      "approval_reference": "",
+      "proposed_change": "",
+      "version_change": {
+        "from_version": "",
+        "to_version": ""
+      }
+    },
+    "feedback_reference": {
+      "episode_id": "",
+      "feedback_record_reference": ""
+    },
+    "asset_reuse": {
+      "period_start": null,
+      "period_end": null,
+      "asset_id": "",
+      "asset_version": "",
+      "episode_ids": [],
+      "reuse_result": "not_measured",
+      "rework_causes": [],
+      "baseline_rework_minutes": null,
+      "current_rework_minutes": null,
+      "evidence": "",
+      "limits": ""
+    }
+  },
+  "experiments": [],
+  "cost_summary": {
+    "period_total_all_production_cost": null,
+    "includes_failed_work_research_rework": true,
+    "qualified_unique_episodes": null,
+    "unit_cost": null,
+    "zero_denominator_result": "not_applicable",
+    "allocation_method": "",
+    "currency": ""
+  },
+  "notes": "",
+  "template": true,
+  "asset_reuse": []
+}

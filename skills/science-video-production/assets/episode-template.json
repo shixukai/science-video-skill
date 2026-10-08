@@ -9,7 +9,12 @@
       "id": "S1",
       "url": "",
       "accessed_on": "",
-      "note": ""
+      "note": "",
+      "title": "",
+      "publisher": "",
+      "published_at": null,
+      "supported_claim_ids": [],
+      "scope_note": ""
     }
   ],
   "claims": [
@@ -18,7 +23,19 @@
       "text": "",
       "source_ids": [
         "S1"
-      ]
+      ],
+      "kind": "",
+      "source_locator": "",
+      "conditions_and_units": "",
+      "certainty": "",
+      "voice_lines": [],
+      "visual_risk": "",
+      "review": {
+        "status": "pending",
+        "reviewer": "",
+        "evidence": ""
+      },
+      "shot_ids": []
     }
   ],
   "assets": [
@@ -32,10 +49,83 @@
         "status": "pending",
         "evidence": "",
         "scope": "",
-        "credit": ""
+        "credit": "",
+        "license_name": "",
+        "terms_version": "",
+        "commercial_use": null,
+        "adaptation_allowed": null,
+        "platform_scope": [],
+        "attribution_required": null,
+        "generation_tool_terms": "",
+        "voice_or_likeness_consent": "",
+        "checked_at": ""
       },
       "disclosure": "",
-      "sha256": ""
+      "sha256": "",
+      "preview": "",
+      "purpose": "",
+      "not_for": "",
+      "view_angle": "",
+      "anchor_points": [],
+      "design_references": {},
+      "rule_ids": [],
+      "change_history": [],
+      "catalog": {
+        "id": "",
+        "name": "",
+        "category": "",
+        "version": "",
+        "stage": "candidate",
+        "source_file": "",
+        "sha256": "",
+        "rendered_file": "",
+        "rendered_sha256": "",
+        "viewBox": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rules": [],
+        "purpose": "",
+        "not_for": "",
+        "scientific_review": {
+          "status": "pending",
+          "claims": [],
+          "source_ids": [],
+          "conditions": [],
+          "simplifications": []
+        },
+        "rights": {
+          "status": "pending"
+        },
+        "approval": {
+          "status": "pending",
+          "asset_sha256": "",
+          "evidence_ref": "",
+          "scope": "",
+          "reviewer": "",
+          "reviewed_at": ""
+        },
+        "anchor_points": []
+      },
+      "usage": "catalog_reuse",
+      "origin": "",
+      "source_file": "",
+      "source_sha256": "",
+      "scientific_review": {
+        "status": "pending",
+        "reason": ""
+      },
+      "observation": {
+        "source_interval": [],
+        "viewing_reference": "",
+        "capture_time": null,
+        "capture_place": null,
+        "processing_note": ""
+      },
+      "ai_disclosure_required": null,
+      "ai_disclosure_basis": ""
     }
   ],
   "shots": [
@@ -94,28 +184,178 @@
           },
           "graphics": [],
           "no_graphics_reason": "待逐镜清点，尚未验收"
-        }
+        },
+        "initial_state": "",
+        "trigger": "",
+        "key_states": [],
+        "final_state": "",
+        "spatial_anchor": "",
+        "trajectory": "",
+        "speed_and_pause": "",
+        "follow_through": "",
+        "viewer_takeaway": "",
+        "view_angle": "",
+        "transition_reason": "",
+        "return_location": "",
+        "physical_conditions": [],
+        "teaching_simplifications": [],
+        "semantic_events": [],
+        "expected_misconception": "",
+        "acceptance_observation": "",
+        "narration_exact_text": "",
+        "object_ids": [],
+        "attention_target": "",
+        "key_change": "",
+        "on_screen_labels": [],
+        "caption_text": "",
+        "simulation_or_scale_disclosure": "",
+        "sound_design": "",
+        "render_file": "",
+        "render_sha256": "",
+        "status": "pending",
+        "recipe": {
+          "question_type": "",
+          "conditions": "",
+          "skeleton": [],
+          "required_assets": [],
+          "motion_card_reference": "",
+          "semantic_events": [],
+          "science_risks": [],
+          "positive_reference": "",
+          "negative_reference": ""
+        },
+        "motion_id": "",
+        "semantic_event_record_format": {
+          "label": "",
+          "audio_time_ms": null,
+          "visual_time_ms": null,
+          "intentional_offset_reason": ""
+        },
+        "timing_basis": {
+          "mode": "pending",
+          "audio_asset_id": "",
+          "audio_sha256": "",
+          "relative_phases": []
+        },
+        "action_class": "",
+        "action_class_details": {}
       }
     }
   ],
   "deliverables": {
     "video": "",
     "cover_3_4": "",
-    "cover_4_3": ""
+    "cover_4_3": "",
+    "captions": "",
+    "editable_project": "",
+    "audio_stems": "",
+    "source_manifest": "",
+    "post_copy": ""
   },
   "production_statement": "",
   "qa": {
     "science": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "evidence": "",
+      "reviewer": "",
+      "visual_mechanism": {
+        "status": "pending",
+        "evidence": "",
+        "note": ""
+      }
     },
     "rights": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "evidence": "",
+      "reviewer": ""
     },
     "visual_frames": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "failures": [],
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "full_episode",
+        "devices": [],
+        "tool_capability_limits": []
+      },
+      "independent_of_generation_context": false,
+      "animation": {
+        "status": "pending",
+        "context_sha256": "",
+        "reference": "",
+        "reference_viewing_note": "",
+        "scope_note": "",
+        "step_ids": [],
+        "steps": [],
+        "viewing": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "representative"
+        },
+        "captions": {
+          "file": "",
+          "sha256": "",
+          "version": ""
+        },
+        "review_id": ""
+      },
+      "process_steps": [],
+      "review_id": "",
+      "reviewer_kind": "",
+      "tool_capability_limits": [],
+      "approval_scope": "",
+      "failure_record_format": {
+        "id": "",
+        "scope": "",
+        "severity": "",
+        "start": null,
+        "end": null,
+        "note": "",
+        "impact_on_explanation": "",
+        "owner": "",
+        "required_change": "",
+        "status": "open",
+        "resolution": {
+          "scope": "",
+          "sha256": "",
+          "context_sha256": "",
+          "evidence": ""
+        }
+      },
+      "art": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      },
+      "motion": {
+        "status": "pending",
+        "note": "",
+        "evidence": ""
+      }
     },
     "mobile_preview": {
       "status": "pending",
@@ -124,31 +364,155 @@
       "surface": "",
       "platform": "",
       "account": "",
-      "reviewed_metadata_sha256": ""
+      "reviewed_metadata_sha256": "",
+      "phone": {
+        "status": "pending",
+        "surface": "actual_device",
+        "device": "",
+        "app_version": "",
+        "checked_at": "",
+        "video_sha256": "",
+        "actual_overlay_geometry": [],
+        "main_content_visible": false,
+        "captions_visible": false,
+        "audio_checked": false,
+        "screenshot": {
+          "file": "",
+          "sha256": ""
+        },
+        "overlay_coordinate_space": "video_pixels",
+        "canvas": [
+          1080,
+          1920
+        ],
+        "note": ""
+      }
     },
     "audio": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "environments": [],
+      "listening": {
+        "headphones": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "full_episode"
+        },
+        "phone_speaker": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "full_episode"
+        }
+      },
+      "evidence": "",
+      "reviewer": ""
     },
     "covers": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "evidence": "",
+      "reviewer": ""
     },
-    "reviewed_sha256": {},
+    "reviewed_sha256": {
+      "video": "",
+      "cover_3_4": "",
+      "cover_4_3": "",
+      "captions": "",
+      "post_copy": "",
+      "editable_project": "",
+      "audio_stems": "",
+      "source_manifest": ""
+    },
     "narration": {
       "status": "pending",
       "note": "",
-      "review_scope": "pending"
+      "review_scope": "pending",
+      "evidence": "",
+      "reviewer": ""
     },
     "comprehension": {
       "status": "pending",
       "note": "",
-      "audience_feedback_reference": ""
+      "audience_feedback_reference": "",
+      "independent_review_reference": "",
+      "cold_view": {
+        "status": "pending",
+        "media_sha256": "",
+        "viewers": [],
+        "viewer_record_format": {
+          "anonymous_id": "",
+          "real_person": false,
+          "not_in_production": false,
+          "no_relevant_training": false,
+          "first_unprompted_normal_watch": false,
+          "watched_current_version": false,
+          "raw_answers": {
+            "topic": "",
+            "causal_chain": "",
+            "visualization_boundary": "",
+            "conclusion": ""
+          },
+          "scores": {
+            "topic": null,
+            "causal_chain": null,
+            "visualization_boundary": null,
+            "conclusion": null
+          },
+          "scoring_evidence": "",
+          "core_misconceptions": [],
+          "total": null
+        },
+        "test_type": "",
+        "procedure": "unprompted normal-speed first viewing by actual independent non-specialists",
+        "actual_viewer_count": 0,
+        "passing_viewer_count": 0,
+        "shared_core_misconceptions": [],
+        "notes": "",
+        "group_id": "",
+        "sampling_plan_reference": ""
+      },
+      "evidence": "",
+      "reviewer": ""
     },
     "shotbook": {
       "status": "pending",
       "reviewed_sha256": "",
-      "note": ""
+      "note": "",
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "full_roughcut"
+      }
     },
     "topic_alignment": {
       "status": "pending",
@@ -176,6 +540,237 @@
         "status": "pending",
         "note": "",
         "evidence": ""
+      },
+      "note": "",
+      "evidence": ""
+    },
+    "gates": {
+      "G1": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G2": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G3": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G4": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G5": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": [],
+        "note": ""
+      },
+      "G6": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G7": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      }
+    },
+    "scorecard": {
+      "media_sha256": "",
+      "scores": {
+        "understanding": {
+          "score": null,
+          "evidence": ""
+        },
+        "art": {
+          "score": null,
+          "evidence": ""
+        },
+        "motion": {
+          "score": null,
+          "evidence": ""
+        },
+        "sound": {
+          "score": null,
+          "evidence": ""
+        },
+        "packaging": {
+          "score": null,
+          "evidence": ""
+        }
+      },
+      "total": null
+    },
+    "captions": {
+      "status": "pending",
+      "note": "",
+      "evidence": "",
+      "file": "",
+      "sha256": "",
+      "formal_script_version": "",
+      "semantic_errors": [],
+      "nonverbal_cues": [],
+      "phone_preview_reference": "",
+      "actual_contrast_checks": [],
+      "static_checks": {
+        "status": "pending",
+        "evidence": "",
+        "method": "",
+        "covered_checks": [],
+        "not_run_reason": ""
+      },
+      "reviewer": "",
+      "contrast_record_format": {
+        "time": null,
+        "ratio": null,
+        "unrounded": true,
+        "foreground": "",
+        "actual_background": "",
+        "method": "",
+        "evidence": {
+          "file": "",
+          "sha256": ""
+        },
+        "worst_case_review": "",
+        "calibration_reason": ""
+      },
+      "formal_script_sha256": ""
+    },
+    "flicker": {
+      "status": "pending",
+      "note": "",
+      "evidence": "",
+      "designed_flash_limit_checked": false,
+      "continuous_review_reference": "",
+      "complex_sequence_assessment": "",
+      "limitations": "",
+      "reviewer": "",
+      "complex_sequence": null,
+      "complex_sequence_reason": "",
+      "designed_events": []
+    },
+    "release": {
+      "status": "pending",
+      "bundle_sha256": "",
+      "authorization_reference": "",
+      "authorization_scope": "",
+      "covers_exact_bundle": false,
+      "ai_disclosure_evidence": "",
+      "rights_evidence": "",
+      "voice_version": "",
+      "captions_version": "",
+      "cover_versions": {},
+      "copy_version": "",
+      "platform_sync_observed": "",
+      "platform_preview_audio_reference": "",
+      "font_rights_reference": "",
+      "release_id": "",
+      "authorized_by": "",
+      "existing_permission_reused": null,
+      "quality_review_reference": "",
+      "additional_request_group": "",
+      "ai_disclosure": {
+        "status": "pending",
+        "contains_generated_content": null,
+        "applicable_platform_controls_checked": false,
+        "platform_declaration_used": false,
+        "required_provenance_preserved": false,
+        "current_rule_reference": "",
+        "declaration_evidence": "",
+        "not_applicable_reason": ""
+      },
+      "sync": {
+        "preserve_existing_setting": true,
+        "observed_setting": null,
+        "independently_verify_result": false,
+        "result": "not_independently_verified"
+      },
+      "note": "",
+      "post_copy_version": "",
+      "authorization_status": "pending"
+    },
+    "publication": {
+      "status": "pending",
+      "state": "not_submitted",
+      "readback_matches_bundle": false,
+      "work_id": "",
+      "url": "",
+      "actual_published_at": "",
+      "timezone": "Asia/Shanghai",
+      "readback_reference": "",
+      "bundle_sha256": "",
+      "platform": "",
+      "account": "",
+      "attempted_at": null,
+      "readback_at": null,
+      "daily_count_eligible": false,
+      "note": ""
+    },
+    "feedback": [],
+    "technical": {
+      "status": "pending",
+      "note": "",
+      "evidence": ""
+    },
+    "feedback_record_format": {
+      "feedback_id": "",
+      "media_sha256": "",
+      "origin": "",
+      "received_at": "",
+      "original_feedback": "",
+      "scope": "",
+      "time_range_s": [],
+      "affected_assets_or_rules": [],
+      "classification": "",
+      "severity": "",
+      "status": "pending",
+      "owner": "",
+      "what_changes": "",
+      "what_must_remain_unchanged": [],
+      "invalidated_reviews": [],
+      "retest_evidence": [],
+      "resolved_at": null,
+      "skill_update": {
+        "rule_id": "",
+        "proposed_change": "",
+        "actual_commit": "",
+        "deployment_status": "not_deployed",
+        "sample_validation": "pending"
       }
     }
   },
@@ -186,7 +781,35 @@
     "asset_id": "",
     "disclosure": "",
     "series_sample_reference": "",
-    "audio_sha256": ""
+    "audio_sha256": "",
+    "script_file": "",
+    "script_sha256": "",
+    "script_version": "",
+    "config_reference": "",
+    "regenerate_reason": "",
+    "duration_seconds": null,
+    "voice_version": "",
+    "transfer": {
+      "local_generation": "pending",
+      "returned_files": "pending",
+      "decode": "pending",
+      "evidence": ""
+    },
+    "notes": "",
+    "included_audio_files": [],
+    "exact_model_revision_reference": "",
+    "source_listen_review": {
+      "status": "pending",
+      "file": "",
+      "sha256": "",
+      "scope": "source_sample_or_voice_track",
+      "ranges": [],
+      "reviewer": "",
+      "reviewed_at": "",
+      "method": "actual_listening",
+      "heard": false,
+      "evidence": ""
+    }
   },
   "topic": {
     "anchor_file": "topic-anchor.json",
@@ -237,7 +860,21 @@
         "shot_ids": [
           "SH1"
         ],
-        "answer_evidence": ""
+        "answer_evidence": "",
+        "causal_steps": [
+          {
+            "id": "CAUSE1",
+            "before": "",
+            "change": "",
+            "after": "",
+            "handoff": "",
+            "shot_ids": [
+              "SH1"
+            ],
+            "requires_dynamic": true,
+            "still_reason": ""
+          }
+        ]
       }
     ],
     "ending": {
@@ -250,6 +887,80 @@
         "SH1"
       ]
     },
-    "omitted_scope_ids": []
+    "omitted_scope_ids": [],
+    "main_scope_ids": [
+      "R1"
+    ]
+  },
+  "workflow_version": 2,
+  "brief": {
+    "audience": "无相关专业训练的成年普通观众",
+    "one_sentence_answer": "",
+    "must_see_change": "",
+    "out_of_scope": [],
+    "forbidden_misrepresentations": [],
+    "production_class": "N",
+    "validation_triggers": [
+      "new_complex_mechanism"
+    ],
+    "roles": {
+      "producer": "",
+      "science_editor": "",
+      "director": "",
+      "art_animation": "",
+      "audio_caption": "",
+      "reviewer": "",
+      "publisher": ""
+    },
+    "existing_constraints": [],
+    "open_questions_that_block_work": [],
+    "work_can_continue_without_user": [],
+    "notes": ""
+  },
+  "design": {
+    "style_version": "",
+    "tokens_sha256": "",
+    "board_reference": "",
+    "board_sha256": "",
+    "approved_scope": "",
+    "font_version": "",
+    "color_spaces": {
+      "source": "",
+      "working": "",
+      "output": ""
+    },
+    "keyframe_scales": {},
+    "comparison_variants": [],
+    "actual_deviations": [],
+    "approval": {
+      "status": "pending",
+      "reviewer": "",
+      "sha256_map": {},
+      "scope": {
+        "visual_style": false,
+        "named_motion": false,
+        "voice": false,
+        "full_episode": false,
+        "platform_release": false
+      },
+      "actual_feedback_ref": "",
+      "approved_board_sha256": ""
+    },
+    "new_asset_ids": [],
+    "library_reference": {
+      "id": "",
+      "version": "",
+      "sha256": "",
+      "adoption": "reference_only"
+    },
+    "render_asset_ids": []
+  },
+  "template": true,
+  "notes": "",
+  "deliverable_asset_ids": {
+    "cover_3_4": [],
+    "cover_4_3": [],
+    "captions": [],
+    "design": []
   }
 }

@@ -11,6 +11,9 @@ import subprocess
 import sys
 from urllib.parse import urlparse
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids
+
 
 REVIEW_KEYS = ("science", "rights", "visual_frames", "mobile_preview", "audio", "narration", "covers")
 KINDS = {"real_capture", "real_observation", "screen_recording", "simulation", "ai_generated", "graphic", "audio", "font"}
@@ -48,9 +51,9 @@ def canonical_sha256(value):
 def topic_review_sha256(data):
     """Version binding only; neither semantic review nor user authorization."""
     qa = data.get("qa") if isinstance(data.get("qa"), dict) else {}
-    return canonical_sha256({"topic": data.get("topic"), "scope": data.get("scope"),
+    return canonical_sha256({"topic": data.get("topic"), "scope": content_scope(data),
         "alignment": data.get("topic_alignment"), "shots": data.get("shots"),
-        "narration": data.get("narration"), "assets": data.get("assets"),
+        "narration": data.get("narration"), "assets": [a for a in data.get("assets", []) if isinstance(a, dict) and a.get("id") in used_asset_ids(data)],
         "deliverables": data.get("deliverables"), "media_hashes": qa.get("reviewed_sha256")})
 
 
@@ -217,7 +220,16 @@ def check_visual_logic(shots, assets):
 
 
 def check(data, root, stage):
-    errors, notes = [], []
+    if stage in GATES:
+        # Quality reuses actual episode checks; release also reuses the platform path.
+        base = "delivery" if stage in ("G6", "G7") else "quality" if stage == "G5" else "plan"
+        errors, notes = check(data, root, base)
+        if stage not in ("G5", "G6"):
+            errors.extend(check_stage(data, root, stage))
+        notes.append("Stage evidence checks only; no actual viewing, quality or authorization is supplied by the checker")
+        return errors, notes
+    complete = stage in ("delivery", "quality")
+    errors, notes = [], semantic_warnings(data)
 
     def require(ok, message):
         if not ok:
@@ -288,7 +300,7 @@ def check(data, root, stage):
         require(rights.get("status") in ("pending", "cleared", "denied"), f"{ident}: rights status must be pending/cleared/denied")
         if asset.get("kind") in ("simulation", "ai_generated"):
             require(nonempty(asset.get("disclosure")), f"{ident}: simulation/AI disclosure required")
-        if stage == "delivery":
+        if complete and ident in used_asset_ids(data):
             require(rights.get("status") == "cleared", f"{ident}: rights not cleared")
             require(all(nonempty(rights.get(k)) for k in ("evidence", "scope")), f"{ident}: actual rights evidence and allowed scope required")
             asset_file = local_file(asset.get("file"), ident)
@@ -326,7 +338,7 @@ def check(data, root, stage):
         require(narration_id in assets and assets[narration_id].get("kind") == "audio", "narration: asset_id must reference an audio asset")
     if voice_type == "synthetic":
         require(nonempty(narration.get("disclosure")), "narration: synthetic voice disclosure required")
-    if stage == "delivery":
+    if complete:
         require(narration.get("status") == "ready" and voice_type in ("human", "synthetic"), "narration: ready Chinese voiceover required; captions/music alone are incomplete")
         require(nonempty(narration_id), "narration: recorded voiceover asset_id required")
         require(nonempty(narration.get("series_sample_reference")), "narration: first shared series voice sample reference required")
@@ -387,7 +399,7 @@ def check(data, root, stage):
             require(len(chosen) == 1, f"{ident}: exactly one selected primary candidate required")
             if len(candidates) < 2:
                 require(nonempty(book.get("alternatives_note")), f"{ident}: explain unavailable alternatives")
-        if stage == "delivery":
+        if complete:
             keyframe = book.get("keyframe_review", {})
             if not isinstance(keyframe, dict):
                 keyframe = {}
@@ -395,7 +407,7 @@ def check(data, root, stage):
             frame = local_file(keyframe.get("file"), f"{ident} keyframe")
             if frame:
                 require(keyframe.get("sha256") == file_sha256(frame), f"{ident}: stale keyframe review hash")
-    if stage == "delivery":
+    if complete:
         audio = assets.get(narration_id) if isinstance(narration_id, str) else None
         audio_file = local_file(audio.get("file"), "shotbook narration") if audio else None
         if audio_file:
@@ -405,13 +417,14 @@ def check(data, root, stage):
             qa_book = {}
         require(qa_book.get("status") == "pass" and nonempty(qa_book.get("note")), "qa.shotbook: actual representative audiovisual review required")
         require(qa_book.get("reviewed_sha256") == shotbook_sha256(data), "qa.shotbook: stale audio/shotbook context; review again")
-    errors.extend(check_topic(data, root, stage, shots))
-    if stage == "delivery":
+    errors.extend(check_topic(data, root, "delivery" if complete else stage, shots))
+    if complete:
         errors.extend(check_visual_logic(shots, assets))
     if stage == "plan":
         notes.append("PLAN ONLY: no footage, rights, decoding, scientific accuracy or visual/mobile approval is established")
         return errors, notes
 
+    errors.extend(check_stage(data, root, "G5" if stage == "quality" else "G6"))
     require(nonempty(data.get("production_statement")), "actual production_statement required")
     deliverables = data.get("deliverables", {})
     qa = data.get("qa", {})
@@ -422,6 +435,8 @@ def check(data, root, stage):
         require(False, "qa must be an object")
         qa = {}
     for key in REVIEW_KEYS:
+        if stage == "quality" and key == "mobile_preview":
+            continue
         record = qa.get(key, {})
         require(isinstance(record, dict) and record.get("status") == "pass" and nonempty(record.get("note")), f"qa.{key}: actual pass and specific review note required")
     comprehension = qa.get("comprehension", {})
@@ -435,14 +450,15 @@ def check(data, root, stage):
         notes.append("Comprehension: editorial review only; actual audience understanding remains unverified")
     narration_review = qa.get("narration", {})
     require(isinstance(narration_review, dict) and narration_review.get("review_scope") == "final_export", "qa.narration: final_export listening scope required; short-sample approval does not approve a full episode")
-    preview = qa.get("mobile_preview", {})
-    if not isinstance(preview, dict):
-        preview = {}
-    require(preview.get("review_scope") == "target_platform", "qa.mobile_preview: actual target_platform review required")
-    require(preview.get("surface") in ("actual_device", "desktop_platform_preview"), "qa.mobile_preview: surface must distinguish actual_device from desktop_platform_preview; bare players/proxies are insufficient")
-    require(nonempty(preview.get("platform")) and nonempty(preview.get("account")), "qa.mobile_preview: actual platform and account required")
-    preview_hash = platform_metadata_sha256(data, preview)
-    require(preview.get("reviewed_metadata_sha256") == preview_hash, f"qa.mobile_preview: missing/stale preview context hash; current hash {preview_hash}")
+    if stage != "quality":
+        preview = qa.get("mobile_preview", {})
+        if not isinstance(preview, dict):
+            preview = {}
+        require(preview.get("review_scope") == "target_platform", "qa.mobile_preview: actual target_platform review required")
+        require(preview.get("surface") in ("actual_device", "desktop_platform_preview"), "qa.mobile_preview: surface must distinguish actual_device from desktop_platform_preview; bare players/proxies are insufficient")
+        require(nonempty(preview.get("platform")) and nonempty(preview.get("account")), "qa.mobile_preview: actual platform and account required")
+        preview_hash = platform_metadata_sha256(data, preview)
+        require(preview.get("reviewed_metadata_sha256") == preview_hash, f"qa.mobile_preview: missing/stale preview context hash; current hash {preview_hash}")
     reviewed = qa.get("reviewed_sha256", {})
     if not isinstance(reviewed, dict):
         require(False, "qa.reviewed_sha256 must be an object")
@@ -504,7 +520,7 @@ def check(data, root, stage):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path)
-    parser.add_argument("--stage", choices=("plan", "delivery"), required=True)
+    parser.add_argument("--stage", choices=("plan", "delivery", *GATES), required=True)
     args = parser.parse_args()
     try:
         data = json.loads(args.episode.read_text(encoding="utf-8"))

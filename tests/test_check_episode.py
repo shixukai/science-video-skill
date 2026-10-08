@@ -2,6 +2,7 @@
 """Regression checks; generated media are synthetic software fixtures, never an episode."""
 import copy, hashlib, importlib.util, json, subprocess, tempfile
 from pathlib import Path
+from stage_fixture import upgrade, refresh
 PROJECT=Path(__file__).resolve().parents[1]
 p=PROJECT/'skills/science-video-production/scripts/check_episode.py'
 spec=importlib.util.spec_from_file_location('checks',p); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
@@ -9,6 +10,8 @@ plan=json.loads((PROJECT/'examples/blue-sky/episode.json').read_text())
 count=0
 def test(label, data, root, stage, expected=None):
  global count
+ if stage=="delivery" and expected is None:
+  refresh(data)  # Synthetic positive fixture explicitly rebinds amended context.
  errors,notes=mod.check(data,root,stage)
  assert (not errors) if expected is None else any(expected in e for e in errors),(label,errors)
  count+=1;print('PASS',label)
@@ -63,7 +66,21 @@ with tempfile.TemporaryDirectory(prefix='science-video-checks-') as tmp:
  x['qa']['topic_alignment']={'status':'pass','reviewer_role':'independent',**{key:{'status':'pass','note':'synthetic fixture declaration; no media review claimed','evidence':'synthetic fixture only'} for key in ('opening_title','opening_voiceover','coverage','ending')}}
  x['qa']['topic_alignment']['opening_voiceover'].update(review_scope='final_export',heard_question='synthetic question declaration only',heard_answer_route='synthetic answer declaration only')
  x['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(x)
+ x=upgrade(x,root)
+ x['qa']['shotbook']['reviewed_sha256']=mod.shotbook_sha256(x)
+ x['qa']['topic_alignment']['reviewed_sha256']=mod.topic_review_sha256(x)
  test('valid technical fixture dimensions and full decode',x,root,'delivery')
+ test('G5 shares actual full-episode checks',x,root,'G5')
+ test('G6 shares complete delivery/platform checks',x,root,'G6')
+ test('G7 requires matching publication record after delivery',x,root,'G7')
+ y=copy.deepcopy(x);y['qa']['topic_alignment']['status']='fail';test('G5 cannot bypass explicit topic failure',y,root,'G5','actual editorial/independent topic review required')
+ y=copy.deepcopy(x);y['qa']['mobile_preview']['review_scope']='local_player';test('G6 cannot bypass platform review',y,root,'G6','actual target_platform review required')
+ y=copy.deepcopy(x);y['scope']={'kind':'local_sample','parent_episode_id':'fixture','chapter_id':'fixture','purpose':'test','delivery_context':'test','placement':'chapter_only','publication_ready':False};test('G6 cannot release local sample',y,root,'G6','local sample/chapter cannot pass')
+ y=copy.deepcopy(x);y['qa']['science']['status']='editor_reviewed';test('science cannot use comprehension status',y,root,'G5','qa.science')
+ y=copy.deepcopy(x);y['qa']['captions']={'status':'pass'};test('G5 requires actual caption records',y,root,'G5','caption actual note required')
+ y=copy.deepcopy(x);y['qa']['publication']['bundle_sha256']='0'*64;test('G7 rejects mismatched published bundle',y,root,'G7','publication readback bundle mismatch')
+ y=copy.deepcopy(x);y['qa']['publication']['account']='other';test('G7 rejects mismatched readback account',y,root,'G7','publication readback destination mismatch')
+
  for status in ['fail','pending','pass']:
   y=copy.deepcopy(x);y['qa']['comprehension']['status']=status;test(f'comprehension {status} cannot be treated as reviewed delivery',y,root,'delivery','qa.comprehension')
  y=copy.deepcopy(x);y['qa']['comprehension']['status']='audience_checked';test('audience-checked claim needs actual feedback reference',y,root,'delivery','actual audience feedback reference required')

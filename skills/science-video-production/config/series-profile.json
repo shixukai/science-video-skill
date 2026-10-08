@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -69,5 +69,20 @@
     "platform_count_authoritative": true,
     "no_friend_mentions": true
   },
-  "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none."
+  "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none.",
+  "operations": {
+    "timezone": "Asia/Shanghai",
+    "daily_actual_unique_target": 5,
+    "additional_requests_separate": true,
+    "no_schedule_change_from_adoption": true,
+    "platform_sync": {
+      "primary": "douyin",
+      "secondary": "toutiao",
+      "preserve_observed_setting": true,
+      "independent_secondary_verification": false,
+      "unknown_secondary_result_blocks_primary": false,
+      "unverified_result_is_not_success": true,
+      "scope": "current series only; no new platform authority"
+    }
+  }
 }

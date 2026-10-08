@@ -130,7 +130,11 @@
   "deliverables": {
     "video": "",
     "cover_3_4": "",
-    "cover_4_3": ""
+    "cover_4_3": "",
+    "captions": "",
+    "editable_project": "",
+    "audio_stems": "",
+    "source_manifest": ""
   },
   "production_statement": "计划状态：实拍、旁白、字体选择与机制示意均尚未完成；未下载第三方媒体，未生成成片，未上传或发布。正式制作声明须按实际成片重写。",
   "qa": {
@@ -144,7 +148,48 @@
     },
     "visual_frames": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "failures": [],
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "full_episode"
+      },
+      "independent_of_generation_context": false,
+      "animation": {
+        "status": "pending",
+        "context_sha256": "",
+        "reference": "",
+        "reference_viewing_note": "",
+        "scope_note": "",
+        "step_ids": [],
+        "steps": [],
+        "viewing": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "representative"
+        }
+      }
     },
     "mobile_preview": {
       "status": "pending",
@@ -157,7 +202,40 @@
     },
     "audio": {
       "status": "pending",
-      "note": ""
+      "note": "",
+      "environments": [],
+      "listening": {
+        "headphones": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "full_episode"
+        },
+        "phone_speaker": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "full_episode"
+        }
+      }
     },
     "covers": {
       "status": "pending",
@@ -172,7 +250,13 @@
     "comprehension": {
       "status": "pending",
       "note": "",
-      "audience_feedback_reference": ""
+      "audience_feedback_reference": "",
+      "independent_review_reference": "",
+      "cold_view": {
+        "status": "pending",
+        "media_sha256": "",
+        "viewers": []
+      }
     },
     "topic_alignment": {
       "status": "pending",
@@ -201,6 +285,146 @@
         "note": "",
         "evidence": ""
       }
+    },
+    "gates": {
+      "G1": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G2": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G3": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G4": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G5": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G6": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      },
+      "G7": {
+        "status": "not_reviewed",
+        "reviewer": "",
+        "reviewed_at": "",
+        "scope": "",
+        "context_sha256": "",
+        "review_refs": [],
+        "evidence": []
+      }
+    },
+    "shotbook": {
+      "status": "pending",
+      "reviewed_sha256": "",
+      "note": "",
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "full_roughcut"
+      }
+    },
+    "scorecard": {
+      "media_sha256": "",
+      "scores": {
+        "understanding": {
+          "score": null,
+          "evidence": ""
+        },
+        "art": {
+          "score": null,
+          "evidence": ""
+        },
+        "motion": {
+          "score": null,
+          "evidence": ""
+        },
+        "sound": {
+          "score": null,
+          "evidence": ""
+        },
+        "packaging": {
+          "score": null,
+          "evidence": ""
+        }
+      },
+      "total": null
+    },
+    "captions": {
+      "status": "pending",
+      "note": "",
+      "evidence": ""
+    },
+    "flicker": {
+      "status": "pending",
+      "note": "",
+      "evidence": ""
+    },
+    "release": {
+      "status": "pending",
+      "bundle_sha256": "",
+      "authorization_reference": "",
+      "authorization_scope": "",
+      "covers_exact_bundle": false,
+      "ai_disclosure_evidence": "",
+      "rights_evidence": ""
+    },
+    "publication": {
+      "status": "pending",
+      "state": "not_submitted",
+      "readback_matches_bundle": false,
+      "work_id": "",
+      "url": "",
+      "actual_published_at": "",
+      "timezone": "Asia/Shanghai",
+      "readback_reference": ""
     }
   },
   "narration": {
@@ -209,7 +433,10 @@
     "voice_type": "synthetic",
     "asset_id": "A3",
     "disclosure": "中文合成解说",
-    "series_sample_reference": ""
+    "series_sample_reference": "",
+    "script_file": "",
+    "script_sha256": "",
+    "script_version": ""
   },
   "topic": {
     "anchor_file": "topic-anchor.json",
@@ -265,7 +492,21 @@
         "shot_ids": [
           "SH2"
         ],
-        "answer_evidence": "计划示意阳光被空气分子散射；非已制成画面"
+        "answer_evidence": "计划示意阳光被空气分子散射；非已制成画面",
+        "causal_steps": [
+          {
+            "id": "CAUSE1",
+            "before": "",
+            "change": "",
+            "after": "",
+            "handoff": "",
+            "shot_ids": [
+              "SH2"
+            ],
+            "requires_dynamic": true,
+            "still_reason": ""
+          }
+        ]
       },
       {
         "scope_id": "R2",
@@ -273,7 +514,22 @@
           "SH2",
           "SH3"
         ],
-        "answer_evidence": "计划对比波长散射并回到晴朗白天条件；非已验收"
+        "answer_evidence": "计划对比波长散射并回到晴朗白天条件；非已验收",
+        "causal_steps": [
+          {
+            "id": "CAUSE2",
+            "before": "",
+            "change": "",
+            "after": "",
+            "handoff": "",
+            "shot_ids": [
+              "SH2",
+              "SH3"
+            ],
+            "requires_dynamic": true,
+            "still_reason": ""
+          }
+        ]
       }
     ],
     "ending": {
@@ -287,6 +543,31 @@
         "SH3"
       ]
     },
-    "omitted_scope_ids": []
+    "omitted_scope_ids": [],
+    "main_scope_ids": [
+      "R1",
+      "R2"
+    ]
+  },
+  "workflow_version": 2,
+  "brief": {
+    "audience": "无相关专业训练的成年普通观众",
+    "one_sentence_answer": "",
+    "must_see_change": "",
+    "out_of_scope": [],
+    "forbidden_misrepresentations": [],
+    "production_class": "N",
+    "validation_triggers": [
+      "new_complex_mechanism"
+    ],
+    "roles": {
+      "producer": "",
+      "science_editor": "",
+      "director": "",
+      "art_animation": "",
+      "audio_caption": "",
+      "reviewer": "",
+      "publisher": ""
+    }
   }
 }

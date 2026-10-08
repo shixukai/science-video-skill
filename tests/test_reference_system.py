@@ -90,5 +90,18 @@ class ReferenceSystemTests(unittest.TestCase):
         self.errors("malformed")
 
 
+    def test_failure_clause_text_stale(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["failure_contracts"][0]["clauses"][0].update(quote="invented reference text"))
+        self.errors("failure clause text missing/stale")
+    def test_failure_clause_digest_stale(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["failure_contracts"][0]["clauses"][0].update(quote_sha256="0" * 64))
+        self.errors("failure clause digest inconsistent")
+    def test_failure_contract_unresolved(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["rules"][0].update(failure_condition_ref={"contract_id":"unknown"}))
+        self.errors("rule precise failure reference missing")
+    def test_unreviewed_mapping_cannot_claim_complete(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["rules"][0].update(mapping_status="pending"))
+        self.errors("rule semantic mapping unresolved")
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "version": "1.0.0",
+  "status": "adopted_requirements_pending_media_validation",
+  "meaning": "H requirements cannot be offset by scores; D values are internal calibration starting points, not platform or industry standards.",
+  "gates": {
+    "order": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "G7"
+    ],
+    "statuses": [
+      "not_reviewed",
+      "needs_changes",
+      "passed",
+      "cancelled"
+    ],
+    "evidence_owner": "episode.qa.gates",
+    "no_automatic_promotion": true
+  },
+  "quality": {
+    "weights": {
+      "understanding": 30,
+      "art": 25,
+      "motion": 25,
+      "sound": 15,
+      "packaging": 5
+    },
+    "scale": [
+      0,
+      5
+    ],
+    "step": 0.5,
+    "routine_total_min": 85,
+    "benchmark_total_min": 90,
+    "routine_min_scores": {
+      "understanding": 4,
+      "art": 4,
+      "motion": 4,
+      "sound": 4,
+      "packaging": 3
+    },
+    "benchmark_min_scores": {
+      "understanding": 4,
+      "art": 4,
+      "motion": 4,
+      "sound": 4,
+      "packaging": 4
+    },
+    "classification": "D: internal starting thresholds; recorded calibration requires evidence; no hard-gate override"
+  },
+  "cold_view": {
+    "required_for": [
+      "new_style",
+      "benchmark",
+      "new_complex_mechanism",
+      "major_restructure",
+      "new_concept",
+      "major_change",
+      "routine_sample",
+      "major_modification"
+    ],
+    "real_viewers": 5,
+    "min_passing": 4,
+    "item_max": {
+      "topic": 1,
+      "causal_chain": 2,
+      "visualization_boundary": 1,
+      "conclusion": 1
+    },
+    "individual_min": 4,
+    "causal_required": 2,
+    "shared_misconception_fail_count": 2,
+    "routine_weekly_sample_start": 2,
+    "no_synthetic_participants": true,
+    "no_automatic_external_recruitment": true,
+    "note": "Five actual independent first viewers are a formative sample, not a population understanding-rate estimate; never simulate participants."
+  },
+  "listening": {
+    "required_environments": [
+      "headphones",
+      "phone_speaker"
+    ],
+    "normal_speed_complete_final_export": true
+  },
+  "defaults": {
+    "output": {
+      "width": 1080,
+      "height": 1920,
+      "fps": 30,
+      "constant_frame_rate": true,
+      "color": "SDR Rec.709",
+      "container": "mp4",
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "audio_sample_rate": 48000,
+      "video_bitrate_mbps": [
+        12,
+        20
+      ],
+      "audio_bitrate_kbps": [
+        192,
+        256
+      ]
+    },
+    "mix": {
+      "lufs": -16,
+      "tolerance_lu": 1,
+      "true_peak_dbtp": -1.5,
+      "priority": "calibration suggestion only; preserve accepted voice/config and measure final encode"
+    },
+    "speech_cjk_per_minute": [
+      220,
+      270
+    ],
+    "caption_chars_per_line": [
+      12,
+      14
+    ],
+    "text_contrast_min": 4.5,
+    "semantic_sync_warning_ms": 150,
+    "motion_ms": {
+      "scale_transition": [
+        600,
+        1000
+      ],
+      "observation": [
+        800,
+        1600
+      ],
+      "localization_and_label_group": [
+        160,
+        320
+      ],
+      "note": "Group range160–320ms; tokens split attention160–280 and label180–320. Internal adaptable starts, not physical timing rules."
+    },
+    "texture_opacity": [
+      0.02,
+      0.04
+    ],
+    "platform_inset_trial_px": {
+      "top": 160,
+      "right": 180,
+      "bottom": 360,
+      "left": 72,
+      "status": "provisional_nonofficial_requires_actual_device_preview"
+    },
+    "legacy_caption_rect_reference": {
+      "x": 72,
+      "y": 1390,
+      "width": 828,
+      "height": 160,
+      "effective": false,
+      "reason": "current series baseline and actual glyph-tight backing take precedence; rectangle top is not text baseline"
+    }
+  },
+  "flicker": {
+    "no_designed_flashes_over_three_in_one_second": true,
+    "below_count_is_not_safety_proof": true,
+    "complex_sequences_require_full_time_review": true
+  },
+  "capacity": {
+    "classes": [
+      "R",
+      "N",
+      "B"
+    ],
+    "initial_timing_records": 10,
+    "calibration_after": 20,
+    "new_experiment_wip_start_limit": 2,
+    "routine_batch_start": 5,
+    "approved_unpublished_inventory_start_goal": 10,
+    "overloaded_batches_before_replan": 2,
+    "daily_target_is_not_capacity_proof": true,
+    "no_schedule_changes": true
+  },
+  "retrospective": {
+    "snapshot_hours_start": [
+      24,
+      72,
+      168
+    ],
+    "match_platform_duration_topic_context": true,
+    "no_automatic_monitor_creation": true
+  },
+  "adoption_validation": {
+    "benchmark_full_episodes": 1,
+    "different_mechanism_replications": 3,
+    "documents_and_assets_alone_not_system_completion": true
+  },
+  "precedence": {
+    "caption_geometry": "series-profile.json captions; does not adopt legacy y=1390",
+    "art_direction": "series-profile.json design and approved project board; supplied base assets are reference only",
+    "voice": "series-profile.json audio; no forced regeneration or rate adjustment",
+    "real_anchor": "series-profile.json medium; authentic dynamic footage remains required"
+  },
+  "source_metadata": {
+    "manual_version": "1.0",
+    "visual_version": "0.1.0",
+    "date": "2026-10-07",
+    "package_status": "proposed_not_deployed",
+    "note": "Historical source package status; current adopted policy status is separate."
+  },
+  "purpose": "Production and publication evidence requirements, not a film approval or authority to act externally.",
+  "limitations": [
+    "Structure and technical checks do not establish comprehension, art, motion or sound quality.",
+    "Missing actual perception or evidence stays unreviewed.",
+    "This policy performs no publishing, purchasing or external repository action."
+  ]
+}

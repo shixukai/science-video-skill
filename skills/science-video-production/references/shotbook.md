@@ -52,3 +52,32 @@
 - OpenMontage [素材选择](https://github.com/calesthio/OpenMontage/blob/main/skills/pipelines/documentary-montage/asset-director.md)与[剪辑组织](https://github.com/calesthio/OpenMontage/blob/main/skills/pipelines/documentary-montage/edit-director.md)：关注逐镜需求、候选实看和素材可追溯性
 - [剪映编辑技能](https://github.com/luoluoluo22/jianying-editor-skill)：仅参考可编辑分轨交付思路，未作兼容性验证
 - [Seedance 技能](https://github.com/dexhunter/seedance2-skill)：仅参考素材角色与分时段动作描述
+
+## 动作卡、镜头配方与事件复核
+
+动作卡八项落实在现有shotbook：对象/锚点、初态、触发、关键变化、终态、轨迹、快慢/观察停顿、观众学到什么；补物理条件、教学简化、关键姿态、口播事件和实际音轨hash。不同机制不套万能弹性曲线；路径、方向、约束、遮挡或观察条件变化可以是实质机制，不强求形变。关键图另说明视角、注意中心、动作路径、字幕区和比例变化。
+
+复用配方记录问题类型、条件、镜头骨架、资产、动作卡、口播事件、科学风险与正反例：整体→局部→整体需同一对象回程；前态→触发→后态保留中间变化；同条件对照只改有关变量；传播→响应核起因/方向/延迟，波前不冒作物质飞出；剖面先建立外形和剖切关系再恢复整体。无声网页演示/相对时间只是候选，不能抵G3，也不能预填未生成音轨的绝对时码。
+
+定位/标签、尺度切换、观察停顿等D时序见制作策略，按任务校准，不机械统一。语义事件实际音频时点与画面时点差超过150ms先标复核警告；提前预备/反应镜头写理由并实际看，不自动判错或自动忽略。
+
+每片保存可恢复的简报、来源、脚本、分镜、设计/资产、原声/混音分轨、事件时码、字幕、样片/候选/发布版、审查、授权/平台回执与反馈。目录可适配现项目，信息不能漏。命名含集/剪辑/音轨/画幅版本，不用final_final_latest；字幕、封面、文案独立hash。改稿使事实/理解/旁白/字幕/相关镜头失效，改音轨使听检/同步/完整片失效，改布局使视觉/字幕/平台失效，改封面文案使包装和相关授权失效。视频任何字节变动需重新绑定并重审相关最终项目。
+
+### 按动作类别补充信息
+
+仅对本镜实际采用的类别填写 `shotbook.action_class` 与 `action_class_details`，复用已有对象、锚点、trigger/key_states/trajectory等字段，不要求每镜全填五类：
+- 定位与标签：appearance_condition（出现条件）、follow_target（跟随目标）、hold_duration（停留）
+- 尺度切换：original_object、spatial_anchor、local_frame（局部取景框及坐标基准）、return_location；明确同一对象进出关系
+- 对象形变：topology_states（可对应的同拓扑关键态）、fixed_boundary、sliding_boundary、trajectory；逐机制设计，不把所有对象统一弹跳，也不为工具限制改变科学机制
+- 传播与变化：cause、origin、direction、delay、end_state；解释动画与实拍一样，若作教学慢放，从第一次使用就清楚提示时间缩放，不等结尾补说明
+- 观察停顿：learning_task与duration，实际停留由理解任务决定
+
+`timing_basis`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。
+
+库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。
+
+开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前适用完整责任正文、固定版本配置/tokens与实际资产清单，再登记本片引用。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。
+
+如果采用雷声机制配方，另读 [条件式完整示例](../assets/examples/thunder-brief.md)，保留其具体禁画、首次慢放即披露和未制作状态；其他题材不因此强制讲雷声，也不恢复被取消题材。
+
+实际依赖统一按资产ID解析：design.font_asset_id和design.render_asset_ids是代表段及成片共用依赖，逐镜asset_ids保留该镜范围，deliverable_asset_ids按产物记录列表。代表段连同其字幕与三尺度设计实际依赖参与权利检查及版本绑定；未使用的后续素材不使当前代表段过期。所有依赖必须类型正确且能解析，不能将非法字段当空列表略过。
