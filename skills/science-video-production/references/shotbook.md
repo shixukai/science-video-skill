@@ -45,7 +45,7 @@
 
 使用参考图/视频辅助生成时，为每份参考明确“对象身份、结构事实、风格、动作或构图”的角色，按时间段写对象动作及保持不变的关系。参考角色不能混用，生成结果仍逐镜审查。不要把任何示例中的健康/科学断言或某模型当时的时长、分辨率、价格写成永久制作规则。
 
-以下仅是工作方法的阅读来源；本文和检查逻辑为本项目独立编写，没有引入其代码、提示词全文或许可证，也不表示可无条件复用这些项目：
+以下是工作方法来源，本文及检查逻辑为本项目独立编写。逐项许可、固定版本、实际采用点及条件式技术引用见 [外部技能选型](video-skills-curation.md)；这些链接不授予不受限的复制或素材使用权：
 
 - [Talkcraft](https://github.com/Vincentwei1021/video-talkcraft/blob/main/SKILL.md)：关注成品音频、语义拍及注意力对象
 - [Vox Director](https://github.com/Alisa0808/vox-director/blob/main/SKILL.md)：关注先关键帧后分层运动
@@ -65,14 +65,14 @@
 
 ### 按动作类别补充信息
 
-仅对本镜实际采用的类别填写 `shotbook.action_class` 与 `action_class_details`，复用已有对象、锚点、trigger/key_states/trajectory等字段，不要求每镜全填五类：
-- 定位与标签：appearance_condition（出现条件）、follow_target（跟随目标）、hold_duration（停留）
-- 尺度切换：original_object、spatial_anchor、local_frame（局部取景框及坐标基准）、return_location；明确同一对象进出关系
-- 对象形变：topology_states（可对应的同拓扑关键态）、fixed_boundary、sliding_boundary、trajectory；逐机制设计，不把所有对象统一弹跳，也不为工具限制改变科学机制
-- 传播与变化：cause、origin、direction、delay、end_state；解释动画与实拍一样，若作教学慢放，从第一次使用就清楚提示时间缩放，不等结尾补说明
-- 观察停顿：learning_task与duration，实际停留由理解任务决定
+仅对本镜实际采用的类别填写 `shotbook.action_class`（去重列表）与 `action_class_details`（按类别键组织），复用已有对象、锚点、trigger/key_states/trajectory等字段，不要求每镜全填五类：
+- localization_and_label（定位与标签）：appearance_condition（出现条件）、follow_target（跟随目标）、hold_duration（停留）
+- scale_transition（尺度切换）：original_object、spatial_anchor、local_frame（局部取景框及坐标基准）、return_location；明确同一对象进出关系
+- deformation（对象形变）：topology_states（可对应的同拓扑关键态）、fixed_boundary、sliding_boundary、trajectory；逐机制设计，不把所有对象统一弹跳，也不为工具限制改变科学机制
+- propagation_and_change（传播与变化）：cause、origin、direction、delay、end_state；解释动画与实拍一样，若作教学慢放，从第一次使用就清楚提示时间缩放，不等结尾补说明
+- observation（观察停顿）：learning_task与duration，实际停留由理解任务决定
 
-`timing_basis`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。
+`timing_basis.mode`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；正式动作方案还记录note说明其语义依据；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。
 
 库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。
 
@@ -81,3 +81,9 @@
 如果采用雷声机制配方，另读 [条件式完整示例](../assets/examples/thunder-brief.md)，保留其具体禁画、首次慢放即披露和未制作状态；其他题材不因此强制讲雷声，也不恢复被取消题材。
 
 实际依赖统一按资产ID解析：design.font_asset_id和design.render_asset_ids是代表段及成片共用依赖，逐镜asset_ids保留该镜范围，deliverable_asset_ids按产物记录列表。代表段连同其字幕与三尺度设计实际依赖参与权利检查及版本绑定；未使用的后续素材不使当前代表段过期。所有依赖必须类型正确且能解析，不能将非法字段当空列表略过。
+
+### 无音轨的 G1 纸面计划
+
+`plan` / G1 可用 `timing_basis.mode=relative_plan`，填写具体的 `relative_phases` 和 `note`，说明先后语义阶段、观察任务以及真实时点尚待音轨确定。`start`、`end` 留 null 或省略；若有计划语义拍，`beats[].at` 留 null，另写具体 `phase`、拟用触发词、注意对象和动作，也可暂用空 `beats`。不要把尚未合成的拟用口播标成无声镜。
+
+尚未制作或取得媒体时，`candidates=[]` 并在 `alternatives_note` 写具体待选需求和当前缺项；模板候选仅是字段示例，未查看时应删除，不能填写虚构的观看或入选记录。这些计划不证明媒体、声音、权利或视觉质量通过。进入 G2 前须取得实际工作音轨，将相对阶段转为实际秒数、对齐语义拍并完成素材实看记录；`relative_plan` 不能通过 G2 及后续阶段。

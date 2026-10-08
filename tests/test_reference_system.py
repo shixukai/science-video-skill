@@ -31,6 +31,31 @@ class ReferenceSystemTests(unittest.TestCase):
         self.assertTrue(any(text in e for e in m.check(self.root)), m.check(self.root))
     def test_clean_system(self):
         self.assertEqual(m.check(self.root), [])
+    def test_audience_cannot_be_restored_as_production_requirement(self):
+        self.edit("config/production-policy.json", lambda d: d["internal_review"].update(real_audience_required=True))
+        self.errors("must not depend on audience")
+    def test_global_profile_cannot_force_a_local_execution_location(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"].update(backend="local_qwen"))
+        self.errors("confirmed at invocation")
+    def test_voice_location_needs_confirmation_before_execution(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"]["execution_policy"].update(confirmation_required=False))
+        self.errors("invocation confirmation policy")
+    def test_voice_location_must_not_create_a_new_environment_automatically(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"]["execution_policy"].update(auto_create_environment=True))
+        self.errors("invocation confirmation policy")
+    def test_moving_model_revision_is_not_a_fixed_default(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"]["local_adapter_example"].update(model_revision="main"))
+        self.errors("optional local adapter fixed revision")
+    def test_aesthetic_average_cannot_replace_dimension_completion(self):
+        self.edit("config/production-policy.json", lambda d: d["quality"]["finesse"].update(no_average_override=False))
+        self.errors("independent dimension target")
+    def test_external_sources_are_immutable(self):
+        self.edit("indexes/external-skills.json", lambda d: d["entries"][0].update(commit="main"))
+        self.errors("immutable commit")
+    def test_modified_copied_reference_needs_explicit_update(self):
+        p = self.root / "third-party/videozero-motion-canvas/TWEENING.md"
+        p.write_text(p.read_text() + "\nAltered example\n")
+        self.errors("copied external reference hash mismatch")
     def test_duplicate_responsibility(self):
         self.edit("indexes/rule-owners.json", lambda d: d["owners"][1]["owns"].append(d["owners"][0]["owns"][0]))
         self.errors("multiple owners")

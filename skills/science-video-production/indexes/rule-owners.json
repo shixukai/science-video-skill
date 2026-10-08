@@ -28,10 +28,11 @@
       "owns": [
         "stage-gates",
         "prerequisites",
-        "causal-beats",
         "whole-episode-roughcut",
         "platform-procedure",
-        "publication-receipts"
+        "publication-receipts",
+        "explanation-structure",
+        "expression-card-design"
       ]
     },
     {
@@ -44,7 +45,8 @@
         "typography-layout",
         "caption-geometry",
         "text-deletion-test",
-        "covers"
+        "covers",
+        "finesse-positive-criteria"
       ]
     },
     {
@@ -76,7 +78,9 @@
         "motion-quality",
         "whole-film-comprehension",
         "technical-check-limits",
-        "feedback-retest"
+        "feedback-retest",
+        "internal-explanation-review",
+        "finesse-evidence"
       ]
     }
   ]

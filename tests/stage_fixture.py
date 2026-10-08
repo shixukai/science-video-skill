@@ -18,11 +18,14 @@ def upgrade(data,root):
    asset.setdefault('rights',{})['status']='cleared'
    asset['sha256']=gates.file_digest(root/asset['file'])
  audio=next((a for a in d.get('assets',[]) if a.get('id')==d['narration'].get('asset_id')),None)
- if audio:d['narration']['audio_sha256']=gates.file_digest(root/audio['file'])
+ if audio:
+  d['narration']['audio_sha256']=gates.file_digest(root/audio['file'])
+  d['narration']['reuse_record']={'status':'previously_accepted','reference':'synthetic test declaration only, not real acceptance','audio_sha256':d['narration']['audio_sha256']}
  alignment=d['topic_alignment'];alignment['main_scope_ids']=[x['id'] for x in d['topic']['current']['required_scope']]
  steps=[]
  for n,c in enumerate(alignment['coverage']):
   ident='TEST'+str(n);c['causal_steps']=[{'id':ident,'before':'test initial declaration','change':'test change declaration','after':'test final declaration','handoff':'test declared handoff','shot_ids':c['shot_ids'],'requires_dynamic':True}];steps.append(ident)
+ alignment['expression_cards']=[{'id':'CARD'+str(i),'step_ids':[ident],'difficulty':'synthetic relationship difficulty','prerequisites':['synthetic premise already established'],'visual_action':'hold the synthetic anchor and show its connected state change','inferable_outcome':'synthetic test conclusion','misconception':'synthetic possible confusion','boundary':'synthetic simplified model only','uncertain':False} for i,ident in enumerate(steps)]
  qa=d['qa'];sha=qa['reviewed_sha256']['video'];video=d['deliverables']['video']
  if not any(a.get('kind') in ('real_capture','real_observation') for a in d.get('assets',[])):
   d['assets'].append({'id':'REAL_FIXTURE','kind':'real_capture','source':'synthetic software declaration, not actual footage','creator':'test harness','file':video,'sha256':sha,'rights':{'status':'cleared','evidence':'synthetic test only','scope':'software test only'},'observation':{'source_interval':[0,1],'viewing_reference':'synthetic, not an actual observation'}})
@@ -46,6 +49,9 @@ def upgrade(data,root):
  qa['visual_frames']['animation']['captions']={'file':d['deliverables']['captions'],'sha256':qa['reviewed_sha256']['captions'],'version':'fixture'}
  qa['visual_frames']['art']={'status':'pass','note':'synthetic only','evidence':'fixture'}
  qa['visual_frames']['motion']={'status':'pass','note':'synthetic only','evidence':'fixture'}
+ qa['visual_frames']['finesse']={'status':'pass','target_level':'L3','reference':'fixture scoped reference','reference_note':'software fixture only','media_sha256':sha}
+ for dimension,prefix,count in (('static','A',10),('motion','D',8),('integration','I',5)):
+  qa['visual_frames']['finesse'][dimension]={'level':'L3','note':'synthetic software fixture only','evidence':'synthetic fixture declaration','criteria':[{'id':prefix+str(i).zfill(2),'status':'pass','note':'synthetic fixture only','evidence':'synthetic fixture declaration'} for i in range(1,count+1)]}
  qa['science']['visual_mechanism']={'status':'pass','note':'synthetic only','evidence':'fixture'}
  qa.setdefault('topic_alignment',{'status':'pass','note':'synthetic only','evidence':'fixture'})
  qa['topic_alignment'].setdefault('note','synthetic only')
@@ -55,6 +61,11 @@ def upgrade(data,root):
  qa['flicker'].update(designed_flash_limit_checked=True,continuous_review_reference='synthetic only',complex_sequence=False,complex_sequence_reason='synthetic no flash',designed_events=[])
  qa['mobile_preview'].update(phone={'status':'pass','surface':'actual_device','device':'synthetic fixture','app_version':'fixture','checked_at':'2026-01-01','video_sha256':sha,'canvas':[48,64],'overlay_coordinate_space':'video_pixels','actual_overlay_geometry':[{'x':0,'y':0,'width':1,'height':1}],'main_content_visible':True,'captions_visible':True,'audio_checked':True,'screenshot':{'file':video,'sha256':sha}})
  qa['comprehension']['independent_review_reference']='synthetic software declaration'
+ for name,gate in (('explanation_logic','G1'),('expression_plan','G2'),('explanation_review','G5'),('expression_review','G5')):
+  final=gate=='G5'
+  qa[name]={'status':'pass','reviewer':'synthetic software fixture, not an actual reviewer','reviewed_at':'2026-01-01T00:00:00Z','note':'synthetic declared internal review only','evidence':'synthetic script/media fixture','reviewed_step_ids':steps[:],'review_scope':'final_export' if final else 'plan'}
+  if name.startswith('expression'):qa[name]['expression_card_ids']=[card['id'] for card in alignment['expression_cards']]
+  if final:qa[name].update(scope='full_episode',media_sha256=sha,independent_of_generation_context=True,actual_information_only=True)
  qa['scorecard']={'scores':{k:{'score':4.5,'evidence':'synthetic test only'} for k in ('understanding','art','motion','sound','packaging')},'total':90,'media_sha256':sha}
  qa['release']={'status':'pass','authorization_reference':'synthetic authorization declaration only','authorization_scope':'no actual platform','ai_disclosure_evidence':'test','rights_evidence':'test','covers_exact_bundle':True}
  qa['release']['authorization_status']='pass'
@@ -64,7 +75,11 @@ def upgrade(data,root):
  return d
 
 def refresh(d):
+ if isinstance(d.get('narration',{}).get('reuse_record'),dict):d['narration']['reuse_record']['audio_sha256']=d['narration'].get('audio_sha256')
  qa=d['qa'];qa['visual_frames']['animation']['context_sha256']=gates.context_sha256(d,'G3')
+ if isinstance(qa['visual_frames'].get('finesse'),dict):qa['visual_frames']['finesse'].update(context_sha256=gates.context_sha256(d,'G5'),media_sha256=qa['reviewed_sha256']['video'])
+ for name,gate in (('explanation_logic','G1'),('expression_plan','G2'),('explanation_review','G5'),('expression_review','G5')):
+  if isinstance(qa.get(name),dict):qa[name]['context_sha256']=gates.context_sha256(d,gate)
  qa['gates']={g:{'status':'passed','reviewer':'synthetic fixture','reviewed_at':'2026-01-01T00:00:00Z','scope':'software test only','context_sha256':gates.context_sha256(d,g),'review_refs':list(gates.REQUIRED_REVIEWS[g]),'evidence':[{'file':d['deliverables']['video'],'sha256':qa['reviewed_sha256']['video']}]} for g in gates.GATES}
  qa['release']['bundle_sha256']=gates.digest({'deliverables':d['deliverables'],'hashes':qa['reviewed_sha256'],'title':d.get('title'),'description':d.get('description'),'tags':d.get('tags'),'platform':qa['mobile_preview']})
  qa['publication'].update(bundle_sha256=qa['release']['bundle_sha256'],platform=qa['mobile_preview'].get('platform','fixture'),account=qa['mobile_preview'].get('account','fixture'))

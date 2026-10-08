@@ -37,7 +37,7 @@ class StageTests(unittest.TestCase):
  def test_missing_phone(s):s.d['qa']['audio']['environments']=['headphones'];s.rejects('phone-speaker')
  def test_fake_score(s):s.d['qa']['scorecard']['total']=100;s.rejects('total inconsistent')
  def test_score_not_override(s):s.d['qa']['visual_frames']['status']='fail';s.rejects('referenced review not passed')
- def test_benchmark_no_people(s):s.d['brief']['production_class']='B';refresh(s.d);s.rejects('cold test missing')
+ def test_benchmark_needs_no_people(s):s.d['brief']['production_class']='B';refresh(s.d);s.assertEqual(s.errors(),[])
  def test_new_video_old_review(s):s.d['deliverables']['video']='changed.mp4';refresh(s.d);s.rejects('must bind final deliverable')
  def test_unsafe_path(s):s.d['qa']['gates']['G1']['evidence'][0]['file']='../outside';s.rejects('path missing/unsafe')
  def test_bad_duration(s):s.d['qa']['visual_frames']['animation']['viewing']['duration']='one';s.rejects('duration must match')
@@ -56,21 +56,21 @@ class StageTests(unittest.TestCase):
  def test_full_chain_review_missing(s):
   s.d['qa']['visual_frames']['process_steps'].pop();s.rejects('full primary causal chain evidence incomplete')
  def prepare_cold(s):
-  s.d['brief']['validation_triggers']=['new_complex_mechanism'];r=s.d['qa']['comprehension'];r['status']='audience_checked'
+  s.d['brief']['validation_triggers']=['new_complex_mechanism'];r=s.d['qa']['comprehension'];r['status']='audience_checked';r['audience_feedback_reference']='synthetic software fixture only'
   r['cold_view']={'status':'pass','shared_core_misconceptions':[],'group_id':'synthetic-five','sampling_plan_reference':'synthetic test plan, not real recruitment','actual_viewer_count':5,'passing_viewer_count':5,'media_sha256':s.d['qa']['reviewed_sha256']['video'],'viewers':[{'anonymous_id':'test-'+str(i),'real_person':True,'not_in_production':True,'no_relevant_training':True,'first_unprompted_normal_watch':True,'watched_current_version':True,'raw_answers':{k:'synthetic software fixture, not actual feedback' for k in ('topic','causal_chain','visualization_boundary','conclusion')},'scores':{'topic':1,'causal_chain':2,'visualization_boundary':0,'conclusion':1},'total':4,'scoring_evidence':'synthetic software fixture','core_misconceptions':[]} for i in range(5)]};refresh(s.d)
- def test_cold_fixture(s):s.prepare_cold();s.assertEqual(s.errors(),[])
- def test_duplicate_people(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][1]['anonymous_id']='test-0';s.rejects('ids missing/duplicate')
+ def test_optional_feedback_fixture(s):s.prepare_cold();s.assertEqual(s.errors(),[])
+ def test_duplicate_people(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][1]['anonymous_id']='test-0';s.rejects('viewer ids missing/duplicate')
  def test_agents_not_people(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][0]['real_person']=False;s.rejects('real_person required')
- def test_raw_answer_missing(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][0]['raw_answers']['causal_chain']='';s.rejects('raw cold-test answer')
- def test_shared_misunderstanding(s):
+ def test_raw_answer_missing(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][0]['raw_answers']['causal_chain']='';s.rejects('raw feedback answers')
+ def test_optional_feedback_does_not_set_internal_quality_verdict(s):
   s.prepare_cold()
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers'][:2]:viewer['core_misconceptions']=['same-core-error']
-  s.rejects('shared core misconception')
- def test_cause_incomplete_despite_total(s):
+  s.assertEqual(s.errors(),[])
+ def test_optional_feedback_scores_are_not_a_gate(s):
   s.prepare_cold()
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers'][:2]:viewer['scores']={'topic':1,'causal_chain':1,'visualization_boundary':1,'conclusion':1}
-  s.rejects('four viewers')
- def test_not_five(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'].pop();s.rejects('five actual viewers')
+  s.assertEqual(s.errors(),[])
+ def test_optional_feedback_allows_four(s):s.prepare_cold();r=s.d['qa']['comprehension']['cold_view'];r['viewers'].pop();r['actual_viewer_count']=4;s.assertEqual(s.errors(),[])
  def test_overlap_cannot_hide_gap(s):s.d['qa']['shotbook']['viewing']['ranges']=[[0,.4],[0,.4],[.8,1]];s.rejects('range gap')
  def test_string_true_not_actual_watch(s):s.d['qa']['shotbook']['viewing']['watched']='true';s.rejects('actual viewing')
  def test_deprecated_asset(s):s.d['assets'][0]['catalog']['stage']='deprecated';refresh(s.d);s.rejects('catalog state blocks')
@@ -79,18 +79,18 @@ class StageTests(unittest.TestCase):
  def test_source_script_stale(s):s.d['narration']['script_sha256']='0'*64;refresh(s.d);s.rejects('script evidence hash stale')
  def test_arbitrary_catalog_rule(s):s.d['assets'][1]['catalog']['rules']=['does-not-exist'];refresh(s.d);s.rejects('rules required/unknown')
  def test_calibration_needs_evidence(s):s.d['qa']['scorecard']['calibration']={};s.rejects('score calibration evidence file')
- def test_missing_misconception_record(s):
+ def test_optional_feedback_does_not_require_score_rubric(s):
   s.prepare_cold()
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers']:viewer.pop('core_misconceptions')
-  s.rejects('explicit core_misconceptions list')
- def test_malformed_misconception_record(s):
+  s.assertEqual(s.errors(),[])
+ def test_legacy_misconception_summary_not_a_gate(s):
   s.prepare_cold()
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers']:viewer['core_misconceptions']={'shared':True}
-  s.rejects('explicit core_misconceptions list')
+  s.assertEqual(s.errors(),[])
  def test_unknown_trigger(s):s.d['brief']['validation_triggers']=['unclassified'];refresh(s.d);s.rejects('recognized values')
- def test_new_concept_requires_cold(s):s.d['brief']['validation_triggers']=['new_concept'];refresh(s.d);s.rejects('cold test missing')
- def test_sampled_routine_requires_cold(s):s.d['brief']['validation_triggers']=['routine_sample'];refresh(s.d);s.rejects('cold test missing')
- def test_major_modification_requires_cold(s):s.d['brief']['validation_triggers']=['major_modification'];refresh(s.d);s.rejects('cold test missing')
+ def test_new_concept_needs_no_cold(s):s.d['brief']['validation_triggers']=['new_concept'];refresh(s.d);s.assertEqual(s.errors(),[])
+ def test_routine_sample_needs_no_cold(s):s.d['brief']['validation_triggers']=['routine_sample'];refresh(s.d);s.assertEqual(s.errors(),[])
+ def test_major_modification_needs_no_cold(s):s.d['brief']['validation_triggers']=['major_modification'];refresh(s.d);s.assertEqual(s.errors(),[])
  def test_unselected_future_asset_allowed(s):
   asset=copy.deepcopy(s.d['assets'][0]);asset['id']='UNSELECTED';asset['catalog']['stage']='candidate';s.d['assets'].append(asset);s.assertEqual(s.errors('G3'),[])
  def test_real_video_not_svg(s):s.d['assets'][0]['catalog'].pop('viewBox');refresh(s.d);s.assertEqual(s.errors('G3'),[])
@@ -134,13 +134,13 @@ class StageTests(unittest.TestCase):
  def test_style_rejection_blocks(s):s.d['design']['approval']['status']='fail';refresh(s.d);s.rejects('design approval missing/failed','G3')
  def test_style_scope_not_expanded(s):s.d['design']['approval']['scope']['visual_style']=False;refresh(s.d);s.rejects('does not cover visual style','G3')
  def test_style_feedback_not_board_path(s):s.d['design']['approval']['actual_feedback_ref']='';refresh(s.d);s.rejects('actual style feedback reference','G3')
- def test_ten_viewers_not_fixed_four_success(s):
+ def test_optional_feedback_allows_any_actual_sample_size(s):
   s.prepare_cold();r=s.d['qa']['comprehension']['cold_view']
   for i in range(5):
    viewer=copy.deepcopy(r['viewers'][0]);viewer['anonymous_id']='extra-'+str(i);viewer['scores']={k:0 for k in viewer['scores']};r['viewers'].append(viewer)
-  r['viewers'][4]['scores']={k:0 for k in r['viewers'][4]['scores']};r['actual_viewer_count']=10;r['passing_viewer_count']=4;s.rejects('exactly five')
+  r['viewers'][4]['scores']={k:0 for k in r['viewers'][4]['scores']};r['actual_viewer_count']=10;r['passing_viewer_count']=4;s.assertEqual(s.errors(),[])
  def test_cold_count_summary_must_match(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['actual_viewer_count']=0;s.rejects('actual viewer count inconsistent')
- def test_cold_passing_summary_must_match(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['passing_viewer_count']=0;s.rejects('passing viewer count inconsistent')
+ def test_legacy_passing_summary_not_a_gate(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['passing_viewer_count']=0;s.assertEqual(s.errors(),[])
  def test_unused_ai_not_current_content(s):
   s.d['narration']['voice_type']='human';s.d['qa']['release']['ai_disclosure'].update(contains_generated_content=False,not_applicable_reason='synthetic ordinary-content test')
   for asset in s.d['assets']:
@@ -168,12 +168,12 @@ class StageTests(unittest.TestCase):
   s.assertEqual(s.errors('G5'),[])
  def test_listening_still_requires_heard(s):
   s.d['qa']['audio']['listening']['headphones']['heard']=False;s.rejects('actual listening required','G5')
- def test_cold_person_total(s):
-  s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][0]['total']=0;s.rejects('person total inconsistent')
- def test_cold_summary_shape(s):
-  s.prepare_cold();s.d['qa']['comprehension']['cold_view']['shared_core_misconceptions']={};s.rejects('summary must equal')
- def test_cold_summary_consistency(s):
-  s.prepare_cold();s.d['qa']['comprehension']['cold_view']['shared_core_misconceptions']=['invented'];s.rejects('summary must equal')
+ def test_legacy_person_score_not_a_gate(s):
+  s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][0]['total']=0;s.assertEqual(s.errors(),[])
+ def test_legacy_score_summary_not_a_gate(s):
+  s.prepare_cold();s.d['qa']['comprehension']['cold_view']['shared_core_misconceptions']={};s.assertEqual(s.errors(),[])
+ def test_legacy_score_summary_not_internal_review(s):
+  s.prepare_cold();s.d['qa']['comprehension']['cold_view']['shared_core_misconceptions']=['invented'];s.assertEqual(s.errors(),[])
 
  def test_inherited_keyframe_dependency_bytes(s):
   a=copy.deepcopy(s.d['assets'][0]);a['id']='KEYFRAME_ONLY';a['file']='keyframe-only.mp4';path=s.root/a['file'];path.write_bytes((s.root/'v.mp4').read_bytes());a['sha256']=gates.file_digest(path);a['catalog']['rendered_file']=a['file'];a['catalog']['rendered_sha256']=a['sha256'];s.d['assets'].append(a);s.d['design']['keyframe_scales']['whole_scene']['asset_ids']=[a['id']];refresh(s.d)
@@ -181,3 +181,58 @@ class StageTests(unittest.TestCase):
   try:
    path.write_bytes(path.read_bytes()+b'changed fixture');s.rejects('hash stale','G5')
   finally:path.unlink()
+
+
+ def generalized(s,relation,fields):
+  coverage=s.d['topic_alignment']['coverage'][0];old=coverage.pop('causal_steps')[0]
+  coverage['explanation_steps']=[{'id':old['id'],'relation_type':relation,'prerequisites':['known test object'],'handoff':'next test relation','shot_ids':old['shot_ids'],'requires_dynamic':False,'still_reason':'a stable comparison reveals this test relationship','key_difficulty':True,**fields}];refresh(s.d)
+ def test_general_relationship_types(s):
+  for relation,fields in gates.RELATION_FIELDS.items():
+   with s.subTest(relation=relation):
+    s.d=copy.deepcopy(s.base);s.generalized(relation,{key:'synthetic '+key for key in fields});s.assertEqual(s.errors(),[])
+ def test_spatial_does_not_need_before_change_after(s):
+  s.generalized('spatial',{'reference_frame':'front view','spatial_relation':'test object lies inside the enclosure'});s.assertEqual(s.errors(),[])
+ def test_unknown_relation_rejected(s):s.generalized('magic',{});s.rejects('recognized relation_type')
+ def test_relation_specific_information_required(s):s.generalized('spatial',{'reference_frame':'test view'});s.rejects('spatial_relation required')
+ def test_general_structure_controls_sample_dependencies(s):
+  s.generalized('evidence',{'evidence_basis':'test observation','inference':'test supported conclusion','limitations':'synthetic fixture only'});s.assertEqual(s.errors('G3'),[])
+ def test_parallel_structures_rejected(s):
+  c=s.d['topic_alignment']['coverage'][0];c['explanation_steps']=copy.deepcopy(c['causal_steps']);refresh(s.d);s.rejects('not two parallel structures')
+ def test_key_difficulty_requires_card(s):s.d['topic_alignment']['expression_cards']=[];refresh(s.d);s.rejects('key difficulty lacks')
+ def test_expression_action_missing(s):s.d['topic_alignment']['expression_cards'][0]['visual_action']='';refresh(s.d);s.rejects('visual_action required')
+ def test_expression_prerequisites_explicit(s):s.d['topic_alignment']['expression_cards'][0].pop('prerequisites');refresh(s.d);s.rejects('prerequisites must be')
+ def prepare_variants(s):
+  c=s.d['topic_alignment']['expression_cards'][0];c['uncertain']=True;c['variants']=[{'id':v,'low_cost':True,'visual_action':'synthetic fixed-anchor comparison '+v,'explanation_effect':'synthetic relation becomes visible '+v} for v in ('A','B')];c['selection']={'variant_id':'B','rationale':'synthetic B keeps the reference visible','criteria':['relation_visibility','ambiguity']};refresh(s.d)
+ def test_uncertain_variants_pass(s):s.prepare_variants();s.assertEqual(s.errors(),[])
+ def test_uncertain_needs_two_variants(s):s.prepare_variants();s.d['topic_alignment']['expression_cards'][0]['variants'].pop();refresh(s.d);s.rejects('two low-cost expression variants')
+ def test_uncertain_choice_cannot_use_prettiness(s):s.prepare_variants();s.d['topic_alignment']['expression_cards'][0]['selection']['criteria']=['prettiness'];refresh(s.d);s.rejects('compare explanation effects')
+ def test_variant_needs_concrete_action(s):s.prepare_variants();s.d['topic_alignment']['expression_cards'][0]['variants'][0]['visual_action']='';refresh(s.d);s.rejects('variant visual_action required')
+ def test_g1_logic_review_required(s):s.d['qa'].pop('explanation_logic');refresh(s.d);s.rejects('explanation_logic internal review missing','G1')
+ def test_g1_can_precede_expression_cards(s):s.d['topic_alignment'].pop('expression_cards');refresh(s.d);s.assertEqual(s.errors('G1'),[])
+ def test_g2_expression_plan_required(s):s.d['qa'].pop('expression_plan');refresh(s.d);s.rejects('expression_plan internal review missing','G2')
+ def test_final_logic_review_uses_actual_work(s):s.d['qa']['explanation_review']['actual_information_only']=False;s.rejects('only information actually presented')
+ def test_final_expression_review_independent(s):s.d['qa']['expression_review']['independent_of_generation_context']=False;s.rejects('independent review context required')
+ def test_final_internal_review_binds_current_media(s):s.d['qa']['expression_review']['media_sha256']='0'*64;s.rejects('stale final media')
+ def test_final_internal_review_covers_steps(s):s.d['qa']['explanation_review']['reviewed_step_ids']=[];s.rejects('complete explanation step review')
+ def test_expression_review_covers_cards(s):s.d['qa']['expression_review']['expression_card_ids']=[];s.rejects('complete expression card review')
+ def test_internal_review_context_not_self_referential(s):
+  before=gates.context_sha256(s.d,'G5');s.d['qa']['explanation_review']['note']='another synthetic finding';s.assertEqual(before,gates.context_sha256(s.d,'G5'))
+ def test_expression_card_change_invalidates_reviews(s):s.d['topic_alignment']['expression_cards'][0]['boundary']='changed';s.rejects('internal review stale context')
+ def test_pending_optional_feedback_not_a_gate(s):s.d['qa']['comprehension']['cold_view']={'status':'pending'};s.assertEqual(s.errors(),[])
+ def test_editorial_review_does_not_claim_audience_rate(s):s.d['qa']['comprehension']['status']='editor_reviewed';s.assertEqual(s.errors(),[])
+ def test_new_optional_feedback_allows_four(s):
+  s.prepare_cold();r=s.d['qa']['comprehension'];r['optional_audience_feedback']=r.pop('cold_view');r['optional_audience_feedback']['viewers'].pop();r['optional_audience_feedback']['actual_viewer_count']=4;s.assertEqual(s.errors(),[])
+ def test_new_feedback_without_viewers_rejected(s):
+  s.prepare_cold();r=s.d['qa']['comprehension'];r['optional_audience_feedback']=r.pop('cold_view');r['optional_audience_feedback']['viewers']=[];r['optional_audience_feedback']['actual_viewer_count']=0;s.rejects('needs actual viewer records')
+ def test_audience_checked_without_feedback_rejected(s):
+  s.prepare_cold();s.d['qa']['comprehension'].pop('cold_view');s.rejects('completed actual optional feedback records')
+ def test_new_pending_feedback_cannot_use_legacy_pass(s):
+  s.prepare_cold();s.d['qa']['comprehension']['optional_audience_feedback']={'status':'not_run'};s.rejects('completed actual optional feedback records')
+ def test_new_pending_feedback_allows_editorial_review(s):
+  s.d['qa']['comprehension']['optional_audience_feedback']={'status':'not_run'};s.assertEqual(s.errors(),[])
+ def test_new_feedback_still_requires_actual_raw_answers(s):
+  s.prepare_cold();r=s.d['qa']['comprehension'];r['optional_audience_feedback']=r.pop('cold_view');r['optional_audience_feedback']['viewers'][0]['raw_answers']={};s.rejects('raw feedback answers')
+ def test_brief_must_see_relation_supported(s):
+  s.d['brief']['must_see_relation']=s.d['brief'].pop('must_see_change');refresh(s.d);s.assertEqual(s.errors('G1'),[])
+ def test_brief_missing_visible_relation_rejected(s):
+  s.d['brief'].pop('must_see_change');refresh(s.d);s.rejects('must_see_relation required','G1')

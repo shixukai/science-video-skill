@@ -252,10 +252,12 @@
       "note": "",
       "audience_feedback_reference": "",
       "independent_review_reference": "",
-      "cold_view": {
-        "status": "pending",
+      "optional_audience_feedback": {
+        "status": "not_run",
         "media_sha256": "",
-        "viewers": []
+        "viewers": [],
+        "actual_viewer_count": 0,
+        "notes": ""
       }
     },
     "topic_alignment": {

@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "version": "1.0.0",
+  "status": "original_adaptable_recipes_not_media_approval",
+  "purpose": "Concrete expression actions for seven relationships; adapt with actual scientific sources, approved art assets and voice events. No fabricated absolute audio timing.",
+  "recipes": [
+    {
+      "id": "causal",
+      "relation_type": "causal",
+      "name": "单变量前后变化",
+      "prerequisites": [
+        "先认识对象及相关条件",
+        "说明本次唯一改变的因素"
+      ],
+      "fixed": [
+        "对象身份、取景及其它相关条件"
+      ],
+      "changed_or_revealed": [
+        "有科学依据的作用过程及结果"
+      ],
+      "sequence": [
+        "呈现前态",
+        "改变因素进入",
+        "展示必要中间过程",
+        "结果出现后保留观察",
+        "把过程接回原现象"
+      ],
+      "method": "fixed_anchor_then_state_change",
+      "scientific_risks": [
+        "变化不是先于原因出现",
+        "时间压缩/慢放不代表真实速度",
+        "不捏造可见中间阶段"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "spatial",
+      "relation_type": "spatial",
+      "name": "参照与视点",
+      "prerequisites": [
+        "对象身份、参照方向及有关视点"
+      ],
+      "fixed": [
+        "对象的世界位置或所研究空间关系"
+      ],
+      "changed_or_revealed": [
+        "观察位置、视角或局部取景"
+      ],
+      "sequence": [
+        "整体定位参照与视点",
+        "明确方向对应",
+        "只改变有关观察条件",
+        "同时保留对应线索",
+        "回到整体说明相对关系"
+      ],
+      "method": "mapped_viewpoint_change",
+      "scientific_risks": [
+        "画面左右不等于对象左右",
+        "相机变化不代表对象移动",
+        "辅助线须先映射到真实实体"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "structure_function",
+      "relation_type": "structure_function",
+      "name": "结构怎样产生功能",
+      "prerequisites": [
+        "部件名称、连接方式与功能任务"
+      ],
+      "fixed": [
+        "对象身份、连接点和科学拓扑"
+      ],
+      "changed_or_revealed": [
+        "承担功能的部件状态、流路或配合"
+      ],
+      "sequence": [
+        "从整体定位部件",
+        "放大并交代剖切/外形关系",
+        "展示连接与约束",
+        "沿连接追踪功能作用",
+        "返回整体回答作用"
+      ],
+      "method": "connected_parts_and_constraint",
+      "scientific_risks": [
+        "部件命名不等于解释功能",
+        "装饰色不代表真实材质",
+        "所省内部细节须不影响核心功能"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "comparison",
+      "relation_type": "comparison",
+      "name": "控制条件比较",
+      "prerequisites": [
+        "比较对象、共同条件及要判断的差异"
+      ],
+      "fixed": [
+        "取景、尺度、测量口径及其他相关条件"
+      ],
+      "changed_or_revealed": [
+        "要比较的一项或有解释依据的一组变量"
+      ],
+      "sequence": [
+        "建立同条件的两个案例",
+        "明确哪个量不同",
+        "同时或顺序显示可对应的状态",
+        "指出差异与推断条件",
+        "回到原问题限定结论"
+      ],
+      "method": "paired_controlled_cases",
+      "scientific_risks": [
+        "不能同时改变多个隐含条件后归因单变量",
+        "局部差异不能推成普遍结论",
+        "同屏位置与大小不能暗示未成立比例"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "quantitative",
+      "relation_type": "quantitative",
+      "name": "量与关系",
+      "prerequisites": [
+        "量的意义、单位、基准及成立条件"
+      ],
+      "fixed": [
+        "单位、坐标基准及比较口径"
+      ],
+      "changed_or_revealed": [
+        "自变量及由关系确定的因变量"
+      ],
+      "sequence": [
+        "先用可识别对象建立量",
+        "固定基准与单位",
+        "选择少量有依据的状态",
+        "把数值变化映射到实际关系",
+        "说明适用范围与非线性/比例边界"
+      ],
+      "method": "quantity_to_visible_extent",
+      "scientific_risks": [
+        "装饰大小不能冒充数量比例",
+        "无依据的精确数字不得填图",
+        "动画插值不能替代真实函数"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "probability",
+      "relation_type": "probability",
+      "name": "结果分布与不确定性",
+      "prerequisites": [
+        "可能结果、一次试验定义和统计口径"
+      ],
+      "fixed": [
+        "试验条件、样本或模型身份"
+      ],
+      "changed_or_revealed": [
+        "结果或累计频次"
+      ],
+      "sequence": [
+        "先建立一次可能结果",
+        "区分单次和重复",
+        "显示有来源或明确模拟的分布",
+        "区分频率与概率模型",
+        "说明样本波动与推断限度"
+      ],
+      "method": "outcomes_then_distribution",
+      "scientific_risks": [
+        "少量样本不能保证理论比例",
+        "随机演示不是实证数据",
+        "不能只突出成功结果或把概率当确定预测"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    },
+    {
+      "id": "evidence",
+      "relation_type": "evidence",
+      "name": "观察支持何种结论",
+      "prerequisites": [
+        "实际观察、待解释的问题和比较依据"
+      ],
+      "fixed": [
+        "证据身份、原始范围及推断条件"
+      ],
+      "changed_or_revealed": [
+        "证据层次或可支持的解释"
+      ],
+      "sequence": [
+        "呈现可核查观察",
+        "标出直接看到的事实",
+        "建立事实与推论之间的依据",
+        "呈现竞争解释或限制（适用时）",
+        "给出与证据力度相符的结论"
+      ],
+      "method": "observation_to_bounded_inference",
+      "scientific_risks": [
+        "示意动画不能冒充观测证据",
+        "相关性不能自动证明因果",
+        "未排除的解释和不确定性不得省略"
+      ],
+      "shotbook_binding": [
+        "subject",
+        "action",
+        "framing",
+        "motion_purpose",
+        "timing_basis",
+        "beats"
+      ],
+      "expression_card_binding": [
+        "difficulty",
+        "prerequisites",
+        "visual_action",
+        "inferable_outcome",
+        "misconception",
+        "boundary"
+      ],
+      "evidence": "Pending actual project keyframes, actual audio timeline and continuous review; this recipe grants no approval."
+    }
+  ]
+}

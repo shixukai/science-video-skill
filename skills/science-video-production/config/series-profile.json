@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -21,13 +21,35 @@
     "speaker": "Serena",
     "language": "Chinese",
     "instruct": "自然口语，像认真向朋友解释一个有趣现象。第一句带一点好奇，接着平实讲清因果。不要朗诵腔，不要逐字停顿，句子有轻重变化，普通话清晰。",
-    "runtime_parameters": "Preserve the project's verified parameter record; unspecified values are not inferred.",
+    "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
     "reuse_matching_audio": true,
     "postprocess_example": {
       "loudnorm": "I=-18:TP=-2:LRA=7",
       "sample_rate_hz": 48000,
       "mp3_bitrate_kbps": 192,
       "status": "optional_example_after_measurement_and_listening"
+    },
+    "backend": "confirm_at_invocation",
+    "provider": "Qwen",
+    "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+    "execution_policy": {
+      "confirmation_required": true,
+      "confirmation_scope": "available_context",
+      "prefer_existing_project": true,
+      "missing_location_action": "ask_user",
+      "modes": ["local_project", "service"],
+      "auto_create_environment": false,
+      "auto_download_model": false
+    },
+    "local_adapter_example": {
+      "scope": "optional_local_adapter_only",
+      "model_revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
+      "runtime": {
+        "device": "cpu",
+        "dtype": "float32",
+        "attn_implementation": "eager"
+      },
+      "generation_params": {}
     }
   },
   "captions": {

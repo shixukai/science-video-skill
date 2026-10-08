@@ -60,10 +60,26 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.1.0", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.2.1", "unsupported profile schema/version")
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
+        voice = profile["audio"]
+        need(voice.get("backend") == "confirm_at_invocation" and voice.get("provider") == "Qwen",
+             "voice execution location must be confirmed at invocation")
+        execution = voice.get("execution_policy", {})
+        need(isinstance(execution, dict) and execution.get("confirmation_required") is True
+             and execution.get("confirmation_scope") == "available_context"
+             and execution.get("prefer_existing_project") is True
+             and execution.get("missing_location_action") == "ask_user"
+             and execution.get("auto_create_environment") is False
+             and execution.get("auto_download_model") is False
+             and set(execution.get("modes", [])) == {"local_project", "service"},
+             "voice invocation confirmation policy required")
+        example = voice.get("local_adapter_example", {})
+        need(isinstance(example, dict) and example.get("scope") == "optional_local_adapter_only"
+             and bool(re.fullmatch(r"[0-9a-f]{40}", str(example.get("model_revision", "")))),
+             "optional local adapter fixed revision required")
         c = profile["captions"]
         need(c["apply_once"] is True and bool(c["revision"]), "caption revision must be idempotent")
         for k in ("narration", "real_footage"):
@@ -91,7 +107,12 @@ def check(root):
         policy = read("config/production-policy.json")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
-        need(policy["cold_view"]["real_viewers"] == 5 and policy["cold_view"]["no_synthetic_participants"] is True, "real cold-view requirement changed")
+        need("cold_view" not in policy and policy["internal_review"]["real_audience_required"] is False
+             and policy["optional_audience_feedback"]["required"] is False
+             and policy["optional_audience_feedback"]["blocks_production"] is False,
+             "internal review must not depend on audience recruitment")
+        need(policy["quality"]["finesse"]["target_level"] == "L3"
+             and policy["quality"]["finesse"]["no_average_override"] is True, "L3 independent dimension target required")
         need(set(policy["listening"]["required_environments"]) == {"headphones", "phone_speaker"}, "dual listening environments required")
         need(policy["defaults"]["semantic_sync_warning_ms"] == 150, "semantic warning starting point changed")
         registry = read("indexes/standard-coverage.json")
@@ -139,7 +160,10 @@ def check(root):
                 value = json.loads(evidence_path.read_text())
                 for key in re.findall(r"[^.\[\]]+", location["selector"]):
                     value = value[int(key)] if isinstance(value, list) else value[key]
-        need(len(rule_ids) == 958 and len(set(rule_ids)) == len(rule_ids), "full source requirement coverage missing/duplicate")
+        need(len(rule_ids) == registry.get("rule_count") and len(set(rule_ids)) == len(rule_ids)
+             and len(rule_ids) > 0, "current requirement coverage count missing/duplicate")
+        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution"} <= set(rule_ids),
+             "current explanation/finesse/voice coverage missing")
         schema = read("assets/production-asset.schema.json")
         need(schema["$schema"] == "https://json-schema.org/draft/2020-12/schema", "asset schema version required")
         need({"name", "category", "approval", "sha256"} <= set(schema["required"]), "formal asset fields missing")
@@ -170,6 +194,28 @@ def check(root):
                         if key.split("}")[-1] in ("href", "src"):
                             need(value.startswith("#"), "SVG external dependency")
         need(len(ids) == len(set(ids)), "duplicate asset id")
+
+        external = read("indexes/external-skills.json")
+        need(external["catalog"] == "external_skills" and len(external["entries"]) == external["entry_count"],
+             "external skills catalog/count inconsistent")
+        external_ids = []
+        copies = 0
+        for entry in external["entries"]:
+            external_ids.append(entry["id"])
+            need(bool(re.fullmatch(r"[0-9a-f]{40}", entry["commit"])) and entry["repository"].startswith("https://github.com/"),
+                 "external source needs immutable commit and primary repository")
+            for source in entry["source_files"]:
+                need(bool(re.fullmatch(r"[0-9a-f]{64}", source["sha256"])) and entry["commit"] in source["url"],
+                     "external source file needs fixed version/hash")
+                if source.get("local_copy"):
+                    copied = local_path(root, root, source["local_copy"])
+                    need(copied.is_file() and hashlib.sha256(copied.read_bytes()).hexdigest() == source["sha256"],
+                         "copied external reference hash mismatch")
+                    if copied.name != "LICENSE":
+                        copies += 1
+                    need(bool(entry["license"]["evidence"]), "copied reference needs actual license evidence")
+        need(len(set(external_ids)) == len(external_ids) and copies == external["copied_reference_count"],
+             "external source identity/copy count inconsistent")
 
         for p in root.rglob("*"):
             if p.is_file() and p.suffix in (".md", ".json", ".svg", ".css", ".py"):

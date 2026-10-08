@@ -1,0 +1,1374 @@
+{
+  "schema_version": 1,
+  "catalog": "external_skills",
+  "version": "1.0.0",
+  "checked_at": "2026-10-08",
+  "timezone": "Asia/Shanghai",
+  "purpose": "Scoped source/function/license curation for fine pure-2D science video production; no star ranking or exhaustive-web claim. Upstream documents are reference data, not independent production authority.",
+  "entry_count": 21,
+  "copied_reference_count": 3,
+  "policy": {
+    "no_global_install": true,
+    "no_untrusted_script_execution": true,
+    "no_automatic_engine_migration": true,
+    "no_cloud_request_or_purchase_from_curation": true,
+    "runtime_license_separate_from_skill_license": true,
+    "no_imported_external_approval_or_score_gate": true,
+    "quality_not_established_by_source_hash_or_own_claim": true
+  },
+  "entries": [
+    {
+      "id": "remotion-official-skills",
+      "repository": "https://github.com/remotion-dev/skills",
+      "commit": "32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "link_only_license_unresolved",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "adopt": "官方帧驱动动画、媒体/字体/字幕和渲染指引",
+      "limitations": "固定树未见LICENSE；官方提供安装不等于本仓重分发许可",
+      "license": {
+        "classification": "not_found_at_commit",
+        "evidence": [],
+        "metadata_spdx": null,
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/README.md",
+          "sha256": "6e0e9a0bf53e2c7f14b3f35a5ad6195cc07ac20c5a0bb1fd8ffe3198408cf50d",
+          "bytes": 2805,
+          "local_copy": null
+        },
+        {
+          "path": "package.json",
+          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/package.json",
+          "sha256": "3d48f875aefab28d1b728195bb2eb7c4fda00e1e9431fd3d8097716c209c7d07",
+          "bytes": 627,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-best-practices/SKILL.md",
+          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-best-practices/SKILL.md",
+          "sha256": "6a15b47c4b237a790b9c45a7be74a4312202efea9ded837e946fc86164d606f5",
+          "bytes": 4215,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-markup/SKILL.md",
+          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-markup/SKILL.md",
+          "sha256": "fd7767fe113c928cf4a1ba65ad1bf93dc3b9e46f484c61cc36b56907f4ca8c40",
+          "bytes": 17900,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-captions/SKILL.md",
+          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-captions/SKILL.md",
+          "sha256": "528b8de50d6793d2c5f794767e06a118d6863a67ae908eb9eadfa44a94943abd",
+          "bytes": 1137,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-render/SKILL.md",
+          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-render/SKILL.md",
+          "sha256": "311a257f351e4e57b42777749827f770fdf2d0b606d29c6cfb75b74a163aa5c8",
+          "bytes": 711,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Remotion",
+        "license_classification": "proprietary_dual_free_company",
+        "primary_reference": "https://www.remotion.dev/docs/license/faq",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "仅技术文档查询；本地渲染本身不需要向模型传稿，云渲染/ASR另核",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "motion-canvas-engine",
+      "repository": "https://github.com/motion-canvas/motion-canvas",
+      "commit": "7b91435c301d530351dcf5ebb91dd139c002e405",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "complementary_engine_reference",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "adopt": "对象、信号、generator与音轨事件同步",
+      "limitations": "框架不自动生成精美资产；保留现有主引擎",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/LICENSE",
+            "sha256": "b3f12201916c5d478263cd210cf17f3d0c007d03bd574e0b77cac6307953068e",
+            "bytes": 1070,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/LICENSE",
+          "sha256": "b3f12201916c5d478263cd210cf17f3d0c007d03bd574e0b77cac6307953068e",
+          "bytes": 1070,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/README.md",
+          "sha256": "9895daa20be79849a312b5cb5b9ed36db2d1a6dfe9731b5e53a67b222abe9cd9",
+          "bytes": 5266,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Motion Canvas",
+        "license_classification": "MIT",
+        "primary_reference": "https://motion-canvas.io/docs/time-events/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本地引擎无强制云模型；远程资源读取及发布另核",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "manim-community-engine",
+      "repository": "https://github.com/ManimCommunity/manim",
+      "commit": "a6d5cc02b430fb57d22add51236b6406fbf19d91",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "complementary_engine_reference",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "精确几何、坐标、图表与动态关联对象",
+      "limitations": "默认数学课件样式不等于本项目画风；只选择纯2D能力",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ManimCommunity/manim/blob/a6d5cc02b430fb57d22add51236b6406fbf19d91/LICENSE",
+            "sha256": "c6a922fc1cfaed7ac0f87aa1dc77ebf5a3c8d1ccc5ab01da33153f0d013bf019",
+            "bytes": 1072,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/ManimCommunity/manim/blob/a6d5cc02b430fb57d22add51236b6406fbf19d91/LICENSE",
+          "sha256": "c6a922fc1cfaed7ac0f87aa1dc77ebf5a3c8d1ccc5ab01da33153f0d013bf019",
+          "bytes": 1072,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/ManimCommunity/manim/blob/a6d5cc02b430fb57d22add51236b6406fbf19d91/README.md",
+          "sha256": "41cac8aeb33a726c1b0a70d10233ee06d9cd73c6df0bace8145637d75c5fc283",
+          "bytes": 8378,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Manim Community",
+        "license_classification": "MIT",
+        "primary_reference": "https://docs.manim.community/en/stable/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本地引擎无强制TTS；可选voiceover服务另核",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "videozero-motion-canvas",
+      "repository": "https://github.com/VideoZero/skills",
+      "commit": "670ff96af6149f0ac8850380a466f073471e600c",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "copied_reference_only",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "FLOW_CONTROL/SVG/TWEENING三个自包含技术正文",
+      "limitations": "未安装上游SKILL、脚本或编辑器API；不导入animation-basics硬秒数与普遍拉伸规则",
+      "license": {
+        "classification": "Apache-2.0",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/LICENSE",
+            "sha256": "d90ea8158b71abfc290c51adf1c989739bb4581ff9581ea8c4ab5c7b5ffefd8c",
+            "bytes": 11356,
+            "local_copy": "third-party/videozero-motion-canvas/LICENSE"
+          }
+        ],
+        "metadata_spdx": "Apache-2.0",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/LICENSE",
+          "sha256": "d90ea8158b71abfc290c51adf1c989739bb4581ff9581ea8c4ab5c7b5ffefd8c",
+          "bytes": 11356,
+          "local_copy": "third-party/videozero-motion-canvas/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/README.md",
+          "sha256": "9f5dcc8b41af16112b156dc3cb3bb2b837265faf34abde916310b303d8cd8af4",
+          "bytes": 1021,
+          "local_copy": null
+        },
+        {
+          "path": "animation-basics/SKILL.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/animation-basics/SKILL.md",
+          "sha256": "30ae2cbacb8b753e42aca04e8cdd2738dbe81fb08fe69110d3549940f6181677",
+          "bytes": 3497,
+          "local_copy": null
+        },
+        {
+          "path": "motion-canvas/SKILL.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/motion-canvas/SKILL.md",
+          "sha256": "8d40c781de8eb5b74b08b6a52cb1dbe5669acb157cbe4958f1c1fa0d594e28e9",
+          "bytes": 10104,
+          "local_copy": null
+        },
+        {
+          "path": "motion-canvas-agent/SKILL.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/motion-canvas-agent/SKILL.md",
+          "sha256": "a00ca5995dfcdce0e31ecf6a653e65be6c69240800f111f5f061689ba2e8f9e3",
+          "bytes": 7056,
+          "local_copy": null
+        },
+        {
+          "path": "motion-canvas/references/FLOW_CONTROL.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/motion-canvas/references/FLOW_CONTROL.md",
+          "sha256": "1fbc5c95911b8cdec2397ebb35062263d780352c2ffba4b8290cf2814f590aab",
+          "bytes": 2152,
+          "local_copy": "third-party/videozero-motion-canvas/FLOW_CONTROL.md"
+        },
+        {
+          "path": "motion-canvas/references/SVG.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/motion-canvas/references/SVG.md",
+          "sha256": "5a8a8ec1ff631ff5a097e66863e04b0a517366d2dcd64e60ec13b6cb3bba01ee",
+          "bytes": 1535,
+          "local_copy": "third-party/videozero-motion-canvas/SVG.md"
+        },
+        {
+          "path": "motion-canvas/references/TWEENING.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/motion-canvas/references/TWEENING.md",
+          "sha256": "e7250c8ca9babb8d15c4f893994bfa83e0bdbf37d31230959dc2295b54423825",
+          "bytes": 2988,
+          "local_copy": "third-party/videozero-motion-canvas/TWEENING.md"
+        },
+        {
+          "path": "motion-canvas/references/RENDERING.md",
+          "url": "https://github.com/VideoZero/skills/blob/670ff96af6149f0ac8850380a466f073471e600c/motion-canvas/references/RENDERING.md",
+          "sha256": "b6089e50280df90173e9be3d0b8363109cc05c735f26a9e7a0a5b38a84e8a8bf",
+          "bytes": 3066,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Motion Canvas",
+        "license_classification": "MIT",
+        "primary_reference": "https://motion-canvas.io/docs/flow/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本次仅本地参考；没有发送项目稿件或安装/运行引擎",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "video-talkcraft",
+      "repository": "https://github.com/Vincentwei1021/video-talkcraft",
+      "commit": "4cd673df4b7a6a35784a0881df223721789c5e23",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_reference_only_restricted",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "成品音轨、语义拍、注意中心和本地字级对齐的方法",
+      "limitations": "工具包商业使用需作者许可；未复制/安装；相机运动不代机制",
+      "license": {
+        "classification": "PolyForm-Noncommercial-1.0.0",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Vincentwei1021/video-talkcraft/blob/4cd673df4b7a6a35784a0881df223721789c5e23/LICENSE",
+            "sha256": "ebe8b7ad95a04a78e6f233db4ffcfa2c03a1d8cfa2c49d537658b36e81603b7c",
+            "bytes": 4895,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "NOASSERTION",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/Vincentwei1021/video-talkcraft/blob/4cd673df4b7a6a35784a0881df223721789c5e23/LICENSE",
+          "sha256": "ebe8b7ad95a04a78e6f233db4ffcfa2c03a1d8cfa2c49d537658b36e81603b7c",
+          "bytes": 4895,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/Vincentwei1021/video-talkcraft/blob/4cd673df4b7a6a35784a0881df223721789c5e23/README.md",
+          "sha256": "01bfa9795976c749c6f8f645d0e6df95396492768a563efc0468b82af33fd89d",
+          "bytes": 20193,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/Vincentwei1021/video-talkcraft/blob/4cd673df4b7a6a35784a0881df223721789c5e23/SKILL.md",
+          "sha256": "f813fdeb45ec61e7b453e2f51205f6eb9a1e29a8999cbd6f5b47907fefbe390c",
+          "bytes": 62221,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Remotion plus ASR/TTS backends",
+        "license_classification": "mixed",
+        "primary_reference": "https://www.remotion.dev/docs/license/faq",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本地ASR与可选Fish Audio分开；云TTS发送脚本并产生独立费用",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "vox-director",
+      "repository": "https://github.com/Alisa0808/vox-director",
+      "commit": "6a85a7c341610442a6a5b1885e6e0217ab82a11f",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_reference_only",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "资产角色、关键帧与元素分层的方法",
+      "limitations": "主流程纸拼贴/云模型/烘焙标题/固定切镜不直接采纳；抽帧不代连续视听",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Alisa0808/vox-director/blob/6a85a7c341610442a6a5b1885e6e0217ab82a11f/LICENSE",
+            "sha256": "5adab6ad9cdc7f1a3b972704cfbd751bafef6fb36f08f9739c9c7a4005666e3b",
+            "bytes": 1067,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/Alisa0808/vox-director/blob/6a85a7c341610442a6a5b1885e6e0217ab82a11f/LICENSE",
+          "sha256": "5adab6ad9cdc7f1a3b972704cfbd751bafef6fb36f08f9739c9c7a4005666e3b",
+          "bytes": 1067,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/Alisa0808/vox-director/blob/6a85a7c341610442a6a5b1885e6e0217ab82a11f/README.md",
+          "sha256": "0de60ae3b9126d650be88a7d6f03a56ca0717c0c799e537f197d3f5bbe65872c",
+          "bytes": 8493,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/Alisa0808/vox-director/blob/6a85a7c341610442a6a5b1885e6e0217ab82a11f/SKILL.md",
+          "sha256": "ece06bfc996bd929b681c26a9359c37f05de96bde2f660b8d23afce72d9405eb",
+          "bytes": 22397,
+          "local_copy": null
+        },
+        {
+          "path": "references/local-engine.md",
+          "url": "https://github.com/Alisa0808/vox-director/blob/6a85a7c341610442a6a5b1885e6e0217ab82a11f/references/local-engine.md",
+          "sha256": "9b256bcdaf8cbd58f63b9410cff6ffdf6d0f71cb739edb6fbab4cd18398b94f7",
+          "bytes": 4556,
+          "local_copy": null
+        },
+        {
+          "path": "references/beat-layer.md",
+          "url": "https://github.com/Alisa0808/vox-director/blob/6a85a7c341610442a6a5b1885e6e0217ab82a11f/references/beat-layer.md",
+          "sha256": "dc73a2ca8b43a02003673e7aa4871530e13f182ff6b6824fba20f1c31700bbc8",
+          "bytes": 10451,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "ffmpeg plus Atlas model services",
+        "license_classification": "mixed",
+        "primary_reference": "https://www.atlascloud.ai/docs/en/billing",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "默认在线图像、视频、声音、音乐各自发送输入并计费；本项目未调用",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "openmontage",
+      "repository": "https://github.com/calesthio/OpenMontage",
+      "commit": "9327439db69021ab4b0e2776729bf3b58fdb5a87",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_reference_only_copyleft",
+      "production_stages": [
+        "G1",
+        "G2",
+        "G4"
+      ],
+      "adopt": "逐镜素材需求、候选片段、来源权利与编辑时间线的方法",
+      "limitations": "未复制或安装AGPL框架；不导入整套代理/平台批准流程",
+      "license": {
+        "classification": "AGPL-3.0-only",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/LICENSE",
+            "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+            "bytes": 34523,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "AGPL-3.0",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/LICENSE",
+          "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+          "bytes": 34523,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/README.md",
+          "sha256": "0431403a913bb4a132e090f4dbd0343852473aa62d67a3a3912294129482906b",
+          "bytes": 44402,
+          "local_copy": null
+        },
+        {
+          "path": "skills/pipelines/documentary-montage/asset-director.md",
+          "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/skills/pipelines/documentary-montage/asset-director.md",
+          "sha256": "24ea30adf34c62f2655569fdbd35558fb97dfa5d3e1c45421860c352dc60f7d1",
+          "bytes": 19958,
+          "local_copy": null
+        },
+        {
+          "path": "skills/pipelines/documentary-montage/edit-director.md",
+          "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/skills/pipelines/documentary-montage/edit-director.md",
+          "sha256": "33ba65f5fb403704be46d358e1f33e6a1d629959f8f2aa32b19c5d08c676aceb",
+          "bytes": 14170,
+          "local_copy": null
+        },
+        {
+          "path": "skills/pipelines/animation/asset-director.md",
+          "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/skills/pipelines/animation/asset-director.md",
+          "sha256": "da8b108f642f34b6ceb05f58dcd491a4afcb3928422d3073943c25a603de3543",
+          "bytes": 9915,
+          "local_copy": null
+        },
+        {
+          "path": "skills/pipelines/character-animation/asset-director.md",
+          "url": "https://github.com/calesthio/OpenMontage/blob/9327439db69021ab4b0e2776729bf3b58fdb5a87/skills/pipelines/character-animation/asset-director.md",
+          "sha256": "ede1957724aea3c6f14ddb8ba0d9a83a01f9cb9dc6ffb857ffedf63dc38b3e99",
+          "bytes": 1804,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "multiple providers and local engines",
+        "license_classification": "mixed",
+        "primary_reference": "https://github.com/calesthio/OpenMontage",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "不同provider服务费用/数据流不同；示例素材存在不等于权利已取得",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "jianying-editor-skill",
+      "repository": "https://github.com/luoluoluo22/jianying-editor-skill",
+      "commit": "32c56928ded4f9e2c2b80e099dc7abb793d2c30b",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "complementary_export_reference",
+      "production_stages": [
+        "G4"
+      ],
+      "adopt": "分轨草稿、同步字幕与可编辑工程组织",
+      "limitations": "需实际剪映兼容验证；自身不是机制动画设计器；不替换本项目声音和固定BGM0.6",
+      "license": {
+        "classification": "MIT-with-Apache-2.0-vendored-component",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/LICENSE",
+            "sha256": "a069bf4635eb34cedf9a049cd2e641e71a868885cb255efccaf6f598132db43a",
+            "bytes": 1551,
+            "local_copy": null
+          },
+          {
+            "path": "scripts/vendor/pyJianYingDraft/LICENSE",
+            "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/scripts/vendor/pyJianYingDraft/LICENSE",
+            "sha256": "1e01a8727be399921ac831b446785ee3b08f8e79ac1fe0584c6cb71c8efca291",
+            "bytes": 10757,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "NOASSERTION",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/LICENSE",
+          "sha256": "a069bf4635eb34cedf9a049cd2e641e71a868885cb255efccaf6f598132db43a",
+          "bytes": 1551,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/README.md",
+          "sha256": "3640b69f2d2f4177cc29cd2696ba78b80ed844607615ac7f463a5563bb6a22f2",
+          "bytes": 15866,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/SKILL.md",
+          "sha256": "a4550b4a4c0598c14847843352ed33bb30b6be92aceca5d36c6782108a3ff8aa",
+          "bytes": 9968,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/vendor/pyJianYingDraft/LICENSE",
+          "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/scripts/vendor/pyJianYingDraft/LICENSE",
+          "sha256": "1e01a8727be399921ac831b446785ee3b08f8e79ac1fe0584c6cb71c8efca291",
+          "bytes": 10757,
+          "local_copy": null
+        },
+        {
+          "path": "rules/audio-voice.md",
+          "url": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/rules/audio-voice.md",
+          "sha256": "cf02200c1145537fe910a9c61e7e9a841cddf43440a8b51491fe9a82b08afc4b",
+          "bytes": 1950,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Jianying plus pyJianYingDraft",
+        "license_classification": "proprietary_application_plus_Apache-2.0_helper",
+        "primary_reference": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/LICENSE",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "可选云TTS/素材接口发送脚本或请求并适用独立权利与费用",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "seedance2-skill",
+      "repository": "https://github.com/dexhunter/seedance2-skill",
+      "commit": "516284d5bab58361bfdfed3cc96cee3e837d4c44",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_reference_only",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "多模态参考角色、分时对象动作与不变量约束",
+      "limitations": "提示词指南，不是已运行生成器；不把模型能力/价格写死",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/dexhunter/seedance2-skill/blob/516284d5bab58361bfdfed3cc96cee3e837d4c44/LICENSE",
+            "sha256": "56abf51bba5502dcc1cd014c9adea5787cd9eec67421858484b660ec97922978",
+            "bytes": 1072,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/dexhunter/seedance2-skill/blob/516284d5bab58361bfdfed3cc96cee3e837d4c44/LICENSE",
+          "sha256": "56abf51bba5502dcc1cd014c9adea5787cd9eec67421858484b660ec97922978",
+          "bytes": 1072,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/dexhunter/seedance2-skill/blob/516284d5bab58361bfdfed3cc96cee3e837d4c44/README.md",
+          "sha256": "a8134a64991da32e3f2bb33ad805b012ed7dfc9d427ecfbd5b1923f65bb89c38",
+          "bytes": 1703,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/dexhunter/seedance2-skill/blob/516284d5bab58361bfdfed3cc96cee3e837d4c44/SKILL.md",
+          "sha256": "107dd9fa5ef46f64d3d5183957244fd42f32a91df57e615ba63338c1344cf442",
+          "bytes": 15337,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Seedance provider service",
+        "license_classification": "service_specific",
+        "primary_reference": "https://github.com/dexhunter/seedance2-skill",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "实际生成时发送文本/参考媒体，服务许可与费用另核；本次仅读取指南",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "manim-craft",
+      "repository": "https://github.com/albertobarnabo/manim-craft",
+      "commit": "c63d5c461569b6ddc3b1ab328ef97391d8ceea29",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "link_only_license_unresolved",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "解释任务选技术、布局及渲染检查思路",
+      "limitations": "自己的LICENSE全文未找到；sources/3b1b MIT仅限对应文件",
+      "license": {
+        "classification": "not_found_at_commit",
+        "evidence": [],
+        "metadata_spdx": null,
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/albertobarnabo/manim-craft/blob/c63d5c461569b6ddc3b1ab328ef97391d8ceea29/README.md",
+          "sha256": "5831861ad47d86457419ad504bf49a7a06e11aad3f01ccb1f11d1e79761e265a",
+          "bytes": 6579,
+          "local_copy": null
+        },
+        {
+          "path": "skill/manim-craft/SKILL.md",
+          "url": "https://github.com/albertobarnabo/manim-craft/blob/c63d5c461569b6ddc3b1ab328ef97391d8ceea29/skill/manim-craft/SKILL.md",
+          "sha256": "eb40b5846f2b25c572c3ec5f31c566753d8bcd97c5792c95253fe60bd639a806",
+          "bytes": 12766,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Manim Community and sample ManimGL sources",
+        "license_classification": "mixed",
+        "primary_reference": "https://docs.manim.community/en/stable/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "仅链接及方法观察；没有复制或执行",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "vumichien-manim-skill",
+      "repository": "https://github.com/vumichien/manim-skill",
+      "commit": "70ccd68cf4dea135973f899b25fb408ddf5946c5",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "complementary_implementation_reference",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "研究/分镜schema及条件式voiceover技术资料",
+      "limitations": "未导入四岗位框架；README把引擎误标Apache，实际Manim Community MIT",
+      "license": {
+        "classification": "Apache-2.0",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vumichien/manim-skill/blob/70ccd68cf4dea135973f899b25fb408ddf5946c5/LICENSE",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+            "bytes": 11358,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "Apache-2.0",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/vumichien/manim-skill/blob/70ccd68cf4dea135973f899b25fb408ddf5946c5/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/vumichien/manim-skill/blob/70ccd68cf4dea135973f899b25fb408ddf5946c5/README.md",
+          "sha256": "04303ec1577d74a1975db1ba8167d12de1646e2b1904b397c7caaa1f74db7354",
+          "bytes": 16292,
+          "local_copy": null
+        },
+        {
+          "path": "skills/manim-video/SKILL.md",
+          "url": "https://github.com/vumichien/manim-skill/blob/70ccd68cf4dea135973f899b25fb408ddf5946c5/skills/manim-video/SKILL.md",
+          "sha256": "426af111b112ae2316665e89543268f9b8cee5bc8ab43388f11705fcfac9502a",
+          "bytes": 9480,
+          "local_copy": null
+        },
+        {
+          "path": "skills/manim-video/references/voiceover-setup.md",
+          "url": "https://github.com/vumichien/manim-skill/blob/70ccd68cf4dea135973f899b25fb408ddf5946c5/skills/manim-video/references/voiceover-setup.md",
+          "sha256": "8bedd57b36a50e15d545c3c596841d8c0f032a1f5909ca84d1783c7d9ad2be77",
+          "bytes": 4261,
+          "local_copy": null
+        },
+        {
+          "path": "skills/manim-video/references/storyboard-schema.md",
+          "url": "https://github.com/vumichien/manim-skill/blob/70ccd68cf4dea135973f899b25fb408ddf5946c5/skills/manim-video/references/storyboard-schema.md",
+          "sha256": "02b5e6fe3f0e0ac8e62abb8ffdee8f34fb1331ecf0c5e20546174e059985e12f",
+          "bytes": 6423,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Manim Community plus optional voiceover providers",
+        "license_classification": "MIT_engine_plus_service_specific",
+        "primary_reference": "https://docs.manim.community/en/stable/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "可选gTTS/OpenAI/ElevenLabs服务需要实际目的地/数据及费用记录",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "awesome-manim-skill",
+      "repository": "https://github.com/awesome-skills/manim-skill",
+      "commit": "e2cdc1e9f5d2f39392cdafd30b2b04b31b673d60",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "link_only_license_incomplete",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "Manim语法和技术镜头示例",
+      "limitations": "README MIT声明与LICENSE全文缺失分开；暂不复制",
+      "license": {
+        "classification": "README_MIT_claim_no_license_text",
+        "evidence": [],
+        "metadata_spdx": null,
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/awesome-skills/manim-skill/blob/e2cdc1e9f5d2f39392cdafd30b2b04b31b673d60/README.md",
+          "sha256": "cda4fef116c2f40fa840927c145483f8889a1fd6fec1c3f70e9419fec7114663",
+          "bytes": 7742,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/awesome-skills/manim-skill/blob/e2cdc1e9f5d2f39392cdafd30b2b04b31b673d60/SKILL.md",
+          "sha256": "5f5f09fb6fa2a9e5a01af790e5284b0124efafe483fc3143aa01a163d789d303",
+          "bytes": 9484,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Manim Community",
+        "license_classification": "MIT",
+        "primary_reference": "https://docs.manim.community/en/stable/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "技术候选；本项目未安装或运行",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "promptible-motion-graphics",
+      "repository": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill",
+      "commit": "b860c7921f2220b9e2a84e815ba0ae7b10858f08",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_reference_only",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "研究素材/实际画面对照与品牌SVG完成度思路",
+      "limitations": "不导入build/delivery批准脚本、产品/品牌硬标准及自评分阈值",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/LICENSE",
+            "sha256": "510af1ca1b113e34bb6b30ed84e2d51b975a923fd504950165eea01130f0cf4f",
+            "bytes": 1067,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/LICENSE",
+          "sha256": "510af1ca1b113e34bb6b30ed84e2d51b975a923fd504950165eea01130f0cf4f",
+          "bytes": 1067,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/README.md",
+          "sha256": "a6144982b77d7816657bfd17af790a347472fb627b9dd388c2b650d35807e07e",
+          "bytes": 17123,
+          "local_copy": null
+        },
+        {
+          "path": "skills/motion-graphics/SKILL.md",
+          "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/skills/motion-graphics/SKILL.md",
+          "sha256": "d5e8f91176a6d8825f2ee435367503e9b56ed840d58fefb9685a689f5e421c24",
+          "bytes": 8049,
+          "local_copy": null
+        },
+        {
+          "path": "skills/cinematic-camera/SKILL.md",
+          "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/skills/cinematic-camera/SKILL.md",
+          "sha256": "cc970c456a4d77ca0e623585eff55055588fe2cfc96e9949e242a70fa1180c9c",
+          "bytes": 6325,
+          "local_copy": null
+        },
+        {
+          "path": "skills/motion-graphics/references/visual-critic.md",
+          "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/skills/motion-graphics/references/visual-critic.md",
+          "sha256": "6aca650f4b253b13f51a4291e486afaa2583b3e3a329c5c6f2a617febcf673e1",
+          "bytes": 2166,
+          "local_copy": null
+        },
+        {
+          "path": "skills/motion-graphics/references/rejected-patterns.md",
+          "url": "https://github.com/Liamrjohnston/remotion-motion-graphics-skill/blob/b860c7921f2220b9e2a84e815ba0ae7b10858f08/skills/motion-graphics/references/rejected-patterns.md",
+          "sha256": "84495e6835960ea6399c7aafd7ba1ea079a53118a983162170d59076407f7b2e",
+          "bytes": 1588,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Remotion",
+        "license_classification": "proprietary_dual_free_company",
+        "primary_reference": "https://www.remotion.dev/docs/license/faq",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "营销素材/品牌权利与引擎许可另核；本项目未执行",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "remotion-marketing-video",
+      "repository": "https://github.com/xsourabhsharma/remotion-marketing-video-skill",
+      "commit": "a7f01a8ffdab4c02f54a8a1649f1f40d32efd529",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "complementary_workflow_reference",
+      "production_stages": [
+        "G2",
+        "G4"
+      ],
+      "adopt": "音轨分层、scene组织、ffmpeg导出资料",
+      "limitations": "SaaS/UI/CTA叙事不作为通用科普解释框架",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/xsourabhsharma/remotion-marketing-video-skill/blob/a7f01a8ffdab4c02f54a8a1649f1f40d32efd529/LICENSE",
+            "sha256": "6ea9bc6676b04c0926c9fb0a5add59790ef60fbb400ae15cd97b0f2b543e42d2",
+            "bytes": 1064,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/xsourabhsharma/remotion-marketing-video-skill/blob/a7f01a8ffdab4c02f54a8a1649f1f40d32efd529/LICENSE",
+          "sha256": "6ea9bc6676b04c0926c9fb0a5add59790ef60fbb400ae15cd97b0f2b543e42d2",
+          "bytes": 1064,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/xsourabhsharma/remotion-marketing-video-skill/blob/a7f01a8ffdab4c02f54a8a1649f1f40d32efd529/README.md",
+          "sha256": "e9ab9cc8cbcae515a4bbdb5051a26af5161be9d6a8eba64b98a9ea2a72e41093",
+          "bytes": 4161,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/xsourabhsharma/remotion-marketing-video-skill/blob/a7f01a8ffdab4c02f54a8a1649f1f40d32efd529/SKILL.md",
+          "sha256": "4ab08b626e3b8bdbb254da97619a7540b0df924d3c58c1520624c9e589d578d6",
+          "bytes": 7095,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Remotion plus optional AI integrations",
+        "license_classification": "mixed",
+        "primary_reference": "https://www.remotion.dev/docs/license/faq",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "可选AI接口传输与费用独立；本项目未执行",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "rive-skills",
+      "repository": "https://github.com/BowTiedSwan/rive-skills",
+      "commit": "e64aa14cfdc4c3d0a92a8a0b14be4aa2bb911bdb",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "link_only_license_unresolved",
+      "production_stages": [
+        "G3"
+      ],
+      "adopt": "可编辑2D对象、状态机与runtime的候选",
+      "limitations": "未见skill LICENSE全文；未核Rive编辑器/资产导出条件或本项目能力",
+      "license": {
+        "classification": "not_found_at_commit",
+        "evidence": [],
+        "metadata_spdx": null,
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/BowTiedSwan/rive-skills/blob/e64aa14cfdc4c3d0a92a8a0b14be4aa2bb911bdb/README.md",
+          "sha256": "22bc1aa106237340eaa3f74fd8377dd41fa59547c742c2a48901e65bbc52ca78",
+          "bytes": 6391,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/BowTiedSwan/rive-skills/blob/e64aa14cfdc4c3d0a92a8a0b14be4aa2bb911bdb/SKILL.md",
+          "sha256": "56d17342eb26f119047ff29de29d2e4a938d1ddf492070c6e2d983e782486075",
+          "bytes": 17950,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Rive ecosystem",
+        "license_classification": "unverified_runtime_and_editor_terms",
+        "primary_reference": "https://github.com/BowTiedSwan/rive-skills",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "只留候选，不推定编辑器、runtime、素材或云服务许可",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "manim-gl",
+      "repository": "https://github.com/3b1b/manim",
+      "commit": "fafa083a4fb274bba9cabde0b6e2f50ba6da0622",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "complementary_engine_reference",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "原ManimGL引擎与可明确许可的代码技术方法",
+      "limitations": "不与Manim Community API混用；引擎许可不扩展到独立3b1b/videos作品仓",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/3b1b/manim/blob/fafa083a4fb274bba9cabde0b6e2f50ba6da0622/LICENSE.md",
+            "sha256": "fe450f4b69c56c80e4ba2f3226174d1af417e7c1728362ed81a8f6c0b909eb43",
+            "bytes": 1077,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE.md",
+          "url": "https://github.com/3b1b/manim/blob/fafa083a4fb274bba9cabde0b6e2f50ba6da0622/LICENSE.md",
+          "sha256": "fe450f4b69c56c80e4ba2f3226174d1af417e7c1728362ed81a8f6c0b909eb43",
+          "bytes": 1077,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/3b1b/manim/blob/fafa083a4fb274bba9cabde0b6e2f50ba6da0622/README.md",
+          "sha256": "c691ca2c4eea1303d9a56dbf970840ed9a424fdae222ce2e244937969c267b00",
+          "bytes": 8330,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "ManimGL",
+        "license_classification": "MIT",
+        "primary_reference": "https://github.com/3b1b/manim",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本地引擎；没有迁移或复制作品仓",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "boriwatopal-motion-graphics",
+      "repository": "https://github.com/Boriwatopal/agent-skill-remotion-motion-graphics",
+      "commit": "682f725e0ec98eaff2de512f53972cb37e28c447",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_reference_only",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "SVG分件、形状接力与分scene组织的候选",
+      "limitations": "copiedremotionrules保留独立来源，不能被自有MIT覆盖；未复制任何文件",
+      "license": {
+        "classification": "MIT_own_files_separate_upstream_rules",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Boriwatopal/agent-skill-remotion-motion-graphics/blob/682f725e0ec98eaff2de512f53972cb37e28c447/LICENSE",
+            "sha256": "e4154ddb027c4db87c426071ef2fad498267440299fbe8eb0bccd7ccebaca7d3",
+            "bytes": 1068,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/Boriwatopal/agent-skill-remotion-motion-graphics/blob/682f725e0ec98eaff2de512f53972cb37e28c447/LICENSE",
+          "sha256": "e4154ddb027c4db87c426071ef2fad498267440299fbe8eb0bccd7ccebaca7d3",
+          "bytes": 1068,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/Boriwatopal/agent-skill-remotion-motion-graphics/blob/682f725e0ec98eaff2de512f53972cb37e28c447/README.md",
+          "sha256": "f13063ab6368d90bfb59d8614705164892f7ba542fae550b99b7eff9a93f1bf0",
+          "bytes": 5479,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-motion-graphics/SKILL.md",
+          "url": "https://github.com/Boriwatopal/agent-skill-remotion-motion-graphics/blob/682f725e0ec98eaff2de512f53972cb37e28c447/skills/remotion-motion-graphics/SKILL.md",
+          "sha256": "f228a685203d320238e71dbf2beed53adcb39a0a35edeeba213a6d08b1e1494c",
+          "bytes": 9180,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Remotion",
+        "license_classification": "proprietary_dual_free_company",
+        "primary_reference": "https://www.remotion.dev/docs/license/faq",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "仅方法参考；素材下载/外部模型/引擎许可另核",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "pluviobyte-video-production",
+      "repository": "https://github.com/Pluviobyte/video-production-skills",
+      "commit": "e19f1f300eddbb4f73764e66849792ece94ff0b7",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "link_only_license_unresolved",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "motion grammar、beat graph与复用组件记录的方法",
+      "limitations": "不纳入80%必须运动、从运动隐喻出发或暗色营销视觉；未复制",
+      "license": {
+        "classification": "not_found_at_commit",
+        "evidence": [],
+        "metadata_spdx": null,
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/Pluviobyte/video-production-skills/blob/e19f1f300eddbb4f73764e66849792ece94ff0b7/README.md",
+          "sha256": "8517af00225e986986188b75a145b428b63270128fd78739324ee4d4f3f5f9ca",
+          "bytes": 10415,
+          "local_copy": null
+        },
+        {
+          "path": "ai-motion-director/SKILL.md",
+          "url": "https://github.com/Pluviobyte/video-production-skills/blob/e19f1f300eddbb4f73764e66849792ece94ff0b7/ai-motion-director/SKILL.md",
+          "sha256": "2a632f66c3eb07a75aac4596604ac748b37141f339e7e3c650aec4154a097e78",
+          "bytes": 6402,
+          "local_copy": null
+        },
+        {
+          "path": "black-white-text-opener/SKILL.md",
+          "url": "https://github.com/Pluviobyte/video-production-skills/blob/e19f1f300eddbb4f73764e66849792ece94ff0b7/black-white-text-opener/SKILL.md",
+          "sha256": "5ad02bf54d2a0a1ea5b6aa7523f7604b1fa86004abe3e2c2474a76a382341141",
+          "bytes": 4165,
+          "local_copy": null
+        },
+        {
+          "path": "dark-saas-magic-video/SKILL.md",
+          "url": "https://github.com/Pluviobyte/video-production-skills/blob/e19f1f300eddbb4f73764e66849792ece94ff0b7/dark-saas-magic-video/SKILL.md",
+          "sha256": "5344067fe59ae680122f6709eb89b023ca4353e6bce3db23e0eea28c418e1e74",
+          "bytes": 4562,
+          "local_copy": null
+        },
+        {
+          "path": "reference-video-replica-qc/SKILL.md",
+          "url": "https://github.com/Pluviobyte/video-production-skills/blob/e19f1f300eddbb4f73764e66849792ece94ff0b7/reference-video-replica-qc/SKILL.md",
+          "sha256": "b468897fb154b44b40ff480b0a604a73f86050e5a230921bdfa978ed39bafc71",
+          "bytes": 7101,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "HyperFrames or Remotion",
+        "license_classification": "runtime_specific_unverified",
+        "primary_reference": "https://github.com/Pluviobyte/video-production-skills",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "只看方法；渲染、素材或模型依赖未运行",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "apliro-manim-video-lab",
+      "repository": "https://github.com/ApliroAI/manim-video-lab",
+      "commit": "6219393c53105d85d8b40b16de48751ac71749da",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_and_implementation_reference",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "是否需要运动、解释任务到对象状态、连续共享结构的方法",
+      "limitations": "固定停留秒数、黑底风格、先亮结果及抽帧验收替代不纳入",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/LICENSE",
+            "sha256": "6987e47e182ba84b35f7d65140ae4c156df22dcb3dff1f405057534e11e597dd",
+            "bytes": 1069,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/LICENSE",
+          "sha256": "6987e47e182ba84b35f7d65140ae4c156df22dcb3dff1f405057534e11e597dd",
+          "bytes": 1069,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/README.md",
+          "sha256": "317e523db609fcffb74e1da135d602191ad0548d137e2f2f285b88404ca396be",
+          "bytes": 10163,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/SKILL.md",
+          "sha256": "2c9f4a9e168d7fd1f4e1e458ad48a448d3b19876b283f5fce2816b1e998a2027",
+          "bytes": 23737,
+          "local_copy": null
+        },
+        {
+          "path": "references/animation-design-thinking.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/references/animation-design-thinking.md",
+          "sha256": "90f04d50731553a778ce003bdd6dd676c8c5e61cc4a914a339633fad06c31be9",
+          "bytes": 8074,
+          "local_copy": null
+        },
+        {
+          "path": "references/director-packet.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/references/director-packet.md",
+          "sha256": "22746bcc30867133b56bc28983c4cb3d2ec9baf37e0828456b65821ae6a5a3cc",
+          "bytes": 21407,
+          "local_copy": null
+        },
+        {
+          "path": "references/visual-design.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/references/visual-design.md",
+          "sha256": "6735fa87219525cd485c187147c3f354ed2a5f53b1fcb19a6fe08183b2df7ba8",
+          "bytes": 4944,
+          "local_copy": null
+        },
+        {
+          "path": "references/cinematic-directing.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/references/cinematic-directing.md",
+          "sha256": "7da1040ba8c8ef1371a54ffae1e0a42f9aec0cc7cd4bac2e0c9b7c6d6d54a8ea",
+          "bytes": 9078,
+          "local_copy": null
+        },
+        {
+          "path": "references/source-backed-patterns.md",
+          "url": "https://github.com/ApliroAI/manim-video-lab/blob/6219393c53105d85d8b40b16de48751ac71749da/references/source-backed-patterns.md",
+          "sha256": "80c892db267180a4d3db5af356c5f4ab5bbb9f57f9c98cad5fec42e7d990eee3",
+          "bytes": 13044,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Manim Community",
+        "license_classification": "MIT",
+        "primary_reference": "https://docs.manim.community/en/stable/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本地实现参考；可选配音插件或服务另核",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "dbillion-manim-storytelling",
+      "repository": "https://github.com/dbillion/manim-storytelling-skills",
+      "commit": "5c6f65d0cec533e3e51c689f1cfa246238a0ee5d",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "method_and_implementation_reference",
+      "production_stages": [
+        "G2",
+        "G3"
+      ],
+      "adopt": "同对象变换、两种表示关联、轨迹、附着标签和图表的技术选择",
+      "limitations": "不纳入黑底蓝黄、每镜aha、三运动上限或静音讲完整的万能规则",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/LICENSE",
+            "sha256": "ddb4e36140b77d4cbf7e47a76cf575d1bf88c8c8e73f71221e4a95bf6d4216f7",
+            "bytes": 1071,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "MIT",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/LICENSE",
+          "sha256": "ddb4e36140b77d4cbf7e47a76cf575d1bf88c8c8e73f71221e4a95bf6d4216f7",
+          "bytes": 1071,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/README.md",
+          "sha256": "f9bcbf645eb0c135875394e8a8448bea3627ab082e508950f399ff210545b0fd",
+          "bytes": 8439,
+          "local_copy": null
+        },
+        {
+          "path": "manim-brilliance-explainer/SKILL.md",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/manim-brilliance-explainer/SKILL.md",
+          "sha256": "1751a6c63f42ba329fbfb9928a59464da779b6e13a651ea5168ed64b453e9781",
+          "bytes": 3786,
+          "local_copy": null
+        },
+        {
+          "path": "manim-dsa-explainer/SKILL.md",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/manim-dsa-explainer/SKILL.md",
+          "sha256": "73087a77f459c107112a6febaa2b1659b40daee45b2ce502807158f89a568205",
+          "bytes": 11040,
+          "local_copy": null
+        },
+        {
+          "path": "manim-dsa-single-path/SKILL.md",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/manim-dsa-single-path/SKILL.md",
+          "sha256": "9959951e69b9068330bdbc6ba07e7834be9877d4c0a394351bea7170fd6a06de",
+          "bytes": 5153,
+          "local_copy": null
+        },
+        {
+          "path": "manim-dsa-storytelling/SKILL.md",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/manim-dsa-storytelling/SKILL.md",
+          "sha256": "acda1ca53e266a513936b1c3198830fe5ee29585dff79cf98ba8908f4afa58ca",
+          "bytes": 10460,
+          "local_copy": null
+        },
+        {
+          "path": "manim-explainer-animations/SKILL.md",
+          "url": "https://github.com/dbillion/manim-storytelling-skills/blob/5c6f65d0cec533e3e51c689f1cfa246238a0ee5d/manim-explainer-animations/SKILL.md",
+          "sha256": "5cf890d4fba7b4cd4db4a444f32e9f59cdbffca390a798fd3ef7b5fbf04be0c9",
+          "bytes": 8247,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Manim Community",
+        "license_classification": "MIT",
+        "primary_reference": "https://docs.manim.community/en/stable/",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "本地技术参考；没有运行脚本/生成样片",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "mamdouh-motion-graphics",
+      "repository": "https://github.com/imMamdouhaboammar/motion-graphics-skills",
+      "commit": "29919c1ff91d0e0a242ffc0d085b838fa9575584",
+      "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
+      "classification": "excluded_proprietary",
+      "production_stages": [
+        "research"
+      ],
+      "adopt": "仅核许可证及仓库介绍",
+      "limitations": "明确限制复制/改写/生产；不引用其skill原文、提示词或代码，不作为采用来源",
+      "license": {
+        "classification": "proprietary_all_rights_reserved",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/imMamdouhaboammar/motion-graphics-skills/blob/29919c1ff91d0e0a242ffc0d085b838fa9575584/LICENSE",
+            "sha256": "f2b182f93e07cd7cbfa973a987034cb411ef3e4796734205bce1226d57d0ceab",
+            "bytes": 4261,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": null,
+        "repository_tree_complete": false
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/imMamdouhaboammar/motion-graphics-skills/blob/29919c1ff91d0e0a242ffc0d085b838fa9575584/LICENSE",
+          "sha256": "f2b182f93e07cd7cbfa973a987034cb411ef3e4796734205bce1226d57d0ceab",
+          "bytes": 4261,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "HyperFrames as repository description",
+        "license_classification": "not_adopted",
+        "primary_reference": "https://github.com/imMamdouhaboammar/motion-graphics-skills/blob/29919c1ff91d0e0a242ffc0d085b838fa9575584/LICENSE",
+        "validation_status": "not_run"
+      },
+      "data_transfer_and_cost": "已排除，未用于生产/训练/执行",
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    }
+  ]
+}

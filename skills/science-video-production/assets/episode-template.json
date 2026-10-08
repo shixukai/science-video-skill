@@ -139,8 +139,8 @@
       ],
       "visual_note": "",
       "shotbook": {
-        "start": 0,
-        "end": 1,
+        "start": null,
+        "end": null,
         "subject": "",
         "action": "",
         "framing": "",
@@ -148,7 +148,8 @@
         "motion_purpose": "",
         "beats": [
           {
-            "at": 0,
+            "at": null,
+            "phase": "",
             "trigger_words": "",
             "attention_subject": "",
             "action": ""
@@ -159,7 +160,7 @@
             "source": "",
             "viewing_note": "",
             "decision_reason": "",
-            "selected": true,
+            "selected": false,
             "asset_id": "A1",
             "source_interval": ""
           }
@@ -232,12 +233,13 @@
           "intentional_offset_reason": ""
         },
         "timing_basis": {
-          "mode": "pending",
+          "mode": "relative_plan",
           "audio_asset_id": "",
           "audio_sha256": "",
-          "relative_phases": []
+          "relative_phases": [],
+          "note": ""
         },
-        "action_class": "",
+        "action_class": [],
         "action_class_details": {}
       }
     }
@@ -355,6 +357,196 @@
         "status": "pending",
         "note": "",
         "evidence": ""
+      },
+      "finesse": {
+        "status": "pending",
+        "target_level": "L3",
+        "reference": "",
+        "reference_note": "",
+        "media_sha256": "",
+        "context_sha256": "",
+        "static": {
+          "level": null,
+          "note": "",
+          "evidence": "",
+          "criteria": [
+            {
+              "id": "A01",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A02",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A03",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A04",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A05",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A06",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A07",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A08",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A09",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "A10",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            }
+          ]
+        },
+        "motion": {
+          "level": null,
+          "note": "",
+          "evidence": "",
+          "criteria": [
+            {
+              "id": "D01",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D02",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D03",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D04",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D05",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D06",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D07",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "D08",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            }
+          ]
+        },
+        "integration": {
+          "level": null,
+          "note": "",
+          "evidence": "",
+          "criteria": [
+            {
+              "id": "I01",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "I02",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "I03",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "I04",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            },
+            {
+              "id": "I05",
+              "status": "pending",
+              "note": "",
+              "evidence": "",
+              "reason": ""
+            }
+          ]
+        }
       }
     },
     "mobile_preview": {
@@ -455,44 +647,15 @@
       "note": "",
       "audience_feedback_reference": "",
       "independent_review_reference": "",
-      "cold_view": {
-        "status": "pending",
+      "evidence": "",
+      "reviewer": "",
+      "optional_audience_feedback": {
+        "status": "not_run",
         "media_sha256": "",
         "viewers": [],
-        "viewer_record_format": {
-          "anonymous_id": "",
-          "real_person": false,
-          "not_in_production": false,
-          "no_relevant_training": false,
-          "first_unprompted_normal_watch": false,
-          "watched_current_version": false,
-          "raw_answers": {
-            "topic": "",
-            "causal_chain": "",
-            "visualization_boundary": "",
-            "conclusion": ""
-          },
-          "scores": {
-            "topic": null,
-            "causal_chain": null,
-            "visualization_boundary": null,
-            "conclusion": null
-          },
-          "scoring_evidence": "",
-          "core_misconceptions": [],
-          "total": null
-        },
-        "test_type": "",
-        "procedure": "unprompted normal-speed first viewing by actual independent non-specialists",
         "actual_viewer_count": 0,
-        "passing_viewer_count": 0,
-        "shared_core_misconceptions": [],
-        "notes": "",
-        "group_id": "",
-        "sampling_plan_reference": ""
-      },
-      "evidence": "",
-      "reviewer": ""
+        "notes": ""
+      }
     },
     "shotbook": {
       "status": "pending",
@@ -772,6 +935,56 @@
         "deployment_status": "not_deployed",
         "sample_validation": "pending"
       }
+    },
+    "explanation_logic": {
+      "status": "pending",
+      "review_scope": "plan",
+      "reviewer": "",
+      "reviewed_at": "",
+      "note": "",
+      "evidence": "",
+      "context_sha256": "",
+      "reviewed_step_ids": []
+    },
+    "expression_plan": {
+      "status": "pending",
+      "review_scope": "plan",
+      "reviewer": "",
+      "reviewed_at": "",
+      "note": "",
+      "evidence": "",
+      "context_sha256": "",
+      "reviewed_step_ids": [],
+      "expression_card_ids": []
+    },
+    "explanation_review": {
+      "status": "pending",
+      "review_scope": "final_export",
+      "reviewer": "",
+      "reviewed_at": "",
+      "note": "",
+      "evidence": "",
+      "context_sha256": "",
+      "reviewed_step_ids": [],
+      "scope": "full_episode",
+      "media_sha256": "",
+      "independent_of_generation_context": false,
+      "actual_information_only": false
+    },
+    "expression_review": {
+      "status": "pending",
+      "review_scope": "final_export",
+      "reviewer": "",
+      "reviewed_at": "",
+      "note": "",
+      "evidence": "",
+      "context_sha256": "",
+      "reviewed_step_ids": [],
+      "expression_card_ids": [],
+      "scope": "full_episode",
+      "media_sha256": "",
+      "independent_of_generation_context": false,
+      "actual_information_only": false
     }
   },
   "narration": {
@@ -790,10 +1003,10 @@
     "duration_seconds": null,
     "voice_version": "",
     "transfer": {
-      "local_generation": "pending",
       "returned_files": "pending",
       "decode": "pending",
-      "evidence": ""
+      "evidence": "",
+      "generation": "pending"
     },
     "notes": "",
     "included_audio_files": [],
@@ -809,6 +1022,21 @@
       "method": "actual_listening",
       "heard": false,
       "evidence": ""
+    },
+    "generation_record": {
+      "file": "",
+      "sha256": ""
+    },
+    "reuse_record": {
+      "status": "pending",
+      "reference": "",
+      "audio_sha256": ""
+    },
+    "execution": {
+      "status": "unconfirmed",
+      "mode": "",
+      "location": "",
+      "confirmation_reference": ""
     }
   },
   "topic": {
@@ -861,18 +1089,18 @@
           "SH1"
         ],
         "answer_evidence": "",
-        "causal_steps": [
+        "explanation_steps": [
           {
-            "id": "CAUSE1",
-            "before": "",
-            "change": "",
-            "after": "",
+            "id": "STEP1",
             "handoff": "",
             "shot_ids": [
               "SH1"
             ],
             "requires_dynamic": true,
-            "still_reason": ""
+            "still_reason": "",
+            "relation_type": "",
+            "prerequisites": [],
+            "key_difficulty": true
           }
         ]
       }
@@ -890,19 +1118,37 @@
     "omitted_scope_ids": [],
     "main_scope_ids": [
       "R1"
+    ],
+    "expression_cards": [
+      {
+        "id": "EXPR1",
+        "step_ids": [
+          "STEP1"
+        ],
+        "difficulty": "",
+        "prerequisites": [],
+        "visual_action": "",
+        "inferable_outcome": "",
+        "misconception": "",
+        "boundary": "",
+        "uncertain": false,
+        "variants": [],
+        "selection": {
+          "variant_id": "",
+          "rationale": "",
+          "criteria": []
+        }
+      }
     ]
   },
   "workflow_version": 2,
   "brief": {
     "audience": "无相关专业训练的成年普通观众",
     "one_sentence_answer": "",
-    "must_see_change": "",
     "out_of_scope": [],
     "forbidden_misrepresentations": [],
     "production_class": "N",
-    "validation_triggers": [
-      "new_complex_mechanism"
-    ],
+    "validation_triggers": [],
     "roles": {
       "producer": "",
       "science_editor": "",
@@ -915,7 +1161,13 @@
     "existing_constraints": [],
     "open_questions_that_block_work": [],
     "work_can_continue_without_user": [],
-    "notes": ""
+    "notes": "",
+    "must_see_relation": "",
+    "audience_prerequisites": {
+      "assumed": [],
+      "introduced": [],
+      "out_of_scope": []
+    }
   },
   "design": {
     "style_version": "",

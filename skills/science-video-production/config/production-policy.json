@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "adopted_requirements_pending_media_validation",
   "meaning": "H requirements cannot be offset by scores; D values are internal calibration starting points, not platform or industry standards.",
   "gates": {
@@ -51,34 +51,25 @@
       "sound": 4,
       "packaging": 4
     },
-    "classification": "D: internal starting thresholds; recorded calibration requires evidence; no hard-gate override"
-  },
-  "cold_view": {
-    "required_for": [
-      "new_style",
-      "benchmark",
-      "new_complex_mechanism",
-      "major_restructure",
-      "new_concept",
-      "major_change",
-      "routine_sample",
-      "major_modification"
-    ],
-    "real_viewers": 5,
-    "min_passing": 4,
-    "item_max": {
-      "topic": 1,
-      "causal_chain": 2,
-      "visualization_boundary": 1,
-      "conclusion": 1
+    "classification": "D: internal starting thresholds; recorded calibration requires evidence; no hard-gate override",
+    "finesse": {
+      "target_level": "L3",
+      "dimensions": [
+        "static",
+        "motion",
+        "integration"
+      ],
+      "no_average_override": true,
+      "evidence_owner": "qa.visual_frames.finesse",
+      "levels": [
+        "L0",
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "unreviewed_status": "pending"
     },
-    "individual_min": 4,
-    "causal_required": 2,
-    "shared_misconception_fail_count": 2,
-    "routine_weekly_sample_start": 2,
-    "no_synthetic_participants": true,
-    "no_automatic_external_recruitment": true,
-    "note": "Five actual independent first viewers are a formative sample, not a population understanding-rate estimate; never simulate participants."
+    "unknown_score": null
   },
   "listening": {
     "required_environments": [
@@ -210,5 +201,26 @@
     "Structure and technical checks do not establish comprehension, art, motion or sound quality.",
     "Missing actual perception or evidence stays unreviewed.",
     "This policy performs no publishing, purchasing or external repository action."
-  ]
+  ],
+  "internal_review": {
+    "required_for": [
+      "R",
+      "N",
+      "B"
+    ],
+    "logic": "qa.explanation_logic",
+    "expression_plan": "qa.expression_plan",
+    "final_logic": "qa.explanation_review",
+    "final_expression": "qa.expression_review",
+    "actual_information_only": true,
+    "independent_of_generation_context": true,
+    "real_audience_required": false
+  },
+  "optional_audience_feedback": {
+    "required": false,
+    "blocks_production": false,
+    "no_synthetic_participants": true,
+    "no_automatic_external_recruitment": true,
+    "note": "Optional postproduction improvement evidence; no participant count, score or frequency gate; preserve actual responses and scope."
+  }
 }

@@ -5,6 +5,7 @@ from datetime import date
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -18,6 +19,49 @@ from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha
 REVIEW_KEYS = ("science", "rights", "visual_frames", "mobile_preview", "audio", "narration", "covers")
 KINDS = {"real_capture", "real_observation", "screen_recording", "simulation", "ai_generated", "graphic", "audio", "font"}
 OUTPUTS = ("video", "cover_3_4", "cover_4_3")
+
+
+def check_finesse(data):
+    """Check evidence declarations, never infer aesthetics from a score."""
+    errors = []
+    qa = data.get("qa", {})
+    qa = qa if isinstance(qa, dict) else {}
+    hashes = qa.get("reviewed_sha256", {})
+    hashes = hashes if isinstance(hashes, dict) else {}
+    visual = qa.get("visual_frames", {}) if isinstance(qa, dict) else {}
+    record = visual.get("finesse", {}) if isinstance(visual, dict) else {}
+    record = record if isinstance(record, dict) else {}
+    def need(ok, message):
+        if not ok:
+            errors.append("finesse: " + message)
+    def text(value):
+        return isinstance(value, str) and bool(value.strip())
+    need(record.get("status") == "pass" and record.get("target_level") == "L3", "L3 target and actual pass required")
+    need(text(record.get("reference")) and text(record.get("reference_note")), "viewed reference and applicable scope required")
+    need(record.get("media_sha256") == hashes.get("video")
+         and text(record.get("media_sha256")), "stale/missing final media binding")
+    need(record.get("context_sha256") == stage_context_sha256(data, "G5"), "stale final review context")
+    conditional = {"A07", "D06", "I05"}
+    for dimension, prefix, count in (("static", "A", 10), ("motion", "D", 8), ("integration", "I", 5)):
+        item = record.get(dimension, {})
+        item = item if isinstance(item, dict) else {}
+        need(item.get("level") == "L3" and text(item.get("note")) and text(item.get("evidence")), dimension + " must independently reach L3 with actual evidence")
+        criteria = item.get("criteria", [])
+        criteria = criteria if isinstance(criteria, list) else []
+        expected = {f"{prefix}{i:02}" for i in range(1, count + 1)}
+        ids = [c.get("id") for c in criteria if isinstance(c, dict)]
+        need(len(ids) == count and all(isinstance(i, str) for i in ids)
+             and set(ids) == expected, dimension + " criteria missing/duplicate")
+        for c in criteria:
+            if not isinstance(c, dict):
+                need(False, dimension + " criterion must be an object")
+                continue
+            exempt = c.get("status") == "not_applicable" and c.get("id") in conditional
+            if exempt:
+                need(text(c.get("reason")), str(c.get("id")) + " non-applicability reason required")
+            else:
+                need(c.get("status") == "pass" and text(c.get("note")) and text(c.get("evidence")), str(c.get("id")) + " actual pass and evidence required")
+    return errors
 
 
 def platform_metadata_sha256(data, preview):
@@ -220,10 +264,21 @@ def check_visual_logic(shots, assets):
 
 
 def check(data, root, stage):
+    # macOS /var and /private/var may name the same temporary directory.
+    # Normalize once before all containment checks, including the public API.
+    root = Path(root).resolve()
     if stage in GATES:
         # Quality reuses actual episode checks; release also reuses the platform path.
         base = "delivery" if stage in ("G6", "G7") else "quality" if stage == "G5" else "plan"
         errors, notes = check(data, root, base)
+        if stage != "G1":
+            for shot in data.get("shots", []):
+                if not isinstance(shot, dict):
+                    continue
+                book = shot.get("shotbook", {})
+                timing = book.get("timing_basis", {}) if isinstance(book, dict) else {}
+                if isinstance(timing, dict) and timing.get("mode") == "relative_plan":
+                    errors.append(f"{stage}: actual audio timing required; relative_plan is only a G1/plan artifact")
         if stage not in ("G5", "G6"):
             errors.extend(check_stage(data, root, stage))
         notes.append("Stage evidence checks only; no actual viewing, quality or authorization is supplied by the checker")
@@ -338,10 +393,77 @@ def check(data, root, stage):
         require(narration_id in assets and assets[narration_id].get("kind") == "audio", "narration: asset_id must reference an audio asset")
     if voice_type == "synthetic":
         require(nonempty(narration.get("disclosure")), "narration: synthetic voice disclosure required")
+    reuse = narration.get("reuse_record", {})
+    reused = isinstance(reuse, dict) and reuse.get("status") == "previously_accepted"
+    execution = narration.get("execution", {})
+    execution = execution if isinstance(execution, dict) else {}
+    if voice_type == "synthetic" and narration.get("status") == "ready" and not reused:
+        require(execution.get("status") == "confirmed"
+                and execution.get("mode") in ("local_project", "service")
+                and nonempty(execution.get("location"))
+                and nonempty(execution.get("confirmation_reference")),
+                "narration: confirmed Qwen execution location/reference required")
     if complete:
         require(narration.get("status") == "ready" and voice_type in ("human", "synthetic"), "narration: ready Chinese voiceover required; captions/music alone are incomplete")
         require(nonempty(narration_id), "narration: recorded voiceover asset_id required")
         require(nonempty(narration.get("series_sample_reference")), "narration: first shared series voice sample reference required")
+        if voice_type == "synthetic":
+            reuse = narration.get("reuse_record", {})
+            reused = isinstance(reuse, dict) and reuse.get("status") == "previously_accepted"
+            if reused:
+                require(nonempty(reuse.get("reference")) and reuse.get("audio_sha256") == narration.get("audio_sha256")
+                        and nonempty(reuse.get("audio_sha256")), "narration: existing accepted audio reference/hash required")
+            else:
+                record_ref = narration.get("generation_record", {})
+                record_ref = record_ref if isinstance(record_ref, dict) else {}
+                record_file = local_file(record_ref.get("file"), "narration generation record")
+                if record_file:
+                    require(file_sha256(record_file) == record_ref.get("sha256"), "narration: stale generation record hash")
+                    try:
+                        generated = json.loads(record_file.read_text(encoding="utf-8"))
+                        require(isinstance(generated, dict), "narration: malformed generation record")
+                        if not isinstance(generated, dict):
+                            generated = {}
+                        require(generated.get("status") == "generated" and nonempty(generated.get("backend"))
+                                and generated.get("provider") == "Qwen"
+                                and nonempty(generated.get("model_id")), "narration: actual synthesis backend/model required")
+                        actual_execution = generated.get("execution", {})
+                        require(isinstance(actual_execution, dict)
+                                and all(actual_execution.get(k) == execution.get(k)
+                                        for k in ("status", "mode", "location", "confirmation_reference")),
+                                "narration: generation execution differs from confirmed location")
+                        revision = generated.get("resolved_model_revision")
+                        manifest = generated.get("model_manifest_sha256")
+                        if revision or manifest:
+                            require(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
+                                    and bool(re.fullmatch(r"[0-9a-f]{64}", str(manifest))),
+                                    "narration: resolved model revision/manifest required when claimed")
+                        else:
+                            require(nonempty(generated.get("model_version_reference")),
+                                    "narration: actual model version reference or unavailable-version evidence required")
+                        voice = generated.get("voice", {})
+                        require(isinstance(voice, dict) and voice.get("speaker") == "Serena" and voice.get("language") == "Chinese", "narration: current voice configuration changed")
+                        source = generated.get("input", {})
+                        require(isinstance(source, dict) and source.get("sha256") == narration.get("script_sha256")
+                                and nonempty(narration.get("script_sha256")), "narration: generation input differs from current script")
+                        output = generated.get("output", {})
+                        output = output if isinstance(output, dict) else {}
+                        require(nonempty(output.get("sha256")), "narration: generation output hash required")
+                        if narration.get("postprocess_record"):
+                            post_ref = narration["postprocess_record"]
+                            post_ref = post_ref if isinstance(post_ref, dict) else {}
+                            post_file = local_file(post_ref.get("file"), "narration postprocess record")
+                            if post_file:
+                                require(file_sha256(post_file) == post_ref.get("sha256"), "narration: stale postprocess record hash")
+                                post = json.loads(post_file.read_text(encoding="utf-8"))
+                                require(isinstance(post, dict) and post.get("status") == "processed"
+                                        and isinstance(post.get("source"), dict) and post["source"].get("sha256") == output.get("sha256")
+                                        and isinstance(post.get("output"), dict) and post["output"].get("sha256") == narration.get("audio_sha256")
+                                        and isinstance(post.get("steps"), list) and bool(post["steps"]), "narration: postprocess source/output/steps must bind actual audio")
+                        else:
+                            require(output.get("sha256") == narration.get("audio_sha256"), "narration: generated output differs from actual audio")
+                    except (OSError, ValueError, TypeError) as exc:
+                        require(False, "narration: unreadable generation/postprocess record: " + str(exc))
     elif narration.get("status") != "ready":
         notes.append("narration: pending Chinese voiceover; captions/music alone are not a completed episode")
     # Shotbook declarations constrain the packet; they never prove visual quality.
@@ -361,29 +483,71 @@ def check(data, root, stage):
             continue
         start, end = book.get("start"), book.get("end")
         timed = seconds(start) and seconds(end) and start < end
-        require(timed, f"{ident}: shotbook needs finite start < end seconds")
+        timing = book.get("timing_basis", {})
+        relative = stage == "plan" and isinstance(timing, dict) and timing.get("mode") == "relative_plan"
+        require(not (complete and isinstance(timing, dict) and timing.get("mode") == "relative_plan"),
+                f"{stage}: actual audio timing required; relative_plan is only a G1/plan artifact")
+        if relative:
+            phases = timing.get("relative_phases")
+            require(isinstance(phases, list) and bool(phases) and all(nonempty(p) for p in phases)
+                    and nonempty(timing.get("note")), f"{ident}: relative_plan needs concrete phases and timing note")
+            require(start is None and end is None, f"{ident}: relative_plan must not claim absolute start/end")
+            notes.append(f"{ident}: relative expression plan; audio timing and viewed media remain pending")
+        else:
+            require(timed, f"{ident}: shotbook needs finite start < end seconds")
         if timed:
             require(start >= last_end, f"{ident}: shotbook shots overlap or are out of order")
             last_end = end
         for key in ("subject", "action", "framing", "claim_support", "motion_purpose"):
             require(nonempty(book.get(key)), f"{ident}: shotbook.{key} required")
+        action_fields = {
+            "localization_and_label": ("appearance_condition", "follow_target", "hold_duration"),
+            "scale_transition": ("original_object", "spatial_anchor", "local_frame", "return_location"),
+            "deformation": ("topology_states", "fixed_boundary", "sliding_boundary", "trajectory"),
+            "propagation_and_change": ("cause", "origin", "direction", "delay", "end_state"),
+            "observation": ("learning_task", "duration"),
+        }
+        classes = book.get("action_class", [])
+        if require(isinstance(classes, list) and all(isinstance(c, str) and c in action_fields for c in classes)
+                   and len(set(classes)) == len(classes), f"{ident}: invalid action_class"):
+            details = book.get("action_class_details", {})
+            if classes and require(isinstance(details, dict), f"{ident}: action_class_details required"):
+                for action_class in classes:
+                    detail = details.get(action_class, {})
+                    if require(isinstance(detail, dict), f"{ident}: {action_class} details required"):
+                        for field in action_fields[action_class]:
+                            value = detail.get(field)
+                            # Numeric times and coordinates may legitimately be zero.
+                            valid = nonempty(value) or (isinstance(value, (list, dict)) and bool(value)) or (
+                                field in ("duration", "delay", "hold_duration") and seconds(value))
+                            require(valid, f"{ident}: {action_class}.{field} required")
+            if complete and classes:
+                timing = book.get("timing_basis", {})
+                require(isinstance(timing, dict) and timing.get("mode") == "real_audio"
+                        and timing.get("audio_sha256") == narration.get("audio_sha256")
+                        and nonempty(timing.get("note")), f"{ident}: action timing must bind real audio")
         beats = book.get("beats")
         if require(isinstance(beats, list), f"{ident}: semantic beats must be a list"):
-            if not beats:
+            if not beats and not relative:
                 require(nonempty(book.get("silence_reason")), f"{ident}: silent observation needs silence_reason")
             previous = start if timed else 0
             for beat in beats:
                 if not require(isinstance(beat, dict), f"{ident}: beat must be an object"):
                     continue
                 at = beat.get("at")
-                if require(seconds(at), f"{ident}: beat.at must be finite seconds"):
+                if relative:
+                    require(at is None and nonempty(beat.get("phase")), f"{ident}: planned beat needs phase, not an invented absolute time")
+                elif require(seconds(at), f"{ident}: beat.at must be finite seconds"):
                     require(timed and start <= at < end and at >= previous, f"{ident}: beat outside shot or out of order")
                     previous = at
                 for key in ("trigger_words", "attention_subject", "action"):
                     require(nonempty(beat.get(key)), f"{ident}: beat.{key} required")
         candidates = book.get("candidates")
         chosen = []
-        if require(isinstance(candidates, list) and bool(candidates), f"{ident}: viewed candidates required"):
+        pending_candidates = relative and isinstance(candidates, list) and not candidates
+        if pending_candidates:
+            require(nonempty(book.get("alternatives_note")), f"{ident}: pending media selection needs a specific note")
+        elif require(isinstance(candidates, list) and bool(candidates), f"{ident}: viewed candidates required"):
             for candidate in candidates:
                 if not require(isinstance(candidate, dict), f"{ident}: candidate must be an object"):
                     continue
@@ -425,6 +589,7 @@ def check(data, root, stage):
         return errors, notes
 
     errors.extend(check_stage(data, root, "G5" if stage == "quality" else "G6"))
+    errors.extend(check_finesse(data))
     require(nonempty(data.get("production_statement")), "actual production_statement required")
     deliverables = data.get("deliverables", {})
     qa = data.get("qa", {})
