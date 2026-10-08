@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Behavioral regression tests for the reference/config/catalog contract."""
 import copy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -128,6 +129,51 @@ class ReferenceSystemTests(unittest.TestCase):
                 finally:
                     p.write_text(original)
         self.assertEqual(m.check(self.root), [])
+
+    def test_spatial_relation_owner_clauses_cannot_be_removed(self):
+        """Test owner/reference integrity, not whether a scene is understandable."""
+        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
+        contracts = {c["id"]: c for c in registry["failure_contracts"]}
+        owners = {o["id"]: o["file"] for o in json.loads(
+            (self.root / "indexes/rule-owners.json").read_text())["owners"]}
+        routes = [
+            ("H-h-failure-100", "production", "逐段声画与图内文字对应", 2),
+            ("field-art", "visual", "纯2d解释与真实素材", 1),
+        ]
+        for ident, owner, anchor, expected_count in routes:
+            clauses = [c for c in contracts[ident]["clauses"]
+                       if c["file"] == owners[owner] and c["anchor"] == anchor]
+            self.assertEqual(len(clauses), expected_count)
+            for clause in clauses:
+                with self.subTest(contract=ident, digest=clause["quote_sha256"]):
+                    p = self.root / owners[owner]
+                    original = p.read_text()
+                    try:
+                        p.write_text(original.replace(clause["quote"], ""))
+                        self.errors("failure clause text missing/stale")
+                    finally:
+                        p.write_text(original)
+        self.assertEqual(m.check(self.root), [])
+
+    def test_spatial_quality_cross_reference_rejects_broken_owner_anchor(self):
+        """A synchronized quote/hash must not hide a broken responsibility link."""
+        target = "production-checkpoints.md#逐段声画与图内文字对应"
+        broken = "production-checkpoints.md#missing-spatial-relation"
+        registry_path = self.root / "indexes/standard-coverage.json"
+        registry = json.loads(registry_path.read_text())
+        contract = next(c for c in registry["failure_contracts"] if c["id"] == "field-art")
+        matches = [c for c in contract["clauses"]
+                   if c["file"] == "references/quality-acceptance.md" and target in c["quote"]]
+        self.assertEqual(len(matches), 1)
+        p = self.root / "references/quality-acceptance.md"
+        p.write_text(p.read_text().replace(target, broken))
+        for contract in registry["failure_contracts"]:
+            for clause in contract["clauses"]:
+                if clause["file"] == "references/quality-acceptance.md" and target in clause["quote"]:
+                    clause["quote"] = clause["quote"].replace(target, broken)
+                    clause["quote_sha256"] = hashlib.sha256(clause["quote"].encode()).hexdigest()
+        registry_path.write_text(json.dumps(registry, ensure_ascii=False))
+        self.errors("broken heading link")
 
 if __name__ == "__main__":
     unittest.main()
