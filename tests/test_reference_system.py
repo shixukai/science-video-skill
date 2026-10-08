@@ -103,5 +103,31 @@ class ReferenceSystemTests(unittest.TestCase):
         self.edit("indexes/standard-coverage.json", lambda d: d["rules"][0].update(mapping_status="pending"))
         self.errors("rule semantic mapping unresolved")
 
+    def test_art_handoff_rule_removal_breaks_reference_integrity(self):
+        """Deleting an execution boundary must fail structurally, not judge art."""
+        contracts = {c["id"]: c for c in json.loads(
+            (self.root / "indexes/standard-coverage.json").read_text())["failure_contracts"]}
+        cases = [
+            ("field-gates", "G2的低精细度指尚未精修", "references/production-checkpoints.md"),
+            ("field-style_approval", "把当前生产资产经实际渲染", "references/visual-system.md"),
+            ("field-style_approval", "若实际资产已变成另一种造型语言", "references/visual-system.md"),
+            ("V-natural_editable_shapes", "对本镜需要独立显隐", "references/visual-system.md"),
+            ("field-art", "已有批准画风时，美术审查须核", "references/quality-acceptance.md"),
+        ]
+        for ident, prefix, owner in cases:
+            with self.subTest(contract=ident, clause=prefix):
+                matches = [c for c in contracts[ident]["clauses"] if c["quote"].startswith(prefix)]
+                self.assertEqual(len(matches), 1, "Execution rule must have a precise existing-contract reference")
+                clause = matches[0]
+                self.assertEqual(clause["file"], owner)
+                p = self.root / owner
+                original = p.read_text()
+                try:
+                    p.write_text(original.replace(clause["quote"], ""))
+                    self.errors("failure clause text missing/stale")
+                finally:
+                    p.write_text(original)
+        self.assertEqual(m.check(self.root), [])
+
 if __name__ == "__main__":
     unittest.main()
