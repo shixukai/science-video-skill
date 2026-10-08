@@ -91,7 +91,7 @@ def check(root):
         policy = read("config/production-policy.json")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
-        need(policy["cold_view"]["real_viewers"] == 5 and policy["cold_view"]["no_synthetic_participants"] is True, "real cold-view requirement changed")
+        need(policy["cold_view"]["production_gate"] is False and policy["cold_view"]["enabled_by_default"] is False and policy["cold_view"]["no_synthetic_participants"] is True and policy["internal_review"]["actual_full_audio_visual_review_required"] is True, "optional feedback/internal review boundary changed")
         need(set(policy["listening"]["required_environments"]) == {"headphones", "phone_speaker"}, "dual listening environments required")
         need(policy["defaults"]["semantic_sync_warning_ms"] == 150, "semantic warning starting point changed")
         registry = read("indexes/standard-coverage.json")
@@ -119,6 +119,22 @@ def check(root):
                     end = next((h.start() for h in headings[i+1:] if len(h.group(1)) <= level), len(body))
                     need(quote in body[start:end], "failure clause outside referenced section")
         need(bool(failure_contracts), "precise failure contracts missing")
+        navigation = registry.get("explanation_standard", {})
+        need(navigation.get("status") == "navigation_only" and navigation.get("authority") == "responsibility_body", "explanation navigation must defer to responsibility body")
+        entries = navigation.get("entries", [])
+        need(isinstance(entries, list) and len(entries) == 12 and {e.get("id") for e in entries if isinstance(e, dict)} == {f"E{i:02}" for i in range(1, 13)}, "E01-E12 explanation navigation missing/duplicate")
+        for entry in entries:
+            target = local_path(root, root, entry.get("owner"))
+            need(str(target) in owner_files, "explanation navigation has no canonical owner")
+            heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
+            need(entry.get("owner_anchor") in heads, "explanation navigation anchor missing")
+            contracts = entry.get("contract_ids", [])
+            valid = isinstance(contracts, list) and bool(contracts) and all(isinstance(i, str) and i in failure_contracts for i in contracts)
+            need(valid, "explanation navigation contract missing")
+            if valid:
+                for ident in contracts:
+                    clauses = failure_contracts[ident].get("clauses", [])
+                    need(bool(clauses) and all(c.get("file") == entry.get("owner") and c.get("anchor") == entry.get("owner_anchor") for c in clauses), "explanation navigation contract owner/anchor mismatch")
         rule_ids = []
         for rule in registry["rules"]:
             rule_ids.append(rule["id"])
@@ -201,3 +217,4 @@ if __name__ == "__main__":
     if not problems:
         print("Reference/config/catalog structure passed; actual design, rights and media remain separate reviews.")
     raise SystemExit(bool(problems))
+

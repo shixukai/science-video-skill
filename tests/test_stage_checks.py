@@ -37,7 +37,7 @@ class StageTests(unittest.TestCase):
  def test_missing_phone(s):s.d['qa']['audio']['environments']=['headphones'];s.rejects('phone-speaker')
  def test_fake_score(s):s.d['qa']['scorecard']['total']=100;s.rejects('total inconsistent')
  def test_score_not_override(s):s.d['qa']['visual_frames']['status']='fail';s.rejects('referenced review not passed')
- def test_benchmark_no_people(s):s.d['brief']['production_class']='B';refresh(s.d);s.rejects('cold test missing')
+ def test_benchmark_no_people(s):s.d['brief']['production_class']='B';refresh(s.d);s.assertEqual(s.errors(),[])
  def test_new_video_old_review(s):s.d['deliverables']['video']='changed.mp4';refresh(s.d);s.rejects('must bind final deliverable')
  def test_unsafe_path(s):s.d['qa']['gates']['G1']['evidence'][0]['file']='../outside';s.rejects('path missing/unsafe')
  def test_bad_duration(s):s.d['qa']['visual_frames']['animation']['viewing']['duration']='one';s.rejects('duration must match')
@@ -57,7 +57,7 @@ class StageTests(unittest.TestCase):
   s.d['qa']['visual_frames']['process_steps'].pop();s.rejects('full primary causal chain evidence incomplete')
  def prepare_cold(s):
   s.d['brief']['validation_triggers']=['new_complex_mechanism'];r=s.d['qa']['comprehension'];r['status']='audience_checked'
-  r['cold_view']={'status':'pass','shared_core_misconceptions':[],'group_id':'synthetic-five','sampling_plan_reference':'synthetic test plan, not real recruitment','actual_viewer_count':5,'passing_viewer_count':5,'media_sha256':s.d['qa']['reviewed_sha256']['video'],'viewers':[{'anonymous_id':'test-'+str(i),'real_person':True,'not_in_production':True,'no_relevant_training':True,'first_unprompted_normal_watch':True,'watched_current_version':True,'raw_answers':{k:'synthetic software fixture, not actual feedback' for k in ('topic','causal_chain','visualization_boundary','conclusion')},'scores':{'topic':1,'causal_chain':2,'visualization_boundary':0,'conclusion':1},'total':4,'scoring_evidence':'synthetic software fixture','core_misconceptions':[]} for i in range(5)]};refresh(s.d)
+  r['cold_view']={'status':'pass','population_rate_claimed':False,'shared_core_misconceptions':[],'group_id':'synthetic-five','sampling_plan_reference':'synthetic test plan, not real recruitment','actual_viewer_count':5,'passing_viewer_count':5,'media_sha256':s.d['qa']['reviewed_sha256']['video'],'viewers':[{'anonymous_id':'test-'+str(i),'real_person':True,'not_in_production':True,'no_relevant_training':True,'first_unprompted_normal_watch':True,'watched_current_version':True,'raw_answers':{k:'synthetic software fixture, not actual feedback' for k in ('topic','causal_chain','visualization_boundary','conclusion')},'scores':{'topic':1,'causal_chain':2,'visualization_boundary':0,'conclusion':1},'total':4,'scoring_evidence':'synthetic software fixture','core_misconceptions':[]} for i in range(5)]};refresh(s.d)
  def test_cold_fixture(s):s.prepare_cold();s.assertEqual(s.errors(),[])
  def test_duplicate_people(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][1]['anonymous_id']='test-0';s.rejects('ids missing/duplicate')
  def test_agents_not_people(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'][0]['real_person']=False;s.rejects('real_person required')
@@ -65,12 +65,12 @@ class StageTests(unittest.TestCase):
  def test_shared_misunderstanding(s):
   s.prepare_cold()
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers'][:2]:viewer['core_misconceptions']=['same-core-error']
-  s.rejects('shared core misconception')
+  s.rejects('observed core misconception')
  def test_cause_incomplete_despite_total(s):
   s.prepare_cold()
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers'][:2]:viewer['scores']={'topic':1,'causal_chain':1,'visualization_boundary':1,'conclusion':1}
-  s.rejects('four viewers')
- def test_not_five(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'].pop();s.rejects('five actual viewers')
+  s.rejects('passing viewer count inconsistent')
+ def test_not_five(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['viewers'].pop();s.rejects('actual viewer count inconsistent')
  def test_overlap_cannot_hide_gap(s):s.d['qa']['shotbook']['viewing']['ranges']=[[0,.4],[0,.4],[.8,1]];s.rejects('range gap')
  def test_string_true_not_actual_watch(s):s.d['qa']['shotbook']['viewing']['watched']='true';s.rejects('actual viewing')
  def test_deprecated_asset(s):s.d['assets'][0]['catalog']['stage']='deprecated';refresh(s.d);s.rejects('catalog state blocks')
@@ -88,9 +88,9 @@ class StageTests(unittest.TestCase):
   for viewer in s.d['qa']['comprehension']['cold_view']['viewers']:viewer['core_misconceptions']={'shared':True}
   s.rejects('explicit core_misconceptions list')
  def test_unknown_trigger(s):s.d['brief']['validation_triggers']=['unclassified'];refresh(s.d);s.rejects('recognized values')
- def test_new_concept_requires_cold(s):s.d['brief']['validation_triggers']=['new_concept'];refresh(s.d);s.rejects('cold test missing')
- def test_sampled_routine_requires_cold(s):s.d['brief']['validation_triggers']=['routine_sample'];refresh(s.d);s.rejects('cold test missing')
- def test_major_modification_requires_cold(s):s.d['brief']['validation_triggers']=['major_modification'];refresh(s.d);s.rejects('cold test missing')
+ def test_new_concept_no_people_allowed(s):s.d['brief']['validation_triggers']=['new_concept'];refresh(s.d);s.assertEqual(s.errors(),[])
+ def test_sampled_routine_no_people_allowed(s):s.d['brief']['validation_triggers']=['routine_sample'];refresh(s.d);s.assertEqual(s.errors(),[])
+ def test_major_modification_no_people_allowed(s):s.d['brief']['validation_triggers']=['major_modification'];refresh(s.d);s.assertEqual(s.errors(),[])
  def test_unselected_future_asset_allowed(s):
   asset=copy.deepcopy(s.d['assets'][0]);asset['id']='UNSELECTED';asset['catalog']['stage']='candidate';s.d['assets'].append(asset);s.assertEqual(s.errors('G3'),[])
  def test_real_video_not_svg(s):s.d['assets'][0]['catalog'].pop('viewBox');refresh(s.d);s.assertEqual(s.errors('G3'),[])
@@ -134,11 +134,13 @@ class StageTests(unittest.TestCase):
  def test_style_rejection_blocks(s):s.d['design']['approval']['status']='fail';refresh(s.d);s.rejects('design approval missing/failed','G3')
  def test_style_scope_not_expanded(s):s.d['design']['approval']['scope']['visual_style']=False;refresh(s.d);s.rejects('does not cover visual style','G3')
  def test_style_feedback_not_board_path(s):s.d['design']['approval']['actual_feedback_ref']='';refresh(s.d);s.rejects('actual style feedback reference','G3')
- def test_ten_viewers_not_fixed_four_success(s):
+ def test_optional_feedback_no_fixed_sample_quota(s):
   s.prepare_cold();r=s.d['qa']['comprehension']['cold_view']
   for i in range(5):
    viewer=copy.deepcopy(r['viewers'][0]);viewer['anonymous_id']='extra-'+str(i);viewer['scores']={k:0 for k in viewer['scores']};r['viewers'].append(viewer)
-  r['viewers'][4]['scores']={k:0 for k in r['viewers'][4]['scores']};r['actual_viewer_count']=10;r['passing_viewer_count']=4;s.rejects('exactly five')
+  r['viewers'][4]['scores']={k:0 for k in r['viewers'][4]['scores']};r['actual_viewer_count']=10;r['passing_viewer_count']=4
+  for viewer in r['viewers']:viewer['total']=sum(viewer['scores'].values())
+  s.assertEqual(s.errors(),[])
  def test_cold_count_summary_must_match(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['actual_viewer_count']=0;s.rejects('actual viewer count inconsistent')
  def test_cold_passing_summary_must_match(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['passing_viewer_count']=0;s.rejects('passing viewer count inconsistent')
  def test_unused_ai_not_current_content(s):
@@ -181,3 +183,73 @@ class StageTests(unittest.TestCase):
   try:
    path.write_bytes(path.read_bytes()+b'changed fixture');s.rejects('hash stale','G5')
   finally:path.unlink()
+
+
+ def typed(s,kind='spatial_constraint'):
+  for coverage in s.d['topic_alignment']['coverage']:
+   coverage['explanation_type']=kind;coverage['explanation_steps']=coverage.pop('causal_steps')
+   for step in coverage['explanation_steps']:
+    for k in ('before','change','after','handoff'):step.pop(k)
+    step.update(prerequisites=['synthetic known premise'],key_relation='synthetic key relation',derivation='synthetic inference',boundary='synthetic limit',referent_mappings={'object':'synthetic on-screen object'},requires_dynamic=False,still_reason='stable relation permits inspection')
+    step.update({key:'synthetic '+key for key in gates.EXPLANATION_TYPES[kind]})
+  for entry in s.d['qa']['visual_frames']['animation']['steps']:
+   entry.pop('observed_change');entry.pop('handoff_observed');entry.update(observed_relation='synthetic actual relation',derivation_observed='synthetic actual inference',representation='stable_spatial_diagram')
+  s.d['brief']['must_make_understandable']=s.d['brief'].pop('must_see_change')
+  s.d['brief'].update(difficult_step_ids=[],explanation_difficulties=[],no_special_design_reason='Synthetic simple stable relation; no separate difficult step identified')
+  s.d['qa']['comprehension']['logic_review']={'status':'pass','basis':'paper_logic','reviewer':'synthetic','capability':'test only','evidence':'synthetic logic-only record'};refresh(s.d)
+ def test_each_typed_relation_passes_without_fabricated_causal_states(s):
+  for kind in gates.EXPLANATION_TYPES:
+   with s.subTest(kind=kind):
+    s.d=copy.deepcopy(s.base);s.typed(kind);s.assertEqual(s.errors(),[])
+ def test_spatial_no_premise(s):s.typed();s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['prerequisites']=[];refresh(s.d);s.rejects('explicit prerequisites')
+ def test_spatial_no_constraint(s):s.typed();s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['constraints']='';refresh(s.d);s.rejects('constraints required')
+ def test_unknown_relation_type(s):s.typed();s.d['topic_alignment']['coverage'][0]['explanation_type']='anything';refresh(s.d);s.rejects('unknown or missing explanation_type')
+ def test_parallel_legacy_cannot_mask_typed_missing(s):
+  s.typed();c=s.d['topic_alignment']['coverage'][0];c['causal_steps']=copy.deepcopy(c['explanation_steps']);c['explanation_steps']=[];refresh(s.d);s.rejects('ambiguous parallel')
+ def test_not_applicable_is_not_premise(s):s.typed();s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['prerequisites']=['not_applicable'];refresh(s.d);s.rejects('explicit prerequisites')
+ def test_quantity_common_scale_required(s):s.typed('quantity');s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['common_scale']='';refresh(s.d);s.rejects('common_scale required')
+ def test_probability_denominator_required(s):s.typed('probability');s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['denominator']='';refresh(s.d);s.rejects('denominator required')
+ def test_evidence_inference_limits_required(s):s.typed('evidence_inference');s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['limits']='';refresh(s.d);s.rejects('limits required')
+ def test_referent_mapping_missing(s):s.typed();s.d['topic_alignment']['coverage'][0]['explanation_steps'][0]['referent_mappings']={};refresh(s.d);s.rejects('referent mappings required')
+ def test_actual_referent_missing(s):s.typed();s.d['qa']['comprehension']['internal_review']['steps'][0]['referent_evidence']={'other':'wrong object'};s.rejects('actual referent mapping incomplete')
+ def test_actual_derivation_missing(s):s.typed();s.d['qa']['comprehension']['internal_review']['steps'][0]['derivation_observed']='';s.rejects('derivation_observed required')
+ def test_unpresented_author_knowledge_blocks(s):s.d['qa']['comprehension']['internal_review']['steps'][0]['unpresented_assumptions']=['author privately knows the geometry'];s.rejects('unpresented assumptions block')
+ def test_internal_review_missing_despite_no_viewer_requirement(s):s.d['qa']['comprehension'].pop('internal_review');s.rejects('actual internal explanation')
+ def test_internal_review_missing_responsibility(s):s.d['qa']['comprehension']['internal_review']['responsibilities'].pop('expression');s.rejects('expression responsibility')
+ def test_paper_logic_cannot_pass_final_media(s):s.d['qa']['comprehension']['internal_review']['viewing']['method']='paper_logic';s.rejects('normal-speed continuous playback')
+ def test_no_actual_internal_watch(s):s.d['qa']['comprehension']['internal_review']['viewing']['watched']=False;s.rejects('actual viewing and listening')
+ def test_no_actual_internal_listen(s):s.d['qa']['comprehension']['internal_review']['viewing']['heard']=False;s.rejects('actual viewing and listening')
+ def test_incapable_agent_cannot_pass(s):s.d['qa']['comprehension']['internal_review']['visual_review_capable']=False;s.rejects('visual_review_capable required')
+ def test_internal_old_context(s):s.d['qa']['comprehension']['internal_review']['context_sha256']='0'*64;s.rejects('internal review stale context')
+ def test_internal_missing_transfer(s):s.d['qa']['comprehension']['internal_review']['understanding_goals']['transfer']['status']='pending';s.rejects('transfer understanding condition')
+ def test_optional_pending_does_not_block(s):s.d['qa']['comprehension']['cold_view']={'status':'pending','viewers':[],'actual_viewer_count':0};s.assertEqual(s.errors(),[])
+ def test_optional_population_rate_rejected(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['population_rate_claimed']=True;s.rejects('cannot establish population')
+ def test_optional_stale_media_rejected(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['media_sha256']='0'*64;s.rejects('cold test stale media')
+ def test_optional_low_scores_honestly_reported_do_not_prove_failure(s):
+  s.prepare_cold();r=s.d['qa']['comprehension']['cold_view']
+  for viewer in r['viewers']:viewer['scores']={k:0 for k in viewer['scores']};viewer['total']=0
+  r['passing_viewer_count']=0;s.assertEqual(s.errors(),[])
+
+ def test_difficult_steps_need_design(s):s.typed();s.d['brief']['difficult_step_ids']=['TEST0'];refresh(s.d);s.rejects('difficulties lack design cards','G1')
+ def test_empty_difficulties_need_specific_reason(s):s.typed();s.d['brief']['no_special_design_reason']='not_applicable';refresh(s.d);s.rejects('no_special_design_reason','G1')
+ def test_difficulty_card_four_fields(s):
+  s.typed();s.d['brief']['difficult_step_ids']=['TEST0'];s.d['brief']['explanation_difficulties']=[{'step_ids':['TEST0'],'difficulty':'fixture','necessary_information':'fixture','expression_action':'fixture','derived_result':'','misleading_risk':'fixture'}];refresh(s.d);s.rejects('derived_result required','G1')
+ def test_difficulty_card_can_cover_selected_subset(s):
+  s.typed();s.d['brief']['difficult_step_ids']=['TEST0'];s.d['brief']['explanation_difficulties']=[{'step_ids':['TEST0'],'difficulty':'fixture','necessary_information':'fixture','expression_action':'fixture','derived_result':'fixture','misleading_risk':'fixture'}];refresh(s.d);s.assertEqual(s.errors(),[])
+ def test_paper_logic_can_pass_g1_without_media_review(s):
+  s.typed();s.d['qa']['comprehension']['internal_review']['status']='pending';s.assertEqual(s.errors('G1'),[]);s.rejects('actual internal explanation','G5')
+ def test_g1_logic_review_missing(s):s.typed();s.d['qa']['comprehension'].pop('logic_review');s.rejects('separate paper logic review','G1')
+ def test_g1_logic_stale(s):s.typed();s.d['qa']['comprehension']['logic_review']['context_sha256']='0'*64;s.rejects('logic review stale context','G1')
+ def test_optional_bad_protocol(s):s.prepare_cold();s.d['qa']['comprehension']['cold_view']['protocol']={'item_max':{}};s.rejects('protocol item maxima invalid')
+ def test_optional_unperformed_claimed_results(s):s.d['qa']['comprehension']['cold_view']={'status':'not_conducted','passing_viewer_count':5};s.rejects('unperformed feedback cannot claim')
+
+ def test_auxiliary_promised_premise_required(s):
+  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];s.d['topic_alignment']['coverage'][1]['explanation_steps'][0]['prerequisites']=[];refresh(s.d);s.rejects('explicit prerequisites','G1')
+ def test_auxiliary_actual_presentation_required(s):
+  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];s.d['qa']['comprehension']['internal_review']['steps'].pop();refresh(s.d);s.rejects('promised explanation coverage incomplete','G5')
+ def test_auxiliary_does_not_require_first_representative_sample(s):
+  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];r=s.d['qa']['visual_frames']['animation'];r['step_ids']=['TEST0'];r['steps']=[r['steps'][0]];refresh(s.d);s.assertEqual(s.errors(),[])
+
+ def test_legacy_structure_cannot_skip_design(s):s.d['brief'].pop('audience_start');refresh(s.d);s.rejects('explicit knowledge layer required','G1')
+ def test_legacy_structure_cannot_skip_logic_review(s):s.d['qa']['comprehension'].pop('logic_review');s.rejects('separate paper logic review','G1')
+ def test_legacy_structure_cannot_skip_learning_targets(s):s.d['brief'].pop('understanding_targets');refresh(s.d);s.rejects('planned understanding target required','G1')

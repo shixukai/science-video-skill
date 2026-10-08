@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "adopted_requirements_pending_media_validation",
   "meaning": "H requirements cannot be offset by scores; D values are internal calibration starting points, not platform or industry standards.",
   "gates": {
@@ -54,31 +54,17 @@
     "classification": "D: internal starting thresholds; recorded calibration requires evidence; no hard-gate override"
   },
   "cold_view": {
-    "required_for": [
-      "new_style",
-      "benchmark",
-      "new_complex_mechanism",
-      "major_restructure",
-      "new_concept",
-      "major_change",
-      "routine_sample",
-      "major_modification"
-    ],
-    "real_viewers": 5,
-    "min_passing": 4,
-    "item_max": {
+    "enabled_by_default": false,
+    "production_gate": false,
+    "no_synthetic_participants": true,
+    "no_automatic_external_recruitment": true,
+    "legacy_item_max": {
       "topic": 1,
       "causal_chain": 2,
       "visualization_boundary": 1,
       "conclusion": 1
     },
-    "individual_min": 4,
-    "causal_required": 2,
-    "shared_misconception_fail_count": 2,
-    "routine_weekly_sample_start": 2,
-    "no_synthetic_participants": true,
-    "no_automatic_external_recruitment": true,
-    "note": "Five actual independent first viewers are a formative sample, not a population understanding-rate estimate; never simulate participants."
+    "note": "Optional authorized formative feedback only. No required group size, pass quota, schedule or population-rate inference; retain truthful current-version answers and investigate observed core errors."
   },
   "listening": {
     "required_environments": [
@@ -210,5 +196,25 @@
     "Structure and technical checks do not establish comprehension, art, motion or sound quality.",
     "Missing actual perception or evidence stays unreviewed.",
     "This policy performs no publishing, purchasing or external repository action."
-  ]
+  ],
+  "review_triggers": [
+    "new_style",
+    "benchmark",
+    "new_complex_mechanism",
+    "major_restructure",
+    "new_concept",
+    "major_change",
+    "routine_sample",
+    "major_modification"
+  ],
+  "internal_review": {
+    "required_for_quality": true,
+    "allowed_reviewers": [
+      "capable_human",
+      "capable_agent"
+    ],
+    "basis": "presented_work_only",
+    "actual_full_audio_visual_review_required": true,
+    "paper_logic_is_not_final_media_review": true
+  }
 }

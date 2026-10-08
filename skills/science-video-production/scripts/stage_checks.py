@@ -30,6 +30,26 @@ def number(x):
  except OverflowError:
   return False
 
+
+EXPLANATION_TYPES = {
+ 'causal_process': ('before','change','after','handoff'),
+ 'spatial_constraint': ('objects_positions','constraints','observer_frame'),
+ 'structure_function': ('components','organization','function_link'),
+ 'propagation': ('carrier','path','transfer'),
+ 'quantity': ('common_scale','denominator','sample_scope','uncertainty'),
+ 'probability': ('common_scale','denominator','sample_scope','uncertainty','outcomes'),
+ 'evidence_inference': ('observations','inference_rule','alternative_explanations','limits'),
+}
+UNDERSTANDING_GOALS = ('answer','relationships','transfer','boundaries')
+
+def relation_steps(coverage):
+ """New typed records and legacy causal records share IDs and dependency mapping."""
+ coverage=obj(coverage)
+ return seq(coverage.get('explanation_steps') if 'explanation_steps' in coverage else coverage.get('causal_steps'))
+
+def substantive(value):
+ return text(value) and value.strip().lower() not in ('n/a','na','none','not_applicable','not applicable','pending','todo','tbd','不适用','无')
+
 def digest(x):
  return hashlib.sha256(json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
@@ -53,7 +73,7 @@ def dependencies(data, representative=False):
   return set(value)
  design=obj(data.get('design'));animation=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation'))
  selected={x for x in seq(animation.get('step_ids')) if text(x)}
- selected_shots={i for coverage in seq(obj(data.get('topic_alignment')).get('coverage')) for step in seq(obj(coverage).get('causal_steps')) if text(obj(step).get('id')) and obj(step).get('id') in selected for i in seq(obj(step).get('shot_ids')) if text(i)}
+ selected_shots={i for coverage in seq(obj(data.get('topic_alignment')).get('coverage')) for step in relation_steps(coverage) if text(obj(step).get('id')) and obj(step).get('id') in selected for i in seq(obj(step).get('shot_ids')) if text(i)}
  used=set()
  for shot in seq(data.get('shots')):
   shot=obj(shot);ids=refs(shot.get('asset_ids'),'shot '+str(shot.get('id')))
@@ -159,33 +179,63 @@ class Checks:
    self.need(number(dur) and cursor>=dur-0.05,label+' full evidence clip must actually be covered')
   return r
  def causal(self):
+  """Historical method name; validates typed explanations, not only causality."""
   a=obj(self.data.get('topic_alignment'));required={r.get('id') for r in seq(obj(obj(self.data.get('topic')).get('current')).get('required_scope')) if isinstance(r,dict) and text(r.get('id'))}
   mains=a.get('main_scope_ids');valid=isinstance(mains,list) and bool(mains) and all(text(x) for x in mains)
   self.need(valid and len(set(mains))==len(mains) and set(mains)<=required,'primary question main_scope_ids missing/invalid')
-  mains=set(mains) if valid else set();covered=set();steps={}
-  all_ids=[]
-  for coverage in seq(a.get('coverage')):
-   for step in seq(obj(coverage).get('causal_steps')):
-    ident=obj(step).get('id')
-    if text(ident):all_ids.append(ident)
-  self.need(len(all_ids)==len(set(all_ids)),'causal step ids must be unique across primary and auxiliary scopes')
+  mains=set(mains) if valid else set();covered=set();steps={};all_ids=[]
   shots={s.get('id') for s in seq(self.data.get('shots')) if isinstance(s,dict) and text(s.get('id'))}
   for c in seq(a.get('coverage')):
-   c=obj(c)
-   if c.get('scope_id') not in mains:continue
-   chain=c.get('causal_steps')
-   if not self.need(isinstance(chain,list) and bool(chain),'primary causal chain missing'):continue
+   c=obj(c);typed='explanation_steps' in c or 'explanation_type' in c
+   kind=c.get('explanation_type') if typed else 'causal_process'
+   self.need(not (typed and 'causal_steps' in c),'ambiguous parallel explanation and causal records')
+   self.need(kind in EXPLANATION_TYPES,'unknown or missing explanation_type')
+   chain=relation_steps(c)
+   all_ids.extend(obj(step).get('id') for step in chain if text(obj(step).get('id')))
+   if not self.need(c.get('scope_id') in required,'explanation scope must match a promised scope'):continue
+   if not self.need(bool(chain),'primary explanation chain missing (legacy primary causal chain missing)'):continue
+   self.need(c.get('scope_id') not in covered,'duplicate promised explanation scope')
    covered.add(c['scope_id'])
    for step in chain:
-    step=obj(step);ident=step.get('id')
-    if not self.need(text(ident) and ident not in steps,'causal step id missing/duplicate'):continue
-    steps[ident]=step
-    for key in ('before','change','after','handoff'):self.need(text(step.get(key)),ident+' '+key+' required')
+    step=dict(obj(step));ident=step.get('id')
+    if not self.need(text(ident) and ident not in steps,'explanation step id missing/duplicate'):continue
+    step['_explanation_type']=kind;step['_typed']=typed;steps[ident]=step
+    for key in EXPLANATION_TYPES.get(kind,()):self.need(substantive(step.get(key)),ident+' '+key+' required')
+    if typed:
+     pre=step.get('prerequisites')
+     self.need(isinstance(pre,list) and bool(pre) and all(substantive(x) for x in pre),ident+' explicit prerequisites required')
+     for key in ('key_relation','derivation','boundary'):self.need(substantive(step.get(key)),ident+' '+key+' required')
+     mappings=step.get('referent_mappings')
+     self.need(isinstance(mappings,dict) and bool(mappings) and all(substantive(k) and substantive(v) for k,v in mappings.items()),ident+' referent mappings required')
     ids=step.get('shot_ids');self.need(isinstance(ids,list) and bool(ids) and all(text(i) and i in shots and i in seq(c.get('shot_ids')) for i in ids),ident+' shot coverage missing')
     self.need(isinstance(step.get('requires_dynamic'),bool),ident+' requires_dynamic declaration required')
-    if step.get('requires_dynamic') is False:self.need(text(step.get('still_reason')),ident+' static observation reason required')
-  self.need(covered==mains and bool(steps),'primary causal chain coverage incomplete')
+    if step.get('requires_dynamic') is False:self.need(substantive(step.get('still_reason')),ident+' static observation reason required')
+  self.need(len(all_ids)==len(set(all_ids)),'explanation step ids must be unique across primary and auxiliary scopes')
+  self.need(covered==required and bool(steps),'all promised explanation coverage incomplete')
   return steps
+ def explanation_design(self,steps):
+  brief=obj(self.data.get('brief'));start=obj(brief.get('audience_start'))
+  for key in ('assumed_knowledge','new_knowledge','deferred_knowledge'):
+   values=start.get(key);self.need(isinstance(values,list) and all(substantive(v) for v in values) and (key!='new_knowledge' or bool(values)),'audience_start '+key+' explicit knowledge layer required')
+  for goal in UNDERSTANDING_GOALS:self.need(substantive(obj(brief.get('understanding_targets')).get(goal)),goal+' planned understanding target required')
+  difficult=brief.get('difficult_step_ids')
+  valid=isinstance(difficult,list) and all(text(i) and i in steps for i in difficult)
+  self.need(valid and len(set(difficult))==len(difficult),'explicit difficult_step_ids must be unique known promised steps')
+  difficult=set(difficult) if valid else set()
+  if not difficult:self.need(substantive(brief.get('no_special_design_reason')),'no difficult steps requires specific no_special_design_reason')
+  cards=brief.get('explanation_difficulties');self.need(isinstance(cards,list),'explanation difficulty cards must be explicit')
+  covered=set()
+  for card in seq(cards):
+   card=obj(card)
+   for key in ('difficulty','necessary_information','expression_action','derived_result','misleading_risk'):self.need(substantive(card.get(key)),'explanation difficulty '+key+' required')
+   ids=card.get('step_ids');valid=isinstance(ids,list) and bool(ids) and all(text(i) and i in difficult for i in ids)
+   self.need(valid,'difficulty card must map declared difficult steps')
+   if valid:covered.update(ids)
+  self.need(covered==difficult,'identified explanation difficulties lack design cards')
+  review=obj(self.record('comprehension').get('logic_review'))
+  self.need(review.get('status')=='pass' and review.get('basis')=='paper_logic','G1 separate paper logic review required; it is not media acceptance')
+  for key in ('reviewer','capability','evidence'):self.need(substantive(review.get(key)),'G1 logic review '+key+' required')
+  self.need(review.get('context_sha256')==context_sha256(self.data,'G1'),'G1 logic review stale context')
  def animation(self,steps):
   r=self.record('visual_frames.animation');v=self.viewing(r.get('viewing'),'G3 motion','representative')
   self.need(r.get('status')=='pass','G3 actual motion review required')
@@ -196,15 +246,15 @@ class Checks:
   selected=r.get('step_ids');valid=isinstance(selected,list) and bool(selected) and all(text(i) and i in steps for i in selected)
   self.need(valid and len(set(selected))==len(selected),'representative step selection invalid')
   mains={x for x in seq(obj(self.data.get('topic_alignment')).get('main_scope_ids')) if text(x)}
-  chains=[{obj(s).get('id') for s in seq(obj(c).get('causal_steps')) if text(obj(s).get('id'))} for c in seq(obj(self.data.get('topic_alignment')).get('coverage')) if obj(c).get('scope_id') in mains]
-  self.need(valid and any(chain and chain<=set(selected) for chain in chains),'representative sample must cover a complete primary causal chain')
+  chains=[{obj(s).get('id') for s in relation_steps(c) if text(obj(s).get('id'))} for c in seq(obj(self.data.get('topic_alignment')).get('coverage')) if obj(c).get('scope_id') in mains]
+  self.need(valid and any(chain and chain<=set(selected) for chain in chains),'representative sample must cover a complete primary explanation chain (legacy complete primary causal chain)')
   found=set()
   for e in seq(r.get('steps')):
    e=obj(e);ident=e.get('step_id')
    if not self.need(text(ident) and ident in steps and ident not in found,'unknown/duplicate motion evidence step'):continue
    found.add(ident)
    self.need(e.get('status')=='pass',ident+' motion failed or unreviewed')
-   for key in ('observed_change','handoff_observed'):self.need(text(e.get(key)),ident+' '+key+' required')
+   for key in (('observed_relation','derivation_observed') if steps[ident].get('_typed') else ('observed_change','handoff_observed')):self.need(substantive(e.get(key)),ident+' '+key+' required')
    start,end=e.get('start'),e.get('end');self.need(number(start) and number(end) and number(v.get('duration')) and 0<=start<end<=v['duration']+0.05,ident+' motion interval invalid')
    if steps[ident].get('requires_dynamic') is True:self.need(e.get('representation')=='object_state_or_interaction',ident+' static board/overlay cannot replace required dynamic process')
   self.need(valid and found==set(selected),'selected primary process lacks continuous evidence')
@@ -314,19 +364,58 @@ class Checks:
   self.need(total>=q['benchmark_total_min' if benchmark else 'routine_total_min'],'weighted score below adopted starting threshold')
   self.need(number(r.get('total')) and abs(r['total']-total)<1e-6,'weighted score total inconsistent')
   self.need(r.get('media_sha256')==obj(self.qa.get('reviewed_sha256')).get('video'),'scorecard stale media')
+ def internal_review(self,steps):
+  r=obj(self.record('comprehension').get('internal_review'))
+  self.need(r.get('status')=='pass','actual internal explanation and expression review required')
+  self.need(r.get('context_sha256')==context_sha256(self.data,'G5'),'internal review stale context')
+  self.need(r.get('basis')=='presented_work_only','internal review must use presented work only, not author knowledge or design notes')
+  self.need(r.get('reviewer_kind') in ('human','agent'),'internal reviewer kind must be human or capable agent')
+  for key in ('visual_review_capable','audio_review_capable'):self.need(r.get(key) is True,'internal '+key+' required')
+  viewing=self.viewing(r.get('viewing'),'internal explanation review','full_episode',final=True)
+  for role in ('explanation','expression'):
+   review=obj(obj(r.get('responsibilities')).get(role))
+   self.need(review.get('status')=='pass',role+' responsibility review missing/failed')
+   for key in ('reviewer','capability','evidence'):self.need(substantive(review.get(key)),role+' '+key+' required')
+  for goal in UNDERSTANDING_GOALS:
+   check=obj(obj(r.get('understanding_goals')).get(goal))
+   self.need(check.get('status')=='pass' and substantive(check.get('evidence')),goal+' understanding condition missing/failed')
+  records=r.get('steps');seen=set()
+  for entry in seq(records):
+   entry=obj(entry);ident=entry.get('step_id')
+   if not self.need(text(ident) and ident in steps and ident not in seen,'internal review unknown/duplicate step'):continue
+   seen.add(ident);step=steps[ident]
+   self.need(entry.get('status')=='pass',ident+' internal explanation failed/unreviewed')
+   start,end=entry.get('start'),entry.get('end')
+   self.need(number(start) and number(end) and number(viewing.get('duration')) and 0<=start<end<=viewing['duration']+.05,ident+' internal actual presentation interval required')
+   ids=entry.get('shot_ids');self.need(isinstance(ids,list) and bool(ids) and all(text(i) for i in ids) and set(ids)==set(seq(step.get('shot_ids'))),ident+' internal shot mapping mismatch')
+   for key in ('prerequisites_observed','relation_observed','derivation_observed','boundary_observed','visual_evidence','narration_evidence','audio_visual_coherence'):
+    self.need(substantive(entry.get(key)),ident+' '+key+' required from actual presentation')
+   self.need(entry.get('unpresented_assumptions')==[],ident+' unpresented assumptions block explanation acceptance')
+   mapping=entry.get('referent_evidence');self.need(isinstance(mapping,dict) and bool(mapping) and all(substantive(k) and substantive(v) for k,v in mapping.items()),ident+' actual referent evidence required')
+   if step.get('_typed'):self.need(set(obj(mapping))==set(obj(step.get('referent_mappings'))),ident+' actual referent mapping incomplete')
+  self.need(seen==set(steps),'internal review promised explanation coverage incomplete')
  def cold_view(self,policy):
-  brief=obj(self.data.get('brief'));flags=brief.get('validation_triggers');self.need(isinstance(flags,list) and all(text(x) and x in policy['cold_view']['required_for'] for x in flags),'validation triggers must be explicit recognized values')
-  needed=brief.get('production_class')=='B' or bool(set(seq(flags)) & set(policy['cold_view']['required_for']))
-  r=self.record('comprehension');test=obj(r.get('cold_view'))
-  if not needed:
-   self.need(text(r.get('independent_review_reference')),'routine episode needs independent full-view misunderstanding review')
+  brief=obj(self.data.get('brief'));flags=brief.get('validation_triggers')
+  self.need(isinstance(flags,list) and all(text(x) and x in policy['review_triggers'] for x in flags),'validation triggers must be explicit recognized values')
+  r=self.record('comprehension');test=obj(r.get('cold_view'));viewers=seq(test.get('viewers'))
+  self.need('viewers' not in test or isinstance(test.get('viewers'),list),'optional feedback viewers must be a list')
+  submitted=bool(viewers) or test.get('status') in ('pass','completed','fail') or r.get('status')=='audience_checked'
+  if not submitted:
+   self.need(test.get('status') in (None,'not_conducted','not_requested','pending'),'optional feedback status invalid')
+   self.need(test.get('actual_viewer_count') in (None,0) and test.get('passing_viewer_count') in (None,0) and test.get('population_understanding_rate') is None and test.get('population_rate_claimed') in (None,False),'unperformed feedback cannot claim participants or population rate')
    return
-  self.need(r.get('status')=='audience_checked','applicable cold test must be reported as audience_checked, not editorial-only')
-  self.need(test.get('status')=='pass','required real-viewer cold test missing/unverified')
+  self.need(test.get('status') in ('pass','completed','fail'),'submitted actual feedback completion status required')
+  self.need(test.get('population_rate_claimed') is False and test.get('population_understanding_rate') is None,'formative feedback cannot establish population understanding rate')
   self.need(test.get('media_sha256')==obj(self.qa.get('reviewed_sha256')).get('video'),'cold test stale media')
-  for key in ('group_id','sampling_plan_reference'):self.need(text(test.get(key)),'cold-test declared five-person group/plan required')
-  viewers=seq(test.get('viewers'));self.need(len(viewers)==5,'exactly five actual viewers in the declared test group required')
+  for key in ('group_id','sampling_plan_reference'):self.need(text(test.get(key)),'cold-test declared group/plan required')
+  viewers=seq(test.get('viewers'));self.need(bool(viewers),'submitted feedback requires actual viewers')
   self.need(type(test.get('actual_viewer_count')) is int and test['actual_viewer_count']==len(viewers),'cold-test actual viewer count inconsistent')
+  protocol=obj(test.get('protocol'));item_max=protocol.get('item_max',policy['cold_view']['legacy_item_max'])
+  valid_protocol=isinstance(item_max,dict) and bool(item_max) and all(substantive(k) and number(v) and v>0 for k,v in item_max.items())
+  self.need(valid_protocol,'cold-test protocol item maxima invalid')
+  item_max=item_max if valid_protocol else {}
+  minimum=protocol.get('individual_min',4);required=protocol.get('required_item','causal_chain');required_score=protocol.get('required_score',2)
+  self.need(number(minimum) and 0<=minimum<=sum(item_max.values()) and text(required) and required in item_max and number(required_score) and 0<=required_score<=item_max.get(required,-1),'cold-test protocol invalid')
   ids=set();passing=0;mis={}
   for person in viewers:
    person=obj(person);ident=person.get('anonymous_id')
@@ -334,25 +423,27 @@ class Checks:
    if text(ident):ids.add(ident)
    for key in ('real_person','not_in_production','no_relevant_training','first_unprompted_normal_watch','watched_current_version'):self.need(person.get(key) is True,'cold viewer '+key+' required')
    score=obj(person.get('scores'));total=0
-   for key,maximum in policy['cold_view']['item_max'].items():
+   for key,maximum in item_max.items():
     n=score.get(key);valid=number(n) and 0<=n<=maximum
     self.need(valid,'cold-test score invalid')
     if valid:total+=n
     self.need(text(obj(person.get('raw_answers')).get(key)),'actual raw cold-test answer required')
    self.need(number(person.get('total')) and abs(person['total']-total)<1e-6,'cold-test person total inconsistent')
    self.need(text(person.get('scoring_evidence')),'cold-test scoring basis required')
-   if total>=4 and score.get('causal_chain')==2:passing+=1
+   self.need(number(minimum) and number(required_score) and required in score,'cold-test protocol invalid')
+   if number(minimum) and number(required_score) and total>=minimum and number(score.get(required)) and score[required]>=required_score:passing+=1
    misconceptions=person.get('core_misconceptions')
    valid=isinstance(misconceptions,list) and all(text(i) for i in misconceptions)
    self.need(valid,'explicit core_misconceptions list required, empty only when none observed')
    if valid:
     for misconception in set(misconceptions):mis[misconception]=mis.get(misconception,0)+1
   self.need(type(test.get('passing_viewer_count')) is int and test['passing_viewer_count']==passing,'cold-test passing viewer count inconsistent')
-  self.need(passing>=4,'at least four viewers need 4/5 and complete causal answer')
   summary=test.get('shared_core_misconceptions');expected={key for key,count in mis.items() if count>=2}
   valid=isinstance(summary,list) and all(text(i) for i in summary)
   self.need(valid and len(set(summary))==len(summary) and set(summary)==expected,'shared misconception summary must equal derived repeated IDs')
-  self.need(all(n<2 for n in mis.values()),'shared core misconception requires rework')
+  if mis:
+   resolution=obj(test.get('misconception_review'))
+   self.need(resolution.get('status')=='resolved' and substantive(resolution.get('evidence')) and resolution.get('media_sha256')==obj(self.qa.get('reviewed_sha256')).get('video'),'observed core misconception requires current internal recheck; removing audience thresholds cannot erase known failures')
  def caption_and_flicker(self,policy):
   caption=self.record('captions')
   self.need(caption.get('file')==obj(self.data.get('deliverables')).get('captions') and caption.get('sha256')==obj(self.qa.get('reviewed_sha256')).get('captions'),'final caption QA must bind current caption file/hash')
@@ -422,9 +513,10 @@ class Checks:
   self.need(mode in ('authentic_continuous_video','not_required'),'explicit project real-anchor policy required')
   return mode!='not_required'
  def run(self,target,policy):
-  n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal()
+  n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
   brief=obj(self.data.get('brief'))
-  for k in ('audience','one_sentence_answer','must_see_change'):self.need(text(brief.get(k)),'brief '+k+' required')
+  for k in ('audience','one_sentence_answer'):self.need(text(brief.get(k)),'brief '+k+' required')
+  self.need(substantive(brief.get('must_make_understandable',brief.get('must_see_change'))),'brief must_make_understandable required (legacy must_see_change accepted)')
   for k in ('out_of_scope','forbidden_misrepresentations'):self.need(isinstance(brief.get(k),list),'brief '+k+' required')
   self.need(brief.get('production_class') in ('R','N','B'),'production class R/N/B required')
   for role in ('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher'):self.need(text(obj(brief.get('roles')).get(role)),'responsible '+role+' required')
@@ -486,12 +578,12 @@ class Checks:
     self.need(text(ident) and ident in steps and ident not in seen,'G5 invalid/duplicate process step')
     if text(ident):seen.add(ident)
     self.need(e.get('status')=='pass' and text(e.get('evidence')),'G5 actual process evidence required')
-   self.need(seen==set(steps),'G5 full primary causal chain evidence incomplete')
+   self.need(seen==set(steps),'G5 full primary explanation evidence incomplete (legacy full primary causal chain evidence incomplete)')
    real_ids={obj(a).get('id') for a in seq(self.data.get('assets')) if obj(a).get('kind') in ('real_capture','real_observation')}
    shot_used={i for shot in seq(self.data.get('shots')) for i in seq(obj(shot).get('asset_ids')) if text(i)}
    if self.real_anchor_required():
     self.need(bool(real_ids & shot_used),'current series requires an actually used real continuous-video anchor; declarations do not prove authenticity')
-   self.caption_and_flicker(policy);self.scores(policy);self.cold_view(policy)
+   self.caption_and_flicker(policy);self.scores(policy);self.internal_review(steps);self.cold_view(policy)
   if n>=5:
    self.need(obj(self.data.get('scope')).get('kind')=='episode' and obj(self.data.get('scope')).get('publication_ready') is True,'release requires a complete episode explicitly ready for publication')
    self.platform_and_disclosure()
@@ -524,3 +616,4 @@ def semantic_warnings(data):
    if number(a) and number(v) and abs(a-v)>150:
     warnings.append('Semantic offset >150ms: '+str(obj(shot).get('id'))+' / '+str(event.get('label'))+'; review actual scene and record any intentional anticipation/reaction')
  return warnings
+

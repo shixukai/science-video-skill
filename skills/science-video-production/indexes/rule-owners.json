@@ -8,7 +8,8 @@
         "original-question",
         "opening-topic",
         "scope",
-        "coverage"
+        "coverage",
+        "explanation-promise-E01"
       ]
     },
     {
@@ -28,10 +29,11 @@
       "owns": [
         "stage-gates",
         "prerequisites",
-        "causal-beats",
+        "typed-explanation-path",
         "whole-episode-roughcut",
         "platform-procedure",
-        "publication-receipts"
+        "publication-receipts",
+        "explanation-design-E02-E07"
       ]
     },
     {
@@ -64,7 +66,8 @@
         "motion-card-binding",
         "candidate-selection",
         "graphic-records",
-        "version-binding"
+        "version-binding",
+        "explanation-step-media-binding"
       ]
     },
     {
@@ -76,7 +79,10 @@
         "motion-quality",
         "whole-film-comprehension",
         "technical-check-limits",
-        "feedback-retest"
+        "feedback-retest",
+        "explanation-review-E08-E12",
+        "internal-explanation-and-expression-review",
+        "optional-audience-feedback-boundary"
       ]
     }
   ]

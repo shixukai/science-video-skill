@@ -31,6 +31,24 @@ class ReferenceSystemTests(unittest.TestCase):
         self.assertTrue(any(text in e for e in m.check(self.root)), m.check(self.root))
     def test_clean_system(self):
         self.assertEqual(m.check(self.root), [])
+    def test_explanation_navigation_required(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d.pop("explanation_standard"))
+        self.errors("E01-E12 explanation navigation")
+    def test_explanation_navigation_duplicate_rejected(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][1].update(id="E01"))
+        self.errors("E01-E12 explanation navigation")
+    def test_explanation_navigation_contract_required(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][0].update(contract_ids=["missing-contract"]))
+        self.errors("explanation navigation contract missing")
+    def test_explanation_navigation_anchor_required(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][0].update(owner_anchor="nonexistent"))
+        self.errors("explanation navigation anchor missing")
+    def test_optional_feedback_cannot_be_mandatory(self):
+        self.edit("config/production-policy.json", lambda d: d["cold_view"].update(production_gate=True))
+        self.errors("optional feedback/internal review boundary")
+    def test_internal_perception_cannot_be_disabled(self):
+        self.edit("config/production-policy.json", lambda d: d["internal_review"].update(actual_full_audio_visual_review_required=False))
+        self.errors("optional feedback/internal review boundary")
     def test_duplicate_responsibility(self):
         self.edit("indexes/rule-owners.json", lambda d: d["owners"][1]["owns"].append(d["owners"][0]["owns"][0]))
         self.errors("multiple owners")
@@ -232,3 +250,4 @@ class ReferenceSystemTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

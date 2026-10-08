@@ -456,7 +456,7 @@
       "audience_feedback_reference": "",
       "independent_review_reference": "",
       "cold_view": {
-        "status": "pending",
+        "status": "not_conducted",
         "media_sha256": "",
         "viewers": [],
         "viewer_record_format": {
@@ -487,12 +487,100 @@
         "actual_viewer_count": 0,
         "passing_viewer_count": 0,
         "shared_core_misconceptions": [],
-        "notes": "",
+        "notes": "Optional authorized actual feedback; no required headcount or passing quota; never substitute agents for real people or infer a population understanding rate.",
         "group_id": "",
-        "sampling_plan_reference": ""
+        "sampling_plan_reference": "",
+        "population_rate_claimed": false
       },
       "evidence": "",
-      "reviewer": ""
+      "reviewer": "",
+      "internal_review": {
+        "status": "pending",
+        "context_sha256": "",
+        "basis": "presented_work_only",
+        "reviewer_kind": "agent",
+        "visual_review_capable": false,
+        "audio_review_capable": false,
+        "viewing": {
+          "file": "",
+          "sha256": "",
+          "duration": null,
+          "ranges": [],
+          "method": "pending",
+          "playback_speed": null,
+          "watched": false,
+          "heard": false,
+          "reviewer": "",
+          "capability": "",
+          "reviewed_at": "",
+          "note": "",
+          "scope": "full_episode",
+          "devices": [],
+          "tool_capability_limits": []
+        },
+        "responsibilities": {
+          "explanation": {
+            "status": "pending",
+            "reviewer": "",
+            "capability": "",
+            "evidence": ""
+          },
+          "expression": {
+            "status": "pending",
+            "reviewer": "",
+            "capability": "",
+            "evidence": ""
+          }
+        },
+        "understanding_goals": {
+          "answer": {
+            "status": "pending",
+            "evidence": ""
+          },
+          "relationships": {
+            "status": "pending",
+            "evidence": ""
+          },
+          "transfer": {
+            "status": "pending",
+            "evidence": ""
+          },
+          "boundaries": {
+            "status": "pending",
+            "evidence": ""
+          }
+        },
+        "steps": [
+          {
+            "step_id": "CAUSE1",
+            "status": "pending",
+            "start": null,
+            "end": null,
+            "shot_ids": [
+              "SH1"
+            ],
+            "prerequisites_observed": "",
+            "relation_observed": "",
+            "derivation_observed": "",
+            "boundary_observed": "",
+            "visual_evidence": "",
+            "narration_evidence": "",
+            "audio_visual_coherence": "",
+            "unpresented_assumptions": [],
+            "referent_evidence": {
+              "object": ""
+            }
+          }
+        ]
+      },
+      "logic_review": {
+        "status": "pending",
+        "basis": "paper_logic",
+        "reviewer": "",
+        "capability": "",
+        "evidence": "",
+        "context_sha256": ""
+      }
     },
     "shotbook": {
       "status": "pending",
@@ -861,7 +949,8 @@
           "SH1"
         ],
         "answer_evidence": "",
-        "causal_steps": [
+        "explanation_type": "causal_process",
+        "explanation_steps": [
           {
             "id": "CAUSE1",
             "before": "",
@@ -872,7 +961,16 @@
               "SH1"
             ],
             "requires_dynamic": true,
-            "still_reason": ""
+            "still_reason": "",
+            "prerequisites": [
+              ""
+            ],
+            "key_relation": "",
+            "derivation": "",
+            "boundary": "",
+            "referent_mappings": {
+              "object": ""
+            }
           }
         ]
       }
@@ -896,7 +994,6 @@
   "brief": {
     "audience": "无相关专业训练的成年普通观众",
     "one_sentence_answer": "",
-    "must_see_change": "",
     "out_of_scope": [],
     "forbidden_misrepresentations": [],
     "production_class": "N",
@@ -915,7 +1012,37 @@
     "existing_constraints": [],
     "open_questions_that_block_work": [],
     "work_can_continue_without_user": [],
-    "notes": ""
+    "notes": "Choose a relation type and its required fields; causal_process alone requires before/change/after/handoff. Review triggers never mandate recruiting real viewers.",
+    "must_make_understandable": "",
+    "explanation_difficulties": [
+      {
+        "difficulty": "",
+        "necessary_information": "",
+        "expression_action": "",
+        "derived_result": "",
+        "misleading_risk": "",
+        "step_ids": [
+          "CAUSE1"
+        ]
+      }
+    ],
+    "difficult_step_ids": [
+      "CAUSE1"
+    ],
+    "no_special_design_reason": "",
+    "audience_start": {
+      "assumed_knowledge": [],
+      "new_knowledge": [
+        ""
+      ],
+      "deferred_knowledge": []
+    },
+    "understanding_targets": {
+      "answer": "",
+      "relationships": "",
+      "transfer": "",
+      "boundaries": ""
+    }
   },
   "design": {
     "style_version": "",
