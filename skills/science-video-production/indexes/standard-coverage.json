@@ -38037,12 +38037,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "三尺度造型与制作细节",
-          "quote": "视觉规范页除调色板外，必须有整体场景、对象中景、机制近景及每尺度的合格/不合格对照，说明轮廓、形状语言、空间层次、光向、材质、细节密度、人物比例、字体层级、语义配色和字幕。缺实例记待做，未实际审看记候选，有范围/版本/证据才作生产基准。默认一种主轮廓与一种材质体系，主体不能比环境粗糙，近景不能把中景SVG无限放大或退成没设计的圆/细线。",
+          "quote": "视觉规范页除调色板外，必须有整体场景、对象中景、机制近景及每尺度的合格/不合格对照，说明轮廓、形状语言、空间层次、光向、材质、细节密度、人物比例、字体层级、语义配色和字幕。缺实例记待做，未实际审看记候选，有范围/版本/证据才作生产基准。默认一种主轮廓与一种材质体系，主体不能比环境粗糙，近景不能把中景SVG无限放大。有依据的科学几何与解释符号可简化，按A01核身份、关系及条件；比例、边缘、空间与色彩组织仍须达到当前目标完成度，不能仅凭形状名称判合格或不合格。",
           "lines": [
             71,
             71
           ],
-          "quote_sha256": "03ef10dc2cc13b325df355e54e597b0c33cf6a24ad41ead9ac285919f86562db"
+          "quote_sha256": "37529a7e6e72d08f5088b586c0e157ddf9b26fea646d558298f83fb1a55a1125"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -43019,12 +43019,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "纯2d解释与真实素材",
-          "quote": "解释镜头先按 [空间关系与声画对应](production-checkpoints.md#逐段声画与图内文字对应) 确定必要对象、参照与注意中心，再选景别、视角和背景。已批准画风约束造型与表现体系，不要求保留同一张整景的构图；必要时重构侧视、局部或简化环境，让背景细节与对比服从关系识别，同时保持对象身份和科学对应。不能为保留漂亮风景，把解释对象缩成难认的点线后叠标签，也不能靠整体缩小、堆字或无关系的装饰补救。",
+          "quote": "解释镜头先按 [空间关系与声画对应](production-checkpoints.md#逐段声画与图内文字对应) 确定必要对象、参照与注意中心，再选景别、视角和背景。已批准画风约束造型与表现体系，不要求保留同一张整景的构图；必要时重构侧视、局部或简化环境，让背景细节与对比服从关系识别，同时保持对象身份和科学对应。简化可减少本镜不需要的信息；按重构后的景别与对象职责维持当前已确认画风的完成度，不能以简化为由把主体退为粗糙占位图形。不能为保留漂亮风景，把解释对象缩成难认的点线后叠标签，也不能靠整体缩小、堆字或无关系的装饰补救。",
           "lines": [
             33,
             33
           ],
-          "quote_sha256": "89dceae76676ad2a4b14bfc2f5e988cb2fc98eb5a5d88c8434bcc55103fc908b"
+          "quote_sha256": "c5b8e86810e21c244bf2a7e8da9bc9d3816e040ded77a656d1d3064655cbd32c"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
