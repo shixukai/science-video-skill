@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "adopted_requirements_pending_media_validation",
   "meaning": "H requirements cannot be offset by scores; D values are internal calibration starting points, not platform or industry standards.",
   "gates": {
@@ -240,5 +240,25 @@
     "major_change",
     "routine_sample",
     "major_modification"
-  ]
+  ],
+  "subject_motion": {
+    "owner": "references/quality-acceptance.md#主体动态与长静帧",
+    "classification": "Conservative executable project limits, not user-specified seconds or industry standards; no score or read-pause override.",
+    "required_stages": [
+      "G2",
+      "G3",
+      "G5"
+    ],
+    "max_no_progress_seconds": 3.0,
+    "max_purposeful_read_seconds": 1.6,
+    "screen": {
+      "sample_fps": 4,
+      "sample_size": 64,
+      "mae_threshold": 0.002,
+      "candidate_min_seconds": 3.0
+    },
+    "automatic_screen_is_not_semantic_acceptance": true,
+    "no_whole_semantic_unit_exception": true,
+    "no_cut_or_speed_workaround": true
+  }
 }

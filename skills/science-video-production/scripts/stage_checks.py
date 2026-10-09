@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 import shutil
 import subprocess
+from subject_motion import validate as validate_subject_motion
 
 GATES = tuple(f'G{i}' for i in range(1, 8))
 REQUIRED_REVIEWS = {
@@ -687,6 +688,7 @@ class Checks:
    for e in seq(evidence):self.evidence(e,gate)
   if n>=1:
    self.viewing(self.record('shotbook').get('viewing'),'G2 roughcut','full_roughcut')
+   validate_subject_motion(self,self.record('shotbook').get('subject_motion'),obj(self.record('shotbook').get('viewing')),'G2',policy['subject_motion'],set(steps))
    narration=obj(self.data.get('narration'))
    self.evidence({'file':narration.get('script_file'),'sha256':narration.get('script_sha256')},'narration script')
    self.need(narration.get('status')=='ready' and isinstance(narration.get('language'),str) and narration['language'].lower().split('-')[0]=='zh','actual ready Chinese working narration required')
@@ -696,6 +698,8 @@ class Checks:
    if audio_path:self.duration(audio_path,require_video=False,label='source narration')
   if n>=2:
    self.animation(steps);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
+   animation=self.record('visual_frames.animation')
+   validate_subject_motion(self,animation.get('subject_motion'),obj(animation.get('viewing')),'G3',policy['subject_motion'],set(x for x in seq(animation.get('step_ids')) if text(x)))
    if n>=3:self.asset_catalog(steps,representative=False)
    design=obj(self.data.get('design'));approval=obj(design.get('approval'))
    self.need(approval.get('status')=='pass','actual design approval missing/failed')
@@ -721,6 +725,7 @@ class Checks:
     self.evidence({'file':obj(self.data.get('deliverables')).get(key),'sha256':obj(self.qa.get('reviewed_sha256')).get(key)},'G4 '+key)
   if n>=4:
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)
+   validate_subject_motion(self,self.record('visual_frames').get('subject_motion'),obj(self.record('visual_frames').get('viewing')),'G5',policy['subject_motion'],set(steps))
    self.need(self.record('visual_frames').get('independent_of_generation_context') is True,'independent review context required; not proof of human perception')
    audio=self.record('audio');self.need(set(policy['listening']['required_environments'])<=set(x for x in seq(audio.get('environments')) if text(x)),'headphones and phone-speaker actual listening required')
    for env in policy['listening']['required_environments']:

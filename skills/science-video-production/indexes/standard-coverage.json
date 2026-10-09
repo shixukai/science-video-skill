@@ -37453,6 +37453,34 @@
           "VOICE-execution-failure"
         ]
       }
+    },
+    {
+      "id": "MOTION-subject-continuity",
+      "rule": "按质量责任正文核实际导出的主体ROI与完整口播语义段，记录最长无有效推进区间，阻断长静帧及伪动态；帧差只筛查，实际连续声画审查不可替代。",
+      "action": "按质量责任正文核实际导出的主体ROI与完整口播语义段，记录最长无有效推进区间，阻断长静帧及伪动态；帧差只筛查，实际连续声画审查不可替代。",
+      "modality": "hard",
+      "owner": "references/quality-acceptance.md",
+      "owner_anchor": "主体动态与长静帧",
+      "evidence_locations": [
+        {
+          "file": "config/production-policy.json",
+          "selector": "subject_motion"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "qa.visual_frames.subject_motion"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "MOTION-subject-continuity-failure"
+        ]
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -43882,9 +43910,58 @@
         }
       ],
       "application": "Existing G1/G2/G5 review evidence only, not a parallel approval."
+    },
+    {
+      "id": "MOTION-subject-continuity-failure",
+      "application": "G2完整有声草排、G3连续样段、G5最终导出全时域",
+      "failure_condition": "主体无推进越限、整语义段幻灯片、伪动态、读图例外扩张、ROI/版本或连续审查证据缺失",
+      "clauses": [
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "视频必须在真实时间内推进所讲的观察或机制。真实锚点是有合法来源、原片区间和权利证据的连续动态实拍/观测；2D解释须让主画面主体的状态、形态、位置或相互作用随口播持续发展。字幕/标题变化、装饰粒子、整图平移缩放（包括Ken Burns）、静图转场或频繁硬切静图均不算有效主体推进。精美静态插画和旁白不能代替视频，静态背景无需强迫运动。",
+          "quote_sha256": "251b6dd6c6e901ca03b44f32b4d6a1936c3f662c8600819ca576e7df37222cc3"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "G2完整有声草排、G3代表连续样段和G5最终完整导出分别核全时域。先正常速度连续看听，再屏蔽字幕/标题/装饰或只看主体ROI，核口播所需变化是否实际发生，标出每个完整语义段及最长无有效主体推进区间；跨镜、硬切、改字幕不重置该区间。机械每2秒切镜、加速片段或随机微动不修复失败。已有被否定版本沿失败台账保持失败，只有对应实际新导出重审才可关闭。",
+          "quote_sha256": "6cf022804e53f936a3c560c5ae6b511ea4b60321aa96ac885f402eb7b497582e"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "当前项目保守可执行上限在 `config/production-policy.json subject_motion`：连续无有效主体推进不得超过3.0秒，有目的短读图停顿不得超过1.6秒；这些数值是项目防静图上限，不是用户指定秒数、科学规律或行业标准。读图停顿必须说明观察目的、口播对应及恢复/收束证据，也计入无推进区间；不得把完整口播语义段记为读图例外。即使不到上限，只要完整语义段仅有静图/排除的伪动态仍失败。不得靠连续拆小停顿、拆语义段或在段间插入无关动作达标；修复应呈现缺失主体/关系的发展。",
+          "quote_sha256": "0f33913d58023e4e8a402dc3b953500d221f4ca3e8c74f8ff25656e23a2d311a"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "`qa.shotbook.subject_motion`（G2）、`qa.visual_frames.animation.subject_motion`（G3）、`qa.visual_frames.subject_motion`（G5）分别记录 `status`、当前阶段 `context_sha256`、所审 `media_sha256`、实际 `roi_review`、五类 `excluded_motion_review` 和不可变 `screen {file,sha256}`。`spans` 按秒连续覆盖完整所审文件，每项有 `start/end/kind/subject/observation/narration_relation/evidence`；kind为 `subject_change`、`authentic_motion`、`purposeful_read` 或 `no_progress`，前两项须记录有依据的主体变化，停顿另记 `purpose/resume_evidence`。`semantic_units` 同样完整连续覆盖，记录 `start/end/step_ids/spoken_point/progression_observed/evidence`，不得省略开头、结尾或无动作口播；G3覆盖所选解释步骤，G2/G5覆盖全部步骤。记录计算所得 `longest_no_progress_seconds`，不以平均帧差、运动总量、局部漂亮动作或高分抵扣最差区间。",
+          "quote_sha256": "47d32acf9be71257e38b8a3af0535583d6c507ed11567669104891675e67bca4"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "实际导出先运行 `python scripts/subject_motion.py <media> --regions <regions.json> --report <new-screen.json>`。regions为连续覆盖全文件的JSON数组，每项有 `start/end/subject/isolation_note/roi/masks`；roi与mask.rect为全画幅归一化 `[x,y,width,height]`，mask另有kind（captions/titles/decoration）。按题材选择完整相关主体/关系ROI，核ROI没有漏掉关键主体或把装饰选成主体，mask没有遮掉必要机制；可用空mask列表明确无须屏蔽。筛查在主体区域采样帧差并列低变化区间，报告最长候选区间和固定媒体/参数；检查器重新解码核报告，且报告须加入该关 `qa.gates.<stage>.evidence`。报错、缺报告、版本/参数过期、时域缺口保持未验并阻断阶段通过。",
+          "quote_sha256": "102a0467453f0f977fe858d83ce73d98c99bd4486e125116cac537966f79f3be"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "自动帧差只筛查，不能识别有意义因果、真实实拍、Ken Burns或静图硬切。每个 `low_motion_ranges` 候选须在 `screen_resolutions` 逐项以同一range实际回放复查；只有确认采样未捕获的有效主体推进，才可记 `result: effective_subject_progression` 并写具体 `observation/evidence`，且不得与spans相矛盾。候选仍为静图、伪动态、长停顿或未能连续审看时记失败/未验，不能只改文字关闭。实际连续声画审查不可由帧差、抽帧或JSON代替；非低帧差片段仍逐项核排除手法和语义推进。无连续视听能力时不签通过。",
+          "quote_sha256": "65e79b70f8f39ddfa986bebe7df661439b80742be4a6b659b4597b02af5757e9"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "退回条件：任何全语义段幻灯片、超过项目上限的无推进、读图例外扩张、主体ROI/屏蔽失真、未解决筛查候选、缺连续视听或当前版本证据。规则适用于所有题材和完整开场；约10秒静图配旁白直接失败。合法真实动态、与口播一致的机制推进及受限有目的短读图停顿可通过相应检查，但不自动证明科学、权利、美术或整片通过。",
+          "quote_sha256": "cd45cad4427cd94299fdd7368549e7d1457a9b5729750d11a25412c7896e1d8c"
+        }
+      ]
     }
   ],
-  "rule_count": 900,
+  "rule_count": 901,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

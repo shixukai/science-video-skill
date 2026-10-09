@@ -323,7 +323,28 @@
           "sha256": "",
           "version": ""
         },
-        "review_id": ""
+        "review_id": "",
+        "subject_motion": {
+          "status": "pending",
+          "context_sha256": "",
+          "media_sha256": "",
+          "roi_review": "",
+          "excluded_motion_review": {
+            "captions": "",
+            "titles": "",
+            "decoration": "",
+            "camera_transform": "",
+            "static_cuts": ""
+          },
+          "screen": {
+            "file": "",
+            "sha256": ""
+          },
+          "spans": [],
+          "semantic_units": [],
+          "longest_no_progress_seconds": null,
+          "screen_resolutions": []
+        }
       },
       "process_steps": [],
       "review_id": "",
@@ -547,6 +568,27 @@
             }
           ]
         }
+      },
+      "subject_motion": {
+        "status": "pending",
+        "context_sha256": "",
+        "media_sha256": "",
+        "roi_review": "",
+        "excluded_motion_review": {
+          "captions": "",
+          "titles": "",
+          "decoration": "",
+          "camera_transform": "",
+          "static_cuts": ""
+        },
+        "screen": {
+          "file": "",
+          "sha256": ""
+        },
+        "spans": [],
+        "semantic_units": [],
+        "longest_no_progress_seconds": null,
+        "screen_resolutions": []
       }
     },
     "mobile_preview": {
@@ -691,6 +733,27 @@
         "reviewed_at": "",
         "note": "",
         "scope": "full_roughcut"
+      },
+      "subject_motion": {
+        "status": "pending",
+        "context_sha256": "",
+        "media_sha256": "",
+        "roi_review": "",
+        "excluded_motion_review": {
+          "captions": "",
+          "titles": "",
+          "decoration": "",
+          "camera_transform": "",
+          "static_cuts": ""
+        },
+        "screen": {
+          "file": "",
+          "sha256": ""
+        },
+        "spans": [],
+        "semantic_units": [],
+        "longest_no_progress_seconds": null,
+        "screen_resolutions": []
       }
     },
     "topic_alignment": {

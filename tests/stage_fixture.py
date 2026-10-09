@@ -1,9 +1,11 @@
 """Synthetic declaration fixtures only; they never assert real media acceptance."""
 from pathlib import Path
 import copy
+import json
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts'))
 import stage_checks as gates
+import subject_motion
 
 def upgrade(data,root,schema='canonical'):
  d=copy.deepcopy(data);root=Path(root)
@@ -86,12 +88,21 @@ def upgrade(data,root,schema='canonical'):
  qa['release']['authorization_status']='pass'
  qa['release']['ai_disclosure']={'status':'pass','contains_generated_content':True,'applicable_platform_controls_checked':True,'platform_declaration_used':True,'required_provenance_preserved':True,'current_rule_reference':'synthetic fixture','declaration_evidence':'synthetic fixture'}
  qa['publication']={'status':'pass','state':'published','readback_matches_bundle':True,'work_id':'synthetic_not_real','actual_published_at':'2026-01-01T00:00:00Z','readback_reference':'synthetic not actual publication'}
+ # Declarations for compatibility tests only; no perceptual acceptance is made.
+ policy=json.loads((Path(gates.__file__).resolve().parents[1]/'config/production-policy.json').read_text())['subject_motion']
+ for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
+  v=parent['viewing'];duration=v['duration']
+  report=subject_motion.screen(root/v['file'],[{'start':0,'end':duration,'subject':'synthetic fixture','isolation_note':'software fixture only','roi':[0,0,1,1],'masks':[]}],policy['screen'])
+  filename='subject-screen-'+gate+'.json';(root/filename).write_text(json.dumps(report))
+  parent['subject_motion']={'status':'pass','media_sha256':v['sha256'],'roi_review':'synthetic declaration only; not actual viewing','excluded_motion_review':{k:'synthetic test declaration only' for k in subject_motion.IGNORED},'screen':{'file':filename,'sha256':gates.file_digest(root/filename)},'spans':[{'start':0,'end':duration,'kind':'subject_change','subject':'synthetic test','observation':'software declaration only','narration_relation':'synthetic declaration','evidence':'test only'}],'semantic_units':[{'start':0,'end':duration,'step_ids':steps[:],'spoken_point':'synthetic declaration','progression_observed':'software declaration only','evidence':'test only'}],'longest_no_progress_seconds':0,'screen_resolutions':[]}
  refresh(d)
  return d
 
 def refresh(d):
  if isinstance(d.get('narration',{}).get('reuse_record'),dict):d['narration']['reuse_record']['audio_sha256']=d['narration'].get('audio_sha256')
  qa=d['qa']
+ for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
+  if isinstance(parent.get('subject_motion'),dict):parent['subject_motion']['context_sha256']=gates.context_sha256(d,gate)
  for name,gate in (('logic_review','G1'),('internal_review','G5')):
   if isinstance(qa['comprehension'].get(name),dict):qa['comprehension'][name]['context_sha256']=gates.context_sha256(d,gate)
  qa['visual_frames']['animation']['context_sha256']=gates.context_sha256(d,'G3')
@@ -99,6 +110,8 @@ def refresh(d):
  for name,gate in (('explanation_logic','G1'),('expression_plan','G2'),('explanation_review','G5'),('expression_review','G5')):
   if isinstance(qa.get(name),dict):qa[name]['context_sha256']=gates.context_sha256(d,gate)
  qa['gates']={g:{'status':'passed','reviewer':'synthetic fixture','reviewed_at':'2026-01-01T00:00:00Z','scope':'software test only','context_sha256':gates.context_sha256(d,g),'review_refs':list(gates.REQUIRED_REVIEWS[g]),'evidence':[{'file':d['deliverables']['video'],'sha256':qa['reviewed_sha256']['video']}]} for g in gates.GATES}
+ for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
+  if isinstance(parent.get('subject_motion'),dict):qa['gates'][gate]['evidence'].append(parent['subject_motion']['screen'])
  if 'explanation_logic' not in qa:
   for record in qa['gates'].values():record['review_refs']=[ref for ref in record['review_refs'] if ref not in ('explanation_logic','expression_plan','explanation_review','expression_review')]
  qa['release']['bundle_sha256']=gates.digest({'deliverables':d['deliverables'],'hashes':qa['reviewed_sha256'],'title':d.get('title'),'description':d.get('description'),'tags':d.get('tags'),'platform':qa['mobile_preview']})

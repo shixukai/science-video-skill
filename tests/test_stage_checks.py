@@ -307,6 +307,13 @@ class EvidenceMediaIntegrityTests(unittest.TestCase):
     s.d=copy.deepcopy(s.base);s.assertEqual(s.errors(gate),[])
     s.review(gate)['viewing'].update(file='replacement.mp4',sha256=gates.file_digest(s.root/'replacement.mp4'))
     s.rejects(gate+' stale stage context',gate)
+    refresh(s.d);s.rejects('subject motion stale media',gate)
+    # Re-signing a context cannot reuse old motion evidence on new pixels.
+    import subject_motion
+    policy=json.loads((Path(gates.__file__).resolve().parents[1]/'config/production-policy.json').read_text())['subject_motion']
+    motion=s.review(gate)['subject_motion'];filename=gate+'-replacement-screen.json'
+    (s.root/filename).write_text(json.dumps(subject_motion.screen(s.root/'replacement.mp4',[{'start':0,'end':1,'subject':'synthetic replacement fixture','isolation_note':'software test only','roi':[0,0,1,1],'masks':[]}],policy['screen'])))
+    motion.update(media_sha256=gates.file_digest(s.root/'replacement.mp4'),screen={'file':filename,'sha256':gates.file_digest(s.root/filename)})
     refresh(s.d);s.assertEqual(s.errors(gate),[])
  def test_media_hash_change_at_same_path_invalidates_review_context(s):
   for gate in ('G2','G3'):
@@ -574,7 +581,7 @@ class CoverageStageTests(unittest.TestCase):
  def test_auxiliary_actual_presentation_required(s):
   s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];s.d['qa']['comprehension']['internal_review']['steps'].pop();refresh(s.d);s.rejects('promised explanation coverage incomplete','G5')
  def test_auxiliary_does_not_require_first_representative_sample(s):
-  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];r=s.d['qa']['visual_frames']['animation'];r['step_ids']=['TEST0'];r['steps']=[r['steps'][0]];refresh(s.d);s.assertEqual(s.errors(),[])
+  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];r=s.d['qa']['visual_frames']['animation'];r['step_ids']=['TEST0'];r['steps']=[r['steps'][0]];r['subject_motion']['semantic_units'][0]['step_ids']=['TEST0'];refresh(s.d);s.assertEqual(s.errors(),[])
 
  def test_legacy_structure_cannot_skip_design(s):s.d['brief'].pop('audience_start');refresh(s.d);s.rejects('explicit knowledge layer required','G1')
  def test_legacy_structure_cannot_skip_logic_review(s):s.d['qa']['comprehension'].pop('logic_review');s.rejects('separate paper logic review','G1')

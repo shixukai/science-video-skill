@@ -319,5 +319,20 @@ class ReferenceSystemTests(unittest.TestCase):
                     registry_path.write_text(original_registry)
         self.assertEqual(m.check(self.root), [])
 
+    def test_subject_motion_policy_cannot_enable_slideshow_exceptions(self):
+        self.edit("config/production-policy.json", lambda d: d["subject_motion"].update(no_whole_semantic_unit_exception=False))
+        self.errors("subject motion screening/semantic boundaries required")
+
+    def test_subject_motion_project_limit_cannot_be_weakened_to_ten_seconds(self):
+        self.edit("config/production-policy.json", lambda d: d["subject_motion"].update(max_no_progress_seconds=10))
+        self.errors("conservative subject motion project limits required")
+
+    def test_subject_motion_rule_cannot_be_removed(self):
+        def remove(registry):
+            registry["rules"] = [r for r in registry["rules"] if r["id"] != "MOTION-subject-continuity"]
+            registry["rule_count"] = len(registry["rules"])
+        self.edit("indexes/standard-coverage.json", remove)
+        self.errors("current explanation/finesse/voice coverage missing")
+
 if __name__ == "__main__":
     unittest.main()

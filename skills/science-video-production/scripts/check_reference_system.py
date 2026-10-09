@@ -131,6 +131,17 @@ def check(root):
         need(tokens["type"]["font_files_bundled"] is False, "font license requires separate verification")
 
         policy = read("config/production-policy.json")
+        motion = policy["subject_motion"]
+        need(motion["owner"] == "references/quality-acceptance.md#主体动态与长静帧"
+             and motion["required_stages"] == ["G2", "G3", "G5"], "subject motion canonical owner/stages required")
+        need(type(motion["max_no_progress_seconds"]) in (int, float) and 0 < motion["max_no_progress_seconds"] <= 3
+             and type(motion["max_purposeful_read_seconds"]) in (int, float)
+             and 0 < motion["max_purposeful_read_seconds"] <= 1.6, "conservative subject motion project limits required")
+        need(motion["automatic_screen_is_not_semantic_acceptance"] is True
+             and motion["no_whole_semantic_unit_exception"] is True
+             and motion["no_cut_or_speed_workaround"] is True, "subject motion screening/semantic boundaries required")
+        need(motion["screen"] == {"sample_fps": 4, "sample_size": 64, "mae_threshold": .002, "candidate_min_seconds": 3.0},
+             "subject motion screen settings must match current project revision")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
         need("cold_view" not in policy and policy["internal_review"]["real_audience_required"] is False
@@ -209,7 +220,7 @@ def check(root):
                     value = value[int(key)] if isinstance(value, list) else value[key]
         need(len(rule_ids) == registry.get("rule_count") and len(set(rule_ids)) == len(rule_ids)
              and len(rule_ids) > 0, "current requirement coverage count missing/duplicate")
-        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution"} <= set(rule_ids),
+        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution", "MOTION-subject-continuity"} <= set(rule_ids),
              "current explanation/finesse/voice coverage missing")
         schema = read("assets/production-asset.schema.json")
         need(schema["$schema"] == "https://json-schema.org/draft/2020-12/schema", "asset schema version required")

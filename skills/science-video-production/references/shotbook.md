@@ -119,3 +119,5 @@ manifest记录生成时episode原字节SHA-256、源视频摘要、工具版本�
 
 当前 qa.explanation_review 与 qa.expression_review 可引用同一详细观察证据；旧 `qa.comprehension.internal_review` 兼容绑定当前上下文与最终声画范围，分别保存解释和表达职责、答案/关系/小变化或区分/边界四目标以及每步实际观察证据。能力、所审文件和范围须真实，不能用模板文本制造已看已听事实；当前关尚无实际作品时保留未验，按阶段范围继续草稿而不签成片通过。
 制作前纸稿逻辑审查使用 qa.explanation_logic，旧 `qa.comprehension.logic_review` 可兼容读取，明确 `basis=paper_logic` 并绑定G1上下文；它不复用最终声画签收。当前每步 key_difficulty 标识实际关键难点，topic_alignment.expression_cards 覆盖该集合；旧 `brief.difficult_step_ids` 与四项难点卡兼容读取而非强求每个铺垫步骤一张卡；确无专项难点时给具体理由。旧 `causal_steps` 兼容读取不代表旧包可以跳过当前G1解释设计或G5实际审查。
+
+主体动态的定义、长静帧上限、ROI筛查、语义段记录与G2/G3/G5失败门槛统一见 [质量责任正文](quality-acceptance.md#主体动态与长静帧)；逐镜静态方向认可不替代对应动态证据。
