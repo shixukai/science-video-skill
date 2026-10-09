@@ -2246,7 +2246,7 @@
     },
     {
       "id": "H-071",
-      "rule": "物理色义高于品牌颜色，彩虹光谱冷热危险信号保持正确",
+      "rule": "科学事实色与变量含义优先于装饰配色，颜色不得改变对象或关系的含义",
       "modality": "hard",
       "owner": "references/visual-system.md",
       "owner_anchor": "三尺度造型与制作细节",
@@ -2257,7 +2257,7 @@
       "applicability_contract": "hard",
       "failure_contract": "hard",
       "sample_reference": "pending_private_evidence",
-      "action": "物理色义高于品牌颜色，彩虹光谱冷热危险信号保持正确",
+      "action": "科学事实色与变量含义优先于装饰配色，颜色不得改变对象或关系的含义",
       "record_role": "normative_requirement_or_boundary",
       "applicability_reference": {
         "file": "references/visual-system.md",
@@ -2495,7 +2495,7 @@
     },
     {
       "id": "H-079",
-      "rule": "不同物理机制不用统一弹性曲线；光路方向/观察条件改变可以是实质解释，不强迫形变",
+      "rule": "不同机制不用统一弹性曲线；路径、方向、约束或观察条件的变化可承担解释，动作由关系需要决定",
       "modality": "hard",
       "owner": "references/shotbook.md",
       "owner_anchor": "动作卡镜头配方与事件复核",
@@ -2506,7 +2506,7 @@
       "applicability_contract": "hard",
       "failure_contract": "hard",
       "sample_reference": "pending_private_evidence",
-      "action": "不同物理机制不用统一弹性曲线；光路方向/观察条件改变可以是实质解释，不强迫形变",
+      "action": "不同机制不用统一弹性曲线；路径、方向、约束或观察条件的变化可承担解释，动作由关系需要决定",
       "record_role": "normative_requirement_or_boundary",
       "applicability_reference": {
         "file": "references/shotbook.md",
@@ -8133,7 +8133,7 @@
     },
     {
       "id": "H-269",
-      "rule": "S10 NOAA雷声事实是示例来源，不是本轮题材必选，也不覆盖彩虹事实",
+      "rule": "示例来源仅支持其已核实陈述与适用条件；当期题材另核事实与来源",
       "modality": "boundary",
       "owner": "references/shotbook.md",
       "owner_anchor": "按动作类别补充信息",
@@ -8150,7 +8150,7 @@
       "applicability_contract": "boundary",
       "failure_contract": "boundary",
       "sample_reference": "pending_private_evidence",
-      "action": "S10 NOAA雷声事实是示例来源，不是本轮题材必选，也不覆盖彩虹事实",
+      "action": "示例来源仅支持其已核实陈述与适用条件；当期题材另核事实与来源",
       "record_role": "normative_requirement_or_boundary",
       "applicability_reference": {
         "file": "references/shotbook.md",
@@ -9245,7 +9245,7 @@
     },
     {
       "id": "V-033",
-      "rule": "机制动作表达因果：叶柄定位/叶尖曲率、传播起点先后、接触后变化；不强迫所有机制形变，光路约束遮挡视角可为关键变化",
+      "rule": "机制动作按实际关系设计，保持所需锚点、先后状态及约束；路径、遮挡或视角变化可承担解释，不强迫所有机制形变",
       "modality": "hard",
       "owner": "references/shotbook.md",
       "owner_anchor": "动作卡镜头配方与事件复核",
@@ -9256,7 +9256,7 @@
       "applicability_contract": "hard",
       "failure_contract": "hard",
       "sample_reference": "pending_private_evidence",
-      "action": "机制动作表达因果：叶柄定位/叶尖曲率、传播起点先后、接触后变化；不强迫所有机制形变，光路约束遮挡视角可为关键变化",
+      "action": "机制动作按实际关系设计，保持所需锚点、先后状态及约束；路径、遮挡或视角变化可承担解释，不强迫所有机制形变",
       "record_role": "normative_requirement_or_boundary",
       "applicability_reference": {
         "file": "references/shotbook.md",
@@ -37924,17 +37924,17 @@
     {
       "id": "H-h-failure-027",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原章节作最小通用修订；已有明确规则则补失败条件、执行证据或验收入口，合并重复项。根因未核实就标待查，不把猜测、个例对象名或单次时间点硬编码为通用要求。",
+      "failure_condition": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。",
       "clauses": [
         {
           "file": "references/quality-acceptance.md",
           "anchor": "失败后的处理",
-          "quote": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原章节作最小通用修订；已有明确规则则补失败条件、执行证据或验收入口，合并重复项。根因未核实就标待查，不把猜测、个例对象名或单次时间点硬编码为通用要求。",
+          "quote": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。",
           "lines": [
             77,
             77
           ],
-          "quote_sha256": "3c0540c08237ff710b522b0bc73aeb03352ab96ff78f7f5e9e1dfa24f75b72b0"
+          "quote_sha256": "162565746c7f33162e2d5924bf56ee4778fcbeefcc07cdb91145b6c07b9655d2"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38644,17 +38644,17 @@
     {
       "id": "H-h-failure-081",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "这些检查不穷尽审美判断。判断“仍未达到参照的完成度”时，必须指出具体差距和对应画面，不能只写“感觉高级”或“我认为精美”。缺陷不能靠添加更多图形、纹理、渐变或特效掩盖。静止观察、图层平移、光路逐步绘制或显隐可以有教学作用，不能一律禁用；但使用这些手法本身不证明动画精美。静态背景可以保留；只让该动的对象/状态发生有依据的变化，不要求每层或每秒运动，不用随机弹跳、粒子或相机推拉制造“动画量”。",
+      "failure_condition": "这些检查不穷尽审美判断。判断“仍未达到参照的完成度”时，必须指出具体差距和对应画面，不能只写“感觉高级”或“我认为精美”。缺陷不能靠添加更多图形、纹理、渐变或特效掩盖。静止观察、图层平移、路径逐步绘制或显隐可以有教学作用，不能一律禁用；但使用这些手法本身不证明动画精美。静态背景可以保留；只让该动的对象/状态发生有依据的变化，不要求每层或每秒运动，不用随机弹跳、粒子或相机推拉制造“动画量”。",
       "clauses": [
         {
           "file": "references/quality-acceptance.md",
           "anchor": "可检查项目",
-          "quote": "这些检查不穷尽审美判断。判断“仍未达到参照的完成度”时，必须指出具体差距和对应画面，不能只写“感觉高级”或“我认为精美”。缺陷不能靠添加更多图形、纹理、渐变或特效掩盖。静止观察、图层平移、光路逐步绘制或显隐可以有教学作用，不能一律禁用；但使用这些手法本身不证明动画精美。静态背景可以保留；只让该动的对象/状态发生有依据的变化，不要求每层或每秒运动，不用随机弹跳、粒子或相机推拉制造“动画量”。",
+          "quote": "这些检查不穷尽审美判断。判断“仍未达到参照的完成度”时，必须指出具体差距和对应画面，不能只写“感觉高级”或“我认为精美”。缺陷不能靠添加更多图形、纹理、渐变或特效掩盖。静止观察、图层平移、路径逐步绘制或显隐可以有教学作用，不能一律禁用；但使用这些手法本身不证明动画精美。静态背景可以保留；只让该动的对象/状态发生有依据的变化，不要求每层或每秒运动，不用随机弹跳、粒子或相机推拉制造“动画量”。",
           "lines": [
             31,
             31
           ],
-          "quote_sha256": "bb0bc2a9af54a0300cc2f1301af7414e00f1b0e8994d767b24cbaa7ef8348cad"
+          "quote_sha256": "c544a7f9bbe36a9b455f3ce0f0b8f115bbe6a64a0b514aef57f89ad0e3d05518"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -42150,17 +42150,17 @@
     {
       "id": "V-failure_cause",
       "kind": "existing_clause_or_required_record_relationship",
-      "failure_condition": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原章节作最小通用修订；已有明确规则则补失败条件、执行证据或验收入口，合并重复项。根因未核实就标待查，不把猜测、个例对象名或单次时间点硬编码为通用要求。",
+      "failure_condition": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。",
       "clauses": [
         {
           "file": "references/quality-acceptance.md",
           "anchor": "失败后的处理",
-          "quote": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原章节作最小通用修订；已有明确规则则补失败条件、执行证据或验收入口，合并重复项。根因未核实就标待查，不把猜测、个例对象名或单次时间点硬编码为通用要求。",
+          "quote": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。",
           "lines": [
             77,
             77
           ],
-          "quote_sha256": "3c0540c08237ff710b522b0bc73aeb03352ab96ff78f7f5e9e1dfa24f75b72b0"
+          "quote_sha256": "162565746c7f33162e2d5924bf56ee4778fcbeefcc07cdb91145b6c07b9655d2"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -43139,12 +43139,12 @@
         {
           "file": "references/quality-acceptance.md",
           "anchor": "失败后的处理",
-          "quote": "1. 在私有项目记录绑定原反馈、受影响版本/时段和实际导出。先区分内容、转镜、动画、解说、声音或布局问题；范围不明只澄清必要歧义，不把局部否定扩大到其他已认可作品。截图/时码先作缺陷定位，除用户明确限定检查范围外，在当前受影响整片从头到尾排查同一缺陷机制及依赖关系，不只检查被点名的一帧。沿用现有分镜与QA缺陷记录，列实际扫描范围、受影响镜头/时段、需改项、保留项及依据、未验项；共同根因未核实仍记待查。全片排查不等于重画所有镜头，改动范围遵循 [当前任务与委托范围](production-checkpoints.md#3-阶段推进与代表样)，不能把实施方便当作保留已知缺陷的依据。\n2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原章节作最小通用修订；已有明确规则则补失败条件、执行证据或验收入口，合并重复项。根因未核实就标待查，不把猜测、个例对象名或单次时间点硬编码为通用要求。\n3. 规则须写清可观察行为、所需证据和失败后退回阶段。按变更风险做回归与独立审查；发布授权另按当前范围履行，公开内容仅含通用规则/测试，不带用户聊天、私有身份或媒体。\n4. 在本片修复及下一条适用视频中实际检查该项，记录规则版本、媒体版本、连续片段/时间点和结果。对本轮反馈与受影响镜头逐项说明已修复、仍适用而保留的依据及尚未处理/未验项，证据按 [记录与技术检查](#记录与技术检查) 绑定本次实际最终导出与所审声画版本。交完整新版本时，复查修复段、依赖镜头和接缝，并按整片要求从头到尾实际看听；不能用代表段通过、文件已替换或旧通过记录覆盖未处理的同类缺陷。后片未产出或未看听时保持待验证，不能把Skill更新或旧样片通过当成已改进后续作品。\n\n仅改规则、改QA字段或通过代码测试都不会自动解除冻结。已认可且与新稿匹配的音轨尽量保留，重新检查其声画/字幕配合，避免无谓重生成。已发布内容不自动修改/删除；需另有明确授权。规则测试只检验流程或程序约束，不证明成片达到质量标准。",
+          "quote": "1. 在私有项目记录绑定原反馈、受影响版本/时段和实际导出。先区分内容、转镜、动画、解说、声音或布局问题；范围不明只澄清必要歧义，不把局部否定扩大到其他已认可作品。截图/时码先作缺陷定位，除用户明确限定检查范围外，在当前受影响整片从头到尾排查同一缺陷机制及依赖关系，不只检查被点名的一帧。沿用现有分镜与QA缺陷记录，列实际扫描范围、受影响镜头/时段、需改项、保留项及依据、未验项；共同根因未核实仍记待查。全片排查不等于重画所有镜头，改动范围遵循 [当前任务与委托范围](production-checkpoints.md#3-阶段推进与代表样)，不能把实施方便当作保留已知缺陷的依据。\n2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。\n3. 规则须写清可观察行为、所需证据和失败后退回阶段。按变更风险做回归与独立审查；发布授权另按当前范围履行，公开内容仅含通用规则/测试，不带用户聊天、私有身份或媒体。\n4. 在本片修复及下一条适用视频中实际检查该项，记录规则版本、媒体版本、连续片段/时间点和结果。对本轮反馈与受影响镜头逐项说明已修复、仍适用而保留的依据及尚未处理/未验项，证据按 [记录与技术检查](#记录与技术检查) 绑定本次实际最终导出与所审声画版本。交完整新版本时，复查修复段、依赖镜头和接缝，并按整片要求从头到尾实际看听；不能用代表段通过、文件已替换或旧通过记录覆盖未处理的同类缺陷。后片未产出或未看听时保持待验证，不能把Skill更新或旧样片通过当成已改进后续作品。\n\n仅改规则、改QA字段或通过代码测试都不会自动解除冻结。已认可且与新稿匹配的音轨尽量保留，重新检查其声画/字幕配合，避免无谓重生成。已发布内容不自动修改/删除；需另有明确授权。规则测试只检验流程或程序约束，不证明成片达到质量标准。",
           "lines": [
             76,
             81
           ],
-          "quote_sha256": "453a4f917ee50b17cc9c4b9df775092dfef192dae5ea268a20fd0f59ff062f4d"
+          "quote_sha256": "80672e0ae0e11ab87cb72f9adfbeb39b361d68bb08975c0475154d7af9e34a9b"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
