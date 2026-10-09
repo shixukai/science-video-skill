@@ -13,12 +13,15 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 
 - 明确主问题及必要的从属问题与联系；用户明确改方向时更新当前范围，局部修复不擅改题；主图、口播、必要图内字须共同解释
 - 原理用纯2D；真实锚点用合法连续实拍/观测视频，照片运动或AI不得顶替
+- 美术制作先实际查看 [已确认画风](assets/style/accepted-style-reference.png)，按 [外观与制作约束](references/visual-system.md#已确认画风的视觉锚点) 制作精细2D绘画资产；正式静态候选须先达到相应完成度，再进入用户风格选择。低完成度占位仅用于明确的技术/构图草排
 - 每条有中文解说及同步字幕；沿用项目已确认声音，不能用纯字幕配乐冒充完成
 - 实际调用千问前，先检查当前及前文上下文中的工程、运行环境或服务位置；上下文已经明确指定时直接使用，只有上下文没有指定时才询问。优先已有工程，具体路径留当期记录；本地脚本是可选适配器，不自动创建环境或下载权重。仅整理Skill或做纸面计划时无需询问调用位置
 - 静态方向、组件、连续样段、整片理解、声音、平台与发布分别验；已知失败不得带病放行
 - 已发布、明确取消或禁止的版本不自动重做/恢复；本Skill写入或升级本身不提供制作恢复、外传或发布权限
 
 ## 阶段路由：逐项执行适用的责任正文
+
+先辨认用户本次要的产物、允许推进的阶段与已有工作包，再按下表读取当前适用章节；进入后续阶段时补读对应正文，不必为纸面策划预读声音、平台和最终美术验收细则。
 
 | 阶段/问题 | 唯一责任正文 | 产物 |
 | --- | --- | --- |
@@ -32,25 +35,34 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 
 同一规则仅在对应正文展开；模板只记录结果，其他章节用链接调用。规则归属与阶段见 [责任索引](indexes/rule-owners.json)，它不创建第二套规则。[完整条款覆盖索引](indexes/standard-coverage.json) 逐项指向责任正文，配套字段重复不算新增独立门槛。
 
+按任务使用入口：
+
+- **只做策划**：先读主题契约、科学与素材、制作检查点的选题与解释设计部分；按所需交付深度写简报/分镜。尚未核实的主张标待研究；缺来源可交待研究策划，不为通过 `plan` 伪造出处。需要机器检查的计划包时，再读逐镜记录的 [无音轨 G1 计划](references/shotbook.md#无音轨的-g1-纸面计划)。`plan` 通过只证明基础计划结构，G1另需完整解释设计及科学/逻辑内审。
+- **新建单集**：读取当阶段配置与正文，在用户工作目录复制所需模板；模板中的ID、候选和审查项是字段示例，按真实情况填写或保留未验，不签假通过。
+- **续做或局部修复**：先读原包、当前媒体版本、最新反馈及已有授权，按 [失败后的处理](references/quality-acceptance.md#失败后的处理) 确定受影响证据。沿用已有文件与稳定ID，不重新复制模板覆盖；未取得原包或目标镜头时先做修复准备，索取必要定位信息后再改实际媒体。修改后旧验收是否有效以当前依赖与导出版本为准，不能凭“其余不动”保留过期整片通过。
+- **只整理 Skill**：检查规则引用、模板、脚本与适当回归；不因此询问千问位置、生成媒体或恢复制作。
+
 ## 当前系列实现基准
 
 - [完整制作策略](config/production-policy.json)：G1–G7、H/D区分、评分、内部解释审查及产能/复盘起点；缺实际能力记未满足
 - [系列配置](config/series-profile.json)：明亮自然方向、纯2D、Qwen/Serena、画幅/字幕与交付默认值
 - [视觉参数](assets/style/bright-nature.tokens.json)：色角色、可调配比、字阶/线条起点；科学本色优先
-- 项目在私有工作包提供已确认设计板及批准范围；公开仓不包含其原图或私有链接
+- Skill携带已确认外观参考及 [美术规格](assets/style/bright-nature.art-direction.json)；额外项目设计板及批准范围留私有工作包
 - 采用本版完整标准及参数只确定工作基准，未自动批准新动作、科学机制、平台布局或整片；按当前任务范围推进，不从配置状态推断复工
 
-先读取配置和所需正文，再复制 [简报](assets/brief-template.md)、[单集记录](assets/episode-template.json) 和 [原题锚点](assets/topic-anchor-template.json)。逐镜实际使用的基准/资产版本与哈希记入私有单集，不以“最新版”代替固定引用。
+新建时按需使用 [简报](assets/brief-template.md)、[单集记录](assets/episode-template.json) 和 [原题锚点](assets/topic-anchor-template.json)。逐镜实际使用的基准/资产版本与哈希记入私有单集，不以“最新版”代替固定引用。相对媒体/证据路径以 `episode.json` 所在目录为根；Skill脚本路径以安装位置为准，不把单集文件放入Skill公共资源目录。
+
+美术制作时按 [视觉方法](references/visual-system.md#代表样与-l2l3-校准) 选风险代表样、校准同镜完成度并检查整片编排；用 [美术与画质记录](assets/art-direction-template.md) 保存实际差距及修复。已有真实秒数分镜和媒体时，可按 [抽帧工具](references/shotbook.md#整片视觉抽帧工具) 生成缩略页；它只辅助审看，结论归既有阶段QA。
 
 ## 检查与交付
 
 从本Skill目录运行：
 
     python scripts/check_reference_system.py .
-    python scripts/check_episode.py path/to/episode.json --stage plan
-    python scripts/check_episode.py path/to/episode.json --stage G3
-    python scripts/check_episode.py path/to/episode.json --stage delivery
+    python scripts/check_episode.py path/to/episode.json --stage plan --report path/to/plan-check-001.json
+    python scripts/check_episode.py path/to/episode.json --stage G3 --report path/to/G3-check-001.json
+    python scripts/check_episode.py path/to/episode.json --stage delivery --report path/to/delivery-check-001.json
 
-第一项只核规则归属、参数与公共索引结构/哈希；阶段检查必须在对应推进前调用并保存回执，plan不晋级，G1–G7逐关核证据，delivery含G6。范围与限制见 [技术检查](references/quality-acceptance.md#记录与技术检查)。通过命令不等于科学、权利、美术、听觉、理解或发布通过。缺实际视听时按质量正文保持未验，可交明确待审材料，不能包装成验收完成。
+第一项只核规则归属、参数与公共索引结构/哈希；阶段检查必须在对应推进前调用并保存回执，plan不晋级，G1–G7逐关核证据，delivery含G6。`--report` 保存带输入与检查资源摘要的本地回执，使用新文件名，不改QA或授予批准；退出码0为本地检查通过、1为检查阻塞、2为输入/执行/回执写入错误。范围与限制见 [技术检查](references/quality-acceptance.md#记录与技术检查)。通过命令不等于科学、权利、美术、听觉、理解或发布通过。缺实际视听时按质量正文保持未验，可交明确待审材料，不能包装成验收完成。
 
 所有适用标准逐项执行，基本素材仅作参考；现行具体项目配置优先。只整理Skill时，不动媒体；用户明确要求完成整理后恢复制作时，先核版本发布/读回结果，再在原授权范围进入对应阶段。任何新的暂停、取消或版本限制优先。

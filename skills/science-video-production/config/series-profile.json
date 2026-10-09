@@ -1,14 +1,18 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "清新明亮、通透、色彩鲜明；主体、环境和机制同一纯2D美术体系",
-    "design_board": "project_supplied_private_reference",
-    "design_board_scope": "record actual version, hash and confirmation scope in private project brief"
+    "direction": "结构可信、光影细腻、材质通透的精细纯2D绘画式自然插画；整景、主体和机制同一完成度",
+    "design_board": "project_specific_board_based_on_selected_style",
+    "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
+    "art_direction": "../assets/style/bright-nature.art-direction.json",
+    "style_reference": "../assets/style/accepted-style-reference.png",
+    "style_reference_sha256": "d7a43878e348893804216aceca29004945d05b81e4c68abf934a8f0aa52c8a77",
+    "style_reference_scope": "visual_style_only"
   },
   "medium": {
     "mechanism": "pure_2d",
@@ -37,7 +41,10 @@
       "confirmation_scope": "available_context",
       "prefer_existing_project": true,
       "missing_location_action": "ask_user",
-      "modes": ["local_project", "service"],
+      "modes": [
+        "local_project",
+        "service"
+      ],
       "auto_create_environment": false,
       "auto_download_model": false
     },

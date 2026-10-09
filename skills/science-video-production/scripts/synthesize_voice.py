@@ -11,6 +11,7 @@ import random
 import re
 import sys
 import tempfile
+import threading
 from datetime import datetime, timezone
 
 
@@ -19,6 +20,7 @@ HUB_ENDPOINT = "https://huggingface.co"
 DEFAULT_PROFILE = Path(__file__).resolve().parents[1] / "config/series-profile.json"
 COMMIT = re.compile(r"[0-9a-f]{40}")
 RESERVED_GENERATION_KEYS = {"text", "speaker", "language", "instruct"}
+_SYNTHESIS_LOCK = threading.Lock()
 
 
 class SynthesisError(RuntimeError):
@@ -69,7 +71,15 @@ def package_versions():
 def read_settings(profile_path, revision=None, device=None, dtype=None):
     profile_path = Path(profile_path).resolve()
     profile_bytes = profile_path.read_bytes()
-    audio = json.loads(profile_bytes)["audio"]
+    try:
+        settings = json.loads(profile_bytes)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise SynthesisError("The profile must contain valid JSON text.") from exc
+    if not isinstance(settings, dict):
+        raise SynthesisError("The profile must be an object.")
+    audio = settings.get("audio")
+    if not isinstance(audio, dict):
+        raise SynthesisError("The profile audio must be an object.")
     if audio.get("backend") not in ("local_qwen", "confirm_at_invocation") or audio.get("provider") != "Qwen":
         raise SynthesisError("Only a confirmed local_qwen adapter with the Qwen provider is supported.")
     model_id = audio.get("model_id")
@@ -85,7 +95,10 @@ def read_settings(profile_path, revision=None, device=None, dtype=None):
     for key in ("speaker", "language", "instruct"):
         if not isinstance(audio.get(key), str) or not audio[key].strip():
             raise SynthesisError("The profile must explicitly set speaker, language and instruct.")
-    runtime = dict(audio.get("runtime", adapter_example.get("runtime", {})))
+    runtime = audio.get("runtime", adapter_example.get("runtime", {}))
+    if not isinstance(runtime, dict):
+        raise SynthesisError("The profile runtime must be an object.")
+    runtime = dict(runtime)
     if device is not None:
         runtime["device"] = device
     if dtype is not None:
@@ -99,8 +112,13 @@ def read_settings(profile_path, revision=None, device=None, dtype=None):
     requested = audio.get("generation_params", adapter_example.get("generation_params"))
     if not isinstance(requested, dict) or RESERVED_GENERATION_KEYS.intersection(requested):
         raise SynthesisError("generation_params must be an object and must not override text or voice identity.")
+    if not isinstance(requested.get("non_streaming_mode", True), bool):
+        raise SynthesisError("non_streaming_mode must be a boolean.")
     # Check serializability and reject NaN/Infinity before loading a model.
-    json_bytes(requested)
+    try:
+        json_bytes(requested)
+    except (TypeError, ValueError) as exc:
+        raise SynthesisError("generation_params must contain finite JSON values.") from exc
     return audio, runtime, requested, selected_revision, hashlib.sha256(profile_bytes).hexdigest()
 
 
@@ -245,8 +263,6 @@ def _synthesize(profile, text_file, output, record, *, revision=None, cache_dir=
             raise SynthesisError("The installed Qwen wrapper cannot expose effective generation parameters.")
         params = dict(requested)
         non_streaming_mode = params.pop("non_streaming_mode", True)
-        if not isinstance(non_streaming_mode, bool):
-            raise SynthesisError("non_streaming_mode must be a boolean.")
         effective = merge(**params)
         json_bytes(effective)
         if seed is not None:
@@ -324,6 +340,16 @@ def _synthesize(profile, text_file, output, record, *, revision=None, cache_dir=
 
 def synthesize(profile, text_file, output, record, *, execution_reference=None,
                project_dir=None, cache_dir=None, **options):
+    # cwd and RNG state are process-wide. Concurrent calls to this adapter must
+    # wait until the previous invocation has restored and removed its workspace.
+    with _SYNTHESIS_LOCK:
+        return _synthesize_serialized(
+            profile, text_file, output, record, execution_reference=execution_reference,
+            project_dir=project_dir, cache_dir=cache_dir, **options)
+
+
+def _synthesize_serialized(profile, text_file, output, record, *, execution_reference,
+                          project_dir, cache_dir, **options):
     execution = confirmed_execution(execution_reference, project_dir, cache_dir)
     # Native dependency initialization can create relative session files. Keep
     # those side effects in disposable private storage, outside a repository.

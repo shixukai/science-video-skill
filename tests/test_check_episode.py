@@ -8,6 +8,23 @@ p=PROJECT/'skills/science-video-production/scripts/check_episode.py'
 spec=importlib.util.spec_from_file_location('checks',p); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
 plan=json.loads((PROJECT/'examples/blue-sky/episode.json').read_text())
 count=0
+
+
+class TopicAnchorDiagnosticsTests(unittest.TestCase):
+ def test_missing_or_invalid_anchor_does_not_claim_an_unauthorized_scope_change(self):
+  with tempfile.TemporaryDirectory(prefix='science-topic-diagnostics-') as tmp:
+   root=Path(tmp)
+   anchor=root/'topic-anchor.json'
+   for value in (None, '{"unfinished":', '[]', '{}'):
+    with self.subTest(anchor=value):
+     if value is None:
+      if anchor.exists():anchor.unlink()
+     else:anchor.write_text(value)
+     errors,_=mod.check(copy.deepcopy(plan),root,'plan')
+     self.assertTrue(errors)
+     self.assertFalse(any('topic/scope change requires' in e for e in errors),errors)
+
+
 def test(label, data, root, stage, expected=None):
  global count
  if stage=="delivery" and expected is None:

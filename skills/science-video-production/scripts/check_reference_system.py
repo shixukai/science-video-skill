@@ -60,7 +60,7 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.2.1", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.3.0", "unsupported profile schema/version")
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
@@ -94,6 +94,32 @@ def check(root):
         tokens = json.loads(tokens_path.read_text(encoding="utf-8"))
         need(tokens["status"] == "working_baseline_v1" and tokens["science_color_priority"] is True,
              "style defaults must preserve science colors and scoped adoption")
+        direction_path = local_path(root, root / "config", profile["design"]["art_direction"])
+        direction = json.loads(direction_path.read_text(encoding="utf-8"))
+        style_path = local_path(root, root / "config", profile["design"]["style_reference"])
+        selected_style_hash = profile["design"].get("style_reference_sha256")
+        need(style_path.is_file() and style_path.suffix == ".png", "selected style image missing")
+        if style_path.is_file():
+            need(hashlib.sha256(style_path.read_bytes()).hexdigest() == selected_style_hash,
+                 "selected style image hash mismatch")
+        need(profile["design"].get("style_reference_scope") == "visual_style_only",
+             "selected style scope must remain appearance only")
+        reference = direction["reference"]
+        need(local_path(root, direction_path.parent, reference["file"]) == style_path
+             and reference["sha256"] == selected_style_hash, "art direction reference binding mismatch")
+        need(local_path(root, tokens_path.parent, tokens["art_direction"]) == direction_path,
+             "tokens art direction binding mismatch")
+        fields = direction["input_fields"]
+        need(isinstance(fields, dict) and bool(fields) and all(isinstance(v, str) and v.strip() for v in fields.values()),
+             "art brief input fields missing")
+        templates = direction["brief_templates"]
+        need(set(templates) == {"whole_scene", "object", "mechanism"}, "art brief modes missing")
+        for template in templates.values():
+            prompt = template["prompt_template"]
+            need(isinstance(prompt, list) and bool(prompt) and all(isinstance(s, str) and s.strip() for s in prompt),
+                 "art brief template malformed")
+            slots = set(re.findall(r"\{\{([a-z_]+)\}\}", "\n".join(prompt)))
+            need(slots == set(fields), "art brief template inputs inconsistent")
         for color in tokens["colors"].values():
             need(bool(HEX.fullmatch(color["hex"])) and bool(color["role"]), "invalid palette color/role")
         ratio = tokens["suggested_scene_ratio"]
@@ -191,10 +217,27 @@ def check(root):
 
         refs = read("indexes/aesthetic-references.json")
         need(refs["catalog"] == "aesthetic_references", "wrong reference catalog")
+        ref_ids = []
+        local_styles = []
         for r in refs["entries"]:
-            need(r["url"].startswith("https://") and r["production_use"] == "not_granted",
-                 "aesthetic reference does not grant production use")
+            ref_ids.append(r["id"])
+            need(r["production_use"] == "not_granted", "aesthetic reference does not grant production use")
+            need(("url" in r) != ("file" in r), "aesthetic reference needs exactly one URL or local file")
+            if "file" in r:
+                p = local_path(root, root, r["file"])
+                need(p.is_file(), "local aesthetic reference missing")
+                if p.is_file():
+                    need(hashlib.sha256(p.read_bytes()).hexdigest() == r.get("sha256"),
+                         "local aesthetic reference hash mismatch")
+                need(r.get("approval_scope") == "visual_style_only" and bool(r.get("rights_scope")),
+                     "local aesthetic reference needs scoped appearance and use boundaries")
+                local_styles.append((p, r.get("sha256")))
+            else:
+                need(isinstance(r.get("url"), str) and r["url"].startswith("https://"),
+                     "aesthetic reference URL must use HTTPS")
             need(bool(r["version"]) and bool(r["viewing_status"]), "reference version/viewing scope required")
+        need(len(ref_ids) == len(set(ref_ids)), "duplicate aesthetic reference id")
+        need((style_path, selected_style_hash) in local_styles, "selected style missing from aesthetic references")
         assets = read("indexes/reusable-assets.json")
         need(assets["catalog"] == "reusable_assets", "wrong reusable asset catalog")
         ids = []

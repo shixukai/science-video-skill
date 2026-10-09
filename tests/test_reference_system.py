@@ -105,6 +105,26 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_reference_not_media_license(self):
         self.edit("indexes/aesthetic-references.json", lambda d: d["entries"][0].update(production_use="granted"))
         self.errors("does not grant")
+    def test_selected_style_image_cannot_be_replaced_without_rebinding(self):
+        path = self.root / "assets/style/accepted-style-reference.png"
+        path.write_bytes(path.read_bytes() + b"altered-reference")
+        self.errors("selected style image hash mismatch")
+        self.errors("local aesthetic reference hash mismatch")
+    def test_selected_style_path_cannot_escape_the_skill(self):
+        self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference="../../outside.png"))
+        self.errors("path escapes Skill")
+    def test_selected_style_does_not_approve_science_or_motion(self):
+        self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference_scope="complete_episode"))
+        self.errors("appearance only")
+    def test_art_brief_cannot_silently_bind_a_different_reference(self):
+        self.edit("assets/style/bright-nature.art-direction.json", lambda d: d["reference"].update(sha256="0" * 64))
+        self.errors("art direction reference binding mismatch")
+    def test_local_style_reference_is_not_a_cleared_production_asset(self):
+        self.edit("indexes/aesthetic-references.json", lambda d: d["entries"][-1].update(production_use="granted"))
+        self.errors("does not grant")
+    def test_local_reference_cannot_have_two_conflicting_locations(self):
+        self.edit("indexes/aesthetic-references.json", lambda d: d["entries"][-1].update(url="https://example.com/other-style"))
+        self.errors("exactly one URL or local file")
     def test_changed_component_needs_new_hash(self):
         p = self.root / "assets/style/leader-and-arrow.svg"
         p.write_text(p.read_text().replace("#243840", "#000000"))

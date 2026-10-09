@@ -32,7 +32,10 @@ def upgrade(data,root,schema='canonical'):
  if not any(a.get('kind') in ('real_capture','real_observation') for a in d.get('assets',[])):
   d['assets'].append({'id':'REAL_FIXTURE','kind':'real_capture','source':'synthetic software declaration, not actual footage','creator':'test harness','file':video,'sha256':sha,'rights':{'status':'cleared','evidence':'synthetic test only','scope':'software test only'},'observation':{'source_interval':[0,1],'viewing_reference':'synthetic, not an actual observation'}})
   d['shots'][0]['asset_ids'].append('REAL_FIXTURE')
- d['design']={'keyframe_scales':{scale:{'file':video,'sha256':sha,'status':'pass','note':'synthetic shape fixture only'} for scale in ('whole_scene','object_midshot','mechanism_closeup')},'comparison_variants':[],'board_sha256':sha,'approval':{'status':'pass','reviewer':'synthetic fixture','actual_feedback_ref':'synthetic data, not actual approval','approved_board_sha256':sha,'scope':{'visual_style':True,'named_motion':False,'full_episode':False,'platform_release':False}}}
+ board=root/'design-board.svg'
+ board.write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80"><rect width="320" height="80" fill="#dceaf4"/><text x="8" y="42">Synthetic software fixture only</text></svg>',encoding='utf-8')
+ board_sha=gates.file_digest(board)
+ d['design']={'keyframe_scales':{scale:{'file':video,'sha256':sha,'status':'pass','note':'synthetic shape fixture only'} for scale in ('whole_scene','object_midshot','mechanism_closeup')},'comparison_variants':[],'board_reference':board.name,'board_sha256':board_sha,'approval':{'status':'pass','reviewer':'synthetic fixture','actual_feedback_ref':'synthetic data, not actual approval','approved_board_sha256':board_sha,'scope':{'visual_style':True,'named_motion':False,'full_episode':False,'platform_release':False}}}
  for i,asset in enumerate(d.get('assets',[])):
   if asset.get('kind') in ('audio','font'):continue
   if not asset.get('file'):asset['file']=video

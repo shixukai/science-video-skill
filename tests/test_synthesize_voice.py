@@ -1,5 +1,6 @@
 """Mock inference only: these fixtures never establish real speech or listening quality."""
 import contextlib
+from concurrent.futures import ThreadPoolExecutor
 import importlib.util
 import io
 import json
@@ -8,6 +9,7 @@ from pathlib import Path
 import struct
 import sys
 import tempfile
+import threading
 from types import SimpleNamespace
 import unittest
 from unittest import mock
@@ -269,6 +271,85 @@ class SynthesisTests(unittest.TestCase):
             self.run_synthesis()
         self.download.assert_not_called()
         self.assert_no_outputs()
+
+    def test_malformed_settings_fail_before_runtime_import(self):
+        valid_audio = self.settings["audio"]
+        cases = [
+            ([], "profile must be an object"),
+            ({}, "audio must be an object"),
+            ({"audio": []}, "audio must be an object"),
+            ({"audio": {**valid_audio, "runtime": None}}, "runtime must be an object"),
+            ({"audio": {**valid_audio, "runtime": [["device", "cpu"]]}}, "runtime must be an object"),
+            ({"audio": {**valid_audio, "generation_params": {"non_streaming_mode": "false"}}},
+             "non_streaming_mode must be a boolean"),
+            ({"audio": {**valid_audio, "generation_params": {"temperature": float("nan")}}},
+             "finite JSON values"),
+        ]
+        for settings, error in cases:
+            with self.subTest(error=error, settings=settings):
+                self.profile.write_text(json.dumps(settings), encoding="utf-8")
+                with self.assertRaisesRegex(voice.SynthesisError, error):
+                    self.run_synthesis()
+                voice.load_runtime.assert_not_called()
+                self.download.assert_not_called()
+                self.assert_no_outputs()
+
+    def test_invalid_profile_encoding_or_json_has_actionable_error(self):
+        for content in (b"\xff", b'{"audio":'):
+            with self.subTest(content=content):
+                self.profile.write_bytes(content)
+                with self.assertRaisesRegex(voice.SynthesisError, "valid JSON text"):
+                    self.run_synthesis()
+                voice.load_runtime.assert_not_called()
+                self.assert_no_outputs()
+
+    def test_concurrent_calls_do_not_share_or_delete_each_others_working_directory(self):
+        previous_cwd = Path.cwd()
+        first_entered = threading.Event()
+        second_started = threading.Event()
+        second_entered = threading.Event()
+        release_first = threading.Event()
+        workdirs = []
+
+        def isolated_synthesis(*args, **kwargs):
+            workdir = Path.cwd()
+            workdirs.append(workdir)
+            if len(workdirs) == 1:
+                first_entered.set()
+                self.assertTrue(release_first.wait(timeout=5))
+            else:
+                second_entered.set()
+            self.assertEqual(Path.cwd(), workdir)
+            return {}
+
+        def second_call():
+            second_started.set()
+            return voice.synthesize(
+                self.profile, self.text, self.root / "voice-v2.wav", self.root / "voice-v2.json",
+                execution_reference=self.execution_reference, project_dir=self.project,
+                cache_dir=self.cache)
+
+        try:
+            with mock.patch.object(voice, "_synthesize", side_effect=isolated_synthesis):
+                with ThreadPoolExecutor(max_workers=2) as pool:
+                    first = pool.submit(self.run_synthesis)
+                    try:
+                        self.assertTrue(first_entered.wait(timeout=5))
+                        second = pool.submit(second_call)
+                        self.assertTrue(second_started.wait(timeout=5))
+                        self.assertFalse(second_entered.wait(timeout=0.1),
+                                         "A second inference changed the process working directory")
+                    finally:
+                        release_first.set()
+                    first.result(timeout=5)
+                    second.result(timeout=5)
+            self.assertEqual(Path.cwd(), previous_cwd)
+            self.assertEqual(len(workdirs), 2)
+            self.assertNotEqual(*workdirs)
+            self.assertTrue(all(not path.exists() for path in workdirs))
+        finally:
+            # Preserve the test runner's cwd even when testing a broken implementation.
+            voice.os.chdir(previous_cwd)
 
     def test_dependency_session_files_stay_in_disposable_private_storage(self):
         previous_cwd = Path.cwd()

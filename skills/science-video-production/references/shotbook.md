@@ -16,11 +16,31 @@
 
 因果/过程的动作卡在现有分镜中记稳定锚点、初态、触发、过程/终态、轨迹、停顿和理解目的；约束、数量、概率或证据类记录参照、条件、比较/呈现顺序及推导，不为字段捏造运动；每次切镜/模型变化记录前后镜号/时点和桥接。动作规则与阶段门槛由 [生产检查点](production-checkpoints.md) 负责，实际验收由 [质量正文](quality-acceptance.md) 负责，不另造平行台账。将这次实际声画审看记入 `qa.shotbook`，`reviewed_sha256` 使用检查器的 `shotbook_sha256(data)` 返回值。任一镜头、素材台账或音轨版本改变都会使该签收过期。每项本地素材的 `assets[].sha256` 也须与当前文件一致，换素材后重审，不能只刷新摘要。哈希只防止沿用旧声明，不能证明真的看过，也不替代整片验收。
 
+## 整片视觉抽帧工具
+
+已有实际对齐媒体的 `shotbook.start/end` 秒数时，可用 [build_visual_review.py](../scripts/build_visual_review.py) 生成静态审片材料。从Skill目录运行：
+
+```bash
+python3 scripts/build_visual_review.py /path/to/episode.json --media renders/candidate-v3.mp4 --output reviews/G5-v3
+```
+
+需要Python3.11+及本地ffmpeg/ffprobe，不自动安装、联网或修改episode/QA。`--media` 和相对 `--output` 均以episode所在目录为根，媒体与输出须在该目录内；输出必须是新目录，已有目录不覆盖。工具限定本地自包含视频容器，拒绝播放列表；非方形像素或非默认显示变换须先在制作软件输出已校正的审查副本，不能静默当作普通方形像素画面。无真实秒数的 `relative_plan`、null、非有限数、重叠/乱序或超出视频时长的镜头会失败，不能用估算时点冒充实际对齐。静帧诊断不要求视频自带音频，也不证明G2及后关的真实音轨条件已满足。
+
+产物包含 `index.html`、每镜首/中/末PNG、`manifest.json` 及 `gate-evidence.json`。总览只代表所列镜头；页面显示源视频时长、所列区间及未覆盖区间，局部输入不冒充整期。保留完整画幅，网页仅缩放显示；按解码帧时间选取相应时点实际显示的帧，末样严格取结束边界前的帧，避免抽到下一镜或EOF。manifest同时记录请求秒数与实际帧时间，短镜/低帧率可能重复同一帧，实际帧起始时点也可能早于请求时点；这不证明剪辑点或分镜标注准确。关键机制状态、接缝和运动极值未命中时另补证据。
+
+manifest记录生成时episode原字节SHA-256、源视频摘要、工具版本、各帧时点及HTML/PNG摘要；输出条目路径以抽帧目录为根，媒体与episode路径以单集目录为根。`timeline_sha256` 只绑定有序镜号及start/end，不覆盖画面、动作描述或全部QA。只改QA会改变episode快照哈希，不能据此认定视频变了；反过来也不能凭时间轴相同沿用已改变媒体/关键状态的观察。换媒体、时点或相关内容后使用新输出目录重建并重审实际影响范围。
+
+`gate-evidence.json` 是可按实际审查范围复制到 `qa.gates.<stage>.evidence` 的文件列表，路径以单集目录为根，直接列出manifest、HTML和所有PNG及其SHA-256，不包含列表自身。记录观察、对照母版或补充片段时须另列这些文件；只引用该列表或manifest不会让阶段检查递归绑定图片，详见 [阶段证据](quality-acceptance.md#美术方法的阶段证据)。
+
+该页辅助 [整片编排](visual-system.md#整片色彩与构图缩略带) 和静态定位；自动抽帧不代替工作软件的色彩管理、母版/最终编码保真对照、实际小屏或平台显示检查。它没有测量审美，也不能凭固定三帧确认中间动作、字幕持续可读、完整声画或L3；是否看过及看见什么仍由审查者如实记录。
+
 ## 设计和资产引用绑定
 
 简报固定Skill提交、series-profile和tokens版本/哈希、私有设计板ID/哈希及批准范围。真实使用的设计图、组件、视频和音轨在现有 `assets` 中按实际kind、来源/权利、版本说明与 `sha256`登记，通过 `shots[].asset_ids` 关联；配置参数或索引本身不假报为实拍。复制到项目的配置/设计证据版本与位置留简报及 `qa.visual_frames.note`，不能写“使用最新版”或仅凭公开tokens认设计板通过。
 
 当前 `episode.json` 字段不增加一套平行审批状态。素材/语义拍/文件hash由现有检查器绑定；设计板、配置引用与实际画面是否一致按质量正文实看。本仓索引检查只验证公开组件哈希，不能验证私有媒体或批准的真实性。
+
+采用当前系列画风时，将Skill内 [参考图](../assets/style/accepted-style-reference.png) 和 [美术规格](../assets/style/bright-nature.art-direction.json) 的固定版本/哈希登记到简报引用清单；实际看图与本镜采用点写在美术记录，不能用文案推定已看。以其生成项目设计板时，`design.board_reference/board_sha256` 仍指当前实际设计板；参考的外观认可与新设计板的实际审查范围分开，不能把系列参考哈希填成新板批准。需要阶段冻结时，把所用参考副本、规格及实际对照文件分别列入既有gate evidence，不从后续安装版本反推旧项目使用内容。
 
 ## 逐镜结构与方向图形记录
 
@@ -76,7 +96,7 @@
 
 库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。
 
-开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前适用完整责任正文、固定版本配置/tokens与实际资产清单，再登记本片引用。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。
+开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前阶段适用的责任章节、固定版本配置/tokens与实际资产清单，再登记本片引用；推进阶段时补读新增适用章节，不遗漏其约束。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。
 
 如果采用雷声机制配方，另读 [条件式完整示例](../assets/examples/thunder-brief.md)，保留其具体禁画、首次慢放即披露和未制作状态；其他题材不因此强制讲雷声，也不恢复被取消题材。
 
@@ -86,6 +106,8 @@
 `plan` / G1 可用 `timing_basis.mode=relative_plan`，填写具体的 `relative_phases` 和 `note`，说明先后语义阶段、观察任务以及真实时点尚待音轨确定。`start`、`end` 留 null 或省略；若有计划语义拍，`beats[].at` 留 null，另写具体 `phase`、拟用触发词、注意对象和动作，也可暂用空 `beats`。不要把尚未合成的拟用口播标成无声镜。
 
 尚未制作或取得媒体时，`candidates=[]` 并在 `alternatives_note` 写具体待选需求和当前缺项；模板候选仅是字段示例，未查看时应删除，不能填写虚构的观看或入选记录。这些计划不证明媒体、声音、权利或视觉质量通过。进入 G2 前须取得实际工作音轨，将相对阶段转为实际秒数、对齐语义拍并完成素材实看记录；`relative_plan` 不能通过 G2 及后续阶段。
+
+计划包的 `assets` 可登记明确需要、尚待制作/取得的素材需求，再由镜头 `asset_ids` 引用稳定ID：`source` 写计划取得方式及用途，`creator` 如实记待确定，`file` 留空，`rights.status=pending`。这类记录不代表已有素材；`candidates` 只记录真正查看过的候选，两者不混用。`kind` 按拟用媒介选，图解/模拟仍如实填所需 `disclosure`；取得后才补实际原源、作者、文件与权利证据。若连素材需求尚未确定，先交简报，不为结构检查编造素材或科学来源。
 
 ## 解释设计与实际镜头的绑定
 

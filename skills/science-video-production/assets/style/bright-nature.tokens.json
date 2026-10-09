@@ -149,9 +149,9 @@
   ],
   "schema_version": 1,
   "id": "bright-nature-style",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "working_baseline_v1",
-  "scope": "Editable style defaults, not a tested full-scene or motion library.",
+  "scope": "Editable implementation defaults for the selected painterly 2D direction; not art or motion approval.",
   "color_space": "sRGB preview; video color conversion not performed",
   "palette_method": "Visual role-based working palette; not a pixel-extraction claim.",
   "science_color_priority": true,
@@ -173,13 +173,14 @@
     "new full scene or character variants"
   ],
   "material": {
-    "default": "matte",
+    "default": "object_dependent_2d_painting",
     "texture_optional": true,
     "texture_opacity_start": [
       0.02,
       0.04
     ],
-    "stable_clipped_to_object": true
+    "stable_clipped_to_object": true,
+    "meaning": "材质按对象真实物性及解释条件塑造；布料、透明体、岩土等不共享同一种哑光/高光预设。"
   },
   "motion": {
     "attention_ms": [
@@ -207,5 +208,6 @@
     "meaning": "Interface/observation starting points only; physical actions use mechanism-specific trajectories",
     "no_looping_flash": true,
     "library_preview_autoplay": false
-  }
+  },
+  "art_direction": "bright-nature.art-direction.json"
 }

@@ -241,6 +241,93 @@ class CanonicalStageTests(unittest.TestCase):
   s.d['brief'].pop('must_see_change');refresh(s.d);s.rejects('must_see_relation required','G1')
 
 
+class DesignBoardEvidenceTests(unittest.TestCase):
+ """Actual board bytes are required; the fixture is no claim of style acceptance."""
+ setUpClass=classmethod(CanonicalStageTests.setUpClass.__func__)
+ tearDownClass=classmethod(CanonicalStageTests.tearDownClass.__func__)
+ setUp=CanonicalStageTests.setUp
+ errors=CanonicalStageTests.errors
+ rejects=CanonicalStageTests.rejects
+ def test_current_local_board_passes(s):
+  board=s.root/s.d['design']['board_reference']
+  s.assertTrue(board.is_file());s.assertEqual(gates.file_digest(board),s.d['design']['board_sha256'])
+  s.assertEqual(s.errors('G3'),[])
+ def test_board_reference_required_from_g3(s):
+  s.d['design'].pop('board_reference');refresh(s.d)
+  s.assertEqual(s.errors('G2'),[]);s.rejects('G3 design board evidence file required','G3')
+ def test_matching_declared_hashes_cannot_replace_missing_board(s):
+  s.d['design']['board_reference']='missing-board.svg';refresh(s.d)
+  s.rejects('G3 design board evidence path missing/unsafe','G3')
+ def test_absolute_board_path_rejected(s):
+  s.d['design']['board_reference']=str(s.root/s.d['design']['board_reference']);refresh(s.d)
+  s.rejects('G3 design board evidence path missing/unsafe','G3')
+ def test_board_outside_package_rejected(s):
+  with tempfile.TemporaryDirectory(dir=s.root.parent) as outside:
+   target=Path(outside)/'board.svg';target.write_bytes((s.root/s.d['design']['board_reference']).read_bytes())
+   s.d['design']['board_reference']='../'+Path(outside).name+'/board.svg';refresh(s.d)
+   s.rejects('G3 design board evidence path missing/unsafe','G3')
+ def test_board_symlink_escape_rejected(s):
+  with tempfile.TemporaryDirectory() as outside:
+   target=Path(outside)/'board.svg';target.write_bytes((s.root/s.d['design']['board_reference']).read_bytes())
+   link=s.root/'outside-board.svg';link.symlink_to(target);s.addCleanup(link.unlink)
+   s.d['design']['board_reference']=link.name;refresh(s.d)
+   s.rejects('G3 design board evidence path missing/unsafe','G3')
+ def test_replaced_board_cannot_reuse_old_matching_hashes(s):
+  board=s.root/s.d['design']['board_reference'];before=board.read_bytes();s.addCleanup(board.write_bytes,before)
+  board.write_bytes(before.replace(b'#dceaf4',b'#204060'))
+  s.rejects('G3 design board evidence hash stale','G3')
+ def test_current_board_hash_does_not_extend_old_approval(s):
+  board=s.root/s.d['design']['board_reference'];before=board.read_bytes();s.addCleanup(board.write_bytes,before)
+  board.write_bytes(before.replace(b'#dceaf4',b'#204060'))
+  s.d['design']['board_sha256']=gates.file_digest(board);refresh(s.d)
+  s.rejects('design approval does not bind current board version','G3')
+
+
+class EvidenceMediaIntegrityTests(unittest.TestCase):
+ """Real media bytes test identity binding, without claiming perceptual approval."""
+ @classmethod
+ def setUpClass(c):
+  CanonicalStageTests.setUpClass.__func__(c)
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=green:s=48x64:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'replacement.mp4')],check=True)
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(c.root/'v.mp4'),'-vn',str(c.root/'voice.wav')],check=True)
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(c.root/'v.mp4'),'-an','-c:v','copy',str(c.root/'silent.mp4')],check=True)
+ tearDownClass=classmethod(CanonicalStageTests.tearDownClass.__func__)
+ setUp=CanonicalStageTests.setUp
+ errors=CanonicalStageTests.errors
+ rejects=CanonicalStageTests.rejects
+ def review(s,gate):
+  return s.d['qa']['shotbook'] if gate=='G2' else s.d['qa']['visual_frames']['animation']
+ def replace_source(s,name):
+  asset=next(a for a in s.d['assets'] if a['id']==s.d['narration']['asset_id'])
+  asset.update(file=name,sha256=gates.file_digest(s.root/name))
+  s.d['narration']['audio_sha256']=asset['sha256'];refresh(s.d)
+ def test_replaced_review_media_invalidates_early_gate_receipts(s):
+  for gate in ('G2','G3'):
+   with s.subTest(gate=gate):
+    s.d=copy.deepcopy(s.base);s.assertEqual(s.errors(gate),[])
+    s.review(gate)['viewing'].update(file='replacement.mp4',sha256=gates.file_digest(s.root/'replacement.mp4'))
+    s.rejects(gate+' stale stage context',gate)
+    refresh(s.d);s.assertEqual(s.errors(gate),[])
+ def test_media_hash_change_at_same_path_invalidates_review_context(s):
+  for gate in ('G2','G3'):
+   with s.subTest(gate=gate):
+    s.d=copy.deepcopy(s.base);before=gates.context_sha256(s.d,gate)
+    s.review(gate)['viewing']['sha256']=gates.file_digest(s.root/'replacement.mp4')
+    s.assertNotEqual(before,gates.context_sha256(s.d,gate))
+ def test_review_findings_do_not_create_self_referential_context(s):
+  for gate in ('G2','G3'):
+   with s.subTest(gate=gate):
+    before=gates.context_sha256(s.d,gate)
+    s.review(gate)['viewing']['note']='updated finding about the same synthetic media'
+    s.assertEqual(before,gates.context_sha256(s.d,gate))
+ def test_real_audio_only_source_is_accepted(s):
+  s.replace_source('voice.wav');s.assertEqual(s.errors('G2'),[])
+ def test_text_cannot_satisfy_ready_narration(s):
+  s.replace_source('script.txt');s.rejects('source narration','G2')
+ def test_video_without_audio_cannot_satisfy_ready_narration(s):
+  s.replace_source('silent.mp4');s.rejects('source narration has no audio','G2')
+
+
 class CoverageStageTests(unittest.TestCase):
  @classmethod
  def setUpClass(c):

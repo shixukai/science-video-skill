@@ -128,6 +128,14 @@ def context_sha256(data, gate):
  if gate in ('G4','G5','G6','G7'): keys += ['deliverables','production_statement']
  if gate in ('G6','G7'): keys += ['title','description','tags']
  result={k:data.get(k) for k in keys}
+ # Freeze the media actually reviewed at each early audiovisual gate. Review
+ # conclusions stay outside the digest so recording them cannot hash itself.
+ if gate=='G2':
+  viewing=obj(obj(obj(data.get('qa')).get('shotbook')).get('viewing'))
+  result['roughcut_media']={k:viewing.get(k) for k in ('file','sha256')}
+ if gate=='G3':
+  viewing=obj(obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('viewing'))
+  result['representative_media']={k:viewing.get(k) for k in ('file','sha256')}
  if gate not in ('G6','G7'):result['scope']=content_scope(data)
  if gate in ('G4','G5','G6','G7'):result['deliverable_asset_ids']=data.get('deliverable_asset_ids')
  if gate in ('G4','G5','G6','G7'):result['assets']=[a for a in seq(data.get('assets')) if obj(a).get('id') in used_asset_ids(data)]
@@ -170,18 +178,18 @@ class Checks:
   if not self.need(not Path(name).is_absolute() and p.is_relative_to(self.root) and p.is_file(),label+' evidence path missing/unsafe'):return None
   self.need(r.get('sha256')==file_digest(p),label+' evidence hash stale')
   return p
- def duration(self,path,require_audio=True):
-  cache_key=(path,require_audio)
+ def duration(self,path,require_audio=True,require_video=True,label='viewing media'):
+  cache_key=(path,require_audio,require_video)
   if cache_key in self.cache:return self.cache[cache_key]
   value=None;probe=shutil.which('ffprobe')
   if not self.need(bool(probe),'ffprobe required for actual viewing interval bounds'):return None
   try:
    p=subprocess.run([probe,'-v','error','-show_format','-show_streams','-of','json',str(path)],capture_output=True,text=True,timeout=60)
-   meta=json.loads(p.stdout);value=float(obj(meta.get('format')).get('duration',0))
-   self.need(p.returncode==0 and math.isfinite(value) and value>0,'viewing media duration invalid')
-   self.need(any(s.get('codec_type')=='video' for s in seq(meta.get('streams'))),'viewing media has no video')
-   if require_audio:self.need(any(s.get('codec_type')=='audio' for s in seq(meta.get('streams'))),'viewing media has no audio')
-  except (OSError,ValueError,TypeError,subprocess.TimeoutExpired):self.need(False,'viewing media unreadable')
+   meta=obj(json.loads(p.stdout));value=float(obj(meta.get('format')).get('duration',0))
+   self.need(p.returncode==0 and math.isfinite(value) and value>0,label+' duration invalid')
+   if require_video:self.need(any(obj(s).get('codec_type')=='video' for s in seq(meta.get('streams'))),label+' has no video')
+   if require_audio:self.need(any(obj(s).get('codec_type')=='audio' for s in seq(meta.get('streams'))),label+' has no audio')
+  except (OSError,ValueError,TypeError,OverflowError,subprocess.TimeoutExpired):self.need(False,label+' unreadable')
   self.cache[cache_key]=value
   return value
  def viewing(self,r,label,scope,final=False,listening_only=False):
@@ -684,7 +692,8 @@ class Checks:
    self.need(narration.get('status')=='ready' and isinstance(narration.get('language'),str) and narration['language'].lower().split('-')[0]=='zh','actual ready Chinese working narration required')
    audio=next((a for a in seq(self.data.get('assets')) if isinstance(a,dict) and a.get('id')==narration.get('asset_id')), {})
    self.need(audio.get('kind')=='audio','source narration must be an audio asset')
-   self.evidence({'file':audio.get('file'),'sha256':narration.get('audio_sha256')},'source narration')
+   audio_path=self.evidence({'file':audio.get('file'),'sha256':narration.get('audio_sha256')},'source narration')
+   if audio_path:self.duration(audio_path,require_video=False,label='source narration')
   if n>=2:
    self.animation(steps);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
    if n>=3:self.asset_catalog(steps,representative=False)
@@ -694,6 +703,7 @@ class Checks:
    self.need(text(approval.get('actual_feedback_ref')) and text(approval.get('reviewer')),'actual style feedback reference and reviewer required')
    board=design.get('board_sha256')
    self.need(text(board) and bool(re.fullmatch('[0-9a-f]{64}',board)) and approval.get('approved_board_sha256')==board,'design approval does not bind current board version')
+   self.evidence({'file':design.get('board_reference'),'sha256':board},'G3 design board')
    for scale in ('whole_scene','object_midshot','mechanism_closeup'):
     frame=obj(obj(design.get('keyframe_scales')).get(scale))
     self.need(frame.get('status')=='pass' and text(frame.get('note')), 'G3 '+scale+' actual art review required')

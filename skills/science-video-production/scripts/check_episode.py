@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Read-only checks of a local production packet; never a legal/visual approval."""
+"""Check a local packet without changing it; optional receipts never grant approval."""
 import argparse
-from datetime import date
+from datetime import date, datetime, timezone
 import hashlib
 import json
 import math
@@ -126,6 +126,7 @@ def check_topic(data, root, stage, shots):
         return result
     topic = obj(data.get("topic"))
     need(text(topic.get("origin_reference")), "original request reference required")
+    anchor_errors = len(errors)
     path = topic.get("anchor_file")
     anchor = {}
     if need(text(path), "frozen anchor_file required"):
@@ -137,13 +138,17 @@ def check_topic(data, root, stage, shots):
                 except (OSError, ValueError) as exc:
                     need(False, f"unreadable anchor: {exc}")
     anchor_fields(anchor, "original")
+    valid_anchor = len(errors) == anchor_errors
     original_hash = canonical_sha256(anchor)
     need(topic.get("anchor_sha256") == original_hash, "original anchor hash mismatch")
     current = obj(topic.get("current"))
+    current_errors = len(errors)
     required = anchor_fields(current, "current")
+    valid_current = len(errors) == current_errors
     current_hash = canonical_sha256(current)
     need(topic.get("current_sha256") == current_hash, "current topic hash mismatch")
-    if current_hash != original_hash:
+    # An absent/broken anchor is an input problem, not evidence of a scope change.
+    if valid_anchor and valid_current and current_hash != original_hash:
         change = obj(topic.get("change_approval"))
         need(change.get("status") == "explicit_user_request" and text(change.get("request_reference"))
              and change.get("from_sha256") == original_hash and change.get("to_sha256") == current_hash,
@@ -682,25 +687,69 @@ def check(data, root, stage):
     return errors, notes
 
 
+def validation_resources():
+    """Fingerprint the local rules used by this checker, not external evidence."""
+    root = Path(__file__).resolve().parents[1]
+    names = (
+        "scripts/check_episode.py", "scripts/stage_checks.py",
+        "config/production-policy.json", "config/series-profile.json",
+        "assets/production-asset.schema.json", "indexes/rule-owners.json",
+    )
+    return {name: file_sha256(root / name) for name in names}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path)
     parser.add_argument("--stage", choices=("plan", "delivery", *GATES), required=True)
+    parser.add_argument("--report", type=Path,
+                        help="save a JSON local-check receipt to a NEW file; never changes QA or approvals")
     args = parser.parse_args()
+    started_at = datetime.now(timezone.utc).isoformat()
+    errors, notes = [], []
+    packet_hash, resources = None, {}
+    result, exit_code = "invalid_input", 2
     try:
-        data = json.loads(args.episode.read_text(encoding="utf-8"))
+        # Refuse existing files (including dangling symlinks) before expensive checks.
+        if args.report and (args.report.exists() or args.report.is_symlink()):
+            raise FileExistsError(f"report already exists; choose a new receipt path: {args.report}")
+        raw = args.episode.read_bytes()
+        packet_hash = hashlib.sha256(raw).hexdigest()
+        resources = validation_resources() if args.report else {}
+        data = json.loads(raw.decode("utf-8"))
         if not isinstance(data, dict):
             raise ValueError("episode JSON must be an object")
         errors, notes = check(data, args.episode.resolve().parent, args.stage)
+        if file_sha256(args.episode) != packet_hash:
+            errors.append("episode changed during validation; rerun against a stable packet")
+        if args.report and validation_resources() != resources:
+            errors.append("checker resources changed during validation; rerun with a fixed checker version")
+        result, exit_code = ("blocked", 1) if errors else ("local_checks_pass", 0)
     except (OSError, ValueError, TypeError) as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 2
+        errors.append(str(exc))
+    if args.report:
+        receipt = {
+            "schema_version": 1, "kind": "local_check_receipt",
+            "stage": args.stage, "result": result, "exit_code": exit_code,
+            "started_at": started_at, "completed_at": datetime.now(timezone.utc).isoformat(),
+            "episode": {"file": str(args.episode.resolve()), "sha256": packet_hash},
+            "validation_resources": resources, "errors": errors, "notes": notes,
+            "limits": "Local record/file checks only. Not scientific, rights, audiovisual, quality or publication approval. Referenced media are not snapshotted; rerun after any change.",
+        }
+        try:
+            # Exclusive creation protects packets, media and earlier receipts.
+            with args.report.open("x", encoding="utf-8") as handle:
+                handle.write(json.dumps(receipt, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
+        except (OSError, ValueError) as exc:
+            errors.append(f"cannot save report: {exc}")
+            result, exit_code = "invalid_input", 2
+    stream = sys.stderr if exit_code == 2 else sys.stdout
     for note in notes:
-        print(f"NOTE: {note}")
+        print(f"NOTE: {note}", file=stream)
     for error in errors:
-        print(f"ERROR: {error}")
-    print(f"{args.stage.upper()}: {'BLOCKED' if errors else 'LOCAL CHECKS PASS'}")
-    return 1 if errors else 0
+        print(f"ERROR: {error}", file=stream)
+    print(f"{args.stage.upper()}: {result.upper().replace('_', ' ')}", file=stream)
+    return exit_code
 
 
 if __name__ == "__main__":

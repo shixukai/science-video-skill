@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "catalog": "aesthetic_references",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "purpose": "Observation and method reference only; no production asset clearance.",
   "entries": [
     {
@@ -21,6 +21,19 @@
       "media_scope": "Select and actually view a relevant 2D interval; not scientific proof",
       "viewing_status": "project_review_required",
       "production_use": "not_granted"
+    },
+    {
+      "id": "selected-painterly-nature",
+      "version": "1.0.0",
+      "file": "assets/style/accepted-style-reference.png",
+      "sha256": "d7a43878e348893804216aceca29004945d05b81e4c68abf934a8f0aa52c8a77",
+      "purpose": "Current selected appearance baseline: precise 2D painted structure, form lighting, differentiated materials and visual hierarchy.",
+      "media_scope": "Static appearance only; main figure and small environment/transparent-object thumbnails; viewer UI excluded.",
+      "viewing_status": "must_view_at_art_execution; this record does not attest future agents have viewed it",
+      "production_use": "not_granted",
+      "approval_scope": "visual_style_only",
+      "source": "User-supplied appearance reference",
+      "rights_scope": "Local reference and comparison only; not a cleared production asset or redistribution license."
     }
   ]
 }
