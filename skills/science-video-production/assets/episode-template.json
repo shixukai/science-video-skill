@@ -344,7 +344,14 @@
           "semantic_units": [],
           "longest_no_progress_seconds": null,
           "screen_resolutions": []
-        }
+        },
+        "shot_intervals": [
+          {
+            "shot_id": "SH1",
+            "start": null,
+            "end": null
+          }
+        ]
       },
       "process_steps": [],
       "review_id": "",
@@ -659,7 +666,132 @@
         }
       },
       "evidence": "",
-      "reviewer": ""
+      "reviewer": "",
+      "continuity": {
+        "G2": {
+          "status": "pending",
+          "context_sha256": "",
+          "media_sha256": "",
+          "audio_sha256": "",
+          "plan_sha256": "",
+          "method": "pending",
+          "actually_heard": false,
+          "reviewer": "",
+          "capability": "",
+          "evidence": "",
+          "ranges": [],
+          "criteria": {
+            "tone": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "rhythm": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "speech_rate": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "loudness": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "joins": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            }
+          },
+          "transitions": []
+        },
+        "G3": {
+          "status": "pending",
+          "context_sha256": "",
+          "media_sha256": "",
+          "audio_sha256": "",
+          "plan_sha256": "",
+          "method": "pending",
+          "actually_heard": false,
+          "reviewer": "",
+          "capability": "",
+          "evidence": "",
+          "ranges": [],
+          "criteria": {
+            "tone": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "rhythm": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "speech_rate": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "loudness": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "joins": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            }
+          },
+          "transitions": []
+        },
+        "G5": {
+          "status": "pending",
+          "context_sha256": "",
+          "media_sha256": "",
+          "audio_sha256": "",
+          "plan_sha256": "",
+          "method": "pending",
+          "actually_heard": false,
+          "reviewer": "",
+          "capability": "",
+          "evidence": "",
+          "ranges": [],
+          "criteria": {
+            "tone": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "rhythm": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "speech_rate": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "loudness": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            },
+            "joins": {
+              "status": "pending",
+              "observation": "",
+              "evidence": ""
+            }
+          },
+          "transitions": []
+        }
+      }
     },
     "covers": {
       "status": "pending",
@@ -1186,6 +1318,137 @@
       "audio_review_capable": false,
       "basis": "presented_work_only",
       "reviewer_kind": ""
+    },
+    "presentation_text": {
+      "G2": {
+        "status": "pending",
+        "context_sha256": "",
+        "media_sha256": "",
+        "inventory_sha256": "",
+        "actual_media_inspected": false,
+        "channel_reviews": {
+          "frame": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "caption": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "voiceover": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          }
+        },
+        "protected_notices_review": "",
+        "sources": {
+          "voiceover": {
+            "file": "",
+            "sha256": ""
+          },
+          "caption": {
+            "file": "",
+            "sha256": ""
+          }
+        },
+        "cover_files": [],
+        "evidence": "",
+        "companion_notices": []
+      },
+      "G3": {
+        "status": "pending",
+        "context_sha256": "",
+        "media_sha256": "",
+        "inventory_sha256": "",
+        "actual_media_inspected": false,
+        "channel_reviews": {
+          "frame": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "caption": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "voiceover": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          }
+        },
+        "protected_notices_review": "",
+        "sources": {
+          "voiceover": {
+            "file": "",
+            "sha256": ""
+          },
+          "caption": {
+            "file": "",
+            "sha256": ""
+          }
+        },
+        "cover_files": [],
+        "evidence": "",
+        "companion_notices": []
+      },
+      "G5": {
+        "status": "pending",
+        "context_sha256": "",
+        "media_sha256": "",
+        "inventory_sha256": "",
+        "actual_media_inspected": false,
+        "channel_reviews": {
+          "frame": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "caption": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "voiceover": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          },
+          "cover": {
+            "status": "pending",
+            "item_ids": [],
+            "observation": "",
+            "evidence": ""
+          }
+        },
+        "protected_notices_review": "",
+        "sources": {
+          "voiceover": {
+            "file": "",
+            "sha256": ""
+          },
+          "caption": {
+            "file": "",
+            "sha256": ""
+          }
+        },
+        "cover_files": [],
+        "evidence": "",
+        "companion_notices": []
+      }
     }
   },
   "narration": {
@@ -1243,6 +1506,24 @@
     "generation_manifest": {
       "file": "",
       "sha256": ""
+    },
+    "delivery_plan": {
+      "mode": "continuous_first",
+      "target": {
+        "tone": "",
+        "rhythm": "",
+        "speech_rate": "",
+        "loudness": ""
+      },
+      "technical_limit": "",
+      "verified_method": "",
+      "capability_evidence": "",
+      "context_handoff": "",
+      "segments": [],
+      "generation_manifest": {
+        "file": "",
+        "sha256": ""
+      }
     }
   },
   "topic": {
@@ -1450,5 +1731,27 @@
     "cover_4_3": [],
     "captions": [],
     "design": []
+  },
+  "presentation_text": {
+    "channels": {
+      "frame": {
+        "status": "pending",
+        "note": ""
+      },
+      "caption": {
+        "status": "pending",
+        "note": ""
+      },
+      "voiceover": {
+        "status": "pending",
+        "note": ""
+      },
+      "cover": {
+        "status": "pending",
+        "note": ""
+      }
+    },
+    "items": [],
+    "required_notices": []
   }
 }

@@ -89,6 +89,20 @@
 
 制作/版本/测试验收状态、内部备注、工具/流水线不入片；素材能力、制作取舍与限制说明默认留配套记录，不能因内容属实或名为披露就上屏。会影响当前结论理解的事实，改写为观众所需的条件或边界，并通过上述删除测试。完整来源、权利与制作声明放配套；署名义务与呈现位置分别核实，不从“需署名”自动推出“需烧录”，也不因移出画面而免除署名。保留按具体条款须保留的来源标识、必要防误认提示及许可/平台要求的标识与位置，依据见 [素材规则](science-and-rights.md)。实际文字验收由质量正文执行，OCR/词黑名单不代看图。
 
+### 可见文字用途与制作辩解
+
+画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。
+
+不能只禁止某一个字符串。反例包括“原视频无音轨；不作飞行声音比较”“因素材不足这里只能这样画”“模型不支持所以用此镜头”“本片测试/验收已通过”；改写同类辩解或从画面移到字幕、口播、封面仍失败。素材无原声时实际不添加虚构原声；若科学任务需要声音对比，就取得适配素材或调整有依据的科学表达，不能靠上屏辩解填缺口。
+
+删除不等于隐瞒科学与权利。必要来源署名、许可信息、AI/模拟标识，以及确有科学意义的时间缩放、实验条件和结论限制，分别核其内容义务与呈现位置；允许由配套说明履行的署名不因此进入画面、字幕、口播或封面。科学模型的适用条件按scientific_condition连接文字一致、有科学依据的保护项；关键词命中时，在该item的 `cue_review` 记录 `status=pass`、`interpretation=scientific_condition`、与保护项basis一致的 `scientific_basis`、具体 `audience_task` 和判断 `note`。有依据的科学条件不因含“因此用”等因果措辞就被否决；缺判断或判断失败保持未通过。素材缺陷、制作工具限制、制作选择和QA状态不能靠保护用途标签或判断声明豁免。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。
+
+单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss。`required_notices` 保留 id/purpose/text/basis，另明确 `placement=audience/companion` 与 `placement_basis`，未知位置不得默认为上屏。audience以item的notice_id连接保护项；companion记录 `companion_destination` 作为配套落点，不强制生成媒体item。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license/ai_simulation；material_defect/internal_qa/production_excuse 为禁止类别。实际素材以 `assets[].required_notice_ids` 引用同一保护项，改变位置或删除媒体文字不免除义务。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。
+
+G1核计划用途和保护项；G2/G3/G5分别在 `qa.presentation_text.<stage>` 记录实际所审版本、context_sha256、media_sha256、inventory_sha256、actual_media_inspected、各通道 channel_reviews（status/item_ids/observation/evidence）、protected_notices_review 与总 evidence。G2/G3核实际画面、字幕和口播，G5再完整核两种封面；G3只签代表段范围。sources.voiceover/caption 用 file/hash 固定相应正式UTF-8稿件/字幕；G3使用所审片段的正式稿，G2/G5绑定本期正式稿，字幕依对应阶段源文件。口播和字幕的完整正文须按原顺序纳入用途清单，不得只挑好句；字幕txt/srt/vtt/ass由检查器提取正文，其他格式先转为受支持的正式字幕格式，再绑定版本并实际检查，不冒称原格式已自动核验。G5 cover_files 固定两种实际封面版本。源文件筛查、词模式和OCR只辅助；各通道仍须实际看/听当前媒体，保护项缺失、漏分类、禁止用途或未实际检查都阻断，不能换个允许类别冒充用途。
+
+配套位置在G1只核义务、位置依据及预期落点，不要求伪造已完成文件。G2/G3/G5的上述阶段记录另用 `companion_notices` 列出 `notice_id/file/sha256/status/observation`，绑定该阶段实际UTF-8配套文本；文件须含必要标识文字并经实际位置审查。G2可使用当时真实配套草稿，G5核当前交付配套；G3只核代表段实际所用素材引用的配套义务。文件存在和字面匹配只证明记录绑定，不证明授权、实际发布或许可合规。
+
 ## 两种封面各自设计
 
 3:4与4:3共用身份、事实和主要素材，分别重排标题/主体/留白，不机械裁切拉伸。可以用同一合法视频的不同帧，不强制重生成；先看缩略图识别，再看细节。封面不能比正片结论夸张、虚构实验或用危险假效果。

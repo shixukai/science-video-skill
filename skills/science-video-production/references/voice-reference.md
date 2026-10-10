@@ -85,6 +85,22 @@
 
 剪接、补录、改词、停顿或语速变化后，重新核实际时码、字幕、关键动作及当前完整混音。混音、语速与最终编码 D 起点见 [制作策略](../config/production-policy.json)；已有认可配置和匹配音轨优先，不为起点强制变声、变速或重生成。最终编码实测响度和峰值，不称平台官方要求，也不代听验。音轨存在、ASR、波形、响度和技术解码都不等于听过；未实际听验的项目保持待审，不用短样认可填 `qa.narration` 的整片通过。
 
+## 整期旁白连续性
+
+整期旁白先按同一次连续讲述组织稿件，统一可感知的语气、节奏、语速和音量关系；不是要求每句同样重音，也不是切镜就重启一段播报。优先生成或取得能连续叙述的音轨，再按解释节拍剪接画面；沿用同一Serena、seed、模型参数或响度数值只能提供制作一致性起点，解码/ASR正确不证明跨段听起来连续。不能用统一加速、变声、强归一化或音乐掩盖语气突变。
+
+长篇超出实际技术能力或因实际缺陷需要上下文补录时，按 [连续讲述与合成单元](#连续讲述与合成单元) 确定必要范围，记录可用方法、能力证据和上下文承接；拆分原因依据实际限制或补录问题，不为补录编造技术上限，也不硬定模型一定支持长篇、提示拼接、参考声或某个未验证方案。分段稿件须保留前后论述、指代、因果与自然句尾/句首的承接，不按每个分镜机械独立生成。实际分段输入/输出版本与承接上下文可核，接缝仍在最终混音中正常速度连续听验；纸面上下文一致不能代替听感。
+
+`narration.delivery_plan` 固定 mode（continuous_first 或 context_preserving_segments）和 target 的 tone/rhythm/speech_rate/loudness，以具体自然语言记录整期方向，不发明通用音质数值门槛。分段记录 verified_method/capability_evidence/context_handoff，逐段保留 context_before/context_after、handoff_evidence，相邻段承接对应同一论述。方法与能力证据写实际采用的完整语义输入、替换范围及相邻真实试听结果，不要求模型具备跨请求状态或原生参考音频接口，也不能为填写字段编造这些能力。
+
+已有 `narration.generation_manifest` 时，delivery_plan 的 `generation_manifest={file,sha256}` 必须引用同一份真实清单，mode 必须为 context_preserving_segments；拆分理由直接使用清单 `reason`，contextual_retake 无需另填 technical_limit。`delivery_plan.segments` 按清单相同 ID 和顺序记录各段上下文，稿件和音轨的 file/hash 由该清单对应项的 input/output 取得，不另造来源台账；若旧行仍保留 script/audio，其引用须与清单 input/output 完全相同。不能把已有多段来源写成 continuous_first，也不能让计划和实际来源分别通过却互相冲突。
+
+没有多源清单的既有合法分段计划，仍用 technical_limit/verified_method/capability_evidence/context_handoff 及各段 script/audio 的 file/hash 核验；单次整稿和已认可复用路径保持其真实来源记录。引用现有工程或生成记录，不因为补字段重装模型或改运行环境。
+
+G2完整有声草排、G3实际代表段和G5最终整期混音分别在 `qa.audio.continuity.<stage>` 记录 status、context_sha256、media_sha256、audio_sha256、plan_sha256、method=normal_speed_continuous_listening、actually_heard、reviewer/capability/evidence 与完整 ranges。criteria 的 tone/rhythm/speech_rate/loudness/joins 各有 status/observation/evidence；逐分镜衔接 transitions 记 from_shot/to_shot、当前媒体时码at、确实跨越该点的listen_range、status/observation/evidence。at必须对齐当前实际媒体分镜边界：G2/G5用实际对齐的有序shots[].shotbook.start/end；G3在既有qa.visual_frames.animation.shot_intervals按代表段本地时码记shot_id/start/end，覆盖当前完整代表段及所选镜头并绑定G3摘要。时间轴不得缺段、重叠或漏镜；自报at与listen_range不能替代边界，成片改变后重新对齐。连续音轨没有拼接也要听相邻画面之间的叙述承接，G3只覆盖所选片段，不能代整期通过；G5仍完成耳机与手机外放完整听检。
+
+用户已反馈语气不一致、接缝突变或明显分段播报时，沿既有 `qa.visual_frames.failures` 记 scope=audio 的开放失败及原版本/时码/反馈定位，`qa.audio` 与对应连续性项保持fail/needs_changes；不以同声线、技术测试或其他高分抵消。局部新样可核修复范围，不能关闭整期声音否定；只有当前完整混音的连续复听、各接缝实际证据及匹配版本的完整复查才能解决该失败。缺实际听觉能力保持未验，测试通过不签视频或声音合格。
+
 ## 来源与传输范围
 
 按本次已确认位置记录传输范围。本地工程与本适配器不向远程合成服务发送稿件；服务方式按实际接收者、文本类别、用途和已有授权执行，当前或前文上下文中明确指定的工程或服务位置可直接作为调用依据。缺少所传内容的授权时补足，不把文字范围扩大到视频或参考声纹。声音方向不代传输授权；不擅自克隆真人，合成声音按实际声明与必要披露执行。

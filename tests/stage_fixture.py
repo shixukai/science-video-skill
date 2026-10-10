@@ -89,6 +89,16 @@ def upgrade(data,root,schema='canonical'):
  qa['release']['authorization_status']='pass'
  qa['release']['ai_disclosure']={'status':'pass','contains_generated_content':True,'applicable_platform_controls_checked':True,'platform_declaration_used':True,'required_provenance_preserved':True,'current_rule_reference':'synthetic fixture','declaration_evidence':'synthetic fixture'}
  qa['publication']={'status':'pass','state':'published','readback_matches_bundle':True,'work_id':'synthetic_not_real','actual_published_at':'2026-01-01T00:00:00Z','readback_reference':'synthetic not actual publication'}
+ d['presentation_text']={'channels':{surface:{'status':'present' if surface in ('voiceover','caption') else 'absent','note':'synthetic fixture surface declaration only'} for surface in ('frame','caption','voiceover','cover')},'items':[{'id':surface,'surface':surface,'text':(root/filename).read_text(),'purposes':['accessibility' if surface=='caption' else 'mechanism'],'necessity':'synthetic test declaration','removal_loss':'synthetic declared meaning'} for surface,filename in (('voiceover','script.txt'),('caption',d['deliverables']['captions']))],'required_notices':[]}
+ d['narration']['delivery_plan']={'mode':'continuous_first','target':{key:'synthetic stable '+key+' target' for key in ('tone','rhythm','speech_rate','loudness')},'segments':[]}
+ for i,shot in enumerate(d['shots']):shot.setdefault('shotbook',{}).update(start=i/len(d['shots']),end=(i+1)/len(d['shots']))
+ qa['visual_frames']['animation']['shot_intervals']=[{'shot_id':shot['id'],'start':shot['shotbook']['start'],'end':shot['shotbook']['end']} for shot in d['shots']]
+ qa['presentation_text']={};qa['audio']['continuity']={}
+ for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
+  view=parent['viewing'];channels=('frame','caption','voiceover','cover') if gate=='G5' else ('frame','caption','voiceover')
+  qa['presentation_text'][gate]={'status':'pass','media_sha256':view['sha256'],'inventory_sha256':gates.digest(d['presentation_text']),'actual_media_inspected':True,'channel_reviews':{surface:{'status':'pass','item_ids':[surface] if surface in ('voiceover','caption') else [],'observation':'synthetic declaration only','evidence':'test only'} for surface in channels},'protected_notices_review':'synthetic no obligations declared; not actual rights acceptance','sources':{'voiceover':{'file':'script.txt','sha256':d['narration']['script_sha256']},'caption':{'file':d['deliverables']['captions'],'sha256':qa['reviewed_sha256']['captions']}},'cover_files':[{'file':d['deliverables'][key],'sha256':qa['reviewed_sha256'][key]} for key in ('cover_3_4','cover_4_3')],'evidence':'synthetic only; not actual media inspection'}
+  shots=d['shots']
+  qa['audio']['continuity'][gate]={'status':'pass','media_sha256':view['sha256'],'audio_sha256':d['narration']['audio_sha256'],'plan_sha256':gates.digest(d['narration']['delivery_plan']),'method':'normal_speed_continuous_listening','actually_heard':True,'reviewer':'synthetic software fixture','capability':'synthetic declarations; no actual perception','evidence':'test only','ranges':copy.deepcopy(view['ranges']),'criteria':{key:{'status':'pass','observation':'synthetic declared stable '+key,'evidence':'test only'} for key in ('tone','rhythm','speech_rate','loudness','joins')},'transitions':[{'from_shot':a['id'],'to_shot':b['id'],'at':b['shotbook']['start'],'listen_range':[0,1],'status':'pass','observation':'synthetic declared continuity','evidence':'test only'} for a,b in zip(shots,shots[1:])]}
  # Declarations for compatibility tests only; no perceptual acceptance is made.
  policy=json.loads((Path(gates.__file__).resolve().parents[1]/'config/production-policy.json').read_text())['subject_motion']
  for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
@@ -102,6 +112,9 @@ def upgrade(data,root,schema='canonical'):
 def refresh(d):
  if isinstance(d.get('narration',{}).get('reuse_record'),dict):d['narration']['reuse_record']['audio_sha256']=d['narration'].get('audio_sha256')
  qa=d['qa']
+ for gate in ('G2','G3','G5'):
+  if isinstance(qa.get('presentation_text',{}).get(gate),dict):qa['presentation_text'][gate]['context_sha256']=gates.context_sha256(d,gate)
+  if isinstance(qa.get('audio',{}).get('continuity',{}).get(gate),dict):qa['audio']['continuity'][gate].update(context_sha256=gates.context_sha256(d,gate),audio_sha256=d['narration'].get('audio_sha256'),plan_sha256=gates.digest(d['narration'].get('delivery_plan')))
  for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
   if isinstance(parent.get('subject_motion'),dict):parent['subject_motion']['context_sha256']=gates.context_sha256(d,gate)
  for name,gate in (('logic_review','G1'),('internal_review','G5')):

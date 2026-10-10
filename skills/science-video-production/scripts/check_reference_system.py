@@ -131,6 +131,21 @@ def check(root):
         need(tokens["type"]["font_files_bundled"] is False, "font license requires separate verification")
 
         policy = read("config/production-policy.json")
+        audience = policy["audience_text"]
+        need(audience["owner"] == "references/visual-system.md#可见文字用途与制作辩解"
+             and audience["plan_stage"] == "G1" and audience["actual_review_stages"] == ["G2", "G3", "G5"], "audience text owner/stages required")
+        need(set(audience["surfaces"]) == {"frame", "caption", "voiceover", "cover"}
+             and set(audience["forbidden_purposes"]) == {"material_defect", "internal_qa", "production_excuse"}
+             and set(audience["protected_purposes"]) == {"scientific_condition", "attribution", "license", "ai_simulation"}
+             and audience["source_screening_is_not_actual_media_inspection"] is True, "audience purpose/protected notice boundaries required")
+        continuity = policy["voice_continuity"]
+        need(continuity["owner"] == "references/voice-reference.md#整期旁白连续性"
+             and continuity["required_stages"] == ["G2", "G3", "G5"]
+             and continuity["continuous_narration_preferred"] is True
+             and continuity["segmentation_requires_verified_capability_and_context_handoff"] is True
+             and continuity["same_speaker_seed_decode_asr_is_not_acceptance"] is True
+             and continuity["actual_continuous_listening_required"] is True
+             and continuity["feedback_failure_owner"] == "qa.visual_frames.failures", "whole-episode continuous voice boundaries required")
         motion = policy["subject_motion"]
         need(motion["owner"] == "references/quality-acceptance.md#主体动态与长静帧"
              and motion["required_stages"] == ["G2", "G3", "G5"], "subject motion canonical owner/stages required")
@@ -220,7 +235,7 @@ def check(root):
                     value = value[int(key)] if isinstance(value, list) else value[key]
         need(len(rule_ids) == registry.get("rule_count") and len(set(rule_ids)) == len(rule_ids)
              and len(rule_ids) > 0, "current requirement coverage count missing/duplicate")
-        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution", "MOTION-subject-continuity", "CONTINUITY-prerequisites", "CONTINUITY-master-script", "CONTINUITY-voice"} <= set(rule_ids),
+        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution", "MOTION-subject-continuity", "CONTINUITY-prerequisites", "CONTINUITY-master-script", "CONTINUITY-voice", "TEXT-audience-purpose", "VOICE-continuity"} <= set(rule_ids),
              "current explanation/finesse/voice coverage missing")
         schema = read("assets/production-asset.schema.json")
         need(schema["$schema"] == "https://json-schema.org/draft/2020-12/schema", "asset schema version required")

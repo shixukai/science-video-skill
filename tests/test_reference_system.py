@@ -74,6 +74,18 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_internal_perception_cannot_be_disabled(self):
         self.edit("config/production-policy.json", lambda d: d["internal_review"].update(actual_full_audio_visual_review_required=False))
         self.errors("actual full internal audio/visual review required")
+    def test_audience_text_protected_notices_cannot_be_disabled(self):
+        self.edit("config/production-policy.json", lambda d: d["audience_text"].update(protected_purposes=[]))
+        self.errors("audience purpose/protected notice boundaries required")
+    def test_audience_source_checks_cannot_replace_actual_inspection(self):
+        self.edit("config/production-policy.json", lambda d: d["audience_text"].update(source_screening_is_not_actual_media_inspection=False))
+        self.errors("audience purpose/protected notice boundaries required")
+    def test_actual_continuous_voice_listening_cannot_be_disabled(self):
+        self.edit("config/production-policy.json", lambda d: d["voice_continuity"].update(actual_continuous_listening_required=False))
+        self.errors("whole-episode continuous voice boundaries required")
+    def test_segmentation_capability_requirement_cannot_be_disabled(self):
+        self.edit("config/production-policy.json", lambda d: d["voice_continuity"].update(segmentation_requires_verified_capability_and_context_handoff=False))
+        self.errors("whole-episode continuous voice boundaries required")
     def test_optional_feedback_cannot_use_synthetic_participants(self):
         self.edit("config/production-policy.json", lambda d: d["optional_audience_feedback"].update(no_synthetic_participants=False))
         self.errors("actual participants and authorized recruitment")
