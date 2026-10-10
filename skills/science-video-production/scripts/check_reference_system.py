@@ -60,7 +60,7 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.3.0", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.3.1", "unsupported profile schema/version")
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
@@ -220,7 +220,7 @@ def check(root):
                     value = value[int(key)] if isinstance(value, list) else value[key]
         need(len(rule_ids) == registry.get("rule_count") and len(set(rule_ids)) == len(rule_ids)
              and len(rule_ids) > 0, "current requirement coverage count missing/duplicate")
-        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution", "MOTION-subject-continuity"} <= set(rule_ids),
+        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution", "MOTION-subject-continuity", "CONTINUITY-prerequisites", "CONTINUITY-master-script", "CONTINUITY-voice"} <= set(rule_ids),
              "current explanation/finesse/voice coverage missing")
         schema = read("assets/production-asset.schema.json")
         need(schema["$schema"] == "https://json-schema.org/draft/2020-12/schema", "asset schema version required")

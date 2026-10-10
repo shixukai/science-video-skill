@@ -1239,6 +1239,10 @@
       "mode": "",
       "location": "",
       "confirmation_reference": ""
+    },
+    "generation_manifest": {
+      "file": "",
+      "sha256": ""
     }
   },
   "topic": {
@@ -1302,7 +1306,10 @@
             "still_reason": "",
             "relation_type": "",
             "prerequisites": [
-              ""
+              {
+                "knowledge": "",
+                "source": "audience_prior"
+              }
             ],
             "key_difficulty": true,
             "before": "",

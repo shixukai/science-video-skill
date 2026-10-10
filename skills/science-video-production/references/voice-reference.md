@@ -10,13 +10,23 @@
 
 当明确选择本地适配器时，系列配置的 audio.local_adapter_example 提供可调整的加载起点；已有工程沿用自己的已验证参数。该示例固定官方模型提交 `0c0e3051f131929182e2c023b9537f8b1c68adfe`，来源为 [官方模型 API](https://huggingface.co/api/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice)，不同修订必须按实际记录；本地适配器核完整提交和文件清单哈希。服务或既有工程未暴露完整权重修订时，在 model_version_reference 写真实模型标识、版本证据及未提供的范围，不发明提交或清单，也不因此另下权重。
 
+## 连续讲述与合成单元
+
+以下方法适用于已确认工程、服务和可选适配器。同一期默认用整期连续讲述稿生成主音轨，再依据实际语义和停顿排镜头；切镜、字幕换行或分镜表中的一行不构成独立合成单元。稿件中的开场、因果推进与结尾属于一次完整讲述，全局风格指令不按每次调用重新要求“第一句”开场语气，重音随当前语义变化。
+
+新生成前核对实际生效的全局指令，包括既有工程保存的指令；其中每次调用都会重启开场或作结的要求，按整期语义调整并在实际生成记录中保存变动。继续使用已确认的声音和运行环境，不能仅因工程已有配置而跳过这项核对；已实际认可且仍匹配当前稿件的音轨优先复用，不因指令文本更新盲目重生成。
+
+只有整稿遇到已核实的接口长度限制或实际生成稳定性问题时，才按完整语义段拆分，在当期记录原因、段落顺序和各段生成记录。边界落在完整意思及自然停顿处，不在因果连接、指代或一句话中间截断。同一期各段沿用已确认的模型版本证据、音色、语言、风格指令、运行配置和可取得的有效生成参数；未暴露的参数如实说明，不逐镜另拟风格或临时调参。已采用的 seed 策略一并记录，相同 seed 或参数不能保证听感一致。先生成并连听相邻语义段，确认接续方式可用后再扩展；不能根据单段样本推定整期连贯。
+
+局部错词或语气问题先定位到实际音轨。需要补录时，以包含问题及必要前后文的完整语义段重新生成，优先替换完整语义段；实际需要裁接时，在自然停顿处选点并连听前后接缝，不把孤立词句直接贴回。这里的上下文通过输入稿件和替换范围提供，具体接口能力按已确认工程核实。沿用已有认可且仍匹配的部分，按 [运行记录与音轨绑定](#运行记录与音轨绑定) 保存新版本及实际处理步骤，再重对齐受影响的声画与字幕。
+
 ## 可选本地适配器
 
 仅在用户已经确认本地工程，并明确选用本适配器时调用它。先核现有环境能否加载所需官方接口；路径、依赖和缓存来自本次确认的工程。确需新增环境、依赖或权重时，先说明具体缺项并取得相应指示，再按所选工程方式准备；不把新建Python环境当默认步骤。本适配器将依赖初始化与推理放在可清理的隔离工作目录，结束后恢复cwd，避免依赖会话文件污染工程。
 
 适配器需要兼容的 `qwen-tts`、soundfile及huggingface_hub，版本按实际环境核实并记录；官方 [包定义](https://github.com/QwenLM/Qwen3-TTS/blob/main/pyproject.toml) 可作依赖依据。已确认工程具有自己的千问入口时优先调用该入口，无需迁移到此适配器。
 
-准备私有 UTF-8 稿件 `script-v1.txt` 后，用新的输出文件名运行。正文不做隐式删改或逐句拆分，先按完整语义选择一段；长稿超过实际能力时按完整段落分次生成并逐段记录。
+按 [连续讲述与合成单元](#连续讲述与合成单元) 准备私有 UTF-8 稿件 `script-v1.txt`，用新的输出文件名运行。适配器将输入原文一次传给模型，不隐式删改、逐句或逐段拆分；确需分段时由制作端先确定语义边界并保留各次实际记录。
 
 以下变量均由本次确认的实际工程提供，不是默认位置；命令从Skill目录运行。
 
@@ -38,15 +48,36 @@
 
 私有生成记录保存真实后端、供应方、模型标识、运行参数、稿件及输出哈希，并用 execution 记录 status=confirmed、mode=local_project/service、location 与 confirmation_reference。本地工程另记实际Python、模型位置和可得的修订/清单；服务另记接口与实际响应版本证据，不含凭据。完整权重修订无法取得时保存真实 model_version_reference 说明。成功状态为 generated，不是声音验收通过；失败不生成成功记录，也不擅自换调用位置。
 
-当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。将实际记录以 narration.generation_record={file,sha256} 绑定到单集，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。
+当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。
 
-裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。未形成连续来源链时不以旧生成记录证明当前文件。可试用的响度/编码起点见系列配置 `audio.postprocess_example`，先实测并试听，不把起点当通用响度标准，也不用处理或音乐掩盖生硬语调。
+裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。单源后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。多源采用下述 `sources` 路径。未形成连续来源链时不以旧生成记录证明当前文件。可试用的响度/编码起点见系列配置 `audio.postprocess_example`，先实测并试听，不把起点当通用响度标准，也不用处理或音乐掩盖生硬语调。
 
 已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。
+
+### 必要分段的有序多源清单
+
+使用 `narration.generation_manifest={file,sha256}` 引用私有 JSON 清单，与单次 `generation_record`、已认可 `reuse_record` 三种来源路径择一。清单及它引用的文件均在单集目录内，使用相对于单集目录的路径。清单不代表一次模型调用，每段保留各自真实运行记录：
+
+| 字段 | 实际内容 |
+| --- | --- |
+| `schema_version`、`mode` | `1`、`ordered_full_segments` |
+| `reason` | `kind=interface_limit/generation_stability/contextual_retake`，`note` 写具体限制或补录问题，`evidence={file,sha256}` 绑定实际接口限制、失败记录或缺陷听验文件；不能只写“按分镜生成” |
+| `script` | `{file,sha256}` 与当前 `narration.script_file/script_sha256` 一致 |
+| `segments` | 至少两个、按最终讲述顺序列出；每项含唯一 `id`、`input={file,sha256}`、`generation_record={file,sha256}`、`output={file,sha256}` |
+
+各段 UTF-8 输入文件的原始字节直接顺序拼接，必须精确还原整稿；空行和标点归入对应段，检查器不补分隔符、不清洗正文。每份真实生成记录的 `input.sha256`、`output.sha256` 分别绑定该段文件，`input.text_transformation=none`。模型版本证据、`voice`（含 `instruct`）、`effective_generation_params` 及实际运行参数跨段一致；本地使用适配器已有 `load_parameters`，服务记录实际 `runtime_parameters`，二者均为非空对象。已有 `actual_device/environment` 也参与比较；seed 可不同，不能据此声称锁定语气。服务未提供足以核对的实际有效参数时如实保留未验，不捏造参数或拿同音色名称代替。
+
+这条可检查路径只覆盖完整段落音轨按序串接：各段与组合音轨均为相同 PCM 编码、采样率、声道的完整音轨，不裁剪、变速、重排、交叠或插入间隔。多源后处理记录仍为 `schema_version=1/status=processed`，另设 `mode=concatenate_full_segments`；`sources` 按清单顺序逐项写 `{segment_id,file,sha256}`，`output={file,sha256}` 绑定当前 `narration.audio_sha256`，`steps` 每项记录实际 `tool/version/parameters`。补录采用最终连续语义段的完整输入和完整输出替换对应项；需要从带额外前后文的输出中裁句、跨段混剪或再处理样本时，须另形成并支持核验对应真实来源链，不能把裁过的片段填写成完整段通过本路径，也不能改用假复用绕过。
+
+生成候选可以保持 `narration.status=pending`、审听未验。申请 `ready` 或进入 G2 及后续适用检查时，现有 `source_listen_review` 绑定当前组合音轨的 `file/sha256`，使用 `scope=assembled_voice_track`、`status=pass`、`method=continuous_playback`、`playback_speed=1`、`heard=true`，并如实填写 `reviewer/capability/environment/reviewed_at`。其 `boundaries` 按每对相邻段顺序列 `left_segment_id/right_segment_id`、`at_seconds`、跨接缝的 `range=[start,end]`、具体 `note` 与实际听验 `evidence={file,sha256}`。时点以各段实际时长累加，试听范围须同时含前后完整语义；未听、失败或记录不全时保持待审，不预签通过。
+
+检查器核文件摘要、逐段原稿还原、配置差异、清单声明的来源顺序、实际 PCM 规格/时长和接缝听验记录的媒体绑定；时长相等不能证明音频样本确实按清单拼接，同长度替换、重排或等量裁补仍须核实际处理记录和音轨。参数相同、文字记录完整也不能证明真的听过或语气自然。当前音轨仍需逐段与稿件核对，并完成下述源音轨及最终混音实际听验。
 
 ## 源音轨与最终混音分别听验
 
 源样本或独立音轨在 `narration.source_listen_review` 记录自己的 file/hash、scope、实际所听区间/方法/能力和证据；设备按实际范围记录。首次样本认可只覆盖所听版本和范围，不能代填长稿或整片通过；声音实质变化时重新试听短样。私有样本、反馈和认可记录留在项目，通用 Skill 不保存私人素材。
+
+分段合成或补录后，先连续听相邻段的前文、边界和后文，范围覆盖完整语义及自然停顿；检查音色和讲述姿态、语速、重音、句尾收束及停顿是否无语义依据地突变，尤其核每段句首是否反复像重新开场。必要时不看画面只听人声，以辨明变化来自声音还是切镜。自然的强调和情绪推进可以保留，不能以“保持一致”把全稿压成同一语调。接缝时码、实际听到的变化及修复结果写入现有源音轨审听证据和最终混音听验记录；孤立各段通过、统一响度或波形平滑不能证明接续自然。存在无依据的语气重启或接续突变时，退回相应合成单元及拼接步骤修复，修后重听相关连续段和当前完整混音。
 
 沿用项目确认的音色与口语指令，每段核稿件一致、漏词/重复/跑词、术语、数字、单位、多音字、断句和拼接处。主题、因果动词与结论有自然重音，给定位和变化留观察停顿；长句先改稿，不统一放慢成机械讲述。异常时长或疑似文本偏离先核查，不直接装片、不猜模型根因；完整解码、合理时长或 ASR 对齐不能代替文本正确性与实际听感检查。每条有中文解说；缺能力交明确待补录版本，字幕与配乐不代配音。
 

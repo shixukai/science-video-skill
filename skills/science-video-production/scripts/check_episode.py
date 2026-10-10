@@ -13,7 +13,7 @@ import sys
 from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids
+from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive
 
 
 REVIEW_KEYS = ("science", "rights", "visual_frames", "mobile_preview", "audio", "narration", "covers")
@@ -90,6 +90,227 @@ def shotbook_sha256(data):
 def canonical_sha256(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def check_voice_segments(narration, root):
+    """Bind ordered whole segments and listening evidence; never infer voice quality."""
+    root = Path(root).resolve()
+    errors = []
+
+    def need(ok, message):
+        if not ok:
+            errors.append("narration segments: " + message)
+        return bool(ok)
+
+    def obj(value):
+        return value if isinstance(value, dict) else {}
+
+    def text(value):
+        return isinstance(value, str) and bool(value.strip())
+
+    def number(value):
+        try:
+            return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+        except OverflowError:
+            return False
+
+    def observed(value):
+        return substantive(value) and value.strip().lower() not in (
+            "not_reviewed", "not reviewed", "blocked", "未验", "待审", "待验", "待听验")
+
+    def evidence(ref, label):
+        ref = obj(ref)
+        name = ref.get("file")
+        if not need(text(name), label + " file required"):
+            return None
+        try:
+            path = (root / name).resolve()
+            if not need(not Path(name).is_absolute() and path.is_relative_to(root) and path.is_file(),
+                        label + " path missing/unsafe"):
+                return None
+            if not need(ref.get("sha256") == file_sha256(path), label + " hash stale/missing"):
+                return None
+            return path
+        except (OSError, ValueError, RuntimeError):
+            need(False, label + " path unreadable/unsafe")
+            return None
+
+    def read_record(ref, label):
+        path = evidence(ref, label)
+        if path:
+            try:
+                result = json.loads(path.read_text(encoding="utf-8"))
+                if need(isinstance(result, dict), label + " must be an object"):
+                    return result
+            except (OSError, ValueError):
+                need(False, label + " unreadable JSON")
+        return {}
+
+    def audio_info(path, label):
+        probe = shutil.which("ffprobe")
+        if path is None or not need(bool(probe), "ffprobe required for segment audio bounds"):
+            return None
+        try:
+            result = subprocess.run([probe, "-v", "error", "-show_format", "-show_streams",
+                                     "-of", "json", str(path)], capture_output=True, text=True, timeout=60)
+            meta = obj(json.loads(result.stdout))
+            streams = meta.get("streams", [])
+            streams = streams if isinstance(streams, list) else []
+            audio = [s for s in streams if isinstance(s, dict) and s.get("codec_type") == "audio"]
+            if not need(result.returncode == 0 and len(audio) == 1 and len(streams) == 1,
+                        label + " must contain one PCM audio stream only"):
+                return None
+            stream = audio[0]
+            duration = float(obj(meta.get("format")).get("duration", 0))
+            rate, channels = int(stream.get("sample_rate", 0)), int(stream.get("channels", 0))
+            codec = stream.get("codec_name", "")
+            if not need(isinstance(codec, str) and codec.startswith("pcm_") and rate > 0 and channels > 0
+                        and math.isfinite(duration) and duration > 0, label + " PCM format/duration invalid"):
+                return None
+            return {"format": (codec, rate, channels), "duration": duration}
+        except (OSError, ValueError, TypeError, OverflowError, subprocess.TimeoutExpired):
+            need(False, label + " audio unreadable")
+            return None
+
+    manifest = read_record(narration.get("generation_manifest"), "generation manifest")
+    need(manifest.get("schema_version") == 1 and manifest.get("mode") == "ordered_full_segments",
+         "ordered_full_segments manifest schema required")
+    reason = obj(manifest.get("reason"))
+    need(reason.get("kind") in ("interface_limit", "generation_stability", "contextual_retake")
+         and observed(reason.get("note")), "actual necessary segmentation reason required")
+    evidence(reason.get("evidence"), "segmentation reason evidence")
+    script_ref = obj(manifest.get("script"))
+    need(script_ref.get("file") == narration.get("script_file")
+         and script_ref.get("sha256") == narration.get("script_sha256"), "manifest must bind current whole script")
+    script_path = evidence(script_ref, "whole script")
+    script_bytes = None
+    if script_path:
+        try:
+            script_bytes = script_path.read_bytes()
+            need(bool(script_bytes.decode("utf-8").strip()), "whole script must be nonempty UTF-8")
+        except (OSError, UnicodeDecodeError):
+            need(False, "whole script must be readable UTF-8")
+    segments = manifest.get("segments")
+    if not need(isinstance(segments, list) and len(segments) >= 2, "at least two ordered segments required"):
+        segments = []
+    ids, inputs, sources, infos = [], [], [], []
+    baseline = None
+    execution = obj(narration.get("execution"))
+    for index, segment in enumerate(segments):
+        segment = obj(segment)
+        label = "segment " + str(index + 1)
+        ident = segment.get("id")
+        need(text(ident) and ident not in ids, label + " id missing/duplicate")
+        ids.append(ident)
+        input_ref, output_ref = obj(segment.get("input")), obj(segment.get("output"))
+        input_path = evidence(input_ref, label + " input")
+        if input_path:
+            try:
+                raw = input_path.read_bytes()
+                need(bool(raw.decode("utf-8").strip()), label + " input must be nonempty UTF-8")
+                inputs.append(raw)
+            except (OSError, UnicodeDecodeError):
+                need(False, label + " input must be readable UTF-8")
+        output_path = evidence(output_ref, label + " output")
+        infos.append(audio_info(output_path, label))
+        sources.append({"segment_id": ident, "file": output_ref.get("file"), "sha256": output_ref.get("sha256")})
+        generated = read_record(segment.get("generation_record"), label + " generation record")
+        need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
+             and generated.get("provider") == "Qwen" and text(generated.get("backend"))
+             and text(generated.get("model_id")), label + " actual Qwen generation record required")
+        actual_execution = obj(generated.get("execution"))
+        need(execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service")
+             and all(text(execution.get(k)) and actual_execution.get(k) == execution.get(k)
+                     for k in ("status", "mode", "location", "confirmation_reference")),
+             label + " execution differs from confirmed location")
+        revision, model_hash = generated.get("resolved_model_revision"), generated.get("model_manifest_sha256")
+        if revision or model_hash:
+            need(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
+                 and bool(re.fullmatch(r"[0-9a-f]{64}", str(model_hash))), label + " model version evidence invalid")
+        else:
+            need(text(generated.get("model_version_reference")), label + " model version evidence required")
+        voice = obj(generated.get("voice"))
+        need(voice.get("speaker") == "Serena" and voice.get("language") == "Chinese"
+             and text(voice.get("instruct")), label + " actual voice and instruct required")
+        effective = generated.get("effective_generation_params")
+        runtime = generated.get("load_parameters") if execution.get("mode") == "local_project" else generated.get("runtime_parameters")
+        need(isinstance(effective, dict) and bool(effective), label + " actual effective generation parameters required")
+        need(isinstance(runtime, dict) and bool(runtime), label + " actual runtime parameters required")
+        config = {key: generated.get(key) for key in ("backend", "provider", "model_id", "resolved_model_revision",
+                  "model_manifest_sha256", "model_version_reference", "voice", "effective_generation_params",
+                  "actual_device", "environment")}
+        config["runtime"] = runtime
+        try:
+            encoded = json.dumps(config, ensure_ascii=False, sort_keys=True, allow_nan=False)
+            if baseline is None:
+                baseline = encoded
+            else:
+                need(encoded == baseline, label + " voice/model/runtime/effective parameters drift")
+        except (TypeError, ValueError):
+            need(False, label + " configuration must contain finite JSON values")
+        generated_input, generated_output = obj(generated.get("input")), obj(generated.get("output"))
+        need(generated_input.get("sha256") == input_ref.get("sha256")
+             and generated_input.get("text_transformation") == "none", label + " generation input mismatch/transformation")
+        need(generated_output.get("sha256") == output_ref.get("sha256"), label + " generation output mismatch")
+    need(script_bytes is not None and len(inputs) == len(segments) and b"".join(inputs) == script_bytes,
+         "ordered segment inputs must exactly reconstruct whole script bytes")
+
+    post = read_record(narration.get("postprocess_record"), "multi-source postprocess record")
+    need(post.get("schema_version") == 1 and post.get("status") == "processed"
+         and post.get("mode") == "concatenate_full_segments" and not post.get("source"),
+         "multi-source postprocess must concatenate complete segments")
+    need(post.get("sources") == sources, "postprocess sources must match all ordered segment outputs")
+    steps = post.get("steps")
+    need(isinstance(steps, list) and bool(steps)
+         and all(isinstance(s, dict) and text(s.get("tool")) and text(s.get("version")) and bool(s.get("parameters"))
+                 for s in steps), "postprocess actual tool/version/parameters required")
+    output_ref = obj(post.get("output"))
+    need(output_ref.get("sha256") == narration.get("audio_sha256"), "postprocess output must bind current narration")
+    output_path = evidence(output_ref, "assembled output")
+    output_info = audio_info(output_path, "assembled output")
+    valid_infos = bool(infos) and all(info is not None for info in infos) and output_info is not None
+    boundaries = []
+    if valid_infos:
+        need(all(info["format"] == output_info["format"] for info in infos),
+             "complete segments and output must share PCM codec/sample rate/channels")
+        elapsed = 0.0
+        for info in infos[:-1]:
+            elapsed += info["duration"]
+            boundaries.append(elapsed)
+        need(abs(sum(info["duration"] for info in infos) - output_info["duration"]) < 0.05,
+             "assembled duration must equal complete ordered source durations; cuts/gaps unsupported")
+
+    review = obj(narration.get("source_listen_review"))
+    need(review.get("status") == "pass" and review.get("scope") == "assembled_voice_track"
+         and review.get("heard") is True and review.get("method") == "continuous_playback"
+         and review.get("playback_speed") == 1 and not isinstance(review.get("playback_speed"), bool),
+         "ready segmented narration requires actual normal-speed boundary listening")
+    need(review.get("file") == output_ref.get("file") and review.get("sha256") == output_ref.get("sha256"),
+         "boundary listening must bind current assembled audio")
+    for key in ("reviewer", "capability", "environment", "reviewed_at"):
+        need(observed(review.get(key)), "boundary listening " + key + " required")
+    reviews = review.get("boundaries")
+    if not need(isinstance(reviews, list) and len(reviews) == max(0, len(segments) - 1),
+                "every adjacent segment boundary must have listening evidence"):
+        reviews = []
+    for index, item in enumerate(reviews):
+        item = obj(item)
+        label = "boundary " + str(index + 1)
+        need(("status" not in item or item["status"] == "pass")
+             and ("heard" not in item or item["heard"] is True),
+             label + " explicit failed/unheard review cannot be overridden by overall pass")
+        need(index + 1 < len(ids) and item.get("left_segment_id") == ids[index]
+             and item.get("right_segment_id") == ids[index + 1], label + " segment order mismatch")
+        at, span = item.get("at_seconds"), item.get("range")
+        timing_valid = index < len(boundaries) and number(at) and abs(at - boundaries[index]) < 0.05
+        need(timing_valid, label + " time must match actual source durations")
+        valid_span = isinstance(span, list) and len(span) == 2 and all(number(v) for v in span)
+        need(valid_span and timing_valid and 0 <= span[0] < at < span[1]
+             and output_info is not None and span[1] <= output_info["duration"] + 0.001,
+             label + " listening range must cross the actual join")
+        need(observed(item.get("note")), label + " actual continuity observations required")
+        evidence(item.get("evidence"), label + " listening evidence")
+    return errors
 
 
 def topic_review_sha256(data):
@@ -408,6 +629,14 @@ def check(data, root, stage):
                 and nonempty(execution.get("location"))
                 and nonempty(execution.get("confirmation_reference")),
                 "narration: confirmed Qwen execution location/reference required")
+    manifest_ref = narration.get("generation_manifest")
+    has_manifest = bool(manifest_ref) and (not isinstance(manifest_ref, dict) or any(manifest_ref.values()))
+    if has_manifest and (narration.get("status") == "ready" or complete):
+        single_ref = narration.get("generation_record")
+        has_single = bool(single_ref) and (not isinstance(single_ref, dict) or any(single_ref.values()))
+        require(voice_type == "synthetic" and not reused and not has_single,
+                "narration: choose exactly one generation manifest, single generation record or accepted reuse")
+        errors.extend(check_voice_segments(narration, root))
     if complete:
         require(narration.get("status") == "ready" and voice_type in ("human", "synthetic"), "narration: ready Chinese voiceover required; captions/music alone are incomplete")
         require(nonempty(narration_id), "narration: recorded voiceover asset_id required")
@@ -418,7 +647,7 @@ def check(data, root, stage):
             if reused:
                 require(nonempty(reuse.get("reference")) and reuse.get("audio_sha256") == narration.get("audio_sha256")
                         and nonempty(reuse.get("audio_sha256")), "narration: existing accepted audio reference/hash required")
-            else:
+            elif not has_manifest:
                 record_ref = narration.get("generation_record", {})
                 record_ref = record_ref if isinstance(record_ref, dict) else {}
                 record_file = local_file(record_ref.get("file"), "narration generation record")

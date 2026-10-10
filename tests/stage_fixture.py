@@ -12,9 +12,10 @@ def upgrade(data,root,schema='canonical'):
  d['scope']={'kind':'episode','publication_ready':True}
  d['narration']['status']='ready';d['narration']['language']='zh-CN'
  d['brief']={'audience':'synthetic fixture','one_sentence_answer':'fixture only','must_see_change':'fixture declaration only','out_of_scope':[],'forbidden_misrepresentations':[],'production_class':'R','validation_triggers':[], 'roles':{r:'synthetic software fixture, not an actual reviewer' for r in ('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher')}}
- d['brief'].update(audience_start={'assumed_knowledge':[],'new_knowledge':['synthetic new premise'],'deferred_knowledge':[]},understanding_targets={goal:'synthetic '+goal for goal in gates.UNDERSTANDING_GOALS},)
+ d['brief'].update(audience_start={'assumed_knowledge':['synthetic assumed premise','known test object','synthetic known premise'],'new_knowledge':['synthetic new premise'],'deferred_knowledge':[]},understanding_targets={goal:'synthetic '+goal for goal in gates.UNDERSTANDING_GOALS},)
  (root/'script.txt').write_text('Synthetic test script only')
  d['narration']['script_file']='script.txt';d['narration']['script_sha256']=gates.file_digest(root/'script.txt')
+ for i,shot in enumerate(d.get('shots',[])):shot.setdefault('shotbook',{})['narration_exact_text']='Synthetic test script only' if i==0 else ''
  for asset in d.get('assets',[]):
   if asset.get('kind') in ('audio','font'):
    if not asset.get('file'):asset['file']=d['deliverables']['video']
@@ -28,7 +29,7 @@ def upgrade(data,root,schema='canonical'):
  steps=[]
  for n,c in enumerate(alignment['coverage']):
   for old in ('explanation_steps','explanation_type'):c.pop(old,None)
-  ident='TEST'+str(n);c['causal_steps']=[{'id':ident,'before':'test initial declaration','change':'test change declaration','after':'test final declaration','handoff':'test declared handoff','shot_ids':c['shot_ids'],'requires_dynamic':True}];steps.append(ident)
+  ident='TEST'+str(n);c['causal_steps']=[{'id':ident,'before':'test initial declaration','change':'test change declaration','after':'test final declaration','handoff':'test declared handoff','prerequisites':[{'knowledge':'synthetic assumed premise','source':'audience_prior'}],'shot_ids':c['shot_ids'],'requires_dynamic':True}];steps.append(ident)
  alignment['expression_cards']=[{'id':'CARD'+str(i),'step_ids':[ident],'difficulty':'synthetic relationship difficulty','prerequisites':['synthetic premise already established'],'visual_action':'hold the synthetic anchor and show its connected state change','inferable_outcome':'synthetic test conclusion','misconception':'synthetic possible confusion','boundary':'synthetic simplified model only','uncertain':False} for i,ident in enumerate(steps)]
  qa=d['qa'];sha=qa['reviewed_sha256']['video'];video=d['deliverables']['video']
  if not any(a.get('kind') in ('real_capture','real_observation') for a in d.get('assets',[])):

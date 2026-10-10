@@ -129,6 +129,8 @@ def context_sha256(data, gate):
  if gate in ('G4','G5','G6','G7'): keys += ['deliverables','production_statement']
  if gate in ('G6','G7'): keys += ['title','description','tags']
  result={k:data.get(k) for k in keys}
+ if gate=='G1':
+  result['viewing_order']=[obj(shot).get('id') for shot in seq(data.get('shots'))]
  # Freeze the media actually reviewed at each early audiovisual gate. Review
  # conclusions stay outside the digest so recording them cannot hash itself.
  if gate=='G2':
@@ -241,7 +243,6 @@ class Checks:
      self.need(kind in EXPLANATION_TYPES,'unknown or missing explanation_type')
      for key in EXPLANATION_TYPES.get(kind,()):self.need(substantive(step.get(key)),ident+' '+key+' required')
     if typed:
-     pre=step.get('prerequisites');self.need(isinstance(pre,list) and bool(pre) and all(substantive(x) for x in pre),ident+' explicit prerequisites required')
      for key in ('key_relation','derivation','boundary'):self.need(substantive(step.get(key)),ident+' '+key+' required')
      mappings=step.get('referent_mappings');self.need(isinstance(mappings,dict) and bool(mappings) and all(substantive(k) and substantive(v) for k,v in mappings.items()),ident+' referent mappings required')
     step.update(_typed=typed,_canonical=canonical,_explanation_type=legacy_type,relation_type=relation,key_difficulty=step.get('key_difficulty',not typed))
@@ -251,7 +252,43 @@ class Checks:
     if step.get('requires_dynamic') is False:self.need(substantive(step.get('still_reason')),ident+' static observation reason required')
   self.need(len(all_ids)==len(set(all_ids)),'explanation/causal step ids must be unique across primary and auxiliary scopes')
   self.need(covered==required and bool(steps),'all promised explanation coverage incomplete')
+  self.prerequisites(steps)
   return steps
+ def prerequisites(self,steps):
+  """Check declared premise references and order, never the truth of a deduction."""
+  prior=seq(obj(obj(self.data.get('brief')).get('audience_start')).get('assumed_knowledge'))
+  positions={obj(s).get('id'):i for i,s in enumerate(seq(self.data.get('shots'))) if text(obj(s).get('id'))}
+  order={ident:i for i,ident in enumerate(steps)}
+  def span(step):
+   ids=step.get('shot_ids')
+   if not isinstance(ids,list) or not ids or not all(text(x) and x in positions for x in ids):return None
+   indices=[positions[x] for x in ids]
+   return min(indices),max(indices)
+  for ident,step in steps.items():
+   refs=step.get('prerequisites')
+   if not self.need(isinstance(refs,list) and bool(refs),ident+' explicit prerequisites with sources required'):continue
+   for ref in refs:
+    if not self.need(isinstance(ref,dict) and substantive(ref.get('knowledge')),ident+' explicit prerequisites require knowledge and source; migrate text-only premises'):continue
+    source=ref.get('source')
+    if source=='audience_prior':
+     self.need(not ref.get('step_id') and ref['knowledge'] in prior,ident+' audience premise must match declared assumed_knowledge without a step_id')
+    elif source=='step':
+     predecessor=ref.get('step_id')
+     if not self.need(text(predecessor) and predecessor in steps and predecessor!=ident,ident+' prerequisite step must reference a different known step'):continue
+     before=span(steps[predecessor]);after=span(step)
+     self.need(before is not None and after is not None and (before[1]<after[0] or (before[1]==after[0] and order[predecessor]<order[ident])),ident+' prerequisite must be established before use in viewing order')
+    else:self.need(False,ident+' prerequisite source must be audience_prior or step')
+ def narration_sequence(self,path):
+  """Bind shot excerpts to the ordered master text; this is not a semantic review."""
+  if path is None:return
+  try:master=path.read_text(encoding='utf-8')
+  except (OSError,UnicodeError):self.need(False,'narration master script must be readable UTF-8');return
+  excerpts=[]
+  for shot in seq(self.data.get('shots')):
+   excerpt=obj(obj(shot).get('shotbook')).get('narration_exact_text')
+   if self.need(isinstance(excerpt,str),'shot '+str(obj(shot).get('id'))+' narration_exact_text required; use empty text for a silent shot'):excerpts.append(excerpt)
+  normalize=lambda value:re.sub(r'\s+','',value)
+  self.need(bool(normalize(master)) and normalize(''.join(excerpts))==normalize(master),'shot narration excerpts must reproduce the continuous master script in viewing order')
  def explanation_design(self,steps):
   brief=obj(self.data.get('brief'));start=obj(brief.get('audience_start'))
   for key in ('assumed_knowledge','new_knowledge','deferred_knowledge'):
@@ -690,7 +727,8 @@ class Checks:
    self.viewing(self.record('shotbook').get('viewing'),'G2 roughcut','full_roughcut')
    validate_subject_motion(self,self.record('shotbook').get('subject_motion'),obj(self.record('shotbook').get('viewing')),'G2',policy['subject_motion'],set(steps))
    narration=obj(self.data.get('narration'))
-   self.evidence({'file':narration.get('script_file'),'sha256':narration.get('script_sha256')},'narration script')
+   script_path=self.evidence({'file':narration.get('script_file'),'sha256':narration.get('script_sha256')},'narration script')
+   self.narration_sequence(script_path)
    self.need(narration.get('status')=='ready' and isinstance(narration.get('language'),str) and narration['language'].lower().split('-')[0]=='zh','actual ready Chinese working narration required')
    audio=next((a for a in seq(self.data.get('assets')) if isinstance(a,dict) and a.get('id')==narration.get('asset_id')), {})
    self.need(audio.get('kind')=='audio','source narration must be an audio asset')

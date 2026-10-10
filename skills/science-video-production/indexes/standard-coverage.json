@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.3.0",
+  "version": "1.4.0",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37481,6 +37481,86 @@
           "MOTION-subject-continuity-failure"
         ]
       }
+    },
+    {
+      "id": "CONTINUITY-prerequisites",
+      "rule": "步骤前提必须指向合理受众起点或观看顺序中已建立的步骤；未知、自身与后文依赖不通过结构检查。",
+      "action": "步骤前提必须指向合理受众起点或观看顺序中已建立的步骤；未知、自身与后文依赖不通过结构检查。",
+      "modality": "hard",
+      "owner": "references/production-checkpoints.md",
+      "owner_anchor": "2-把解释关系变成可见表达",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "topic_alignment.coverage[0].explanation_steps[0].prerequisites"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "CONTINUITY-prerequisites-failure"
+        ]
+      }
+    },
+    {
+      "id": "CONTINUITY-master-script",
+      "rule": "以连续完整讲解稿拆镜，镜头口播按观看顺序与原稿一致；单镜分别写完不等于整期成立，完整声画仍须实际审查。",
+      "action": "以连续完整讲解稿拆镜，镜头口播按观看顺序与原稿一致；单镜分别写完不等于整期成立，完整声画仍须实际审查。",
+      "modality": "hard",
+      "owner": "references/shotbook.md",
+      "owner_anchor": "音频先行但不牺牲画面",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "narration.script_file"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "shots[0].shotbook.narration_exact_text"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "CONTINUITY-master-script-failure"
+        ]
+      }
+    },
+    {
+      "id": "CONTINUITY-voice",
+      "rule": "整期连续讲述优先，切镜不作为合成边界；实际语气以相邻语义段及完整音轨听验判断，参数一致不代替听感。",
+      "action": "整期连续讲述优先，切镜不作为合成边界；实际语气以相邻语义段及完整音轨听验判断，参数一致不代替听感。",
+      "modality": "hard",
+      "owner": "references/voice-reference.md",
+      "owner_anchor": "连续讲述与合成单元",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "narration.generation_record"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "narration.generation_manifest"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "CONTINUITY-voice-failure"
+        ]
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -37513,8 +37593,8 @@
           "anchor": "记录与技术检查",
           "quote": "`scripts/check_reference_system.py` 只核本仓引用归属、参数结构和可公开通用组件哈希；私有设计板、素材许可及平台适配仍由项目按本页实审。规范采用、模板齐全或分数达标均不能直接成为自动放行器；内部评分、精美程度和解释内审按下文执行。",
           "lines": [
-            73,
-            73
+            89,
+            89
           ],
           "quote_sha256": "6f6ef2ca00b8910b9bbd09b9e0bf8d3693a0dc1305878648bc77821c3512d6d9"
         }
@@ -37531,8 +37611,8 @@
           "anchor": "3-阶段推进与代表样",
           "quote": "先核当前任务允许的阶段。设计系统整理、私有样片、整片制作及发布是不同范围；暂停时保存现状，不由旧日程或规则更新自动恢复。完成某前置阶段后继续制作须有当前任务覆盖。",
           "lines": [
-            62,
-            62
+            64,
+            64
           ],
           "quote_sha256": "1032a3a3b71c7ef870f308fdaffa9f6cf03aa405c3f677d3c22a8116e265ed86"
         }
@@ -37549,8 +37629,8 @@
           "anchor": "交付包与发布回执",
           "quote": "上传、定时、公开发布前，核已有具体授权覆盖账号、内容版本和动作；已有批准不反复问，范围/风险变化另按当前权限处理。交付或采用本Skill不等于发布授权。仅实际发布成功状态、作品ID/链接或平台回执才能记已发布；审核中、草稿、定时、失败和结果未知分别记录。未知先查重/回读，不能盲目重发；失败不自动改账号、付费或公开到其他位置。已发或被取消/禁止内容不因规则更新重新投放。平台实测缺条件时可交待平台检查版，不宣称已适配。",
           "lines": [
-            94,
-            94
+            96,
+            96
           ],
           "quote_sha256": "b3f44ea05eedf5438f16c12cf2ed4c89152cbb9d636598c50e6900f84be85101"
         }
@@ -37597,8 +37677,8 @@
           "anchor": "运行记录与音轨绑定",
           "quote": "已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。",
           "lines": [
-            45,
-            45
+            55,
+            55
           ],
           "quote_sha256": "43f8b840e4e5eb31ea2d992d012a8ea231b953e12ff60c2ec08c97ca5756958b"
         }
@@ -37615,8 +37695,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前阶段适用的责任章节、固定版本配置/tokens与实际资产清单，再登记本片引用；推进阶段时补读新增适用章节，不遗漏其约束。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。",
           "lines": [
-            99,
-            99
+            101,
+            101
           ],
           "quote_sha256": "215fde452543fd010c6103a6e12c726624b795e40ae6feff95a5adb3c13cfff6"
         }
@@ -37633,8 +37713,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "加权总分按分数÷5×权重求和。常规85且前四项≥4、包装≥3；标杆90且各项≥4是内部起始门槛，按真实样片校准，不能称行业客观线。科学/权利、明确否定、完整实际视听、平台可见性、版本授权、必要声明等H任何失败或未知，100分也不放行。此前“不可用自评分自动放行”仍成立，但不能据此省略已采用的评分记录。",
           "lines": [
-            101,
-            101
+            117,
+            117
           ],
           "quote_sha256": "df01a617dba903943ded8c727da11051c063e067d46f75cfb61b567f71ec6a33"
         }
@@ -37651,8 +37731,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "完整标准按硬门槛H与内部可校准起点D执行，数值唯一来源为 [制作策略](../config/production-policy.json)。D不是可静默省略的要求：按起点实施，改变时记录样片、理由和校准证据；H未知或失败不能用分数抵扣。设计素材是参考，不能按候选文件自带状态认定生产批准；系列具体风格/字幕/已认可声音以现行配置优先。",
           "lines": [
-            108,
-            108
+            110,
+            110
           ],
           "quote_sha256": "052a94a8f061179ba97afe15921585108da51453800184286b57e468179e47ec"
         }
@@ -37734,17 +37814,17 @@
     {
       "id": "H-h-failure-013",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "先保全必要机制，删掉支线与重复，再用实际配音安排镜头。解说稿须回答观众此刻在看什么、为何发生和为何转到下一步；自然地朗读正确句子不等于已经讲清。先补缺失前提、指代或推理桥，再决定是否需改配音，不能只换音色、加字幕或加连接词掩盖逻辑断裂。难点后给观察、对比和消化的停留；不能为固定总时长删关键解释步骤或加速 Qwen 硬塞。",
+      "failure_condition": "先保全必要机制，删掉支线与重复，按解释路径写成连续完整讲解稿，再按理解任务划分语义段、安排分镜，最后用实际配音确定时点。解说稿须回答观众此刻在看什么、为何发生和为何转到下一步；连读时只用此前已建立的信息推进，不能把各镜独立写成短文后拼接。改镜头顺序或结论时，先修完整稿及受影响的承接段，再重新拆镜。先补缺失前提、指代或推理桥，再决定是否需改配音，不能只换音色、加字幕或加连接词掩盖逻辑断裂。难点后给观察、对比和消化的停留；不能为固定总时长删关键解释步骤或加速 Qwen 硬塞。",
       "clauses": [
         {
           "file": "references/production-checkpoints.md",
           "anchor": "4-按真实解说安排理解节奏",
-          "quote": "先保全必要机制，删掉支线与重复，再用实际配音安排镜头。解说稿须回答观众此刻在看什么、为何发生和为何转到下一步；自然地朗读正确句子不等于已经讲清。先补缺失前提、指代或推理桥，再决定是否需改配音，不能只换音色、加字幕或加连接词掩盖逻辑断裂。难点后给观察、对比和消化的停留；不能为固定总时长删关键解释步骤或加速 Qwen 硬塞。",
+          "quote": "先保全必要机制，删掉支线与重复，按解释路径写成连续完整讲解稿，再按理解任务划分语义段、安排分镜，最后用实际配音确定时点。解说稿须回答观众此刻在看什么、为何发生和为何转到下一步；连读时只用此前已建立的信息推进，不能把各镜独立写成短文后拼接。改镜头顺序或结论时，先修完整稿及受影响的承接段，再重新拆镜。先补缺失前提、指代或推理桥，再决定是否需改配音，不能只换音色、加字幕或加连接词掩盖逻辑断裂。难点后给观察、对比和消化的停留；不能为固定总时长删关键解释步骤或加速 Qwen 硬塞。",
           "lines": [
-            72,
-            72
+            74,
+            74
           ],
-          "quote_sha256": "8d63261b6505ddf92753515e51ac4bcb3c17b1233c401399f59382db98c60ad5"
+          "quote_sha256": "a18dc8d5df996ec82b5b5367681a6cf03260b23297714829374ef0cce3ec2e6a"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -37788,17 +37868,17 @@
     {
       "id": "H-h-failure-017",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "逐条做删除测试：隐藏文字，结合当时画面/声音，看是否损失主题识别、对象关系、机制理解、可访问性或必要披露。无损则删；必要字用短准确表达且时机/位置合适。在简报记文字、时段、用途、删去损失与决定，不烧录这份记录。",
+      "failure_condition": "逐条做删除测试：先写明观众在此时需要识别、理解或判断什么，再隐藏文字，结合当时画面/声音，核主题识别、对象关系、机制理解与可访问性的具体损失。署名或披露另核适用依据及要求的呈现位置；只有当前理解任务确需，或已核实义务要求在该画面呈现的文字才保留。无上述必要性则删去或移至适合的配套位置；保留字用短准确表达且时机/位置合适。在简报记文字、时段、当前理解任务、删去损失、义务及位置依据、决定与配套落点，不烧录这份记录。",
       "clauses": [
         {
           "file": "references/visual-system.md",
           "anchor": "观众画面与交付记录",
-          "quote": "逐条做删除测试：隐藏文字，结合当时画面/声音，看是否损失主题识别、对象关系、机制理解、可访问性或必要披露。无损则删；必要字用短准确表达且时机/位置合适。在简报记文字、时段、用途、删去损失与决定，不烧录这份记录。",
+          "quote": "逐条做删除测试：先写明观众在此时需要识别、理解或判断什么，再隐藏文字，结合当时画面/声音，核主题识别、对象关系、机制理解与可访问性的具体损失。署名或披露另核适用依据及要求的呈现位置；只有当前理解任务确需，或已核实义务要求在该画面呈现的文字才保留。无上述必要性则删去或移至适合的配套位置；保留字用短准确表达且时机/位置合适。在简报记文字、时段、当前理解任务、删去损失、义务及位置依据、决定与配套落点，不烧录这份记录。",
           "lines": [
             86,
             86
           ],
-          "quote_sha256": "0105d98f0874d5d21bf21c325da3b1e785ee6da743a5a1ff5baa4609b70fd898"
+          "quote_sha256": "5618e485f3f10fd20aa31565ec2c2537469269f90aee923497b4b792c7060ded"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -37829,20 +37909,20 @@
         {
           "file": "references/voice-reference.md",
           "anchor": "可选本地适配器",
-          "quote": "准备私有 UTF-8 稿件 `script-v1.txt` 后，用新的输出文件名运行。正文不做隐式删改或逐句拆分，先按完整语义选择一段；长稿超过实际能力时按完整段落分次生成并逐段记录。",
+          "quote": "按 [连续讲述与合成单元](#连续讲述与合成单元) 准备私有 UTF-8 稿件 `script-v1.txt`，用新的输出文件名运行。适配器将输入原文一次传给模型，不隐式删改、逐句或逐段拆分；确需分段时由制作端先确定语义边界并保留各次实际记录。",
           "lines": [
-            19,
-            19
+            29,
+            29
           ],
-          "quote_sha256": "9f4bb91c0365b08fd9f9dd9912137f9c42febb787d44e1728775d86c3317a9a6"
+          "quote_sha256": "20860f348398e8a8f9f7988c131e96fcb5b921840fdccc273482ce7c97c966b8"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "源音轨与最终混音分别听验",
           "quote": "沿用项目确认的音色与口语指令，每段核稿件一致、漏词/重复/跑词、术语、数字、单位、多音字、断句和拼接处。主题、因果动词与结论有自然重音，给定位和变化留观察停顿；长句先改稿，不统一放慢成机械讲述。异常时长或疑似文本偏离先核查，不直接装片、不猜模型根因；完整解码、合理时长或 ASR 对齐不能代替文本正确性与实际听感检查。每条有中文解说；缺能力交明确待补录版本，字幕与配乐不代配音。",
           "lines": [
-            51,
-            51
+            82,
+            82
           ],
           "quote_sha256": "389593d7e42924953edc6715d8a47596ca29591cf0a26d4ecd693997143deaf3"
         },
@@ -37851,8 +37931,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "最终混音在 `qa.audio.listening` 正常速度完整听当前导出，按 [制作策略](../config/production-policy.json) 完成耳机与手机外放检查，记录设备、区间和问题时码；缺哪项就哪项未验。平台另核关键段。核心术语错读、因果词吞漏、断句改义、拼接突变、持续底噪/失真和音乐遮解释均退回。配音、配乐、环境和音效分轨，人声优先，逐段/跨段核突刺、削波与突断；不用 whoosh 或警报掩盖问题，不每次切镜默认加音效，设计音效不冒充原声记录。",
           "lines": [
-            53,
-            53
+            84,
+            84
           ],
           "quote_sha256": "46da354227a932dfa2e19fe7e73d30672d642d44e220049f94461eafa9cb43ed"
         }
@@ -37869,8 +37949,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "沿用项目确认的音色与口语指令，每段核稿件一致、漏词/重复/跑词、术语、数字、单位、多音字、断句和拼接处。主题、因果动词与结论有自然重音，给定位和变化留观察停顿；长句先改稿，不统一放慢成机械讲述。异常时长或疑似文本偏离先核查，不直接装片、不猜模型根因；完整解码、合理时长或 ASR 对齐不能代替文本正确性与实际听感检查。每条有中文解说；缺能力交明确待补录版本，字幕与配乐不代配音。",
           "lines": [
-            51,
-            51
+            82,
+            82
           ],
           "quote_sha256": "389593d7e42924953edc6715d8a47596ca29591cf0a26d4ecd693997143deaf3"
         }
@@ -37887,8 +37967,8 @@
           "anchor": "从小样到整片的证据",
           "quote": "先做少量代表性关键帧：能看到整体、关键细节与最难的机制；再做完整标准建议15–30秒或足以覆盖所需变化的短样，配实际解说/字幕。时长是检验范围的结果，不是必须凑齐的数字。跨镜解释的小样先覆盖相邻多镜和必要桥接，连续带声验证可理解性；孤立难镜不能证明跨镜方案可行。小样未验或失败不得放行整片/整批，修复后重验对应连续段；小样通过也不代替整片验收。记录认可的媒体版本、片段和维度：局部连贯只证明该段连续可追踪，不能证明整期首次观看能理解原问题；拼接扩展后重新从开场到结尾检查信息优先级、前提与答案，不能把局部修复段自动当整片教学骨架。",
           "lines": [
-            53,
-            53
+            69,
+            69
           ],
           "quote_sha256": "902054719fa79655c98369c93f3293ad284b19072dcb6d897d50b6aaba711809"
         }
@@ -37905,8 +37985,8 @@
           "anchor": "产能成本与复盘",
           "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。",
           "lines": [
-            136,
-            136
+            140,
+            140
           ],
           "quote_sha256": "fd7488decfea603dae613266f6f610b41cc67269a1d0f79a83891d4fb7d1b03b"
         }
@@ -37923,8 +38003,8 @@
           "anchor": "记录与技术检查",
           "quote": "每类记录实际文件/版本、方法、时间点与看到/听到的结果：事实、权利、理解、美术/动作、声音/字幕、技术、平台不能互相代签。全片需可解码且尺寸/比例/时长正确、音视频流存在、首尾无坏帧/黑场/错段；这些只证明技术条件。",
           "lines": [
-            63,
-            63
+            79,
+            79
           ],
           "quote_sha256": "0c2e2c25d011efc6b60d23553363e3ef11b018d1701a0618ee308ec2f07ebe29"
         }
@@ -37941,8 +38021,8 @@
           "anchor": "实施参考的用途",
           "quote": "每个统计周期在项目台账asset_reuse中关联asset_id@version、实际复用单集、成功/失败适用性、返工原因/工时变化和证据。没有数据保持未测，不把文件复用次数当有效复用或自动宣称节省工时；不因此新增监控。",
           "lines": [
-            167,
-            167
+            171,
+            171
           ],
           "quote_sha256": "ef55759f901cee602565bd4ad24608244eeaa361fa0dc07b7b8c5d30546781c4"
         }
@@ -37959,8 +38039,8 @@
           "anchor": "失败后的处理",
           "quote": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。",
           "lines": [
-            83,
-            83
+            99,
+            99
           ],
           "quote_sha256": "162565746c7f33162e2d5924bf56ee4778fcbeefcc07cdb91145b6c07b9655d2"
         }
@@ -37977,8 +38057,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "在同一 `episode.json` 的 `brief.roles` 指定制片/主编、科学编辑、编导、美术动画、声音字幕、审片、发布负责人。一人可兼岗，工时合并；作者自查和独立审片使用不同任务上下文，模型数量不是真人数量。制片对最终版本负责，不能把技术诊断或普通修复转嫁用户。仅在真正缺少风格选择、重大题材决策或当前规则要求的批准时请求决定，既有授权不重复索取。",
           "lines": [
-            110,
-            110
+            112,
+            112
           ],
           "quote_sha256": "f7bdf327568e412d9d3e4ba412883aa1fdb7a6639677f33f7a1ad55812e5c406"
         }
@@ -37995,8 +38075,8 @@
           "anchor": "实施参考的用途",
           "quote": "制片/主编负责收窄选题、分配工作、控制版本、维护事实来源与发布队列，并交选题卡、排产和变更记录；只报进度不能代品质通过。审查者先看指定成片，再看作者解释，首次卡点不得被事后讲解覆盖。发布失败在qa.publication.note分别写执行拒绝、权限缺失、用户取消或网络/技术失败及实际证据，不笼统写系统卡住，不绕过新的明确拒绝。",
           "lines": [
-            171,
-            171
+            175,
+            175
           ],
           "quote_sha256": "b9e45b6cc9b8697e48f52f36eea871440331f83841cdabae3471c1b565065c09"
         }
@@ -38024,17 +38104,17 @@
     {
       "id": "H-h-failure-032",
       "kind": "existing_required_stage_deliverable_and_return_relationship",
-      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
       "clauses": [
         {
           "file": "references/production-checkpoints.md",
           "anchor": "g1g7-的实际推进记录",
-          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
           "lines": [
-            115,
-            115
+            117,
+            117
           ],
-          "quote_sha256": "d40c2d5d4b4b73353e95214d3a98dc08ef420973a38a855107ad3e681f16a280"
+          "quote_sha256": "f3a8d107df289820f4747579d20785b7eddc11990a26f357ff596949fc571499"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38085,8 +38165,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "最终混音在 `qa.audio.listening` 正常速度完整听当前导出，按 [制作策略](../config/production-policy.json) 完成耳机与手机外放检查，记录设备、区间和问题时码；缺哪项就哪项未验。平台另核关键段。核心术语错读、因果词吞漏、断句改义、拼接突变、持续底噪/失真和音乐遮解释均退回。配音、配乐、环境和音效分轨，人声优先，逐段/跨段核突刺、削波与突断；不用 whoosh 或警报掩盖问题，不每次切镜默认加音效，设计音效不冒充原声记录。",
           "lines": [
-            53,
-            53
+            84,
+            84
           ],
           "quote_sha256": "46da354227a932dfa2e19fe7e73d30672d642d44e220049f94461eafa9cb43ed"
         }
@@ -38103,8 +38183,8 @@
           "anchor": "审片者与观看安全",
           "quote": "每次审查记录实际审片者/角色、具备的看图/连续播放/听音能力、所审文件/时段与未覆盖部分。先按正常速度、不中途借制作说明补空地完整观看，再回放或逐帧定位；已看过稿件的编辑自审不写成陌生观众首看。独立任务身份不等于真人测试，也不等于具备实际音视频感知。",
           "lines": [
-            47,
-            47
+            63,
+            63
           ],
           "quote_sha256": "896c0cd80d1c6a2442b526d677dcac4b83f9c1cc8efb3c40d49eca2078d178bc"
         }
@@ -38121,8 +38201,8 @@
           "anchor": "从小样到整片的证据",
           "quote": "全片仍须连续看/听，并复核每镜首中末、转场、运动极值与关键细节放大，不能只挑好看的静帧。最低记录为：导出版本/文件、镜号/时间点、检验项、参照定位、实际帧/片段、观察到的差距、退回/修复/复查结果。关键依据、画面或试听能力缺失就写“未验”。",
           "lines": [
-            55,
-            55
+            71,
+            71
           ],
           "quote_sha256": "530bf7d4e42a85516c515e4cf2f827c48bcf5dc0b2ad78d0789187dc50ab5bad"
         }
@@ -38139,8 +38219,8 @@
           "anchor": "实施参考的用途",
           "quote": "单期不再用一个笼统status覆盖混合阶段：当前阶段由工作记录说明，各关状态以qa.gates为准。source_ids是sources[].id中被实际主张引用的ID集合，不是完整source对象数组。授权核查状态 `qa.release.authorization_status` 与包就绪status分开；其他质量/平台项失败不抹掉已有效授权，也不重复问同一批准。",
           "lines": [
-            169,
-            169
+            173,
+            173
           ],
           "quote_sha256": "303bdc2b4f33ad4cc34cf370f6d22d368ebaba0576cf877214792c419b109172"
         }
@@ -38157,8 +38237,8 @@
           "anchor": "实施参考的用途",
           "quote": "以下只支持相应方法，项目自定分数/产能不由外部来源背书，使用时核当前文档：",
           "lines": [
-            156,
-            156
+            160,
+            160
           ],
           "quote_sha256": "f49bfba879b2b333f8422f4e66ec48f28b27dc22605ec389c97a15b595d178a0"
         }
@@ -38175,8 +38255,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G1 | 选题六项、事实卡、全部必答范围的解释结构、必要前提、难点定位、禁画清单及科学/逻辑内审 | 正式脚本/分镜 | 缩题/研究 |",
           "lines": [
-            114,
-            114
+            116,
+            116
           ],
           "quote_sha256": "f86c8ed81d74610c6acdd55f6ac5fb534bba533f6a3f2f0f668a2604fcc64c99"
         }
@@ -38193,8 +38273,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G3 | 整景/中景/机制三尺度美术图与最终造型、真实音轨、正式字幕的连续代表动态 | 仅已验范围的同体系扩制 | 美术/动作 |",
           "lines": [
-            116,
-            116
+            118,
+            118
           ],
           "quote_sha256": "34f342ff62328009876c6e82f02e15bccc0bdad13bd1352edd60fee3db8e6ec1"
         }
@@ -38211,8 +38291,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G4 | 当前整片、音轨分轨、字幕、可编辑工程、来源与资产版本清单 | 正式整片验收 | 对应工序 |",
           "lines": [
-            117,
-            117
+            119,
+            119
           ],
           "quote_sha256": "3fe9ab245576cc86ba1375330af1359df4b7a66cea24c1df3170ae00ad633149"
         }
@@ -38229,8 +38309,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G5 | 当前完整版本的科学、解释与表达独立内审、L3精美程度、声音、字幕、技术及观看舒适审查 | 提请或使用已获具体版本批准 | 对应工序 |",
           "lines": [
-            118,
-            118
+            120,
+            120
           ],
           "quote_sha256": "0ac2abfd2b3c49cef5ad4e41c89010863f56ed138cc277b3ede5139cec6a382a"
         }
@@ -38247,8 +38327,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G6 | 锁定发布包、实际平台预览、权利/标识及覆盖该包的授权 | 指定平台提交 | 发布包/适配 |",
           "lines": [
-            119,
-            119
+            121,
+            121
           ],
           "quote_sha256": "cf529ea6d3153db8afb5a430fecd16f5d7fb6dd66daecf65383ff6050b83db54"
         }
@@ -38265,8 +38345,8 @@
           "anchor": "6-从导出到实际平台完成检查",
           "quote": "发现关键字幕、单位、标签或主体被挡住时，做最小布局调整，重新导出并在同一最终文案/界面下复查，不能沿用旧通过记录。改视频、标题、简介、账号或相关展示方式后重查。没有平台访问或授权时可交待平台检查版，不能宣称已完成平台适配，更不能自行发布。",
           "lines": [
-            86,
-            86
+            88,
+            88
           ],
           "quote_sha256": "07d662542437596735cd6b262ab6d01199391e09fe93c43b75c5d7576e6e0f5e"
         }
@@ -38283,8 +38363,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G7 | 实际作品ID/链接、发布时间、平台状态与内容匹配读回 | 计入唯一实际发布/复盘 | 未知先查重，失败修复 |",
           "lines": [
-            120,
-            120
+            122,
+            122
           ],
           "quote_sha256": "82e9a4a5d7acacd3e3ffc699a973c1ea82f55db7d631c437eaa83e5c6a334077"
         }
@@ -38294,17 +38374,17 @@
     {
       "id": "H-h-failure-053",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "先用当前成品级解说划分语义拍，再排镜头，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
+      "failure_condition": "以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
       "clauses": [
         {
           "file": "references/shotbook.md",
           "anchor": "音频先行但不牺牲画面",
-          "quote": "先用当前成品级解说划分语义拍，再排镜头，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
+          "quote": "以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
           "lines": [
             7,
             7
           ],
-          "quote_sha256": "530c2ec9a7c998e7f160f41fe5ecc9189a661d3dba18999e7d28b073415735c7"
+          "quote_sha256": "230e12fb6ca83455f239266de99a2a602b679a34d9c66423019f3f016643ebb5"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38319,8 +38399,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "剪接、补录、改词、停顿或语速变化后，重新核实际时码、字幕、关键动作及当前完整混音。混音、语速与最终编码 D 起点见 [制作策略](../config/production-policy.json)；已有认可配置和匹配音轨优先，不为起点强制变声、变速或重生成。最终编码实测响度和峰值，不称平台官方要求，也不代听验。音轨存在、ASR、波形、响度和技术解码都不等于听过；未实际听验的项目保持待审，不用短样认可填 `qa.narration` 的整片通过。",
           "lines": [
-            55,
-            55
+            86,
+            86
           ],
           "quote_sha256": "3d49396fee3eb790c3ebd5983cce0c347b62f1bea6b88e0c073e12ba851b6f08"
         }
@@ -38337,8 +38417,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "`qa.gates.G1` 至 `G7` 仅引用现有QA记录，不另造平行审批。状态为 `not_reviewed`、`needs_changes`、`passed`；取消为 `cancelled`。每个通过含实际审查者、时间、范围、证据文件及哈希、所引用QA与对应上下文摘要。没过的前置不能从后关倒填通过。G2允许低精细度，关键状态/整期范围不能缺；`plan` 检查通过允许范围明确的草排待审交付，不代表G2通过。先探索风格可并行，G2/G3未过不批量精制作。G3返工可以保留整片失败状态，不能拿局部通过清掉它。",
           "lines": [
-            122,
-            122
+            124,
+            124
           ],
           "quote_sha256": "d3bc1e7cc6efddc07c322ac845b09f6a7ad30f6dd1690e4019daf68e0b3e18a0"
         }
@@ -38355,8 +38435,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "常规系列可复用已验证风格；新对象/机制仍验代表动作。新风格用同一科学事实、配音与解释结构比较两套方案，防止同时换题/音色无法判断；长度随完整变化需要，不凑固定秒数。样段明确适用范围与例外，再扩制。",
           "lines": [
-            128,
-            128
+            132,
+            132
           ],
           "quote_sha256": "9ee6278fd0626aedfe3a9648aa907fbc8cb164c8f054670d9c6209b1417a4e51"
         }
@@ -38373,8 +38453,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G1 | 选题六项、事实卡、全部必答范围的解释结构、必要前提、难点定位、禁画清单及科学/逻辑内审 | 正式脚本/分镜 | 缩题/研究 |",
           "lines": [
-            114,
-            114
+            116,
+            116
           ],
           "quote_sha256": "f86c8ed81d74610c6acdd55f6ac5fb534bba533f6a3f2f0f668a2604fcc64c99"
         }
@@ -38456,17 +38536,17 @@
     {
       "id": "H-h-failure-064",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "制作/版本/测试验收状态、内部备注、工具/流水线不入片。完整来源、权利与制作声明放配套；许可强制署名、防误认必需的示意/模拟/AI/非按比例及平台披露不能盲删，依据见 [素材规则](science-and-rights.md)。实际文字验收由质量正文执行，OCR/词黑名单不代看图。",
+      "failure_condition": "制作/版本/测试验收状态、内部备注、工具/流水线不入片；素材能力、制作取舍与限制说明默认留配套记录，不能因内容属实或名为披露就上屏。会影响当前结论理解的事实，改写为观众所需的条件或边界，并通过上述删除测试。完整来源、权利与制作声明放配套；署名义务与呈现位置分别核实，不从“需署名”自动推出“需烧录”，也不因移出画面而免除署名。保留按具体条款须保留的来源标识、必要防误认提示及许可/平台要求的标识与位置，依据见 [素材规则](science-and-rights.md)。实际文字验收由质量正文执行，OCR/词黑名单不代看图。",
       "clauses": [
         {
           "file": "references/visual-system.md",
           "anchor": "观众画面与交付记录",
-          "quote": "制作/版本/测试验收状态、内部备注、工具/流水线不入片。完整来源、权利与制作声明放配套；许可强制署名、防误认必需的示意/模拟/AI/非按比例及平台披露不能盲删，依据见 [素材规则](science-and-rights.md)。实际文字验收由质量正文执行，OCR/词黑名单不代看图。",
+          "quote": "制作/版本/测试验收状态、内部备注、工具/流水线不入片；素材能力、制作取舍与限制说明默认留配套记录，不能因内容属实或名为披露就上屏。会影响当前结论理解的事实，改写为观众所需的条件或边界，并通过上述删除测试。完整来源、权利与制作声明放配套；署名义务与呈现位置分别核实，不从“需署名”自动推出“需烧录”，也不因移出画面而免除署名。保留按具体条款须保留的来源标识、必要防误认提示及许可/平台要求的标识与位置，依据见 [素材规则](science-and-rights.md)。实际文字验收由质量正文执行，OCR/词黑名单不代看图。",
           "lines": [
             90,
             90
           ],
-          "quote_sha256": "7c4989bfdce34ec7b6838917aee55803de3d3e13d0f3549a23782931974f694a"
+          "quote_sha256": "1239aa1ec3ffcd636659b8b944301588810b6f663c50ed472b9bd6b92db9bf98"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38564,17 +38644,17 @@
     {
       "id": "H-h-failure-072",
       "kind": "existing_required_full_roughcut_review_and_return_relationship",
-      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
       "clauses": [
         {
           "file": "references/production-checkpoints.md",
           "anchor": "g1g7-的实际推进记录",
-          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
           "lines": [
-            115,
-            115
+            117,
+            117
           ],
-          "quote_sha256": "d40c2d5d4b4b73353e95214d3a98dc08ef420973a38a855107ad3e681f16a280"
+          "quote_sha256": "f3a8d107df289820f4747579d20785b7eddc11990a26f357ff596949fc571499"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38582,17 +38662,17 @@
     {
       "id": "H-h-failure-073",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
       "clauses": [
         {
           "file": "references/production-checkpoints.md",
           "anchor": "g1g7-的实际推进记录",
-          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
           "lines": [
-            115,
-            115
+            117,
+            117
           ],
-          "quote_sha256": "d40c2d5d4b4b73353e95214d3a98dc08ef420973a38a855107ad3e681f16a280"
+          "quote_sha256": "f3a8d107df289820f4747579d20785b7eddc11990a26f357ff596949fc571499"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38690,17 +38770,17 @@
     {
       "id": "H-h-failure-082",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "每次切镜或镜内解释模型切换，在现有分镜中交代“上一镜留下什么问题 → 下一镜怎样推进回答”，保留可识别的对象身份与空间锚点；有意换对象/地点时先建立新关系，不能让观众误认同一连续过程。放大先定位整体中的目标再进入局部，返回时能认回原位置；转视角、剖面或尺度变化交代前后对应。可用构图、匹配动作、连续镜头、简短解说或必要标注完成，不强制新增上屏字或固定转场特效，叠化本身不是桥接。",
+      "failure_condition": "每次切镜或镜内解释模型切换，成对设计前镜终态与后镜初态：前面已建立什么结论，后面怎样沿用它推进回答，哪些对象与空间锚点保持，哪些视角、尺度或状态需要改变。后镜据此承接制作，不能各自完成后只补一句转场原因。有意换对象/地点时先建立新关系，不能让观众误认同一连续过程。放大先定位整体中的目标再进入局部，返回时能认回原位置；转视角、剖面或尺度变化交代前后对应。可用构图、匹配动作、连续镜头、简短解说或必要标注完成，不强制新增上屏字或固定转场特效，叠化本身不是桥接。",
       "clauses": [
         {
           "file": "references/production-checkpoints.md",
           "anchor": "2-把解释关系变成可见表达",
-          "quote": "每次切镜或镜内解释模型切换，在现有分镜中交代“上一镜留下什么问题 → 下一镜怎样推进回答”，保留可识别的对象身份与空间锚点；有意换对象/地点时先建立新关系，不能让观众误认同一连续过程。放大先定位整体中的目标再进入局部，返回时能认回原位置；转视角、剖面或尺度变化交代前后对应。可用构图、匹配动作、连续镜头、简短解说或必要标注完成，不强制新增上屏字或固定转场特效，叠化本身不是桥接。",
+          "quote": "每次切镜或镜内解释模型切换，成对设计前镜终态与后镜初态：前面已建立什么结论，后面怎样沿用它推进回答，哪些对象与空间锚点保持，哪些视角、尺度或状态需要改变。后镜据此承接制作，不能各自完成后只补一句转场原因。有意换对象/地点时先建立新关系，不能让观众误认同一连续过程。放大先定位整体中的目标再进入局部，返回时能认回原位置；转视角、剖面或尺度变化交代前后对应。可用构图、匹配动作、连续镜头、简短解说或必要标注完成，不强制新增上屏字或固定转场特效，叠化本身不是桥接。",
           "lines": [
             21,
             21
           ],
-          "quote_sha256": "f8dec0fecb5e41dfd1b15366390b086847053e8f8d10ee0c3da0b871df688668"
+          "quote_sha256": "8cd7f5166402e71b31f7f553039dab100eed151c1e763cc061e652beb9d80195"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38715,8 +38795,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "实际过程类的动作卡八项落实在现有shotbook：对象/锚点、初态、触发、关键变化、终态、轨迹、快慢/观察停顿、观众学到什么；补物理条件、教学简化、关键姿态、口播事件和实际音轨hash。不同机制不套万能弹性曲线；路径、方向、约束、遮挡或观察条件变化可以是实质机制，不强求形变。关键图另说明视角、注意中心、动作路径、字幕区和比例变化。",
           "lines": [
-            78,
-            78
+            80,
+            80
           ],
           "quote_sha256": "4e9f8480be84f6da68e9ee799624c7fa7f5dc1dc1842969a13afc107922db58f"
         }
@@ -38733,8 +38813,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "实际过程类的动作卡八项落实在现有shotbook：对象/锚点、初态、触发、关键变化、终态、轨迹、快慢/观察停顿、观众学到什么；补物理条件、教学简化、关键姿态、口播事件和实际音轨hash。不同机制不套万能弹性曲线；路径、方向、约束、遮挡或观察条件变化可以是实质机制，不强求形变。关键图另说明视角、注意中心、动作路径、字幕区和比例变化。",
           "lines": [
-            78,
-            78
+            80,
+            80
           ],
           "quote_sha256": "4e9f8480be84f6da68e9ee799624c7fa7f5dc1dc1842969a13afc107922db58f"
         }
@@ -38751,8 +38831,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "旧约10–20秒只是早期项目探索长度；采用完整标准后以15–30秒为D起点，任何长度都优先覆盖完整关键关系/动作，其他长度记录实际范围与校准理由，不机械凑时长。",
           "lines": [
-            125,
-            125
+            141,
+            141
           ],
           "quote_sha256": "8a660edfc68c7f2709081569335d24c000339e9928848971d8b69f23032aa775"
         }
@@ -38769,8 +38849,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G3 | 整景/中景/机制三尺度美术图与最终造型、真实音轨、正式字幕的连续代表动态 | 仅已验范围的同体系扩制 | 美术/动作 |",
           "lines": [
-            116,
-            116
+            118,
+            118
           ],
           "quote_sha256": "34f342ff62328009876c6e82f02e15bccc0bdad13bd1352edd60fee3db8e6ec1"
         }
@@ -38803,20 +38883,20 @@
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
-          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。将实际记录以 narration.generation_record={file,sha256} 绑定到单集，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
+          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
           "lines": [
-            41,
-            41
+            51,
+            51
           ],
-          "quote_sha256": "6f735a07a01214ec6b7694eb551c6c0d5ae5a852037297717f7c4feac6e62e75"
+          "quote_sha256": "44255fd66cd4c074dacbb65e6be56a9e94a4ce98845425ec3b0609db58b2dea7"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
           "quote": "已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。",
           "lines": [
-            45,
-            45
+            55,
+            55
           ],
           "quote_sha256": "43f8b840e4e5eb31ea2d992d012a8ea231b953e12ff60c2ec08c97ca5756958b"
         }
@@ -38833,8 +38913,8 @@
           "anchor": "来源与传输范围",
           "quote": "服务、配额或资源失败报告具体阻塞，保留当前方案；不轮换账户、换镜像规避限制，不自动购买额度。模型许可、服务条款与具体用途分别核实，不在台账或仓库存入凭据、令牌或参考声纹。",
           "lines": [
-            61,
-            61
+            92,
+            92
           ],
           "quote_sha256": "fe3386afabd09caaa72251ae565242bc62133a13677a6773b38373341956484b"
         }
@@ -38851,8 +38931,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "沿用项目确认的音色与口语指令，每段核稿件一致、漏词/重复/跑词、术语、数字、单位、多音字、断句和拼接处。主题、因果动词与结论有自然重音，给定位和变化留观察停顿；长句先改稿，不统一放慢成机械讲述。异常时长或疑似文本偏离先核查，不直接装片、不猜模型根因；完整解码、合理时长或 ASR 对齐不能代替文本正确性与实际听感检查。每条有中文解说；缺能力交明确待补录版本，字幕与配乐不代配音。",
           "lines": [
-            51,
-            51
+            82,
+            82
           ],
           "quote_sha256": "389593d7e42924953edc6715d8a47596ca29591cf0a26d4ecd693997143deaf3"
         },
@@ -38861,8 +38941,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "最终混音在 `qa.audio.listening` 正常速度完整听当前导出，按 [制作策略](../config/production-policy.json) 完成耳机与手机外放检查，记录设备、区间和问题时码；缺哪项就哪项未验。平台另核关键段。核心术语错读、因果词吞漏、断句改义、拼接突变、持续底噪/失真和音乐遮解释均退回。配音、配乐、环境和音效分轨，人声优先，逐段/跨段核突刺、削波与突断；不用 whoosh 或警报掩盖问题，不每次切镜默认加音效，设计音效不冒充原声记录。",
           "lines": [
-            53,
-            53
+            84,
+            84
           ],
           "quote_sha256": "46da354227a932dfa2e19fe7e73d30672d642d44e220049f94461eafa9cb43ed"
         }
@@ -38879,8 +38959,8 @@
           "anchor": "逐段声画与图内文字对应",
           "quote": "对每个完整解释语义段写一行对应关系：实际口播句 → 被讲述的画面对象 → 对象动作或状态变化 → 必要时的就近图内短标签/关键词（无需添加时注明画面如何讲清） → 真实音轨时点与最终导出证据。按语义段而非每个字强制动画；字幕、图内解释与主题标题各有职责。",
           "lines": [
-            48,
-            48
+            50,
+            50
           ],
           "quote_sha256": "8b098fb908e9c8d78e8365478d7d4226383f3b948cf6a45cf95637eb785c5bfc"
         },
@@ -38889,8 +38969,8 @@
           "anchor": "逐段声画与图内文字对应",
           "quote": "解释相对位置、朝向或观察关系时，先建立可识别的参照对象及方向对应；涉及观察关系时，还须建立相关观察者或视点，使观众知道“相对谁、从哪里看、朝向哪里”。已建立且当前仍可追踪的画外参照、第一人称视角或抽象模型可沿用，不强求所有对象每帧同屏，不为无关关系强加观察者。用点、轴、线或局部框替代实体，先展示其与该实体/视点的对应，换视角后仍能认回同一关系；不能让未建立映射的坐标和标签独自承担解释。说“这里、那边、这个方向”等指示语时，对应时点的所指对象或区域须清楚可辨、定位无歧义，可通过取景、对象姿态、局部强调或必要引导实现，不强制增加箭头或文字。参照缺失、指代目标弱小/多义或映射断裂，退回该镜分镜和关系布局；仅补一个对象图标、标签或更粗的线不构成修复，须重新核完整关系。",
           "lines": [
-            56,
-            56
+            58,
+            58
           ],
           "quote_sha256": "762301e32f8cff1c22c1e7df7992069e2f491d6913b6d5f2a96617a4032a1b1c"
         }
@@ -38907,8 +38987,8 @@
           "anchor": "逐段声画与图内文字对应",
           "quote": "- 说变化或因果时展示必要过程；说比较、空间、结构、数量或证据时，呈现对应的条件、参照和联系。实际口播与画面事件一致，不能提前显示下一阶段结果",
           "lines": [
-            51,
-            51
+            53,
+            53
           ],
           "quote_sha256": "3401d92b67bbed984822f516ac59e9de97d2ab657b5e4ba1f87768de6e825111"
         }
@@ -38925,8 +39005,8 @@
           "anchor": "实施参考的用途",
           "quote": "- [Motion Canvas事件](https://motion-canvas.io/docs/time-events/)：可维护的声画时码；经局部验证后可选，不是品质证明",
           "lines": [
-            158,
-            158
+            162,
+            162
           ],
           "quote_sha256": "1f1dbc508be5a0170b44bc6b3f9193c1190339128069f7baae8a0f9d32be026b"
         }
@@ -38943,8 +39023,8 @@
           "anchor": "逐段声画与图内文字对应",
           "quote": "- 必要图内文字简短解释正在看的动作、关系、条件或数值，术语与口播一致；先做文字删除测试，不为每段配字。主图必须承载对应解释，不能只有底部逐字字幕在更新，也不应复制整段旁白造成重复阅读",
           "lines": [
-            52,
-            52
+            54,
+            54
           ],
           "quote_sha256": "8e4b4406143893f2cbcdcf6e0a6007730f3e16ab76229e5d55e5b97493f06080"
         }
@@ -38997,8 +39077,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "闪烁采用项目保守设计上限：不设计任意1秒内超过3次闪烁，避免大面积高对比反复闪白/红闪；复杂片段另审。低于次数仍非普适安全证明。字幕正文以正式稿校对，错字及漏否定/限定词是硬伤。字幕空段/重叠/越界与事件偏差可做静态检查，最终仍须实际手机/平台及连续观看。",
           "lines": [
-            117,
-            117
+            133,
+            133
           ],
           "quote_sha256": "3d9e60c6197ff8c6bf4dee0f0b380d0ab54d49c1864d0b2a2e1d6670695b67d5"
         }
@@ -39033,8 +39113,8 @@
           "anchor": "6-从导出到实际平台完成检查",
           "quote": "只有已获所需上传/预览授权时才进入平台。使用实际目标账号，填入最终标题、完整简介与 tag，等平台 UI、文案和预览真正加载；保留用户名、互动栏、文案等实际覆盖区域，查看首/中/末、最密字幕、转场及运动极值。文案长度可能改变遮挡，不能只用短标题预览代替最终文案。",
           "lines": [
-            82,
-            82
+            84,
+            84
           ],
           "quote_sha256": "0aeb57933289ee2508cae274c3280af4e74abd646f8abe2bdec5b0d301c8c651"
         }
@@ -39051,8 +39131,8 @@
           "anchor": "6-从导出到实际平台完成检查",
           "quote": "记录预览来源：实际手机/平台发布页预览/本地播放器，以及导出版本、最终文案和关键时间点截图。浏览器中的手机样式预览不能称为实机；被截图裁去画幅边界时不能反推完整 9:16 坐标。没有实机条件就写未做实机检查。",
           "lines": [
-            84,
-            84
+            86,
+            86
           ],
           "quote_sha256": "2aa953a8d60caf36cecea237826cca88aba2f43d3bd69e7da3d90c33918ec7a0"
         }
@@ -39069,8 +39149,8 @@
           "anchor": "审片者与观看安全",
           "quote": "涉及快速亮度变化、重复高对比闪烁或全屏明暗交替时，先减少不必要的强闪，用柔和且科学不误导的变化表达；审所用真实素材及合成后的完整时域。帧率、几张抽帧或平均亮度不能证明全段无风险，警告文字也不代替修复。疑似风险未排除、缺相应连续检查或检测能力时保持该项未验，不签“观看安全”；需要专门评估时报告限制，不能作医学安全保证。",
           "lines": [
-            49,
-            49
+            65,
+            65
           ],
           "quote_sha256": "e75ae65b82f1a12ed448dcbbd3a6e7ee1c9fcd3ba23f45e4224b2b315284292b"
         }
@@ -39087,8 +39167,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "导出默认格式/码率等D用制作策略并记实际偏差和依据；ffprobe记录实际帧率/恒定性、色彩信息、流和时长，解码检查损坏；源色彩标签不足以证明转换正确。所有版本由同一主工程导出，不下载已发片反复压制。可保留高质量无平台下载水印母版，不能移除必要AI/作者/许可标识。跨平台版独立核排版、字幕、标题、许可和预览；同步设置按项目既有指示核实，不擅改、不将未核同步说成功。",
           "lines": [
-            152,
-            152
+            156,
+            156
           ],
           "quote_sha256": "cb6ba109c464b28eaf68c4c63d21cfc4f0279bede147a6c3c4b885d428129e69"
         }
@@ -39105,8 +39185,8 @@
           "anchor": "可选工作方式与参考边界",
           "quote": "可编辑剪辑工程可按解说、字幕、音乐/音效、画面、图内标注分别建轨，以便替换和复核。只有实际导出并在目标编辑器打开验证，才能称为可编辑工程已交付；当前规则不承诺特定剪辑器兼容。",
           "lines": [
-            64,
-            64
+            66,
+            66
           ],
           "quote_sha256": "cc4434ff522a82d65098ab6e1be26e533cdf954a23edaea4b92404834121893f"
         }
@@ -39123,8 +39203,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "导出默认格式/码率等D用制作策略并记实际偏差和依据；ffprobe记录实际帧率/恒定性、色彩信息、流和时长，解码检查损坏；源色彩标签不足以证明转换正确。所有版本由同一主工程导出，不下载已发片反复压制。可保留高质量无平台下载水印母版，不能移除必要AI/作者/许可标识。跨平台版独立核排版、字幕、标题、许可和预览；同步设置按项目既有指示核实，不擅改、不将未核同步说成功。",
           "lines": [
-            152,
-            152
+            156,
+            156
           ],
           "quote_sha256": "cb6ba109c464b28eaf68c4c63d21cfc4f0279bede147a6c3c4b885d428129e69"
         }
@@ -39141,8 +39221,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "对比度记录实际前景/动态背板、未舍入比值、软件/测量证据与最坏画面复核；低于内部起点必须有实际校准依据，数字不证明可读性。字幕检查可自动或人工，空段、重叠、越界和正式稿校对各有实际证据。闪烁设计上限核查必须真实执行；复杂片段单独实际评估，无复杂变化须说明适用性，低次数也不保证绝对安全。",
           "lines": [
-            123,
-            123
+            139,
+            139
           ],
           "quote_sha256": "5cc1f2ba1c3992e69fcb6c4b83f15794d29ccb684a9928797722f2e742768e3e"
         }
@@ -39159,8 +39239,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "定位/标签、尺度切换、观察停顿等D时序见制作策略，按任务校准，不机械统一。语义事件实际音频时点与画面时点差超过150ms先标复核警告；提前预备/反应镜头写理由并实际看，不自动判错或自动忽略。",
           "lines": [
-            82,
-            82
+            84,
+            84
           ],
           "quote_sha256": "815d4385278f8e132d7ac8b1d737e65a26666328d21d6cfc642ebc35897f88c2"
         }
@@ -39177,8 +39257,8 @@
           "anchor": "记录与技术检查",
           "quote": "`scripts/check_episode.py` 的 `plan` 只核计划结构与诚实缺项，已有科学依据才适用，不补假来源/日期通关。`delivery` 核文件、尺寸、文案长度、来源/权利声明、音轨、全片解码与版本绑定；需Python3.11+、ffprobe/ffmpeg，不联网/下载/发布。它不判断合法性、科学语义、自然声音或视觉美感，不检测所有照片伪视频，字段自报不能创造实际验收。",
           "lines": [
-            71,
-            71
+            87,
+            87
           ],
           "quote_sha256": "4dbfa9df7e8641e5d7b850b00b6f2691aa6e52b1f224a223f129f7d314ef64f8"
         }
@@ -39206,17 +39286,17 @@
     {
       "id": "H-h-failure-135",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
+      "failure_condition": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
       "clauses": [
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
+          "quote": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
           "lines": [
             26,
             26
           ],
-          "quote_sha256": "cd081c652084e93c8655a11a1dfe92d1f238702f82c6fab6149b3725ed9503c6"
+          "quote_sha256": "4d3bc68912ebecbb76a62d1757a71bc24f899d220af5e5dfaf8b6b5474dc57cd"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -39231,8 +39311,8 @@
           "anchor": "失败后的处理",
           "quote": "发现上述缺陷时退回对应制作阶段，撤销该版本相关旧通过，保留问题与修复前后证据。整片动画表现已失败时，回到解释分镜和覆盖完整解释过程的动态方案；局部动作获准或修复只保留该局部的认可范围，不能解除整体失败。先用连续代表段验证方案，再重验整片，而非仅替换一个动作后沿用旧通过。用户明确整体否定一批作品时，冻结该批当前“可交付/可发布”状态，受影响 `qa` 条目改为 `pending`（待复核）或 `fail`（已确认失败）；先找共同根因，重审全部质量维度，再用少量代表小样复核，不能只补被点名的局部就恢复整批通过。",
           "lines": [
-            79,
-            79
+            95,
+            95
           ],
           "quote_sha256": "11de5d65c2d1f832e49f753ca1eb41dd421b302419a2db984ededddf38a627c2"
         }
@@ -39267,8 +39347,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "| 理解与叙事30 | 核心问题、必要解释关系与答案闭合清晰，正常观看能跟上 | 少量解释即可准确展示关键机制，回看有明确价值 |",
           "lines": [
-            95,
-            95
+            111,
+            111
           ],
           "quote_sha256": "358d1b7013e9df32cd45783331682dcd3b79f4645bbdbd17a0fae790645d577f"
         }
@@ -39285,8 +39365,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "| 美术一致性25 | 整景/中景/近景造型、材质、层次一致，无明显拼贴 | 成熟构图与系列辨识度，可作基准画面 |",
           "lines": [
-            96,
-            96
+            112,
+            112
           ],
           "quote_sha256": "ee3038f5af72f50a54324cb57eacb1192ea21da52edfe9895667b0e41a94747a"
         }
@@ -39303,8 +39383,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "| 动作与镜头25 | 核心变化可读，对象连续，时序和停顿合理 | 动作精确自然、有设计细节且不增加理解负担 |",
           "lines": [
-            97,
-            97
+            113,
+            113
           ],
           "quote_sha256": "037d98e3f979a98a740553ecf477265c553f05c748714dba9bd11664eb8ae5c0"
         }
@@ -39321,8 +39401,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "| 声音15 | 自然清楚、无明显接缝、音画对应 | 讲述、环境和动作形成稳定克制的节奏 |",
           "lines": [
-            98,
-            98
+            114,
+            114
           ],
           "quote_sha256": "2e87832a9d2f64a718143fb99488d9aeaf448bdcc22f456948a75a8f5d5b2bc0"
         }
@@ -39339,8 +39419,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "| 字幕与包装5 | 手机可读、不挡机制、封面准确 | 字幕/封面/系列语言统一且更便理解 |",
           "lines": [
-            99,
-            99
+            115,
+            115
           ],
           "quote_sha256": "686493a5bbab6268cfb520971e1d059acecf231abbb63f11924a2f8dbbd7328b"
         }
@@ -39357,8 +39437,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "按 [制作策略](../config/production-policy.json) 记录五维评分，各0–5，可半分：未验用null并另记pending；0已确认缺失，1重大错误或严重不可用，2明显阻碍，3可用但粗糙，4完整成熟，5可作标杆。每项附当前版本的具体时点/证据，不能只填数字。",
           "lines": [
-            91,
-            91
+            107,
+            107
           ],
           "quote_sha256": "973b8f2f7442a2220f9deb688f8b48ec61b0fe4c4e0376c7401e976e4c429224"
         }
@@ -39375,8 +39455,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "加权总分按分数÷5×权重求和。常规85且前四项≥4、包装≥3；标杆90且各项≥4是内部起始门槛，按真实样片校准，不能称行业客观线。科学/权利、明确否定、完整实际视听、平台可见性、版本授权、必要声明等H任何失败或未知，100分也不放行。此前“不可用自评分自动放行”仍成立，但不能据此省略已采用的评分记录。",
           "lines": [
-            101,
-            101
+            117,
+            117
           ],
           "quote_sha256": "df01a617dba903943ded8c727da11051c063e067d46f75cfb61b567f71ec6a33"
         }
@@ -39393,8 +39473,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "评分阈值校准在 `qa.scorecard.calibration` 保存实际依据文件/哈希、审查者、理由、适用范围及对应总分/分项起点；检查器可核校准记录完整性，不能证明新阈值有审美依据。五维含义、硬门槛、解释内审和明确否定不因此降低。没有校准证据时沿默认值，不能静默改总分或伪造测试。",
           "lines": [
-            119,
-            119
+            135,
+            135
           ],
           "quote_sha256": "96ad6fd30fe4507a8e52b0073fbb0d134da68dcae3563070a273c953281e6c39"
         }
@@ -39411,8 +39491,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "正式顺序：正常速完整带声首看记首次卡点→针对性复看→静音检查机制/文字定位→耳机与手机外放完整听检。实际审查范围、设备、是否含音频与感知限制都留记录。P0是科学核心/权利标识/错版本/忽略否定/严重观看风险，停止发布路径；P1是因果不通、关键机制PPT替代、字幕遮挡、声音遮解释或混搭，不发布；P2为不损理解的局部修饰，累计压低维度仍返工。缺陷固定“版本时点—观察—解释影响—责任/修改—复查证据”，不靠改严重度绕门槛。",
           "lines": [
-            109,
-            109
+            125,
+            125
           ],
           "quote_sha256": "846e6921670e29c2e428f26640a0f80d672709d5262f248fe18dea8ad2a7bbe3"
         }
@@ -39429,8 +39509,8 @@
           "anchor": "逐段声画与图内文字对应",
           "quote": "验收先静音检查主图和图内文字能否让人定位对象、变化与关系，再带声连续逐段对照口播、动作、标签及字幕的真实时点。静音检查不是要求画面独立讲完全部细节，带声检查也不能仅以转写或时间码匹配代替。记录检查版本、时间点、实际对应结果和缺项；填写映射表不创造验收事实。用户指出解释混乱或声画脱节时，当前内容验收失败：重查解释结构与分镜，不只补一句片头或修改底部字幕后沿用旧通过。",
           "lines": [
-            58,
-            58
+            60,
+            60
           ],
           "quote_sha256": "1d7176053a7dfdb11259cdf0df9cb57815c1b541cb8197217bbd8796a7577cc8"
         }
@@ -39447,8 +39527,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "解释内审按 [自主解释与表达审查](#自主解释与表达审查) 分两种职责。explanation_review 检查原问题、必要前提、推理完整、成立条件、边界和结尾整合；expression_review 检查这些关系是否确实出现在最终脚本、画面、动作和声音中。G1在 qa.explanation_logic 记录逻辑审查，G2在 qa.expression_plan 记录表达方案审查；G5在 qa.explanation_review 与 qa.expression_review 按各自职责记录当前完整最终导出的实际证据。已有 qa.comprehension.logic_review / internal_review 的详细记录可映射同一阶段职责，不能另强制填写两套批准；可引用同一次实际观看与逐步骤记录，各职责的结论、范围与版本仍须明确。",
           "lines": [
-            103,
-            103
+            119,
+            119
           ],
           "quote_sha256": "3814e91747911c2e7529d2df298f4426ee1f4c8e079d2668768dde242fad9646"
         },
@@ -39457,8 +39537,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "阶段记录固定相应阶段 context_sha256、reviewer、reviewed_at、note 与 evidence。G1纸面逻辑检查只绑定其阶段的解释设计；G2以方案审查及实际完整草排证据签收对应范围；G5固定 actual_information_only=true、independent_of_generation_context=true 和 media_sha256，并记录 reviewer_kind、visual_review_capable、audio_review_capable 及完整 viewing，逐项保存 understanding_goals 的 answer、relationships、transfer、boundaries 结论和证据。每个所审解释步骤的 steps 记录实际 start/end、shot_ids、prerequisites_observed、relation_observed、derivation_observed、boundary_observed、visual_evidence、narration_evidence、audio_visual_coherence 和 referent_evidence；unpresented_assumptions 保留发现的未呈现前提，缺项须修复后实际重查，通过时该项应为空列表，不能只清空字段伪造通过。步骤证据对应所有必答范围，不仅代表段或主链；引用共同记录须能定位同一媒体版本、实际时段与该职责观察。审查者可为具备相应能力的人员或Agent，但须如实记录实际看听能力，不能将内审通过写成真实受众理解率。",
           "lines": [
-            105,
-            105
+            121,
+            121
           ],
           "quote_sha256": "635e2c2ad1e9277816fd06b0c635bb4c6d13ea9bf7387dd4a88390878de43860"
         },
@@ -39467,8 +39547,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "所有制作类R/N/B均由制作端完成这一闭环：解释目标→必要前提→关系结构→难点表达→有声草排→内部审查→修订与精制作。审查意见指向具体缺口及作品时点，例如未交代成立条件、关系只写在说明而未进入画面、转视角后参照断裂。已知核心误解必须修复后实审。真实观众反馈是可选的后续优化信息；记录在 qa.comprehension.optional_audience_feedback，缺失不阻塞制作、最终质量或标杆判定。取得外部反馈仍须遵守现有分享权限，保存真实原答及样本范围，不以招募或实时反馈作为制作前提，不虚构、不将模型模拟当真人。",
           "lines": [
-            107,
-            107
+            123,
+            123
           ],
           "quote_sha256": "736f16c83f9d6d466134ff17a64c7e01e84d2a7eb2552b9f52ae4754ffd9a884"
         },
@@ -39477,8 +39557,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "可选观众反馈按事先声明的研究范围、实际轮次、当前媒体版本、匿名真实参与者、原答及观察记录保存；不把额外轮次混作同一组，不抹去已知误解。若选择测试协议，先记录适用目标、样本与判据，保留完整原答、版本和结果，不挑成功者重写历史；协议仅适用于该次可选研究，不成为所有视频的默认门槛。只有未看过制作稿、未被告知预期答案的实际观看者才可记录新观众首次理解反馈；分别记录其具体回答、问题与原因、第一处困惑，不先解释答案再称第一次就懂。没有反馈记not_run；已经取得的具体核心误解仍须进入缺陷与修复记录。反馈仅用于改进，不产生固定人数、分数、抽样频次或总体理解率门槛。已有 cold_view 记录按兼容格式读取；若保留评分，每人的 total 须与真实分项一致，共同误解摘要由原答支持，不能虚构统计。",
           "lines": [
-            127,
-            127
+            143,
+            143
           ],
           "quote_sha256": "c26a87970cef60b96f1f5c7592caa2f487a084e661e4fde3f272646820185d90"
         }
@@ -39513,8 +39593,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "所有制作类R/N/B均由制作端完成这一闭环：解释目标→必要前提→关系结构→难点表达→有声草排→内部审查→修订与精制作。审查意见指向具体缺口及作品时点，例如未交代成立条件、关系只写在说明而未进入画面、转视角后参照断裂。已知核心误解必须修复后实审。真实观众反馈是可选的后续优化信息；记录在 qa.comprehension.optional_audience_feedback，缺失不阻塞制作、最终质量或标杆判定。取得外部反馈仍须遵守现有分享权限，保存真实原答及样本范围，不以招募或实时反馈作为制作前提，不虚构、不将模型模拟当真人。",
           "lines": [
-            107,
-            107
+            123,
+            123
           ],
           "quote_sha256": "736f16c83f9d6d466134ff17a64c7e01e84d2a7eb2552b9f52ae4754ffd9a884"
         },
@@ -39523,8 +39603,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "可选观众反馈按事先声明的研究范围、实际轮次、当前媒体版本、匿名真实参与者、原答及观察记录保存；不把额外轮次混作同一组，不抹去已知误解。若选择测试协议，先记录适用目标、样本与判据，保留完整原答、版本和结果，不挑成功者重写历史；协议仅适用于该次可选研究，不成为所有视频的默认门槛。只有未看过制作稿、未被告知预期答案的实际观看者才可记录新观众首次理解反馈；分别记录其具体回答、问题与原因、第一处困惑，不先解释答案再称第一次就懂。没有反馈记not_run；已经取得的具体核心误解仍须进入缺陷与修复记录。反馈仅用于改进，不产生固定人数、分数、抽样频次或总体理解率门槛。已有 cold_view 记录按兼容格式读取；若保留评分，每人的 total 须与真实分项一致，共同误解摘要由原答支持，不能虚构统计。",
           "lines": [
-            127,
-            127
+            143,
+            143
           ],
           "quote_sha256": "c26a87970cef60b96f1f5c7592caa2f487a084e661e4fde3f272646820185d90"
         }
@@ -39541,8 +39621,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "正式顺序：正常速完整带声首看记首次卡点→针对性复看→静音检查机制/文字定位→耳机与手机外放完整听检。实际审查范围、设备、是否含音频与感知限制都留记录。P0是科学核心/权利标识/错版本/忽略否定/严重观看风险，停止发布路径；P1是因果不通、关键机制PPT替代、字幕遮挡、声音遮解释或混搭，不发布；P2为不损理解的局部修饰，累计压低维度仍返工。缺陷固定“版本时点—观察—解释影响—责任/修改—复查证据”，不靠改严重度绕门槛。",
           "lines": [
-            109,
-            109
+            125,
+            125
           ],
           "quote_sha256": "846e6921670e29c2e428f26640a0f80d672709d5262f248fe18dea8ad2a7bbe3"
         }
@@ -39559,8 +39639,8 @@
           "anchor": "失败后的处理",
           "quote": "仅改规则、改QA字段或通过代码测试都不会自动解除冻结。已认可且与新稿匹配的音轨尽量保留，重新检查其声画/字幕配合，避免无谓重生成。已发布内容不自动修改/删除；需另有明确授权。规则测试只检验流程或程序约束，不证明成片达到质量标准。",
           "lines": [
-            87,
-            87
+            103,
+            103
           ],
           "quote_sha256": "474488f20a2a9975623b9c652bec3e57aa8f9448f40ee60be942ad4bacad8880"
         }
@@ -39624,17 +39704,17 @@
     {
       "id": "H-h-failure-167",
       "kind": "existing_asset_rights_record_relationship",
-      "failure_condition": "- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；需要的屏幕标签和署名",
+      "failure_condition": "- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置",
       "clauses": [
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；需要的屏幕标签和署名",
+          "quote": "- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置",
           "lines": [
             22,
             22
           ],
-          "quote_sha256": "006b4c8d1059a3bf6a838598167e07a0b4c3e812eef673b8ed220676bd62bd76"
+          "quote_sha256": "65be41166ae97fa29ec4a6cc1c73069ccfcc4901cf8fffe896a500b20f6e6675"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -39678,17 +39758,17 @@
     {
       "id": "H-h-failure-174",
       "kind": "concrete_existing_failure_or_boundary",
-      "failure_condition": "用观众看得懂的话写本片事实：哪些镜头真实拍摄/观测，哪些是解释图解或模拟，是否使用 AI，哪些处理会改变理解。再列科学依据与素材署名/许可摘要；具体素材对应关系留在单集台账。",
+      "failure_condition": "制作声明及科学依据、素材署名/许可摘要默认放配套资料，署名和披露仍按具体许可、授权及平台规则核定的位置落实；具体素材对应关系留在单集台账。用观众看得懂的话写本片事实：哪些镜头真实拍摄/观测，哪些是解释图解或模拟，是否使用 AI，哪些处理会改变理解。台账和声明中的文字不自动成为画面文案。",
       "clauses": [
         {
           "file": "references/science-and-rights.md",
           "anchor": "制作声明的最小内容",
-          "quote": "用观众看得懂的话写本片事实：哪些镜头真实拍摄/观测，哪些是解释图解或模拟，是否使用 AI，哪些处理会改变理解。再列科学依据与素材署名/许可摘要；具体素材对应关系留在单集台账。",
+          "quote": "制作声明及科学依据、素材署名/许可摘要默认放配套资料，署名和披露仍按具体许可、授权及平台规则核定的位置落实；具体素材对应关系留在单集台账。用观众看得懂的话写本片事实：哪些镜头真实拍摄/观测，哪些是解释图解或模拟，是否使用 AI，哪些处理会改变理解。台账和声明中的文字不自动成为画面文案。",
           "lines": [
             42,
             42
           ],
-          "quote_sha256": "ddf365abfc768efa7281272432197a448473ee1f943be4d5bd62c9ce860a52e1"
+          "quote_sha256": "b101ba2c4ee17722e96f3a13eb949f49722896a7980aa478c7280c875fdf198b"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -39739,8 +39819,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "每片保存可恢复的简报、来源、脚本、分镜、设计/资产、原声/混音分轨、事件时码、字幕、样片/候选/发布版、审查、授权/平台回执与反馈。目录可适配现项目，信息不能漏。命名含集/剪辑/音轨/画幅版本，不用final_final_latest；字幕、封面、文案独立hash。改稿使事实/理解/旁白/字幕/相关镜头失效，改音轨使听检/同步/完整片失效，改布局使视觉/字幕/平台失效，改封面文案使包装和相关授权失效。视频任何字节变动需重新绑定并重审相关最终项目。",
           "lines": [
-            84,
-            84
+            86,
+            86
           ],
           "quote_sha256": "cb7516288ee19a1dd1169f2c738951e21c309fa737b3e25bd9f203a47b30774d"
         }
@@ -39757,8 +39837,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "每片保存可恢复的简报、来源、脚本、分镜、设计/资产、原声/混音分轨、事件时码、字幕、样片/候选/发布版、审查、授权/平台回执与反馈。目录可适配现项目，信息不能漏。命名含集/剪辑/音轨/画幅版本，不用final_final_latest；字幕、封面、文案独立hash。改稿使事实/理解/旁白/字幕/相关镜头失效，改音轨使听检/同步/完整片失效，改布局使视觉/字幕/平台失效，改封面文案使包装和相关授权失效。视频任何字节变动需重新绑定并重审相关最终项目。",
           "lines": [
-            84,
-            84
+            86,
+            86
           ],
           "quote_sha256": "cb7516288ee19a1dd1169f2c738951e21c309fa737b3e25bd9f203a47b30774d"
         }
@@ -39793,8 +39873,8 @@
           "anchor": "记录与技术检查",
           "quote": "- 实际审完才将对应项写 `pass`，三份交付媒体SHA-256记 `qa.reviewed_sha256`；媒体、音轨、素材、镜头或文案改变后重审相应项目，不能只刷新哈希沿用旧结论",
           "lines": [
-            69,
-            69
+            85,
+            85
           ],
           "quote_sha256": "629f67367d6c56432f51565fc30a408af71baf5c838c317e618a56e715be242b"
         }
@@ -39811,8 +39891,8 @@
           "anchor": "实施参考的用途",
           "quote": "当前系列同步例外在series-profile.operations.platform_sync配置：按既有安排保留观察到的同步设置，不独立核附属平台结果，未核不算成功且不作为主平台阻塞。该项目例外不自动推广到其他项目，也不授权改变同步或新增发布。",
           "lines": [
-            165,
-            165
+            169,
+            169
           ],
           "quote_sha256": "23c1e36bce2c380a434934deba118fd958be27da162d659bb87a4adc97e59e36"
         }
@@ -39829,8 +39909,8 @@
           "anchor": "产能成本与复盘",
           "quote": "每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。",
           "lines": [
-            138,
-            138
+            142,
+            142
           ],
           "quote_sha256": "bace027099f9b420b6529dc5ed8392687fbe134bcc0e820f7cb053b9731a135f"
         }
@@ -39847,8 +39927,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "系统建成须同时有一条完整通过的标杆、三条不同机制可复制成片、版本/来源/发布读回可追溯、缺陷能追到责任工序、实测成本与容量。缺一项就写具体未完成；规范写入、测试全绿不代这些媒体成果。每轮交付列当前版本、实际新增产物、已验/未验/失败、下一个可独立执行事项。",
           "lines": [
-            148,
-            148
+            152,
+            152
           ],
           "quote_sha256": "fdd4fdbd6c80589981bbf14d6d813c1c07a1755fd55a079e7a096aeb6623330e"
         }
@@ -39865,8 +39945,8 @@
           "anchor": "产能成本与复盘",
           "quote": "采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。",
           "lines": [
-            140,
-            140
+            144,
+            144
           ],
           "quote_sha256": "b99229480ae0b5870d59b4bddb1d39d3a9732580eea6859e4f25e7858cd381a4"
         }
@@ -39883,8 +39963,8 @@
           "anchor": "产能成本与复盘",
           "quote": "采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。",
           "lines": [
-            140,
-            140
+            144,
+            144
           ],
           "quote_sha256": "b99229480ae0b5870d59b4bddb1d39d3a9732580eea6859e4f25e7858cd381a4"
         }
@@ -39901,8 +39981,8 @@
           "anchor": "产能成本与复盘",
           "quote": "每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。",
           "lines": [
-            138,
-            138
+            142,
+            142
           ],
           "quote_sha256": "bace027099f9b420b6529dc5ed8392687fbe134bcc0e820f7cb053b9731a135f"
         }
@@ -39919,8 +39999,8 @@
           "anchor": "产能成本与复盘",
           "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
           "lines": [
-            142,
-            142
+            146,
+            146
           ],
           "quote_sha256": "b43c09cad6dfbb925eebb7f86ce760c28254dcddf5b1ba72739f1ae18b0d65ec"
         }
@@ -39937,8 +40017,8 @@
           "anchor": "产能成本与复盘",
           "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
           "lines": [
-            142,
-            142
+            146,
+            146
           ],
           "quote_sha256": "b43c09cad6dfbb925eebb7f86ce760c28254dcddf5b1ba72739f1ae18b0d65ec"
         }
@@ -39955,8 +40035,8 @@
           "anchor": "实施参考的用途",
           "quote": "规则回归的version_change分别记录拟变更的from_version与to_version，可在proposed阶段填写；actual_commit仅在真实提交成功后记录，二者不得互相代填。",
           "lines": [
-            173,
-            173
+            177,
+            177
           ],
           "quote_sha256": "b4af88e620650f39825b399d2627961fd65e6c20ddc583e987e05450dbb4311f"
         }
@@ -39973,8 +40053,8 @@
           "anchor": "失败后的处理",
           "quote": "3. 规则须写清可观察行为、所需证据和失败后退回阶段。按变更风险做回归与独立审查；发布授权另按当前范围履行，公开内容仅含通用规则/测试，不带用户聊天、私有身份或媒体。",
           "lines": [
-            84,
-            84
+            100,
+            100
           ],
           "quote_sha256": "7ffd8a9b01b94caef17de2073bdb16393b2ae6dae26f5b45a9dc19c554335c2c"
         }
@@ -39991,8 +40071,8 @@
           "anchor": "实施参考的用途",
           "quote": "已有可用渲染器先保持，不同时迁移主渲染器、声音模型与美术体系。每轮规则迭代分别记录文档、技术、连续代表段、完整成片四层回归；静态/动态/失败/声音/字幕/全片标杆参考集由项目私有证据维护，有固定版本、范围和实际批准才使用。",
           "lines": [
-            163,
-            163
+            167,
+            167
           ],
           "quote_sha256": "d8f4cd7310f00c9a39d521d2baab455d38695f3c2eed6154795d787852aae200"
         }
@@ -40009,8 +40089,8 @@
           "anchor": "失败后的处理",
           "quote": "4. 在本片修复及下一条适用视频中实际检查该项，记录规则版本、媒体版本、连续片段/时间点和结果。对本轮反馈与受影响镜头逐项说明已修复、仍适用而保留的依据及尚未处理/未验项，证据按 [记录与技术检查](#记录与技术检查) 绑定本次实际最终导出与所审声画版本。交完整新版本时，复查修复段、依赖镜头和接缝，并按整片要求从头到尾实际看听；不能用代表段通过、文件已替换或旧通过记录覆盖未处理的同类缺陷。后片未产出或未看听时保持待验证，不能把Skill更新或旧样片通过当成已改进后续作品。",
           "lines": [
-            85,
-            85
+            101,
+            101
           ],
           "quote_sha256": "1ed462ec3d25559744a74ee0b6207039b723961ebf9f9082709544839042ea1d"
         }
@@ -40027,8 +40107,8 @@
           "anchor": "实施参考的用途",
           "quote": "- [Remotion Skills](https://www.remotion.dev/docs/ai/skills)与[许可说明](https://www.remotion.dev/docs/license/faq)：实现参考与按主体核许可，不自动安装或认定商业资格",
           "lines": [
-            159,
-            159
+            163,
+            163
           ],
           "quote_sha256": "e1db5276e5efab3a4f3b94d3c67921decc20e66e89f07b53aef9b7cada0dbf6a"
         }
@@ -40045,8 +40125,8 @@
           "anchor": "失败后的处理",
           "quote": "1. 在私有项目记录绑定原反馈、受影响版本/时段和实际导出。先区分内容、转镜、动画、解说、声音或布局问题；范围不明只澄清必要歧义，不把局部否定扩大到其他已认可作品。截图/时码先作缺陷定位，除用户明确限定检查范围外，在当前受影响整片从头到尾排查同一缺陷机制及依赖关系，不只检查被点名的一帧。沿用现有分镜与QA缺陷记录，列实际扫描范围、受影响镜头/时段、需改项、保留项及依据、未验项；共同根因未核实仍记待查。全片排查不等于重画所有镜头，改动范围遵循 [当前任务与委托范围](production-checkpoints.md#3-阶段推进与代表样)，不能把实施方便当作保留已知缺陷的依据。",
           "lines": [
-            82,
-            82
+            98,
+            98
           ],
           "quote_sha256": "b4e7b7ea9e35261cb6a7ff6d1e51963d141be68b55a77caf429a82cc80102bf4"
         }
@@ -40063,8 +40143,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "先冻结标准和可用资产/声音，新风格探索再以同一事实链做两方案三尺度图与连续有声代表段，已有明确认可方向则复用其绑定范围而不强制重选两案；通过后做完整标杆及内部解释/表达审查与实际平台验证；真实反馈仅可选，再以三种不同且未取消的机制验证复制，记录工时与返工，最后据实排产扩库。素材库/设计包完成、视觉体系验证、生产系统建成分开报告。",
           "lines": [
-            146,
-            146
+            150,
+            150
           ],
           "quote_sha256": "17f5a8923d701e235aede01fb517fad92242e27f9e98888fde988c8a08bc216a"
         }
@@ -40081,8 +40161,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G4 | 当前整片、音轨分轨、字幕、可编辑工程、来源与资产版本清单 | 正式整片验收 | 对应工序 |",
           "lines": [
-            117,
-            117
+            119,
+            119
           ],
           "quote_sha256": "3fe9ab245576cc86ba1375330af1359df4b7a66cea24c1df3170ae00ad633149"
         }
@@ -40099,8 +40179,8 @@
           "anchor": "实施参考的用途",
           "quote": "- [Ordinary Folk流程](https://www.ordinaryfolk.co/process)：脚本、设计、动画和声音工序",
           "lines": [
-            157,
-            157
+            161,
+            161
           ],
           "quote_sha256": "1487f1af21a08fb1b50b8f95f1341d6f69f9595f002a082d1754f79d61d1649e"
         }
@@ -40117,8 +40197,8 @@
           "anchor": "实施参考的用途",
           "quote": "- [FFmpeg loudnorm](https://ffmpeg.org/ffmpeg-filters.html#loudnorm)与[ffprobe](https://www.ffmpeg.org/ffprobe.html)：测量/媒体信息能力，不为内部响度起点背书",
           "lines": [
-            160,
-            160
+            164,
+            164
           ],
           "quote_sha256": "093dd20fd1382b612be48f58a2384753adbe2b4556e82783ac28c0431b510fb9"
         }
@@ -40207,8 +40287,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "D不是可静默省略的要求：按起点实施，改变时记录样片、理由和校准证据；H未知或失败不能用分数抵扣。设计素材是参考，不能按候选文件自带状态认定生产批准；系列具体风格/字幕/已认可声音以现行配置优先。",
           "lines": [
-            108,
-            108
+            110,
+            110
           ],
           "quote_sha256": "0502ab33f532cc3e741c749168f419995c329f5e50042d888d9d0700c70444c1"
         }
@@ -40297,8 +40377,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "对比度记录实际前景/动态背板、未舍入比值、软件/测量证据与最坏画面复核；低于内部起点必须有实际校准依据，数字不证明可读性。",
           "lines": [
-            123,
-            123
+            139,
+            139
           ],
           "quote_sha256": "be4e22ec66d059e829901ce57a3ef9882ddc18f4ebb6574ac3bfde1e36322c38"
         }
@@ -40451,8 +40531,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "字幕正文以正式稿校对，错字及漏否定/限定词是硬伤。字幕空段/重叠/越界与事件偏差可做静态检查，最终仍须实际手机/平台及连续观看。",
           "lines": [
-            117,
-            117
+            133,
+            133
           ],
           "quote_sha256": "2cccbe671918f9f8cee26535e3516f841ea3a08d569038f5b2cdad931c0d86dc"
         }
@@ -40462,17 +40542,17 @@
     {
       "id": "V-text_redundancy_failure",
       "kind": "existing_clause_or_required_record_relationship",
-      "failure_condition": "可删不损理解的标签/镜头描述、自证或重复正文仍在；遗漏必要主题、字幕、对象/机制解释或强制披露；只查脚本或词黑名单即签收",
+      "failure_condition": "无当前观众用途或画面位置依据的制作说明、标签/镜头描述、自证或重复正文仍在，借“必要披露”保留；遗漏必要主题、字幕、对象/机制解释，或义务未在正确位置落实；只查脚本或词黑名单即签收",
       "clauses": [
         {
           "file": "references/quality-acceptance.md",
           "anchor": "可检查项目",
-          "quote": "可删不损理解的标签/镜头描述、自证或重复正文仍在；遗漏必要主题、字幕、对象/机制解释或强制披露；只查脚本或词黑名单即签收",
+          "quote": "无当前观众用途或画面位置依据的制作说明、标签/镜头描述、自证或重复正文仍在，借“必要披露”保留；遗漏必要主题、字幕、对象/机制解释，或义务未在正确位置落实；只查脚本或词黑名单即签收",
           "lines": [
             29,
             29
           ],
-          "quote_sha256": "abca9dc66d3e320be91b4d04fd996e076c6c11a0159254d636c689f23f235a4a"
+          "quote_sha256": "d94960996e46e5ddd75c128dd282daec7869cbb1db8192b999218538d399a5ff"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -40541,8 +40621,8 @@
           "anchor": "6-从导出到实际平台完成检查",
           "quote": "记录预览来源：实际手机/平台发布页预览/本地播放器，以及导出版本、最终文案和关键时间点截图。浏览器中的手机样式预览不能称为实机；被截图裁去画幅边界时不能反推完整 9:16 坐标。没有实机条件就写未做实机检查。",
           "lines": [
-            84,
-            84
+            86,
+            86
           ],
           "quote_sha256": "2aa953a8d60caf36cecea237826cca88aba2f43d3bd69e7da3d90c33918ec7a0"
         }
@@ -40559,8 +40639,8 @@
           "anchor": "6-从导出到实际平台完成检查",
           "quote": "发现关键字幕、单位、标签或主体被挡住时，做最小布局调整，重新导出并在同一最终文案/界面下复查，不能沿用旧通过记录。改视频、标题、简介、账号或相关展示方式后重查。没有平台访问或授权时可交待平台检查版，不能宣称已完成平台适配，更不能自行发布。",
           "lines": [
-            86,
-            86
+            88,
+            88
           ],
           "quote_sha256": "07d662542437596735cd6b262ab6d01199391e09fe93c43b75c5d7576e6e0f5e"
         }
@@ -40698,17 +40778,17 @@
     {
       "id": "V-single_attention",
       "kind": "existing_clause_or_required_record_relationship",
-      "failure_condition": "先用当前成品级解说划分语义拍，再排镜头，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
+      "failure_condition": "以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
       "clauses": [
         {
           "file": "references/shotbook.md",
           "anchor": "音频先行但不牺牲画面",
-          "quote": "先用当前成品级解说划分语义拍，再排镜头，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
+          "quote": "以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
           "lines": [
             7,
             7
           ],
-          "quote_sha256": "530c2ec9a7c998e7f160f41fe5ecc9189a661d3dba18999e7d28b073415735c7"
+          "quote_sha256": "230e12fb6ca83455f239266de99a2a602b679a34d9c66423019f3f016643ebb5"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -40741,8 +40821,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "关键图另说明视角、注意中心、动作路径、字幕区和比例变化。",
           "lines": [
-            78,
-            78
+            80,
+            80
           ],
           "quote_sha256": "e83066624ab763282a293724884afbf6ced3f3a0ad9bd9421add7c91ff2fed3c"
         }
@@ -40759,8 +40839,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "实际过程类的动作卡八项落实在现有shotbook：对象/锚点、初态、触发、关键变化、终态、轨迹、快慢/观察停顿、观众学到什么；补物理条件、教学简化、关键姿态、口播事件和实际音轨hash。不同机制不套万能弹性曲线；路径、方向、约束、遮挡或观察条件变化可以是实质机制，不强求形变。",
           "lines": [
-            78,
-            78
+            80,
+            80
           ],
           "quote_sha256": "8e1d91d021fe5abe057a39473916449640af9f7e0220b94dfa57d599167815e6"
         }
@@ -40795,8 +40875,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "仅对本镜实际采用的类别填写 `shotbook.action_class`（去重列表）与 `action_class_details`（按类别键组织），复用已有对象、锚点、trigger/key_states/trajectory等字段，不要求每镜全填五类：",
           "lines": [
-            88,
-            88
+            90,
+            90
           ],
           "quote_sha256": "c224133b6321f097d5d6f7c9b5986fcb5ae63877c9eb01ffda09e704d37c014a"
         }
@@ -40813,8 +40893,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "- localization_and_label（定位与标签）：appearance_condition（出现条件）、follow_target（跟随目标）、hold_duration（停留）",
           "lines": [
-            89,
-            89
+            91,
+            91
           ],
           "quote_sha256": "67062aa879ade4578eda1101487fbbd5a96d413273c3e00d4f78381527f8e064"
         }
@@ -40831,8 +40911,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "- scale_transition（尺度切换）：original_object、spatial_anchor、local_frame（局部取景框及坐标基准）、return_location；明确同一对象进出关系",
           "lines": [
-            90,
-            90
+            92,
+            92
           ],
           "quote_sha256": "8d988b51053d41484369fc70d2dbef86af829d2d3ba6c7c40b1642bcdc18cb5e"
         }
@@ -40849,8 +40929,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "- deformation（对象形变）：topology_states（可对应的同拓扑关键态）、fixed_boundary、sliding_boundary、trajectory；逐机制设计，不把所有对象统一弹跳，也不为工具限制改变科学机制",
           "lines": [
-            91,
-            91
+            93,
+            93
           ],
           "quote_sha256": "c297239817886d73177a6f8b33d73fbd9b1a2128d25221fb967c13be2868796a"
         }
@@ -40867,8 +40947,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "- propagation_and_change（传播与变化）：cause、origin、direction、delay、end_state；解释动画与实拍一样，若作教学慢放，从第一次使用就清楚提示时间缩放，不等结尾补说明",
           "lines": [
-            92,
-            92
+            94,
+            94
           ],
           "quote_sha256": "9ae6e4acd876df1848bb8fb7be7520985abf3cc5646eeb35e9caa2d5bd11f129"
         }
@@ -40885,8 +40965,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "- observation（观察停顿）：learning_task与duration，实际停留由理解任务决定",
           "lines": [
-            93,
-            93
+            95,
+            95
           ],
           "quote_sha256": "a7d63f13028118f5933d44f0f6fe5de03d300cca61a966fbbcccc8065e38399a"
         }
@@ -40903,8 +40983,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "定位/标签、尺度切换、观察停顿等D时序见制作策略，按任务校准，不机械统一。语义事件实际音频时点与画面时点差超过150ms先标复核警告；提前预备/反应镜头写理由并实际看，不自动判错或自动忽略。",
           "lines": [
-            82,
-            82
+            84,
+            84
           ],
           "quote_sha256": "815d4385278f8e132d7ac8b1d737e65a26666328d21d6cfc642ebc35897f88c2"
         }
@@ -40921,8 +41001,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "`timing_basis.mode`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；正式动作方案还记录note说明其语义依据；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。",
           "lines": [
-            95,
-            95
+            97,
+            97
           ],
           "quote_sha256": "3710bd427fa353bb0a062e1ce06f816e2a44696198fc5ab7817ae9917abe8db1"
         }
@@ -40939,8 +41019,8 @@
           "anchor": "实施参考的用途",
           "quote": "已有可用渲染器先保持，不同时迁移主渲染器、声音模型与美术体系。",
           "lines": [
-            163,
-            163
+            167,
+            167
           ],
           "quote_sha256": "cafef178e825b24181ef306e032df6f0110f182d0247edf416b3881c5d77c175"
         }
@@ -40975,8 +41055,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "无声网页演示/相对时间只是候选，不能抵G3，也不能预填未生成音轨的绝对时码。",
           "lines": [
-            80,
-            80
+            82,
+            82
           ],
           "quote_sha256": "1fc7207e6d73359118ea129b3166cfd5e39bef61d755e162f6ff90cf65a57c25"
         }
@@ -40993,8 +41073,8 @@
           "anchor": "审片者与观看安全",
           "quote": "帧率、几张抽帧或平均亮度不能证明全段无风险，警告文字也不代替修复。疑似风险未排除、缺相应连续检查或检测能力时保持该项未验，不签“观看安全”；需要专门评估时报告限制，不能作医学安全保证。",
           "lines": [
-            49,
-            49
+            65,
+            65
           ],
           "quote_sha256": "77fe718519b426672a7aa7619ca7d109ecfb582654ac66e26cd2d2a90d1c5511"
         }
@@ -41011,8 +41091,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "闪烁采用项目保守设计上限：不设计任意1秒内超过3次闪烁，避免大面积高对比反复闪白/红闪；复杂片段另审。低于次数仍非普适安全证明。",
           "lines": [
-            117,
-            117
+            133,
+            133
           ],
           "quote_sha256": "1e14a128a1cff323715fc87477886d3b8b7c0734e6579610e6295a751ae9a119"
         }
@@ -41029,8 +41109,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "复用配方记录问题类型、条件、镜头骨架、资产、动作卡、口播事件、科学风险与正反例：整体→局部→整体需同一对象回程；前态→触发→后态保留中间变化；同条件对照只改有关变量；传播→响应核起因/方向/延迟，波前不冒作物质飞出；剖面先建立外形和剖切关系再恢复整体。",
           "lines": [
-            80,
-            80
+            82,
+            82
           ],
           "quote_sha256": "b30f80e98352b3dd4be181349d290c498570485289ab21f3bb34559e84950228"
         }
@@ -41137,8 +41217,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "实际依赖统一按资产ID解析：design.font_asset_id和design.render_asset_ids是代表段及成片共用依赖，逐镜asset_ids保留该镜范围，deliverable_asset_ids按产物记录列表。代表段连同其字幕与三尺度设计实际依赖参与权利检查及版本绑定；未使用的后续素材不使当前代表段过期。所有依赖必须类型正确且能解析，不能将非法字段当空列表略过。",
           "lines": [
-            103,
-            103
+            105,
+            105
           ],
           "quote_sha256": "c64727f79b1db7fd38dbc9d585a3a5e04b97c0e88542cd535eec367a7d8dd5cd"
         }
@@ -41173,8 +41253,8 @@
           "anchor": "从小样到整片的证据",
           "quote": "小样未验或失败不得放行整片/整批，修复后重验对应连续段；小样通过也不代替整片验收。记录认可的媒体版本、片段和维度：局部连贯只证明该段连续可追踪，不能证明整期首次观看能理解原问题；拼接扩展后重新从开场到结尾检查信息优先级、前提与答案，不能把局部修复段自动当整片教学骨架。",
           "lines": [
-            53,
-            53
+            69,
+            69
           ],
           "quote_sha256": "37d9d6e05064055b5a396d5a131819fffafdddc86e18828d592af905ada4e258"
         }
@@ -41191,8 +41271,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "`qa.gates.G1` 至 `G7` 仅引用现有QA记录，不另造平行审批。状态为 `not_reviewed`、`needs_changes`、`passed`；取消为 `cancelled`。每个通过含实际审查者、时间、范围、证据文件及哈希、所引用QA与对应上下文摘要。没过的前置不能从后关倒填通过。G2允许低精细度，关键状态/整期范围不能缺；`plan` 检查通过允许范围明确的草排待审交付，不代表G2通过。先探索风格可并行，G2/G3未过不批量精制作。G3返工可以保留整片失败状态，不能拿局部通过清掉它。",
           "lines": [
-            122,
-            122
+            124,
+            124
           ],
           "quote_sha256": "d3bc1e7cc6efddc07c322ac845b09f6a7ad30f6dd1690e4019daf68e0b3e18a0"
         }
@@ -41209,8 +41289,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "执行者在进入精制作前保存G2检查回执，在G3扩制前保存G3回执，在完整候选交验前保存G4回执、实际质量审查后记录G5回执，在提交发布前保存delivery（含G6）回执，发布后再核G7。检查失败或缺回执必须停在相应关；不能绕过检查器直接调用渲染/发布后补通过。脚本本身不劫持外部渲染器或平台，执行责任人和独立审查要核真实调用/回执与产物版本。",
           "lines": [
-            150,
-            150
+            154,
+            154
           ],
           "quote_sha256": "c5145be879796b6e98cd96868de832f48132f1904094324bcd56aa4778056304"
         }
@@ -41227,8 +41307,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G1 | 选题六项、事实卡、全部必答范围的解释结构、必要前提、难点定位、禁画清单及科学/逻辑内审 | 正式脚本/分镜 | 缩题/研究 |",
           "lines": [
-            114,
-            114
+            116,
+            116
           ],
           "quote_sha256": "f86c8ed81d74610c6acdd55f6ac5fb534bba533f6a3f2f0f668a2604fcc64c99"
         }
@@ -41238,17 +41318,17 @@
     {
       "id": "V-g2_outputs",
       "kind": "existing_clause_or_required_record_relationship",
-      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+      "failure_condition": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
       "clauses": [
         {
           "file": "references/production-checkpoints.md",
           "anchor": "g1g7-的实际推进记录",
-          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听 | 成品美术/动作验证 | 脚本/镜头顺序 |",
+          "quote": "| G2 | 经核脚本、难点表达方案内审、真实工作音轨、整期声画表及完整有声草排；正常速完整看听并逐个审查相邻镜承接 | 成品美术/动作验证 | 脚本/镜头顺序 |",
           "lines": [
-            115,
-            115
+            117,
+            117
           ],
-          "quote_sha256": "d40c2d5d4b4b73353e95214d3a98dc08ef420973a38a855107ad3e681f16a280"
+          "quote_sha256": "f3a8d107df289820f4747579d20785b7eddc11990a26f357ff596949fc571499"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -41263,8 +41343,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G3 | 整景/中景/机制三尺度美术图与最终造型、真实音轨、正式字幕的连续代表动态 | 仅已验范围的同体系扩制 | 美术/动作 |",
           "lines": [
-            116,
-            116
+            118,
+            118
           ],
           "quote_sha256": "34f342ff62328009876c6e82f02e15bccc0bdad13bd1352edd60fee3db8e6ec1"
         }
@@ -41281,8 +41361,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G4 | 当前整片、音轨分轨、字幕、可编辑工程、来源与资产版本清单 | 正式整片验收 | 对应工序 |",
           "lines": [
-            117,
-            117
+            119,
+            119
           ],
           "quote_sha256": "3fe9ab245576cc86ba1375330af1359df4b7a66cea24c1df3170ae00ad633149"
         }
@@ -41299,8 +41379,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G5 | 当前完整版本的科学、解释与表达独立内审、L3精美程度、声音、字幕、技术及观看舒适审查 | 提请或使用已获具体版本批准 | 对应工序 |",
           "lines": [
-            118,
-            118
+            120,
+            120
           ],
           "quote_sha256": "0ac2abfd2b3c49cef5ad4e41c89010863f56ed138cc277b3ede5139cec6a382a"
         }
@@ -41317,8 +41397,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G6 | 锁定发布包、实际平台预览、权利/标识及覆盖该包的授权 | 指定平台提交 | 发布包/适配 |",
           "lines": [
-            119,
-            119
+            121,
+            121
           ],
           "quote_sha256": "cf529ea6d3153db8afb5a430fecd16f5d7fb6dd66daecf65383ff6050b83db54"
         }
@@ -41335,8 +41415,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G7 | 实际作品ID/链接、发布时间、平台状态与内容匹配读回 | 计入唯一实际发布/复盘 | 未知先查重，失败修复 |",
           "lines": [
-            120,
-            120
+            122,
+            122
           ],
           "quote_sha256": "82e9a4a5d7acacd3e3ffc699a973c1ea82f55db7d631c437eaa83e5c6a334077"
         }
@@ -41353,8 +41433,8 @@
           "anchor": "交付包与发布回执",
           "quote": "上传、定时、公开发布前，核已有具体授权覆盖账号、内容版本和动作；已有批准不反复问，范围/风险变化另按当前权限处理。交付或采用本Skill不等于发布授权。仅实际发布成功状态、作品ID/链接或平台回执才能记已发布；审核中、草稿、定时、失败和结果未知分别记录。未知先查重/回读，不能盲目重发；失败不自动改账号、付费或公开到其他位置。已发或被取消/禁止内容不因规则更新重新投放。平台实测缺条件时可交待平台检查版，不宣称已适配。",
           "lines": [
-            94,
-            94
+            96,
+            96
           ],
           "quote_sha256": "b3f44ea05eedf5438f16c12cf2ed4c89152cbb9d636598c50e6900f84be85101"
         }
@@ -41391,8 +41471,8 @@
           "anchor": "运行记录与音轨绑定",
           "quote": "已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。",
           "lines": [
-            45,
-            45
+            55,
+            55
           ],
           "quote_sha256": "43f8b840e4e5eb31ea2d992d012a8ea231b953e12ff60c2ec08c97ca5756958b"
         }
@@ -41417,20 +41497,20 @@
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
-          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。将实际记录以 narration.generation_record={file,sha256} 绑定到单集，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
+          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
           "lines": [
-            41,
-            41
+            51,
+            51
           ],
-          "quote_sha256": "6f735a07a01214ec6b7694eb551c6c0d5ae5a852037297717f7c4feac6e62e75"
+          "quote_sha256": "44255fd66cd4c074dacbb65e6be56a9e94a4ce98845425ec3b0609db58b2dea7"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
           "quote": "已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。",
           "lines": [
-            45,
-            45
+            55,
+            55
           ],
           "quote_sha256": "43f8b840e4e5eb31ea2d992d012a8ea231b953e12ff60c2ec08c97ca5756958b"
         }
@@ -41447,8 +41527,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "加权总分按分数÷5×权重求和。常规85且前四项≥4、包装≥3；标杆90且各项≥4是内部起始门槛，按真实样片校准，不能称行业客观线。科学/权利、明确否定、完整实际视听、平台可见性、版本授权、必要声明等H任何失败或未知，100分也不放行。此前“不可用自评分自动放行”仍成立，但不能据此省略已采用的评分记录。",
           "lines": [
-            101,
-            101
+            117,
+            117
           ],
           "quote_sha256": "df01a617dba903943ded8c727da11051c063e067d46f75cfb61b567f71ec6a33"
         }
@@ -41465,8 +41545,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "按 [制作策略](../config/production-policy.json) 记录五维评分，各0–5，可半分：未验用null并另记pending；0已确认缺失，1重大错误或严重不可用，2明显阻碍，3可用但粗糙，4完整成熟，5可作标杆。每项附当前版本的具体时点/证据，不能只填数字。",
           "lines": [
-            91,
-            91
+            107,
+            107
           ],
           "quote_sha256": "973b8f2f7442a2220f9deb688f8b48ec61b0fe4c4e0376c7401e976e4c429224"
         }
@@ -41483,8 +41563,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "评分阈值校准在 `qa.scorecard.calibration` 保存实际依据文件/哈希、审查者、理由、适用范围及对应总分/分项起点；检查器可核校准记录完整性，不能证明新阈值有审美依据。五维含义、硬门槛、解释内审和明确否定不因此降低。没有校准证据时沿默认值，不能静默改总分或伪造测试。",
           "lines": [
-            119,
-            119
+            135,
+            135
           ],
           "quote_sha256": "96ad6fd30fe4507a8e52b0073fbb0d134da68dcae3563070a273c953281e6c39"
         }
@@ -41501,8 +41581,8 @@
           "anchor": "从小样到整片的证据",
           "quote": "全片仍须连续看/听，并复核每镜首中末、转场、运动极值与关键细节放大，不能只挑好看的静帧。最低记录为：导出版本/文件、镜号/时间点、检验项、参照定位、实际帧/片段、观察到的差距、退回/修复/复查结果。关键依据、画面或试听能力缺失就写“未验”。",
           "lines": [
-            55,
-            55
+            71,
+            71
           ],
           "quote_sha256": "530bf7d4e42a85516c515e4cf2f827c48bcf5dc0b2ad78d0789187dc50ab5bad"
         }
@@ -41519,8 +41599,8 @@
           "anchor": "审片者与观看安全",
           "quote": "每次审查记录实际审片者/角色、具备的看图/连续播放/听音能力、所审文件/时段与未覆盖部分。先按正常速度、不中途借制作说明补空地完整观看，再回放或逐帧定位；已看过稿件的编辑自审不写成陌生观众首看。独立任务身份不等于真人测试，也不等于具备实际音视频感知。",
           "lines": [
-            47,
-            47
+            63,
+            63
           ],
           "quote_sha256": "896c0cd80d1c6a2442b526d677dcac4b83f9c1cc8efb3c40d49eca2078d178bc"
         }
@@ -41537,8 +41617,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "在同一 `episode.json` 的 `brief.roles` 指定制片/主编、科学编辑、编导、美术动画、声音字幕、审片、发布负责人。一人可兼岗，工时合并；作者自查和独立审片使用不同任务上下文，模型数量不是真人数量。制片对最终版本负责，不能把技术诊断或普通修复转嫁用户。仅在真正缺少风格选择、重大题材决策或当前规则要求的批准时请求决定，既有授权不重复索取。",
           "lines": [
-            110,
-            110
+            112,
+            112
           ],
           "quote_sha256": "f7bdf327568e412d9d3e4ba412883aa1fdb7a6639677f33f7a1ad55812e5c406"
         }
@@ -41555,8 +41635,8 @@
           "anchor": "实施参考的用途",
           "quote": "每个统计周期在项目台账asset_reuse中关联asset_id@version、实际复用单集、成功/失败适用性、返工原因/工时变化和证据。没有数据保持未测，不把文件复用次数当有效复用或自动宣称节省工时；不因此新增监控。",
           "lines": [
-            167,
-            167
+            171,
+            171
           ],
           "quote_sha256": "ef55759f901cee602565bd4ad24608244eeaa361fa0dc07b7b8c5d30546781c4"
         }
@@ -41573,8 +41653,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "系统建成须同时有一条完整通过的标杆、三条不同机制可复制成片、版本/来源/发布读回可追溯、缺陷能追到责任工序、实测成本与容量。缺一项就写具体未完成；规范写入、测试全绿不代这些媒体成果。每轮交付列当前版本、实际新增产物、已验/未验/失败、下一个可独立执行事项。",
           "lines": [
-            148,
-            148
+            152,
+            152
           ],
           "quote_sha256": "fdd4fdbd6c80589981bbf14d6d813c1c07a1755fd55a079e7a096aeb6623330e"
         }
@@ -41591,8 +41671,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "先冻结标准和可用资产/声音，新风格探索再以同一事实链做两方案三尺度图与连续有声代表段，已有明确认可方向则复用其绑定范围而不强制重选两案；通过后做完整标杆及内部解释/表达审查与实际平台验证；真实反馈仅可选，再以三种不同且未取消的机制验证复制，记录工时与返工，最后据实排产扩库。素材库/设计包完成、视觉体系验证、生产系统建成分开报告。",
           "lines": [
-            146,
-            146
+            150,
+            150
           ],
           "quote_sha256": "17f5a8923d701e235aede01fb517fad92242e27f9e98888fde988c8a08bc216a"
         }
@@ -41609,8 +41689,8 @@
           "anchor": "产能成本与复盘",
           "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。",
           "lines": [
-            136,
-            136
+            140,
+            140
           ],
           "quote_sha256": "fd7488decfea603dae613266f6f610b41cc67269a1d0f79a83891d4fb7d1b03b"
         }
@@ -41627,8 +41707,8 @@
           "anchor": "产能成本与复盘",
           "quote": "每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。",
           "lines": [
-            138,
-            138
+            142,
+            142
           ],
           "quote_sha256": "bace027099f9b420b6529dc5ed8392687fbe134bcc0e820f7cb053b9731a135f"
         }
@@ -41645,8 +41725,8 @@
           "anchor": "产能成本与复盘",
           "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
           "lines": [
-            142,
-            142
+            146,
+            146
           ],
           "quote_sha256": "b43c09cad6dfbb925eebb7f86ce760c28254dcddf5b1ba72739f1ae18b0d65ec"
         }
@@ -41656,17 +41736,17 @@
     {
       "id": "V-rights_terms",
       "kind": "existing_clause_or_required_record_relationship",
-      "failure_condition": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
+      "failure_condition": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
       "clauses": [
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
+          "quote": "机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。",
           "lines": [
             26,
             26
           ],
-          "quote_sha256": "cd081c652084e93c8655a11a1dfe92d1f238702f82c6fab6149b3725ed9503c6"
+          "quote_sha256": "4d3bc68912ebecbb76a62d1757a71bc24f899d220af5e5dfaf8b6b5474dc57cd"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -41692,17 +41772,17 @@
     {
       "id": "V-rights_details",
       "kind": "existing_clause_or_required_record_relationship",
-      "failure_condition": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；需要的屏幕标签和署名",
+      "failure_condition": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置",
       "clauses": [
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；需要的屏幕标签和署名",
+          "quote": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置",
           "lines": [
             19,
             22
           ],
-          "quote_sha256": "468deb393b30b0344945747c554f36b2f11145f4add8c808926c4d2b093f349a"
+          "quote_sha256": "2a9089158c155deb38e01cbe5cbadcf4bc6aefa8e755839c4928c7293d34c8af"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -41771,8 +41851,8 @@
           "anchor": "记录与技术检查",
           "quote": "它不判断合法性、科学语义、自然声音或视觉美感，不检测所有照片伪视频，字段自报不能创造实际验收。",
           "lines": [
-            71,
-            71
+            87,
+            87
           ],
           "quote_sha256": "b8d1c640279eb946928ee7ba19b311480a72e20594f47f92aa3f3b889c7fc955"
         }
@@ -41807,8 +41887,8 @@
           "anchor": "实施参考的用途",
           "quote": "以下只支持相应方法，项目自定分数/产能不由外部来源背书，使用时核当前文档：",
           "lines": [
-            156,
-            156
+            160,
+            160
           ],
           "quote_sha256": "f49bfba879b2b333f8422f4e66ec48f28b27dc22605ec389c97a15b595d178a0"
         }
@@ -41825,8 +41905,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "导出默认格式/码率等D用制作策略并记实际偏差和依据；ffprobe记录实际帧率/恒定性、色彩信息、流和时长，解码检查损坏；源色彩标签不足以证明转换正确。所有版本由同一主工程导出，不下载已发片反复压制。可保留高质量无平台下载水印母版，不能移除必要AI/作者/许可标识。跨平台版独立核排版、字幕、标题、许可和预览；同步设置按项目既有指示核实，不擅改、不将未核同步说成功。",
           "lines": [
-            152,
-            152
+            156,
+            156
           ],
           "quote_sha256": "cb6ba109c464b28eaf68c4c63d21cfc4f0279bede147a6c3c4b885d428129e69"
         }
@@ -41841,20 +41921,20 @@
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
-          "quote": "裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。未形成连续来源链时不以旧生成记录证明当前文件。可试用的响度/编码起点见系列配置 `audio.postprocess_example`，先实测并试听，不把起点当通用响度标准，也不用处理或音乐掩盖生硬语调。",
+          "quote": "裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。单源后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。多源采用下述 `sources` 路径。未形成连续来源链时不以旧生成记录证明当前文件。可试用的响度/编码起点见系列配置 `audio.postprocess_example`，先实测并试听，不把起点当通用响度标准，也不用处理或音乐掩盖生硬语调。",
           "lines": [
-            43,
-            43
+            53,
+            53
           ],
-          "quote_sha256": "80886e5d6302d842d84fee64f68a11e1cf5209d8240db2d224b169cf5d315e65"
+          "quote_sha256": "09684e5c586eaf162999f6f731141a1a793e5aafa1b89a9cafd883e5c1be771f"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "源音轨与最终混音分别听验",
           "quote": "剪接、补录、改词、停顿或语速变化后，重新核实际时码、字幕、关键动作及当前完整混音。混音、语速与最终编码 D 起点见 [制作策略](../config/production-policy.json)；已有认可配置和匹配音轨优先，不为起点强制变声、变速或重生成。最终编码实测响度和峰值，不称平台官方要求，也不代听验。音轨存在、ASR、波形、响度和技术解码都不等于听过；未实际听验的项目保持待审，不用短样认可填 `qa.narration` 的整片通过。",
           "lines": [
-            55,
-            55
+            86,
+            86
           ],
           "quote_sha256": "3d49396fee3eb790c3ebd5983cce0c347b62f1bea6b88e0c073e12ba851b6f08"
         }
@@ -41871,8 +41951,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "最终混音在 `qa.audio.listening` 正常速度完整听当前导出，按 [制作策略](../config/production-policy.json) 完成耳机与手机外放检查，记录设备、区间和问题时码；缺哪项就哪项未验。平台另核关键段。核心术语错读、因果词吞漏、断句改义、拼接突变、持续底噪/失真和音乐遮解释均退回。配音、配乐、环境和音效分轨，人声优先，逐段/跨段核突刺、削波与突断；不用 whoosh 或警报掩盖问题，不每次切镜默认加音效，设计音效不冒充原声记录。",
           "lines": [
-            53,
-            53
+            84,
+            84
           ],
           "quote_sha256": "46da354227a932dfa2e19fe7e73d30672d642d44e220049f94461eafa9cb43ed"
         }
@@ -41889,8 +41969,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前阶段适用的责任章节、固定版本配置/tokens与实际资产清单，再登记本片引用；推进阶段时补读新增适用章节，不遗漏其约束。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。",
           "lines": [
-            99,
-            99
+            101,
+            101
           ],
           "quote_sha256": "215fde452543fd010c6103a6e12c726624b795e40ae6feff95a5adb3c13cfff6"
         }
@@ -41907,8 +41987,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。",
           "lines": [
-            97,
-            97
+            99,
+            99
           ],
           "quote_sha256": "027bda8f5b17b47866bd6d0612d99c59b331f35b9f7fe383471d882a7f262be5"
         }
@@ -41925,8 +42005,8 @@
           "anchor": "音频先行但不牺牲画面",
           "quote": "将当前解说文件 SHA-256 写入 `narration.audio_sha256`。换录音、裁剪、变速或重排后，重新听并对齐全部受影响语义拍；更新校验值不能代替重听。检查器只查时间及版本一致性，不会识别词义、判断听感，也不自动批准画面。",
           "lines": [
-            11,
-            11
+            13,
+            13
           ],
           "quote_sha256": "a6c1625f2f2463f6abce53b8f2b862756cfc6d7cd02036cb4b09366f9deb4b44"
         }
@@ -41943,8 +42023,8 @@
           "anchor": "先静帧完成度再分层动作",
           "quote": "任一镜头、素材台账或音轨版本改变都会使该签收过期。每项本地素材的 `assets[].sha256` 也须与当前文件一致，换素材后重审，不能只刷新摘要。哈希只防止沿用旧声明，不能证明真的看过，也不替代整片验收。",
           "lines": [
-            17,
-            17
+            19,
+            19
           ],
           "quote_sha256": "8455204a74277869dd38d11a2feb6ca66e9ed72cc6f6eb8ad6c5d124c5f3de9e"
         }
@@ -41961,8 +42041,8 @@
           "anchor": "设计和资产引用绑定",
           "quote": "简报固定Skill提交、series-profile和tokens版本/哈希、私有设计板ID/哈希及批准范围。真实使用的设计图、组件、视频和音轨在现有 `assets` 中按实际kind、来源/权利、版本说明与 `sha256`登记，通过 `shots[].asset_ids` 关联；配置参数或索引本身不假报为实拍。复制到项目的配置/设计证据版本与位置留简报及 `qa.visual_frames.note`，不能写“使用最新版”或仅凭公开tokens认设计板通过。",
           "lines": [
-            39,
-            39
+            41,
+            41
           ],
           "quote_sha256": "db586b9c034c5db3e893660f0ea491d2c333fe7847a501b9b104ac2c216d63dc"
         }
@@ -41977,20 +42057,20 @@
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
-          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。将实际记录以 narration.generation_record={file,sha256} 绑定到单集，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
+          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
           "lines": [
-            41,
-            41
+            51,
+            51
           ],
-          "quote_sha256": "6f735a07a01214ec6b7694eb551c6c0d5ae5a852037297717f7c4feac6e62e75"
+          "quote_sha256": "44255fd66cd4c074dacbb65e6be56a9e94a4ce98845425ec3b0609db58b2dea7"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "源音轨与最终混音分别听验",
           "quote": "源样本或独立音轨在 `narration.source_listen_review` 记录自己的 file/hash、scope、实际所听区间/方法/能力和证据；设备按实际范围记录。首次样本认可只覆盖所听版本和范围，不能代填长稿或整片通过；声音实质变化时重新试听短样。私有样本、反馈和认可记录留在项目，通用 Skill 不保存私人素材。",
           "lines": [
-            49,
-            49
+            78,
+            78
           ],
           "quote_sha256": "3f93ef62d6c55758141c5ec329231e5831b3bb12c30d4b34f1817ec6cc684d0f"
         }
@@ -42007,8 +42087,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "每片保存可恢复的简报、来源、脚本、分镜、设计/资产、原声/混音分轨、事件时码、字幕、样片/候选/发布版、审查、授权/平台回执与反馈。目录可适配现项目，信息不能漏。命名含集/剪辑/音轨/画幅版本，不用final_final_latest；字幕、封面、文案独立hash。改稿使事实/理解/旁白/字幕/相关镜头失效，改音轨使听检/同步/完整片失效，改布局使视觉/字幕/平台失效，改封面文案使包装和相关授权失效。视频任何字节变动需重新绑定并重审相关最终项目。",
           "lines": [
-            84,
-            84
+            86,
+            86
           ],
           "quote_sha256": "cb7516288ee19a1dd1169f2c738951e21c309fa737b3e25bd9f203a47b30774d"
         }
@@ -42025,8 +42105,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "连续证据记录实际文件/哈希、总时长、覆盖区间、正常播放速度、真实看/听能力及范围；程序查区间与媒体时长、版本一致性，抽帧方法不能签连续。主题/主链、镜头、音轨、素材、发布包改变后对应上下文失效。删除失败历史、捏造人测或观看字段仍可能骗过程序，必须由独立实际审查与私有变更记录复核；程序不识别画面机制、不证明听感/艺术、不授予发布权限。完整标准的真实执行与后续片回归仍单独记待验。",
           "lines": [
-            115,
-            115
+            131,
+            131
           ],
           "quote_sha256": "c069c75171597b7d6bd5a210db7de5b5e44352c75050a0664e305076e63a0c94"
         }
@@ -42043,8 +42123,8 @@
           "anchor": "记录与技术检查",
           "quote": "- 实际审完才将对应项写 `pass`，三份交付媒体SHA-256记 `qa.reviewed_sha256`；媒体、音轨、素材、镜头或文案改变后重审相应项目，不能只刷新哈希沿用旧结论",
           "lines": [
-            69,
-            69
+            85,
+            85
           ],
           "quote_sha256": "629f67367d6c56432f51565fc30a408af71baf5c838c317e618a56e715be242b"
         }
@@ -42061,8 +42141,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "源样本或独立音轨在 `narration.source_listen_review` 记录自己的 file/hash、scope、实际所听区间/方法/能力和证据；设备按实际范围记录。首次样本认可只覆盖所听版本和范围，不能代填长稿或整片通过；声音实质变化时重新试听短样。私有样本、反馈和认可记录留在项目，通用 Skill 不保存私人素材。",
           "lines": [
-            49,
-            49
+            78,
+            78
           ],
           "quote_sha256": "3f93ef62d6c55758141c5ec329231e5831b3bb12c30d4b34f1817ec6cc684d0f"
         }
@@ -42079,8 +42159,8 @@
           "anchor": "来源与传输范围",
           "quote": "按本次已确认位置记录传输范围。本地工程与本适配器不向远程合成服务发送稿件；服务方式按实际接收者、文本类别、用途和已有授权执行，当前或前文上下文中明确指定的工程或服务位置可直接作为调用依据。缺少所传内容的授权时补足，不把文字范围扩大到视频或参考声纹。声音方向不代传输授权；不擅自克隆真人，合成声音按实际声明与必要披露执行。",
           "lines": [
-            59,
-            59
+            90,
+            90
           ],
           "quote_sha256": "efa006ff827764868f553dce5422c9caa9c1062c5be6f8254609a9842398986e"
         }
@@ -42097,8 +42177,8 @@
           "anchor": "来源与传输范围",
           "quote": "服务、配额或资源失败报告具体阻塞，保留当前方案；不轮换账户、换镜像规避限制，不自动购买额度。模型许可、服务条款与具体用途分别核实，不在台账或仓库存入凭据、令牌或参考声纹。",
           "lines": [
-            61,
-            61
+            92,
+            92
           ],
           "quote_sha256": "fe3386afabd09caaa72251ae565242bc62133a13677a6773b38373341956484b"
         }
@@ -42115,8 +42195,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "剪接、补录、改词、停顿或语速变化后，重新核实际时码、字幕、关键动作及当前完整混音。混音、语速与最终编码 D 起点见 [制作策略](../config/production-policy.json)；已有认可配置和匹配音轨优先，不为起点强制变声、变速或重生成。最终编码实测响度和峰值，不称平台官方要求，也不代听验。音轨存在、ASR、波形、响度和技术解码都不等于听过；未实际听验的项目保持待审，不用短样认可填 `qa.narration` 的整片通过。",
           "lines": [
-            55,
-            55
+            86,
+            86
           ],
           "quote_sha256": "3d49396fee3eb790c3ebd5983cce0c347b62f1bea6b88e0c073e12ba851b6f08"
         }
@@ -42133,8 +42213,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "观看记录的ranges为实际完整声画共同覆盖的秒区间，仅当同一区间真的看过且听过时合并记录；如看/听范围不同，另保各自记录，不用看过证明听过。原毫秒范围转换为秒须除以1000。所审音轨/字幕版本与该次file/hash/上下文一起冻结，不能从后来更新的当前版本字段倒推旧审查。",
           "lines": [
-            129,
-            129
+            145,
+            145
           ],
           "quote_sha256": "e958e0c0dd1aec2715ad94213148bbbcc6779d90084b27ce2fb496b613d24a38"
         }
@@ -42151,8 +42231,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "缺陷固定“版本时点—观察—解释影响—责任/修改—复查证据”，不靠改严重度绕门槛。",
           "lines": [
-            109,
-            109
+            125,
+            125
           ],
           "quote_sha256": "a09e0f8390510eb026a362c5b69de5c92d9e524410348daf937b394f573247cc"
         }
@@ -42169,8 +42249,8 @@
           "anchor": "失败后的处理",
           "quote": "发现上述缺陷时退回对应制作阶段，撤销该版本相关旧通过，保留问题与修复前后证据。整片动画表现已失败时，回到解释分镜和覆盖完整解释过程的动态方案；局部动作获准或修复只保留该局部的认可范围，不能解除整体失败。先用连续代表段验证方案，再重验整片，而非仅替换一个动作后沿用旧通过。用户明确整体否定一批作品时，冻结该批当前“可交付/可发布”状态，受影响 `qa` 条目改为 `pending`（待复核）或 `fail`（已确认失败）；先找共同根因，重审全部质量维度，再用少量代表小样复核，不能只补被点名的局部就恢复整批通过。",
           "lines": [
-            79,
-            79
+            95,
+            95
           ],
           "quote_sha256": "11de5d65c2d1f832e49f753ca1eb41dd421b302419a2db984ededddf38a627c2"
         }
@@ -42187,8 +42267,8 @@
           "anchor": "失败后的处理",
           "quote": "1. 在私有项目记录绑定原反馈、受影响版本/时段和实际导出。先区分内容、转镜、动画、解说、声音或布局问题；范围不明只澄清必要歧义，不把局部否定扩大到其他已认可作品。截图/时码先作缺陷定位，除用户明确限定检查范围外，在当前受影响整片从头到尾排查同一缺陷机制及依赖关系，不只检查被点名的一帧。沿用现有分镜与QA缺陷记录，列实际扫描范围、受影响镜头/时段、需改项、保留项及依据、未验项；共同根因未核实仍记待查。全片排查不等于重画所有镜头，改动范围遵循 [当前任务与委托范围](production-checkpoints.md#3-阶段推进与代表样)，不能把实施方便当作保留已知缺陷的依据。",
           "lines": [
-            82,
-            82
+            98,
+            98
           ],
           "quote_sha256": "b4e7b7ea9e35261cb6a7ff6d1e51963d141be68b55a77caf429a82cc80102bf4"
         }
@@ -42205,8 +42285,8 @@
           "anchor": "失败后的处理",
           "quote": "2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。",
           "lines": [
-            83,
-            83
+            99,
+            99
           ],
           "quote_sha256": "162565746c7f33162e2d5924bf56ee4778fcbeefcc07cdb91145b6c07b9655d2"
         }
@@ -42223,8 +42303,8 @@
           "anchor": "失败后的处理",
           "quote": "3. 规则须写清可观察行为、所需证据和失败后退回阶段。按变更风险做回归与独立审查；发布授权另按当前范围履行，公开内容仅含通用规则/测试，不带用户聊天、私有身份或媒体。\n4. 在本片修复及下一条适用视频中实际检查该项，记录规则版本、媒体版本、连续片段/时间点和结果。对本轮反馈与受影响镜头逐项说明已修复、仍适用而保留的依据及尚未处理/未验项，证据按 [记录与技术检查](#记录与技术检查) 绑定本次实际最终导出与所审声画版本。交完整新版本时，复查修复段、依赖镜头和接缝，并按整片要求从头到尾实际看听；不能用代表段通过、文件已替换或旧通过记录覆盖未处理的同类缺陷。后片未产出或未看听时保持待验证，不能把Skill更新或旧样片通过当成已改进后续作品。",
           "lines": [
-            84,
-            85
+            100,
+            101
           ],
           "quote_sha256": "0dd4de6a047ec85db84ce65162ff5cc01166b802a07c0805a8dabec9f7ea2f94"
         }
@@ -42241,8 +42321,8 @@
           "anchor": "实施参考的用途",
           "quote": "每轮规则迭代分别记录文档、技术、连续代表段、完整成片四层回归；静态/动态/失败/声音/字幕/全片标杆参考集由项目私有证据维护，有固定版本、范围和实际批准才使用。",
           "lines": [
-            163,
-            163
+            167,
+            167
           ],
           "quote_sha256": "b55eb26682703f29e5f77ae4b0f088ed125d83e7a426948ca6c819a160f019ba"
         }
@@ -42259,8 +42339,8 @@
           "anchor": "实施参考的用途",
           "quote": "规则回归的version_change分别记录拟变更的from_version与to_version，可在proposed阶段填写；actual_commit仅在真实提交成功后记录，二者不得互相代填。",
           "lines": [
-            173,
-            173
+            177,
+            177
           ],
           "quote_sha256": "b4af88e620650f39825b399d2627961fd65e6c20ddc583e987e05450dbb4311f"
         }
@@ -42313,8 +42393,8 @@
           "anchor": "3-阶段推进与代表样",
           "quote": "先核当前任务允许的阶段。设计系统整理、私有样片、整片制作及发布是不同范围；暂停时保存现状，不由旧日程或规则更新自动恢复。完成某前置阶段后继续制作须有当前任务覆盖。",
           "lines": [
-            62,
-            62
+            64,
+            64
           ],
           "quote_sha256": "1032a3a3b71c7ef870f308fdaffa9f6cf03aa405c3f677d3c22a8116e265ed86"
         },
@@ -42323,8 +42403,8 @@
           "anchor": "3-阶段推进与代表样",
           "quote": "返工和任务委托须沿用原请求及用户最新明确范围，传递请求引用、最终交付范围、允许改动与保留项；不能仅凭一张截图、一个时码或方便实施，把整片修复擅缩成局部替换。内部先做代表段时保留整片尚待处理和验证的范围，不把试验边界改成最终任务上限。用户明确只改或只审局部时遵循该限制；新指示扩大范围或撤销旧限制时，同步更新委托，不能继续用过期的“其余不动”阻止必要返工。同类排查、修复范围与最终证据按 [失败后的处理](quality-acceptance.md#失败后的处理) 执行，不另建台账。",
           "lines": [
-            64,
-            64
+            66,
+            66
           ],
           "quote_sha256": "d8697eb20626f0b632164956628a7ccad1d72cd38c84ab565ae78acb711cf31c"
         }
@@ -42341,8 +42421,8 @@
           "anchor": "3-阶段推进与代表样",
           "quote": "局部修复优先沿用仍匹配的已认可音轨与素材，不为迁移索引重新生成。无法渲染或实际看听时，标具体缺项并继续可独立做的纸稿/设计；明示待审交付不等完整放行。每阶段记录实际版本、当前结果、下一步和未验项，不以成本、素材数或工期代替品质。",
           "lines": [
-            68,
-            68
+            70,
+            70
           ],
           "quote_sha256": "214f64a049a65157ffe85f6fd892b1ac147a75a83e1700478e8682e0fdaf3bde"
         }
@@ -42359,8 +42439,8 @@
           "anchor": "记录与技术检查",
           "quote": "`scripts/check_reference_system.py` 只核本仓引用归属、参数结构和可公开通用组件哈希；私有设计板、素材许可及平台适配仍由项目按本页实审。规范采用、模板齐全或分数达标均不能直接成为自动放行器；内部评分、精美程度和解释内审按下文执行。",
           "lines": [
-            73,
-            73
+            89,
+            89
           ],
           "quote_sha256": "6f6ef2ca00b8910b9bbd09b9e0bf8d3693a0dc1305878648bc77821c3512d6d9"
         },
@@ -42415,8 +42495,8 @@
           "anchor": "审片者与观看安全",
           "quote": "每次审查记录实际审片者/角色、具备的看图/连续播放/听音能力、所审文件/时段与未覆盖部分。先按正常速度、不中途借制作说明补空地完整观看，再回放或逐帧定位；已看过稿件的编辑自审不写成陌生观众首看。独立任务身份不等于真人测试，也不等于具备实际音视频感知。",
           "lines": [
-            47,
-            47
+            63,
+            63
           ],
           "quote_sha256": "896c0cd80d1c6a2442b526d677dcac4b83f9c1cc8efb3c40d49eca2078d178bc"
         },
@@ -42425,8 +42505,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "连续证据记录实际文件/哈希、总时长、覆盖区间、正常播放速度、真实看/听能力及范围；程序查区间与媒体时长、版本一致性，抽帧方法不能签连续。主题/主链、镜头、音轨、素材、发布包改变后对应上下文失效。删除失败历史、捏造人测或观看字段仍可能骗过程序，必须由独立实际审查与私有变更记录复核；程序不识别画面机制、不证明听感/艺术、不授予发布权限。完整标准的真实执行与后续片回归仍单独记待验。",
           "lines": [
-            115,
-            115
+            131,
+            131
           ],
           "quote_sha256": "c069c75171597b7d6bd5a210db7de5b5e44352c75050a0664e305076e63a0c94"
         },
@@ -42435,8 +42515,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "观看记录的ranges为实际完整声画共同覆盖的秒区间，仅当同一区间真的看过且听过时合并记录；如看/听范围不同，另保各自记录，不用看过证明听过。原毫秒范围转换为秒须除以1000。所审音轨/字幕版本与该次file/hash/上下文一起冻结，不能从后来更新的当前版本字段倒推旧审查。",
           "lines": [
-            129,
-            129
+            145,
+            145
           ],
           "quote_sha256": "e958e0c0dd1aec2715ad94213148bbbcc6779d90084b27ce2fb496b613d24a38"
         }
@@ -42453,8 +42533,8 @@
           "anchor": "失败后的处理",
           "quote": "发现上述缺陷时退回对应制作阶段，撤销该版本相关旧通过，保留问题与修复前后证据。整片动画表现已失败时，回到解释分镜和覆盖完整解释过程的动态方案；局部动作获准或修复只保留该局部的认可范围，不能解除整体失败。先用连续代表段验证方案，再重验整片，而非仅替换一个动作后沿用旧通过。用户明确整体否定一批作品时，冻结该批当前“可交付/可发布”状态，受影响 `qa` 条目改为 `pending`（待复核）或 `fail`（已确认失败）；先找共同根因，重审全部质量维度，再用少量代表小样复核，不能只补被点名的局部就恢复整批通过。",
           "lines": [
-            79,
-            79
+            95,
+            95
           ],
           "quote_sha256": "11de5d65c2d1f832e49f753ca1eb41dd421b302419a2db984ededddf38a627c2"
         },
@@ -42463,8 +42543,8 @@
           "anchor": "失败后的处理",
           "quote": "仅改规则、改QA字段或通过代码测试都不会自动解除冻结。已认可且与新稿匹配的音轨尽量保留，重新检查其声画/字幕配合，避免无谓重生成。已发布内容不自动修改/删除；需另有明确授权。规则测试只检验流程或程序约束，不证明成片达到质量标准。",
           "lines": [
-            87,
-            87
+            103,
+            103
           ],
           "quote_sha256": "474488f20a2a9975623b9c652bec3e57aa8f9448f40ee60be942ad4bacad8880"
         }
@@ -42479,12 +42559,12 @@
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；需要的屏幕标签和署名\n\n自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；优先换合法来源。\n\n机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。\n\n购买素材、接受新条款、分享个人数据或向外部账号传素材均按当前权限处理。未取得的权利可以阻塞交付，不能靠制作声明免责。",
+          "quote": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置\n\n自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；优先换合法来源。\n\n机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。\n\n购买素材、接受新条款、分享个人数据或向外部账号传素材均按当前权限处理。未取得的权利可以阻塞交付，不能靠制作声明免责。",
           "lines": [
             19,
             28
           ],
-          "quote_sha256": "d9fb37b81d1613451d28aa95a13671180e543a3b668b2321560ab2250e700718"
+          "quote_sha256": "6b3c0d101f9fb171f893d0fcf51582ccfed15a96e3c44fbc137f5211fbe2ce16"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -42499,8 +42579,8 @@
           "anchor": "6-从导出到实际平台完成检查",
           "quote": "只有已获所需上传/预览授权时才进入平台。使用实际目标账号，填入最终标题、完整简介与 tag，等平台 UI、文案和预览真正加载；保留用户名、互动栏、文案等实际覆盖区域，查看首/中/末、最密字幕、转场及运动极值。文案长度可能改变遮挡，不能只用短标题预览代替最终文案。\n\n记录预览来源：实际手机/平台发布页预览/本地播放器，以及导出版本、最终文案和关键时间点截图。浏览器中的手机样式预览不能称为实机；被截图裁去画幅边界时不能反推完整 9:16 坐标。没有实机条件就写未做实机检查。\n\n发现关键字幕、单位、标签或主体被挡住时，做最小布局调整，重新导出并在同一最终文案/界面下复查，不能沿用旧通过记录。改视频、标题、简介、账号或相关展示方式后重查。没有平台访问或授权时可交待平台检查版，不能宣称已完成平台适配，更不能自行发布。\n\n在 `qa.mobile_preview` 记实际 `platform`、`account`、`review_scope=target_platform`，`surface` 用 `actual_device` 或 `desktop_platform_preview`，`note` 记录看到的结果与截图/时间点；裸播放器或代理缩图不能填成它们。实际复核后再填 `reviewed_metadata_sha256`，由本地 `check_episode.py` 的 `platform_metadata_sha256(data, preview)` 对标题、简介、tag、平台、账号与预览来源计算，缺失时检查器会显示当前值。计算/复制哈希不代表验收；它只帮助发现后续文案或目的地变更使旧记录失效。",
           "lines": [
-            82,
-            88
+            84,
+            90
           ],
           "quote_sha256": "ad4cb44e9c2ff41a816e179bbeb3950a4b3336f6818001b43abeae06d7ae8307"
         }
@@ -42517,8 +42597,8 @@
           "anchor": "交付包与发布回执",
           "quote": "上传、定时、公开发布前，核已有具体授权覆盖账号、内容版本和动作；已有批准不反复问，范围/风险变化另按当前权限处理。交付或采用本Skill不等于发布授权。仅实际发布成功状态、作品ID/链接或平台回执才能记已发布；审核中、草稿、定时、失败和结果未知分别记录。未知先查重/回读，不能盲目重发；失败不自动改账号、付费或公开到其他位置。已发或被取消/禁止内容不因规则更新重新投放。平台实测缺条件时可交待平台检查版，不宣称已适配。",
           "lines": [
-            94,
-            94
+            96,
+            96
           ],
           "quote_sha256": "b3f44ea05eedf5438f16c12cf2ed4c89152cbb9d636598c50e6900f84be85101"
         },
@@ -42527,8 +42607,8 @@
           "anchor": "实施参考的用途",
           "quote": "单期不再用一个笼统status覆盖混合阶段：当前阶段由工作记录说明，各关状态以qa.gates为准。source_ids是sources[].id中被实际主张引用的ID集合，不是完整source对象数组。授权核查状态 `qa.release.authorization_status` 与包就绪status分开；其他质量/平台项失败不抹掉已有效授权，也不重复问同一批准。\n\n制片/主编负责收窄选题、分配工作、控制版本、维护事实来源与发布队列，并交选题卡、排产和变更记录；只报进度不能代品质通过。审查者先看指定成片，再看作者解释，首次卡点不得被事后讲解覆盖。发布失败在qa.publication.note分别写执行拒绝、权限缺失、用户取消或网络/技术失败及实际证据，不笼统写系统卡住，不绕过新的明确拒绝。",
           "lines": [
-            169,
-            171
+            173,
+            175
           ],
           "quote_sha256": "5756f7a2428aa1b3e23254a9eb26598d52bb2a4d133f54c4d70483014aa22a0a"
         }
@@ -42563,8 +42643,8 @@
           "anchor": "交付包与发布回执",
           "quote": "上传、定时、公开发布前，核已有具体授权覆盖账号、内容版本和动作；已有批准不反复问，范围/风险变化另按当前权限处理。交付或采用本Skill不等于发布授权。仅实际发布成功状态、作品ID/链接或平台回执才能记已发布；审核中、草稿、定时、失败和结果未知分别记录。未知先查重/回读，不能盲目重发；失败不自动改账号、付费或公开到其他位置。已发或被取消/禁止内容不因规则更新重新投放。平台实测缺条件时可交待平台检查版，不宣称已适配。",
           "lines": [
-            94,
-            94
+            96,
+            96
           ],
           "quote_sha256": "b3f44ea05eedf5438f16c12cf2ed4c89152cbb9d636598c50e6900f84be85101"
         },
@@ -42573,8 +42653,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "| G7 | 实际作品ID/链接、发布时间、平台状态与内容匹配读回 | 计入唯一实际发布/复盘 | 未知先查重，失败修复 |",
           "lines": [
-            120,
-            120
+            122,
+            122
           ],
           "quote_sha256": "82e9a4a5d7acacd3e3ffc699a973c1ea82f55db7d631c437eaa83e5c6a334077"
         }
@@ -42591,8 +42671,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "G2的低精细度指尚未精修，不授权更换已批准的造型语言。内部技术草排可用明确占位形体；已有批准画风时，交用户审看的工作稿须按 [已批准设计的实际落地](visual-system.md#已批准设计的实际落地) 使用基本符合该方向的实际可见资产。偏离批准造型的工程占位形体只能作为内部技术证据，不能借“G2允许粗艺术”、技术通过或标注“未验”冒充符合画风的美术结果；用户明确要求查看技术线框/占位稿时，可按该范围交付。此边界不要求G2提前完成G3的全部动作精修；技术帧、内部G2稿、风格审看稿和整片分别说明实际范围。",
           "lines": [
-            126,
-            126
+            130,
+            130
           ],
           "quote_sha256": "1ae15f62a42e9cf26ffb38f3cd1171065cb4c689a7b90a514dfbafa26c45b659"
         }
@@ -42607,12 +42687,12 @@
         {
           "file": "references/shotbook.md",
           "anchor": "音频先行但不牺牲画面",
-          "quote": "先用当前成品级解说划分语义拍，再排镜头，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。\n\n`start`、`end`、`beats[].at` 均为成片时间轴上的秒数。镜头按序、互不重叠；叠化属于镜内合成。没有解说的纯观察镜填 `beats: []` 并用 `silence_reason` 说明停顿作用；语义拍只覆盖实际解说事件，不必伪造词句填满静默。每镜填 `subject`（对象）、`action`（动作）、`framing`（景别/取景）、`claim_support`（本镜如何支持所列主张；无主张则解释叙事作用）、`motion_purpose`（变化怎样帮助理解或为何保持静止）。\n\n将当前解说文件 SHA-256 写入 `narration.audio_sha256`。换录音、裁剪、变速或重排后，重新听并对齐全部受影响语义拍；更新校验值不能代替重听。检查器只查时间及版本一致性，不会识别词义、判断听感，也不自动批准画面。",
+          "quote": "以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。\n\nG2 将各镜 `narration_exact_text` 按镜头顺序拼回完整稿，仅忽略排版空白；无口播镜写空字符串。这只核文本结构一致，不代表解释逻辑通过。\n\n`start`、`end`、`beats[].at` 均为成片时间轴上的秒数。镜头按序、互不重叠；叠化属于镜内合成。没有解说的纯观察镜填 `beats: []` 并用 `silence_reason` 说明停顿作用；语义拍只覆盖实际解说事件，不必伪造词句填满静默。每镜填 `subject`（对象）、`action`（动作）、`framing`（景别/取景）、`claim_support`（本镜如何支持所列主张；无主张则解释叙事作用）、`motion_purpose`（变化怎样帮助理解或为何保持静止）。\n\n将当前解说文件 SHA-256 写入 `narration.audio_sha256`。换录音、裁剪、变速或重排后，重新听并对齐全部受影响语义拍；更新校验值不能代替重听。检查器只查时间及版本一致性，不会识别词义、判断听感，也不自动批准画面。",
           "lines": [
             7,
-            11
+            13
           ],
-          "quote_sha256": "bceaea6fb8b4dbed9dc3d76c18f204371415bd9d73dc537101d452d30576af99"
+          "quote_sha256": "0840f4dc80cf5d509e6d4865364c988c330de51ef03f46353844a76ac97e70ac"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -42657,28 +42737,28 @@
           "anchor": "运行记录与音轨绑定",
           "quote": "私有生成记录保存真实后端、供应方、模型标识、运行参数、稿件及输出哈希，并用 execution 记录 status=confirmed、mode=local_project/service、location 与 confirmation_reference。本地工程另记实际Python、模型位置和可得的修订/清单；服务另记接口与实际响应版本证据，不含凭据。完整权重修订无法取得时保存真实 model_version_reference 说明。成功状态为 generated，不是声音验收通过；失败不生成成功记录，也不擅自换调用位置。",
           "lines": [
-            39,
-            39
+            49,
+            49
           ],
           "quote_sha256": "83afa11261a53dd071eab580476c1cd387409ddb92ced9c8e0dddb57ddcd0c1f"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
-          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。将实际记录以 narration.generation_record={file,sha256} 绑定到单集，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
+          "quote": "当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。",
           "lines": [
-            41,
-            41
+            51,
+            51
           ],
-          "quote_sha256": "6f735a07a01214ec6b7694eb551c6c0d5ae5a852037297717f7c4feac6e62e75"
+          "quote_sha256": "44255fd66cd4c074dacbb65e6be56a9e94a4ce98845425ec3b0609db58b2dea7"
         },
         {
           "file": "references/voice-reference.md",
           "anchor": "运行记录与音轨绑定",
           "quote": "已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。",
           "lines": [
-            45,
-            45
+            55,
+            55
           ],
           "quote_sha256": "43f8b840e4e5eb31ea2d992d012a8ea231b953e12ff60c2ec08c97ca5756958b"
         }
@@ -42741,8 +42821,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "按 [制作策略](../config/production-policy.json) 记录五维评分，各0–5，可半分：未验用null并另记pending；0已确认缺失，1重大错误或严重不可用，2明显阻碍，3可用但粗糙，4完整成熟，5可作标杆。每项附当前版本的具体时点/证据，不能只填数字。\n\n| 维度/权重 | 4分锚点 | 5分锚点 |\n| --- | --- | --- |\n| 理解与叙事30 | 核心问题、必要解释关系与答案闭合清晰，正常观看能跟上 | 少量解释即可准确展示关键机制，回看有明确价值 |\n| 美术一致性25 | 整景/中景/近景造型、材质、层次一致，无明显拼贴 | 成熟构图与系列辨识度，可作基准画面 |\n| 动作与镜头25 | 核心变化可读，对象连续，时序和停顿合理 | 动作精确自然、有设计细节且不增加理解负担 |\n| 声音15 | 自然清楚、无明显接缝、音画对应 | 讲述、环境和动作形成稳定克制的节奏 |\n| 字幕与包装5 | 手机可读、不挡机制、封面准确 | 字幕/封面/系列语言统一且更便理解 |\n\n加权总分按分数÷5×权重求和。常规85且前四项≥4、包装≥3；标杆90且各项≥4是内部起始门槛，按真实样片校准，不能称行业客观线。科学/权利、明确否定、完整实际视听、平台可见性、版本授权、必要声明等H任何失败或未知，100分也不放行。此前“不可用自评分自动放行”仍成立，但不能据此省略已采用的评分记录。",
           "lines": [
-            91,
-            101
+            107,
+            117
           ],
           "quote_sha256": "136ef16d2e9b627fa8db3e6e5c3d878db604da2ea4471ae1f1edc6206267d5c9"
         },
@@ -42751,8 +42831,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "评分阈值校准在 `qa.scorecard.calibration` 保存实际依据文件/哈希、审查者、理由、适用范围及对应总分/分项起点；检查器可核校准记录完整性，不能证明新阈值有审美依据。五维含义、硬门槛、解释内审和明确否定不因此降低。没有校准证据时沿默认值，不能静默改总分或伪造测试。",
           "lines": [
-            119,
-            119
+            135,
+            135
           ],
           "quote_sha256": "96ad6fd30fe4507a8e52b0073fbb0d134da68dcae3563070a273c953281e6c39"
         }
@@ -42769,8 +42849,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "完整标准按硬门槛H与内部可校准起点D执行，数值唯一来源为 [制作策略](../config/production-policy.json)。D不是可静默省略的要求：按起点实施，改变时记录样片、理由和校准证据；H未知或失败不能用分数抵扣。设计素材是参考，不能按候选文件自带状态认定生产批准；系列具体风格/字幕/已认可声音以现行配置优先。",
           "lines": [
-            108,
-            108
+            110,
+            110
           ],
           "quote_sha256": "052a94a8f061179ba97afe15921585108da51453800184286b57e468179e47ec"
         },
@@ -42779,8 +42859,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "导出默认格式/码率等D用制作策略并记实际偏差和依据；ffprobe记录实际帧率/恒定性、色彩信息、流和时长，解码检查损坏；源色彩标签不足以证明转换正确。所有版本由同一主工程导出，不下载已发片反复压制。可保留高质量无平台下载水印母版，不能移除必要AI/作者/许可标识。跨平台版独立核排版、字幕、标题、许可和预览；同步设置按项目既有指示核实，不擅改、不将未核同步说成功。",
           "lines": [
-            152,
-            152
+            156,
+            156
           ],
           "quote_sha256": "cb6ba109c464b28eaf68c4c63d21cfc4f0279bede147a6c3c4b885d428129e69"
         }
@@ -42797,8 +42877,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "沿用项目确认的音色与口语指令，每段核稿件一致、漏词/重复/跑词、术语、数字、单位、多音字、断句和拼接处。主题、因果动词与结论有自然重音，给定位和变化留观察停顿；长句先改稿，不统一放慢成机械讲述。异常时长或疑似文本偏离先核查，不直接装片、不猜模型根因；完整解码、合理时长或 ASR 对齐不能代替文本正确性与实际听感检查。每条有中文解说；缺能力交明确待补录版本，字幕与配乐不代配音。",
           "lines": [
-            51,
-            51
+            82,
+            82
           ],
           "quote_sha256": "389593d7e42924953edc6715d8a47596ca29591cf0a26d4ecd693997143deaf3"
         },
@@ -42807,8 +42887,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "最终混音在 `qa.audio.listening` 正常速度完整听当前导出，按 [制作策略](../config/production-policy.json) 完成耳机与手机外放检查，记录设备、区间和问题时码；缺哪项就哪项未验。平台另核关键段。核心术语错读、因果词吞漏、断句改义、拼接突变、持续底噪/失真和音乐遮解释均退回。配音、配乐、环境和音效分轨，人声优先，逐段/跨段核突刺、削波与突断；不用 whoosh 或警报掩盖问题，不每次切镜默认加音效，设计音效不冒充原声记录。",
           "lines": [
-            53,
-            53
+            84,
+            84
           ],
           "quote_sha256": "46da354227a932dfa2e19fe7e73d30672d642d44e220049f94461eafa9cb43ed"
         },
@@ -42817,8 +42897,8 @@
           "anchor": "源音轨与最终混音分别听验",
           "quote": "剪接、补录、改词、停顿或语速变化后，重新核实际时码、字幕、关键动作及当前完整混音。混音、语速与最终编码 D 起点见 [制作策略](../config/production-policy.json)；已有认可配置和匹配音轨优先，不为起点强制变声、变速或重生成。最终编码实测响度和峰值，不称平台官方要求，也不代听验。音轨存在、ASR、波形、响度和技术解码都不等于听过；未实际听验的项目保持待审，不用短样认可填 `qa.narration` 的整片通过。",
           "lines": [
-            55,
-            55
+            86,
+            86
           ],
           "quote_sha256": "3d49396fee3eb790c3ebd5983cce0c347b62f1bea6b88e0c073e12ba851b6f08"
         }
@@ -42835,8 +42915,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "实际过程类的动作卡八项落实在现有shotbook：对象/锚点、初态、触发、关键变化、终态、轨迹、快慢/观察停顿、观众学到什么；补物理条件、教学简化、关键姿态、口播事件和实际音轨hash。不同机制不套万能弹性曲线；路径、方向、约束、遮挡或观察条件变化可以是实质机制，不强求形变。关键图另说明视角、注意中心、动作路径、字幕区和比例变化。\n\n复用配方记录问题类型、条件、镜头骨架、资产、动作卡、口播事件、科学风险与正反例：整体→局部→整体需同一对象回程；前态→触发→后态保留中间变化；同条件对照只改有关变量；传播→响应核起因/方向/延迟，波前不冒作物质飞出；剖面先建立外形和剖切关系再恢复整体。无声网页演示/相对时间只是候选，不能抵G3，也不能预填未生成音轨的绝对时码。\n\n定位/标签、尺度切换、观察停顿等D时序见制作策略，按任务校准，不机械统一。语义事件实际音频时点与画面时点差超过150ms先标复核警告；提前预备/反应镜头写理由并实际看，不自动判错或自动忽略。",
           "lines": [
-            78,
-            82
+            80,
+            84
           ],
           "quote_sha256": "06fcd85c39a5b12d89eb313cfc2e155527f9058514e3e9f17ca99009bab04ebc"
         },
@@ -42845,8 +42925,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "仅对本镜实际采用的类别填写 `shotbook.action_class`（去重列表）与 `action_class_details`（按类别键组织），复用已有对象、锚点、trigger/key_states/trajectory等字段，不要求每镜全填五类：\n- localization_and_label（定位与标签）：appearance_condition（出现条件）、follow_target（跟随目标）、hold_duration（停留）\n- scale_transition（尺度切换）：original_object、spatial_anchor、local_frame（局部取景框及坐标基准）、return_location；明确同一对象进出关系\n- deformation（对象形变）：topology_states（可对应的同拓扑关键态）、fixed_boundary、sliding_boundary、trajectory；逐机制设计，不把所有对象统一弹跳，也不为工具限制改变科学机制\n- propagation_and_change（传播与变化）：cause、origin、direction、delay、end_state；解释动画与实拍一样，若作教学慢放，从第一次使用就清楚提示时间缩放，不等结尾补说明\n- observation（观察停顿）：learning_task与duration，实际停留由理解任务决定\n\n`timing_basis.mode`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；正式动作方案还记录note说明其语义依据；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。",
           "lines": [
-            88,
-            95
+            90,
+            97
           ],
           "quote_sha256": "49769466bf2d01ab056d9374410f6bfc414d3bd5691e97747c813c5284b0813f"
         }
@@ -42863,8 +42943,8 @@
           "anchor": "产能成本与复盘",
           "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。\n\n每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。\n\n采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。\n\n复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
           "lines": [
-            136,
-            142
+            140,
+            146
           ],
           "quote_sha256": "94156ab2a94eceedf99936e08c5ce7cde91544e41b12367bc4d314d6ab0bee72"
         }
@@ -42881,8 +42961,8 @@
           "anchor": "实施参考的用途",
           "quote": "当前系列同步例外在series-profile.operations.platform_sync配置：按既有安排保留观察到的同步设置，不独立核附属平台结果，未核不算成功且不作为主平台阻塞。该项目例外不自动推广到其他项目，也不授权改变同步或新增发布。",
           "lines": [
-            165,
-            165
+            169,
+            169
           ],
           "quote_sha256": "23c1e36bce2c380a434934deba118fd958be27da162d659bb87a4adc97e59e36"
         }
@@ -42899,8 +42979,8 @@
           "anchor": "记录与技术检查",
           "quote": "`scripts/check_episode.py` 的 `plan` 只核计划结构与诚实缺项，已有科学依据才适用，不补假来源/日期通关。`delivery` 核文件、尺寸、文案长度、来源/权利声明、音轨、全片解码与版本绑定；需Python3.11+、ffprobe/ffmpeg，不联网/下载/发布。它不判断合法性、科学语义、自然声音或视觉美感，不检测所有照片伪视频，字段自报不能创造实际验收。\n\n`scripts/check_reference_system.py` 只核本仓引用归属、参数结构和可公开通用组件哈希；私有设计板、素材许可及平台适配仍由项目按本页实审。规范采用、模板齐全或分数达标均不能直接成为自动放行器；内部评分、精美程度和解释内审按下文执行。",
           "lines": [
-            71,
-            73
+            87,
+            89
           ],
           "quote_sha256": "188a655d4adec340841ac7cfba1b2ca620deb18d46cfa404d4ee0303c47d47dc"
         },
@@ -42909,8 +42989,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "连续证据记录实际文件/哈希、总时长、覆盖区间、正常播放速度、真实看/听能力及范围；程序查区间与媒体时长、版本一致性，抽帧方法不能签连续。主题/主链、镜头、音轨、素材、发布包改变后对应上下文失效。删除失败历史、捏造人测或观看字段仍可能骗过程序，必须由独立实际审查与私有变更记录复核；程序不识别画面机制、不证明听感/艺术、不授予发布权限。完整标准的真实执行与后续片回归仍单独记待验。",
           "lines": [
-            115,
-            115
+            131,
+            131
           ],
           "quote_sha256": "c069c75171597b7d6bd5a210db7de5b5e44352c75050a0664e305076e63a0c94"
         }
@@ -42995,8 +43075,8 @@
           "anchor": "设计和资产引用绑定",
           "quote": "采用当前系列画风时，将Skill内 [参考图](../assets/style/accepted-style-reference.png) 和 [美术规格](../assets/style/bright-nature.art-direction.json) 的固定版本/哈希登记到简报引用清单；实际看图与本镜采用点写在美术记录，不能用文案推定已看。以其生成项目设计板时，`design.board_reference/board_sha256` 仍指当前实际设计板；参考的外观认可与新设计板的实际审查范围分开，不能把系列参考哈希填成新板批准。需要阶段冻结时，把所用参考副本、规格及实际对照文件分别列入既有gate evidence，不从后续安装版本反推旧项目使用内容。",
           "lines": [
-            43,
-            43
+            45,
+            45
           ],
           "quote_sha256": "46e14002940b6c124d978f6370ced6bc8a8d4b41b35191fe5fa975f2e0fbc929"
         }
@@ -43013,8 +43093,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。\n\n开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前阶段适用的责任章节、固定版本配置/tokens与实际资产清单，再登记本片引用；推进阶段时补读新增适用章节，不遗漏其约束。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。",
           "lines": [
-            97,
-            99
+            99,
+            101
           ],
           "quote_sha256": "3d5e680e2bf350945d396439589fa3f8bf120287018015618ad4b55e94e7c1fe"
         }
@@ -43031,8 +43111,8 @@
           "anchor": "设计和资产引用绑定",
           "quote": "简报固定Skill提交、series-profile和tokens版本/哈希、私有设计板ID/哈希及批准范围。真实使用的设计图、组件、视频和音轨在现有 `assets` 中按实际kind、来源/权利、版本说明与 `sha256`登记，通过 `shots[].asset_ids` 关联；配置参数或索引本身不假报为实拍。复制到项目的配置/设计证据版本与位置留简报及 `qa.visual_frames.note`，不能写“使用最新版”或仅凭公开tokens认设计板通过。\n\n当前 `episode.json` 字段不增加一套平行审批状态。素材/语义拍/文件hash由现有检查器绑定；设计板、配置引用与实际画面是否一致按质量正文实看。本仓索引检查只验证公开组件哈希，不能验证私有媒体或批准的真实性。",
           "lines": [
-            39,
-            41
+            41,
+            43
           ],
           "quote_sha256": "5c321c748006590f6ec1295d5a0e41568740a6439e9f04b8505f8c13f658ea41"
         },
@@ -43041,8 +43121,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "实际依赖统一按资产ID解析：design.font_asset_id和design.render_asset_ids是代表段及成片共用依赖，逐镜asset_ids保留该镜范围，deliverable_asset_ids按产物记录列表。代表段连同其字幕与三尺度设计实际依赖参与权利检查及版本绑定；未使用的后续素材不使当前代表段过期。所有依赖必须类型正确且能解析，不能将非法字段当空列表略过。",
           "lines": [
-            103,
-            103
+            105,
+            105
           ],
           "quote_sha256": "c64727f79b1db7fd38dbc9d585a3a5e04b97c0e88542cd535eec367a7d8dd5cd"
         }
@@ -43125,8 +43205,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "闪烁采用项目保守设计上限：不设计任意1秒内超过3次闪烁，避免大面积高对比反复闪白/红闪；复杂片段另审。低于次数仍非普适安全证明。字幕正文以正式稿校对，错字及漏否定/限定词是硬伤。字幕空段/重叠/越界与事件偏差可做静态检查，最终仍须实际手机/平台及连续观看。\n\n评分阈值校准在 `qa.scorecard.calibration` 保存实际依据文件/哈希、审查者、理由、适用范围及对应总分/分项起点；检查器可核校准记录完整性，不能证明新阈值有审美依据。五维含义、硬门槛、解释内审和明确否定不因此降低。没有校准证据时沿默认值，不能静默改总分或伪造测试。\n\nG3的字幕证据绑定本段正式字幕源文件/版本/hash，不要求提前完成全片字幕。G4完整候选可待审，尚无G5回执不妨碍交正式审查；G5复用完整主题、声音、结构与技术硬检查，G6再加真实手机/平台、声明和授权，不能把plan当任一后关的替代。G7读回另绑定当前G6发布包与目标平台/账号，不仅靠一项“已匹配”布尔值。\n\n对比度记录实际前景/动态背板、未舍入比值、软件/测量证据与最坏画面复核；低于内部起点必须有实际校准依据，数字不证明可读性。字幕检查可自动或人工，空段、重叠、越界和正式稿校对各有实际证据。闪烁设计上限核查必须真实执行；复杂片段单独实际评估，无复杂变化须说明适用性，低次数也不保证绝对安全。",
           "lines": [
-            117,
-            123
+            133,
+            139
           ],
           "quote_sha256": "60bc2356a724cc4a0909b680711b357af6cace4c1f4a6820b27ea078e7376aa9"
         }
@@ -43143,8 +43223,8 @@
           "anchor": "记录与技术检查",
           "quote": "每类记录实际文件/版本、方法、时间点与看到/听到的结果：事实、权利、理解、美术/动作、声音/字幕、技术、平台不能互相代签。全片需可解码且尺寸/比例/时长正确、音视频流存在、首尾无坏帧/黑场/错段；这些只证明技术条件。",
           "lines": [
-            63,
-            63
+            79,
+            79
           ],
           "quote_sha256": "0c2e2c25d011efc6b60d23553363e3ef11b018d1701a0618ee308ec2f07ebe29"
         },
@@ -43153,8 +43233,8 @@
           "anchor": "记录与技术检查",
           "quote": "`scripts/check_episode.py` 的 `plan` 只核计划结构与诚实缺项，已有科学依据才适用，不补假来源/日期通关。`delivery` 核文件、尺寸、文案长度、来源/权利声明、音轨、全片解码与版本绑定；需Python3.11+、ffprobe/ffmpeg，不联网/下载/发布。它不判断合法性、科学语义、自然声音或视觉美感，不检测所有照片伪视频，字段自报不能创造实际验收。",
           "lines": [
-            71,
-            71
+            87,
+            87
           ],
           "quote_sha256": "4dbfa9df7e8641e5d7b850b00b6f2691aa6e52b1f224a223f129f7d314ef64f8"
         }
@@ -43171,8 +43251,8 @@
           "anchor": "审片者与观看安全",
           "quote": "涉及快速亮度变化、重复高对比闪烁或全屏明暗交替时，先减少不必要的强闪，用柔和且科学不误导的变化表达；审所用真实素材及合成后的完整时域。帧率、几张抽帧或平均亮度不能证明全段无风险，警告文字也不代替修复。疑似风险未排除、缺相应连续检查或检测能力时保持该项未验，不签“观看安全”；需要专门评估时报告限制，不能作医学安全保证。",
           "lines": [
-            49,
-            49
+            65,
+            65
           ],
           "quote_sha256": "e75ae65b82f1a12ed448dcbbd3a6e7ee1c9fcd3ba23f45e4224b2b315284292b"
         },
@@ -43181,8 +43261,8 @@
           "anchor": "阶段证据检查的用法与限制",
           "quote": "闪烁采用项目保守设计上限：不设计任意1秒内超过3次闪烁，避免大面积高对比反复闪白/红闪；复杂片段另审。低于次数仍非普适安全证明。字幕正文以正式稿校对，错字及漏否定/限定词是硬伤。字幕空段/重叠/越界与事件偏差可做静态检查，最终仍须实际手机/平台及连续观看。",
           "lines": [
-            117,
-            117
+            133,
+            133
           ],
           "quote_sha256": "3d9e60c6197ff8c6bf4dee0f0b380d0ab54d49c1864d0b2a2e1d6670695b67d5"
         }
@@ -43199,8 +43279,8 @@
           "anchor": "失败后的处理",
           "quote": "1. 在私有项目记录绑定原反馈、受影响版本/时段和实际导出。先区分内容、转镜、动画、解说、声音或布局问题；范围不明只澄清必要歧义，不把局部否定扩大到其他已认可作品。截图/时码先作缺陷定位，除用户明确限定检查范围外，在当前受影响整片从头到尾排查同一缺陷机制及依赖关系，不只检查被点名的一帧。沿用现有分镜与QA缺陷记录，列实际扫描范围、受影响镜头/时段、需改项、保留项及依据、未验项；共同根因未核实仍记待查。全片排查不等于重画所有镜头，改动范围遵循 [当前任务与委托范围](production-checkpoints.md#3-阶段推进与代表样)，不能把实施方便当作保留已知缺陷的依据。\n2. 对照已有规则判断是缺规则、规则含糊还是执行/验收遗漏。前两类在原责任章节修订可复用的判断方法，写清适用条件与可变部分；已有明确规则时修正实际制作或验收执行，并记录证据。单集对象、具体模型、坐标、时码与局部处理留在该集工作包；跨集复用核当前题材、关系与边界。根因未核实仍标待查，未经验证的个例结论不作为通用要求。\n3. 规则须写清可观察行为、所需证据和失败后退回阶段。按变更风险做回归与独立审查；发布授权另按当前范围履行，公开内容仅含通用规则/测试，不带用户聊天、私有身份或媒体。\n4. 在本片修复及下一条适用视频中实际检查该项，记录规则版本、媒体版本、连续片段/时间点和结果。对本轮反馈与受影响镜头逐项说明已修复、仍适用而保留的依据及尚未处理/未验项，证据按 [记录与技术检查](#记录与技术检查) 绑定本次实际最终导出与所审声画版本。交完整新版本时，复查修复段、依赖镜头和接缝，并按整片要求从头到尾实际看听；不能用代表段通过、文件已替换或旧通过记录覆盖未处理的同类缺陷。后片未产出或未看听时保持待验证，不能把Skill更新或旧样片通过当成已改进后续作品。\n\n仅改规则、改QA字段或通过代码测试都不会自动解除冻结。已认可且与新稿匹配的音轨尽量保留，重新检查其声画/字幕配合，避免无谓重生成。已发布内容不自动修改/删除；需另有明确授权。规则测试只检验流程或程序约束，不证明成片达到质量标准。",
           "lines": [
-            82,
-            87
+            98,
+            103
           ],
           "quote_sha256": "80672e0ae0e11ab87cb72f9adfbeb39b361d68bb08975c0475154d7af9e34a9b"
         }
@@ -43217,8 +43297,8 @@
           "anchor": "标杆与可复制性的完成定义",
           "quote": "先冻结标准和可用资产/声音，新风格探索再以同一事实链做两方案三尺度图与连续有声代表段，已有明确认可方向则复用其绑定范围而不强制重选两案；通过后做完整标杆及内部解释/表达审查与实际平台验证；真实反馈仅可选，再以三种不同且未取消的机制验证复制，记录工时与返工，最后据实排产扩库。素材库/设计包完成、视觉体系验证、生产系统建成分开报告。\n\n系统建成须同时有一条完整通过的标杆、三条不同机制可复制成片、版本/来源/发布读回可追溯、缺陷能追到责任工序、实测成本与容量。缺一项就写具体未完成；规范写入、测试全绿不代这些媒体成果。每轮交付列当前版本、实际新增产物、已验/未验/失败、下一个可独立执行事项。",
           "lines": [
-            146,
-            148
+            150,
+            152
           ],
           "quote_sha256": "c61e3fed6e678bb049b413f5e04d8bb2a820aeabe1f8c375fc256ee168e1362d"
         }
@@ -43273,8 +43353,8 @@
           "anchor": "实施参考的用途",
           "quote": "以下只支持相应方法，项目自定分数/产能不由外部来源背书，使用时核当前文档：\n- [Ordinary Folk流程](https://www.ordinaryfolk.co/process)：脚本、设计、动画和声音工序\n- [Motion Canvas事件](https://motion-canvas.io/docs/time-events/)：可维护的声画时码；经局部验证后可选，不是品质证明\n- [Remotion Skills](https://www.remotion.dev/docs/ai/skills)与[许可说明](https://www.remotion.dev/docs/license/faq)：实现参考与按主体核许可，不自动安装或认定商业资格\n- [FFmpeg loudnorm](https://ffmpeg.org/ffmpeg-filters.html#loudnorm)与[ffprobe](https://www.ffmpeg.org/ffprobe.html)：测量/媒体信息能力，不为内部响度起点背书\n- W3C [文字对比](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)、[闪烁](https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html)、[预录字幕](https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html)：内部检查参考，不等全片认证或所有人的安全保证",
           "lines": [
-            156,
-            161
+            160,
+            165
           ],
           "quote_sha256": "34264216ebc583913e85f085f8dd4f22991e81997f7031adbd5c3fa6eabef6ef"
         }
@@ -43291,8 +43371,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "每片保存可恢复的简报、来源、脚本、分镜、设计/资产、原声/混音分轨、事件时码、字幕、样片/候选/发布版、审查、授权/平台回执与反馈。目录可适配现项目，信息不能漏。命名含集/剪辑/音轨/画幅版本，不用final_final_latest；字幕、封面、文案独立hash。改稿使事实/理解/旁白/字幕/相关镜头失效，改音轨使听检/同步/完整片失效，改布局使视觉/字幕/平台失效，改封面文案使包装和相关授权失效。视频任何字节变动需重新绑定并重审相关最终项目。",
           "lines": [
-            84,
-            84
+            86,
+            86
           ],
           "quote_sha256": "cb7516288ee19a1dd1169f2c738951e21c309fa737b3e25bd9f203a47b30774d"
         },
@@ -43301,8 +43381,8 @@
           "anchor": "记录与技术检查",
           "quote": "- 实际审完才将对应项写 `pass`，三份交付媒体SHA-256记 `qa.reviewed_sha256`；媒体、音轨、素材、镜头或文案改变后重审相应项目，不能只刷新哈希沿用旧结论",
           "lines": [
-            69,
-            69
+            85,
+            85
           ],
           "quote_sha256": "629f67367d6c56432f51565fc30a408af71baf5c838c317e618a56e715be242b"
         }
@@ -43355,8 +43435,8 @@
           "anchor": "动作卡镜头配方与事件复核",
           "quote": "复用配方记录问题类型、条件、镜头骨架、资产、动作卡、口播事件、科学风险与正反例：整体→局部→整体需同一对象回程；前态→触发→后态保留中间变化；同条件对照只改有关变量；传播→响应核起因/方向/延迟，波前不冒作物质飞出；剖面先建立外形和剖切关系再恢复整体。无声网页演示/相对时间只是候选，不能抵G3，也不能预填未生成音轨的绝对时码。",
           "lines": [
-            80,
-            80
+            82,
+            82
           ],
           "quote_sha256": "145b520d25994589cd289c8f74e8c82cc14a3ec0f0642d58b492723a000d5ab7"
         },
@@ -43365,8 +43445,8 @@
           "anchor": "按动作类别补充信息",
           "quote": "`timing_basis.mode`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；正式动作方案还记录note说明其语义依据；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。",
           "lines": [
-            95,
-            95
+            97,
+            97
           ],
           "quote_sha256": "3710bd427fa353bb0a062e1ce06f816e2a44696198fc5ab7817ae9917abe8db1"
         }
@@ -43464,12 +43544,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "每个关键难点的表达方案",
-          "quote": "在 topic_alignment.expression_cards 为关键难点填写 difficulty、prerequisites、visual_action、inferable_outcome、misconception、boundary，以及 step_ids 与 uncertain。visual_action 必须具体说清固定什么、改变什么、展示顺序、比较哪两个状态、放大哪个局部或持续保留哪条联系；“做直观动画”“突出重点”不足以执行。必要前提可合理来自受众起点，仍须写明；没有特殊误解或简化时写出依据。",
+          "quote": "在 topic_alignment.expression_cards 为关键难点填写 difficulty、prerequisites、visual_action、inferable_outcome、misconception、boundary，以及 step_ids 与 uncertain。visual_action 必须具体说清固定什么、改变什么、展示顺序、比较哪两个状态、放大哪个局部或持续保留哪条联系；“做直观动画”“突出重点”不足以执行。卡片及解释配方的 prerequisites 仍是规划所需信息的文字清单，来源绑定记录在对应解释步骤；必要前提可合理来自受众起点，仍须写明。没有特殊误解或简化时写出依据。",
           "lines": [
-            29,
-            29
+            31,
+            31
           ],
-          "quote_sha256": "1f3fb49a4412add22ae0a0ede7ac5ba0e7ef257840e8ece91ea3accdc0151593"
+          "quote_sha256": "53624e751503701b3b8313e3618ba70eb481a6b293ff50ff9ee62ab6384e5ac3"
         }
       ]
     },
@@ -43484,8 +43564,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "解释内审按 [自主解释与表达审查](#自主解释与表达审查) 分两种职责。explanation_review 检查原问题、必要前提、推理完整、成立条件、边界和结尾整合；expression_review 检查这些关系是否确实出现在最终脚本、画面、动作和声音中。G1在 qa.explanation_logic 记录逻辑审查，G2在 qa.expression_plan 记录表达方案审查；G5在 qa.explanation_review 与 qa.expression_review 按各自职责记录当前完整最终导出的实际证据。已有 qa.comprehension.logic_review / internal_review 的详细记录可映射同一阶段职责，不能另强制填写两套批准；可引用同一次实际观看与逐步骤记录，各职责的结论、范围与版本仍须明确。",
           "lines": [
-            103,
-            103
+            119,
+            119
           ],
           "quote_sha256": "3814e91747911c2e7529d2df298f4426ee1f4c8e079d2668768dde242fad9646"
         },
@@ -43494,8 +43574,8 @@
           "anchor": "完整质量标准的分数与解释内审",
           "quote": "阶段记录固定相应阶段 context_sha256、reviewer、reviewed_at、note 与 evidence。G1纸面逻辑检查只绑定其阶段的解释设计；G2以方案审查及实际完整草排证据签收对应范围；G5固定 actual_information_only=true、independent_of_generation_context=true 和 media_sha256，并记录 reviewer_kind、visual_review_capable、audio_review_capable 及完整 viewing，逐项保存 understanding_goals 的 answer、relationships、transfer、boundaries 结论和证据。每个所审解释步骤的 steps 记录实际 start/end、shot_ids、prerequisites_observed、relation_observed、derivation_observed、boundary_observed、visual_evidence、narration_evidence、audio_visual_coherence 和 referent_evidence；unpresented_assumptions 保留发现的未呈现前提，缺项须修复后实际重查，通过时该项应为空列表，不能只清空字段伪造通过。步骤证据对应所有必答范围，不仅代表段或主链；引用共同记录须能定位同一媒体版本、实际时段与该职责观察。审查者可为具备相应能力的人员或Agent，但须如实记录实际看听能力，不能将内审通过写成真实受众理解率。",
           "lines": [
-            105,
-            105
+            121,
+            121
           ],
           "quote_sha256": "635e2c2ad1e9277816fd06b0c635bb4c6d13ea9bf7387dd4a88390878de43860"
         }
@@ -43512,8 +43592,8 @@
           "anchor": "精美程度的分级与逐项证据",
           "quote": "当前2D成片目标为L3。qa.visual_frames.finesse 分别记录 static（A01–A10）、motion（D01–D08）、integration（I01–I05）的实际级别、note、evidence 及逐项 criteria；同时固定 target_level、reference、reference_note、media_sha256 和G5 context_sha256。逐项记录 id、status、具体观察和证据时点，适用项须pass；确实不适用才填not_applicable并写reason，未验或失败不得用别项抵消。静态、动态、整合三维均达L3才能签精美通过，不能以三项平均或局部静图通过替代。已有明确否定、P0/P1或未实际看听仍依本页退回。",
           "lines": [
-            141,
-            141
+            157,
+            157
           ],
           "quote_sha256": "06c02d7a721103a4e3250b55ec07f7af9ade3526982c2f7e272436831c1b5f96"
         },
@@ -43552,8 +43632,8 @@
           "anchor": "g1g7-的实际推进记录",
           "quote": "美术方法在既有阶段内推进：G2用 [色彩与构图缩略带](visual-system.md#整片色彩与构图缩略带) 检查整期选择和关系；G3按 [实际风险选样及同镜校准](visual-system.md#代表样与-l2l3-校准) 验证精修后的主体、构图和连续动作；G5检查完整最终编码的L3完成度与细节保留；G6在已获授权的实际目标平台预览中复核可观察的细节及遮挡。发布后转码成品尚未取得时另记待验，不要求先发布才能完成G6预览。前期缩略带可为粗稿，不能把G3的精修要求提前变成G2门槛。证据、失败与未验沿用 [美术方法的阶段证据](quality-acceptance.md#美术方法的阶段证据)，不增加关卡或重复风格批准。",
           "lines": [
-            132,
-            132
+            136,
+            136
           ],
           "quote_sha256": "a8a25d44de7a599a6028b8a2d86d6b37a4d2bf640f1dc03c82da1103709b8812"
         },
@@ -43562,8 +43642,8 @@
           "anchor": "美术方法的阶段证据",
           "quote": "按 [视觉系统](visual-system.md#代表样与-l2l3-校准) 实施选样、构图、精修、整片编排及编码对照；可用 [美术与画质记录](../assets/art-direction-template.md) 保存具体观察，已有同等信息直接引用。本节把方法接入现有阶段和A/D/I条目，不新增评分、审批或JSON必填字段。",
           "lines": [
-            149,
-            149
+            165,
+            165
           ],
           "quote_sha256": "bfcb625b121f50e8588150c183ab523e3b3ffa61d1926300d54a5a936beae905"
         },
@@ -43645,8 +43725,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "- E02 观众起点：分别列可合理假设的知识、本片必须先交代的对象/概念/参照及范围外内容。复杂关系前先能辨认对象；不无限追溯常识，但缺失就无法理解下一步的前提必须先交代",
           "lines": [
-            179,
-            179
+            183,
+            183
           ],
           "quote_sha256": "dc53287ee5174a096401f7f22ef36e7a718c3a4ad13762a8c6c1a2ac1a16904b"
         }
@@ -43663,8 +43743,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "- E03 结构：标注因果过程、空间约束、结构功能、传播、数量、概率或证据推断，可按实际解释分支组合。写清前提、关键关系、结论和边界，不把所有题材套为触发—变化—结果，不用知识名词清单代替推导",
           "lines": [
-            180,
-            180
+            184,
+            184
           ],
           "quote_sha256": "e400bb09635401b6f89214c0a3c349687ecbb4724bbf8d7acfafa937b2e5eec6"
         }
@@ -43681,8 +43761,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "- E04 推理：逐个核因为、所以、因此、从而等连接是否有足够前提；缺变化、约束、对应或证据就补足。命名和宣布结果不算解释；已明确接受的合理前提无需无限下钻",
           "lines": [
-            181,
-            181
+            185,
+            185
           ],
           "quote_sha256": "d2a5c27ad1f0abfac0fd694fa1bb97406d239e2c587a0b8c03863390450eb249"
         }
@@ -43699,8 +43779,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "- E05 分段：按认识对象、观察变化、建立对应、比较或得出结论的理解任务分段，不按固定秒数。控制同时新增的重要关系，不机械限制每镜只有一个物体或每句只有一个名词；说明每段如何接到下一段",
           "lines": [
-            182,
-            182
+            186,
+            186
           ],
           "quote_sha256": "054d598ff47fb9bcea55577f5a0b44eb6084ce891a0b701ca437688b21fde132"
         }
@@ -43717,8 +43797,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "- E06 整合：把原现象、已建立关系和最终答案重新对应，不仅重复结论，不在收尾引入未经解释的重要概念",
           "lines": [
-            183,
-            183
+            187,
+            187
           ],
           "quote_sha256": "702428ed764bffb041112a14524280a6b5f9144eb2e3a72964361b485bbb8597"
         }
@@ -43735,8 +43815,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "- E07 选表达：由难点决定方法，不能为复用现有模型、素材或转场反过来改写解释。说明方法让哪个关键关系可观察；以下选择表是工具，不是统一模板",
           "lines": [
-            184,
-            184
+            188,
+            188
           ],
           "quote_sha256": "495f3fb0c7ccef14a37680e84240a7f7781737dcae554d72ef54fcda2e325678"
         },
@@ -43745,8 +43825,8 @@
           "anchor": "e02e07精制作前的解释设计",
           "quote": "| 关系类型 | 可选表达 | 不可省略的观察依据 |\n| --- | --- | --- |\n| 因果过程 | 连续状态、局部放大、接触/作用 | 中间变化与前后联系 |\n| 空间约束 | 固定参照、视角转换、条件筛选 | 不变量及满足条件的位置/方向 |\n| 结构功能 | 整体定位后剖面、分层、往返 | 位置、连接与相互作用 |\n| 传播 | 分离局部响应与传播范围 | 物体运动和整体传播的差别 |\n| 数量 | 共同尺度、受控对照 | 改变项、不变项、数量基准与完整分母 |\n| 概率 | 分布、范围、相同基准比较 | 样本范围、分母、不确定性，不以单次结果代规律 |\n| 证据推断 | 分开观察与推断 | 得到什么证据、能推出什么、不能推出什么 |",
           "lines": [
-            186,
-            194
+            190,
+            198
           ],
           "quote_sha256": "3305efcf5958b7d276f335604cad3c27e41672260ddd0da4baace63d3cbcdb67"
         }
@@ -43763,8 +43843,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "| E08关键画面 | 核心画面是否承担定位、比较、追踪、变化、结构或约束观察 | 补关系所需状态、连接或对照；相关物体/关键词/特效不是解释 |",
           "lines": [
-            182,
-            182
+            198,
+            198
           ],
           "quote_sha256": "0c5adce3d4885ec3b11334966a3c00a02e07989e0b7c35bcc3e49be5ab5f5585"
         },
@@ -43773,8 +43853,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "画面不需包办全部推理，也不要求静音能理解所有细节；声画共同形成必要对应。若只会复述术语、答案依赖未呈现的关键步骤、画面与旁白冲突、或必须作者课外补充才成立，退回解释与表达设计，不用总分掩盖。",
           "lines": [
-            188,
-            188
+            204,
+            204
           ],
           "quote_sha256": "3b28e6f76b9613977eae727c762bb896e3dd1b7fd48fc1038909869a5df90bdb"
         }
@@ -43791,8 +43871,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "| E09跟随路径 | 换对象、视角、时空或尺度后是否仍知所看内容 | 补锚点和对应，教学扫描/分解/暂停不冒充实际发生顺序 |",
           "lines": [
-            183,
-            183
+            199,
+            199
           ],
           "quote_sha256": "7318e761af33e1ae890ab7300c7773ad38a118bd558b2ea40d90f9ff7871ec80"
         }
@@ -43809,8 +43889,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "| E10通道配合 | 旁白引观察/连推理，主画面给观察依据，标签定位消歧，字幕准确保留口播 | 关键语义与对象/变化及时对应；不逐字强制动画，不让观众跨时空拼接 |",
           "lines": [
-            184,
-            184
+            200,
+            200
           ],
           "quote_sha256": "5340e0c1faeb872477dc26c7bc20c003a10e712433ba9ce3816d18dc9f613da8"
         }
@@ -43827,8 +43907,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "| E11简化边界 | 简化/类比/模拟是否保持核心关系、对象映射和必要差异说明 | 防示意线当实物、教学动画当事实证据、相关当因果、条件结论普遍化 |",
           "lines": [
-            185,
-            185
+            201,
+            201
           ],
           "quote_sha256": "dfb9f1772115b70be9ebc32e236efb5fecb6b5553e58a3a525352da0b62f6ade"
         }
@@ -43845,8 +43925,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "| E12误导 | 认真看完仍最可能推导出什么核心错误理解 | 用对照/限定/回真实情境消歧，不以作者本意辩解 |",
           "lines": [
-            186,
-            186
+            202,
+            202
           ],
           "quote_sha256": "c820e4f406993a49cd0acd8f6f794adc78fd19185c226b556f64518d89a615c4"
         }
@@ -43863,8 +43943,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "G1保留解释设计与逻辑缺项，G2以完整有声草排检查关系实际呈现，G5对最终整合版本重查解释/表达与实际完整声画；沿现有阶段和版本证据，不新增平行批准。每项结果必须指向已审作品位置，已知失败须修复并重新检查；可选真人反馈的缺失不阻断，实际必需的视听检查缺失仍阻断相应成片通过。",
           "lines": [
-            192,
-            192
+            208,
+            208
           ],
           "quote_sha256": "1ed46316fb6fc3b262269373a957f4b96ec40c2196df37f0b0a5ef81c8568c6b"
         },
@@ -43873,8 +43953,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "**解释审查**检查问题、前提、关系、推理与边界，逐步问凭什么能得到下一结论。**表达审查**检查实际脚本、分镜、草排或最终导出是否呈现必要信息与关系。只凭当前作品已呈现内容，不用作者脑中知识、设计说明或预期答案补空。纸稿只能支持相应逻辑/文字结论，不能签实际动态、音色或成片通过；技术、逻辑、实际视听分别记录，未实际检查的项目不填通过。内部审查不证明真实受众理解率。",
           "lines": [
-            170,
-            170
+            186,
+            186
           ],
           "quote_sha256": "afa862cc927a5ad70df88f02a4c273c13d57b27bf7cf380d9bb9894df0186966"
         },
@@ -43883,8 +43963,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "检查四个目标：作品是否足以支持明确回答原问题、解释关键关系、判断同等难度的小变化或相近情形、知道结论与示意的边界。小变化不要求片中未交代的知识，也不靠提高难度制造失败。这些是作品逻辑与表达的内部检查任务，不是必须收集观众回答的门槛。",
           "lines": [
-            172,
-            172
+            188,
+            188
           ],
           "quote_sha256": "c2d4016caea55af6e0d0433e7fa9886d651e07f8fcb19da65b9a872003ad75a5"
         },
@@ -43893,8 +43973,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "事实正确与表达清楚分别验收，不能抵扣；语言顺滑、美术漂亮、知识覆盖、技术完成或总分都不证明解释成立。",
           "lines": [
-            174,
-            174
+            190,
+            190
           ],
           "quote_sha256": "d4239e60d0a271137a84b241049ee82a0afd4c886f5dcdc33869f34232c76904"
         },
@@ -43903,8 +43983,8 @@
           "anchor": "自主解释与表达审查",
           "quote": "返工记录沿用已有缺陷台账：具体位置与版本 → 缺失的理解条件 → 修改哪种表达 → 用何实际证据复查。对象不明查识别/前提；关系不明查布局/连接/对照；局部懂但连不起查推理和衔接；跟不上查分段/停留/出现顺序；换视角迷失查锚点；错误结论查类比边界；答不出原问题查主次与整合。“更通俗”“更直观”不是完整返工指令。",
           "lines": [
-            190,
-            190
+            206,
+            206
           ],
           "quote_sha256": "94d241dfc3637185e21097466b925f428fbc3c434ab9bb09f50659feb7456c78"
         }
@@ -43920,48 +44000,167 @@
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "视频必须在真实时间内推进所讲的观察或机制。真实锚点是有合法来源、原片区间和权利证据的连续动态实拍/观测；2D解释须让主画面主体的状态、形态、位置或相互作用随口播持续发展。字幕/标题变化、装饰粒子、整图平移缩放（包括Ken Burns）、静图转场或频繁硬切静图均不算有效主体推进。精美静态插画和旁白不能代替视频，静态背景无需强迫运动。",
-          "quote_sha256": "251b6dd6c6e901ca03b44f32b4d6a1936c3f662c8600819ca576e7df37222cc3"
+          "quote_sha256": "251b6dd6c6e901ca03b44f32b4d6a1936c3f662c8600819ca576e7df37222cc3",
+          "lines": [
+            41,
+            41
+          ]
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "G2完整有声草排、G3代表连续样段和G5最终完整导出分别核全时域。先正常速度连续看听，再屏蔽字幕/标题/装饰或只看主体ROI，核口播所需变化是否实际发生，标出每个完整语义段及最长无有效主体推进区间；跨镜、硬切、改字幕不重置该区间。机械每2秒切镜、加速片段或随机微动不修复失败。已有被否定版本沿失败台账保持失败，只有对应实际新导出重审才可关闭。",
-          "quote_sha256": "6cf022804e53f936a3c560c5ae6b511ea4b60321aa96ac885f402eb7b497582e"
+          "quote_sha256": "6cf022804e53f936a3c560c5ae6b511ea4b60321aa96ac885f402eb7b497582e",
+          "lines": [
+            43,
+            43
+          ]
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "当前项目保守可执行上限在 `config/production-policy.json subject_motion`：连续无有效主体推进不得超过3.0秒，有目的短读图停顿不得超过1.6秒；这些数值是项目防静图上限，不是用户指定秒数、科学规律或行业标准。读图停顿必须说明观察目的、口播对应及恢复/收束证据，也计入无推进区间；不得把完整口播语义段记为读图例外。即使不到上限，只要完整语义段仅有静图/排除的伪动态仍失败。不得靠连续拆小停顿、拆语义段或在段间插入无关动作达标；修复应呈现缺失主体/关系的发展。",
-          "quote_sha256": "0f33913d58023e4e8a402dc3b953500d221f4ca3e8c74f8ff25656e23a2d311a"
+          "quote_sha256": "0f33913d58023e4e8a402dc3b953500d221f4ca3e8c74f8ff25656e23a2d311a",
+          "lines": [
+            45,
+            45
+          ]
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "`qa.shotbook.subject_motion`（G2）、`qa.visual_frames.animation.subject_motion`（G3）、`qa.visual_frames.subject_motion`（G5）分别记录 `status`、当前阶段 `context_sha256`、所审 `media_sha256`、实际 `roi_review`、五类 `excluded_motion_review` 和不可变 `screen {file,sha256}`。`spans` 按秒连续覆盖完整所审文件，每项有 `start/end/kind/subject/observation/narration_relation/evidence`；kind为 `subject_change`、`authentic_motion`、`purposeful_read` 或 `no_progress`，前两项须记录有依据的主体变化，停顿另记 `purpose/resume_evidence`。`semantic_units` 同样完整连续覆盖，记录 `start/end/step_ids/spoken_point/progression_observed/evidence`，不得省略开头、结尾或无动作口播；G3覆盖所选解释步骤，G2/G5覆盖全部步骤。记录计算所得 `longest_no_progress_seconds`，不以平均帧差、运动总量、局部漂亮动作或高分抵扣最差区间。",
-          "quote_sha256": "47d32acf9be71257e38b8a3af0535583d6c507ed11567669104891675e67bca4"
+          "quote_sha256": "47d32acf9be71257e38b8a3af0535583d6c507ed11567669104891675e67bca4",
+          "lines": [
+            47,
+            47
+          ]
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "实际导出先运行 `python scripts/subject_motion.py <media> --regions <regions.json> --report <new-screen.json>`。regions为连续覆盖全文件的JSON数组，每项有 `start/end/subject/isolation_note/roi/masks`；roi与mask.rect为全画幅归一化 `[x,y,width,height]`，mask另有kind（captions/titles/decoration）。按题材选择完整相关主体/关系ROI，核ROI没有漏掉关键主体或把装饰选成主体，mask没有遮掉必要机制；可用空mask列表明确无须屏蔽。筛查在主体区域采样帧差并列低变化区间，报告最长候选区间和固定媒体/参数；检查器重新解码核报告，且报告须加入该关 `qa.gates.<stage>.evidence`。报错、缺报告、版本/参数过期、时域缺口保持未验并阻断阶段通过。",
-          "quote_sha256": "102a0467453f0f977fe858d83ce73d98c99bd4486e125116cac537966f79f3be"
+          "quote_sha256": "102a0467453f0f977fe858d83ce73d98c99bd4486e125116cac537966f79f3be",
+          "lines": [
+            49,
+            49
+          ]
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "自动帧差只筛查，不能识别有意义因果、真实实拍、Ken Burns或静图硬切。每个 `low_motion_ranges` 候选须在 `screen_resolutions` 逐项以同一range实际回放复查；只有确认采样未捕获的有效主体推进，才可记 `result: effective_subject_progression` 并写具体 `observation/evidence`，且不得与spans相矛盾。候选仍为静图、伪动态、长停顿或未能连续审看时记失败/未验，不能只改文字关闭。实际连续声画审查不可由帧差、抽帧或JSON代替；非低帧差片段仍逐项核排除手法和语义推进。无连续视听能力时不签通过。",
-          "quote_sha256": "65e79b70f8f39ddfa986bebe7df661439b80742be4a6b659b4597b02af5757e9"
+          "quote_sha256": "65e79b70f8f39ddfa986bebe7df661439b80742be4a6b659b4597b02af5757e9",
+          "lines": [
+            51,
+            51
+          ]
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
           "quote": "退回条件：任何全语义段幻灯片、超过项目上限的无推进、读图例外扩张、主体ROI/屏蔽失真、未解决筛查候选、缺连续视听或当前版本证据。规则适用于所有题材和完整开场；约10秒静图配旁白直接失败。合法真实动态、与口播一致的机制推进及受限有目的短读图停顿可通过相应检查，但不自动证明科学、权利、美术或整片通过。",
-          "quote_sha256": "cd45cad4427cd94299fdd7368549e7d1457a9b5729750d11a25412c7896e1d8c"
+          "quote_sha256": "cd45cad4427cd94299fdd7368549e7d1457a9b5729750d11a25412c7896e1d8c",
+          "lines": [
+            53,
+            53
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CONTINUITY-prerequisites-failure",
+      "application": "G1及后续重新验收；已有前提记录按正文迁移",
+      "failure_condition": "步骤前提必须指向合理受众起点或观看顺序中已建立的步骤；未知、自身与后文依赖不通过结构检查。",
+      "clauses": [
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "2-把解释关系变成可见表达",
+          "quote": "每个解释步骤的 `prerequisites` 逐项记录 `knowledge`（本步沿用的具体知识/结论）及 `source`：`audience_prior` 表示已列入 `brief.audience_start.assumed_knowledge` 的合理受众前提；`step` 同时填写来源 `step_id`。来源步骤必须已在片中建立所需关系，不能用后文知识或开场先给的一句话总答补当前缺口。来源步骤的最后一镜不得晚于本步第一镜；共用同镜时按 coverage 及 steps 记录顺序表示先后，并与实际呈现顺序一致。旧 `explanation_steps` / `causal_steps` 的字符串前提须在重新验 G1 前迁移，不能自动假定为受众已知。检查器只核引用和记录顺序，关系是否实际建立仍由纸稿及有声草排审查判断。",
+          "quote_sha256": "d51c511571cb7dd2864f02d746e3de0bcedd34a8b36bddfb20a3cdb3942c4aa2",
+          "lines": [
+            27,
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CONTINUITY-master-script-failure",
+      "application": "G2及后续阶段",
+      "failure_condition": "以连续完整讲解稿拆镜，镜头口播按观看顺序与原稿一致；单镜分别写完不等于整期成立，完整声画仍须实际审查。",
+      "clauses": [
+        {
+          "file": "references/shotbook.md",
+          "anchor": "音频先行但不牺牲画面",
+          "quote": "以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。",
+          "quote_sha256": "230e12fb6ca83455f239266de99a2a602b679a34d9c66423019f3f016643ebb5",
+          "lines": [
+            7,
+            7
+          ]
+        },
+        {
+          "file": "references/shotbook.md",
+          "anchor": "音频先行但不牺牲画面",
+          "quote": "G2 将各镜 `narration_exact_text` 按镜头顺序拼回完整稿，仅忽略排版空白；无口播镜写空字符串。这只核文本结构一致，不代表解释逻辑通过。",
+          "quote_sha256": "da43ed6c6e15c1facba93cd3c9c28fc10dc328827a1937c37d939b5b17b69bb0",
+          "lines": [
+            9,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CONTINUITY-voice-failure",
+      "application": "新生成、必要分段及补录；不因规则修改重生成匹配的已认可音轨",
+      "failure_condition": "整期连续讲述优先，切镜不作为合成边界；实际语气以相邻语义段及完整音轨听验判断，参数一致不代替听感。",
+      "clauses": [
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "连续讲述与合成单元",
+          "quote": "以下方法适用于已确认工程、服务和可选适配器。同一期默认用整期连续讲述稿生成主音轨，再依据实际语义和停顿排镜头；切镜、字幕换行或分镜表中的一行不构成独立合成单元。稿件中的开场、因果推进与结尾属于一次完整讲述，全局风格指令不按每次调用重新要求“第一句”开场语气，重音随当前语义变化。",
+          "quote_sha256": "f68151e68a09f1f90ed404b47a65a63753490bd2d3552af77daadf5f73cf8c03",
+          "lines": [
+            15,
+            15
+          ]
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "连续讲述与合成单元",
+          "quote": "新生成前核对实际生效的全局指令，包括既有工程保存的指令；其中每次调用都会重启开场或作结的要求，按整期语义调整并在实际生成记录中保存变动。继续使用已确认的声音和运行环境，不能仅因工程已有配置而跳过这项核对；已实际认可且仍匹配当前稿件的音轨优先复用，不因指令文本更新盲目重生成。",
+          "quote_sha256": "246b8d732bfcbb8cd3d20ed9947f2fcf61e3ed2214b41f6536c8f5f5342700b1",
+          "lines": [
+            17,
+            17
+          ]
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "连续讲述与合成单元",
+          "quote": "只有整稿遇到已核实的接口长度限制或实际生成稳定性问题时，才按完整语义段拆分，在当期记录原因、段落顺序和各段生成记录。边界落在完整意思及自然停顿处，不在因果连接、指代或一句话中间截断。同一期各段沿用已确认的模型版本证据、音色、语言、风格指令、运行配置和可取得的有效生成参数；未暴露的参数如实说明，不逐镜另拟风格或临时调参。已采用的 seed 策略一并记录，相同 seed 或参数不能保证听感一致。先生成并连听相邻语义段，确认接续方式可用后再扩展；不能根据单段样本推定整期连贯。",
+          "quote_sha256": "db6b5c3d5ad08d44fc8d45bb3468940e0e8b2c839a3f7d1d9a18d1e6223561d5",
+          "lines": [
+            19,
+            19
+          ]
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "连续讲述与合成单元",
+          "quote": "局部错词或语气问题先定位到实际音轨。需要补录时，以包含问题及必要前后文的完整语义段重新生成，优先替换完整语义段；实际需要裁接时，在自然停顿处选点并连听前后接缝，不把孤立词句直接贴回。这里的上下文通过输入稿件和替换范围提供，具体接口能力按已确认工程核实。沿用已有认可且仍匹配的部分，按 [运行记录与音轨绑定](#运行记录与音轨绑定) 保存新版本及实际处理步骤，再重对齐受影响的声画与字幕。",
+          "quote_sha256": "be8b08b7a51748b87dad9e4847560f948facdd8a4be2c446dcb00b061109c86a",
+          "lines": [
+            21,
+            21
+          ]
         }
       ]
     }
   ],
-  "rule_count": 901,
+  "rule_count": 904,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

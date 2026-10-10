@@ -1,6 +1,7 @@
 """Mock inference only: these fixtures never establish real speech or listening quality."""
 import contextlib
 from concurrent.futures import ThreadPoolExecutor
+import hashlib
 import importlib.util
 import io
 import json
@@ -154,6 +155,22 @@ class SynthesisTests(unittest.TestCase):
         self.assertFalse(self.download.call_args.kwargs["local_files_only"])
         self.assertEqual(self.download.call_args.kwargs["revision"], "reviewed-branch")
         self.assertNotIn("text", self.download.call_args.kwargs)
+
+    def test_multiple_paragraphs_remain_one_unchanged_generation_input(self):
+        narration = "  这是第一段。它包含两句话。\n\n因此，第二段继续前面的解释！\n最后一句收束全文。\n"
+        self.text.write_text(narration, encoding="utf-8")
+
+        result = self.run_synthesis()
+
+        self.model.generate_custom_voice.assert_called_once_with(
+            text=narration, speaker="Serena", language="Chinese", instruct="自然口语",
+            non_streaming_mode=True, temperature=0.9, max_new_tokens=2048, top_p=0.75)
+        self.assertEqual(result["input"]["sha256"], hashlib.sha256(narration.encode("utf-8")).hexdigest())
+        self.assertEqual(result["input"]["text_transformation"], "none")
+        self.assertEqual(result["voice"]["instruct"], "自然口语")
+        self.assertEqual(result["effective_generation_params"], {
+            "non_streaming_mode": True, "temperature": 0.9, "max_new_tokens": 2048, "top_p": 0.75})
+        self.assertEqual(result["listening"]["status"], "pending")
 
     def test_no_overwrite_of_existing_voice(self):
         self.output.write_bytes(b"accepted source voice")

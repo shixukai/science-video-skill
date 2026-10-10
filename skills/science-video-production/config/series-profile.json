@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -24,7 +24,7 @@
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
     "speaker": "Serena",
     "language": "Chinese",
-    "instruct": "自然口语，像认真向朋友解释一个有趣现象。第一句带一点好奇，接着平实讲清因果。不要朗诵腔，不要逐字停顿，句子有轻重变化，普通话清晰。",
+    "instruct": "自然口语，像认真向朋友连续解释一个有趣现象。用平实、连贯的语气讲清因果，重音和停顿跟随当前语义。不要朗诵腔，不要逐字停顿，普通话清晰。",
     "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
     "reuse_matching_audio": true,
     "postprocess_example": {

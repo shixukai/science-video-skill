@@ -27,6 +27,8 @@ class CanonicalStageTests(unittest.TestCase):
  def test_partial(s):s.d['qa']['visual_frames']['animation']['viewing']['ranges']=[[0,.5]];s.rejects('full evidence clip')
  def test_old_media(s):s.d['qa']['visual_frames']['animation']['viewing']['sha256']='0'*64;s.rejects('hash stale')
  def test_plan_changed(s):s.d['shots'][0]['visual_note']='changed';s.rejects('stale stage context')
+ def test_g1_shot_order_change_invalidates_paper_review(s):
+  s.d['shots'].reverse();s.rejects('stale context','G1')
  def test_audio_changed(s):s.d['narration']['audio_sha256']='0'*64;s.rejects('stale animation')
  def test_step_missing(s):s.d['qa']['visual_frames']['animation']['steps'].pop();s.rejects('lacks continuous evidence')
  def test_local_cannot_clear(s):s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.rejects('local approval cannot overwrite')
@@ -186,7 +188,7 @@ class CanonicalStageTests(unittest.TestCase):
 
  def generalized(s,relation,fields):
   coverage=s.d['topic_alignment']['coverage'][0];old=coverage.pop('causal_steps')[0]
-  coverage['explanation_steps']=[{'id':old['id'],'relation_type':relation,'prerequisites':['known test object'],'handoff':'next test relation','shot_ids':old['shot_ids'],'requires_dynamic':False,'still_reason':'a stable comparison reveals this test relationship','key_difficulty':True,'key_relation':'synthetic relation','derivation':'synthetic derivation','boundary':'synthetic scoped boundary','referent_mappings':{'object':'synthetic known object'},**{key:'synthetic '+key for key in gates.RELATION_FIELDS.get(relation,())},**fields}]
+  coverage['explanation_steps']=[{'id':old['id'],'relation_type':relation,'prerequisites':[{'knowledge':'known test object','source':'audience_prior'}],'handoff':'next test relation','shot_ids':old['shot_ids'],'requires_dynamic':False,'still_reason':'a stable comparison reveals this test relationship','key_difficulty':True,'key_relation':'synthetic relation','derivation':'synthetic derivation','boundary':'synthetic scoped boundary','referent_mappings':{'object':'synthetic known object'},**{key:'synthetic '+key for key in gates.RELATION_FIELDS.get(relation,())},**fields}]
   s.d['qa']['visual_frames']['animation']['steps'][0].update(observed_relation='synthetic observed relation',derivation_observed='synthetic observed inference')
   refresh(s.d)
  def test_general_relationship_types(s):
@@ -523,7 +525,7 @@ class CoverageStageTests(unittest.TestCase):
    coverage['explanation_type']=kind;coverage['explanation_steps']=coverage.pop('causal_steps')
    for step in coverage['explanation_steps']:
     for k in ('before','change','after','handoff'):step.pop(k)
-    step.update(prerequisites=['synthetic known premise'],key_relation='synthetic key relation',derivation='synthetic inference',boundary='synthetic limit',referent_mappings={'object':'synthetic on-screen object'},requires_dynamic=False,still_reason='stable relation permits inspection')
+    step.update(prerequisites=[{'knowledge':'synthetic known premise','source':'audience_prior'}],key_relation='synthetic key relation',derivation='synthetic inference',boundary='synthetic limit',referent_mappings={'object':'synthetic on-screen object'},requires_dynamic=False,still_reason='stable relation permits inspection')
     step.update({key:'synthetic '+key for key in gates.EXPLANATION_TYPES[kind]})
   for entry in s.d['qa']['visual_frames']['animation']['steps']:
    entry.pop('observed_change');entry.pop('handoff_observed');entry.update(observed_relation='synthetic actual relation',derivation_observed='synthetic actual inference',representation='stable_spatial_diagram')
