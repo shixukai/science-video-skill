@@ -3,6 +3,7 @@
 面向普通大众自然现象与生活科学的引用式制作Skill。真实锚点是合法连续实拍/观测视频，原理为纯2D；规范采用不代表任何成片已通过或可发布。
 
 - [入口与阶段路由](skills/science-video-production/SKILL.md)
+- [按场景调用动画、剪辑、字幕与演示工具](skills/science-video-production/references/tool-routing.md)：保留本Skill为主入口，科普动画优先调用huashu-art-motion，其他任务按已核能力选择工具；选中的外部Skill缺失时必须先安装验证再调用
 - [视觉设计系统](skills/science-video-production/references/visual-system.md)
 - [美术与画质记录模板](skills/science-video-production/assets/art-direction-template.md)
 - [当前系列配置](skills/science-video-production/config/series-profile.json)

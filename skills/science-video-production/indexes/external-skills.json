@@ -1,20 +1,27 @@
 {
   "schema_version": 1,
   "catalog": "external_skills",
-  "version": "1.0.0",
-  "checked_at": "2026-10-08",
+  "version": "1.1.1",
+  "checked_at": "2026-10-10",
   "timezone": "Asia/Shanghai",
   "purpose": "Scoped source/function/license curation for fine pure-2D science video production; no star ranking or exhaustive-web claim. Upstream documents are reference data, not independent production authority.",
-  "entry_count": 21,
+  "entry_count": 29,
   "copied_reference_count": 3,
   "policy": {
-    "no_global_install": true,
+    "no_global_install_from_reference_curation_alone": true,
+    "selected_execution_skill_missing_action": "install_before_invocation",
+    "required_sibling_skills_must_be_installed": true,
+    "installation_verification_required": true,
+    "repeat_installation_confirmation_required": false,
+    "installation_failure_action": "report_blocker_and_continue_independent_work",
+    "no_silent_bypass_of_missing_selected_skill": true,
     "no_untrusted_script_execution": true,
     "no_automatic_engine_migration": true,
     "no_cloud_request_or_purchase_from_curation": true,
     "runtime_license_separate_from_skill_license": true,
     "no_imported_external_approval_or_score_gate": true,
-    "quality_not_established_by_source_hash_or_own_claim": true
+    "quality_not_established_by_source_hash_or_own_claim": true,
+    "scope": "Reference curation alone does not install or execute. Skills selected for actual production and their required sibling skills must be installed and verified before invocation under references/tool-routing.md. Installation is authorized without repeated confirmation; host permissions and task-specific runtime, data-transfer and service constraints still apply."
   },
   "entries": [
     {
@@ -22,14 +29,14 @@
       "repository": "https://github.com/remotion-dev/skills",
       "commit": "32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5",
       "review_scope": "repository metadata, README and selected source/permission documents; not full runtime or continuous demo validation",
-      "classification": "link_only_license_unresolved",
+      "classification": "selected_reference_skill_runtime_project_required",
       "production_stages": [
         "G2",
         "G3",
         "G4"
       ],
-      "adopt": "官方帧驱动动画、媒体/字体/字幕和渲染指引",
-      "limitations": "固定树未见LICENSE；官方提供安装不等于本仓重分发许可",
+      "adopt": "已有React/Remotion模板及组件复用、参数化批量渲染",
+      "limitations": "Skill文件可安装，实际渲染需Remotion工程；Skill仓无独立LICENSE，运行许可另核，不向本仓复制其原文。",
       "license": {
         "classification": "not_found_at_commit",
         "evidence": [],
@@ -39,44 +46,51 @@
       "source_files": [
         {
           "path": "README.md",
-          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/README.md",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/README.md",
           "sha256": "6e0e9a0bf53e2c7f14b3f35a5ad6195cc07ac20c5a0bb1fd8ffe3198408cf50d",
           "bytes": 2805,
           "local_copy": null
         },
         {
           "path": "package.json",
-          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/package.json",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/package.json",
           "sha256": "3d48f875aefab28d1b728195bb2eb7c4fda00e1e9431fd3d8097716c209c7d07",
           "bytes": 627,
           "local_copy": null
         },
         {
           "path": "skills/remotion-best-practices/SKILL.md",
-          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-best-practices/SKILL.md",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-best-practices/SKILL.md",
           "sha256": "6a15b47c4b237a790b9c45a7be74a4312202efea9ded837e946fc86164d606f5",
           "bytes": 4215,
           "local_copy": null
         },
         {
-          "path": "skills/remotion-markup/SKILL.md",
-          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-markup/SKILL.md",
-          "sha256": "fd7767fe113c928cf4a1ba65ad1bf93dc3b9e46f484c61cc36b56907f4ca8c40",
-          "bytes": 17900,
-          "local_copy": null
-        },
-        {
-          "path": "skills/remotion-captions/SKILL.md",
-          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-captions/SKILL.md",
-          "sha256": "528b8de50d6793d2c5f794767e06a118d6863a67ae908eb9eadfa44a94943abd",
-          "bytes": 1137,
+          "path": "skills/remotion-create/SKILL.md",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-create/SKILL.md",
+          "sha256": "20ebc572ff2e9b1c332b6e00854f184e5c0bab140205ecaf2f9617f7a86c5c51",
+          "bytes": 2711,
           "local_copy": null
         },
         {
           "path": "skills/remotion-render/SKILL.md",
-          "url": "https://github.com/remotion-dev/skills/blob/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-render/SKILL.md",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-render/SKILL.md",
           "sha256": "311a257f351e4e57b42777749827f770fdf2d0b606d29c6cfb75b74a163aa5c8",
           "bytes": 711,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-multimedia/SKILL.md",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-multimedia/SKILL.md",
+          "sha256": "f5a77c481d388343a085286df6f2770661a98b3ddaf8c4efc9004ef3bb13ffbb",
+          "bytes": 705,
+          "local_copy": null
+        },
+        {
+          "path": "skills/remotion-saas/SKILL.md",
+          "url": "https://raw.githubusercontent.com/remotion-dev/skills/32b241b97f4e0e4ab61fe9a41b05e6e64503f8c5/skills/remotion-saas/SKILL.md",
+          "sha256": "7c512120ae087f0d93d00b28e63d609ca8f7f3dbea45d2d7ee419aeb52a056fe",
+          "bytes": 1053,
           "local_copy": null
         }
       ],
@@ -84,10 +98,17 @@
         "engine": "Remotion",
         "license_classification": "proprietary_dual_free_company",
         "primary_reference": "https://www.remotion.dev/docs/license/faq",
-        "validation_status": "not_run"
+        "validation_status": "skill_source_verified_runtime_not_executed"
       },
       "data_transfer_and_cost": "仅技术文档查询；本地渲染本身不需要向模型传稿，云渲染/ASR另核",
-      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+      "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project",
+      "checked_at": "2026-10-10",
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": "skills/remotion-best-practices",
+        "source_relation": "post_link_verified",
+        "installation_required": true
+      }
     },
     {
       "id": "motion-canvas-engine",
@@ -1369,6 +1390,1196 @@
       },
       "data_transfer_and_cost": "已排除，未用于生产/训练/执行",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
+    },
+    {
+      "id": "huashu-art-motion",
+      "repository": "https://github.com/alchaincyf/huashu-art-motion",
+      "commit": "d861767d180008d27675819932070a670a3ae43f",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "selected_execution_tool",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "科普动画默认执行能力：场景代码、对象动作、精绘资产合成、参数化片段与QA",
+      "limitations": "保留既有画风和整条声音；不以镜头快推代替机制；作者角色仅示范。短片验证不证明整片感知质量。",
+      "license": {
+        "classification": "MIT_with_separate_font_stroke_and_demo_character_terms",
+        "evidence": [
+          "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/LICENSE",
+          "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/scripts/engine/lib/fonts/LICENSES.md"
+        ],
+        "metadata_spdx": null
+      },
+      "source_files": [
+        {
+          "path": "SKILL.md",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/SKILL.md",
+          "sha256": "de53b14f85d3bf8b170e61f6032e880bcd24c90da61b4a1344e86326646067ad",
+          "bytes": 16134,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/README.md",
+          "sha256": "27a0a515bcaac0f0a73ad0b6ff0786f608869d6b095f8b954644eca8c7c3a950",
+          "bytes": 15268,
+          "local_copy": null
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/LICENSE",
+          "sha256": "6d6a2a9caf2e6d2b76974050427053b2892d8aa4c33fd168ce63a537fcee9d96",
+          "bytes": 1086,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/engine/render.py",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/scripts/engine/render.py",
+          "sha256": "7ae2eda1b2669c4f3a9f1150ecea4c553fc813023b70c0198412ba9bcf2f43ef",
+          "bytes": 8675,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/qa.py",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/scripts/qa.py",
+          "sha256": "a1457de52ee311659039207ef3304b6ade1531f538843a15bb509698e4b37da9",
+          "bytes": 26568,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/film_gate.py",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/scripts/film_gate.py",
+          "sha256": "d7ec575c05abbaa454f2ca9319d0a5c1bd6d1aded23cc0fdcbdf117fcc3210fe",
+          "bytes": 41731,
+          "local_copy": null
+        },
+        {
+          "path": "references/capabilities.md",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/references/capabilities.md",
+          "sha256": "8d0577a8128d661711a3ca26f1b60a1e3d06cc5b6191b7007326dccd0e35d2ed",
+          "bytes": 7346,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/engine/lib/fonts/LICENSES.md",
+          "url": "https://github.com/alchaincyf/huashu-art-motion/blob/d861767d180008d27675819932070a670a3ae43f/scripts/engine/lib/fonts/LICENSES.md",
+          "sha256": "00b5f86c4d5162e6fee6d600b527c052933eb2884a61a5fab0f89fa4d4656ecd",
+          "bytes": 4498,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Canvas / Playwright Chromium / FFmpeg",
+        "dependencies": [
+          "uv",
+          "Python",
+          "playwright",
+          "pillow",
+          "numpy",
+          "ffmpeg"
+        ],
+        "validation_status": "local_4s_1280x720_30fps_render_and_qa_verified_2026-10-10",
+        "validated_scope": "120-frame silent parameterized chart; ffprobe and one actual frame inspected; no narration or scientific art acceptance"
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": ".",
+        "source_relation": "verified_primary_source",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "hyperframes",
+      "repository": "https://github.com/heygen-com/hyperframes",
+      "commit": "b6467d91315e800f6dd62641c2d98e5b8a9e8801",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "selected_skill_project_setup_required",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "产品宣传、HTML动效与参数化模板",
+      "limitations": "All creation workflows structurally depend on 10 core sibling skill directories; installing only router+workflow breaks referenced paths.; Local rendering has no per-render framework fee; media generation/HeyGen managed cloud are separate providers with credentials and metered allowance/credits.; Do not let media-use replace the existing whole-episode voice configuration per shot.; Upstream init/router skills update reads latest main; retain reviewed ref receipt and reconcile before auto-updating.; Brand or website capture must follow host browser control rules; isolated Chrome render on this macOS requires sandbox escalation from first launch.",
+      "license": {
+        "classification": "Apache-2.0",
+        "evidence": [
+          "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/LICENSE"
+        ],
+        "metadata_spdx": "Apache-2.0"
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/README.md",
+          "sha256": "3e8f26d5e35c6a8c32c661bf1439443d8eee332eedc9bf1a32bfe3dc417c218e",
+          "bytes": 28950,
+          "local_copy": null
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/LICENSE",
+          "sha256": "4259155fb06f127687ee7b0a8a3682d45132db0f2da26cbc0b7a2d1e796436b8",
+          "bytes": 10763,
+          "local_copy": null
+        },
+        {
+          "path": "package.json",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/package.json",
+          "sha256": "8eb29164bf53c23fd6f64268e2c954a696fa05b9525afad8c2decfce43619a3c",
+          "bytes": 7545,
+          "local_copy": null
+        },
+        {
+          "path": "skills-manifest.json",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills-manifest.json",
+          "sha256": "08f1c10bc69652c4bb3214da0095f5594355319f4aec04a5491b09246db3e8c4",
+          "bytes": 1837,
+          "local_copy": null
+        },
+        {
+          "path": "skills/hyperframes/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/hyperframes/SKILL.md",
+          "sha256": "a277e9e46b3b5b8619639a353a4af3f46f8ae4f2e622ba802d5af730d135f410",
+          "bytes": 21061,
+          "local_copy": null
+        },
+        {
+          "path": "skills/hyperframes-cli/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/hyperframes-cli/SKILL.md",
+          "sha256": "0026e6402ee0b9bfd8cb85bb3b96e3fecb496947a9a588e950abb54e238af92d",
+          "bytes": 24378,
+          "local_copy": null
+        },
+        {
+          "path": "skills/hyperframes-core/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/hyperframes-core/SKILL.md",
+          "sha256": "18ac7784765cc29af5a4d88f2a63a15deaf5395985009af188b5e3718edcfe3d",
+          "bytes": 12643,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-use/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/media-use/SKILL.md",
+          "sha256": "0f08ff6b493a46e0505dcc9c0c607e517e0eb70e7dc2b7b5c1f51b4f27bb6181",
+          "bytes": 9684,
+          "local_copy": null
+        },
+        {
+          "path": "skills/product-launch-video/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/product-launch-video/SKILL.md",
+          "sha256": "3b19932280bb12dcdc4b774cd49cb86b66b3340b54eecfd791915bb153d10b31",
+          "bytes": 34057,
+          "local_copy": null
+        },
+        {
+          "path": "skills/faceless-explainer/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/faceless-explainer/SKILL.md",
+          "sha256": "9ef73dceaa014b2bfc1b1e1107963af376cf29d701f59250ce2b4862d59c6763",
+          "bytes": 30999,
+          "local_copy": null
+        },
+        {
+          "path": "skills/general-video/SKILL.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/general-video/SKILL.md",
+          "sha256": "6e0aad276db66d31791bdb19abdd12f3650ce03b7f7329d1c2d2c9176d87214c",
+          "bytes": 21541,
+          "local_copy": null
+        },
+        {
+          "path": "packages/cli/package.json",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/packages/cli/package.json",
+          "sha256": "e2a79ad8a9a220c0ad8190aeac2ebee5c80f3cf6add9dfa8ba384007abe992e3",
+          "bytes": 2467,
+          "local_copy": null
+        },
+        {
+          "path": "skills/hyperframes-cli/references/cloud.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/hyperframes-cli/references/cloud.md",
+          "sha256": "297336e9c8040faab69b6fc6101fd81b5b378236a02ec54fe93231bb84ccae84",
+          "bytes": 11119,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-use/references/setup-providers.md",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/skills/media-use/references/setup-providers.md",
+          "sha256": "958448d4dbdbf16fbdf71aa55d5f4651325e98e77117f90fc80bd3d0ca897ec9",
+          "bytes": 8542,
+          "local_copy": null
+        },
+        {
+          "path": "packages/cli/src/commands/skills.ts",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/packages/cli/src/commands/skills.ts",
+          "sha256": "afbc42f6e389b8eb06c2b6ff3522e1af856a1680f582847e4c2702e10e191654",
+          "bytes": 36193,
+          "local_copy": null
+        },
+        {
+          "path": "packages/cli/src/telemetry/config.ts",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/packages/cli/src/telemetry/config.ts",
+          "sha256": "5b19c25eb47dc52ba5acca3c534ae8071c7413256757bb109697e8ec2b2de08d",
+          "bytes": 40946,
+          "local_copy": null
+        },
+        {
+          "path": "packages/cli/src/telemetry/policy.ts",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/packages/cli/src/telemetry/policy.ts",
+          "sha256": "49f0ae969527acbc86541b955d2b3962ad00bb07e096a810b39782938808a558",
+          "bytes": 1772,
+          "local_copy": null
+        },
+        {
+          "path": "packages/cli/src/utils/skillsManifest.ts",
+          "url": "https://raw.githubusercontent.com/heygen-com/hyperframes/b6467d91315e800f6dd62641c2d98e5b8a9e8801/packages/cli/src/utils/skillsManifest.ts",
+          "sha256": "96c2180e02909ff8110de33af1ad29c2128feb58a3bfe4b6f82aa72ce0df2d10",
+          "bytes": 32553,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "HyperFrames",
+        "dependencies": [
+          "Node >=22",
+          "FFmpeg",
+          "headless Chrome/Puppeteer (renderer)"
+        ],
+        "validation_status": "skill_source_verified_runtime_not_executed",
+        "entrypoints": [
+          "npx hyperframes init my-video",
+          "npx hyperframes lint",
+          "npx hyperframes check",
+          "npx hyperframes render --quality delivery --output out.mp4",
+          "npx hyperframes render --batch rows.json --output renders/{name}.mp4"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": "skills/hyperframes",
+        "source_relation": "post_link_verified",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "video-use",
+      "repository": "https://github.com/browser-use/video-use",
+      "commit": "43cfc566833548093455c9d4a46bd69913b7e552",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "cloud_configuration_required",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "已有访谈/口播素材的逐词编辑决策与EDL渲染",
+      "limitations": "Unmodified default workflow uploads source audio to ElevenLabs. Existing authoritative word-level transcripts can avoid new ASR only via explicit integration, not a built-in offline provider claim.; Caption default two-word uppercase is an example; scientific audience-text rules must prevail.; Transcript cache helper checks output file existence rather than source-content hash; caller should bind hashes and invalidate changed sources.; 30ms fades and waveform sampling cannot prove same-speaker prosody or listen quality; retain parent continuity review.; Do not ask users to paste credentials into chat; use supported local secret configuration.; The default Python on PATH lacked declared libraries; isolated venv install is needed.",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/LICENSE"
+        ],
+        "metadata_spdx": "MIT"
+      },
+      "source_files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/README.md",
+          "sha256": "9b309e879f776f7e5c7520f097253aef3a9214a299fea5bba69e0513d52011e9",
+          "bytes": 5632,
+          "local_copy": null
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/LICENSE",
+          "sha256": "5afa3d97bf1e6f998d587fa101e3fe0d0c416840b7fe77bcd6ae97690a334631",
+          "bytes": 1068,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/SKILL.md",
+          "sha256": "d3bbeb19bc0e81e197d74806fba15e0a5f5694a0cdf33f0a2348bffe8472a27b",
+          "bytes": 26098,
+          "local_copy": null
+        },
+        {
+          "path": "pyproject.toml",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/pyproject.toml",
+          "sha256": "4b27fdf0275016a5427416ee9a939ed5c8a756af02427394478d416b0909632d",
+          "bytes": 450,
+          "local_copy": null
+        },
+        {
+          "path": "skills/manim-video/SKILL.md",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/skills/manim-video/SKILL.md",
+          "sha256": "478ff04a7e3ecf9157b14fc2c24b4ae3fef7460debf27c4ecbe361bf26b0ac29",
+          "bytes": 11983,
+          "local_copy": null
+        },
+        {
+          "path": "helpers/transcribe.py",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/helpers/transcribe.py",
+          "sha256": "5b61a5f92db9baf6e7f7f3ee88d0afaed8485e5f7b537a38e90f87ce8c76e58a",
+          "bytes": 8027,
+          "local_copy": null
+        },
+        {
+          "path": "helpers/transcribe_batch.py",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/helpers/transcribe_batch.py",
+          "sha256": "fcb240f1f2fc422df01d09c2a53335e0b61fa110aac924f9c479c685a52882a1",
+          "bytes": 3970,
+          "local_copy": null
+        },
+        {
+          "path": "helpers/render.py",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/helpers/render.py",
+          "sha256": "6bbde45ad5929c7c94fa068996f81e0c44b55a9c9dedcf716fc24c071a5c8dd7",
+          "bytes": 29462,
+          "local_copy": null
+        },
+        {
+          "path": "helpers/timeline_view.py",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/helpers/timeline_view.py",
+          "sha256": "69aee88e4204f86127740cca9de6a6eaa75a558df1bb07745dd62f69a3c2e9cf",
+          "bytes": 13748,
+          "local_copy": null
+        },
+        {
+          "path": "install.md",
+          "url": "https://raw.githubusercontent.com/browser-use/video-use/43cfc566833548093455c9d4a46bd69913b7e552/install.md",
+          "sha256": "9a78c92932864a728cfe80700d1a6bd5a4c4b4cf2d3f4694f3fd53b49fc93394",
+          "bytes": 7739,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Python helpers / FFmpeg",
+        "dependencies": [
+          "Python >=3.10",
+          "requests",
+          "librosa",
+          "matplotlib",
+          "pillow",
+          "numpy",
+          "FFmpeg/ffprobe",
+          "ElevenLabs API key for default transcription",
+          "optional Manim/HyperFrames/Remotion first-use animation backend"
+        ],
+        "validation_status": "skill_source_verified_runtime_not_executed",
+        "entrypoints": [
+          "python helpers/transcribe.py <video> --edit-dir <dir>",
+          "python helpers/transcribe_batch.py <videos_dir>",
+          "python helpers/pack_transcripts.py --edit-dir <dir>",
+          "python helpers/render.py <edl.json> -o <out> --preview",
+          "python helpers/timeline_view.py <video> <start> <end>"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": ".",
+        "source_relation": "post_link_verified",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "agent-caption",
+      "repository": "https://github.com/ahkamboh/agent-caption",
+      "commit": "e25c765b0e82d924fc0674bd0f9c1e9e56b8427b",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "setup_required",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "Local same-language captions for finished voice/video; Forced alignment of an existing approved script to existing narration; Speech/music transcription when source text is not available; English/Hinglish caption styling",
+      "limitations": "Copies original audio when burning captions; does not synthesize or select a replacement voice. Preserve science-video-production Qwen/Serena narration.",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/assets/fonts/OFL.txt",
+          "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/LICENSE"
+        ],
+        "metadata_spdx": "MIT"
+      },
+      "source_files": [
+        {
+          "path": "AGENTS.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/AGENTS.md",
+          "sha256": "14ac17011bca0501d79331d01a508543d989f23c3d562336224320fb3d12a3f9",
+          "bytes": 280,
+          "local_copy": null
+        },
+        {
+          "path": "CLAUDE.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/CLAUDE.md",
+          "sha256": "14ac17011bca0501d79331d01a508543d989f23c3d562336224320fb3d12a3f9",
+          "bytes": 280,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/README.md",
+          "sha256": "c5b47c3652e4655299327558b0cddfe029130ed577e831f6c596aa8b4ed3f2a5",
+          "bytes": 8754,
+          "local_copy": null
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/SKILL.md",
+          "sha256": "80f4e7cbaa31a895237e5134e99291da98595a407233461c8dc4ce4b76215896",
+          "bytes": 9835,
+          "local_copy": null
+        },
+        {
+          "path": "assets/fonts/OFL.txt",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/assets/fonts/OFL.txt",
+          "sha256": "6be04893d770899a015649c7aa3b582f871b272f8747a92b78b17c3e5c8b2573",
+          "bytes": 4385,
+          "local_copy": null
+        },
+        {
+          "path": "caption.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/caption.py",
+          "sha256": "2c73c69e1c8ab7777862cfa34cf0b66c2f24af9eac87cc80b5c600ada0355dc1",
+          "bytes": 20587,
+          "local_copy": null
+        },
+        {
+          "path": "docs/caption-styles.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/docs/caption-styles.md",
+          "sha256": "30bb29408234d37cef70cccca475063e0b473f7f9acd5de14d788fbd330faa9b",
+          "bytes": 5285,
+          "local_copy": null
+        },
+        {
+          "path": "prompts/captioned-video.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/prompts/captioned-video.md",
+          "sha256": "f315a16081f61463936e92dfc95262615e03235ce86f1b1d541e69eed89ece27",
+          "bytes": 1613,
+          "local_copy": null
+        },
+        {
+          "path": "prompts/captions.md",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/prompts/captions.md",
+          "sha256": "8412ba38a1355b1912b0b57e302086d7b4b7da2e838cc5410055b518651cf2f1",
+          "bytes": 2324,
+          "local_copy": null
+        },
+        {
+          "path": "requirements.txt",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/requirements.txt",
+          "sha256": "aa5fa063ec6138a97ca675dcfd48feac809c6944c0c42767ae8998c647ff94ab",
+          "bytes": 907,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/align.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/align.py",
+          "sha256": "89d410f57d097d3d54544b2e7f9354f9ee1ee8422abc65b8a16145f2c0dc1473",
+          "bytes": 10470,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/benchmark.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/benchmark.py",
+          "sha256": "46e1c5667d723d97fbc233ef94bb836f828ed9df55b84b69220cf5aeb95785c6",
+          "bytes": 4970,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/caption.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/caption.py",
+          "sha256": "fba0a31ff0ca36acb86285903c1f1e4ebc682ee2129a688af17d2ee3fb8bd78a",
+          "bytes": 24118,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/cs_transcribe.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/cs_transcribe.py",
+          "sha256": "333cf0c0f7eecd8b299c5dc3d2213e56b239cab5bbd39deedfe3126571d08256",
+          "bytes": 9268,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/export-subs.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/export-subs.py",
+          "sha256": "d5afdd7cd79b64049dbf3e5a559ac3b5dfa3c7fd24c44d00a432842deb476af8",
+          "bytes": 2426,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/footprint.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/footprint.py",
+          "sha256": "82352b4e5a1cc61bdfd42bab2bc3c371eca22aed69c8ccbadc38d16e9303d98a",
+          "bytes": 6620,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/grammar_fix.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/grammar_fix.py",
+          "sha256": "5d7651223fb3960624726e93338ea98f5f831b72587bd46edd2006847265bc0e",
+          "bytes": 4683,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/isolate_vocals.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/isolate_vocals.py",
+          "sha256": "f62efbb73f669e58e89e7484de6139c2667aee608321542118c42652740e0267",
+          "bytes": 5075,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/mms_align.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/mms_align.py",
+          "sha256": "e0863ab66eec87139375ace00a430f80df9bf664c0fa5224bc456b710408ee2b",
+          "bytes": 8484,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/multilang-subs.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/multilang-subs.py",
+          "sha256": "166829f8ea9ea78c5179c7ca6fca7216753c365119aefbcadb1b05fb370dde87",
+          "bytes": 3512,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/qa.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/qa.py",
+          "sha256": "5bdb0dc616d5fe5ccdb0778de918db5edf908ff24b0f56a6b705f2a0d769f23a",
+          "bytes": 5830,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/transcribe.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/transcribe.py",
+          "sha256": "0c33958a00e6fdfb1cadceb17bf77437799c15acb3504f044be413665052103d",
+          "bytes": 2764,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/translate-subs.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/translate-subs.py",
+          "sha256": "f865dbc892057f4a6cdc2d167addb662dd25d265d20c788a69755005046416e3",
+          "bytes": 2419,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/validate_timing.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/scripts/validate_timing.py",
+          "sha256": "9976c31a666b14159b7869f29046e75d25dcf946f7724d93629a714251571285",
+          "bytes": 4556,
+          "local_copy": null
+        },
+        {
+          "path": "setup.py",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/setup.py",
+          "sha256": "1f59b2399c88efeb4b26e28a384588530363a7307a6cc1ed23db95d10d4e300e",
+          "bytes": 4395,
+          "local_copy": null
+        },
+        {
+          "path": "setup.sh",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/setup.sh",
+          "sha256": "838db0a0cacfb223137eb309f3f0b1f0468adfc1cb552718038a1d87850876cc",
+          "bytes": 324,
+          "local_copy": null
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/ahkamboh/agent-caption/e25c765b0e82d924fc0674bd0f9c1e9e56b8427b/LICENSE",
+          "sha256": "107126002b9c301e6110a95c87188151cc9e8cc819ab1c6d8c31a8912b3ef427",
+          "bytes": 1073,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "local_after_dependency_and_model_downloads",
+        "dependencies": [
+          "Python 3.10+ per SKILL (setup.py guard accepts 3.9, so prefer documented 3.10+)",
+          "ffmpeg and ffprobe",
+          "Isolated .venv-whisperx",
+          "openai-whisper, faster-whisper, whisperx, torch, torchaudio, silero-vad, numpy, soundfile, argostranslate, uroman, Pillow, demucs, librosa",
+          "Whisper large-v3 plus forced-alignment models; upstream estimates ~4GB overall but not measured",
+          "Optional grammar correction: language_tool_python and Java/JRE 8+"
+        ],
+        "validation_status": "source_review_only_not_installed_or_executed",
+        "entrypoints": [
+          "python setup.py",
+          "./.venv-whisperx/bin/python caption.py INPUT --lang zh --content speech --script APPROVED_SCRIPT --srt",
+          "./.venv-whisperx/bin/python caption.py INPUT --from-srt APPROVED_SRT --font CJK_FONT --strict --out OUTPUT"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": ".",
+        "source_relation": "post_link_verified",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "video-subtitle-translator",
+      "repository": "https://github.com/alwaysmavs/agent-skills",
+      "commit": "3ed0d80a5f9bf2bbdafba478008633ed042d898b",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "cloud_configuration_required",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "Translate subtitles into a requested target language; Produce CJK-aware SRT/VTT/ASS; Hard-subtitle MP4 or selectable-subtitle MKV when requested",
+      "limitations": "Does not perform TTS or replace voices; FFmpeg rendering copies original audio. Preserve Qwen/Serena.",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/LICENSE"
+        ],
+        "metadata_spdx": "MIT"
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/LICENSE",
+          "sha256": "01fbfb653cf2f2eec29d68d0b440466db5614917dd7dae64336ddddc3be535e5",
+          "bytes": 1062,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/README.md",
+          "sha256": "c64c7332096a9fe58a77783d7de141c9266c90c34bc944b938a0c4a7d6687821",
+          "bytes": 4549,
+          "local_copy": null
+        },
+        {
+          "path": "README.zh-CN.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/README.zh-CN.md",
+          "sha256": "2e8c4fbcc67d37d50ea3586effe57cfa3ded581fb7a87134e6f8afb1a8938f03",
+          "bytes": 4522,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/.oo-metadata.json",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/.oo-metadata.json",
+          "sha256": "badcffa8321ee126846ab9914e90d337e1e77f69d30f63fe22e0181032e7e8d6",
+          "bytes": 127,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/README.ja.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/README.ja.md",
+          "sha256": "20758f12b0958c0905bdc79367224f3b64307900c38f2457494c3891bf0acfbb",
+          "bytes": 6801,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/README.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/README.md",
+          "sha256": "2dcaf7e66e3c6086242f1e777f6c4cc0f557e5e2b0b9cc16c11cdc13280ff843",
+          "bytes": 5443,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/README.zh-CN.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/README.zh-CN.md",
+          "sha256": "4ffce7f7d0b4efa04b0c6ae638f1f78f555453f30054310d5d94f1c1d74f7f61",
+          "bytes": 5299,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/SKILL.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/SKILL.md",
+          "sha256": "682ca80952cc578b118a94beff4da3fcd33069a1ea80734c86b9d0a6f32f38c1",
+          "bytes": 9568,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/agents/openai.yaml",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/agents/openai.yaml",
+          "sha256": "b2f5db1cbfbc6d561f0267b2991f77695fe32aad02d1e61c637b7d40df046e1f",
+          "bytes": 235,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/package.json",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/package.json",
+          "sha256": "cc29493f428624e276f21c40edb144c6ca3db4f253be32c8328aa392ee6d085c",
+          "bytes": 279,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/references/fusion-asr.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/references/fusion-asr.md",
+          "sha256": "47e7c80749112b91d179cf0579ff649a7a119b6941c408577da4ba6f5b348640",
+          "bytes": 1599,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/references/rendering.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/references/rendering.md",
+          "sha256": "69903548a1b57921cba7241620ec42e81a1d8121558dff2a4086ecb77be88ba6",
+          "bytes": 1650,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/references/translation.md",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/references/translation.md",
+          "sha256": "190d2007211e435c888a3197ba0d922f582397937480d83d6c4deff191c467ba",
+          "bytes": 1792,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/scripts/subtitle-tools.mjs",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/scripts/subtitle-tools.mjs",
+          "sha256": "1450dd56aa704ad4f5c94ee638cafd2b1da8623dc2a2895a780d2cd03475ccda",
+          "bytes": 42275,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/tests/fixtures/fusion-transcript.json",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/tests/fixtures/fusion-transcript.json",
+          "sha256": "49c00969628155de3124ac9c1f305dcb4e10c67b0fe79fb84ecb3a2cbcb67ede",
+          "bytes": 990,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/tests/fixtures/input.srt",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/tests/fixtures/input.srt",
+          "sha256": "cb3c75cbf672024a41ea28c3c5e8f5b0245ae78bae80e3c5241440c1c5cc06ae",
+          "bytes": 143,
+          "local_copy": null
+        },
+        {
+          "path": "skills/video-subtitle-translator/tests/subtitle-tools.test.mjs",
+          "url": "https://raw.githubusercontent.com/alwaysmavs/agent-skills/3ed0d80a5f9bf2bbdafba478008633ed042d898b/skills/video-subtitle-translator/tests/subtitle-tools.test.mjs",
+          "sha256": "42bd7e1f5e0cd94f45b1373154c91e53e003e2025d23b96cf6beb77721063aa5",
+          "bytes": 2027,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "hybrid_cloud_asr_and_llm_local_media",
+        "dependencies": [
+          "Node.js >=18",
+          "ffmpeg/ffprobe",
+          "Authenticated oo CLI",
+          "fusion-api connector access",
+          "OO LLM configuration",
+          "CJK-capable font for burn-in"
+        ],
+        "validation_status": "source_review_only_not_installed_or_executed",
+        "entrypoints": [
+          "oo --version",
+          "oo llm config --json >/dev/null",
+          "oo file upload AUDIO --json",
+          "oo connector run fusion-api --action qwen_asr_filetrans_submit --data @submit-asr.json --json",
+          "node scripts/subtitle-tools.mjs translate-srt --input SOURCE_SRT --out-dir OUTPUT --target-language Simplified_Chinese --target-code zh --profile youtube_explainer",
+          "node scripts/subtitle-tools.mjs prepare-display-srt --input SRT --output DISPLAY_SRT --cjk-line-length 18 --max-lines 2"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": "skills/video-subtitle-translator",
+        "source_relation": "post_link_verified",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "app-demo-agent",
+      "repository": "https://github.com/michaelboeding/skills",
+      "commit": "ca686c565bd3498ddc792dc34397a116d24f2adb",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "adaptation_and_dependencies_required",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "Product/app demo from an existing screen recording, with device frame and approved existing narration",
+      "limitations": "Upstream explicitly defaults to Gemini TTS Orus and assembles a new audio track. This conflicts with Qwen/Serena; do not invoke its unadapted orchestration. Reuse approved Qwen/Serena whole-episode audio and local framing/muxing only.",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/LICENSE"
+        ],
+        "metadata_spdx": "MIT"
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/LICENSE",
+          "sha256": "06dcddbb6908a0c6dd4a9e8ec822eea41d5a460a53089fecccc8a68049e99241",
+          "bytes": 1056,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/README.md",
+          "sha256": "c31603e2f12e597bd4bc8849a4f9cb8209d78b7a65181a1db5ad1f0f9d8a269e",
+          "bytes": 53733,
+          "local_copy": null
+        },
+        {
+          "path": "skills/app-demo-agent/SKILL.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/app-demo-agent/SKILL.md",
+          "sha256": "7f8caf5e0e740ba7d01b6445a4f62e932f6f3155f0dd4ac496d4be7bd2ded849",
+          "bytes": 22101,
+          "local_copy": null
+        },
+        {
+          "path": "skills/app-demo-agent/scripts/extract_frames.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/app-demo-agent/scripts/extract_frames.py",
+          "sha256": "aede7cde3456f05af9c987dc868d1e17d37ecb11e6f65114c9c236b9072e18ce",
+          "bytes": 9160,
+          "local_copy": null
+        },
+        {
+          "path": "skills/device-framer/README.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/device-framer/README.md",
+          "sha256": "283989dc7706cb6488d16ceb6a2d7e472cb7e226fae544a01b8b7e19f96140ba",
+          "bytes": 5708,
+          "local_copy": null
+        },
+        {
+          "path": "skills/device-framer/SKILL.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/device-framer/SKILL.md",
+          "sha256": "4bd78a4a14f0bcb714d37791e1a89594845ffb1becf2c7d319eb7fe4539458ed",
+          "bytes": 4312,
+          "local_copy": null
+        },
+        {
+          "path": "skills/device-framer/scripts/frame_video.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/device-framer/scripts/frame_video.py",
+          "sha256": "e7c67886f0a700786318bffd0645fec8e73bdea08135709e7c9a5e43876490e0",
+          "bytes": 20722,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/SKILL.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/SKILL.md",
+          "sha256": "210b61e64e9c26bf53c28bda6859a81ca59adc923f1488fbac2c12178c35e413",
+          "bytes": 4578,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/audio_concat.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/audio_concat.py",
+          "sha256": "1e19ba77fe24fc84b075b949d364bdb0ef422ebdd878be0f8e9a2e6a0d2fe688",
+          "bytes": 7022,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/audio_mix.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/audio_mix.py",
+          "sha256": "6e153d64fc4100c9e97648a2c4ff8f824695df6e9082a8b5d21344191dcd8b0b",
+          "bytes": 9885,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/check_ffmpeg.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/check_ffmpeg.py",
+          "sha256": "75e6796202c2c4685910f3fd81d89c8f851a676bcd6996175014c6efcdddd5be",
+          "bytes": 4447,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/report_to_pdf.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/report_to_pdf.py",
+          "sha256": "4c3c4950c274cb3758a18d55d7f2409fde4a6fd41a49dd5198148b749ecd3a3e",
+          "bytes": 14823,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/video_audio_merge.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/video_audio_merge.py",
+          "sha256": "640a6336f79beb6158f7541e4b3672f6e8fcfc254579e9d7c538cbde26073510",
+          "bytes": 12209,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/video_concat.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/video_concat.py",
+          "sha256": "0a669a057c7e2b3f17d15623d3db4cea0c5ce41fee27d42dcd9d1c14c7e4fc31",
+          "bytes": 10572,
+          "local_copy": null
+        },
+        {
+          "path": "skills/media-utils/scripts/video_strip_audio.py",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/media-utils/scripts/video_strip_audio.py",
+          "sha256": "d97415b1b937df61b4e747f5f709a2f9f094e6d3ed721eb2370bb4b6db299988",
+          "bytes": 6123,
+          "local_copy": null
+        },
+        {
+          "path": "requirements.txt",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/requirements.txt",
+          "sha256": "ac484e60a7c3aab6b0719b699c9e72618a0e04eac3d705b6f6cc2f5d1d495f77",
+          "bytes": 2096,
+          "local_copy": null
+        },
+        {
+          "path": "skills/voice-generation/SKILL.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/voice-generation/SKILL.md",
+          "sha256": "35b813f2cb79b1942f84cf94cf846d131f13bb7bd435e4098abe9a690b1ed0b8",
+          "bytes": 8484,
+          "local_copy": null
+        },
+        {
+          "path": "skills/music-generation/SKILL.md",
+          "url": "https://raw.githubusercontent.com/michaelboeding/skills/ca686c565bd3498ddc792dc34397a116d24f2adb/skills/music-generation/SKILL.md",
+          "sha256": "121cdd4d3f06178e14e06972ad8fb50c6243f21ca9193039378d562ca4012cbc",
+          "bytes": 9391,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "local_frame_and_media_processing_with_optional_cloud_voice_music",
+        "dependencies": [
+          "Existing screen recording (skill does not record it)",
+          "Python and ffmpeg/ffprobe",
+          "Pillow for device framing",
+          "Sibling skills/device-framer including frame assets",
+          "Sibling skills/media-utils for audio mix/concat/mux",
+          "Sibling skills/voice-generation and skills/music-generation only if provider generation explicitly selected",
+          "google-genai>=1.0.0 for Google provider paths; API keys or Google Cloud configuration for selected external provider"
+        ],
+        "validation_status": "source_review_only_not_installed_or_executed",
+        "entrypoints": [
+          "python3 skills/app-demo-agent/scripts/extract_frames.py INPUT -o FRAMES --scene-detect --timestamps",
+          "python3 skills/device-framer/scripts/frame_video.py INPUT -o FRAMED_OUTPUT --device iphone-16-pro",
+          "python3 skills/media-utils/scripts/video_audio_merge.py --help"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": "skills/app-demo-agent",
+        "source_relation": "post_link_mismatch_independent_same_name_alternative",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "ffmpeg-skill",
+      "repository": "https://github.com/kajisho5/ffmpeg-skill",
+      "commit": "1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "selected_execution_tool",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "本地剪切、拼接、混音、转码与媒体核验",
+      "limitations": "原帖误链后的独立同名候选。滤镜/编码器逐项预检；当前验证不含烧字或HDR。",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/LICENSE"
+        ],
+        "metadata_spdx": "MIT"
+      },
+      "source_files": [
+        {
+          "path": "SKILL.md",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/SKILL.md",
+          "sha256": "0c55c511da002038b5f49941f53ee1b395e1eb9ccdd528659c6b68dff495c8b2",
+          "bytes": 29981,
+          "local_copy": null
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/LICENSE",
+          "sha256": "7522b29e4d6e90f2a8fab15f07d224b1064c70692a872be9996ac1a88cf474e9",
+          "bytes": 1065,
+          "local_copy": null
+        },
+        {
+          "path": "package.json",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/package.json",
+          "sha256": "55a9692ce7029930025c473fe126d9e3bf911ff56f20ebaac59c897b29fe7157",
+          "bytes": 1748,
+          "local_copy": null
+        },
+        {
+          "path": "AGENTS.md",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/AGENTS.md",
+          "sha256": "605f07f1ffb7cb521cd74e44ec28815d8656f40e7db82c37bc4090e0aae3f727",
+          "bytes": 949,
+          "local_copy": null
+        },
+        {
+          "path": "bin/install.js",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/bin/install.js",
+          "sha256": "15c1274a5322f03e1ee49dd76ce22576ce27a6a23e4c89321830342fec10826d",
+          "bytes": 7467,
+          "local_copy": null
+        },
+        {
+          "path": "docs/design-decisions.md",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/docs/design-decisions.md",
+          "sha256": "9cbb9ade9e9292feb08441eba5d44969dacae8084b9802525011c525544e2329",
+          "bytes": 113205,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/_contract.py",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/scripts/_contract.py",
+          "sha256": "cf5bfbf6a6194dd00949d3eccb405619557c02ea3a80ebd330483d1bd18fd84a",
+          "bytes": 129767,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/probe.py",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/scripts/probe.py",
+          "sha256": "e2fd1390bc9976d5086e06e0a9ea64bd966638273339709ee7c2a0fa53210063",
+          "bytes": 2733,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/check.py",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/scripts/check.py",
+          "sha256": "6af16c15d7d76f0b5a9c1c328612378b9def8b86207a7f3ab0806adf426f1353",
+          "bytes": 20006,
+          "local_copy": null
+        },
+        {
+          "path": "scripts/look.py",
+          "url": "https://raw.githubusercontent.com/kajisho5/ffmpeg-skill/1f7e7e3ad1c30cb39fe9032abb5b39cca8e63376/scripts/look.py",
+          "sha256": "5fc523eca18e4182283cc950c9adbc009aaf1593b105b1c470283893a838ec19",
+          "bytes": 15695,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Python / FFmpeg",
+        "validation_status": "probe_dry_run_and_1s_accurate_cut_verified_2026-10-10",
+        "entrypoints": [
+          "python3 <skill-dir>/scripts/<name>.py; probe.py -> intended edit --dry-run --json -> edit -> check.py -> look.py; no npm/runtime dependency required after installation"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": ".",
+        "source_relation": "independent_same_name_candidate",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "browser-video-recording",
+      "repository": "https://github.com/MengTo/Skills",
+      "commit": "83a47fee32f0b6349bff1fede99257a5ef03dc93",
+      "checked_at": "2026-10-10",
+      "review_scope": "README, actual Skill entrypoints and selected execution/dependency/license files; validation scope stated per runtime",
+      "classification": "selected_execution_tool",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4",
+        "G5"
+      ],
+      "adopt": "浏览器截图状态、显式游标轨迹与缩放的演示合成",
+      "limitations": "不是连续实录；浏览器采集使用实际允许工具；显式PNG游标避免默认桌面干预；沿用本片音轨。",
+      "license": {
+        "classification": "MIT",
+        "evidence": [
+          "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/LICENSE"
+        ],
+        "metadata_spdx": "MIT"
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/LICENSE",
+          "sha256": "b2a071ba22fefd803f4e9d1f5c777dd79c62d191695586a1a73fd4d0ebd051c6",
+          "bytes": 1064,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/SKILL.md",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/SKILL.md",
+          "sha256": "9c9aa4307a6d7bac1bc7dad29cc68468d22be35f9ad5b7b5f48522b1070a4c64",
+          "bytes": 6146,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/demo/PROMPT.md",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/demo/PROMPT.md",
+          "sha256": "be3ae8df8c3f41e6c657db3771ec49cff02c29b2a2bd38c6797f680d6220616d",
+          "bytes": 2260,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/demo/expected-output.md",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/demo/expected-output.md",
+          "sha256": "44616c5b01794663ef785e8d6996f32d7eb7f743741430d59c7a1da975d99ab4",
+          "bytes": 231,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/demo/index.html",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/demo/index.html",
+          "sha256": "97c0644594fd6aa1b4094d9a06fa8af565bd652fc61534fd8c37fa6897bcbdbf",
+          "bytes": 4045,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/demo/input.md",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/demo/input.md",
+          "sha256": "77edb787c17771e4e88763de701dc586365b830235d22c4b212147229610aec3",
+          "bytes": 183,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/demo/preview.jpg",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/demo/preview.jpg",
+          "sha256": "526b77002a6f188ed59b5e6049b73f4fc3c41735736987cc7d8244db87538842",
+          "bytes": 86752,
+          "local_copy": null
+        },
+        {
+          "path": "agent-skills/codex/browser-video-recording/scripts/render_browser_demo.py",
+          "url": "https://raw.githubusercontent.com/MengTo/Skills/83a47fee32f0b6349bff1fede99257a5ef03dc93/agent-skills/codex/browser-video-recording/scripts/render_browser_demo.py",
+          "sha256": "f791472f135513eb4094661ba1be8ee800820220fe20764eaa3f486e8f203550",
+          "bytes": 16973,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "Python / FFmpeg",
+        "validation_status": "help_and_1s_synthetic_fixture_render_verified_2026-10-10",
+        "entrypoints": [
+          "python3 <skill-dir>/scripts/render_browser_demo.py --config CONFIG --output NEW_OUTPUT.mp4; use explicit cursor_asset/cursor_hotspot"
+        ]
+      },
+      "execution": {
+        "routing_reference": "references/tool-routing.md",
+        "skill_path": "agent-skills/codex/browser-video-recording",
+        "source_relation": "post_link_verified",
+        "installation_required": true
+      },
+      "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
     }
   ]
 }
