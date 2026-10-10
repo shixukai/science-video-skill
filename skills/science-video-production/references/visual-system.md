@@ -89,6 +89,18 @@
 
 制作/版本/测试验收状态、内部备注、工具/流水线不入片。完整来源、权利与制作声明放配套；许可强制署名、防误认必需的示意/模拟/AI/非按比例及平台披露不能盲删，依据见 [素材规则](science-and-rights.md)。实际文字验收由质量正文执行，OCR/词黑名单不代看图。
 
+### 可见文字用途与制作辩解
+
+画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。
+
+不能只禁止某一个字符串。反例包括“原视频无音轨；不作飞行声音比较”“因素材不足这里只能这样画”“模型不支持所以用此镜头”“本片测试/验收已通过”；改写同类辩解或从画面移到字幕、口播、封面仍失败。素材无原声时实际不添加虚构原声；若科学任务需要声音对比，就取得适配素材或调整有依据的科学表达，不能靠上屏辩解填缺口。
+
+删除不等于隐瞒科学与权利。必要作者/年份/来源、实际许可要求（如素材所需“Cheney 等 (2020) · CC BY 4.0”）、简洁“AI生成”“机制示意”“模拟/非按比例”及确有科学意义的时间缩放、实验条件、样本和结论限制必须保留在其适用通道。正例：“慢动作 ×0.25”“条件：空气中、常温”“机制示意，非按比例”“模型不支持超音速流动；适用范围：低速气流”；最后一项按scientific_condition连接文字一致、有科学依据的保护项，区别科学模型的适用范围与制作工具借口，词筛查不能无条件删掉科学条件。素材缺陷、制作选择和QA状态不能靠保护用途标签豁免。不能把科学条件归为制作备注后删掉，也不能把许可证或AI标识当多余字。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。
+
+单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss，保护项另以 notice_id 连接 `required_notices` 的 id/purpose/text/basis。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license/ai_simulation；material_defect/internal_qa/production_excuse 为禁止类别。需要许可标识的实际素材以 `assets[].required_notice_ids` 引用同一保护项，删除清单不得使该义务消失。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。
+
+G1核计划用途和保护项；G2/G3/G5分别在 `qa.presentation_text.<stage>` 记录实际所审版本、context_sha256、media_sha256、inventory_sha256、actual_media_inspected、各通道 channel_reviews（status/item_ids/observation/evidence）、protected_notices_review 与总 evidence。G2/G3核实际画面、字幕和口播，G5再完整核两种封面；G3只签代表段范围。sources.voiceover/caption 用 file/hash 固定相应正式UTF-8稿件/字幕；G3使用所审片段的正式稿，G2/G5绑定本期正式稿，字幕依对应阶段源文件。口播和字幕的完整正文须按原顺序纳入用途清单，不得只挑好句；字幕txt/srt/vtt/ass由检查器提取正文，其他格式先转为受支持的正式字幕格式，再绑定版本并实际检查，不冒称原格式已自动核验。G5 cover_files 固定两种实际封面版本。源文件筛查、词模式和OCR只辅助；各通道仍须实际看/听当前媒体，保护项缺失、漏分类、禁止用途或未实际检查都阻断，不能换个允许类别冒充用途。
+
 ## 两种封面各自设计
 
 3:4与4:3共用身份、事实和主要素材，分别重排标题/主体/留白，不机械裁切拉伸。可以用同一合法视频的不同帧，不强制重生成；先看缩略图识别，再看细节。封面不能比正片结论夸张、虚构实验或用危险假效果。

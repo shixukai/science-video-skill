@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from subject_motion import validate as validate_subject_motion
+from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
 
 GATES = tuple(f'G{i}' for i in range(1, 8))
 REQUIRED_REVIEWS = {
@@ -123,7 +124,7 @@ def used_asset_ids(data):
 
 def context_sha256(data, gate):
  """Version binding at the relevant production scope, not evidence of review."""
- keys=['topic','topic_alignment','sources','claims','brief','scope','series_profile']
+ keys=['topic','topic_alignment','sources','claims','brief','scope','series_profile','presentation_text']
  if gate!='G1': keys += ['shots','narration']
  if gate not in ('G1','G2'): keys += ['assets','design']
  if gate in ('G4','G5','G6','G7'): keys += ['deliverables','production_statement']
@@ -145,6 +146,7 @@ def context_sha256(data, gate):
   result['shots']=[shot for shot in seq(data.get('shots')) if obj(shot).get('id') in shot_ids]
   result['assets']=[a for a in seq(data.get('assets')) if obj(a).get('id') in used]
   result['representative_step_ids']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('step_ids')
+  result['representative_shot_intervals']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('shot_intervals')
  if gate not in ('G1','G2'):
   result['representative_captions']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('captions')
  if gate in ('G4','G5','G6','G7'):
@@ -339,9 +341,13 @@ class Checks:
    if state=='resolved':
     r=obj(item.get('resolution'));self.need(text(r.get('evidence')),'failure resolution evidence required')
     self.need(r.get('context_sha256')==context_sha256(self.data,'G5') and r.get('sha256')==obj(self.qa.get('reviewed_sha256')).get('video'),'failure resolution stale media/context')
-    if item.get('scope') in ('whole_episode','series_style'):
+    if item.get('scope') in ('whole_episode','series_style','audio'):
      self.need(r.get('scope')=='full_episode','local approval cannot resolve whole-episode failure')
-     self.viewing(visual.get('viewing'),'failure resolution','full_episode',final=True)
+     if item.get('scope')=='audio':
+      for env in ('headphones','phone_speaker'):
+       self.viewing(obj(self.record('audio.listening')).get(env),'audio failure resolution '+env,'full_episode',final=True,listening_only=True)
+      validate_voice_continuity(self,'G5',obj(obj(self.record('audio.listening')).get('headphones')))
+     else:self.viewing(visual.get('viewing'),'failure resolution','full_episode',final=True)
  def asset_catalog(self,steps,representative):
   schema=json.loads((Path(__file__).resolve().parents[1]/'assets/production-asset.schema.json').read_text())
   owners=json.loads((Path(__file__).resolve().parents[1]/'indexes/rule-owners.json').read_text())
@@ -663,6 +669,7 @@ class Checks:
   return mode!='not_required'
  def run(self,target,policy):
   n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
+  text_items=validate_text_plan(self)
   cards=self.expression_cards(steps) if n>=1 else {}
   self.internal_review('explanation_logic','G1',steps,cards)
   if n>=1:self.internal_review('expression_plan','G2',steps,cards)
@@ -689,6 +696,8 @@ class Checks:
   if n>=1:
    self.viewing(self.record('shotbook').get('viewing'),'G2 roughcut','full_roughcut')
    validate_subject_motion(self,self.record('shotbook').get('subject_motion'),obj(self.record('shotbook').get('viewing')),'G2',policy['subject_motion'],set(steps))
+   validate_text_review(self,'G2',obj(self.record('shotbook').get('viewing')),text_items)
+   validate_voice_continuity(self,'G2',obj(self.record('shotbook').get('viewing')))
    narration=obj(self.data.get('narration'))
    self.evidence({'file':narration.get('script_file'),'sha256':narration.get('script_sha256')},'narration script')
    self.need(narration.get('status')=='ready' and isinstance(narration.get('language'),str) and narration['language'].lower().split('-')[0]=='zh','actual ready Chinese working narration required')
@@ -700,6 +709,8 @@ class Checks:
    self.animation(steps);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
    animation=self.record('visual_frames.animation')
    validate_subject_motion(self,animation.get('subject_motion'),obj(animation.get('viewing')),'G3',policy['subject_motion'],set(x for x in seq(animation.get('step_ids')) if text(x)))
+   validate_text_review(self,'G3',obj(animation.get('viewing')),text_items)
+   validate_voice_continuity(self,'G3',obj(animation.get('viewing')))
    if n>=3:self.asset_catalog(steps,representative=False)
    design=obj(self.data.get('design'));approval=obj(design.get('approval'))
    self.need(approval.get('status')=='pass','actual design approval missing/failed')
@@ -726,6 +737,8 @@ class Checks:
   if n>=4:
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)
    validate_subject_motion(self,self.record('visual_frames').get('subject_motion'),obj(self.record('visual_frames').get('viewing')),'G5',policy['subject_motion'],set(steps))
+   validate_text_review(self,'G5',obj(self.record('visual_frames').get('viewing')),text_items)
+   validate_voice_continuity(self,'G5',obj(self.record('visual_frames').get('viewing')))
    self.need(self.record('visual_frames').get('independent_of_generation_context') is True,'independent review context required; not proof of human perception')
    audio=self.record('audio');self.need(set(policy['listening']['required_environments'])<=set(x for x in seq(audio.get('environments')) if text(x)),'headphones and phone-speaker actual listening required')
    for env in policy['listening']['required_environments']:

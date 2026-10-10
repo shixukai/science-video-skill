@@ -314,6 +314,8 @@ class EvidenceMediaIntegrityTests(unittest.TestCase):
     motion=s.review(gate)['subject_motion'];filename=gate+'-replacement-screen.json'
     (s.root/filename).write_text(json.dumps(subject_motion.screen(s.root/'replacement.mp4',[{'start':0,'end':1,'subject':'synthetic replacement fixture','isolation_note':'software test only','roi':[0,0,1,1],'masks':[]}],policy['screen'])))
     motion.update(media_sha256=gates.file_digest(s.root/'replacement.mp4'),screen={'file':filename,'sha256':gates.file_digest(s.root/filename)})
+    s.d['qa']['presentation_text'][gate]['media_sha256']=s.review(gate)['viewing']['sha256']
+    s.d['qa']['audio']['continuity'][gate]['media_sha256']=s.review(gate)['viewing']['sha256']
     refresh(s.d);s.assertEqual(s.errors(gate),[])
  def test_media_hash_change_at_same_path_invalidates_review_context(s):
   for gate in ('G2','G3'):

@@ -37481,6 +37481,54 @@
           "MOTION-subject-continuity-failure"
         ]
       }
+    },
+    {
+      "id": "TEXT-audience-purpose",
+      "rule": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
+      "action": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
+      "modality": "hard",
+      "owner": "references/visual-system.md",
+      "owner_anchor": "可见文字用途与制作辩解",
+      "evidence_locations": [
+        {
+          "file": "config/production-policy.json",
+          "selector": "audience_text"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "TEXT-audience-purpose-failure"
+        ]
+      }
+    },
+    {
+      "id": "VOICE-continuity",
+      "rule": "整期旁白先按同一次连续讲述组织稿件，统一可感知的语气、节奏、语速和音量关系；不是要求每句同样重音，也不是切镜就重启一段播报。优先生成或取得能连续叙述的音轨，再按解释节拍剪接画面；沿用同一Serena、seed、模型参数或响度数值只能提供制作一致性起点，解码/ASR正确不证明跨段听起来连续。不能用统一加速、变声、强归一化或音乐掩盖语气突变。",
+      "action": "整期旁白先按同一次连续讲述组织稿件，统一可感知的语气、节奏、语速和音量关系；不是要求每句同样重音，也不是切镜就重启一段播报。优先生成或取得能连续叙述的音轨，再按解释节拍剪接画面；沿用同一Serena、seed、模型参数或响度数值只能提供制作一致性起点，解码/ASR正确不证明跨段听起来连续。不能用统一加速、变声、强归一化或音乐掩盖语气突变。",
+      "modality": "hard",
+      "owner": "references/voice-reference.md",
+      "owner_anchor": "整期旁白连续性",
+      "evidence_locations": [
+        {
+          "file": "config/production-policy.json",
+          "selector": "voice_continuity"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "VOICE-continuity-failure"
+        ]
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -43959,9 +44007,83 @@
           "quote_sha256": "cd45cad4427cd94299fdd7368549e7d1457a9b5729750d11a25412c7896e1d8c"
         }
       ]
+    },
+    {
+      "id": "TEXT-audience-purpose-failure",
+      "application": "计划及相应当前媒体实际审查",
+      "failure_condition": "禁止用途/保护标识缺失，或整期声音已知失败、缺完整跨段实听/版本证据",
+      "clauses": [
+        {
+          "file": "references/visual-system.md",
+          "anchor": "可见文字用途与制作辩解",
+          "quote": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
+          "quote_sha256": "2a8c358da9e74205182e5ffe792f89225256cec25479244ae8bbcbe2a73e8f82"
+        },
+        {
+          "file": "references/visual-system.md",
+          "anchor": "可见文字用途与制作辩解",
+          "quote": "不能只禁止某一个字符串。反例包括“原视频无音轨；不作飞行声音比较”“因素材不足这里只能这样画”“模型不支持所以用此镜头”“本片测试/验收已通过”；改写同类辩解或从画面移到字幕、口播、封面仍失败。素材无原声时实际不添加虚构原声；若科学任务需要声音对比，就取得适配素材或调整有依据的科学表达，不能靠上屏辩解填缺口。",
+          "quote_sha256": "bcc91656863b4cc9629920ab2c45e22c3fbebdea41da1c24eb291b031348b720"
+        },
+        {
+          "file": "references/visual-system.md",
+          "anchor": "可见文字用途与制作辩解",
+          "quote": "删除不等于隐瞒科学与权利。必要作者/年份/来源、实际许可要求（如素材所需“Cheney 等 (2020) · CC BY 4.0”）、简洁“AI生成”“机制示意”“模拟/非按比例”及确有科学意义的时间缩放、实验条件、样本和结论限制必须保留在其适用通道。正例：“慢动作 ×0.25”“条件：空气中、常温”“机制示意，非按比例”“模型不支持超音速流动；适用范围：低速气流”；最后一项按scientific_condition连接文字一致、有科学依据的保护项，区别科学模型的适用范围与制作工具借口，词筛查不能无条件删掉科学条件。素材缺陷、制作选择和QA状态不能靠保护用途标签豁免。不能把科学条件归为制作备注后删掉，也不能把许可证或AI标识当多余字。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。",
+          "quote_sha256": "8a4f41cd2c6314a91373e016715a3fef6a0408ed9d670b267127e9277f003611"
+        },
+        {
+          "file": "references/visual-system.md",
+          "anchor": "可见文字用途与制作辩解",
+          "quote": "单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss，保护项另以 notice_id 连接 `required_notices` 的 id/purpose/text/basis。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license/ai_simulation；material_defect/internal_qa/production_excuse 为禁止类别。需要许可标识的实际素材以 `assets[].required_notice_ids` 引用同一保护项，删除清单不得使该义务消失。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。",
+          "quote_sha256": "29285d1ff6b58166885f191e89d6b79b2f3c5488fb989e82db8a6884f01edece"
+        },
+        {
+          "file": "references/visual-system.md",
+          "anchor": "可见文字用途与制作辩解",
+          "quote": "G1核计划用途和保护项；G2/G3/G5分别在 `qa.presentation_text.<stage>` 记录实际所审版本、context_sha256、media_sha256、inventory_sha256、actual_media_inspected、各通道 channel_reviews（status/item_ids/observation/evidence）、protected_notices_review 与总 evidence。G2/G3核实际画面、字幕和口播，G5再完整核两种封面；G3只签代表段范围。sources.voiceover/caption 用 file/hash 固定相应正式UTF-8稿件/字幕；G3使用所审片段的正式稿，G2/G5绑定本期正式稿，字幕依对应阶段源文件。口播和字幕的完整正文须按原顺序纳入用途清单，不得只挑好句；字幕txt/srt/vtt/ass由检查器提取正文，其他格式先转为受支持的正式字幕格式，再绑定版本并实际检查，不冒称原格式已自动核验。G5 cover_files 固定两种实际封面版本。源文件筛查、词模式和OCR只辅助；各通道仍须实际看/听当前媒体，保护项缺失、漏分类、禁止用途或未实际检查都阻断，不能换个允许类别冒充用途。",
+          "quote_sha256": "4913ee910cbb3669407d9a3b0ff086cb226119ee7898937766b0d204629035bc"
+        }
+      ]
+    },
+    {
+      "id": "VOICE-continuity-failure",
+      "application": "计划及相应当前媒体实际审查",
+      "failure_condition": "禁止用途/保护标识缺失，或整期声音已知失败、缺完整跨段实听/版本证据",
+      "clauses": [
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "整期旁白连续性",
+          "quote": "整期旁白先按同一次连续讲述组织稿件，统一可感知的语气、节奏、语速和音量关系；不是要求每句同样重音，也不是切镜就重启一段播报。优先生成或取得能连续叙述的音轨，再按解释节拍剪接画面；沿用同一Serena、seed、模型参数或响度数值只能提供制作一致性起点，解码/ASR正确不证明跨段听起来连续。不能用统一加速、变声、强归一化或音乐掩盖语气突变。",
+          "quote_sha256": "f36503c61adc9a00a04497b1d45224e53e1f5394888d65d677cf52fe3f54c38c"
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "整期旁白连续性",
+          "quote": "长篇超出实际技术能力时可分段，按已验证的当前入口记录具体限制、可用方法、能力证据和上下文承接；不硬定模型一定支持长篇、提示拼接、参考声或某个未验证方案。分段稿件须保留前后论述、指代、因果与自然句尾/句首的承接，不按每个分镜机械独立生成。实际分段输入/输出版本与承接上下文可核，接缝仍在最终混音中正常速度连续听验；纸面上下文一致不能代替听感。",
+          "quote_sha256": "64c2e9f9b3f7b06341b71218d0d1d3a4ae91cabc357279864183ccbf07b9d9b0"
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "整期旁白连续性",
+          "quote": "`narration.delivery_plan` 固定 mode（continuous_first 或 context_preserving_segments）和 target 的 tone/rhythm/speech_rate/loudness，以具体自然语言记录整期方向，不发明通用音质数值门槛。分段另有 technical_limit/verified_method/capability_evidence/context_handoff，并逐段记录 id、script与audio的file/hash、context_before/context_after、handoff_evidence，相邻段承接对应同一论述。引用现有工程或生成记录，不因为补字段重装模型或改运行环境。",
+          "quote_sha256": "1003876613954d8b88bee140514aacf3247afd5a03c7522df7faca8f347487ce"
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "整期旁白连续性",
+          "quote": "G2完整有声草排、G3实际代表段和G5最终整期混音分别在 `qa.audio.continuity.<stage>` 记录 status、context_sha256、media_sha256、audio_sha256、plan_sha256、method=normal_speed_continuous_listening、actually_heard、reviewer/capability/evidence 与完整 ranges。criteria 的 tone/rhythm/speech_rate/loudness/joins 各有 status/observation/evidence；逐分镜衔接 transitions 记 from_shot/to_shot、当前媒体时码at、确实跨越该点的listen_range、status/observation/evidence。at必须对齐当前实际媒体分镜边界：G2/G5用实际对齐的有序shots[].shotbook.start/end；G3在既有qa.visual_frames.animation.shot_intervals按代表段本地时码记shot_id/start/end，覆盖当前完整代表段及所选镜头并绑定G3摘要。时间轴不得缺段、重叠或漏镜；自报at与listen_range不能替代边界，成片改变后重新对齐。连续音轨没有拼接也要听相邻画面之间的叙述承接，G3只覆盖所选片段，不能代整期通过；G5仍完成耳机与手机外放完整听检。",
+          "quote_sha256": "85796ae424dda1359f6805797956b69ba359077cf7c4c548d5945af2a2f1b273"
+        },
+        {
+          "file": "references/voice-reference.md",
+          "anchor": "整期旁白连续性",
+          "quote": "用户已反馈语气不一致、接缝突变或明显分段播报时，沿既有 `qa.visual_frames.failures` 记 scope=audio 的开放失败及原版本/时码/反馈定位，`qa.audio` 与对应连续性项保持fail/needs_changes；不以同声线、技术测试或其他高分抵消。局部新样可核修复范围，不能关闭整期声音否定；只有当前完整混音的连续复听、各接缝实际证据及匹配版本的完整复查才能解决该失败。缺实际听觉能力保持未验，测试通过不签视频或声音合格。",
+          "quote_sha256": "303b8bb5f63ab719842b87589f4d287eb05ab06af5f529d3866bb892187bca15"
+        }
+      ]
     }
   ],
-  "rule_count": 901,
+  "rule_count": 903,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

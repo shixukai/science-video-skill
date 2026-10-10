@@ -49,7 +49,8 @@
         "caption-geometry",
         "text-deletion-test",
         "covers",
-        "finesse-positive-criteria"
+        "finesse-positive-criteria",
+        "audience-text-purpose"
       ]
     },
     {
@@ -58,7 +59,8 @@
       "owns": [
         "voice-generation",
         "voice-transmission",
-        "listening-method"
+        "listening-method",
+        "episode-narration-continuity"
       ]
     },
     {
