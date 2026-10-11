@@ -56,7 +56,7 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 
 新建时按需使用 [简报](assets/brief-template.md)、[单集记录](assets/episode-template.json) 和 [原题锚点](assets/topic-anchor-template.json)。逐镜实际使用的基准/资产版本与哈希记入私有单集，不以“最新版”代替固定引用。相对媒体/证据路径以 `episode.json` 所在目录为根；Skill脚本路径以安装位置为准，不把单集文件放入Skill公共资源目录。
 
-美术制作时按 [封面完成度到可控动态场景](references/visual-system.md#从封面完成度到可控动态场景) 把精绘主视觉转为分层资产和口播驱动的机制动作，再按 [视觉方法](references/visual-system.md#代表样与-l2l3-校准) 选风险代表样、校准同镜完成度并检查整片编排；用 [美术与画质记录](assets/art-direction-template.md) 保存实际差距及修复。已有真实秒数分镜和媒体时，可按 [抽帧工具](references/shotbook.md#整片视觉抽帧工具) 生成缩略页；它只辅助审看，结论归既有阶段QA。
+将封面完成度迁入影片时，按 [封面完成度到可控动态场景](references/visual-system.md#从封面完成度到可控动态场景) 把完整场景、主体尺度与光影延续到机制镜头，先实际审过“现象→局部→一个机制→可见结果”的连续代表段，再扩制；分层资产与口播驱动动作共同承载可见关系，再按 [视觉方法](references/visual-system.md#代表样与-l2l3-校准) 选风险代表样、校准同镜完成度并检查整片编排；用 [美术与画质记录](assets/art-direction-template.md) 保存实际差距及修复。已有真实秒数分镜和媒体时，可按 [抽帧工具](references/shotbook.md#整片视觉抽帧工具) 生成缩略页；它只辅助审看，结论归既有阶段QA。
 
 ## 检查与交付
 
