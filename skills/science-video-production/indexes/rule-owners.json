@@ -10,7 +10,8 @@
         "scope",
         "coverage",
         "explanation-promise-E01",
-        "cover-opening-alignment"
+        "cover-opening-alignment",
+        "curiosity-gap-and-viewer-payoff"
       ]
     },
     {
@@ -36,7 +37,9 @@
         "explanation-structure",
         "expression-card-design",
         "typed-explanation-path",
-        "explanation-design-E02-E07"
+        "explanation-design-E02-E07",
+        "payoff-progression",
+        "retention-retrospective"
       ]
     },
     {
@@ -94,7 +97,8 @@
         "internal-explanation-and-expression-review",
         "optional-audience-feedback-boundary",
         "subject-motion-continuity",
-        "user-feedback-dimension-isolation"
+        "user-feedback-dimension-isolation",
+        "internal-engagement-review"
       ]
     }
   ]

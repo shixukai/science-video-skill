@@ -543,7 +543,7 @@
     "topic_sha256": "86cfb72292d30028dfd8e3e5bde44f19b6f19cef0391f2e1d7ca2327879d8d32",
     "opening": {
       "title": "天空为什么是蓝色",
-      "voiceover": "天空为什么是蓝色？因为空气分子对短波可见光的散射更强，下面看阳光如何到达眼睛。",
+      "voiceover": "太阳光看起来接近白色，天空的蓝从哪里来？先看空气怎样把光散向我们的眼睛。",
       "intent": "explain_mechanism",
       "scope_ids": [
         "R1",
@@ -552,12 +552,31 @@
       "shot_ids": [
         "SH1"
       ],
-      "spoken_question": "天空为什么是蓝色？",
-      "answer_route": "因为空气分子对短波可见光的散射更强，下面看阳光如何到达眼睛。",
+      "spoken_question": "太阳光看起来接近白色，天空的蓝从哪里来？",
+      "answer_route": "先看空气怎样把光散向我们的眼睛。",
       "cover_question": "白天天空为什么蓝？",
       "question_relation": "specific_equivalent",
       "question_comparison": "封面与开场都问白天天空的蓝色来源，口播不把这一具体问题换成泛泛的天空变化。",
-      "visual_handoff": "计划从封面的蓝天主体进入实际天空观察，再沿视线引入散射解释；具体镜头和实际过渡仍待审。"
+      "visual_handoff": "计划从封面的蓝天主体进入实际天空观察，再沿视线引入散射解释；具体镜头和实际过渡仍待审。",
+      "curiosity_gap": "太阳光看起来接近白色，晴朗白天的天空却蓝；待解释光如何从天空方向到眼睛，不把所有人预设为误解。",
+      "viewer_payoff": "看完能说明晴朗白天散射光怎样进入眼睛，区分光源方向与看到蓝天的方向。",
+      "payoff_steps": [
+        {
+          "scope_id": "R1",
+          "shot_ids": [
+            "SH2"
+          ],
+          "contribution": "定位阳光、空气与眼睛，展示光改变方向，建立散射而非凭空变蓝的解释。"
+        },
+        {
+          "scope_id": "R2",
+          "shot_ids": [
+            "SH2",
+            "SH3"
+          ],
+          "contribution": "用同条件的蓝红散射对照建立颜色差异，再回到晴朗白天的实际观察回答来源及边界。"
+        }
+      ]
     },
     "coverage": [
       {

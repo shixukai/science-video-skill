@@ -55,6 +55,44 @@ def check_opening_plan(data):
             errors.append("opening alignment: opening." + key + " concrete plan required")
     if opening.get("question_relation") != "specific_equivalent":
         errors.append("opening alignment: specific_equivalent question review required; generic_only/different_question/pending cannot pass")
+    # Legacy plans remain readable. A newly supplied interest design must be
+    # complete and point into the existing answer evidence, not a parallel plan.
+    if {"curiosity_gap", "viewer_payoff", "payoff_steps"} & opening.keys():
+        for key in ("curiosity_gap", "viewer_payoff"):
+            if not concrete(opening.get(key)):
+                errors.append("opening alignment: opening." + key + " concrete plan required")
+        steps = opening.get("payoff_steps")
+        if not isinstance(steps, list) or not steps:
+            errors.append("opening alignment: nonempty payoff_steps required")
+            return errors
+        alignment = obj(data.get("topic_alignment"))
+        rows = alignment.get("coverage")
+        coverage = {row["scope_id"]: row for row in rows if isinstance(row, dict)
+                    and concrete(row.get("scope_id"))} if isinstance(rows, list) else {}
+        shots = data.get("shots")
+        order = {shot["id"]: i for i, shot in enumerate(shots) if isinstance(shot, dict)
+                 and concrete(shot.get("id"))} if isinstance(shots, list) else {}
+        previous_end = -1
+        for value in steps:
+            step = obj(value)
+            scope_id = step.get("scope_id")
+            row = obj(coverage.get(scope_id)) if isinstance(scope_id, str) else {}
+            if not row:
+                errors.append("opening alignment: payoff scope_id must reference existing coverage")
+            if not concrete(step.get("contribution")):
+                errors.append("opening alignment: payoff contribution concrete evidence/progression required")
+            ids = step.get("shot_ids")
+            row_ids = row.get("shot_ids")
+            allowed = {s for s in row_ids if isinstance(s, str)} if isinstance(row_ids, list) else set()
+            valid = isinstance(ids, list) and bool(ids) and all(isinstance(s, str) and s in order and s in allowed for s in ids)
+            valid = valid and len(set(ids)) == len(ids)
+            if not valid:
+                errors.append("opening alignment: payoff shot_ids must be unique known shots within referenced coverage")
+                continue
+            positions = [order[s] for s in ids]
+            if positions != sorted(positions) or positions[0] < previous_end:
+                errors.append("opening alignment: payoff_steps must follow actual shot order")
+            previous_end = positions[-1]
     return errors
 
 
@@ -97,7 +135,9 @@ def validate_opening_review(checks):
     question = span(review.get("question_range_s"), "spoken question", viewed)
     answer = span(review.get("answer_route_range_s"), "answer/route", viewed)
     if question and answer:
-        need(question[1] <= answer[0], "actual question must precede concise answer/route")
+        # Legacy question_* names include an accurate conclusion-led topic
+        # entry. This checks ranges, not grammar or the truth of that entry.
+        need(question[1] <= answer[0], "actual topic entry must precede concise answer/route")
     heard = obj(obj(qa.get("topic_alignment")).get("opening_voiceover"))
     for key in ("heard_question", "heard_answer_route"):
         need(concrete(heard.get(key)), "actual " + key + " required")

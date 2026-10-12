@@ -1623,7 +1623,18 @@
       "cover_question": "",
       "question_relation": "pending",
       "question_comparison": "",
-      "visual_handoff": ""
+      "visual_handoff": "",
+      "curiosity_gap": "",
+      "viewer_payoff": "",
+      "payoff_steps": [
+        {
+          "scope_id": "R1",
+          "shot_ids": [
+            "SH2"
+          ],
+          "contribution": ""
+        }
+      ]
     },
     "coverage": [
       {

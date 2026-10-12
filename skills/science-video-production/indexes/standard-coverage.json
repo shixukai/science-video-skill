@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.6",
+  "version": "1.4.7",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37722,6 +37722,90 @@
           "REVIEW-observation-scope-failure"
         ]
       }
+    },
+    {
+      "id": "TOPIC-curiosity-payoff",
+      "rule": "以真实观察差异或具体疑问建立好奇缺口与观看收益，保持科学条件及同一承诺；新方案的兑现引用完整有效，字段齐全不签科学或留存效果。",
+      "action": "以真实观察差异或具体疑问建立好奇缺口与观看收益，保持科学条件及同一承诺；新方案的兑现引用完整有效，字段齐全不签科学或留存效果。",
+      "modality": "hard",
+      "owner": "references/topic-contract.md",
+      "owner_anchor": "开场与观众范围",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "topic_alignment.opening.curiosity_gap"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "topic_alignment.opening.viewer_payoff"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "topic_alignment.opening.payoff_steps"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "TOPIC-curiosity-payoff-failure"
+        ]
+      }
+    },
+    {
+      "id": "PRODUCTION-payoff-progression",
+      "rule": "沿解释分镜逐段提供证据、必要前提或关系，及时兑现可回答的信息，并由结尾整合原现象与答案。",
+      "action": "沿解释分镜逐段提供证据、必要前提或关系，及时兑现可回答的信息，并由结尾整合原现象与答案。",
+      "modality": "hard",
+      "owner": "references/production-checkpoints.md",
+      "owner_anchor": "2-把解释关系变成可见表达",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "topic_alignment.coverage"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "PRODUCTION-payoff-progression-failure"
+        ]
+      }
+    },
+    {
+      "id": "PRODUCTION-retention-review",
+      "rule": "按已发布版本的真实平台字段和曲线位置复盘开头、正文及片长，核样本、分母、窗口和流量可比性，区分相关与因果。",
+      "action": "按已发布版本的真实平台字段和曲线位置复盘开头、正文及片长，核样本、分母、窗口和流量可比性，区分相关与因果。",
+      "modality": "hard",
+      "owner": "references/production-checkpoints.md",
+      "owner_anchor": "产能成本与复盘",
+      "evidence_locations": [
+        {
+          "file": "assets/project-ledger-template.json",
+          "selector": "record_formats.platform_snapshot"
+        },
+        {
+          "file": "assets/project-ledger-template.json",
+          "selector": "record_formats.retention_review"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "PRODUCTION-retention-review-failure"
+        ]
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -37980,12 +38064,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "4-按真实解说安排理解节奏",
-          "quote": "先保全必要机制，删掉支线与重复，按解释路径写成连续完整讲解稿，再按理解任务划分语义段、安排分镜，最后用实际配音确定时点。解说稿须回答观众此刻在看什么、为何发生和为何转到下一步；连读时只用此前已建立的信息推进，不能把各镜独立写成短文后拼接。改镜头顺序或结论时，先修完整稿及受影响的承接段，再重新拆镜。先补缺失前提、指代或推理桥，再决定是否需改配音，不能只换音色、加字幕或加连接词掩盖逻辑断裂。难点后给观察、对比和消化的停留；不能为固定总时长删关键解释步骤或加速 Qwen 硬塞。",
+          "quote": "先保全必要机制，删掉支线与重复，按解释路径写成连续完整讲解稿，再按理解任务划分语义段、安排分镜，最后用实际配音确定时点。解说稿须回答观众此刻在看什么、为何发生和为何转到下一步；尽早给出能推进问题的第一块有效信息，随后让新观察或关系产生继续看的理由，不能把各镜独立写成短文后拼接。连读时只用此前已建立的信息推进。改镜头顺序或结论时，先修完整稿及受影响的承接段，再重新拆镜。先补缺失前提、指代或推理桥，再决定是否需改配音，不能只换音色、加字幕或加连接词掩盖逻辑断裂。难点后给观察、对比和消化的停留；判断停顿、重复和支线是否有理解用途，不能把快速切镜当吸引力，也不能为固定总时长删关键解释步骤或加速 Qwen 硬塞。",
           "lines": [
             74,
             74
           ],
-          "quote_sha256": "a18dc8d5df996ec82b5b5367681a6cf03260b23297714829374ef0cce3ec2e6a"
+          "quote_sha256": "bc97a7adfed5c58379332a899512dff64f6ffcb11c7977a2c7d3350f698ae852"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38738,12 +38822,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "1-先确定观众要看懂的一件事",
-          "quote": "在 brief 写三句：观众见过什么、哪里值得问、看完能解释什么。围绕原题必答范围组织，结尾用日常话回答开头，不因修复局部而新增支题。先让观众认出整体问题和可观察现象，建立一句准确的整体关系，再进入必要机制细节；总答不能代替后续关系与证据，细节也不能挤走整体答案。",
+          "quote": "在 brief 写三句：观众见过什么、哪里值得问、看完能解释或判断什么。优先寻找日常直觉与真实观察之间值得解释的差异，或一个能用画面追查的问题；具体好奇缺口的科学、题意与开场边界按 [主题契约](topic-contract.md#开场与观众范围) 执行，不为制造意外改写事实。观看收益须落到本题的任务，例如能凭什么观察区分两种现象、解释一个常见误判或判断条件改变后的结果；“了解更多”“看到最后有惊喜”不能代替。围绕原题必答范围组织，结尾用日常话把观察、已建立关系与答案接回开头，不因修复局部而新增支题。先让观众认出整体问题和可观察现象，建立一句准确的整体关系，再进入必要机制细节；总答不能代替后续关系与证据，细节也不能挤走整体答案。",
           "lines": [
             7,
             7
           ],
-          "quote_sha256": "42fa8549dc3c0bd3607f227e302749e92720bb2cca8f4d5869ff36cb3deae376"
+          "quote_sha256": "a00abb42ddaf5973ce74ba235a0259528259f7c13dc05e9410582577d84dd2d9"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38774,12 +38858,12 @@
         {
           "file": "references/topic-contract.md",
           "anchor": "开场与观众范围",
-          "quote": "片内第一屏须让人识别对象/现象及具体问题，标题与主视觉对应，在手机大小可读、有自然阅读时间；不能仅栏目名、口号或美图，封面/简介也不能代替。实际开场口播先读题目/核心问题，紧接准确总答或解释路线，再进机制；允许紧接主题的现象钩子，不强制问候/秒数，不夸大。标题与口播题意一致，不必逐字相同。布局由 [视觉系统](visual-system.md) 负责。",
+          "quote": "片内第一屏须让人识别对象/现象及具体问题，标题与主视觉对应，在手机大小可读、有自然阅读时间；不能仅栏目名、口号或美图，封面/简介也不能代替。实际开场口播直接进入具体核心问题，也可用有依据、带条件的反直觉结论点明原问题或解释任务；点明本期要解释什么后，紧接简短准确的总答或解释路线，再进机制。尽早给第一块有效信息，让观众知道继续看能解释或判断什么，不先铺栏目介绍、知识背景或空泛感叹。标题与口播题意一致，不必逐字相同，不强制问候、句式或秒数。布局由 [视觉系统](visual-system.md) 负责。",
           "lines": [
             34,
             34
           ],
-          "quote_sha256": "34f978d439796c65380f9a09401718262f74dbe869aabb25c1575f4053956b3a"
+          "quote_sha256": "cda3764e0a4d4b8dfe2a2eb951a18895373c2b54d995351ba26c8f93603ecfa8"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -38792,12 +38876,12 @@
         {
           "file": "references/topic-contract.md",
           "anchor": "四处回查原题不靠关键词打勾",
-          "quote": "开场先让观众听到本期题目/核心问题，再听到总答或解释路线，随后进入细节；可有紧接主题的现象钩子，不规定秒数或机械问候。不能只有可见标题而没有主题口播，也不能把中间解释当主题导入。自问自答应忠实于锚定的问题类型，不能把制造过程改成作用介绍。`qa.topic_alignment.opening_voiceover` 增记 `review_scope=final_export`、实际听到的 `heard_question`、`heard_answer_route` 和 `evidence` 中的时间段/文件定位；只审脚本、ASR或旧音轨都保留 pending。总答不准确、顺序颠倒、漏读题目或题意漂移须退回开场与相关口播。",
+          "quote": "开场表达沿本页 [开场与观众范围](#开场与观众范围) 实审。不能只有可见标题而没有主题口播，也不能把中间解释当主题导入；反直觉结论引入仍须自然点明锚定的核心问题，不能把制造过程改成作用介绍。`qa.topic_alignment.opening_voiceover` 增记 `review_scope=final_export`、实际听到的 `heard_question`、`heard_answer_route` 和 `evidence` 中的时间段/文件定位；只审脚本、ASR或旧音轨都保留 pending。总答不准确、缺明确主题或解释路线、题意漂移须退回开场与相关口播；内部吸引力判断与实际留存按 [质量审查](quality-acceptance.md#自主解释与表达审查) 和 [真实复盘](production-checkpoints.md#产能成本与复盘) 分别记录。",
           "lines": [
             51,
             51
           ],
-          "quote_sha256": "9c31d93f1e093cd4fa609b6363874253096a6e5fd433519f4e06386cd0dd225f"
+          "quote_sha256": "1c07ec11e3d1cf659857fe73a982b62b685a1ff8782eda773b1ac1b3ba595226"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -40158,12 +40242,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "产能成本与复盘",
-          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
+          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见、承诺未兑现及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、定义、分母、窗口、采集时间及媒体版本）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。真实留存数据在已有台账保存原始回执或导出，私有账号、作品及反馈不进入公共Skill；无曲线仍可完成内部审查，不要求观众实时反馈。\n\n有留存曲线时，把下降、趋平段或重看峰值的实际位置对回已发布版本的声画任务，分别检查开头是否迟迟没有明确问题/有效信息、正文是否缺前提/重复/转镜失联/答案不兑现，以及片长是否包含可删支线或确有必要的解释。峰值可能来自兴趣，也可能来自看不懂后的重看，不自动称为高光。只有总体完播率时，不能定位流失段或认定开头是唯一根因；同时看平台可提供的平均观看时长、各段留存及其定义，避免把较短视频更容易看完当成解释质量更好。必要观察停留与科学步骤不能为了完播删掉。\n\n比较先匹配平台、题材、片长、发布窗口、分母和流量来源/受众范围，再看可比作品中位数及样本量；缺口、样本小或推荐流量变化须明确，不能把外部基准直接当本片可达到的效果。沿现有台账提出带位置和证据的下一轮假设，一轮改变一个主要创作变量，保留前后条件与结果；非受控比较只支持相关与待验证假设，单条高播放、总体完播变化或跨平台上传不证明开场、画风或时长的因果效果，不保证改动后的留存提升。",
           "lines": [
             146,
             146
           ],
-          "quote_sha256": "b43c09cad6dfbb925eebb7f86ce760c28254dcddf5b1ba72739f1ae18b0d65ec"
+          "quote_sha256": "32a7a3c4dc1c301e64258a2ffdd737900766342935fe197c412fd923fd181de6"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -40176,12 +40260,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "产能成本与复盘",
-          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
+          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见、承诺未兑现及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、定义、分母、窗口、采集时间及媒体版本）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。真实留存数据在已有台账保存原始回执或导出，私有账号、作品及反馈不进入公共Skill；无曲线仍可完成内部审查，不要求观众实时反馈。\n\n有留存曲线时，把下降、趋平段或重看峰值的实际位置对回已发布版本的声画任务，分别检查开头是否迟迟没有明确问题/有效信息、正文是否缺前提/重复/转镜失联/答案不兑现，以及片长是否包含可删支线或确有必要的解释。峰值可能来自兴趣，也可能来自看不懂后的重看，不自动称为高光。只有总体完播率时，不能定位流失段或认定开头是唯一根因；同时看平台可提供的平均观看时长、各段留存及其定义，避免把较短视频更容易看完当成解释质量更好。必要观察停留与科学步骤不能为了完播删掉。\n\n比较先匹配平台、题材、片长、发布窗口、分母和流量来源/受众范围，再看可比作品中位数及样本量；缺口、样本小或推荐流量变化须明确，不能把外部基准直接当本片可达到的效果。沿现有台账提出带位置和证据的下一轮假设，一轮改变一个主要创作变量，保留前后条件与结果；非受控比较只支持相关与待验证假设，单条高播放、总体完播变化或跨平台上传不证明开场、画风或时长的因果效果，不保证改动后的留存提升。",
           "lines": [
             146,
             146
           ],
-          "quote_sha256": "b43c09cad6dfbb925eebb7f86ce760c28254dcddf5b1ba72739f1ae18b0d65ec"
+          "quote_sha256": "32a7a3c4dc1c301e64258a2ffdd737900766342935fe197c412fd923fd181de6"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -41884,12 +41968,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "产能成本与复盘",
-          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
+          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见、承诺未兑现及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、定义、分母、窗口、采集时间及媒体版本）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。真实留存数据在已有台账保存原始回执或导出，私有账号、作品及反馈不进入公共Skill；无曲线仍可完成内部审查，不要求观众实时反馈。\n\n有留存曲线时，把下降、趋平段或重看峰值的实际位置对回已发布版本的声画任务，分别检查开头是否迟迟没有明确问题/有效信息、正文是否缺前提/重复/转镜失联/答案不兑现，以及片长是否包含可删支线或确有必要的解释。峰值可能来自兴趣，也可能来自看不懂后的重看，不自动称为高光。只有总体完播率时，不能定位流失段或认定开头是唯一根因；同时看平台可提供的平均观看时长、各段留存及其定义，避免把较短视频更容易看完当成解释质量更好。必要观察停留与科学步骤不能为了完播删掉。\n\n比较先匹配平台、题材、片长、发布窗口、分母和流量来源/受众范围，再看可比作品中位数及样本量；缺口、样本小或推荐流量变化须明确，不能把外部基准直接当本片可达到的效果。沿现有台账提出带位置和证据的下一轮假设，一轮改变一个主要创作变量，保留前后条件与结果；非受控比较只支持相关与待验证假设，单条高播放、总体完播变化或跨平台上传不证明开场、画风或时长的因果效果，不保证改动后的留存提升。",
           "lines": [
             146,
             146
           ],
-          "quote_sha256": "b43c09cad6dfbb925eebb7f86ce760c28254dcddf5b1ba72739f1ae18b0d65ec"
+          "quote_sha256": "32a7a3c4dc1c301e64258a2ffdd737900766342935fe197c412fd923fd181de6"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -42526,12 +42610,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "1-先确定观众要看懂的一件事",
-          "quote": "在 brief 写三句：观众见过什么、哪里值得问、看完能解释什么。围绕原题必答范围组织，结尾用日常话回答开头，不因修复局部而新增支题。先让观众认出整体问题和可观察现象，建立一句准确的整体关系，再进入必要机制细节；总答不能代替后续关系与证据，细节也不能挤走整体答案。",
+          "quote": "在 brief 写三句：观众见过什么、哪里值得问、看完能解释或判断什么。优先寻找日常直觉与真实观察之间值得解释的差异，或一个能用画面追查的问题；具体好奇缺口的科学、题意与开场边界按 [主题契约](topic-contract.md#开场与观众范围) 执行，不为制造意外改写事实。观看收益须落到本题的任务，例如能凭什么观察区分两种现象、解释一个常见误判或判断条件改变后的结果；“了解更多”“看到最后有惊喜”不能代替。围绕原题必答范围组织，结尾用日常话把观察、已建立关系与答案接回开头，不因修复局部而新增支题。先让观众认出整体问题和可观察现象，建立一句准确的整体关系，再进入必要机制细节；总答不能代替后续关系与证据，细节也不能挤走整体答案。",
           "lines": [
             7,
             7
           ],
-          "quote_sha256": "42fa8549dc3c0bd3607f227e302749e92720bb2cca8f4d5869ff36cb3deae376"
+          "quote_sha256": "a00abb42ddaf5973ce74ba235a0259528259f7c13dc05e9410582577d84dd2d9"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -43112,12 +43196,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "产能成本与复盘",
-          "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。\n\n当前系列按 [项目配置](../config/series-profile.json) 分别执行每日 **10条完整制作**（`operations.daily_completed_unique_target`）与每日 **10条实际有效唯一新发布**（`operations.daily_actual_unique_target`），两项分别报实际数、目标和差额，不互相抵扣。日期按配置时区：完整制作计当天首次完成且G5实际通过的不同完整单集；发布计当天首次有效发布且G7读回核实的不同作品。沿用项目台账的 `production_ledger` 与 `publication_ledger` 分别记账；未知实际数和差额用null，不写成已达标。保留作品ID、媒体版本/哈希、新作品范围依据、完成时间、当前G5质量证据及G7首次发布回执，G4待审候选不能计完成，不能只按文件数、尝试次数或计划数量计数。\n\n样片、草稿、渲染中、旧片或失败版本均不得抵扣，重复版本/重复上传也不得抵数。旧片如另有发布批准，可如实记平台活动，但不能自动计入每日10条新作品达标；合格未发布库存是否属于本次新作品范围，须由来源、版本及实际记录确定，不默认全部计入，也不因此停止当前制作或反复询问。昨天已完成的成果不能重复记今天制作，已经发布的旧片重传必须排除；既有未完成视频继续制作，只有实际完整完成、当前G5通过且符合新作品范围证据，才计入当日制作。目标不降低反馈、美术、声音、科学、权利或发布门槛；缺口如实保留。这次配置纠正只更新目标与计数口径，不新建或改变日程，也不据此推断过去实际按何数量停止。\n\n\n每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。\n\n采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。\n\n复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
+          "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。\n\n当前系列按 [项目配置](../config/series-profile.json) 分别执行每日 **10条完整制作**（`operations.daily_completed_unique_target`）与每日 **10条实际有效唯一新发布**（`operations.daily_actual_unique_target`），两项分别报实际数、目标和差额，不互相抵扣。日期按配置时区：完整制作计当天首次完成且G5实际通过的不同完整单集；发布计当天首次有效发布且G7读回核实的不同作品。沿用项目台账的 `production_ledger` 与 `publication_ledger` 分别记账；未知实际数和差额用null，不写成已达标。保留作品ID、媒体版本/哈希、新作品范围依据、完成时间、当前G5质量证据及G7首次发布回执，G4待审候选不能计完成，不能只按文件数、尝试次数或计划数量计数。\n\n样片、草稿、渲染中、旧片或失败版本均不得抵扣，重复版本/重复上传也不得抵数。旧片如另有发布批准，可如实记平台活动，但不能自动计入每日10条新作品达标；合格未发布库存是否属于本次新作品范围，须由来源、版本及实际记录确定，不默认全部计入，也不因此停止当前制作或反复询问。昨天已完成的成果不能重复记今天制作，已经发布的旧片重传必须排除；既有未完成视频继续制作，只有实际完整完成、当前G5通过且符合新作品范围证据，才计入当日制作。目标不降低反馈、美术、声音、科学、权利或发布门槛；缺口如实保留。这次配置纠正只更新目标与计数口径，不新建或改变日程，也不据此推断过去实际按何数量停止。\n\n\n每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。\n\n采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。\n\n复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见、承诺未兑现及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、定义、分母、窗口、采集时间及媒体版本）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。真实留存数据在已有台账保存原始回执或导出，私有账号、作品及反馈不进入公共Skill；无曲线仍可完成内部审查，不要求观众实时反馈。\n\n有留存曲线时，把下降、趋平段或重看峰值的实际位置对回已发布版本的声画任务，分别检查开头是否迟迟没有明确问题/有效信息、正文是否缺前提/重复/转镜失联/答案不兑现，以及片长是否包含可删支线或确有必要的解释。峰值可能来自兴趣，也可能来自看不懂后的重看，不自动称为高光。只有总体完播率时，不能定位流失段或认定开头是唯一根因；同时看平台可提供的平均观看时长、各段留存及其定义，避免把较短视频更容易看完当成解释质量更好。必要观察停留与科学步骤不能为了完播删掉。\n\n比较先匹配平台、题材、片长、发布窗口、分母和流量来源/受众范围，再看可比作品中位数及样本量；缺口、样本小或推荐流量变化须明确，不能把外部基准直接当本片可达到的效果。沿现有台账提出带位置和证据的下一轮假设，一轮改变一个主要创作变量，保留前后条件与结果；非受控比较只支持相关与待验证假设，单条高播放、总体完播变化或跨平台上传不证明开场、画风或时长的因果效果，不保证改动后的留存提升。",
           "lines": [
             140,
             146
           ],
-          "quote_sha256": "78ccb59c4870f85a32fcda76b2f1b6f260d190bdba453ceeca8f3214ea7d85d8"
+          "quote_sha256": "8194907d90cef8c8a8fcadfdd673867d66cde8b9b32d717210b3c1cd235becbe"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -43186,12 +43270,12 @@
         {
           "file": "references/topic-contract.md",
           "anchor": "开场与观众范围",
-          "quote": "默认面向没有相关专业训练的成年普通观众，优先自然现象/生活科学；不以抽象数学、统计或概率点图替代可识别现象，不把本集改成公式课。必要数字和单位可以帮助直观理解。\n\n片内第一屏须让人识别对象/现象及具体问题，标题与主视觉对应，在手机大小可读、有自然阅读时间；不能仅栏目名、口号或美图，封面/简介也不能代替。实际开场口播先读题目/核心问题，紧接准确总答或解释路线，再进机制；允许紧接主题的现象钩子，不强制问候/秒数，不夸大。标题与口播题意一致，不必逐字相同。布局由 [视觉系统](visual-system.md) 负责。\n\n单期明确主问题；可以回答多个相关问题，但逐项说明主从关系与必要性。整期含多个问题时，在现有分镜/范围说明中明确一个主问题及附带问题，标出附带解释依赖哪项已建立的关系或机制。先让观众获得回答主问题所需的解释关系，再展开依赖它的延伸；可用现象或衍生疑问作悬念，但须及时回到主线，不能用悬念替代基础解释。核首屏、口播路线、主要镜头任务和结尾是否共同回答主问题；若观众须先追附带问题才被告知本片在解释什么，退回主题与段落顺序。附带内容的长度按作用取舍，不机械规定比例，也不擅自新增题目。",
+          "quote": "默认面向没有相关专业训练的成年普通观众，优先自然现象/生活科学；不以抽象数学、统计或概率点图替代可识别现象，不把本集改成公式课。必要数字和单位可以帮助直观理解。\n\n片内第一屏须让人识别对象/现象及具体问题，标题与主视觉对应，在手机大小可读、有自然阅读时间；不能仅栏目名、口号或美图，封面/简介也不能代替。实际开场口播直接进入具体核心问题，也可用有依据、带条件的反直觉结论点明原问题或解释任务；点明本期要解释什么后，紧接简短准确的总答或解释路线，再进机制。尽早给第一块有效信息，让观众知道继续看能解释或判断什么，不先铺栏目介绍、知识背景或空泛感叹。标题与口播题意一致，不必逐字相同，不强制问候、句式或秒数。布局由 [视觉系统](visual-system.md) 负责。\n\n选题优先寻找科学真实、能由画面支持的好奇缺口：在既有简报记候选的直觉预期、真实差异或尚待解释的观察、核心答案、可视证据与适用条件。直觉预期是可检验的表达假设，不冒称所有人都误解；没有可靠差异就用具体疑问或观察，不强造反常识。观看收益应是看完能说明某个关系、排除某种解释或判断相近情形，不能只有“涨知识”。封面、标题、口播与开场画面承诺同一问题和条件；悬念留在“依据是什么、过程怎样发生”，不藏已经可以准确说出的核心答案。禁止伪反常识、夸大、无依据的“颠覆认知/科学家也不懂”、与正文无关的惊奇画面、假悬念、以“看到最后”无意义拖答案或强制互动。\n\n在 `topic_alignment.opening` 用 `curiosity_gap` 说明上述预期与真实差异/疑问及条件，用 `viewer_payoff` 说明具体观看收益；核心答案沿用 `brief.one_sentence_answer`，开场的总答或解释路线沿用 `answer_route`，科学依据沿用主张/来源记录。`payoff_steps` 按正文实际推进顺序引用既有 `coverage` 的 `scope_id`、`shot_ids`，用 `contribution` 说明该段提供何证据、补何前提、排除何解释、展示何关系或验证何预测；结尾沿用 `ending.answer` 回答原问题，不另建批准。这些字段用于本轮新建或修订的吸引力方案，旧包未改此方案时可沿现有简报记录；一旦填写其中任一字段，结构检查要求三项完整、正文引用有效。字段齐全不证明科学、吸引力或实际兑现，不能把测试通过写成完播改善。\n\n下列是有条件的纸面表达示例，不是每集模板、已取得素材或已验证效果；事实来源不授予媒体复用权，实际使用仍按 [科学与素材](science-and-rights.md) 核研究及连续视频权利。\n\n| 题材与可选开场 | 好奇缺口与观看收益 | 可视证据、兑现与边界 |\n| --- | --- | --- |\n| 普通冰浮水：“普通冰的密度比液态水小，所以会浮起来。同样多的水结成冰，排列哪里变了？” | 固体可能被想象得更紧实，但普通冰的排列更疏松；看完能用相同质量的体积比较解释密度差异 | 有权连续冰块浮水观察；纯2D保持分子数量/所代表质量不变，对比液态排列与普通冰的较疏松结构，再回浮水结果。分子本身不膨大，“密度小”不是质量消失；限常见压力下普通水结成的冰与液态水，不推广到所有固体、冰相或液体；[USGS说明](https://www.usgs.gov/water-science-school/science/water-density/) |\n| 晴朗白天：“太阳光看起来接近白色，天空的蓝从哪里来？先看空气怎样把光散向我们的眼睛。” | 光源外观与天空颜色不同；看完能说明光怎样从天空方向进入眼睛 | 有权蓝天视频定位观察方向；纯2D依次建立阳光、空气、散射和眼睛。蓝红对照不是阳光只有两色，蓝光比红光散射更强不等于蓝光在所有可见光中最强。若原题还包括红日落，先区分看天空的散射光与看太阳方向经历较长路径的光，不能把两条路径混为一谈；[NASA说明](https://spaceplace.nasa.gov/blue-sky/en/) |\n| 雷声迟到：“为什么先见闪电，雷声却晚到？光和声音的传播速度不同，先分清产生与到达。” | 看见与听见的先后不等于声源生成的先后；看完能区分产生过程和传播过程 | 现象依据须是同次事件的原始同步声画，不能重排音效制造延迟；纯2D先定位放电加热空气的声源，再比较传播到观察者的过程。不能暗示闪电过一会才制造雷声；时延并非声源机制的替代答案。只在本题范围含延迟时采用，不擅改雷声声源题；[NOAA说明](https://www.nesdis.noaa.gov/about/k-12-education/severe-weather/what-causes-lightning-and-thunder) |\n\n单期明确主问题；可以回答多个相关问题，但逐项说明主从关系与必要性。整期含多个问题时，在现有分镜/范围说明中明确一个主问题及附带问题，标出附带解释依赖哪项已建立的关系或机制。先让观众获得回答主问题所需的解释关系，再展开依赖它的延伸；可用现象或衍生疑问作悬念，但须及时回到主线，不能用悬念替代基础解释。核首屏、口播路线、主要镜头任务和结尾是否共同回答主问题；若观众须先追附带问题才被告知本片在解释什么，退回主题与段落顺序。附带内容的长度按作用取舍，不机械规定比例，也不擅自新增题目。",
           "lines": [
             32,
             36
           ],
-          "quote_sha256": "455607bc308282be643d8df6b2ab8845089be338ed8e324a8a8b7e2436896b88"
+          "quote_sha256": "f809777fbc2bac699b1159324cf56a2313a89da39b1b6818febf36f689d0e6c1"
         },
         {
           "file": "references/topic-contract.md",
@@ -44132,22 +44216,22 @@
         {
           "file": "references/quality-acceptance.md",
           "anchor": "自主解释与表达审查",
-          "quote": "G1保留解释设计与逻辑缺项，G2以完整有声草排检查关系实际呈现，G5对最终整合版本重查解释/表达与实际完整声画；沿现有阶段和版本证据，不新增平行批准。每项结果必须指向已审作品位置，已知失败须修复并重新检查；可选真人反馈的缺失不阻断，实际必需的视听检查缺失仍阻断相应成片通过。",
+          "quote": "G1在 `qa.explanation_logic` 的现有 note/evidence 中检查好奇缺口、观看收益、科学依据和计划兑现路径；G2在 `qa.expression_plan` 以完整有声草排检查第一块有效信息、关系推进、观察停留与答案是否实际成立。G3沿现有代表段证据复核所覆盖关系的吸引力与兑现，局部结果不升格为整片结论；G5在 `qa.explanation_review` / `qa.expression_review` 对当前完整最终导出重查开场到结尾及全部承诺。记录具体位置、当时所见所闻、第一次失去追踪或发现无推进之处、修改和实查结果；独立审查沿既有不同任务上下文要求，不新增吸引力分数、固定秒数或平行批准。计划有吸引力不等于实际看听有吸引力，内部判断不等于平台留存已提升；发布后的证据与可比性按 [真实复盘](production-checkpoints.md#产能成本与复盘) 处理。每项结果必须指向已审作品位置，已知失败须修复并重新检查；可选真人反馈的缺失不阻断，实际必需的视听检查缺失仍阻断相应成片通过。",
           "lines": [
             208,
             208
           ],
-          "quote_sha256": "1ed46316fb6fc3b262269373a957f4b96ec40c2196df37f0b0a5ef81c8568c6b"
+          "quote_sha256": "bc94cce5a0c1caf46a9ed9573a0ce99eff568dfd0ac15ae9eba9c24de519e9a2"
         },
         {
           "file": "references/quality-acceptance.md",
           "anchor": "自主解释与表达审查",
-          "quote": "**解释审查**检查问题、前提、关系、推理与边界，逐步问凭什么能得到下一结论。**表达审查**检查实际脚本、分镜、草排或最终导出是否呈现必要信息与关系。只凭当前作品已呈现内容，不用作者脑中知识、设计说明或预期答案补空。纸稿只能支持相应逻辑/文字结论，不能签实际动态、音色或成片通过；技术、逻辑、实际视听分别记录，未实际检查的项目不填通过。内部审查不证明真实受众理解率。",
+          "quote": "**解释审查**检查问题、前提、关系、推理与边界，逐步问凭什么能得到下一结论。**表达审查**检查实际脚本、分镜、草排或最终导出是否呈现必要信息与关系。两种职责同时核 [开场的真实好奇缺口](topic-contract.md#开场与观众范围) 与 [逐段兑现](production-checkpoints.md#2-把解释关系变成可见表达)：观众为何值得看、能获得什么、何处获得支持答案的第一块信息、后续各段怎样推进及结尾是否回答。只凭当前作品已呈现内容，不用作者脑中知识、设计说明或预期答案补空。纸稿只能支持相应逻辑/文字结论，不能签实际动态、音色或成片通过；技术、逻辑、实际视听分别记录，未实际检查的项目不填通过。内部审查不证明真实受众理解率或留存效果。",
           "lines": [
             186,
             186
           ],
-          "quote_sha256": "afa862cc927a5ad70df88f02a4c273c13d57b27bf7cf380d9bb9894df0186966"
+          "quote_sha256": "d1c99189cc418017150a3a2db42d4d4376ec2ccfc7f7f06f3481def839b54a22"
         },
         {
           "file": "references/quality-acceptance.md",
@@ -44499,8 +44583,8 @@
         {
           "file": "references/topic-contract.md",
           "anchor": "封面题意到实际开场的连续核对",
-          "quote": "沿同一主题契约串起“封面核心问题 → 实际开场的具体提问 → 简短准确的总答/解释路线 → 主体与场景承接”。同对象、同关键词或一句“它为什么会这样”都不足以证明题意一致；例如合成教学案例中，封面问“白天天空为什么蓝”，开场只说“看看天空，它怎么变成这样”仍未明确要解释的蓝色现象。允许自然同义表达，如“晴天抬头看到的那片蓝色，从哪里来？”，不要求照念封面，不强制静态标题卡、同一场景贯穿所有项目、固定秒数或机械问候。",
-          "quote_sha256": "654c4cf8f487bc9553c34ca64a24ef0a9644298b54397a5203aa8ea960d5ae69",
+          "quote": "沿同一主题契约串起“封面核心问题 → 实际开场的主题导入（具体提问或结论式主题陈述） → 简短准确的总答/解释路线 → 主体与场景承接”。同对象、同关键词或一句“它为什么会这样”都不足以证明题意一致；例如合成教学案例中，封面问“白天天空为什么蓝”，开场只说“看看天空，它怎么变成这样”仍未明确要解释的蓝色现象。允许自然同义表达，如“晴天抬头看到的那片蓝色，从哪里来？”，不要求照念封面，不强制静态标题卡、同一场景贯穿所有项目、固定秒数或机械问候。",
+          "quote_sha256": "0e3e44231d813fd8764f84d4b28c09c2b38a2df4d7e609f9ad130b368d07bc30",
           "lines": [
             58,
             58
@@ -44519,8 +44603,8 @@
         {
           "file": "references/topic-contract.md",
           "anchor": "封面题意到实际开场的连续核对",
-          "quote": "G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的提问/路线；`video` 和两种 `covers` 各绑定当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`viewed_range_s` 从实际导出首帧开始，覆盖问题、随后的答案/路线和承接；`question_range_s`、`answer_route_range_s` 标真实时码且问在答前，不编固定时长。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。",
-          "quote_sha256": "0e022a9f375a4eb8276c3995438e26a5c3e3085fddc92a7e66646a4eeb61ccdb",
+          "quote": "G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的主题导入/路线；`video` 和两种 `covers` 各绑定当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`heard_question` 与 `question_range_s` 对应上述 `spoken_question` 的主题导入，可为结论式主题陈述；它已经给核心答案时，后续 `answer_route` 说明怎样解释或验证，不强迫重新提问或重复答案。`viewed_range_s` 从实际导出首帧开始，覆盖主题导入、随后的答案/路线和承接；两段标真实时码且主题导入在解释路线前，不编固定时长。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。",
+          "quote_sha256": "883132e3eb1121b2aecc93a8eff29f07c74aa679db7e9925e1d1f0e8013a6b6d",
           "lines": [
             62,
             62
@@ -44571,9 +44655,66 @@
           "quote_sha256": "89c81bf5f70af49d00f352921d5ae159a3734dff01ae172a58fab3c27d9a1fd9"
         }
       ]
+    },
+    {
+      "id": "TOPIC-curiosity-payoff-failure",
+      "application": "本轮新建或修订的吸引力方案；旧包与局部修样沿既有范围和记录，不新增批准。",
+      "failure_condition": "伪反常识、夸大、假悬念、无意义拖答案或承诺不一致须修主题/脚本；已填写的新方案缺项、无效范围或镜号、兑现顺序错误不得通过对应计划检查。",
+      "clauses": [
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "开场与观众范围",
+          "quote": "选题优先寻找科学真实、能由画面支持的好奇缺口：在既有简报记候选的直觉预期、真实差异或尚待解释的观察、核心答案、可视证据与适用条件。直觉预期是可检验的表达假设，不冒称所有人都误解；没有可靠差异就用具体疑问或观察，不强造反常识。观看收益应是看完能说明某个关系、排除某种解释或判断相近情形，不能只有“涨知识”。封面、标题、口播与开场画面承诺同一问题和条件；悬念留在“依据是什么、过程怎样发生”，不藏已经可以准确说出的核心答案。禁止伪反常识、夸大、无依据的“颠覆认知/科学家也不懂”、与正文无关的惊奇画面、假悬念、以“看到最后”无意义拖答案或强制互动。",
+          "quote_sha256": "e3212b74897eaf95bfece9d7d6c3ca1e0cace6f3b047c680df49a26d06d6ac6a"
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "开场与观众范围",
+          "quote": "在 `topic_alignment.opening` 用 `curiosity_gap` 说明上述预期与真实差异/疑问及条件，用 `viewer_payoff` 说明具体观看收益；核心答案沿用 `brief.one_sentence_answer`，开场的总答或解释路线沿用 `answer_route`，科学依据沿用主张/来源记录。`payoff_steps` 按正文实际推进顺序引用既有 `coverage` 的 `scope_id`、`shot_ids`，用 `contribution` 说明该段提供何证据、补何前提、排除何解释、展示何关系或验证何预测；结尾沿用 `ending.answer` 回答原问题，不另建批准。这些字段用于本轮新建或修订的吸引力方案，旧包未改此方案时可沿现有简报记录；一旦填写其中任一字段，结构检查要求三项完整、正文引用有效。字段齐全不证明科学、吸引力或实际兑现，不能把测试通过写成完播改善。",
+          "quote_sha256": "c1d9ce6219a1dc47fe9c10a941d6201176cc2b16ca1caada8fd9bce7575cc32f"
+        }
+      ]
+    },
+    {
+      "id": "PRODUCTION-payoff-progression-failure",
+      "application": "各题材既有解释设计和正文推进，不固定段数、时长或统一反转模板。",
+      "failure_condition": "段落只预告、重复问题或增加无关信息，已可回答仍藏答案/条件，须删改与重审，不以快切或加速替代。",
+      "clauses": [
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "2-把解释关系变成可见表达",
+          "quote": "先识别需要建立的关系，再选择表达。因果用前态、改变因素、必要过程与结果；空间用参照、方向、视点及约束；结构与功能用部件、连接及作用；比较用同条件案例与关键差异；数量用量、单位、关系和成立条件；概率用可能结果、分布与不确定性；证据用观察、推断及其限度；传播用载体、路径、传递和局部响应与整体传播的差别。只填写本题实际需要的类型，不为非因果问题虚构触发和变化。按理解依赖顺序揭示，预告、回顾与正在发生的机制须可区分；开场简短总答不代替后续解释。沿已有解释分镜写清各段怎样兑现开场承诺：给观察证据、补必要前提、排除一种合理解释、建立关系或验证一个预测，按本题选择。段落若只重复提问、预告惊喜或增加无关信息，先删改；已能说明的答案及时说明，后续好奇由尚待解释的关系和证据承接，不故意藏住关键条件或把同一答案拖到片尾。",
+          "quote_sha256": "d9a0fa78a0df129135bab169ee8b4fb7ea32ab2d00ab7cae839cbfd467f0ec43"
+        }
+      ]
+    },
+    {
+      "id": "PRODUCTION-retention-review-failure",
+      "application": "获授权取得的发布后真实数据；无曲线可做内部审查，未知保持未知，不新增监控或实时观众要求。",
+      "failure_condition": "总体完播不能定位唯一根因，重看峰不自动高光，跨题材/片长/统计口径/流量比较不得声明提升因果或结果保证。",
+      "clauses": [
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "产能成本与复盘",
+          "quote": "复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见、承诺未兑现及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、定义、分母、窗口、采集时间及媒体版本）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。真实留存数据在已有台账保存原始回执或导出，私有账号、作品及反馈不进入公共Skill；无曲线仍可完成内部审查，不要求观众实时反馈。",
+          "quote_sha256": "737bfafc3389e0f6c4936fb79d44ed274b4009fef8812aee2b07b7a338c7a38b"
+        },
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "产能成本与复盘",
+          "quote": "有留存曲线时，把下降、趋平段或重看峰值的实际位置对回已发布版本的声画任务，分别检查开头是否迟迟没有明确问题/有效信息、正文是否缺前提/重复/转镜失联/答案不兑现，以及片长是否包含可删支线或确有必要的解释。峰值可能来自兴趣，也可能来自看不懂后的重看，不自动称为高光。只有总体完播率时，不能定位流失段或认定开头是唯一根因；同时看平台可提供的平均观看时长、各段留存及其定义，避免把较短视频更容易看完当成解释质量更好。必要观察停留与科学步骤不能为了完播删掉。",
+          "quote_sha256": "df2d9614d4ebc85596332e802807b968d64aa184aabf2758b24b87d9d430e37d"
+        },
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "产能成本与复盘",
+          "quote": "比较先匹配平台、题材、片长、发布窗口、分母和流量来源/受众范围，再看可比作品中位数及样本量；缺口、样本小或推荐流量变化须明确，不能把外部基准直接当本片可达到的效果。沿现有台账提出带位置和证据的下一轮假设，一轮改变一个主要创作变量，保留前后条件与结果；非受控比较只支持相关与待验证假设，单条高播放、总体完播变化或跨平台上传不证明开场、画风或时长的因果效果，不保证改动后的留存提升。",
+          "quote_sha256": "5d8730cefd2cd1a680d9e27c50f2c9734248d790bda3edd294b7002174dd7407"
+        }
+      ]
     }
   ],
-  "rule_count": 909,
+  "rule_count": 912,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

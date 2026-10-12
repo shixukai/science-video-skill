@@ -71,7 +71,12 @@
       "hours_since_publication": null,
       "field_names_as_platform_shows": {},
       "denominators": {},
-      "notes": ""
+      "notes": "",
+      "media_sha256": "",
+      "duration_s": null,
+      "evidence": [],
+      "traffic_and_audience": {},
+      "retention_points": []
     },
     "experiment": {
       "hypothesis": "",
@@ -117,6 +122,26 @@
       "current_rework_minutes": null,
       "evidence": "",
       "limits": ""
+    },
+    "retention_point": {
+      "time_s": null,
+      "platform_field": "",
+      "value": null,
+      "denominator": null,
+      "observation": "",
+      "evidence": []
+    },
+    "retention_review": {
+      "episode_id": "",
+      "snapshot_references": [],
+      "opening_observation": "",
+      "body_observation": "",
+      "duration_observation": "",
+      "comparison_basis": "",
+      "sample_and_traffic_limits": "",
+      "alternative_explanations": "",
+      "next_hypothesis": "",
+      "result": "not_measured"
     }
   },
   "experiments": [],
@@ -136,5 +161,6 @@
     "daily_target": 10,
     "actual_unique_completed": null,
     "gap": null
-  }
+  },
+  "retention_reviews": []
 }

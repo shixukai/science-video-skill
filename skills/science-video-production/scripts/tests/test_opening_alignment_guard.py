@@ -65,6 +65,85 @@ class OpeningAlignmentTests(unittest.TestCase):
         self.data.pop('deliverables'); self.data.pop('qa')
         self.assertEqual(check_opening_plan(self.data), [])
 
+    def interest_plan(self):
+        data = copy.deepcopy(self.data)
+        data['shots'] = [{'id': 'S1'}, {'id': 'S2'}, {'id': 'S3'}]
+        data['topic_alignment']['coverage'] = [
+            dict(scope_id='R1', shot_ids=['S1', 'S2']),
+            dict(scope_id='R2', shot_ids=['S3'])]
+        data['topic_alignment']['opening'].update(
+            curiosity_gap='太阳光看起来近白，晴朗天空却蓝；具体观察差异，不预设人人误解。',
+            viewer_payoff='说明散射光如何从天空方向进入眼睛。',
+            payoff_steps=[dict(scope_id='R1', shot_ids=['S2'], contribution='定位光、空气与眼睛，展示散射的关系。'),
+                          dict(scope_id='R2', shot_ids=['S3'], contribution='回到真实观察回答原题及晴朗白天的条件。')])
+        return data
+
+    def test_interest_plan_accepts_observation_question_without_media_or_timing_formula(self):
+        data = self.interest_plan()
+        data.pop('deliverables'); data.pop('qa')
+        self.assertEqual(check_opening_plan(data), [])
+
+    def test_accurate_conclusion_can_be_topic_entry_without_question_mark(self):
+        opening = self.data['topic_alignment']['opening']
+        entry = '晴朗白天天空的蓝色来自被空气散向眼睛的阳光。'
+        route = '先定位阳光、空气和眼睛，再比较散射的颜色。'
+        opening.update(spoken_question=entry, answer_route=route, voiceover=entry + route,
+                       question_comparison='结论式主题陈述明确回答同一晴朗白天蓝色来源，再说明解释任务。')
+        self.data['qa']['topic_alignment']['opening_voiceover'].update(heard_question=entry, heard_answer_route=route)
+        self.review['context_sha256'] = opening_context_sha256(self.data)
+        self.review['question_comparison'] = opening['question_comparison']
+        self.save()
+        self.assertEqual(check_opening_plan(self.data), [])
+        self.assertEqual(self.errors(), [])  # Synthetic declarations, not scientific or listening acceptance.
+
+    def test_partial_interest_design_and_placeholder_content_rejected(self):
+        for key in ('curiosity_gap', 'viewer_payoff', 'payoff_steps'):
+            for value in (None, '', 'pending', [], {}):
+                data = self.interest_plan(); data['topic_alignment']['opening'][key] = value
+                self.assertTrue(check_opening_plan(data), (key, value))
+            data = self.interest_plan(); del data['topic_alignment']['opening'][key]
+            self.assertTrue(check_opening_plan(data), key)
+        data = copy.deepcopy(self.data)
+        data['topic_alignment']['opening']['viewer_payoff'] = '说明可见的具体关系。'
+        self.assertTrue(check_opening_plan(data))
+
+    def test_payoff_references_must_belong_to_existing_answer_evidence(self):
+        for key, value in [('scope_id', 'missing'), ('scope_id', {}), ('shot_ids', ['missing']),
+                           ('shot_ids', ['S3']), ('shot_ids', ['S2', 'S2']), ('shot_ids', [{}]),
+                           ('shot_ids', []), ('contribution', 'pass')]:
+            data = self.interest_plan(); data['topic_alignment']['opening']['payoff_steps'][0][key] = value
+            self.assertTrue(check_opening_plan(data), (key, value))
+
+    def test_payoff_order_follows_shots_and_allows_sequential_same_shot_progress(self):
+        data = self.interest_plan()
+        steps = data['topic_alignment']['opening']['payoff_steps']
+        steps.reverse()
+        self.assertTrue(any('actual shot order' in e for e in check_opening_plan(data)))
+        data = self.interest_plan()
+        data['topic_alignment']['opening']['payoff_steps'][0]['shot_ids'] = ['S2', 'S1']
+        self.assertTrue(any('actual shot order' in e for e in check_opening_plan(data)))
+        data = self.interest_plan()
+        data['topic_alignment']['coverage'][1]['shot_ids'] = ['S2', 'S3']
+        data['topic_alignment']['opening']['payoff_steps'][1]['shot_ids'] = ['S2', 'S3']
+        self.assertEqual(check_opening_plan(data), [])
+
+    def test_interest_design_does_not_force_episode_opening_on_local_or_chapter(self):
+        for kind in ('local_sample', 'chapter'):
+            data = self.interest_plan(); data['scope']['kind'] = kind
+            data['topic_alignment']['opening'] = {'viewer_payoff': ''}
+            self.assertEqual(check_opening_plan(data), [])
+
+    def test_g1_direct_path_checks_new_interest_design(self):
+        data = self.interest_plan(); data['topic_alignment']['opening'].pop('viewer_payoff')
+        self.assertTrue(any('opening.viewer_payoff' in e for e in check_stage(data, self.root, 'G1')))
+
+    def test_interest_change_invalidates_existing_actual_review_context(self):
+        self.data = self.interest_plan()
+        self.review['context_sha256'] = opening_context_sha256(self.data); self.save()
+        self.assertEqual(self.errors(), [])
+        self.data['topic_alignment']['opening']['payoff_steps'][0]['contribution'] += ' changed evidence task'
+        self.save(); self.rejects('stale topic/opening/transcript context')
+
     def test_plan_missing_empty_or_placeholder_details_rejected(self):
         for key in ('spoken_question', 'answer_route', 'cover_question', 'question_comparison', 'visual_handoff'):
             for value in (None, '', 'pending', 'pass'):

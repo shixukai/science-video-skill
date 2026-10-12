@@ -35,6 +35,11 @@ def upgrade(data,root,schema='canonical'):
   d['narration']['audio_sha256']=gates.file_digest(root/audio['file'])
   d['narration']['reuse_record']={'status':'previously_accepted','reference':'synthetic test declaration only, not real acceptance','audio_sha256':d['narration']['audio_sha256']}
  alignment=d['topic_alignment'];alignment['main_scope_ids']=[x['id'] for x in d['topic']['current']['required_scope']]
+ # The technical packet may collapse a paper plan to one synthetic shot. Bind
+ # its interest design to that synthetic coverage, never the original media.
+ opening=alignment['opening']
+ if {'curiosity_gap','viewer_payoff','payoff_steps'} & opening.keys():
+  opening.update(curiosity_gap='Synthetic observation question, no actual interest claim',viewer_payoff='Synthetic evidence task, no audience or retention result',payoff_steps=[{'scope_id':c['scope_id'],'shot_ids':c['shot_ids'][:],'contribution':'Synthetic scope evidence task, not actual engagement'} for c in alignment['coverage']])
  steps=[]
  for n,c in enumerate(alignment['coverage']):
   for old in ('explanation_steps','explanation_type'):c.pop(old,None)
