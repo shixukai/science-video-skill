@@ -51,7 +51,8 @@
         "covers",
         "finesse-positive-criteria",
         "audience-text-purpose",
-        "on-frame-label-permission"
+        "on-frame-label-permission",
+        "scene-substance-and-art-finesse"
       ]
     },
     {
@@ -91,7 +92,8 @@
         "explanation-review-E08-E12",
         "internal-explanation-and-expression-review",
         "optional-audience-feedback-boundary",
-        "subject-motion-continuity"
+        "subject-motion-continuity",
+        "user-feedback-dimension-isolation"
       ]
     }
   ]

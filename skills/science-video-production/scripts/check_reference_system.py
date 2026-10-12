@@ -37,6 +37,36 @@ def caption_baselines(profile, width, height):
             for name, record in c["baselines"].items()}
 
 
+def check_operations(operations):
+    """Current project targets and accounting declarations, not measured output."""
+    errors = []
+    if not isinstance(operations, dict):
+        return ["operations must be an object"]
+    for key in ("daily_completed_unique_target", "daily_actual_unique_target"):
+        if type(operations.get(key)) is not int or operations[key] != 10:
+            errors.append("current series " + key + " must be 10")
+    counting = operations.get("daily_counting", {})
+    if not isinstance(counting, dict):
+        return errors + ["daily_counting must be an object"]
+    if counting.get("counters_independent") is not True:
+        errors.append("completion and actual publication must be counted separately")
+    if counting.get("completion_basis") != "unique_full_episode_completed_and_G5_passed_today":
+        errors.append("completion counter must require a newly completed quality-passed full episode")
+    if counting.get("publication_basis") != "unique_first_publication_with_verified_G7_readback_today":
+        errors.append("publication counter must require a new unique verified publication")
+    excluded = counting.get("excluded_credits")
+    required = {"failed", "sample", "draft", "rendering", "old_video", "duplicate", "previous_day_completion", "previously_published_reupload"}
+    if not isinstance(excluded, list) or not all(isinstance(v, str) for v in excluded) or not required <= set(excluded):
+        errors.append("daily counters must exclude failed, sample, draft, rendering, duplicate and old-video credits")
+    if counting.get("new_work_eligibility") != "current_new_work_scope_with_source_and_version_evidence":
+        errors.append("new-work eligibility requires source and version evidence")
+    if counting.get("unpublished_inventory") != "not_automatically_eligible; determine new-work scope from source/version evidence":
+        errors.append("old/unpublished inventory cannot automatically satisfy the new-work target")
+    if operations.get("no_schedule_change_from_adoption") is not True:
+        errors.append("profile target changes do not create or change a schedule")
+    return errors
+
+
 def check(root):
     root = Path(root).resolve()
     errors = []
@@ -60,7 +90,8 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.4.1", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.4.3", "unsupported profile schema/version")
+        errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")

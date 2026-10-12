@@ -1145,8 +1145,24 @@
         "proposed_change": "",
         "actual_commit": "",
         "deployment_status": "not_deployed",
-        "sample_validation": "pending"
-      }
+        "sample_validation": "pending",
+        "disposition": "pending",
+        "status": "pending",
+        "rule_version": "",
+        "change_evidence": {
+          "file": "",
+          "sha256": ""
+        },
+        "regression_evidence": []
+      },
+      "contract_version": 1,
+      "source_ref": "",
+      "media_version": "",
+      "applies_to_gates": [],
+      "dimensions": {},
+      "repair_artifacts": [],
+      "repair_time_range_s": [],
+      "scope_kind": ""
     },
     "explanation_logic": {
       "status": "pending",
@@ -1462,7 +1478,8 @@
           "sha256": ""
         }
       }
-    }
+    },
+    "feedback_expected_ids": []
   },
   "narration": {
     "language": "zh-CN",

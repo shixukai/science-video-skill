@@ -102,6 +102,27 @@ G2完整有声草排、G3代表连续样段和G5最终完整导出分别核全�
 
 仅改规则、改QA字段或通过代码测试都不会自动解除冻结。已认可且与新稿匹配的音轨尽量保留，重新检查其声画/字幕配合，避免无谓重生成。已发布内容不自动修改/删除；需另有明确授权。规则测试只检验流程或程序约束，不证明成片达到质量标准。
 
+
+### 用户意见逐项登记与维度隔离
+
+每条实际收到的用户意见都先登记到现有 `qa.feedback`，包括肯定、否定与后续修正；在本次工作包的 `qa.feedback_expected_ids` 列出已收到的对应ID，再核逐项覆盖。来源引用、原意、对应媒体版本/SHA-256、实际时段、适用对象/范围和维度分别保留。不能因“观众研究可选”漏掉已经收到的用户意见；来源只能是实际反馈，不用作者判断补写用户认可。公开Skill只保留匿名通用方法和合成测试，真实聊天、附件、用户身份和媒体留在私有项目。
+
+理解、科学、美术、动画、声音和布局各自判断。同一旧样段可以“机制直观/理解获得局部认可”且“美术失败”；前者只对原媒体、原范围和原维度成立，不能抵消后者，也不等于整体通过。原失败保留在 `dimensions`，修复结果放在新版本复查记录，不把原fail改写为pass。新媒体须重验受改动影响的理解与其他维度，不能把旧理解认可搬到新整片。反馈范围明确时不擅自扩大；范围未明先留待核，不能自行将一次黑底或组件失败推广成永久禁止所有深色背景、科学时间轴或局部放大。
+
+新收到或本轮处理的用户意见沿用 `feedback_record_format`，`origin=user`、`contract_version=1`：
+- `source_ref`、`original_feedback`、`received_at`、`media_version/media_sha256` 固定来源和原媒体；`scope`、`scope_kind=segment/whole_episode/series_style/static_direction`、`time_range_s` 与 `applies_to_gates` 写实际范围和最早受影响关卡（该失败持续约束其后关卡，不能仅列G3后在G5绕过）
+- `dimensions` 分别保存 `{status: pass/fail/pending, note}`；`what_changes` 写可观察调整，保留项及依据仍用原字段；未实际验证的方向用 `status=candidate` 或 `pending`
+- `repair_time_range_s` 写修复媒体中实际受影响秒区间；`repair_artifacts`、`retest_evidence` 复用 `{file,sha256}`；只有真实修后文件和实际复查齐全才可 `resolved`，不能用代码测试、技术运行或理解通过代替美术复查
+- `skill_update` 写 `disposition=rule_change/execution_fix/pending`、`proposed_change`、`status=pending/implemented`。已有规则明确则修执行/验收并记录依据，不机械新造规则；实际落地时补 `rule_id/rule_version`、`change_evidence` 和 `regression_evidence`，回归回执以 `rule_id/rule_version/change_sha256` 绑定实际规则修订证据，记录实际 `command/executed=true/exit_code=0/result=pass`（或 `tests_pass/local_checks_pass`），失败执行不得记完成；尚未部署/后续样段未验继续如实保留原字段状态
+
+`retest_evidence` 指向实际JSON复查记录，含 `status=pass`、`feedback_id/media_sha256`、`feedback_context_sha256`（用 `scripts/feedback_guard.py` 的同名函数固定原来源/媒体/范围/维度及调整内容）、`source_time_range_s`、`scope_mapping`（原范围到新时点的对应）、实际 `ranges`、`scope/scope_kind`、`reviewer`、`actual_viewed`、`observation`、`normal_speed_continuous_av` 和分维度 `dimension_results {维度: {status, observation}}`。动态范围的美术/动画/理解/布局修复须看当前连续有声样段；实际复看范围须覆盖修复区间并落在真实媒体时长内，写明时段与限制，不能仅更新哈希关闭缺陷。复查scope_kind须与原反馈一致；whole_episode/series_style须覆盖整个所审媒体，局部或静图复查不能关闭整体失败，系列结论仍限明确已检范围。仅 `static_direction` 的同一静态反馈ID可用真实可解码修后静图和实际看图记录关闭，原/修后时段与ranges均为 `[]`，静态 `dimensions` 仅允许 `art/static_art/layout/composition/color/lighting/material/detail/style`，分别限画面美术、版式/构图、色彩、光线、材质、细节和风格；其他键（包括animation、whole_episode、publication、voice等别名）一律不能作为静态认可维度，不能声称看过连续播放或签理解/声音/动画；这不关闭任何动态、局部样段或整片反馈ID。原认可维度也核新媒体，不凭原pass复制。`resolved` 只关闭该反馈的实审范围，不授予整片或发布通过；G3修复样段可解除相应扩制阻断并进入G4完整候选待审，不把G5整片实审提前作为G4交审条件；G5及以后须绑定当前整片复查，不能用旧样段复查签新整片。
+
+阶段检查挂在既有G1–G7：核显式反馈ID漏项、维度状态、修复/回归证据文件及摘要；已登记的适用失败不能用整体pass或理解pass抵消，未闭环不得扩制。用户明确限制立即生效；规则提交、安装/同步与媒体验证分阶段记录，修样不以完成Git提交或环境同步为前提。`repair_sample` 可在原授权内继续修样，不能签成扩制通过。未涉及本轮反馈的历史包不强制迁移；制作端仍必须完整登记新意见，机器不能访问会话，无法发现被整体隐瞒的聊天或判定来源/实际观看是否真实。哈希与回执只证明记录绑定，不证明画面变好。Skill规则改进、媒体修复和后续作品验证分别报告，缺哪一项就保持待验。
+
+匿名反例：用户仅肯定样段机制直观，却指出下方控件化滑条/时间带放大后粗糙、黑底层次不足；制作端只保留“直观”并标整片通过，或给旧组件加粒子、边框就宣布美术改善，均失败。符合规则的处理方式：原理解认可保留原范围，美术记fail；定位实际UI控件而非误认对象微距，提出适用候选并在新连续样段逐维复查。自然场景中环境条件改变与新生长区对应、针叶承接主体或空中微距等均只是可选制作假设，未经实际样段验证不写成已改善的正例，不强迫跨题材复用。
+
+另一种合法的分阶段状态：旧黑底UI样段“机制直观但美术fail” → 用户认可新版成熟自然光主体细节方向图，新增 `static_art=pass` 并固定该静图版本与认可范围 → 连续动画仍 `pending`。静态画风认可可以成为后续制作基准，不能关闭旧动态美术缺陷或签动画、全片、发布通过；原反馈与新认可分别保留，不把两张方向图的认可泛化为所有变体都已批准。
+
 ## 完整质量标准的分数与解释内审
 
 按 [制作策略](../config/production-policy.json) 记录五维评分，各0–5，可半分：未验用null并另记pending；0已确认缺失，1重大错误或严重不可用，2明显阻碍，3可用但粗糙，4完整成熟，5可作标杆。每项附当前版本的具体时点/证据，不能只填数字。

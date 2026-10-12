@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -105,7 +105,7 @@
   "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none.",
   "operations": {
     "timezone": "Asia/Shanghai",
-    "daily_actual_unique_target": 5,
+    "daily_actual_unique_target": 10,
     "additional_requests_separate": true,
     "no_schedule_change_from_adoption": true,
     "platform_sync": {
@@ -116,6 +116,24 @@
       "unknown_secondary_result_blocks_primary": false,
       "unverified_result_is_not_success": true,
       "scope": "current series only; no new platform authority"
+    },
+    "daily_completed_unique_target": 10,
+    "daily_counting": {
+      "counters_independent": true,
+      "completion_basis": "unique_full_episode_completed_and_G5_passed_today",
+      "publication_basis": "unique_first_publication_with_verified_G7_readback_today",
+      "excluded_credits": [
+        "failed",
+        "sample",
+        "draft",
+        "rendering",
+        "old_video",
+        "duplicate",
+        "previous_day_completion",
+        "previously_published_reupload"
+      ],
+      "new_work_eligibility": "current_new_work_scope_with_source_and_version_evidence",
+      "unpublished_inventory": "not_automatically_eligible; determine new-work scope from source/version evidence"
     }
   },
   "landscape_captions": {

@@ -16,7 +16,7 @@
     "conclusion": "not_measured"
   },
   "publication_ledger": {
-    "daily_target": null,
+    "daily_target": 10,
     "actual_unique": null,
     "gap": null,
     "approved_unpublished_inventory": null,
@@ -54,7 +54,15 @@
       "actual_published_at": null,
       "platform": "",
       "work_id": "",
-      "episode_record_reference": ""
+      "episode_record_reference": "",
+      "media_sha256": "",
+      "new_work_eligibility": {
+        "status": "pending",
+        "source_version_evidence": [],
+        "scope_note": ""
+      },
+      "quality_evidence": [],
+      "publication_readback_evidence": []
     },
     "platform_snapshot": {
       "episode_id": "",
@@ -123,5 +131,10 @@
   },
   "notes": "",
   "template": true,
-  "asset_reuse": []
+  "asset_reuse": [],
+  "production_ledger": {
+    "daily_target": 10,
+    "actual_unique_completed": null,
+    "gap": null
+  }
 }

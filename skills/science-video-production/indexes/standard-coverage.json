@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.1",
+  "version": "1.4.3",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -579,6 +579,15 @@
         "target_fields": [],
         "relation": "Read with the exact linked responsibility clause and template prototype scope. Record IDs/counts/actual used scope govern runtime binding; matching field names or existing paths alone do not establish implementation or real execution.",
         "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
+      },
+      "companion_reference": {
+        "file": "config/series-profile.json",
+        "selectors": [
+          "operations.daily_completed_unique_target",
+          "operations.daily_actual_unique_target",
+          "operations.daily_counting"
+        ],
+        "checker": "scripts/check_reference_system.py:check_operations"
       }
     },
     {
@@ -4770,6 +4779,12 @@
         "target_fields": [],
         "relation": "Read with the exact linked responsibility clause and template prototype scope. Record IDs/counts/actual used scope govern runtime binding; matching field names or existing paths alone do not establish implementation or real execution.",
         "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
+      },
+      "companion_reference": {
+        "file": "references/quality-acceptance.md",
+        "anchor": "用户意见逐项登记与维度隔离",
+        "format": "qa.feedback_record_format",
+        "checker": "scripts/feedback_guard.py"
       }
     },
     {
@@ -20767,7 +20782,7 @@
     },
     {
       "id": "P-091",
-      "rule": "production.daily_actual_unique_publish_target：5",
+      "rule": "production.daily_actual_unique_publish_target：10",
       "modality": "default",
       "owner": "references/production-checkpoints.md",
       "owner_anchor": "产能成本与复盘",
@@ -20784,7 +20799,7 @@
       "applicability_contract": "default",
       "failure_contract": "default",
       "sample_reference": "pending_private_evidence",
-      "action": "production.daily_actual_unique_publish_target：5",
+      "action": "production.daily_actual_unique_publish_target：10",
       "record_role": "source_field_alias_or_record_binding",
       "applicability_reference": {
         "file": "references/production-checkpoints.md",
@@ -35691,7 +35706,7 @@
     },
     {
       "id": "P-443",
-      "rule": "daily_target：5",
+      "rule": "daily targets：完整制作10与实际有效唯一新发布10分别计数，旧片/样片/草稿/渲染中/失败不得抵扣",
       "modality": "default",
       "owner": "references/production-checkpoints.md",
       "owner_anchor": "产能成本与复盘",
@@ -35705,6 +35720,21 @@
           "file": "assets/project-ledger-template.json",
           "selector": "publication_ledger.daily_target",
           "selector_scope": "Reviewed policy or template-record mapping only; not an actual completed production record"
+        },
+        {
+          "file": "config/series-profile.json",
+          "selector": "operations.daily_completed_unique_target",
+          "selector_scope": "Reviewed policy or template-record mapping only; not an actual completed production record"
+        },
+        {
+          "file": "config/series-profile.json",
+          "selector": "operations.daily_counting",
+          "selector_scope": "Reviewed policy or template-record mapping only; not an actual completed production record"
+        },
+        {
+          "file": "assets/project-ledger-template.json",
+          "selector": "production_ledger.daily_target",
+          "selector_scope": "Reviewed policy or template-record mapping only; not an actual completed production record"
         }
       ],
       "mapping_status": "verified_semantic_mapping",
@@ -35713,7 +35743,7 @@
       "applicability_contract": "default",
       "failure_contract": "default",
       "sample_reference": "pending_private_evidence",
-      "action": "daily_target：5",
+      "action": "daily targets：完整制作10与实际有效唯一新发布10分别计数，旧片/样片/草稿/渲染中/失败不得抵扣",
       "record_role": "source_field_alias_or_record_binding",
       "applicability_reference": {
         "file": "references/production-checkpoints.md",
@@ -37433,6 +37463,10 @@
         "contract_ids": [
           "ART-finesse-failure"
         ]
+      },
+      "companion_reference": {
+        "file": "references/visual-system.md",
+        "anchor": "画面充实与精细场景表达"
       }
     },
     {
@@ -43013,12 +43047,12 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "产能成本与复盘",
-          "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。\n\n每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。\n\n采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。\n\n复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
+          "quote": "R为熟悉机制常规片，N为新对象/机制，B为新风格/标杆，质量硬门槛相同。日更与研发分队列；实际唯一发布、追加任务、取消项与样段分别记账。缺合格库存如实报目标差额，不自行降频、不拿失败上传/重复片抵数。当前任务的每日目标属于项目配置，不证明产能。\n\n当前系列按 [项目配置](../config/series-profile.json) 分别执行每日 **10条完整制作**（`operations.daily_completed_unique_target`）与每日 **10条实际有效唯一新发布**（`operations.daily_actual_unique_target`），两项分别报实际数、目标和差额，不互相抵扣。日期按配置时区：完整制作计当天首次完成且G5实际通过的不同完整单集；发布计当天首次有效发布且G7读回核实的不同作品。沿用项目台账的 `production_ledger` 与 `publication_ledger` 分别记账；未知实际数和差额用null，不写成已达标。保留作品ID、媒体版本/哈希、新作品范围依据、完成时间、当前G5质量证据及G7首次发布回执，G4待审候选不能计完成，不能只按文件数、尝试次数或计划数量计数。\n\n样片、草稿、渲染中、旧片或失败版本均不得抵扣，重复版本/重复上传也不得抵数。旧片如另有发布批准，可如实记平台活动，但不能自动计入每日10条新作品达标；合格未发布库存是否属于本次新作品范围，须由来源、版本及实际记录确定，不默认全部计入，也不因此停止当前制作或反复询问。昨天已完成的成果不能重复记今天制作，已经发布的旧片重传必须排除；既有未完成视频继续制作，只有实际完整完成、当前G5通过且符合新作品范围证据，才计入当日制作。目标不降低反馈、美术、声音、科学、权利或发布门槛；缺口如实保留。这次配置纠正只更新目标与计数口径，不新建或改变日程，也不据此推断过去实际按何数量停止。\n\n\n每片记录各岗位有效工时、机器占用、排队、返工次数/来源与工时、付费素材/声音/计算成本及币种，订阅分摊写方法。按策略中最初10片实测、20片按R/N/B观察中位数及保守分位数，少样本同时保留逐条数据。同一人多岗位合并负荷，审片与发布也是瓶颈，机器并行不等于审片无限。单位合格片成本=观察周期内全部制作成本（含失败片、研发与返工成本）÷最终通过质量门槛的不同作品数，分母0记不适用；不能只计成功片的成本。\n\n采用策略中的在制实验上限、常规成批起点与缓冲库存目标；库存是已批准未发的不同作品，不是假设已有。连续两批瓶颈过载，依次收窄问题、删无必要新场景、复用已验证资产、修返工点；补外包能力须另有预算/交易批准，交付含源文件、关键态、权利范围，不自动购买。不得降低验收标准。\n\n复盘分三组：生产健康（首次整片通过率、P0/P1、返工/排队、合格库存、实际发布与差额）、解释质量（内部发现的缺失前提、推理跳步、关系不可见及修复结果；有授权取得的观众反馈可附加）、平台表现（平台原名字段、分母、窗口、采集时间）。缺数据用null，不推算成事实；播放、关注、订单、收入分开，未知收入不是0。24/72小时与7天为快照起点，不自动新建监控。比较先匹配平台、时长、题材和发布环境，用相近作品中位数；一轮改变一个主要创作变量，单条高播放/跨平台上传不证明画风因果效果。",
           "lines": [
             140,
             146
           ],
-          "quote_sha256": "94156ab2a94eceedf99936e08c5ce7cde91544e41b12367bc4d314d6ab0bee72"
+          "quote_sha256": "78ccb59c4870f85a32fcda76b2f1b6f260d190bdba453ceeca8f3214ea7d85d8"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."

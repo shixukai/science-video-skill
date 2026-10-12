@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from subject_motion import validate as validate_subject_motion
+from feedback_guard import validate_feedback
 from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
 
 GATES = tuple(f'G{i}' for i in range(1, 8))
@@ -763,6 +764,7 @@ class Checks:
   if n>=2:self.need(action in ('expand','repair_sample'),'G3 next_action must explicitly be expand or repair_sample')
   expanding=n>=3 or (n>=2 and action=='expand')
   self.tool_applications(expanding,dependencies(self.data,True)[1] if n==2 else None);self.expansion_failures(expanding)
+  validate_feedback(self,target,expanding)
   text_items=validate_text_plan(self)
   cards=self.expression_cards(steps) if n>=1 else {}
   self.internal_review('explanation_logic','G1',steps,cards)
