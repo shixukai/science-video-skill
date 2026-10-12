@@ -176,6 +176,14 @@ def validate(checks, record, viewing, gate, policy, step_ids):
         need(False, "review required")
         return
     need(record.get("status") == "pass", "failed/unreviewed")
+    # This is the continuous viewing record, not the later ROI diagnostics.
+    # Method, speed and ranges retain the existing Checks.viewing contract.
+    if "frame_scope" in viewing:
+        need(viewing["frame_scope"] == "full_frame",
+             "declared viewing frame_scope does not establish full-frame comprehension")
+    if "visual_review_capable" in viewing:
+        need(viewing["visual_review_capable"] is True,
+             "actual viewing reviewer's visual capability is unavailable or unconfirmed")
     from stage_checks import context_sha256
     need(record.get("context_sha256") == context_sha256(checks.data, gate), "stale context")
     need(record.get("media_sha256") == viewing.get("sha256"), "stale media")

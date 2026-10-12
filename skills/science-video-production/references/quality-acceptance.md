@@ -46,6 +46,8 @@ G2完整有声草排、G3代表连续样段和G5最终完整导出分别核全�
 
 `qa.shotbook.subject_motion`（G2）、`qa.visual_frames.animation.subject_motion`（G3）、`qa.visual_frames.subject_motion`（G5）分别记录 `status`、当前阶段 `context_sha256`、所审 `media_sha256`、实际 `roi_review`、五类 `excluded_motion_review` 和不可变 `screen {file,sha256}`。`spans` 按秒连续覆盖完整所审文件，每项有 `start/end/kind/subject/observation/narration_relation/evidence`；kind为 `subject_change`、`authentic_motion`、`purposeful_read` 或 `no_progress`，前两项须记录有依据的主体变化，停顿另记 `purpose/resume_evidence`。`semantic_units` 同样完整连续覆盖，记录 `start/end/step_ids/spoken_point/progression_observed/evidence`，不得省略开头、结尾或无动作口播；G3覆盖所选解释步骤，G2/G5覆盖全部步骤。记录计算所得 `longest_no_progress_seconds`，不以平均帧差、运动总量、局部漂亮动作或高分抵扣最差区间。
 
+现有 `qa.shotbook.viewing`（G2）、`qa.visual_frames.animation.viewing`（G3）、`qa.visual_frames.viewing`（G5）按原契约核 `method=continuous_playback`、`playback_speed=1`、实际看听与完整 `ranges`，静帧/抽帧不能签连续。该条连续审看片记录可显式补 `frame_scope=full_frame` 与 `visual_review_capable=true`；`roi_only` 表示只审局部，能力字段只属于出具该条观察的实际审片者，不继承助手或其他审查者的能力。出现的字段须与所签自然速全画面结论一致：局部范围及未知或不具备的能力不能被 `pass` 或已观看布尔值覆盖。未出现这两个可选字段的历史记录沿原契约检查，不自动补值或强制迁移；显式空值/未知值不能视作已确认。暂停、放大、抽帧、去辅助等另列的诊断不属于这条签收观察，不递归套用本检查；它们可定位问题，但不能替代连续全画面观察。程序只核声明的矛盾，字段齐全或观察文字具体都不能证明观看真实。
+
 实际导出先运行 `python scripts/subject_motion.py <media> --regions <regions.json> --report <new-screen.json>`。regions为连续覆盖全文件的JSON数组，每项有 `start/end/subject/isolation_note/roi/masks`；roi与mask.rect为全画幅归一化 `[x,y,width,height]`，mask另有kind（captions/titles/decoration）。按题材选择完整相关主体/关系ROI，核ROI没有漏掉关键主体或把装饰选成主体，mask没有遮掉必要机制；可用空mask列表明确无须屏蔽。筛查在主体区域采样帧差并列低变化区间，报告最长候选区间和固定媒体/参数；检查器重新解码核报告，且报告须加入该关 `qa.gates.<stage>.evidence`。报错、缺报告、版本/参数过期、时域缺口保持未验并阻断阶段通过。
 
 自动帧差只筛查，不能识别有意义因果、真实实拍、Ken Burns或静图硬切。每个 `low_motion_ranges` 候选须在 `screen_resolutions` 逐项以同一range实际回放复查；只有确认采样未捕获的有效主体推进，才可记 `result: effective_subject_progression` 并写具体 `observation/evidence`，且不得与spans相矛盾。候选仍为静图、伪动态、长停顿或未能连续审看时记失败/未验，不能只改文字关闭。实际连续声画审查不可由帧差、抽帧或JSON代替；非低帧差片段仍逐项核排除手法和语义推进。无连续视听能力时不签通过。
@@ -65,6 +67,8 @@ G2完整有声草排、G3代表连续样段和G5最终完整导出分别核全�
 ## 审片者与观看安全
 
 每次审查记录实际审片者/角色、具备的看图/连续播放/听音能力、所审文件/时段与未覆盖部分。先按正常速度、不中途借制作说明补空地完整观看，再回放或逐帧定位；已看过稿件的编辑自审不写成陌生观众首看。独立任务身份不等于真人测试，也不等于具备实际音视频感知。
+
+观察方式与结论范围逐项对应：关键态/抽帧只支持实际所见时点，局部/去辅助只支持被观察对象，目标尺寸静帧只支持该呈现方式，不能分别升格成连续过程、原构图全画面关系或自然速理解。沿既有连续审看片记录的具体观察，先记录同一语义段在目标显示尺寸、全画面正常速播放时实际注意到的对象、变化及前后因果联系，再用暂停、放大或去辅助诊断差异；复述脚本和预期答案不是实际观察。缺对应感知工具时仍可在授权范围制作可播放候选，缺项保留未验，已知失败沿原台账保留；技术修复或新未知不能清除失败，也不能伪签通过。
 
 涉及快速亮度变化、重复高对比闪烁或全屏明暗交替时，先减少不必要的强闪，用柔和且科学不误导的变化表达；审所用真实素材及合成后的完整时域。帧率、几张抽帧或平均亮度不能证明全段无风险，警告文字也不代替修复。疑似风险未排除、缺相应连续检查或检测能力时保持该项未验，不签“观看安全”；需要专门评估时报告限制，不能作医学安全保证。
 

@@ -66,6 +66,8 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 
 ## 检查与交付
 
+排查透明度端点、镜头四边覆盖或审片截图新增伪影时，读 [渲染边界与取证副本](references/render-evidence.md)；技术回归不替代实际观看，也不证明画面改善。
+
 从本Skill目录运行：
 
     python scripts/check_reference_system.py .

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.5",
+  "version": "1.4.6",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37703,6 +37703,25 @@
           "TOPIC-cover-opening-alignment-failure"
         ]
       }
+    },
+    {
+      "id": "REVIEW-observation-scope",
+      "rule": "逐条核观察方式、全画面/局部与结论范围一致；静帧、去辅助或技术筛查不签自然速全画面理解，实际失败不由新未知清除。",
+      "action": "逐条核观察方式、全画面/局部与结论范围一致；静帧、去辅助或技术筛查不签自然速全画面理解，实际失败不由新未知清除。",
+      "modality": "hard",
+      "owner": "references/quality-acceptance.md",
+      "owner_anchor": "审片者与观看安全",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "REVIEW-observation-scope-failure"
+        ]
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -44538,9 +44557,23 @@
           ]
         }
       ]
+    },
+    {
+      "id": "REVIEW-observation-scope-failure",
+      "kind": "concrete_existing_failure_or_boundary",
+      "failure_condition": "The actual observation method or frame scope is narrower than the signed continuous full-frame comprehension conclusion.",
+      "application": "Use the evidence for the observation it actually supports; retain scoped pending/failure and allow authorized candidate production.",
+      "clauses": [
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "审片者与观看安全",
+          "quote": "观察方式与结论范围逐项对应：关键态/抽帧只支持实际所见时点，局部/去辅助只支持被观察对象，目标尺寸静帧只支持该呈现方式，不能分别升格成连续过程、原构图全画面关系或自然速理解。沿既有连续审看片记录的具体观察，先记录同一语义段在目标显示尺寸、全画面正常速播放时实际注意到的对象、变化及前后因果联系，再用暂停、放大或去辅助诊断差异；复述脚本和预期答案不是实际观察。缺对应感知工具时仍可在授权范围制作可播放候选，缺项保留未验，已知失败沿原台账保留；技术修复或新未知不能清除失败，也不能伪签通过。",
+          "quote_sha256": "89c81bf5f70af49d00f352921d5ae159a3734dff01ae172a58fab3c27d9a1fd9"
+        }
+      ]
     }
   ],
-  "rule_count": 908,
+  "rule_count": 909,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",
