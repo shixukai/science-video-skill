@@ -1,0 +1,67 @@
+{
+  "status": "pending",
+  "review_scope": "pending",
+  "context_sha256": "",
+  "video": {
+    "file": "",
+    "sha256": ""
+  },
+  "viewed_range_s": [],
+  "question_range_s": [],
+  "answer_route_range_s": [],
+  "question_relation": "pending",
+  "question_comparison": "",
+  "answer_route_review": {
+    "status": "pending",
+    "observation": ""
+  },
+  "covers": {
+    "cover_3_4": {
+      "file": "",
+      "sha256": "",
+      "observed_title": "",
+      "core_question": "",
+      "subject": "",
+      "question_relation": "pending",
+      "comparison": "",
+      "status": "pending"
+    },
+    "cover_4_3": {
+      "file": "",
+      "sha256": "",
+      "observed_title": "",
+      "core_question": "",
+      "subject": "",
+      "question_relation": "pending",
+      "comparison": "",
+      "status": "pending"
+    }
+  },
+  "visual_handoff": {
+    "status": "pending",
+    "mode": "pending",
+    "opening_subject": "",
+    "relationship": "",
+    "observation": "",
+    "range_s": []
+  },
+  "schema_version": 1,
+  "sources": [
+    {
+      "kind": "editor",
+      "reviewer": "",
+      "reference": "",
+      "statement": "",
+      "reviewed_items": [],
+      "evidence": {
+        "file": "",
+        "sha256": ""
+      },
+      "status": "pending",
+      "actually_watched": false,
+      "actually_heard": false,
+      "method": "pending",
+      "range_s": []
+    }
+  ]
+}

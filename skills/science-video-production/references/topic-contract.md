@@ -46,12 +46,26 @@
 
 检查器拦截缺字段、版本错误、无明确改题记录、问题类型声明不一致、范围遗漏、镜头引用失效、局部冒充整期。它不理解语义：填写相同的 intent 或范围ID，不证明“说明功能”已回答“怎么制造”；标题无需逐字一致，出现同一关键词也不能证明不跑题。
 
-导出后由编辑或独立审查者实际看首屏、听开场、检查必要段落并听看片尾。在 `qa.topic_alignment` 分别记录 `opening_title`、`opening_voiceover`、`coverage`、`ending` 的状态、具体观察及证据位置；任何失败或未验都阻断完整交付。`reviewer_role` 如实写 editor/independent，不能把自审冒充独审。语义判断可用独立审查辅助，但不冒充真人观众反馈。
+导出后由编辑或独立审查者实际看首屏、听开场、检查必要段落并听看片尾。在 `qa.topic_alignment` 分别记录 `opening_title`、`opening_voiceover`、`coverage`、`ending` 的状态、具体观察及证据位置；任何失败或未验都阻断完整交付。`reviewer_role` 如实写 editor/independent/user，不能把自审或用户审看冒充独审。语义判断可用独立审查辅助，但不冒充真人观众反馈。
 
 开场先让观众听到本期题目/核心问题，再听到总答或解释路线，随后进入细节；可有紧接主题的现象钩子，不规定秒数或机械问候。不能只有可见标题而没有主题口播，也不能把中间解释当主题导入。自问自答应忠实于锚定的问题类型，不能把制造过程改成作用介绍。`qa.topic_alignment.opening_voiceover` 增记 `review_scope=final_export`、实际听到的 `heard_question`、`heard_answer_route` 和 `evidence` 中的时间段/文件定位；只审脚本、ASR或旧音轨都保留 pending。总答不准确、顺序颠倒、漏读题目或题意漂移须退回开场与相关口播。
 
 以 `topic_review_sha256(data)` 绑定当前主题、范围、分镜、实际音轨、素材、交付文件及已审媒体哈希。换标题口播、镜头、素材或导出后重审，不能只重算摘要继续沿用旧结论。原题核对先于局部美术和节奏验收；发现跑题则先恢复范围与片头，再评美术质量。
 
+
+## 封面题意到实际开场的连续核对
+
+沿同一主题契约串起“封面核心问题 → 实际开场的具体提问 → 简短准确的总答/解释路线 → 主体与场景承接”。同对象、同关键词或一句“它为什么会这样”都不足以证明题意一致；例如合成教学案例中，封面问“白天天空为什么蓝”，开场只说“看看天空，它怎么变成这样”仍未明确要解释的蓝色现象。允许自然同义表达，如“晴天抬头看到的那片蓝色，从哪里来？”，不要求照念封面，不强制静态标题卡、同一场景贯穿所有项目、固定秒数或机械问候。
+
+在既有 `topic_alignment.opening` 增记 `cover_question`（封面承诺的具体问题）、`question_relation`、`question_comparison`（对照原题、封面与 spoken_question 的对象、条件及要解释的关系）和 `visual_handoff`（计划怎样承接封面主体/场景，或为什么切向另一观察）。计划自查具体题意成立记 `specific_equivalent`；`generic_only`、`different_question`、`pending` 不能通过 plan/G1 及后续对应检查。计划阶段只核问题和衔接方案，不要求尚不存在的媒体；这份声明也不代表最终口播或过渡已验。
+
+G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的提问/路线；`video` 和两种 `covers` 各绑定当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`viewed_range_s` 从实际导出首帧开始，覆盖问题、随后的答案/路线和承接；`question_range_s`、`answer_route_range_s` 标真实时码且问在答前，不编固定时长。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。
+
+`visual_handoff` 分别记录实际 opening_subject、relationship、observation、从首帧开始且在已审范围内的 range_s 及 status：可为 `continuous_subject`（可识别的主体/场景关系延续），也可为 `motivated_transition`（能跟上的、有观察/解释动机的切换）。记录封面主体如何在首段被识别、切换处如何承接提问和路线，并由实际连续看听判断是否突兀；只有漂亮封面、首帧抽查、脚本、ASR或重排设想都不能填 pass。新转场方案在实际审看前保持 pending，已知突兀保持 fail；不能被总体 pass 隐藏。
+
+实际审查来源可为 editor、independent 或 user。`sources` 可汇集合适的分项来源，不要求同一人核完四项；每项记 status、真实 reviewer、原始 reference、原文 statement、其原始文字证据 file/sha256，以及确实核过的 reviewed_items 子集（合并须覆盖 cover_question、spoken_question、answer_route、visual_handoff）。每个来源的 actually_watched/actually_heard、method 和 range_s 只描述它对绑定版本及所负责时段的真实覆盖；封面实查可不听声音，口播项须连续实听，visual_handoff 须正常速度连续看听。用户明确对该版本开场进行了听看并反馈具体项目，可记录为 user 来源并用于这些项目，不因助手没有听觉能力而一律拒绝，也不能改写成助手/editor 已听。助手自身未听仍如实未验。笼统“不错”、整片整体好评或局部美术认可，保留其真实范围，不能自动填满开场题意、路线或连续性；来源没有覆盖的项目保持 pending，需要补足实际记录。
+
+检查器只核必填、声明的不足/失败、时码、文件与版本及原文引用存在，不会理解句意、判断转场顺滑或证明反馈真实。题意和视听结论由实际审查者完成，不能用正则、逐字相等、通过标志或合成测试冒充。缺单集总记录/阶段回执时诚实说明尚未完成哪些核查，不能把平台首帧/比例/字幕/封面局检或用户整体好评写成全部门检完成；本规则的整理和测试通过也不证明任何已发布作品曾执行它。
 
 ## E01：解释承诺与问题范围
 

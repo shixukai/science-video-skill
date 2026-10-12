@@ -30,7 +30,7 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 
 | 阶段/问题 | 唯一责任正文 | 产物 |
 | --- | --- | --- |
-| 原题、开场、局部范围和答案 | [主题契约](references/topic-contract.md) | 原题锚点与覆盖证据 |
+| 原题、封面到开场、局部范围和答案 | [主题契约](references/topic-contract.md) | 原题锚点与覆盖证据 |
 | 科学、视频原源、权利与两类素材索引 | [科学与素材](references/science-and-rights.md) | 主张/来源/权利及候选 |
 | 顺序、前提、解释关系、整期草排与交付发布 | [制作检查点](references/production-checkpoints.md) | 整期计划、有声代表段、发布回执 |
 | 系列画风、三尺度、色与字、布局和封面 | [视觉设计系统](references/visual-system.md) | 当前设计板引用与实现版本 |

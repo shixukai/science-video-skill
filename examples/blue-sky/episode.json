@@ -553,7 +553,11 @@
         "SH1"
       ],
       "spoken_question": "天空为什么是蓝色？",
-      "answer_route": "因为空气分子对短波可见光的散射更强，下面看阳光如何到达眼睛。"
+      "answer_route": "因为空气分子对短波可见光的散射更强，下面看阳光如何到达眼睛。",
+      "cover_question": "白天天空为什么蓝？",
+      "question_relation": "specific_equivalent",
+      "question_comparison": "封面与开场都问白天天空的蓝色来源，口播不把这一具体问题换成泛泛的天空变化。",
+      "visual_handoff": "计划从封面的蓝天主体进入实际天空观察，再沿视线引入散射解释；具体镜头和实际过渡仍待审。"
     },
     "coverage": [
       {

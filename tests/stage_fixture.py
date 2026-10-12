@@ -1,14 +1,23 @@
 """Synthetic declaration fixtures only; they never assert real media acceptance."""
 from pathlib import Path
 import copy
+import importlib.util
 import json
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts'))
 import stage_checks as gates
 import subject_motion
+_opening_spec = importlib.util.spec_from_file_location('bundled_opening_fixture', Path(gates.__file__).resolve().parent / 'tests/opening_fixture.py')
+_opening_module = importlib.util.module_from_spec(_opening_spec)
+_opening_spec.loader.exec_module(_opening_module)
+attach_opening_fixture = _opening_module.attach_opening_fixture
+
+class SyntheticPacket(dict):
+ """Keep test workspace out of serialized production data; deepcopy preserves it."""
+ pass
 
 def upgrade(data,root,schema='canonical'):
- d=copy.deepcopy(data);root=Path(root)
+ d=SyntheticPacket(copy.deepcopy(data));root=Path(root);d.fixture_root=root
  d['scope']={'kind':'episode','publication_ready':True}
  d['narration']['status']='ready';d['narration']['language']='zh-CN'
  d['brief']={'audience':'synthetic fixture','one_sentence_answer':'fixture only','must_see_change':'fixture declaration only','out_of_scope':[],'forbidden_misrepresentations':[],'production_class':'R','validation_triggers':[], 'roles':{r:'synthetic software fixture, not an actual reviewer' for r in ('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher')}}
@@ -113,6 +122,7 @@ def upgrade(data,root,schema='canonical'):
 def refresh(d):
  if isinstance(d.get('narration',{}).get('reuse_record'),dict):d['narration']['reuse_record']['audio_sha256']=d['narration'].get('audio_sha256')
  qa=d['qa']
+ attach_opening_fixture(d,d.fixture_root)
  for gate in ('G2','G3','G5'):
   if isinstance(qa.get('presentation_text',{}).get(gate),dict):qa['presentation_text'][gate]['context_sha256']=gates.context_sha256(d,gate)
   if isinstance(qa.get('audio',{}).get('continuity',{}).get(gate),dict):qa['audio']['continuity'][gate].update(context_sha256=gates.context_sha256(d,gate),audio_sha256=d['narration'].get('audio_sha256'),plan_sha256=gates.digest(d['narration'].get('delivery_plan')))

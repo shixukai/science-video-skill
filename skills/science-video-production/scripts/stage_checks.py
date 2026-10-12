@@ -9,6 +9,7 @@ import shutil
 import subprocess
 from subject_motion import validate as validate_subject_motion
 from feedback_guard import validate_feedback
+from opening_alignment_guard import check_opening_plan, validate_opening_review
 from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
 
 GATES = tuple(f'G{i}' for i in range(1, 8))
@@ -759,6 +760,7 @@ class Checks:
    self.need(not(item.get('status')=='open' and item.get('scope') in ('whole_episode','series_style','segment')),
              'known visual failure blocks expansion; repair and re-review before extending')
  def run(self,target,policy):
+  self.errors.extend(check_opening_plan(self.data))
   n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
   action=self.record('visual_frames.animation').get('next_action')
   if n>=2:self.need(action in ('expand','repair_sample'),'G3 next_action must explicitly be expand or repair_sample')
@@ -832,6 +834,7 @@ class Checks:
    for key in ('video','captions','editable_project','audio_stems','source_manifest'):
     self.evidence({'file':obj(self.data.get('deliverables')).get(key),'sha256':obj(self.qa.get('reviewed_sha256')).get(key)},'G4 '+key)
   if n>=4:
+   validate_opening_review(self)
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)
    validate_subject_motion(self,self.record('visual_frames').get('subject_motion'),obj(self.record('visual_frames').get('viewing')),'G5',policy['subject_motion'],set(steps))
    validate_text_review(self,'G5',obj(self.record('visual_frames').get('viewing')),text_items)

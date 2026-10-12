@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.3",
+  "version": "1.4.4",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37667,6 +37667,38 @@
           "TEXT-label-permission-failure"
         ]
       }
+    },
+    {
+      "id": "TOPIC-cover-opening-alignment",
+      "rule": "核对封面具体问题、实际开场提问、简短答案路线及主体/场景承接；区分计划与实际审查，绑定原始来源和当前媒体，未验不以整体好评填充。",
+      "action": "核对封面具体问题、实际开场提问、简短答案路线及主体/场景承接；区分计划与实际审查，绑定原始来源和当前媒体，未验不以整体好评填充。",
+      "modality": "hard",
+      "owner": "references/topic-contract.md",
+      "owner_anchor": "封面题意到实际开场的连续核对",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "topic_alignment.opening"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "qa.topic_alignment.opening_alignment"
+        },
+        {
+          "file": "assets/opening-review-template.json",
+          "selector": "sources"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "TOPIC-cover-opening-alignment-failure"
+        ]
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -44395,9 +44427,76 @@
           ]
         }
       ]
+    },
+    {
+      "id": "TOPIC-cover-opening-alignment-failure",
+      "application": "单集计划/G1及G5完整交付的对应开场证据；局部样片不冒充整期开场",
+      "failure_condition": "泛泛/异题提问，缺少具体比较、实际来源或连续看听，嵌套未验/失败，封面/视频/上下文过期，均不得签开场通过",
+      "clauses": [
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "封面题意到实际开场的连续核对",
+          "quote": "沿同一主题契约串起“封面核心问题 → 实际开场的具体提问 → 简短准确的总答/解释路线 → 主体与场景承接”。同对象、同关键词或一句“它为什么会这样”都不足以证明题意一致；例如合成教学案例中，封面问“白天天空为什么蓝”，开场只说“看看天空，它怎么变成这样”仍未明确要解释的蓝色现象。允许自然同义表达，如“晴天抬头看到的那片蓝色，从哪里来？”，不要求照念封面，不强制静态标题卡、同一场景贯穿所有项目、固定秒数或机械问候。",
+          "quote_sha256": "654c4cf8f487bc9553c34ca64a24ef0a9644298b54397a5203aa8ea960d5ae69",
+          "lines": [
+            58,
+            58
+          ]
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "封面题意到实际开场的连续核对",
+          "quote": "在既有 `topic_alignment.opening` 增记 `cover_question`（封面承诺的具体问题）、`question_relation`、`question_comparison`（对照原题、封面与 spoken_question 的对象、条件及要解释的关系）和 `visual_handoff`（计划怎样承接封面主体/场景，或为什么切向另一观察）。计划自查具体题意成立记 `specific_equivalent`；`generic_only`、`different_question`、`pending` 不能通过 plan/G1 及后续对应检查。计划阶段只核问题和衔接方案，不要求尚不存在的媒体；这份声明也不代表最终口播或过渡已验。",
+          "quote_sha256": "773f8a3d082a79c7a924e6db652d51300abe61976bdad34b34709bb2957dc71f",
+          "lines": [
+            60,
+            60
+          ]
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "封面题意到实际开场的连续核对",
+          "quote": "G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的提问/路线；`video` 和两种 `covers` 各绑定当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`viewed_range_s` 从实际导出首帧开始，覆盖问题、随后的答案/路线和承接；`question_range_s`、`answer_route_range_s` 标真实时码且问在答前，不编固定时长。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。",
+          "quote_sha256": "0e022a9f375a4eb8276c3995438e26a5c3e3085fddc92a7e66646a4eeb61ccdb",
+          "lines": [
+            62,
+            62
+          ]
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "封面题意到实际开场的连续核对",
+          "quote": "`visual_handoff` 分别记录实际 opening_subject、relationship、observation、从首帧开始且在已审范围内的 range_s 及 status：可为 `continuous_subject`（可识别的主体/场景关系延续），也可为 `motivated_transition`（能跟上的、有观察/解释动机的切换）。记录封面主体如何在首段被识别、切换处如何承接提问和路线，并由实际连续看听判断是否突兀；只有漂亮封面、首帧抽查、脚本、ASR或重排设想都不能填 pass。新转场方案在实际审看前保持 pending，已知突兀保持 fail；不能被总体 pass 隐藏。",
+          "quote_sha256": "31227a2f8bf1afdfbfdddbd199e0eb516e068cdb8f5a2e92bacac3364d3e6c7e",
+          "lines": [
+            64,
+            64
+          ]
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "封面题意到实际开场的连续核对",
+          "quote": "实际审查来源可为 editor、independent 或 user。`sources` 可汇集合适的分项来源，不要求同一人核完四项；每项记 status、真实 reviewer、原始 reference、原文 statement、其原始文字证据 file/sha256，以及确实核过的 reviewed_items 子集（合并须覆盖 cover_question、spoken_question、answer_route、visual_handoff）。每个来源的 actually_watched/actually_heard、method 和 range_s 只描述它对绑定版本及所负责时段的真实覆盖；封面实查可不听声音，口播项须连续实听，visual_handoff 须正常速度连续看听。用户明确对该版本开场进行了听看并反馈具体项目，可记录为 user 来源并用于这些项目，不因助手没有听觉能力而一律拒绝，也不能改写成助手/editor 已听。助手自身未听仍如实未验。笼统“不错”、整片整体好评或局部美术认可，保留其真实范围，不能自动填满开场题意、路线或连续性；来源没有覆盖的项目保持 pending，需要补足实际记录。",
+          "quote_sha256": "fafe16f3751607f36bbe7ca9b0bd1c4c18ae49bab0ae01a063a9efbef167e855",
+          "lines": [
+            66,
+            66
+          ]
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "封面题意到实际开场的连续核对",
+          "quote": "检查器只核必填、声明的不足/失败、时码、文件与版本及原文引用存在，不会理解句意、判断转场顺滑或证明反馈真实。题意和视听结论由实际审查者完成，不能用正则、逐字相等、通过标志或合成测试冒充。缺单集总记录/阶段回执时诚实说明尚未完成哪些核查，不能把平台首帧/比例/字幕/封面局检或用户整体好评写成全部门检完成；本规则的整理和测试通过也不证明任何已发布作品曾执行它。",
+          "quote_sha256": "4f617703954a8fec3e533a322b9723a6c68b628e381a0db596283ffc99bd3d2b",
+          "lines": [
+            68,
+            68
+          ]
+        }
+      ]
     }
   ],
-  "rule_count": 907,
+  "rule_count": 908,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

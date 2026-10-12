@@ -917,7 +917,14 @@
         "evidence": ""
       },
       "note": "",
-      "evidence": ""
+      "evidence": "",
+      "opening_alignment": {
+        "status": "pending",
+        "evidence": {
+          "file": "",
+          "sha256": ""
+        }
+      }
     },
     "gates": {
       "G1": {
@@ -1597,7 +1604,11 @@
         "SH1"
       ],
       "spoken_question": "",
-      "answer_route": ""
+      "answer_route": "",
+      "cover_question": "",
+      "question_relation": "pending",
+      "question_comparison": "",
+      "visual_handoff": ""
     },
     "coverage": [
       {

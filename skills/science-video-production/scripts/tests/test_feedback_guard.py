@@ -292,7 +292,7 @@ class FeedbackContractTests(unittest.TestCase):
     def test_current_daily_targets_are_ten_and_independent(self):
         from check_reference_system import check_operations
         profile = self.operations_profile()
-        self.assertEqual(profile['version'], '1.4.3')
+        self.assertEqual(profile['version'], '1.4.4')
         self.assertEqual(check_operations(profile['operations']), [])
         self.assertEqual(profile['operations']['daily_completed_unique_target'], 10)
         self.assertEqual(profile['operations']['daily_actual_unique_target'], 10)

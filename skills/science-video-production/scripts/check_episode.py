@@ -13,6 +13,7 @@ import sys
 from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from opening_alignment_guard import check_opening_plan
 from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive
 
 
@@ -323,7 +324,7 @@ def topic_review_sha256(data):
 
 
 def check_topic(data, root, stage, shots):
-    errors = []
+    errors = check_opening_plan(data)
     def need(ok, message):
         if not ok:
             errors.append("topic: " + message)
@@ -421,7 +422,7 @@ def check_topic(data, root, stage, shots):
              "local work must identify omitted episode scope")
     if stage == "delivery":
         review = obj(obj(data.get("qa")).get("topic_alignment"))
-        need(review.get("status") == "pass" and review.get("reviewer_role") in ("editor", "independent"), "actual editorial/independent topic review required")
+        need(review.get("status") == "pass" and review.get("reviewer_role") in ("editor", "independent", "user"), "actual editorial/independent topic review required (or scoped actual user review)")
         need(review.get("reviewed_sha256") == topic_review_sha256(data), "stale topic/media review context")
         for key in ("opening_title", "opening_voiceover", "coverage", "ending"):
             check = obj(review.get(key))
@@ -920,7 +921,7 @@ def validation_resources():
     """Fingerprint the local rules used by this checker, not external evidence."""
     root = Path(__file__).resolve().parents[1]
     names = (
-        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/feedback_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
+        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
         "config/production-policy.json", "config/series-profile.json",
         "assets/production-asset.schema.json", "indexes/rule-owners.json",
     )

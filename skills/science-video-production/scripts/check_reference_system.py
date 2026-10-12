@@ -90,7 +90,7 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.4.3", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.4.4", "unsupported profile schema/version")
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
