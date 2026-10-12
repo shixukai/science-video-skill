@@ -281,13 +281,15 @@
       "accessibility",
       "scientific_condition",
       "attribution",
-      "license",
-      "ai_simulation"
+      "license"
     ],
     "forbidden_purposes": [
       "material_defect",
       "internal_qa",
-      "production_excuse"
+      "production_excuse",
+      "production_meta",
+      "ai_simulation",
+      "watermark"
     ],
     "protected_purposes": [
       "scientific_condition",
@@ -295,7 +297,12 @@
       "license",
       "ai_simulation"
     ],
-    "source_screening_is_not_actual_media_inspection": true
+    "source_screening_is_not_actual_media_inspection": true,
+    "label_permission_owner": "references/visual-system.md#画内标识须有具体同意",
+    "actual_overlay_evidence_required": true,
+    "companion_only_purposes": [
+      "ai_simulation"
+    ]
   },
   "voice_continuity": {
     "owner": "references/voice-reference.md#整期旁白连续性",

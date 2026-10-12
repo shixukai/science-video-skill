@@ -325,6 +325,10 @@ class EvidenceMediaIntegrityTests(unittest.TestCase):
     motion.update(media_sha256=gates.file_digest(s.root/'replacement.mp4'),screen={'file':filename,'sha256':gates.file_digest(s.root/filename)})
     s.d['qa']['presentation_text'][gate]['media_sha256']=s.review(gate)['viewing']['sha256']
     s.d['qa']['audio']['continuity'][gate]['media_sha256']=s.review(gate)['viewing']['sha256']
+    refresh(s.d);s.rejects('overlay guard: stale media/inventory binding',gate)
+    # A changed synthetic export needs a fresh bound overlay fixture too.
+    from stage_fixture import overlay_fixture
+    overlay_fixture(s.d,s.root)
     refresh(s.d);s.assertEqual(s.errors(gate),[])
  def test_media_hash_change_at_same_path_invalidates_review_context(s):
   for gate in ('G2','G3'):

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "_instructions": [
+    "这是待填写模板，不是通过记录。绑定当前媒体及用途清单；所有文件路径相对单集根目录。",
+    "必须实际检查最终输出和所有文字/图形overlay来源，含底图内置水印；未知或覆盖不完整不能填pass。",
+    "sources列id/kind/file/sha256；observed逐项列item_id/source_ids/text/surface/position/time_range及有图形时graphic_sha256。",
+    "普通科学文字和字幕不需user_approval；标识同意存presentation_text.items，不在这里自签。",
+    "G5的cover_sha256绑定两种当前封面；静态封面时段[0,1]。本证据不证明机器OCR或人类审看已发生。"
+  ],
+  "status": "pending",
+  "stage": "",
+  "media_sha256": "",
+  "inventory_sha256": "",
+  "time_range": [
+    0,
+    0
+  ],
+  "method": "actual_output_and_sources",
+  "actual_output_inspected": false,
+  "reviewer": "",
+  "observation": "",
+  "zones": [
+    "subtitles",
+    "corners",
+    "opening",
+    "closing",
+    "in_art",
+    "body"
+  ],
+  "unknown_overlays": [],
+  "sources": [],
+  "observed": [],
+  "cover_sha256": []
+}

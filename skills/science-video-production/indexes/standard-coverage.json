@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.0",
+  "version": "1.4.1",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37564,8 +37564,8 @@
     },
     {
       "id": "TEXT-audience-purpose",
-      "rule": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
-      "action": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
+      "rule": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名或许可证；一条有多种真实用途可并列。AI制作/模拟标识默认留平台字段及配套，不因自填用途或approval获准入画。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
+      "action": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名或许可证；一条有多种真实用途可并列。AI制作/模拟标识默认留平台字段及配套，不因自填用途或approval获准入画。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
       "modality": "hard",
       "owner": "references/visual-system.md",
       "owner_anchor": "可见文字用途与制作辩解",
@@ -37607,6 +37607,30 @@
       "failure_condition_ref": {
         "contract_ids": [
           "VOICE-continuity-failure"
+        ]
+      }
+    },
+    {
+      "id": "TEXT-label-permission",
+      "rule": "未经用户对具体标识内容、位置和显示时段的明确同意，不得在视频、字幕、封面或图内资产烧录AI模拟标识、水印、制作说明、内部验收记录或其他制作标识；工具默认、模板惯例、许可名称或笼统制作授权均不是同意。必要科学标签、图例、比例/时间/实验条件及正常同步字幕不属于此禁令，不额外要求逐字审批。",
+      "action": "未经用户对具体标识内容、位置和显示时段的明确同意，不得在视频、字幕、封面或图内资产烧录AI模拟标识、水印、制作说明、内部验收记录或其他制作标识；工具默认、模板惯例、许可名称或笼统制作授权均不是同意。必要科学标签、图例、比例/时间/实验条件及正常同步字幕不属于此禁令，不额外要求逐字审批。",
+      "modality": "permission",
+      "owner": "references/visual-system.md",
+      "owner_anchor": "画内标识须有具体同意",
+      "evidence_locations": [
+        {
+          "file": "assets/episode-template.json",
+          "selector": "qa.presentation_text.G5.overlay_evidence"
+        }
+      ],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "permission",
+      "failure_contract": "permission",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "TEXT-label-permission-failure"
         ]
       }
     }
@@ -44215,8 +44239,8 @@
         {
           "file": "references/visual-system.md",
           "anchor": "可见文字用途与制作辩解",
-          "quote": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
-          "quote_sha256": "2a8c358da9e74205182e5ffe792f89225256cec25479244ae8bbcbe2a73e8f82",
+          "quote": "画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名或许可证；一条有多种真实用途可并列。AI制作/模拟标识默认留平台字段及配套，不因自填用途或approval获准入画。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。",
+          "quote_sha256": "8d20b5ddf720f2c2342038f9caa273eb427c6268a4c3c389c1ac62f546c188da",
           "lines": [
             94,
             94
@@ -44235,21 +44259,21 @@
         {
           "file": "references/visual-system.md",
           "anchor": "可见文字用途与制作辩解",
-          "quote": "删除不等于隐瞒科学与权利。必要来源署名、许可信息、AI/模拟标识，以及确有科学意义的时间缩放、实验条件和结论限制，分别核其内容义务与呈现位置；允许由配套说明履行的署名不因此进入画面、字幕、口播或封面。科学模型的适用条件按scientific_condition连接文字一致、有科学依据的保护项；关键词命中时，在该item的 `cue_review` 记录 `status=pass`、`interpretation=scientific_condition`、与保护项basis一致的 `scientific_basis`、具体 `audience_task` 和判断 `note`。有依据的科学条件不因含“因此用”等因果措辞就被否决；缺判断或判断失败保持未通过。素材缺陷、制作工具限制、制作选择和QA状态不能靠保护用途标签或判断声明豁免。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。",
-          "quote_sha256": "e5432815ad4939819f0f87d5378a2b40757f1d5b92cc8a418c141173a1a185d0",
+          "quote": "删除不等于隐瞒科学与权利。必要来源署名、许可信息，以及确有科学意义的时间缩放、实验条件和结论限制，分别核其内容义务与呈现位置；AI制作披露默认留平台字段及配套，画内冲突按下文具体同意规则处理；允许由配套说明履行的署名不因此进入画面、字幕、口播或封面。科学模型的适用条件按scientific_condition连接文字一致、有科学依据的保护项；关键词命中时，在该item的 `cue_review` 记录 `status=pass`、`interpretation=scientific_condition`、与保护项basis一致的 `scientific_basis`、具体 `audience_task` 和判断 `note`。有依据的科学条件不因含“因此用”等因果措辞就被否决；缺判断或判断失败保持未通过。素材缺陷、制作工具限制、制作选择和QA状态不能靠保护用途标签或判断声明豁免。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。",
+          "quote_sha256": "4af2d5193fbcf291e870cd587629878216c3e07d075634c5f1fc682bbe243254",
           "lines": [
-            98,
-            98
+            127,
+            127
           ]
         },
         {
           "file": "references/visual-system.md",
           "anchor": "可见文字用途与制作辩解",
-          "quote": "单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss。`required_notices` 保留 id/purpose/text/basis，另明确 `placement=audience/companion` 与 `placement_basis`，未知位置不得默认为上屏。audience以item的notice_id连接保护项；companion记录 `companion_destination` 作为配套落点，不强制生成媒体item。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license/ai_simulation；material_defect/internal_qa/production_excuse 为禁止类别。实际素材以 `assets[].required_notice_ids` 引用同一保护项，改变位置或删除媒体文字不免除义务。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。",
-          "quote_sha256": "57a99a823ad74af76a76b8365e50e02aeef51cdf652237247931635b549f2d8d",
+          "quote": "单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss。`required_notices` 保留 id/purpose/text/basis，另明确 `placement=audience/companion` 与 `placement_basis`，未知位置不得默认为上屏。audience以item的notice_id连接保护项；companion记录 `companion_destination` 作为配套落点，不强制生成媒体item。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license；material_defect/internal_qa/production_excuse/production_meta/ai_simulation/watermark 为禁止类别，AI制作披露只在companion及平台字段履行。实际素材以 `assets[].required_notice_ids` 引用同一保护项，改变位置或删除媒体文字不免除义务。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。",
+          "quote_sha256": "3771a95750c8dc8ef2da9d1c74e52a3fd19cfe32398f36dc81a079193a09804b",
           "lines": [
-            100,
-            100
+            129,
+            129
           ]
         },
         {
@@ -44320,9 +44344,26 @@
           ]
         }
       ]
+    },
+    {
+      "id": "TEXT-label-permission-failure",
+      "application": "所有计划及G2/G3/G5实际输出；普通科学文字无需额外同意",
+      "failure_condition": "无具体原始用户同意的画内标识、未知/未授权overlay、实际来源或导出版本未覆盖，均阻断",
+      "clauses": [
+        {
+          "file": "references/visual-system.md",
+          "anchor": "画内标识须有具体同意",
+          "quote": "未经用户对具体标识内容、位置和显示时段的明确同意，不得在视频、字幕、封面或图内资产烧录AI模拟标识、水印、制作说明、内部验收记录或其他制作标识；工具默认、模板惯例、许可名称或笼统制作授权均不是同意。必要科学标签、图例、比例/时间/实验条件及正常同步字幕不属于此禁令，不额外要求逐字审批。",
+          "quote_sha256": "5c2f48ae4e369472335fbcec884aeb01a619b666df73e4980dc8f7af1490cec4",
+          "lines": [
+            137,
+            137
+          ]
+        }
+      ]
     }
   ],
-  "rule_count": 906,
+  "rule_count": 907,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

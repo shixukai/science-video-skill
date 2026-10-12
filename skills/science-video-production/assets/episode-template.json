@@ -1360,7 +1360,11 @@
         },
         "cover_files": [],
         "evidence": "",
-        "companion_notices": []
+        "companion_notices": [],
+        "overlay_evidence": {
+          "file": "",
+          "sha256": ""
+        }
       },
       "G3": {
         "status": "pending",
@@ -1401,7 +1405,11 @@
         },
         "cover_files": [],
         "evidence": "",
-        "companion_notices": []
+        "companion_notices": [],
+        "overlay_evidence": {
+          "file": "",
+          "sha256": ""
+        }
       },
       "G5": {
         "status": "pending",
@@ -1448,7 +1456,11 @@
         },
         "cover_files": [],
         "evidence": "",
-        "companion_notices": []
+        "companion_notices": [],
+        "overlay_evidence": {
+          "file": "",
+          "sha256": ""
+        }
       }
     }
   },

@@ -3,7 +3,7 @@ import copy
 from pathlib import Path
 import unittest
 
-from stage_fixture import gates, refresh
+from stage_fixture import gates, refresh, overlay_fixture
 import presentation_checks as presentation
 
 
@@ -34,6 +34,7 @@ class PresentationBoundaryTests(unittest.TestCase):
             r["inventory_sha256"] = gates.digest(self.d["presentation_text"])
             for surface, review in r["channel_reviews"].items():
                 review["item_ids"] = [x["id"] for x in items if x["surface"] == surface]
+        overlay_fixture(self.d, self.root)
         refresh(self.d)
 
     def add_item(self, surface, wording, purposes, notice=None):
@@ -67,13 +68,17 @@ class PresentationBoundaryTests(unittest.TestCase):
                 self.add_item("frame", wording, ["mechanism"])
                 self.rejects("production/material-defect cue", "G1")
 
-    def test_protected_attribution_license_ai_and_scientific_conditions_are_allowed(self):
-        examples = {"attribution": "示例作者 · 示例许可", "license": "CC BY 4.0", "ai_simulation": "机制示意，非按比例", "scientific_condition": "条件：空气中、常温"}
+    def test_consented_attribution_license_and_scientific_conditions_are_allowed(self):
+        examples = {"attribution": "示例作者 · 示例许可", "license": "CC BY 4.0", "scientific_condition": "条件：空气中、常温"}
         for purpose, wording in examples.items():
             with self.subTest(purpose=purpose):
                 self.d = copy.deepcopy(self.base)
                 notice = {"id": "N", "purpose": purpose, "text": wording, "basis": "Synthetic notice obligation only"}
                 self.add_item("frame", wording, [purpose], notice)
+                if purpose in ("attribution", "license"):
+                    from test_label_permission_guard import consent_item
+                    consent_item(self.d["presentation_text"]["items"][-1], self.root)
+                    self.accept_inventory_fixture()
                 self.assertEqual(self.errors(), [])
 
     def test_scientific_model_limit_keeps_bound_scientific_basis(self):

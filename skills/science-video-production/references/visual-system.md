@@ -120,17 +120,27 @@
 
 ### 可见文字用途与制作辩解
 
-画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名、许可证或简洁AI/模拟标识；一条有多种真实用途可并列。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。
+画面、字幕、口播和封面只保留帮助观众理解或满足必要权利/标识义务的内容。逐条分类为主题、机制、中文可访问性、科学条件、来源署名或许可证；一条有多种真实用途可并列。AI制作/模拟标识默认留平台字段及配套，不因自填用途或approval获准入画。素材缺陷说明、内部制作/验收状态和为制作选择辩解一律不得进入这些观众通道，即使属实也不能当成免责。详细素材问题、工具限制、选择理由和审查回执移入私有制作记录及必要交付说明，不用它们占据成片。
 
 不能只禁止某一个字符串。反例包括“原视频无音轨；不作飞行声音比较”“因素材不足这里只能这样画”“模型不支持所以用此镜头”“本片测试/验收已通过”；改写同类辩解或从画面移到字幕、口播、封面仍失败。素材无原声时实际不添加虚构原声；若科学任务需要声音对比，就取得适配素材或调整有依据的科学表达，不能靠上屏辩解填缺口。
 
-删除不等于隐瞒科学与权利。必要来源署名、许可信息、AI/模拟标识，以及确有科学意义的时间缩放、实验条件和结论限制，分别核其内容义务与呈现位置；允许由配套说明履行的署名不因此进入画面、字幕、口播或封面。科学模型的适用条件按scientific_condition连接文字一致、有科学依据的保护项；关键词命中时，在该item的 `cue_review` 记录 `status=pass`、`interpretation=scientific_condition`、与保护项basis一致的 `scientific_basis`、具体 `audience_task` 和判断 `note`。有依据的科学条件不因含“因此用”等因果措辞就被否决；缺判断或判断失败保持未通过。素材缺陷、制作工具限制、制作选择和QA状态不能靠保护用途标签或判断声明豁免。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。
+删除不等于隐瞒科学与权利。必要来源署名、许可信息，以及确有科学意义的时间缩放、实验条件和结论限制，分别核其内容义务与呈现位置；AI制作披露默认留平台字段及配套，画内冲突按下文具体同意规则处理；允许由配套说明履行的署名不因此进入画面、字幕、口播或封面。科学模型的适用条件按scientific_condition连接文字一致、有科学依据的保护项；关键词命中时，在该item的 `cue_review` 记录 `status=pass`、`interpretation=scientific_condition`、与保护项basis一致的 `scientific_basis`、具体 `audience_task` 和判断 `note`。有依据的科学条件不因含“因此用”等因果措辞就被否决；缺判断或判断失败保持未通过。素材缺陷、制作工具限制、制作选择和QA状态不能靠保护用途标签或判断声明豁免。具体署名/许可和披露事实依 [权利责任正文](science-and-rights.md)，不由本规则授予使用权。
 
-单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss。`required_notices` 保留 id/purpose/text/basis，另明确 `placement=audience/companion` 与 `placement_basis`，未知位置不得默认为上屏。audience以item的notice_id连接保护项；companion记录 `companion_destination` 作为配套落点，不强制生成媒体item。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license/ai_simulation；material_defect/internal_qa/production_excuse 为禁止类别。实际素材以 `assets[].required_notice_ids` 引用同一保护项，改变位置或删除媒体文字不免除义务。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。
+单集 `presentation_text` 维护唯一用途清单：`channels` 明确 frame/caption/voiceover/cover 的 present/absent 与 note；`items` 按正式文字顺序记录 id、surface、text、purposes、necessity、removal_loss。`required_notices` 保留 id/purpose/text/basis，另明确 `placement=audience/companion` 与 `placement_basis`，未知位置不得默认为上屏。audience以item的notice_id连接保护项；companion记录 `companion_destination` 作为配套落点，不强制生成媒体item。purposes 使用 topic/mechanism/accessibility/scientific_condition/attribution/license；material_defect/internal_qa/production_excuse/production_meta/ai_simulation/watermark 为禁止类别，AI制作披露只在companion及平台字段履行。实际素材以 `assets[].required_notice_ids` 引用同一保护项，改变位置或删除媒体文字不免除义务。没有字的通道也说明实际无字与核查范围，不默认把遗漏记为空。
 
 G1核计划用途和保护项；G2/G3/G5分别在 `qa.presentation_text.<stage>` 记录实际所审版本、context_sha256、media_sha256、inventory_sha256、actual_media_inspected、各通道 channel_reviews（status/item_ids/observation/evidence）、protected_notices_review 与总 evidence。G2/G3核实际画面、字幕和口播，G5再完整核两种封面；G3只签代表段范围。sources.voiceover/caption 用 file/hash 固定相应正式UTF-8稿件/字幕；G3使用所审片段的正式稿，G2/G5绑定本期正式稿，字幕依对应阶段源文件。口播和字幕的完整正文须按原顺序纳入用途清单，不得只挑好句；字幕txt/srt/vtt/ass由检查器提取正文，其他格式先转为受支持的正式字幕格式，再绑定版本并实际检查，不冒称原格式已自动核验。G5 cover_files 固定两种实际封面版本。源文件筛查、词模式和OCR只辅助；各通道仍须实际看/听当前媒体，保护项缺失、漏分类、禁止用途或未实际检查都阻断，不能换个允许类别冒充用途。
 
 配套位置在G1只核义务、位置依据及预期落点，不要求伪造已完成文件。G2/G3/G5的上述阶段记录另用 `companion_notices` 列出 `notice_id/file/sha256/status/observation`，绑定该阶段实际UTF-8配套文本；文件须含必要标识文字并经实际位置审查。G2可使用当时真实配套草稿，G5核当前交付配套；G3只核代表段实际所用素材引用的配套义务。文件存在和字面匹配只证明记录绑定，不证明授权、实际发布或许可合规。
+
+### 画内标识须有具体同意
+
+未经用户对具体标识内容、位置和显示时段的明确同意，不得在视频、字幕、封面或图内资产烧录AI模拟标识、水印、制作说明、内部验收记录或其他制作标识；工具默认、模板惯例、许可名称或笼统制作授权均不是同意。必要科学标签、图例、比例/时间/实验条件及正常同步字幕不属于此禁令，不额外要求逐字审批。
+
+AI合规优先使用平台声明字段及简介/配套说明，并核实具体义务。若具体平台规则或素材许可确实要求画内保留标识，先向用户说明实际条款、拟用内容、位置与时段并取得具体同意；未同意则暂停相关素材/输出、改选可合规的素材或渠道，不能自行加标，也不能去掉法定或许可要求后悄然违约发布。现有制作元叙述、内部验收及AI制作说明禁项仍有效；用户特批与具体义务的冲突需单独人工复核，本通用门禁不依据一份approval自签豁免。METv2擅自烧录AI模拟标识是失败反例，不是认可样片或以后加标依据。
+
+标识项沿用 `presentation_text.items`，另填实际 `position`、`time_range=[start_seconds,end_seconds]`；静态封面用约定区间 `[0,1]` 表示整张。必要真实署名/许可证也须核此同意，不从许可要求推导用户同意。图形标识以 `kind=marking`、可辨识内容说明 `text`、`graphic_sha256` 及 `graphic_source={file,sha256}` 固定实际图形来源，不以没有文字逃过检查。`user_approval.scope` 精确复制 text/surface/position/time_range/graphic_sha256（无图形填null），另填 `user_message_ref`、`user_quote` 和 `evidence={file,sha256}`，指向用户原始同意文本及逐字引文；bool=true、制作端自签、旧版本笼统批准或改变内容/位置/时段后沿用均不合格。G1只核已有计划及同意，不要求尚未制作的成片。来源引用、引文和哈希只能绑定记录，原始消息真实性与同意语义仍须实际核实，不能伪造或由代理补签。
+
+G2/G3/G5输出前在现有文字审查记录绑定 `overlay_evidence={file,sha256}`，按 [标识与来源证据模板](../assets/overlay-evidence-template.json) 和 [标识权限门禁](../scripts/label_permission_guard.py) 核当前导出媒体、用途清单、renderer/字幕/栅格字层/素材来源、实际可见文字与图形标识；角落、片头片尾、字幕、图内和主体区都须实看，含无字区及瞬时overlay。G3核完整代表段，G2/G5核完整当前导出，G5另绑定两种实际封面。每项实际观察连接用途item、来源、精确内容/位置/时段；来源文件和证据均须当前SHA-256。未知/未列明overlay、无来源、未授权标识、与同意范围不符或过期证据一律阻断；不能把未知记为空、把标识改叫科学字幕或仅扫源代码就签通过。该增量不替代既有用途、实际声画、OCR/全时域文字检查；机器只能验证证据结构/绑定和已知词句，完整来源捕获、实际看图及授权真伪仍依真实审查。当前词模式仍保守：如“AI模拟大气环流用于预测天气”“人工智能辅助识别细胞结构”等将AI本身作为科学方法的文案可能触发阻断，需单独人工科学语义复核；不代表这些主题被科学规则禁止，也不能用purpose或自填approval绕过。现有更严文字检查不因本增量解除，本版未自动支持所有AI科研主题。
 
 ## 两种封面各自设计
 

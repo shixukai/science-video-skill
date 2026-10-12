@@ -3,11 +3,12 @@ import re
 import html
 from pathlib import Path
 from subject_motion import text as meaningful
+from label_permission_guard import validate_label_plan, validate_overlay_review, marking_cue
 
 SURFACES = {"frame", "caption", "voiceover", "cover"}
-ALLOWED = {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license", "ai_simulation"}
+ALLOWED = {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license"}
 PROTECTED = {"scientific_condition", "attribution", "license", "ai_simulation"}
-FORBIDDEN = {"material_defect", "internal_qa", "production_excuse"}
+FORBIDDEN = {"material_defect", "internal_qa", "production_excuse", "production_meta", "ai_simulation", "watermark"}
 VOICE_CRITERIA = {"tone", "rhythm", "speech_rate", "loudness", "joins"}
 # Screening is supplementary: category/necessity and actual-media reviews remain
 # required, including for wording that does not match any of these patterns.
@@ -26,6 +27,8 @@ def prohibited_cue(item, record):
     excuses. Actual scientific purpose still requires current-media review.
     """
     wording = item.get("text", "")
+    if marking_cue(wording):
+        return True
     for index, pattern in enumerate(EXCUSE_CUES):
         if not pattern.search(wording): continue
         notices = record.get("required_notices", [])
@@ -108,6 +111,8 @@ def validate_text_plan(checks):
         if text(ident): notice_ids.add(ident)
         checks.need(isinstance(notice.get("purpose"), str) and notice.get("purpose") in PROTECTED and substantive(notice.get("text")) and substantive(notice.get("basis")), "presentation protected notice scientific/rights basis required")
         placement = notice.get("placement")
+        checks.need(notice.get("purpose") != "ai_simulation" or placement == "companion",
+                    "AI production disclosure belongs in companion/platform fields, not audience media")
         checks.need(placement in ("audience", "companion") and substantive(notice.get("placement_basis")),
                     "presentation protected notice explicit placement and basis required")
         matches = [x for x in items if obj(x).get("notice_id") == ident]
@@ -123,6 +128,7 @@ def validate_text_plan(checks):
         if asset.get("id") not in used: continue
         refs = asset.get("required_notice_ids", [])
         checks.need(isinstance(refs, list) and all(text(i) and i in notice_ids for i in refs), "presentation used asset required notice unresolved")
+    validate_label_plan(checks, found)
     return found
 
 
@@ -148,6 +154,7 @@ def validate_text_review(checks, gate, viewing, items):
         need(review.get("status") == "pass" and substantive(review.get("observation")) and substantive(review.get("evidence")), surface+" actual purpose/deletion review required")
     if gate != "G3":
         need(ids == {i for i, item in items.items() if item.get("surface") in channels}, "full export text inventory coverage incomplete")
+    validate_overlay_review(checks, gate, viewing, r, items, ids)
     sources = obj(r.get("sources"))
     for surface in ("voiceover", "caption"):
         path = checks.evidence(sources.get(surface), label+surface)

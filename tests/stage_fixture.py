@@ -106,6 +106,7 @@ def upgrade(data,root,schema='canonical'):
   report=subject_motion.screen(root/v['file'],[{'start':0,'end':duration,'subject':'synthetic fixture','isolation_note':'software fixture only','roi':[0,0,1,1],'masks':[]}],policy['screen'])
   filename='subject-screen-'+gate+'.json';(root/filename).write_text(json.dumps(report))
   parent['subject_motion']={'status':'pass','media_sha256':v['sha256'],'roi_review':'synthetic declaration only; not actual viewing','excluded_motion_review':{k:'synthetic test declaration only' for k in subject_motion.IGNORED},'screen':{'file':filename,'sha256':gates.file_digest(root/filename)},'spans':[{'start':0,'end':duration,'kind':'subject_change','subject':'synthetic test','observation':'software declaration only','narration_relation':'synthetic declaration','evidence':'test only'}],'semantic_units':[{'start':0,'end':duration,'step_ids':steps[:],'spoken_point':'synthetic declaration','progression_observed':'software declaration only','evidence':'test only'}],'longest_no_progress_seconds':0,'screen_resolutions':[]}
+ overlay_fixture(d,root)
  refresh(d)
  return d
 
@@ -131,3 +132,16 @@ def refresh(d):
   for record in qa['gates'].values():record['review_refs']=[ref for ref in record['review_refs'] if ref not in ('explanation_logic','expression_plan','explanation_review','expression_review')]
  qa['release']['bundle_sha256']=gates.digest({'deliverables':d['deliverables'],'hashes':qa['reviewed_sha256'],'title':d.get('title'),'description':d.get('description'),'tags':d.get('tags'),'platform':qa['mobile_preview']})
  qa['publication'].update(bundle_sha256=qa['release']['bundle_sha256'],platform=qa['mobile_preview'].get('platform','fixture'),account=qa['mobile_preview'].get('account','fixture'))
+
+
+def overlay_fixture(d, root):
+ """Synthetic bound inventory only, never an actual output inspection."""
+ from label_permission_guard import ZONES
+ root=Path(root)
+ for gate,parent in (('G2',d['qa']['shotbook']),('G3',d['qa']['visual_frames']['animation']),('G5',d['qa']['visual_frames'])):
+  r=d['qa']['presentation_text'][gate];view=parent['viewing']
+  selected={i for v in r['channel_reviews'].values() for i in v['item_ids']}
+  observations=[dict(item_id=i['id'],source_ids=['synthetic-source'],text=i['text'],surface=i['surface'],position=i.get('position','synthetic frame location'),time_range=i.get('time_range',[0,view['duration']]),graphic_sha256=i.get('graphic_sha256')) for i in d['presentation_text']['items'] if i['id'] in selected and i['surface']!='voiceover']
+  data={'schema_version':1,'status':'pass','stage':gate,'media_sha256':view['sha256'],'inventory_sha256':gates.digest(d['presentation_text']),'time_range':[0,view['duration']],'method':'actual_output_and_sources','actual_output_inspected':True,'reviewer':'synthetic software fixture, no actual reviewer','observation':'Synthetic structural fixture; no actual perception or source completeness claim','zones':sorted(ZONES),'unknown_overlays':[],'sources':[{'id':'synthetic-source','kind':'caption',**r['sources']['caption']}],'observed':observations,'cover_sha256':[x['sha256'] for x in r['cover_files']]}
+  filename='overlay-'+gate+'-'+gates.digest(data)+'.json';(root/filename).write_text(json.dumps(data))
+  r['overlay_evidence']={'file':filename,'sha256':gates.file_digest(root/filename)}
