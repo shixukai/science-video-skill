@@ -69,6 +69,14 @@ explanation_steps = relation_steps
 def substantive(value):
  return text(value) and value.strip().lower() not in ('n/a','na','none','not_applicable','not applicable','pending','todo','tbd','不适用','无')
 
+def local_repair_scope(data):
+ """Narrow chapter-only repair scope; never an episode or release exemption."""
+ scope=obj(data.get('scope'))
+ return (scope.get('kind')=='local_sample' and scope.get('placement')=='chapter_only'
+         and scope.get('publication_ready') is False
+         and all(substantive(scope.get(key)) and scope[key].strip().casefold() not in ('unknown','pass','ok','通过','待审','未验','待验','未审','待核') for key in ('parent_episode_id','chapter_id','purpose','delivery_context'))
+         and obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('next_action')=='repair_sample')
+
 def digest(x):
  return hashlib.sha256(json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
@@ -132,6 +140,7 @@ def context_sha256(data, gate):
  if gate in ('G4','G5','G6','G7'): keys += ['deliverables','production_statement']
  if gate in ('G6','G7'): keys += ['title','description','tags']
  result={k:data.get(k) for k in keys}
+ if data.get("workflow_version") not in (None,2):result["workflow_version"]=data.get("workflow_version")
  if gate=='G1':
   result['viewing_order']=[obj(shot).get('id') for shot in seq(data.get('shots'))]
  # Freeze the media actually reviewed at each early audiovisual gate. Review
@@ -258,7 +267,13 @@ class Checks:
     self.need(isinstance(step.get('requires_dynamic'),bool),ident+' requires_dynamic declaration required')
     if step.get('requires_dynamic') is False:self.need(substantive(step.get('still_reason')),ident+' static observation reason required')
   self.need(len(all_ids)==len(set(all_ids)),'explanation/causal step ids must be unique across primary and auxiliary scopes')
-  self.need(covered==required and bool(steps),'all promised explanation coverage incomplete')
+  if obj(self.data.get('scope')).get('kind')=='local_sample':
+   self.need(local_repair_scope(self.data),'local sample requires explicit chapter-only repair_sample scope')
+   self.need(bool(covered) and covered<=required and bool(steps),'local repair explanation coverage must be a nonempty original-scope subset')
+   self.need(valid and set(mains)<=covered,'local repair main_scope_ids must belong to actual covered scope')
+   omitted=a.get('omitted_scope_ids');valid_omitted=isinstance(omitted,list) and all(text(x) for x in omitted)
+   self.need(valid_omitted and len(set(omitted))==len(omitted) and set(omitted)==required-covered,'local repair must declare exact unique omitted scope')
+  else:self.need(covered==required and bool(steps),'all promised explanation coverage incomplete')
   self.prerequisites(steps)
   return steps
  def prerequisites(self,steps):

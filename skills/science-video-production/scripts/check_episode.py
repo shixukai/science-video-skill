@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from opening_alignment_guard import check_opening_plan
-from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive
+from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive, local_repair_scope
 
 
 REVIEW_KEYS = ("science", "rights", "visual_frames", "mobile_preview", "audio", "narration", "covers")
@@ -384,11 +384,14 @@ def check_topic(data, root, stage, shots):
         need(scope.get("placement") == "chapter_only", "local work cannot substitute for episode opening")
         need(scope.get("publication_ready") is False, "local work cannot be marked publication ready")
         need(stage != "delivery", "local sample/chapter cannot pass complete-episode delivery")
+    local_repair = local_repair_scope(data)
+    if kind == "local_sample":
+        need(local_repair, "local sample requires explicit chapter-only repair_sample scope")
     alignment = obj(data.get("topic_alignment"))
     need(alignment.get("topic_sha256") == current_hash, "alignment bound to wrong topic version")
     for section, fields in (("opening", ("title", "voiceover", "spoken_question", "answer_route")), ("ending", ("answer",))):
         record = obj(alignment.get(section))
-        for field in fields:
+        for field in (() if local_repair else fields):
             need(text(record.get(field)), f"{section}.{field} required")
         need(record.get("intent") == current.get("intent"), f"{section} question type differs from anchored intent")
         refs = record.get("scope_ids")
@@ -418,8 +421,19 @@ def check_topic(data, root, stage, shots):
         need(covered == set(required), "necessary answer scope missing from episode coverage")
     else:
         omitted = alignment.get("omitted_scope_ids")
-        need(isinstance(omitted, list) and all(isinstance(x, str) for x in omitted) and set(omitted) == set(required) - covered,
-             "local work must identify omitted episode scope")
+        valid_omitted = isinstance(omitted, list) and all(isinstance(x, str) for x in omitted)
+        need(valid_omitted and len(set(omitted)) == len(omitted) and set(omitted) == set(required) - covered,
+             "local work must identify exact unique omitted episode scope")
+    if local_repair:
+        mains = alignment.get("main_scope_ids")
+        valid_mains = isinstance(mains, list) and bool(mains) and all(isinstance(x, str) for x in mains)
+        need(bool(covered) and covered <= set(required), "local repair must cover nonempty original scope")
+        need(valid_mains and len(set(mains)) == len(mains) and set(mains) <= covered,
+             "local repair main_scope_ids must belong to actual covered scope")
+        for section in ("opening", "ending"):
+            refs = obj(alignment.get(section)).get("scope_ids")
+            need(isinstance(refs, list) and bool(refs) and all(isinstance(x, str) and x in covered for x in refs),
+                 f"{section}: local boundary mapping must use actual covered scope")
     if stage == "delivery":
         review = obj(obj(data.get("qa")).get("topic_alignment"))
         need(review.get("status") == "pass" and review.get("reviewer_role") in ("editor", "independent", "user"), "actual editorial/independent topic review required (or scoped actual user review)")

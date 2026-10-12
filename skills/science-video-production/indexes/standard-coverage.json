@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.4",
+  "version": "1.4.5",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37503,6 +37503,10 @@
         {
           "file": "assets/episode-template.json",
           "selector": "qa.visual_frames.subject_motion"
+        },
+        {
+          "file": "assets/episode-template.json",
+          "selector": "qa.visual_frames.subject_motion.object_result_review"
         }
       ],
       "mapping_status": "verified_semantic_mapping",
@@ -42373,6 +42377,16 @@
             125
           ],
           "quote_sha256": "a09e0f8390510eb026a362c5b69de5c92d9e524410348daf937b394f573247cc"
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "完整质量标准的分数与解释内审",
+          "quote": "关键美术失败，尤其用户明确否定或同内容同景别对照中的明显目标差距，不因“科学正确/机制直观”变成可留开的P2修饰。沿现有 `qa.feedback` 逐维保留否定，沿 `qa.visual_frames.failures` 保留已知缺陷；纸面或消息独审中的未闭环缺陷也须登记，不能只留在散文里而让结构化列表为空；扩制前实际重读尚未闭环项并运行现有阶段检查，保存真实输入、同版媒体及结果，不能补写历史pass。现有扩制阻断不看P2标签，未闭环先在授权范围修代表段并复查，不带缺陷扩整片；真正不构成质量失败的局部可选修饰可保留为建议，不能把已知失败改名为建议；规则/代码通过仅证明约束已写入，新动态代表段尚未验证的方法继续记候选。",
+          "lines": [
+            154,
+            154
+          ],
+          "quote_sha256": "bbe4dde09f11e7da817f4f53837d7f09a3f2e213e9eee1d2c813c9672deca57c"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -43159,6 +43173,16 @@
             36
           ],
           "quote_sha256": "455607bc308282be643d8df6b2ab8845089be338ed8e324a8a8b7e2436896b88"
+        },
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "整期章节与局部样片分开",
+          "quote": "章节内的局部修复可用 `scope.kind=local_sample`、`placement=chapter_only`、`publication_ready=false` 及现有 `qa.visual_frames.animation.next_action=repair_sample` 进入对应修样检查；四个所属/目的字段须具体完整，原整期锚点、current及改题授权规则不变。此窄范围的 `opening/ending` 只需继承原题 `intent`、本次实际覆盖的 `scope_ids` 和真实首尾 `shot_ids` 定位，不要求为中段修复补造整期题卡、主题口播、`spoken_question/answer_route` 或整期结尾答案。`coverage` 必须非空且属于原必要范围，`main_scope_ids` 非空且位于本次覆盖内；`omitted_scope_ids` 完整、无重复地列出原必要范围减本次覆盖的补集。该局部声明不将 `chapter`、不完整元数据、`next_action=expand` 或整期包变成例外；即使本次覆盖恰含全部必要范围，也仍只是局部修样。G4及以后、quality/delivery继续要求整期，未闭环反馈/已知失败照常阻断扩制；局部通过不签整期或发布，不能删原题、改标题或补写历史pass来通关。",
+          "quote_sha256": "47324af0e5c7450cc29a08542c6a2822ab6b52136427160bcd6b1ee9c51c5870",
+          "lines": [
+            30,
+            30
+          ]
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -43301,6 +43325,16 @@
             58
           ],
           "quote_sha256": "c5b8e86810e21c244bf2a7e8da9bc9d3816e040ded77a656d1d3064655cbd32c"
+        },
+        {
+          "file": "references/visual-system.md",
+          "anchor": "画面充实与精细场景表达",
+          "quote": "精细独立资产合成后仍可能像拼贴：对象各自有纹理，却不共享可解释的视点/投影、相对尺度、遮挡和边缘层次，机制仅在上叠图形中发生。沿现有动作卡和同镜对照核完整全景、对应近景及相机运动极值；同一对象须接回同一场景，剖切或示意投影的取舍须明确，不能靠标签补回空间身份。光向、环境映色与材质也在完整合成中复核，但只记录实际看见的差距，不因拼贴感便推定光向冲突；精细资产、统一色调或增加层数均不能单独证明场景成立。",
+          "lines": [
+            211,
+            211
+          ],
+          "quote_sha256": "3c280a457dd6af12d80503908a6a8c505a3ef5a8d215ae51e860fc50eee734a2"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -44203,6 +44237,16 @@
             53,
             53
           ]
+        },
+        {
+          "file": "references/quality-acceptance.md",
+          "anchor": "主体动态与长静帧",
+          "quote": "在上述主体ROI复查中，另做对象结果诊断：临时隐藏额外标签、刻度及解释叠图，检查本段按科学模型应能看见的主体状态、相互作用或结果，再恢复必要图示核其对应。隐藏是诊断，不从成片删去必要科学图形；不要用遮罩盖掉待检主体或必要机制来制造通过。温度、水汽等不可见量和抽象关系可以由图示解释，不要求肉眼看见不可见量，也不强迫静态环境运动；但已承诺可见对象结果的段落不能改称“仅图示”来掩盖静贴片。只见叠图运动、主体应有的结果始终缺失，仍记失败。\n\n本版新建或按本版重审的包沿用 `workflow_version=3`，在现有 `subject_motion.object_result_review` 记录 `status/media_sha256/units`；每项按原 `semantic_units` 同顺序固定 `start/end/step_ids`，记 `status`、`mode=visible_result/diagram_only`、`subject/overlay_isolation/observation/scientific_boundary/evidence`，仅图示另记 `diagram_only_reason`。证据文字须定位当前媒体、主体ROI及实际时点；科学不可见性、静态环境和必要图示的合理性由实际审查判断，不能只换mode过关。诊断沿用当前媒体、主体ROI及连续审查，不新建关卡；工具只核字段、范围与当前媒体一致性，不读取证据文字所指的实际画面或判美术。旧 `workflow_version=2`（或未声明版本）且完全无此项的未改历史包不强制迁移；出现此项即完整核验，空值不能充当兼容模式，version3删项仍阻断。工作流版本进入新阶段摘要，不能降级后沿用旧通过记录。",
+          "lines": [
+            55,
+            57
+          ],
+          "quote_sha256": "6fc959928b81a96c7d4af670eeb1c74ed48da6ec4278754e3dbf5aebf98d4990"
         }
       ]
     },

@@ -343,7 +343,12 @@
           "spans": [],
           "semantic_units": [],
           "longest_no_progress_seconds": null,
-          "screen_resolutions": []
+          "screen_resolutions": [],
+          "object_result_review": {
+            "status": "pending",
+            "media_sha256": "",
+            "units": []
+          }
         },
         "shot_intervals": [
           {
@@ -596,7 +601,12 @@
         "spans": [],
         "semantic_units": [],
         "longest_no_progress_seconds": null,
-        "screen_resolutions": []
+        "screen_resolutions": [],
+        "object_result_review": {
+          "status": "pending",
+          "media_sha256": "",
+          "units": []
+        }
       }
     },
     "mobile_preview": {
@@ -886,7 +896,12 @@
         "spans": [],
         "semantic_units": [],
         "longest_no_progress_seconds": null,
-        "screen_resolutions": []
+        "screen_resolutions": [],
+        "object_result_review": {
+          "status": "pending",
+          "media_sha256": "",
+          "units": []
+        }
       }
     },
     "topic_alignment": {
@@ -1683,7 +1698,7 @@
       }
     ]
   },
-  "workflow_version": 2,
+  "workflow_version": 3,
   "brief": {
     "audience": "无相关专业训练的成年普通观众",
     "one_sentence_answer": "",

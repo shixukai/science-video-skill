@@ -329,6 +329,9 @@ class EvidenceMediaIntegrityTests(unittest.TestCase):
     # A changed synthetic export needs a fresh bound overlay fixture too.
     from stage_fixture import overlay_fixture
     overlay_fixture(s.d,s.root)
+    refresh(s.d);s.rejects('object result stale media',gate)
+    # Recreate the synthetic diagnostic binding; no actual art is certified.
+    motion['object_result_review']['media_sha256']=motion['media_sha256']
     refresh(s.d);s.assertEqual(s.errors(gate),[])
  def test_media_hash_change_at_same_path_invalidates_review_context(s):
   for gate in ('G2','G3'):
@@ -603,7 +606,7 @@ class CoverageStageTests(unittest.TestCase):
  def test_auxiliary_actual_presentation_required(s):
   s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];s.d['qa']['comprehension']['internal_review']['steps'].pop();refresh(s.d);s.rejects('promised explanation coverage incomplete','G5')
  def test_auxiliary_does_not_require_first_representative_sample(s):
-  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];r=s.d['qa']['visual_frames']['animation'];r['step_ids']=['TEST0'];r['steps']=[r['steps'][0]];r['subject_motion']['semantic_units'][0]['step_ids']=['TEST0'];refresh(s.d);s.assertEqual(s.errors(),[])
+  s.typed();s.d['topic_alignment']['main_scope_ids']=[s.d['topic_alignment']['coverage'][0]['scope_id']];r=s.d['qa']['visual_frames']['animation'];r['step_ids']=['TEST0'];r['steps']=[r['steps'][0]];r['subject_motion']['semantic_units'][0]['step_ids']=['TEST0'];r['subject_motion']['object_result_review']['units'][0]['step_ids']=['TEST0'];refresh(s.d);s.assertEqual(s.errors(),[])
 
  def test_legacy_structure_cannot_skip_design(s):s.d['brief'].pop('audience_start');refresh(s.d);s.rejects('explicit knowledge layer required','G1')
  def test_legacy_structure_cannot_skip_logic_review(s):s.d['qa']['comprehension'].pop('logic_review');s.rejects('separate paper logic review','G1')

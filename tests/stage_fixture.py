@@ -115,6 +115,10 @@ def upgrade(data,root,schema='canonical'):
   report=subject_motion.screen(root/v['file'],[{'start':0,'end':duration,'subject':'synthetic fixture','isolation_note':'software fixture only','roi':[0,0,1,1],'masks':[]}],policy['screen'])
   filename='subject-screen-'+gate+'.json';(root/filename).write_text(json.dumps(report))
   parent['subject_motion']={'status':'pass','media_sha256':v['sha256'],'roi_review':'synthetic declaration only; not actual viewing','excluded_motion_review':{k:'synthetic test declaration only' for k in subject_motion.IGNORED},'screen':{'file':filename,'sha256':gates.file_digest(root/filename)},'spans':[{'start':0,'end':duration,'kind':'subject_change','subject':'synthetic test','observation':'software declaration only','narration_relation':'synthetic declaration','evidence':'test only'}],'semantic_units':[{'start':0,'end':duration,'step_ids':steps[:],'spoken_point':'synthetic declaration','progression_observed':'software declaration only','evidence':'test only'}],'longest_no_progress_seconds':0,'screen_resolutions':[]}
+ # Workflow-3 synthetic diagnostics exercise current templates without claiming perception.
+ for parent in (qa['shotbook'],qa['visual_frames']['animation'],qa['visual_frames']):
+  record=parent['subject_motion']
+  record['object_result_review']={'status':'pass','media_sha256':record['media_sha256'],'units':[dict({key:unit[key] for key in ('start','end','step_ids')},status='pass',mode='visible_result',subject='synthetic object',overlay_isolation='synthetic complete object ROI without extra overlays',observation='synthetic object state progression; not an actual review',scientific_boundary='synthetic variable boundary; static environment allowed',evidence='synthetic current media times only') for unit in record['semantic_units']]}
  overlay_fixture(d,root)
  refresh(d)
  return d

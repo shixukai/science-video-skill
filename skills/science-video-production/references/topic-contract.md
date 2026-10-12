@@ -27,6 +27,8 @@
 
 `plan` 可检查诚实标注的局部计划；`delivery` 专指完整单集验收，局部样片和章节不能通过该模式。局部美术或连贯性认可仅属于被审版本、片段及被认可维度；不等于整片主题、理解、声音或发布通过。恢复制作时保留这份范围，另审整片，不能把局部认可标成整期认可。
 
+章节内的局部修复可用 `scope.kind=local_sample`、`placement=chapter_only`、`publication_ready=false` 及现有 `qa.visual_frames.animation.next_action=repair_sample` 进入对应修样检查；四个所属/目的字段须具体完整，原整期锚点、current及改题授权规则不变。此窄范围的 `opening/ending` 只需继承原题 `intent`、本次实际覆盖的 `scope_ids` 和真实首尾 `shot_ids` 定位，不要求为中段修复补造整期题卡、主题口播、`spoken_question/answer_route` 或整期结尾答案。`coverage` 必须非空且属于原必要范围，`main_scope_ids` 非空且位于本次覆盖内；`omitted_scope_ids` 完整、无重复地列出原必要范围减本次覆盖的补集。该局部声明不将 `chapter`、不完整元数据、`next_action=expand` 或整期包变成例外；即使本次覆盖恰含全部必要范围，也仍只是局部修样。G4及以后、quality/delivery继续要求整期，未闭环反馈/已知失败照常阻断扩制；局部通过不签整期或发布，不能删原题、改标题或补写历史pass来通关。
+
 ## 开场与观众范围
 
 默认面向没有相关专业训练的成年普通观众，优先自然现象/生活科学；不以抽象数学、统计或概率点图替代可识别现象，不把本集改成公式课。必要数字和单位可以帮助直观理解。

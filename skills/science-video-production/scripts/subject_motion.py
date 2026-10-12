@@ -128,6 +128,45 @@ def screen(path, regions, settings):
     return _screen(str(Path(path).resolve()), sha(path), json.dumps(regions, sort_keys=True), json.dumps(settings, sort_keys=True))
 
 
+def validate_object_results(checks, record, units, media_sha, prefix=""):
+    """Check scoped diagnostic declarations, not the pictures named by evidence."""
+    def need(ok, message):
+        return checks.need(ok, prefix + "object result " + message)
+    version = checks.data.get("workflow_version", 2)
+    valid_version = type(version) is int and version in (2, 3)
+    need(valid_version, "workflow_version must be 2 or 3")
+    if "object_result_review" not in record and valid_version and version == 2:
+        return  # Untouched historical packets retain their original contract.
+    review = record.get("object_result_review")
+    if not isinstance(review, dict):
+        need(False, "diagnostic required; null/omission is not a current review")
+        return
+    need(review.get("status") == "pass", "failed/unreviewed diagnostic")
+    need(text(media_sha) and review.get("media_sha256") == media_sha, "stale media")
+    rows = review.get("units")
+    need(isinstance(rows, list) and bool(rows) and isinstance(units, list)
+         and len(rows) == len(units), "complete semantic-unit diagnostic required")
+    for index, row in enumerate(rows if isinstance(rows, list) else []):
+        if not isinstance(row, dict):
+            need(False, "unit must be an object")
+            continue
+        source = units[index] if isinstance(units, list) and index < len(units) else {}
+        source = source if isinstance(source, dict) else {}
+        need(all(finite(row.get(k)) and row[k] == source.get(k) for k in ("start", "end"))
+             and row.get("start", 0) < row.get("end", 0), "unit range must match semantic unit")
+        ids = row.get("step_ids")
+        need(isinstance(ids, list) and bool(ids) and all(text(i) for i in ids)
+             and len(set(i for i in ids if isinstance(i, str))) == len(ids)
+             and ids == source.get("step_ids"), "unit steps must match semantic unit")
+        need(row.get("status") == "pass", "unit failed/unreviewed")
+        mode = row.get("mode")
+        need(mode in ("visible_result", "diagram_only"), "explicit visible-result/diagram-only mode required")
+        for key in ("subject", "overlay_isolation", "observation", "scientific_boundary", "evidence"):
+            need(text(row.get(key)), "actual unit " + key + " required")
+        if mode == "diagram_only":
+            need(text(row.get("diagram_only_reason")), "diagram-only scientific reason required")
+
+
 def validate(checks, record, viewing, gate, policy, step_ids):
     """Validate declared continuous observations plus replayed media screening."""
     prefix = gate + " subject motion "
@@ -144,6 +183,7 @@ def validate(checks, record, viewing, gate, policy, step_ids):
     bypass = record.get("excluded_motion_review")
     need(isinstance(bypass, dict) and set(bypass) == IGNORED and all(text(v) for v in bypass.values()),
          "all caption/title/decoration/camera/static-cut bypasses must be reviewed")
+    validate_object_results(checks, record, record.get("semantic_units"), viewing.get("sha256"), prefix)
     path = checks.evidence(record.get("screen"), prefix+"screen")
     if not path:
         return
@@ -164,11 +204,19 @@ def validate(checks, record, viewing, gate, policy, step_ids):
         need(False, "screen/timeline invalid: "+str(exc))
         return
     inactive_start, longest = None, 0
+    unclassified = []
     for span in spans:
         kind = span.get("kind")
-        need(kind in ACTIVE | {"purposeful_read", "no_progress"}, "invalid observed span kind")
+        classified = isinstance(kind, str) and kind in ACTIVE | {"purposeful_read", "no_progress"}
+        need(classified, "invalid observed span kind; progression remains unreviewed")
         for key in ("subject", "observation", "narration_relation", "evidence"):
             need(text(span.get(key)), "span "+key+" required")
+        if not classified:
+            unclassified.append(span)
+            if inactive_start is not None:
+                longest = max(longest, span["start"]-inactive_start)
+            inactive_start = None
+            continue  # Invalid data blocks review; it is not an observed still interval.
         if kind in ACTIVE:
             if inactive_start is not None:
                 longest = max(longest, span["start"]-inactive_start)
@@ -180,9 +228,14 @@ def validate(checks, record, viewing, gate, policy, step_ids):
             need(text(span.get("purpose")) and text(span.get("resume_evidence")), "read purpose/resumption evidence required")
     if inactive_start is not None:
         longest = max(longest, duration-inactive_start)
-    need(longest <= policy["max_no_progress_seconds"], "longest interval without effective subject progression exceeds project limit")
-    need(finite(record.get("longest_no_progress_seconds")) and abs(record["longest_no_progress_seconds"]-longest) <= .001,
-         "longest interval declaration inconsistent")
+    if unclassified:
+        need(longest <= policy["max_no_progress_seconds"], "observed no-progression interval exceeds project limit; other intervals unreviewed")
+    else:
+        need(longest <= policy["max_no_progress_seconds"], "longest interval without effective subject progression exceeds project limit")
+        need(finite(record.get("longest_no_progress_seconds")) and abs(record["longest_no_progress_seconds"]-longest) <= .001,
+             "longest interval declaration inconsistent")
+    def unknown_overlap(start, end):
+        return any(min(s["end"], end)-max(s["start"], start) > 0 for s in unclassified)
     covered = set()
     for unit in units:
         ids = unit.get("step_ids")
@@ -192,8 +245,11 @@ def validate(checks, record, viewing, gate, policy, step_ids):
             covered.update(ids)
         for key in ("spoken_point", "progression_observed", "evidence"):
             need(text(unit.get(key)), "semantic unit "+key+" required")
-        need(any(s.get("kind") in ACTIVE and min(s["end"], unit["end"])-max(s["start"], unit["start"]) > .001 for s in spans),
-             "complete spoken semantic unit is a slideshow; read pauses do not exempt it")
+        if unknown_overlap(unit["start"], unit["end"]):
+            need(False, "semantic unit has unreviewed span classification; subject progression not established")
+        else:
+            need(any(isinstance(s.get("kind"), str) and s["kind"] in ACTIVE and min(s["end"], unit["end"])-max(s["start"], unit["start"]) > .001 for s in spans),
+                 "complete spoken semantic unit is a slideshow; read pauses do not exempt it")
     need(covered == set(step_ids), "semantic units omit reviewed explanation coverage")
     resolutions = record.get("screen_resolutions")
     need(isinstance(resolutions, list) and len(resolutions) == len(actual["low_motion_ranges"]), "unresolved low-motion screen candidates")
@@ -202,8 +258,11 @@ def validate(checks, record, viewing, gate, policy, step_ids):
              and resolution.get("result") == "effective_subject_progression"
              and text(resolution.get("observation")) and text(resolution.get("evidence")),
              "low-motion candidate needs actual continuous subject-change recheck; static/read-only resolution fails")
-        need(any(s.get("kind") in ACTIVE and min(s["end"], interval[1])-max(s["start"], interval[0]) > .001 for s in spans),
-             "screen resolution contradicts observed no-progression timeline")
+        if unknown_overlap(interval[0], interval[1]):
+            need(False, "screen resolution overlaps unreviewed spans; effective progression not established")
+        else:
+            need(any(isinstance(s.get("kind"), str) and s["kind"] in ACTIVE and min(s["end"], interval[1])-max(s["start"], interval[0]) > .001 for s in spans),
+                 "screen resolution contradicts observed no-progression timeline")
 
 
 def main():
