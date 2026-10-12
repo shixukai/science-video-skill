@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -82,12 +82,13 @@
     "apply_once": true,
     "scale_policy": "Same aspect ratio: multiply vertical values by output_height/1920, record rounding; different layout requires review.",
     "exclude": "Published or already-approved-for-publication versions are not changed by this setting.",
-    "move_scope": "Captions and tight background only; document any necessary local label reflow."
+    "move_scope": "Captions and tight background only; document any necessary local label reflow.",
+    "scope": "legacy_portrait_revision_only; not the default for new landscape work"
   },
   "delivery": {
     "canvas": [
-      1080,
-      1920
+      1920,
+      1080
     ],
     "cover_ratios": [
       "3:4",
@@ -96,7 +97,10 @@
     "title_max_codepoints": 30,
     "description_and_tags_max_codepoints": 1000,
     "platform_count_authoritative": true,
-    "no_friend_mentions": true
+    "no_friend_mentions": true,
+    "aspect_ratio": "16:9",
+    "caption_layout": "landscape_captions",
+    "default_scope": "Future new productions and explicitly requested landscape work only; preserve approved/published portrait identities and media."
   },
   "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none.",
   "operations": {
@@ -113,5 +117,14 @@
       "unverified_result_is_not_success": true,
       "scope": "current series only; no new platform authority"
     }
+  },
+  "landscape_captions": {
+    "canvas": [
+      1920,
+      1080
+    ],
+    "status": "project_layout_review_required",
+    "baselines": null,
+    "policy": "Design against actual scene and platform, then inspect exported text and tight backgrounds. Never scale legacy portrait Y coordinates into this layout."
   }
 }

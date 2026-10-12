@@ -150,6 +150,9 @@ def context_sha256(data, gate):
   result['representative_step_ids']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('step_ids')
   result['representative_shot_intervals']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('shot_intervals')
  if gate not in ('G1','G2'):
+  applications=[row for row in seq(data.get('tool_applications')) if gate!='G3' or set(i for i in seq(obj(row).get('shot_ids')) if text(i)) & shot_ids]
+  if applications:result['tool_applications']=applications
+ if gate not in ('G1','G2'):
   result['representative_captions']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('captions')
  if gate in ('G4','G5','G6','G7'):
   result['media_hashes']=obj(data.get('qa')).get('reviewed_sha256')
@@ -704,8 +707,62 @@ class Checks:
   mode=obj(profile.get('medium')).get('real_anchor')
   self.need(mode in ('authentic_continuous_video','not_required'),'explicit project real-anchor policy required')
   return mode!='not_required'
+ def tool_applications(self,expanding=False,current_shots=None):
+  if 'tool_applications' not in self.data:return
+  rows=self.data['tool_applications']
+  self.need(isinstance(rows,list),'tool_applications must be a list of selected items only')
+  shots={obj(s).get('id') for s in seq(self.data.get('shots')) if text(obj(s).get('id'))}
+  for index,row in enumerate(seq(rows)):
+   row=obj(row);label='selected tool '+str(index)
+   for key in ('need','selection_reason','source_id'):self.need(text(row.get(key)),label+' '+key+' required')
+   mode=row.get('usage_mode');self.need(mode in ('method','runtime'),label+' usage_mode must distinguish method/runtime')
+   status=row.get('status');self.need(status in ('planned','applied'),label+' status must be planned/applied')
+   ids=row.get('shot_ids');self.need(isinstance(ids,list) and bool(ids) and all(text(i) and i in shots for i in seq(ids)),label+' current shot_ids required')
+   if current_shots is not None and not ({i for i in seq(ids) if text(i)} & current_shots):continue
+   if status!='applied':
+    relevant=current_shots is None or bool({i for i in seq(ids) if text(i)} & current_shots)
+    self.need(not(expanding and relevant),label+' planned application cannot support expansion')
+    continue
+   reference=obj(row.get('read_reference'));version=reference.get('version')
+   self.need(text(version) and bool(re.fullmatch(r'(?:[0-9a-f]{40}|[0-9a-f]{64}|v?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)',version)),label+' fixed read version required')
+   files=reference.get('files');self.need(isinstance(files,list) and bool(files) and all(text(f) for f in seq(files)),label+' actually read files required')
+   self.evidence(row.get('artifact_evidence'),label+' applied artifact')
+   if mode=='runtime':
+    self.evidence(row.get('installation_evidence'),label+' installation')
+    self.evidence(row.get('execution_evidence'),label+' execution')
+ def whole_shot_coverage(self,duration):
+  if not number(duration):return
+  end=0.0;discontinuity=0.0;shots=seq(self.data.get('shots'))
+  self.need(bool(shots),'whole shotbook must not be empty')
+  for shot in shots:
+   book=obj(obj(shot).get('shotbook'));start,stop=book.get('start'),book.get('end')
+   if not self.need(number(start) and number(stop) and 0<=start<stop,'whole shotbook needs valid timed intervals'):continue
+   discontinuity+=abs(start-end)
+   self.need(discontinuity<=0.05,'whole shotbook contains gap/overlap')
+   end=stop
+  self.need(abs(end-duration)<=0.05,'whole shotbook must cover complete actual narration duration')
+ def expansion_failures(self,expanding):
+  if not expanding:return
+  self.need(self.record('visual_frames').get('status') not in ('fail','needs_changes','blocked'),
+            'known visual failure blocks expansion; overall review is still failed')
+  for name in ('visual_frames.art','visual_frames.motion','visual_frames.finesse'):
+   self.need(self.record(name).get('status') not in ('fail','needs_changes','blocked'),
+             'known visual failure blocks expansion; '+name+' is still failed')
+  for dimension in ('static','motion','integration'):
+   record=obj(self.record('visual_frames.finesse').get(dimension))
+   for criterion in [record]+seq(record.get('criteria')):
+    self.need(obj(criterion).get('status') not in ('fail','needs_changes','blocked'),
+              'known visual failure blocks expansion; finesse '+dimension+' criterion is still failed')
+  for item in seq(self.record('visual_frames').get('failures')):
+   item=obj(item)
+   self.need(not(item.get('status')=='open' and item.get('scope') in ('whole_episode','series_style','segment')),
+             'known visual failure blocks expansion; repair and re-review before extending')
  def run(self,target,policy):
   n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
+  action=self.record('visual_frames.animation').get('next_action')
+  if n>=2:self.need(action in ('expand','repair_sample'),'G3 next_action must explicitly be expand or repair_sample')
+  expanding=n>=3 or (n>=2 and action=='expand')
+  self.tool_applications(expanding,dependencies(self.data,True)[1] if n==2 else None);self.expansion_failures(expanding)
   text_items=validate_text_plan(self)
   cards=self.expression_cards(steps) if n>=1 else {}
   self.internal_review('explanation_logic','G1',steps,cards)
@@ -742,7 +799,7 @@ class Checks:
    audio=next((a for a in seq(self.data.get('assets')) if isinstance(a,dict) and a.get('id')==narration.get('asset_id')), {})
    self.need(audio.get('kind')=='audio','source narration must be an audio asset')
    audio_path=self.evidence({'file':audio.get('file'),'sha256':narration.get('audio_sha256')},'source narration')
-   if audio_path:self.duration(audio_path,require_video=False,label='source narration')
+   if audio_path:self.whole_shot_coverage(self.duration(audio_path,require_video=False,label='source narration'))
   if n>=2:
    self.animation(steps);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
    animation=self.record('visual_frames.animation')

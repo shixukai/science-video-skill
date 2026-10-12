@@ -123,6 +123,7 @@ def refresh(d):
  if isinstance(qa['visual_frames'].get('finesse'),dict):qa['visual_frames']['finesse'].update(context_sha256=gates.context_sha256(d,'G5'),media_sha256=qa['reviewed_sha256']['video'])
  for name,gate in (('explanation_logic','G1'),('expression_plan','G2'),('explanation_review','G5'),('expression_review','G5')):
   if isinstance(qa.get(name),dict):qa[name]['context_sha256']=gates.context_sha256(d,gate)
+ qa['visual_frames']['animation']['next_action']='expand'
  qa['gates']={g:{'status':'passed','reviewer':'synthetic fixture','reviewed_at':'2026-01-01T00:00:00Z','scope':'software test only','context_sha256':gates.context_sha256(d,g),'review_refs':list(gates.REQUIRED_REVIEWS[g]),'evidence':[{'file':d['deliverables']['video'],'sha256':qa['reviewed_sha256']['video']}]} for g in gates.GATES}
  for gate,parent in (('G2',qa['shotbook']),('G3',qa['visual_frames']['animation']),('G5',qa['visual_frames'])):
   if isinstance(parent.get('subject_motion'),dict):qa['gates'][gate]['evidence'].append(parent['subject_motion']['screen'])

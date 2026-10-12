@@ -60,7 +60,7 @@ def check(root):
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.3.1", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.4.0", "unsupported profile schema/version")
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
@@ -88,6 +88,13 @@ def check(root):
             need(record["target"] == record["original"] + c["total_y"], "caption total inconsistent")
         need(caption_baselines(profile, 1080, 1920) == {"narration": 1615, "real_footage": 1690}, "current series baseline mismatch")
         limits = profile["delivery"]
+        need(limits.get("canvas") == [1920, 1080] and limits.get("aspect_ratio") == "16:9",
+             "new production default must be HD landscape")
+        landscape = profile.get("landscape_captions", {})
+        need(limits.get("caption_layout") == "landscape_captions" and landscape.get("canvas") == [1920, 1080]
+             and landscape.get("status") == "project_layout_review_required" and landscape.get("baselines") is None,
+             "landscape captions need independent actual layout review, not portrait baseline scaling")
+        need(str(c.get("scope", "")).startswith("legacy_portrait_revision_only"), "old caption coordinates must be scoped to legacy portrait")
         need(limits["title_max_codepoints"] == 30 and limits["description_and_tags_max_codepoints"] == 1000,
              "series limits must remain aligned with packet checker")
         tokens_path = local_path(root, root / "config", profile["design"]["tokens"])

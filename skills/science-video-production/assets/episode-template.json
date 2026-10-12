@@ -351,7 +351,8 @@
             "start": null,
             "end": null
           }
-        ]
+        ],
+        "next_action": "repair_sample"
       },
       "process_steps": [],
       "review_id": "",
@@ -1753,5 +1754,6 @@
     },
     "items": [],
     "required_notices": []
-  }
+  },
+  "tool_applications": []
 }

@@ -21,7 +21,7 @@
     "runtime_license_separate_from_skill_license": true,
     "no_imported_external_approval_or_score_gate": true,
     "quality_not_established_by_source_hash_or_own_claim": true,
-    "scope": "Reference curation alone does not install or execute. Skills selected for actual production and their required sibling skills must be installed and verified before invocation under references/tool-routing.md. Installation is authorized without repeated confirmation; host permissions and task-specific runtime, data-transfer and service constraints still apply."
+    "scope": "Reference curation alone does not install or execute. Skills selected for runtime execution and their required sibling skills must be installed and verified before invocation under references/tool-routing.md. Method-only application instead records fixed source reading and shot artifact evidence without assuming framework execution. Installation is authorized without repeated confirmation; host permissions and task-specific runtime, data-transfer and service constraints still apply."
   },
   "entries": [
     {

@@ -15,6 +15,12 @@ class CanonicalStageTests(unittest.TestCase):
  def errors(s,stage='G6'):return gates.check_stage(s.d,s.root,stage)
  def rejects(s,part,stage='G6'):s.assertTrue(any(part in e for e in s.errors(stage)),s.errors(stage))
  def test_valid(s):s.assertEqual(s.errors(),[])
+ def test_missing_expansion_intent(s):
+  s.d['qa']['visual_frames']['animation'].pop('next_action');s.rejects('next_action','G3')
+ def test_unknown_expansion_intent(s):
+  s.d['qa']['visual_frames']['animation']['next_action']='review';s.rejects('next_action','G3')
+ def test_expansion_with_known_failure(s):
+  s.d['qa']['visual_frames']['status']='fail';s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.rejects('blocks expansion','G3')
  def test_no_g2(s):s.d['qa']['gates']['G2']['status']='not_reviewed';s.rejects('G2 not passed','G3')
  def test_missing_chain(s):s.d['topic_alignment']['coverage'][0].pop('causal_steps');refresh(s.d);s.rejects('primary causal chain missing')
  def test_missing_shot(s):s.d['topic_alignment']['coverage'][0]['causal_steps'][0]['shot_ids']=['missing'];refresh(s.d);s.rejects('shot coverage missing')
@@ -33,6 +39,7 @@ class CanonicalStageTests(unittest.TestCase):
  def test_step_missing(s):s.d['qa']['visual_frames']['animation']['steps'].pop();s.rejects('lacks continuous evidence')
  def test_local_cannot_clear(s):s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.rejects('local approval cannot overwrite')
  def test_repair_not_deadlocked(s):
+  s.d['qa']['visual_frames']['animation']['next_action']='repair_sample'
   s.d['qa']['visual_frames']['status']='fail';s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.assertEqual(s.errors('G3'),[]);s.rejects('known failure blocks')
  def test_local_resolution(s):
   s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'resolved','resolution':{'scope':'local_sample','evidence':'test','sha256':s.d['qa']['reviewed_sha256']['video'],'context_sha256':gates.context_sha256(s.d,'G5')}}];s.rejects('local approval cannot resolve')
@@ -352,6 +359,12 @@ class CoverageStageTests(unittest.TestCase):
  def errors(s,stage='G6'):return gates.check_stage(s.d,s.root,stage)
  def rejects(s,part,stage='G6'):s.assertTrue(any(part in e for e in s.errors(stage)),s.errors(stage))
  def test_valid(s):s.assertEqual(s.errors(),[])
+ def test_missing_expansion_intent(s):
+  s.d['qa']['visual_frames']['animation'].pop('next_action');s.rejects('next_action','G3')
+ def test_unknown_expansion_intent(s):
+  s.d['qa']['visual_frames']['animation']['next_action']='review';s.rejects('next_action','G3')
+ def test_expansion_with_known_failure(s):
+  s.d['qa']['visual_frames']['status']='fail';s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.rejects('blocks expansion','G3')
  def test_no_g2(s):s.d['qa']['gates']['G2']['status']='not_reviewed';s.rejects('G2 not passed','G3')
  def test_missing_chain(s):s.d['topic_alignment']['coverage'][0].pop('causal_steps');refresh(s.d);s.rejects('primary causal chain missing')
  def test_missing_shot(s):s.d['topic_alignment']['coverage'][0]['causal_steps'][0]['shot_ids']=['missing'];refresh(s.d);s.rejects('shot coverage missing')
@@ -368,6 +381,7 @@ class CoverageStageTests(unittest.TestCase):
  def test_step_missing(s):s.d['qa']['visual_frames']['animation']['steps'].pop();s.rejects('lacks continuous evidence')
  def test_local_cannot_clear(s):s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.rejects('local approval cannot overwrite')
  def test_repair_not_deadlocked(s):
+  s.d['qa']['visual_frames']['animation']['next_action']='repair_sample'
   s.d['qa']['visual_frames']['status']='fail';s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'open'}];s.assertEqual(s.errors('G3'),[]);s.rejects('known failure blocks')
  def test_local_resolution(s):
   s.d['qa']['visual_frames']['failures']=[{'id':'F','scope':'whole_episode','note':'known','status':'resolved','resolution':{'scope':'local_sample','evidence':'test','sha256':s.d['qa']['reviewed_sha256']['video'],'context_sha256':gates.context_sha256(s.d,'G5')}}];s.rejects('local approval cannot resolve')
