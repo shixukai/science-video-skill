@@ -37806,6 +37806,39 @@
           "PRODUCTION-retention-review-failure"
         ]
       }
+    },
+    {
+      "id": "ART-scene-design",
+      "rule": "先设计实体状态、场景职责和镜头新增信息，再精绘关键态；按实际连续段检查充实度与动作。",
+      "action": "先设计实体状态、场景职责和镜头新增信息，再精绘关键态；按实际连续段检查充实度与动作。",
+      "modality": "hard",
+      "owner": "references/visual-system.md",
+      "owner_anchor": "动画场景设计与执行",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence",
+      "actual_execution": "not_established",
+      "failure_condition_ref": {
+        "kind": "body_clause_relationship",
+        "contract_ids": [
+          "ART-scene-design-failure"
+        ],
+        "source_rule_ref": "ART-scene-design",
+        "target_fields": [],
+        "relation": "现有动作卡、美术记录与A/D/I实际观察。",
+        "application": "结构检查不判断视觉质量，纸面例不构成实际效果证据。"
+      },
+      "companion_reference": {
+        "file": "references/visual-system.md",
+        "anchor": "画面充实与精细场景表达"
+      },
+      "applicability_reference": {
+        "file": "references/visual-system.md",
+        "anchor": "动画场景设计与执行",
+        "relation": "主要动画设计、静图转动态或空洞修复时读取责任正文及所链接细则。"
+      }
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -42265,7 +42298,7 @@
       "clauses": [
         {
           "file": "references/shotbook.md",
-          "anchor": "先静帧完成度再分层动作",
+          "anchor": "先设计状态再精绘关键态与分层动作",
           "quote": "任一镜头、素材台账或音轨版本改变都会使该签收过期。每项本地素材的 `assets[].sha256` 也须与当前文件一致，换素材后重审，不能只刷新摘要。哈希只防止沿用旧声明，不能证明真的看过，也不替代整片验收。",
           "lines": [
             19,
@@ -44712,9 +44745,22 @@
           "quote_sha256": "5d8730cefd2cd1a680d9e27c50f2c9734248d790bda3edd294b7002174dd7407"
         }
       ]
+    },
+    {
+      "id": "ART-scene-design-failure",
+      "failure_condition": "主体退为线条/文字、状态历史不成立、近景无必要新信息，或用装饰抵扣场景/解释缺失时，返回设计并复查对应A/D/I。",
+      "application": "制作细则由视觉责任正文及其引用负责；设计例未制作，实际验收沿现有G2/G3/G5，不新增外部审批。",
+      "clauses": [
+        {
+          "file": "references/visual-system.md",
+          "anchor": "动画场景设计与执行",
+          "quote": "主要自然动画必须由精细可识别的实体/介质及其与本题相符的状态或关系承担，禁止简单线条和文字充当主要动画；辅助图形可解释不可见关系，但不能取代所讲的主体结果。设计时先明确主体、必要情境、可见关系与本镜新增信息，再确定关键态、构图与资产拆分；对生长等累积过程保留合理的状态历史，近景须提供解释需要的新信息。真实感、场景充实、解释成立与动作完成度分别检查，不能靠更多装饰、层数、粒子、镜头运动或固定满屏率相互抵扣。",
+          "quote_sha256": "fa9a45ec59854a756024e7a84d3a8b049df640869bb4bdb32030847a8d6d03e9"
+        }
+      ]
     }
   ],
-  "rule_count": 912,
+  "rule_count": 913,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",
