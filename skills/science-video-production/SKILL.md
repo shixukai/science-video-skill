@@ -51,7 +51,7 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 - **续做或局部修复**：先读原包、当前媒体版本、最新反馈及已有授权，按 [失败后的处理](references/quality-acceptance.md#失败后的处理) 确定受影响证据。沿用已有文件与稳定ID，不重新复制模板覆盖；未取得原包或目标镜头时先做修复准备，索取必要定位信息后再改实际媒体。修改后旧验收是否有效以当前依赖与导出版本为准，不能凭“其余不动”保留过期整片通过。
 - **优化持续观看与整片编排**：读 [持续观看设计](references/viewer-retention-design.md)，在既有解释分镜中明确下一观察任务、关键发现和结尾回报；用有声草排检查必要停留与删改依据，真实留存效果按已有发布数据另验。
 - **只整理 Skill**：检查规则引用、模板、脚本与适当回归；不因此询问千问位置、生成媒体或恢复制作。
-- **制作或重做封面**：读 [两种封面各自设计](references/visual-system.md#两种封面各自设计)，按大主体、短标题/问题、独立横竖构图及实际手机缩略审看制作；不把整片截图直接当封面，不因封面任务改动成片或自动替换已发布内容。
+- **制作或重做封面**：读 [两种封面各自设计](references/visual-system.md#两种封面各自设计)，按本系列封面硬限制及实际认可样图制作；交付前运行 `check_episode.py --stage covers`，G5–G7同时强制核封面证据；不把整片截图直接当封面，不因封面任务改动成片或自动替换已发布内容。
 
 - **学习参考并持续改进**：按 [从参考到实际改进](references/production-checkpoints.md#从参考学习到实际改进) 先实看、按时点拆解，再在当前授权的未完成影片代表段应用和对照；区分观察、迁移假设与已验证效果，不以报告或Skill写入代替制作。
 
@@ -74,6 +74,7 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 从本Skill目录运行：
 
     python scripts/check_reference_system.py .
+    python scripts/check_episode.py path/to/episode.json --stage covers --report path/to/cover-check-001.json
     python scripts/check_episode.py path/to/episode.json --stage plan --report path/to/plan-check-001.json
     python scripts/check_episode.py path/to/episode.json --stage G3 --report path/to/G3-check-001.json
     python scripts/check_episode.py path/to/episode.json --stage delivery --report path/to/delivery-check-001.json

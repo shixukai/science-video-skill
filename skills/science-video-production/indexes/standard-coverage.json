@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.7",
+  "version": "1.4.9",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37839,6 +37839,25 @@
         "anchor": "动画场景设计与执行",
         "relation": "主要动画设计、静图转动态或空洞修复时读取责任正文及所链接细则。"
       }
+    },
+    {
+      "id": "VIS-cover-style-bound-evidence",
+      "rule": "本系列封面固定为精细2D自然插画的大主体、左上醒目主题名与短问题；3:4和4:3须独立组织标题、主体与留白。禁止用机制说明页、箭头与小标签堆叠、带字幕的视频截图替代。禁止因成片赶工、技术检查通过或沿用旧文件而降低封面完成度；偏离已认可系列的成品不得交付或放行。",
+      "modality": "hard",
+      "owner": "references/visual-system.md",
+      "owner_anchor": "两种封面各自设计",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "action": "本系列封面固定为精细2D自然插画的大主体、左上醒目主题名与短问题；3:4和4:3须独立组织标题、主体与留白。禁止用机制说明页、箭头与小标签堆叠、带字幕的视频截图替代。禁止因成片赶工、技术检查通过或沿用旧文件而降低封面完成度；偏离已认可系列的成品不得交付或放行。",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "VIS-cover-style-bound-evidence-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -44758,9 +44777,22 @@
           "quote_sha256": "fa9a45ec59854a756024e7a84d3a8b049df640869bb4bdb32030847a8d6d03e9"
         }
       ]
+    },
+    {
+      "id": "VIS-cover-style-bound-evidence-failure",
+      "failure_condition": "Missing actual approved-cover comparison, unreviewed/failed cover, prohibited layout, missing or stale bound artifacts blocks covers and G5–G7.",
+      "application": "Current series cover delivery and current production/release checks only; no automatic republishing of prior media.",
+      "clauses": [
+        {
+          "file": "references/visual-system.md",
+          "anchor": "两种封面各自设计",
+          "quote": "本系列封面固定为精细2D自然插画的大主体、左上醒目主题名与短问题；3:4和4:3须独立组织标题、主体与留白。禁止用机制说明页、箭头与小标签堆叠、带字幕的视频截图替代。禁止因成片赶工、技术检查通过或沿用旧文件而降低封面完成度；偏离已认可系列的成品不得交付或放行。",
+          "quote_sha256": "6c89054cea75ab51db99aaabf4ff096e0c801fe8082247dc3dbcc4b50ece3bd6"
+        }
+      ]
     }
   ],
-  "rule_count": 913,
+  "rule_count": 914,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

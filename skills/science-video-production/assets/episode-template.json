@@ -808,7 +808,11 @@
       "status": "pending",
       "note": "",
       "evidence": "",
-      "reviewer": ""
+      "reviewer": "",
+      "visual_review": {
+        "file": "",
+        "sha256": ""
+      }
     },
     "reviewed_sha256": {
       "video": "",

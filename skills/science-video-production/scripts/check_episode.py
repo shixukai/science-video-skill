@@ -14,6 +14,8 @@ from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from opening_alignment_guard import check_opening_plan
+from cover_guard import validate_cover_review, LIMITS as COVER_LIMITS
+from stage_checks import Checks
 from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive, local_repair_scope
 
 
@@ -508,6 +510,10 @@ def check(data, root, stage):
     # macOS /var and /private/var may name the same temporary directory.
     # Normalize once before all containment checks, including the public API.
     root = Path(root).resolve()
+    if stage == "covers":
+        checks = Checks(data, root)
+        validate_cover_review(checks)
+        return checks.errors, [COVER_LIMITS]
     if stage in GATES:
         # Quality reuses actual episode checks; release also reuses the platform path.
         base = "delivery" if stage in ("G6", "G7") else "quality" if stage == "G5" else "plan"
@@ -935,7 +941,7 @@ def validation_resources():
     """Fingerprint the local rules used by this checker, not external evidence."""
     root = Path(__file__).resolve().parents[1]
     names = (
-        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
+        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
         "config/production-policy.json", "config/series-profile.json",
         "assets/production-asset.schema.json", "indexes/rule-owners.json",
     )
@@ -945,7 +951,7 @@ def validation_resources():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path)
-    parser.add_argument("--stage", choices=("plan", "delivery", *GATES), required=True)
+    parser.add_argument("--stage", choices=("plan", "covers", "delivery", *GATES), required=True)
     parser.add_argument("--report", type=Path,
                         help="save a JSON local-check receipt to a NEW file; never changes QA or approvals")
     args = parser.parse_args()

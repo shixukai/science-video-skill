@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "status": "pending",
+  "producer": "",
+  "reviewer": "",
+  "reviewed_at": "",
+  "independent_review": false,
+  "method": "pending",
+  "baseline": {
+    "kind": "approved_cover",
+    "scope": "cover_appearance",
+    "image": {
+      "file": "",
+      "sha256": ""
+    },
+    "approval_evidence": {
+      "file": "",
+      "sha256": ""
+    },
+    "approval_reference": "",
+    "approved_image_sha256": "",
+    "actually_opened": false,
+    "observation": ""
+  },
+  "variants": {
+    "cover_3_4": {
+      "export": {
+        "file": "",
+        "sha256": ""
+      },
+      "actual_export_opened": false,
+      "baseline_compared": false,
+      "layout_kind": "independent_cover_scene",
+      "style": "detailed_2d_nature",
+      "title_position": "upper_left",
+      "subject": "",
+      "title": "",
+      "question": "",
+      "prohibited_elements": null,
+      "mobile_preview": {
+        "file": "",
+        "sha256": "",
+        "source_sha256": "",
+        "display_width_px": null,
+        "display_context": "phone_thumbnail",
+        "actually_opened": false
+      },
+      "comparison": {
+        "file": "",
+        "sha256": "",
+        "baseline_sha256": "",
+        "export_sha256": "",
+        "preview_sha256": "",
+        "actually_opened": false
+      },
+      "observations": {
+        "style_match": {
+          "status": "pending",
+          "observation": ""
+        },
+        "large_natural_subject": {
+          "status": "pending",
+          "observation": ""
+        },
+        "upper_left_title_and_short_question": {
+          "status": "pending",
+          "observation": ""
+        },
+        "independent_composition": {
+          "status": "pending",
+          "observation": ""
+        },
+        "scientific_appearance": {
+          "status": "pending",
+          "observation": ""
+        },
+        "mobile_readability": {
+          "status": "pending",
+          "observation": ""
+        },
+        "no_mechanism_page_or_subtitle_capture": {
+          "status": "pending",
+          "observation": ""
+        }
+      }
+    },
+    "cover_4_3": {
+      "export": {
+        "file": "",
+        "sha256": ""
+      },
+      "actual_export_opened": false,
+      "baseline_compared": false,
+      "layout_kind": "independent_cover_scene",
+      "style": "detailed_2d_nature",
+      "title_position": "upper_left",
+      "subject": "",
+      "title": "",
+      "question": "",
+      "prohibited_elements": null,
+      "mobile_preview": {
+        "file": "",
+        "sha256": "",
+        "source_sha256": "",
+        "display_width_px": null,
+        "display_context": "phone_thumbnail",
+        "actually_opened": false
+      },
+      "comparison": {
+        "file": "",
+        "sha256": "",
+        "baseline_sha256": "",
+        "export_sha256": "",
+        "preview_sha256": "",
+        "actually_opened": false
+      },
+      "observations": {
+        "style_match": {
+          "status": "pending",
+          "observation": ""
+        },
+        "large_natural_subject": {
+          "status": "pending",
+          "observation": ""
+        },
+        "upper_left_title_and_short_question": {
+          "status": "pending",
+          "observation": ""
+        },
+        "independent_composition": {
+          "status": "pending",
+          "observation": ""
+        },
+        "scientific_appearance": {
+          "status": "pending",
+          "observation": ""
+        },
+        "mobile_readability": {
+          "status": "pending",
+          "observation": ""
+        },
+        "no_mechanism_page_or_subtitle_capture": {
+          "status": "pending",
+          "observation": ""
+        }
+      }
+    }
+  }
+}

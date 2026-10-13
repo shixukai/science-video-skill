@@ -7,6 +7,10 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts'))
 import stage_checks as gates
 import subject_motion
+_cover_spec = importlib.util.spec_from_file_location("bundled_cover_fixture", Path(gates.__file__).resolve().parent / "tests/cover_fixture.py")
+_cover_module = importlib.util.module_from_spec(_cover_spec)
+_cover_spec.loader.exec_module(_cover_module)
+attach_cover_fixture = _cover_module.attach_cover_fixture
 _opening_spec = importlib.util.spec_from_file_location('bundled_opening_fixture', Path(gates.__file__).resolve().parent / 'tests/opening_fixture.py')
 _opening_module = importlib.util.module_from_spec(_opening_spec)
 _opening_spec.loader.exec_module(_opening_module)
@@ -46,6 +50,7 @@ def upgrade(data,root,schema='canonical'):
   ident='TEST'+str(n);c['causal_steps']=[{'id':ident,'before':'test initial declaration','change':'test change declaration','after':'test final declaration','handoff':'test declared handoff','prerequisites':[{'knowledge':'synthetic assumed premise','source':'audience_prior'}],'shot_ids':c['shot_ids'],'requires_dynamic':True}];steps.append(ident)
  alignment['expression_cards']=[{'id':'CARD'+str(i),'step_ids':[ident],'difficulty':'synthetic relationship difficulty','prerequisites':['synthetic premise already established'],'visual_action':'hold the synthetic anchor and show its connected state change','inferable_outcome':'synthetic test conclusion','misconception':'synthetic possible confusion','boundary':'synthetic simplified model only','uncertain':False} for i,ident in enumerate(steps)]
  qa=d['qa'];sha=qa['reviewed_sha256']['video'];video=d['deliverables']['video']
+ attach_cover_fixture(d,root)
  if not any(a.get('kind') in ('real_capture','real_observation') for a in d.get('assets',[])):
   d['assets'].append({'id':'REAL_FIXTURE','kind':'real_capture','source':'synthetic software declaration, not actual footage','creator':'test harness','file':video,'sha256':sha,'rights':{'status':'cleared','evidence':'synthetic test only','scope':'software test only'},'observation':{'source_interval':[0,1],'viewing_reference':'synthetic, not an actual observation'}})
   d['shots'][0]['asset_ids'].append('REAL_FIXTURE')

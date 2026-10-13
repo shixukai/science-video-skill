@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from subject_motion import validate as validate_subject_motion
+from cover_guard import validate_cover_review
 from feedback_guard import validate_feedback
 from opening_alignment_guard import check_opening_plan, validate_opening_review
 from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
@@ -167,6 +168,8 @@ def context_sha256(data, gate):
   result['representative_captions']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('captions')
  if gate in ('G4','G5','G6','G7'):
   result['media_hashes']=obj(data.get('qa')).get('reviewed_sha256')
+ if gate in ('G5','G6','G7'):
+  result['cover_review']=obj(obj(data.get('qa')).get('covers')).get('visual_review')
  if gate in ('G6','G7'):
   result['platform']=obj(data.get('qa')).get('mobile_preview')
  return digest(result)
@@ -849,6 +852,7 @@ class Checks:
    for key in ('video','captions','editable_project','audio_stems','source_manifest'):
     self.evidence({'file':obj(self.data.get('deliverables')).get(key),'sha256':obj(self.qa.get('reviewed_sha256')).get(key)},'G4 '+key)
   if n>=4:
+   validate_cover_review(self)
    validate_opening_review(self)
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)
    validate_subject_motion(self,self.record('visual_frames').get('subject_motion'),obj(self.record('visual_frames').get('viewing')),'G5',policy['subject_motion'],set(steps))
