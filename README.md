@@ -8,6 +8,7 @@
 - [按场景调用动画、剪辑、字幕与演示工具](skills/science-video-production/references/tool-routing.md)：保留本Skill为主入口，科普动画优先调用huashu-art-motion，其他任务按已核能力选择工具；选中的外部Skill缺失时必须先安装验证再调用
 - [视觉设计系统](skills/science-video-production/references/visual-system.md)
 - [动画场景详细设计标准](skills/science-video-production/references/animation-scene-design.md) 与 [雪花生长设计示例](skills/science-video-production/references/snow-crystal-scene-example.md)：主体状态、场景内容、镜头发现与连续审查；示例待评审，未制作验证
+- [持续观看的制作方法](skills/science-video-production/references/viewer-retention-design.md)：下一观察任务、关键发现、草排删改与结尾回报；内部表达审查与真实留存分开
 - [美术与画质记录模板](skills/science-video-production/assets/art-direction-template.md)
 - [当前系列配置](skills/science-video-production/config/series-profile.json)
 - [外部视频Skill选型与许可证](skills/science-video-production/references/video-skills-curation.md)
