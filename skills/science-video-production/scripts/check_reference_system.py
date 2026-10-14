@@ -8,7 +8,7 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 
-OWNER_IDS = {"topic", "science-rights", "production", "visual", "voice", "shotbook", "quality"}
+OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "production", "visual", "voice", "shotbook", "quality"}
 HEX = re.compile(r"#[0-9A-Fa-f]{6}$")
 PRIVATE_ID = re.compile(r"(?:libfile_|Sentinel_)[0-9a-f]{20,}|file_[0-9a-f]{24,}")
 
@@ -110,7 +110,7 @@ def check(root):
         return json.loads((root / name).read_text(encoding="utf-8"))
     try:
         owners = read("indexes/rule-owners.json")["owners"]
-        need({o["id"] for o in owners} == OWNER_IDS and len(owners) == 7, "exactly seven responsibility owners required")
+        need({o["id"] for o in owners} == OWNER_IDS and len(owners) == 8, "exactly eight responsibility owners required")
         assigned = []
         owner_files = []
         for o in owners:

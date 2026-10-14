@@ -97,7 +97,7 @@ class ReferenceSystemTests(unittest.TestCase):
         self.errors("multiple owners")
     def test_missing_owner(self):
         self.edit("indexes/rule-owners.json", lambda d: d["owners"].pop())
-        self.errors("seven")
+        self.errors("eight")
     def test_missing_reference_file(self):
         (self.root / "references/shotbook.md").unlink()
         self.errors("owner file")

@@ -39,6 +39,7 @@
 | 已有App录屏的包装演示 | 优先 `hyperframes` + `ffmpeg-skill`；`app-demo-agent` 留作适配候选 | 录屏、已认可旁白、设备素材 → 产品演示 | 独立同名候选依赖多项兄弟Skill并默认Gemini Orus；未适配现有声音前不直接调用其全流程 |
 | 网页操作的光标、点击和跟随缩放演示 | `browser-video-recording` | 由允许的浏览器工具取得的截图状态、光标轨迹、时码 → 无声演示轨 | 是截图状态合成，不是连续实录。显式提供PNG光标，避免默认的系统光标抓取；详见执行说明 |
 | 精细插画、背景、透明人物/物体、封面 | 当前系统 `imagegen` 和实际 `image_gen` 工具 | 已确认外观参考与明确素材需求 → 位图资产 | 复用内置能力，不重复安装旧样例；编辑先看原图，透明素材保留alpha，正式素材收进单集工程 |
+| 用户锁定 AI 生成现象/场景连续视频 | 当前宿主已授权的视频生成工具 + 可选 seedance2-skill 方法参考 | 逐镜提示与约束 → 生成样片/成片镜头 | 先读 [ai-generated-video.md](ai-generated-video.md)；生成结果须实看科学与连续状态；披露必做；方法参考不授权云上传或付费 |
 
 ## 交给子工具的任务
 
@@ -76,6 +77,7 @@ uv run --isolated --python python3 --with playwright --with pillow --with numpy 
 - **HyperFrames**：产品宣传需要10个核心目录及 `product-launch-video`，不能只装router却假定兄弟引用可读。Node项目中运行其lint/check/render；设置 `HYPERFRAMES_NO_TELEMETRY=1`。上游要求的反馈提交、素材外传和云生成按实际任务授权处理，安装与本地渲染不自动授权对外发送。使用现有音轨与当前图片工具，不按镜头重新选TTS。浏览器采集遵循当前可用控制工具，独立渲染遵循宿主权限。
 - **Remotion**：`remotion-best-practices` 已包含各方向参考，先读任务对应文件。复用已有项目；新项目按上游依赖要求建立，Studio使用 `--no-open`，需要显示时通过允许的浏览器工具打开。运行许可与Skill文本来源分开核实，不把Skill安装当作商用运行许可。
 - **browser-video-recording**：截图/交互使用当前会话允许的浏览器工具，不能照搬不可用的工具名。配置明确的 `cursor_asset`、`cursor_hotspot`，再运行 `scripts/render_browser_demo.py --config <配置> --output <新文件.mp4>`；不要进入会全屏遮罩并移动系统鼠标的默认光标抓取分支。缺Pillow时用隔离环境。无声输出接入本片整条旁白；成片画幅由任务决定。
+- **AI 生成连续视频**：用户已锁 `ai_generated` 时按 [AI生成视频](ai-generated-video.md) 执行；只用宿主已授权生成能力，缺能力则记录缺口并阻塞该镜。seedance2-skill 等仅提示词方法参考，不是默认可执行渲染器。
 - **需要模型或服务配置的候选**：保留确切缺项，完成对应准备和小样验证后才调用。未核实来源的名称不生成猜测命令；云转录/翻译不伪装本地处理，也不静默切换服务。当前任务只需本地剪接时按场景选择编辑器，再按调用前安装要求补齐并验证。
 
 ## 来源识别
