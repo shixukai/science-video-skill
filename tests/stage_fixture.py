@@ -5,6 +5,8 @@ import importlib.util
 import json
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts/tests'))
+from topic_selection_fixture import attach_topic_selection_fixture, refresh_topic_selection_fixture
 import stage_checks as gates
 import subject_motion
 _cover_spec = importlib.util.spec_from_file_location("bundled_cover_fixture", Path(gates.__file__).resolve().parent / "tests/cover_fixture.py")
@@ -15,6 +17,11 @@ _opening_spec = importlib.util.spec_from_file_location('bundled_opening_fixture'
 _opening_module = importlib.util.module_from_spec(_opening_spec)
 _opening_spec.loader.exec_module(_opening_module)
 attach_opening_fixture = _opening_module.attach_opening_fixture
+_execution_spec = importlib.util.spec_from_file_location("bundled_execution_fixture", Path(gates.__file__).resolve().parent / "tests/execution_fixture.py")
+_execution_module = importlib.util.module_from_spec(_execution_spec)
+_execution_spec.loader.exec_module(_execution_module)
+attach_execution_fixture = _execution_module.attach_execution_fixture
+refresh_execution_fixture = _execution_module.refresh_execution_fixture
 
 class SyntheticPacket(dict):
  """Keep test workspace out of serialized production data; deepcopy preserves it."""
@@ -26,6 +33,7 @@ def upgrade(data,root,schema='canonical'):
  d['narration']['status']='ready';d['narration']['language']='zh-CN'
  d['brief']={'audience':'synthetic fixture','one_sentence_answer':'fixture only','must_see_change':'fixture declaration only','out_of_scope':[],'forbidden_misrepresentations':[],'production_class':'R','validation_triggers':[], 'roles':{r:'synthetic software fixture, not an actual reviewer' for r in ('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher')}}
  d['brief'].update(audience_start={'assumed_knowledge':['synthetic assumed premise','known test object','synthetic known premise'],'new_knowledge':['synthetic new premise'],'deferred_knowledge':[]},understanding_targets={goal:'synthetic '+goal for goal in gates.UNDERSTANDING_GOALS},)
+ attach_topic_selection_fixture(d)
  (root/'script.txt').write_text('Synthetic test script only')
  d['narration']['script_file']='script.txt';d['narration']['script_sha256']=gates.file_digest(root/'script.txt')
  for i,shot in enumerate(d.get('shots',[])):shot.setdefault('shotbook',{})['narration_exact_text']='Synthetic test script only' if i==0 else ''
@@ -130,13 +138,16 @@ def upgrade(data,root,schema='canonical'):
   record=parent['subject_motion']
   record['object_result_review']={'status':'pass','media_sha256':record['media_sha256'],'units':[dict({key:unit[key] for key in ('start','end','step_ids')},status='pass',mode='visible_result',subject='synthetic object',overlay_isolation='synthetic complete object ROI without extra overlays',observation='synthetic object state progression; not an actual review',scientific_boundary='synthetic variable boundary; static environment allowed',evidence='synthetic current media times only') for unit in record['semantic_units']]}
  overlay_fixture(d,root)
+ attach_execution_fixture(d,root)
  refresh(d)
  return d
 
 def refresh(d):
+ refresh_topic_selection_fixture(d)
  if isinstance(d.get('narration',{}).get('reuse_record'),dict):d['narration']['reuse_record']['audio_sha256']=d['narration'].get('audio_sha256')
  qa=d['qa']
  attach_opening_fixture(d,d.fixture_root)
+ refresh_execution_fixture(d,d.fixture_root)
  for gate in ('G2','G3','G5'):
   if isinstance(qa.get('presentation_text',{}).get(gate),dict):qa['presentation_text'][gate]['context_sha256']=gates.context_sha256(d,gate)
   if isinstance(qa.get('audio',{}).get('continuity',{}).get(gate),dict):qa['audio']['continuity'][gate].update(context_sha256=gates.context_sha256(d,gate),audio_sha256=d['narration'].get('audio_sha256'),plan_sha256=gates.digest(d['narration'].get('delivery_plan')))

@@ -67,6 +67,39 @@ def check_operations(operations):
     return errors
 
 
+def check_platform_record_formats(ledger):
+    """Check blank research templates, not live platform evidence or performance."""
+    if not isinstance(ledger, dict) or not isinstance(ledger.get("record_formats"), dict):
+        return ["platform research record formats required"]
+    errors = []
+    formats = ledger["record_formats"]
+    required = {
+        "platform_snapshot": {"collected_at", "denominators", "hours_since_publication", "duration_s", "traffic_and_audience", "source_url", "page_filters", "window_note", "data_updated_display", "update_status", "published_display", "publication_timezone", "age_basis", "sample_note", "field_definitions", "raw_display_values", "field_states", "inconsistency_note", "evidence"},
+        "platform_research": {"collected_at", "snapshot_references", "availability_note", "candidate_hypotheses", "ai_suggestions", "activity_constraints", "next_check"},
+        "experiment": {"hypothesis", "primary_variable", "baseline_version", "candidate_version", "comparison_window", "metrics_to_check", "traffic_and_sample_limits", "observation_status", "result", "limits"},
+    }
+    for name, keys in required.items():
+        record = formats.get(name)
+        if not isinstance(record, dict) or not keys <= record.keys():
+            errors.append("platform research " + name + " traceability fields required")
+    snapshot = formats.get("platform_snapshot", {})
+    if isinstance(snapshot, dict):
+        if (snapshot.get("update_status") != "unknown" or snapshot.get("hours_since_publication") is not None
+                or snapshot.get("duration_s") is not None):
+            errors.append("blank platform snapshot must not invent freshness or work age")
+        for name in ("raw_display_values", "field_states", "field_definitions", "field_names_as_platform_shows", "denominators", "traffic_and_audience"):
+            if snapshot.get(name) != {}:
+                errors.append("blank platform snapshot must not invent observed fields")
+    if ledger.get("platform_snapshots") != []:
+        errors.append("blank platform snapshots must not invent observations")
+    experiment = formats.get("experiment", {})
+    if isinstance(experiment, dict) and (experiment.get("observation_status") != "not_measured" or experiment.get("result") != ""):
+        errors.append("blank experiment must preserve unmeasured status and empty result")
+    if ledger.get("platform_research") != []:
+        errors.append("blank platform research must not invent research findings")
+    return errors
+
+
 def check(root):
     root = Path(root).resolve()
     errors = []
@@ -89,8 +122,9 @@ def check(root):
         need(len(owner_files) == len(set(owner_files)), "duplicate owner file")
         need(len(assigned) == len(set(assigned)), "responsibility has multiple owners")
 
+        errors.extend(check_platform_record_formats(read("assets/project-ledger-template.json")))
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.4.9", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.6.1", "unsupported profile schema/version")
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")

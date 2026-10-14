@@ -18,6 +18,9 @@ checker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checker)
 
 
+from stage_fixture import attach_topic_selection_fixture
+
+
 class CheckReportTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="science-receipts-")
@@ -25,6 +28,7 @@ class CheckReportTests(unittest.TestCase):
         for name in ("episode.json", "topic-anchor.json"):
             shutil.copyfile(PROJECT / "examples/blue-sky" / name, self.root / name)
         self.packet = self.root / "episode.json"
+        data=json.loads(self.packet.read_text()); attach_topic_selection_fixture(data); self.packet.write_text(json.dumps(data))
         self.report = self.root / "plan-check.json"
 
     def tearDown(self):

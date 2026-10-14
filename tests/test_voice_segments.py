@@ -268,6 +268,8 @@ class VoiceSegmentTests(unittest.TestCase):
 
     def packet(self):
         packet = json.loads((ROOT / "examples/blue-sky/episode.json").read_text())
+        from stage_fixture import attach_topic_selection_fixture
+        attach_topic_selection_fixture(packet)
         (self.root / "topic-anchor.json").write_bytes((ROOT / "examples/blue-sky/topic-anchor.json").read_bytes())
         packet["narration"] = copy.deepcopy(self.narration)
         packet["assets"].append({"id": "VOICE", "kind": "audio", "file": "assembled.wav",

@@ -29,6 +29,34 @@
 
 章节内的局部修复可用 `scope.kind=local_sample`、`placement=chapter_only`、`publication_ready=false` 及现有 `qa.visual_frames.animation.next_action=repair_sample` 进入对应修样检查；四个所属/目的字段须具体完整，原整期锚点、current及改题授权规则不变。此窄范围的 `opening/ending` 只需继承原题 `intent`、本次实际覆盖的 `scope_ids` 和真实首尾 `shot_ids` 定位，不要求为中段修复补造整期题卡、主题口播、`spoken_question/answer_route` 或整期结尾答案。`coverage` 必须非空且属于原必要范围，`main_scope_ids` 非空且位于本次覆盖内；`omitted_scope_ids` 完整、无重复地列出原必要范围减本次覆盖的补集。该局部声明不将 `chapter`、不完整元数据、`next_action=expand` 或整期包变成例外；即使本次覆盖恰含全部必要范围，也仍只是局部修样。G4及以后、quality/delivery继续要求整期，未闭环反馈/已知失败照常阻断扩制；局部通过不签整期或发布，不能删原题、改标题或补写历史pass来通关。
 
+## 成人受众的选题筛选
+
+面向有日常常识、无相关专业训练的成年人，不能把小学常识验证、概念定义复述或平淡问题换标题作为选题。制作前必须有完整且与当前题目绑定的选题卡；存在已声明的淘汰理由、事实主源或解释回报缺失、不可行的视觉方案时先退回选题，不调用渲染器。
+
+“容易听懂”不等于“只讲早已知道的结论”。先问这个具体受众已经知道什么，再找值得追问的真实冲突、条件、现实关联或未解观察；新所得可以是机制、约束、权衡、证据或可迁移的发现，不要求高深术语、热门事件、惊人数字或所有题都反直觉。现实关联可以来自日常判断，也可以是理解一个真实自然现象或工程选择，不强塞生活技巧。基本原理可作为解释工具，但不能把验证基本常识当成整期回报。
+
+在现有 `brief.topic_selection` 写选题卡，不另建评分榜或审批链。复用 `brief.audience`、`audience_start.assumed_knowledge`、`one_sentence_answer`、`understanding_targets.transfer` 与 `topic.current`，分别说明具体受众的知识起点、核心问题/答案和看完可用于解释或判断什么。卡内写：
+- `audience_category=ordinary_adults`；`conflict_or_question` 写值得追问的真实问题，`adult_relevance` 写为何值得这个受众花时间，`knowledge_increment` 写比其已有常识多得到什么。
+- `source_ids` 引用已实际查核的事实主源；沿用 sources 的标题、机构、URL、核验日期与 `scope_note`，定位支撑哪个机制、条件和边界。优先原研究、机构技术资料及权威解释，不将二手转述冒充一手实验；来源真实性和结论支持度仍须研究判断。
+- `causal_visualization` 说明如何让对象、关系、条件变化与解释回报可见；非因果题写其实际需要的结构、比较或证据关系，不硬造因果链。
+- `feasibility` 写素材/权利计划、制作方法、实际约束与 `blocking_gaps`。先判断题目值不值得讲，再选择资产；已有管道、动画或配音不能成为保留弱题的理由。此时无需已制好素材或声音；有可信的制作/取材路径即可，不能因手里没有现成资产错杀好题，也不能承诺无法表达的关键过程。
+
+编辑明确写 `review.status=selected/revise/rejected/pending`、真实审题者和理由，用 `selection_context_sha256(data)` 绑定实际题目、受众、增量、主源与可行性。`disqualifiers` 明列已发现的 `common_knowledge_only/definition_only/title_only_change/asset_led/unsupported_hook/no_explanatory_payoff/unvisualizable/unfeasible`，没有已知淘汰项时才留空。`selected` 只是编辑决定，不等于用户批准、事实正确、作品合格或保证观众喜欢。题目、受众起点、解释回报、来源或制作约束变化时重新审题；不能只刷新哈希或删除淘汰项。
+
+默认 `interest_basis=editorial_hypothesis`，`audience_evidence=[]`：这是可说明理由的编辑假设，不是实际调研。已有真实受众证据时才选 `observed_audience_evidence`，绑定原始证据文件/哈希、来源、所观察范围和局限；不编参与者、兴趣比例、播放量或完播改善，不要求实时招募、额外观众反馈或特定受欢迎分数。程序只核选题记录的完整性、来源引用/文件绑定、已声明失败和版本，不理解兴趣、不验证事实或预测爆款。普通平淡问题不能靠填满字段过编辑这一关。
+
+有权可用的平台数据优先按 [平台选题与数据复核](production-checkpoints.md#平台选题与数据复核) 检查科普话题、往期作品与AI建议，将可追踪证据引用进现有卡。数据不可用时保留具体缺口，不要求实时反馈；平台热度不能代替事实主源或成年人解释回报。
+
+`plan`、G1及后续阶段检查复用同一张卡，实际 `render_gate` 的 sample/full 调用前也核卡。旧包在本版恢复制作前补真实审题记录，不能以缺卡为兼容放行；仅保存历史文件不补签过去执行。未选定时继续查源、比较和改题，不能先花时间制作再补选题理由。封面单独核验不要求为已完成作品重开选题。
+
+### 好坏题成对比较
+
+以下是编辑推断的候选示例，不是已验观众偏好，也不是可直接开拍的批准；制作时重新核最新主源、具体型号/环境和权利。改进来自增加真实解释任务，不是把标题写得更夸张。
+
+1. 淘汰“热会从热的地方传向冷的地方吗”：只验证基础方向，没有新增判断。可研究“45℃冷却液怎样给AI芯片降温，为什么不用更冷的水？”：沿冷板吸热、循环输运、室外排热、机械制冷需求串联，让观众理解温差之外的系统约束与能耗取舍。45℃是[NVIDIA所述特定架构的上限条件](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)，免机械制冷取决于地域和设计；不能说所有数据中心都省水或永不制冷，也不能仍只解释热高到低。
+2. 淘汰“月球有没有风”：一个已知结论即可结束。可研究“月球没有风，一次着陆为什么会危及附近设备？”：用喷流、月壤颗粒运动、污染/撞击与设施布局建立解释回报。[NASA的月尘资料及Apollo 12/Surveyor III案例](https://www.nasa.gov/humans-in-space/commercial-space/the-perils-and-promise-of-dust-on-the-moon/)提供可核线索；距离和效应随着陆器、土壤与条件变化，不虚构通用安全距离，不把月面真空画成大气风暴。
+3. 淘汰“宇航员为什么要穿宇航服”：停在常识用途清单。可研究“宇航服为什么不直接保持地球气压？”：解释压差与活动难度、工作气压与供氧、由含氮舱内环境进入低压前的预呼吸，以及准备时间/风险/机动性的取舍。依据[NASA舱外服设计访谈](https://www.nasa.gov/podcasts/houston-we-have-a-podcast/artemis-spacesuits/)与[EVA生理研究](https://www.nasa.gov/directorates/esdmd/hhp/space-suits-and-exploration-operations/)，区分特定服型和任务条件；不把某一气压或预呼吸时长推广为所有宇航服，更不提供个人操作建议。
+
 ## 开场与观众范围
 
 默认面向没有相关专业训练的成年普通观众，优先自然现象/生活科学；不以抽象数学、统计或概率点图替代可识别现象，不把本集改成公式课。必要数字和单位可以帮助直观理解。

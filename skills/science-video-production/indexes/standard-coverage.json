@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.4.9",
+  "version": "1.6.1",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37858,6 +37858,82 @@
       "applicability_contract": "hard",
       "failure_contract": "hard",
       "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "EXEC-guarded-production",
+      "rule": "每次实际制作先锁定正在使用的Skill版本与全部文件哈希；每个待制镜头先写清讲什么、主体、主体怎样动、注意对象与观众应发现什么。缺设计不能开工，已知失败不能扩整片；修复后重新实际审查再继续。已有认可真实成片时先对照该片做同风格有声动态样稿，不能擅换造型语言，也不能以静态参数、代码检查或补填记录代替实际执行与审美。",
+      "modality": "hard",
+      "owner": "references/production-checkpoints.md",
+      "owner_anchor": "开工锁定与真实渲染入口",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "action": "每次实际制作先锁定正在使用的Skill版本与全部文件哈希；每个待制镜头先写清讲什么、主体、主体怎样动、注意对象与观众应发现什么。缺设计不能开工，已知失败不能扩整片；修复后重新实际审查再继续。已有认可真实成片时先对照该片做同风格有声动态样稿，不能擅换造型语言，也不能以静态参数、代码检查或补填记录代替实际执行与审美。",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "EXEC-guarded-production-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "VIS-connection-integrity",
+      "rule": "出现管道、线缆、连杆等连接件时，先设计正确对象/端口角色与连接拓扑，明确管径或截面变化、实体接头、中心线与接合/插入深度、遮挡层次，以及运动全程和跨镜的端点身份。连接不连续、接错端口、无合理实体接头的突变、悬浮断口或仅视觉搭桥均失败；按连接类型判断，不能机械要求所有线等粗。",
+      "modality": "hard",
+      "owner": "references/visual-system.md",
+      "owner_anchor": "连接拓扑与接口连续性",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "action": "出现管道、线缆、连杆等连接件时，先设计正确对象/端口角色与连接拓扑，明确管径或截面变化、实体接头、中心线与接合/插入深度、遮挡层次，以及运动全程和跨镜的端点身份。连接不连续、接错端口、无合理实体接头的突变、悬浮断口或仅视觉搭桥均失败；按连接类型判断，不能机械要求所有线等粗。",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "VIS-connection-integrity-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "TOPIC-adult-interest-selection",
+      "rule": "面向有日常常识、无相关专业训练的成年人，不能把小学常识验证、概念定义复述或平淡问题换标题作为选题。制作前必须有完整且与当前题目绑定的选题卡；存在已声明的淘汰理由、事实主源或解释回报缺失、不可行的视觉方案时先退回选题，不调用渲染器。",
+      "modality": "hard",
+      "owner": "references/topic-contract.md",
+      "owner_anchor": "成人受众的选题筛选",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "action": "面向有日常常识、无相关专业训练的成年人，不能把小学常识验证、概念定义复述或平淡问题换标题作为选题。制作前必须有完整且与当前题目绑定的选题卡；存在已声明的淘汰理由、事实主源或解释回报缺失、不可行的视觉方案时先退回选题，不调用渲染器。",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "TOPIC-adult-interest-selection-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "PLATFORM-research-evidence-integrity",
+      "rule": "平台研究须保留可核来源、采集时间、数据更新状态、统计窗口、作品年龄、样本与分母；缺失、未更新和真实零值分别记录。口径未对齐的数据不能拼成统计结论，平台建议与观察相关不构成已证实因果或执行授权。",
+      "modality": "hard",
+      "owner": "references/production-checkpoints.md",
+      "owner_anchor": "平台选题与数据复核",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "action": "平台研究须保留可核来源、采集时间、数据更新状态、统计窗口、作品年龄、样本与分母；缺失、未更新和真实零值分别记录。口径未对齐的数据不能拼成统计结论，平台建议与观察相关不构成已证实因果或执行授权。",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "PLATFORM-research-evidence-integrity-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -44790,9 +44866,61 @@
           "quote_sha256": "6c89054cea75ab51db99aaabf4ff096e0c801fe8082247dc3dbcc4b50ece3bd6"
         }
       ]
+    },
+    {
+      "id": "EXEC-guarded-production-failure",
+      "failure_condition": "Missing locked actual Skill, shot design or approved film baseline blocks sample rendering; missing reviewed rendered sample or unresolved failure blocks expansion. Final viewing/listening must independently cover the real full output.",
+      "application": "Actual video work in the authorized scope. Candidate rendering does not require its future G3; local record checks never approve perception or publication.",
+      "clauses": [
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "开工锁定与真实渲染入口",
+          "quote": "每次实际制作先锁定正在使用的Skill版本与全部文件哈希；每个待制镜头先写清讲什么、主体、主体怎样动、注意对象与观众应发现什么。缺设计不能开工，已知失败不能扩整片；修复后重新实际审查再继续。已有认可真实成片时先对照该片做同风格有声动态样稿，不能擅换造型语言，也不能以静态参数、代码检查或补填记录代替实际执行与审美。",
+          "quote_sha256": "d497e273f8d984c0ff30a578eb9e017067fe0d2b9f25462ce9c06019bfb8dcc1"
+        }
+      ]
+    },
+    {
+      "id": "VIS-connection-integrity-failure",
+      "failure_condition": "Missing applicable connector design blocks rendering. Wrong observed endpoints, unresolved physical/visual defects, missing overview/joint/key-state inspection or stale bindings block G3 and final review.",
+      "application": "Only scenes with physical connectors. A truthful N/A requires no invented connector or equal-width rule. Technical checks never establish real physical/visual quality.",
+      "clauses": [
+        {
+          "file": "references/visual-system.md",
+          "anchor": "连接拓扑与接口连续性",
+          "quote": "出现管道、线缆、连杆等连接件时，先设计正确对象/端口角色与连接拓扑，明确管径或截面变化、实体接头、中心线与接合/插入深度、遮挡层次，以及运动全程和跨镜的端点身份。连接不连续、接错端口、无合理实体接头的突变、悬浮断口或仅视觉搭桥均失败；按连接类型判断，不能机械要求所有线等粗。",
+          "quote_sha256": "4dde61ba23739debe6b6e609b382ca703faeaca42b674b71f196e98311a5bf1b"
+        }
+      ]
+    },
+    {
+      "id": "TOPIC-adult-interest-selection-failure",
+      "failure_condition": "Missing/stale topic card, unselected editorial decision, declared disqualifier, unsupported factual reference or unresolved feasibility gaps block production.",
+      "application": "Ordinary adult series, before plan/G1 or any guarded sample/full invocation; checks do not prove audience interest.",
+      "clauses": [
+        {
+          "file": "references/topic-contract.md",
+          "anchor": "成人受众的选题筛选",
+          "quote": "面向有日常常识、无相关专业训练的成年人，不能把小学常识验证、概念定义复述或平淡问题换标题作为选题。制作前必须有完整且与当前题目绑定的选题卡；存在已声明的淘汰理由、事实主源或解释回报缺失、不可行的视觉方案时先退回选题，不调用渲染器。",
+          "quote_sha256": "3a239061db5e438c9c020e53fa75f51413636748dff9b086ae6b8d53f6ab48fe"
+        }
+      ]
+    },
+    {
+      "id": "PLATFORM-research-evidence-integrity-failure",
+      "failure_condition": "Missing freshness, window, sample, denominator or incompatible metric scope prevents confident platform diagnosis or causal claims; it does not require live audience feedback to produce.",
+      "application": "Authorized platform topic research and private performance review; AI and observational comparisons remain hypotheses, not instructions or permission.",
+      "clauses": [
+        {
+          "file": "references/production-checkpoints.md",
+          "anchor": "平台选题与数据复核",
+          "quote": "平台研究须保留可核来源、采集时间、数据更新状态、统计窗口、作品年龄、样本与分母；缺失、未更新和真实零值分别记录。口径未对齐的数据不能拼成统计结论，平台建议与观察相关不构成已证实因果或执行授权。",
+          "quote_sha256": "a77eb8de6dbbbd61ae8234e2baadb8696c36f2fdde2e0787a88fb446b0045a93"
+        }
+      ]
     }
   ],
-  "rule_count": 914,
+  "rule_count": 918,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

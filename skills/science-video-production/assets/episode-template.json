@@ -240,7 +240,12 @@
           "note": ""
         },
         "action_class": [],
-        "action_class_details": {}
+        "action_class_details": {},
+        "connections": {
+          "applicable": null,
+          "not_applicable_reason": "",
+          "links": []
+        }
       }
     }
   ],
@@ -357,7 +362,22 @@
             "end": null
           }
         ],
-        "next_action": "repair_sample"
+        "next_action": "repair_sample",
+        "style_comparison": {
+          "status": "pending",
+          "baseline_sha256": "",
+          "sample_sha256": "",
+          "actually_compared": false,
+          "observation": ""
+        },
+        "connection_review": {
+          "status": "pending",
+          "actually_inspected": false,
+          "media_sha256": "",
+          "plan_sha256": "",
+          "reviewer": "",
+          "links": []
+        }
       },
       "process_steps": [],
       "review_id": "",
@@ -607,6 +627,14 @@
           "media_sha256": "",
           "units": []
         }
+      },
+      "connection_review": {
+        "status": "pending",
+        "actually_inspected": false,
+        "media_sha256": "",
+        "plan_sha256": "",
+        "reviewer": "",
+        "links": []
       }
     },
     "mobile_preview": {
@@ -1755,6 +1783,29 @@
       "relationships": "",
       "transfer": "",
       "boundaries": ""
+    },
+    "topic_selection": {
+      "audience_category": "ordinary_adults",
+      "conflict_or_question": "",
+      "adult_relevance": "",
+      "knowledge_increment": "",
+      "source_ids": [],
+      "causal_visualization": "",
+      "feasibility": {
+        "materials_and_rights_plan": "",
+        "method": "",
+        "constraints": "",
+        "blocking_gaps": []
+      },
+      "interest_basis": "editorial_hypothesis",
+      "audience_evidence": [],
+      "disqualifiers": [],
+      "review": {
+        "status": "pending",
+        "reviewer": "",
+        "reason": "",
+        "context_sha256": ""
+      }
     }
   },
   "design": {
@@ -1793,7 +1844,34 @@
       "sha256": "",
       "adoption": "reference_only"
     },
-    "render_asset_ids": []
+    "render_asset_ids": [],
+    "approved_film_reference": {
+      "kind": "approved_finished_film",
+      "approval_reference": "",
+      "approval_evidence": {
+        "file": "",
+        "sha256": ""
+      },
+      "approved_media_sha256": "",
+      "applicable_style": "",
+      "viewing": {
+        "file": "",
+        "sha256": "",
+        "duration": null,
+        "ranges": [],
+        "method": "pending",
+        "playback_speed": null,
+        "watched": false,
+        "heard": false,
+        "reviewer": "",
+        "capability": "",
+        "reviewed_at": "",
+        "note": "",
+        "scope": "approved_film",
+        "purpose": "",
+        "frames": []
+      }
+    }
   },
   "template": true,
   "notes": "",
@@ -1825,5 +1903,23 @@
     "items": [],
     "required_notices": []
   },
-  "tool_applications": []
+  "tool_applications": [],
+  "execution": {
+    "skill_lock": {
+      "file": "",
+      "sha256": ""
+    },
+    "entrypoint": {
+      "file": "",
+      "sha256": ""
+    },
+    "sample_receipt": {
+      "file": "",
+      "sha256": ""
+    },
+    "full_receipt": {
+      "file": "",
+      "sha256": ""
+    }
+  }
 }

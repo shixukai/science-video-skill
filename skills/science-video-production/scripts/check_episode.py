@@ -506,6 +506,9 @@ def check_visual_logic(shots, assets):
     return errors
 
 
+from topic_selection_guard import validate_topic_selection
+
+
 def check(data, root, stage):
     # macOS /var and /private/var may name the same temporary directory.
     # Normalize once before all containment checks, including the public API.
@@ -531,7 +534,8 @@ def check(data, root, stage):
         notes.append("Stage evidence checks only; no actual viewing, quality or authorization is supplied by the checker")
         return errors, notes
     complete = stage in ("delivery", "quality")
-    errors, notes = [], semantic_warnings(data)
+    selection = Checks(data, root); validate_topic_selection(selection)
+    errors, notes = list(selection.errors), semantic_warnings(data)
 
     def require(ok, message):
         if not ok:
@@ -941,7 +945,7 @@ def validation_resources():
     """Fingerprint the local rules used by this checker, not external evidence."""
     root = Path(__file__).resolve().parents[1]
     names = (
-        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
+        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/render_gate.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
         "config/production-policy.json", "config/series-profile.json",
         "assets/production-asset.schema.json", "indexes/rule-owners.json",
     )

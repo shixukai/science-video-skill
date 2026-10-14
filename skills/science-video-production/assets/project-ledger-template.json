@@ -76,7 +76,20 @@
       "duration_s": null,
       "evidence": [],
       "traffic_and_audience": {},
-      "retention_points": []
+      "retention_points": [],
+      "source_url": "",
+      "page_filters": {},
+      "window_note": "",
+      "data_updated_display": null,
+      "update_status": "unknown",
+      "published_display": null,
+      "publication_timezone": null,
+      "age_basis": "",
+      "sample_note": "",
+      "field_definitions": {},
+      "raw_display_values": {},
+      "field_states": {},
+      "inconsistency_note": ""
     },
     "experiment": {
       "hypothesis": "",
@@ -86,7 +99,11 @@
       "version_difference": "",
       "result": "",
       "evidence": "",
-      "limits": ""
+      "limits": "",
+      "comparison_window": "",
+      "metrics_to_check": [],
+      "traffic_and_sample_limits": "",
+      "observation_status": "not_measured"
     },
     "rule_regression": {
       "rule_id": "",
@@ -142,6 +159,15 @@
       "alternative_explanations": "",
       "next_hypothesis": "",
       "result": "not_measured"
+    },
+    "platform_research": {
+      "collected_at": "",
+      "snapshot_references": [],
+      "availability_note": "",
+      "candidate_hypotheses": [],
+      "ai_suggestions": [],
+      "activity_constraints": "",
+      "next_check": ""
     }
   },
   "experiments": [],
@@ -162,5 +188,6 @@
     "actual_unique_completed": null,
     "gap": null
   },
-  "retention_reviews": []
+  "retention_reviews": [],
+  "platform_research": []
 }

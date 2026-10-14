@@ -9,6 +9,9 @@ import shutil
 import subprocess
 from subject_motion import validate as validate_subject_motion
 from cover_guard import validate_cover_review
+from render_gate import validate_final_execution
+from topic_selection_guard import validate_topic_selection
+from connection_guard import validate_connection_review
 from feedback_guard import validate_feedback
 from opening_alignment_guard import check_opening_plan, validate_opening_review
 from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
@@ -778,6 +781,7 @@ class Checks:
    self.need(not(item.get('status')=='open' and item.get('scope') in ('whole_episode','series_style','segment')),
              'known visual failure blocks expansion; repair and re-review before extending')
  def run(self,target,policy):
+  validate_topic_selection(self)
   self.errors.extend(check_opening_plan(self.data))
   n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
   action=self.record('visual_frames.animation').get('next_action')
@@ -824,6 +828,7 @@ class Checks:
    if audio_path:self.whole_shot_coverage(self.duration(audio_path,require_video=False,label='source narration'))
   if n>=2:
    self.animation(steps);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
+   validate_connection_review(self,'G3',dependencies(self.data,True)[1])
    animation=self.record('visual_frames.animation')
    validate_subject_motion(self,animation.get('subject_motion'),obj(animation.get('viewing')),'G3',policy['subject_motion'],set(x for x in seq(animation.get('step_ids')) if text(x)))
    validate_text_review(self,'G3',obj(animation.get('viewing')),text_items)
@@ -852,6 +857,8 @@ class Checks:
    for key in ('video','captions','editable_project','audio_stems','source_manifest'):
     self.evidence({'file':obj(self.data.get('deliverables')).get(key),'sha256':obj(self.qa.get('reviewed_sha256')).get(key)},'G4 '+key)
   if n>=4:
+   validate_final_execution(self)
+   validate_connection_review(self,'G5',[obj(s).get('id') for s in seq(self.data.get('shots'))])
    validate_cover_review(self)
    validate_opening_review(self)
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)

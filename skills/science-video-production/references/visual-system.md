@@ -286,3 +286,17 @@ G2/G3/G5输出前在现有文字审查记录绑定 `overlay_evidence={file,sha25
 - [School of Motion：A Guide to Completing Your Motion Design Project](https://schoolofmotion.com/blog/guide-completing-motion-design-project)：其教学流程以分镜、风格帧、有声草排和制作板推进，并用具体批评迭代。本文的同镜L2/L3校准、构图缩略带、精修顺序及编码对照是面向本项目的实施建议，不是该来源确立的审美阈值或理解效果实验。
 
 这些专业流程支持制作方法，不授予参考画面复制权，也不证明本片已经达到L3。数量、色数、面积配比与精修投入不能代替当前作品的实际结果。
+
+### 连接拓扑与接口连续性
+
+出现管道、线缆、连杆等连接件时，先设计正确对象/端口角色与连接拓扑，明确管径或截面变化、实体接头、中心线与接合/插入深度、遮挡层次，以及运动全程和跨镜的端点身份。连接不连续、接错端口、无合理实体接头的突变、悬浮断口或仅视觉搭桥均失败；按连接类型判断，不能机械要求所有线等粗。
+
+端口功能须按可靠型号资料、结构图、可验证实物观察或明示教学模型定义确认，不能仅凭颜色、外形或就近位置指定进出口。接口还须核末端切线/中心线同轴关系、套入与固定结构；缺型号或用途依据时先核实，不给未知口补签正确。
+
+沿用每镜 `shotbook.connections`：先判断是否有需要核查的跨部件连接。无连接场景只写 `applicable=false`、真实的 `not_applicable_reason` 与空 `links`，不编接头、粗细数值或虚构审查。存在连接时按稳定ID逐条记录类型、两端对象/端口及功能角色、截面/变径设计、接合几何、遮挡和动态/跨镜连续性。变径须有符合对象的实体过渡；线缆粗细或连杆截面可不同，但须解释其结构，不能靠背景遮盖突变。相同连接ID换端点或角色须有明确设计理由；科学过程本来包含拆接时明确展示拆接状态，不把真实断开错判为事故，也不允许无说明换接。
+
+候选实际连续看听时，逐条对照设计与观察到的端点角色，并查看全景、接口近景和运动/切镜关键态。检查中心线、端面贴合/插入深度、管口/接头是否真正相接；弯曲、缩放、遮挡或切镜后，不能出现断口、穿帮、粗细跳变、前后层次互换或假接。允许复用同一张清晰关键态对照页，不强制固定截图数量或同一管径。仍有接口问题须修相应连接或镜头并重看，不能用字幕解释、粗线覆盖或其它镜头通过抵扣。
+
+`sample`渲染入口先检查所选镜头的连接设计，不要求未来候选审查；G3在既有 `qa.visual_frames.animation.connection_review` 绑定当前样稿及设计，G5–G7在 `qa.visual_frames.connection_review` 绑定实际整片。沿用本阶段连续视听记录中的审查人/媒体，不另建审批链；有连接的每镜每条连接都需实观察，记录端点、五类观察、未解决问题和全景/接口/关键态图像引用。缺实看、设计/媒体/图像哈希过期、观察端口与设计不符或任何未修问题阻断相应关。代码只核声明、图像和绑定，物理合理性、真实拓扑和视觉质量仍须实际审查；N/A不能用来隐藏画面中存在的连接件。项目图片和审片意见留私有工作包，不收入公共Skill。
+
+连接记录字段：`links[]` 使用 `id/kind/from/to/diameter_and_transition/joint_geometry/occlusion/continuity`；两端各含 `object_id/port_id/role/role_basis`，有意换接另记 `topology_change_reason`。实际 `connection_review` 使用 `status/actually_inspected/media_sha256/plan_sha256/reviewer/links`；每个结果含 `shot_id/connection_id/from/to/status/issues`、五类 `observations`（`topology_and_ports/diameter_and_transition/joint_geometry/occlusion/continuity`）及 `views`。视图各含 `kind/file/sha256/source_media_sha256/actually_opened/observation`，kind覆盖 `overview/joint_closeup/motion_or_cut_key_states`；plan_sha256由 `connection_guard.plan_sha256(episode, shot_ids)` 计算，不由审查人编造。

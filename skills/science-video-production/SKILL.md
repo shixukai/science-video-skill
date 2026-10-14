@@ -11,6 +11,12 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 
 ## 核心边界
 
+- 管道、线缆、连杆等有连接件的镜头，先按 [连接拓扑与接口连续性](references/visual-system.md#连接拓扑与接口连续性) 设计端点角色与接合几何，再实看全景、接口近景和运动/跨镜关键态；不把线条碰在一起或技术字段齐全当作正确连接。
+
+- 选题先按 [成人受众兴趣筛选](references/topic-contract.md#成人受众的选题筛选) 完成brief选题卡；常识验证、定义复述和换标题不能开工，门禁通过不证明观众兴趣。选题与复盘读取有权可用的 [平台证据](references/production-checkpoints.md#平台选题与数据复核)，先核更新/窗口/分母，再把AI建议与下一轮措施作为待验证假设。
+
+- 每次实际制作先按 [开工锁定与真实渲染入口](references/production-checkpoints.md#开工锁定与真实渲染入口) 锁定实际Skill文件版本/哈希；逐镜设计和认可真实成片基准先于调用。样稿、扩整片与最终审查分阶段拦截，修复样稿不要求尚未产生的G3；不能绕开入口后补记录冒充执行。
+
 - 设计主要动画、将静图转为动态或修复“真实但空洞”时，先读 [动画场景设计与执行](references/visual-system.md#动画场景设计与执行) 及其详细标准；先设计实体状态、情境关系和逐镜发现，再精绘资产。雪花案例是待评审设计示例，不是成片通过证据
 
 - 不得擅自在视频加标识：按 [具体同意与输出门禁](references/visual-system.md#画内标识须有具体同意) 核用户对内容/位置/时段的原始同意及实际overlay来源；必要科学标签和正常字幕保留，AI合规优先平台字段与简介
@@ -74,6 +80,8 @@ description: 为普通大众制作自然现象与生活科学视频，使用有�
 从本Skill目录运行：
 
     python scripts/check_reference_system.py .
+    python scripts/render_gate.py lock /absolute/private/episode/skill-lock.json
+    python scripts/render_gate.py run /absolute/private/episode/episode.json --phase sample --shot-ids SH1 --output sample-001.mp4 --receipt sample-run-001.json
     python scripts/check_episode.py path/to/episode.json --stage covers --report path/to/cover-check-001.json
     python scripts/check_episode.py path/to/episode.json --stage plan --report path/to/plan-check-001.json
     python scripts/check_episode.py path/to/episode.json --stage G3 --report path/to/G3-check-001.json
