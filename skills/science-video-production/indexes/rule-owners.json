@@ -27,6 +27,14 @@
       ]
     },
     {
+      "id": "ai-generated-video",
+      "file": "references/ai-generated-video.md",
+      "owns": [
+        "picture-modality-lock",
+        "ai-generated-video-path"
+      ]
+    },
+    {
       "id": "production",
       "file": "references/production-checkpoints.md",
       "owns": [
