@@ -124,7 +124,7 @@ def check(root):
 
         errors.extend(check_platform_record_formats(read("assets/project-ledger-template.json")))
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.6.1", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.6.2", "unsupported profile schema/version")
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
