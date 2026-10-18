@@ -67,3 +67,5 @@
 ## 工具选择
 
 按 [tool-routing 中 AI 生成行](tool-routing.md) 选择当前宿主已授权的视频生成工具。`seedance2-skill` 等仅作提示词方法参考（见 [video-skills-curation](video-skills-curation.md)），**不是**默认可执行渲染器，也不因写入本 Skill 而授权云上传或付费。实际能否生成以宿主权限与现网能力为准；缺能力则阻塞并报告，不编造成片路径。
+
+逐镜状态、固定基线试验、条件输入的能力边界及执行效率，统一按 [精确可控与高效迭代](production-checkpoints.md#精确可控与高效迭代) 执行；本页不重复建立规则或另增放行条件。

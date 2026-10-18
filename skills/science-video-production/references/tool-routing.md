@@ -100,3 +100,5 @@ uv run --isolated --python python3 --with playwright --with pillow --with numpy 
 ## 来源识别
 
 [原帖](https://x.com/xiaoying_eth/status/2108172059495022812) 列了10项，但 `ffmpeg-skill` 的链接与Remotion相同，配音和App演示链接均重复指向字幕翻译。此表的 [kajisho5/ffmpeg-skill](https://github.com/kajisho5/ffmpeg-skill) 与 [michaelboeding/skills 的 app-demo-agent](https://github.com/michaelboeding/skills/tree/main/skills/app-demo-agent) 是另行核实的同名候选，不把它们写成原帖已确认的来源。字幕翻译器没有TTS，不以重命名替代缺失的 `video-dubbing`。
+
+逐镜状态、固定基线试验、条件输入的能力边界及执行效率，统一按 [精确可控与高效迭代](production-checkpoints.md#精确可控与高效迭代) 执行；本页不重复建立规则或另增放行条件。
