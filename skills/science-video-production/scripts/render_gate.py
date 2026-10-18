@@ -125,6 +125,8 @@ def input_snapshot(checks, shot_ids):
     refs += [(execution.get(k), k) for k in ("entrypoint", "skill_lock")]
     refs += [(baseline.get(k), "baseline " + k) for k in ("approval_evidence", "viewing")]
     refs += [(obj(frame).get("image"), "baseline visual frame") for frame in seq(obj(baseline.get("viewing")).get("frames"))]
+    from realism_guard import references as realism_references
+    refs += list(realism_references(data, shot_ids))
     snapshot = {}
     for reference, label in refs:
         path = checks.evidence(reference, "execution input " + label)
@@ -233,6 +235,8 @@ def preflight(data, root, phase, shot_ids):
     c = Checks(data, root)
     c.need(phase in ("sample", "full"), "execution phase must be sample or full")
     validate_topic_selection(c)
+    from realism_guard import validate_realism
+    validate_realism(c, shot_ids, phase)
     check_lock(c); selected_design(c, shot_ids); baseline_hash = check_baseline(c)
     input_snapshot(c, shot_ids)
     from connection_guard import plans as connection_plans
@@ -260,6 +264,8 @@ def preflight(data, root, phase, shot_ids):
 
 def validate_final_execution(checks):
     """G5-G7 reuse their full playback records; keep three results separate."""
+    from realism_guard import validate_realism
+    validate_realism(checks, [obj(s).get('id') for s in seq(checks.data.get('shots'))], 'full')
     check_lock(checks)
     r = validate_receipt(checks, obj(checks.data.get("execution")).get("full_receipt"), "full")
     checks.need(r.get("shot_ids") == [obj(s).get("id") for s in seq(checks.data.get("shots"))], "execution final receipt must cover the complete episode")

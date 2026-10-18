@@ -29,6 +29,12 @@ class ReferenceSystemTests(unittest.TestCase):
         p.write_text(json.dumps(d, ensure_ascii=False))
     def errors(self, text):
         self.assertTrue(any(text in e for e in m.check(self.root)), m.check(self.root))
+    def test_legacy_pure_2d_cannot_be_default_main_picture(self):
+        self.edit("config/series-profile.json", lambda d: d["medium"].update(mechanism="pure_2d"))
+        self.errors("realistic main footage")
+    def test_legacy_style_must_not_claim_realistic_approval(self):
+        self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference_scope="visual_style_only"))
+        self.errors("scoped to legacy 2D")
     def test_clean_system(self):
         self.assertEqual(m.check(self.root), [])
     def test_audience_cannot_be_restored_as_production_requirement(self):
@@ -97,7 +103,7 @@ class ReferenceSystemTests(unittest.TestCase):
         self.errors("multiple owners")
     def test_missing_owner(self):
         self.edit("indexes/rule-owners.json", lambda d: d["owners"].pop())
-        self.errors("eight")
+        self.errors("complete responsibility owners")
     def test_missing_reference_file(self):
         (self.root / "references/shotbook.md").unlink()
         self.errors("owner file")
@@ -127,7 +133,7 @@ class ReferenceSystemTests(unittest.TestCase):
         self.errors("path escapes Skill")
     def test_selected_style_does_not_approve_science_or_motion(self):
         self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference_scope="complete_episode"))
-        self.errors("appearance only")
+        self.errors("scoped to legacy 2D")
     def test_art_brief_cannot_silently_bind_a_different_reference(self):
         self.edit("assets/style/bright-nature.art-direction.json", lambda d: d["reference"].update(sha256="0" * 64))
         self.errors("art direction reference binding mismatch")

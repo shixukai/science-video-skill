@@ -56,6 +56,17 @@ shutil.copyfile('baseline.mp4',a.output)
                          'approved_media_sha256': view['sha256'], 'applicable_style': 'synthetic same style test', 'viewing': view}},
                      'qa': {'visual_frames': {'status': 'pending', 'animation': {'next_action': 'repair_sample'}}}}
         self.data['shots'][0]['shotbook']['connections']={'applicable':False,'not_applicable_reason':'Synthetic shape has no connector.','links':[]}
+        # Explicit synthetic non-realistic fixture exception; never a real approval.
+        self.data['design']['visual_intent'] = {
+            'target': 'scientific_realism', 'style_reference': self.ref('baseline.mp4'),
+            'scientific_constraints': 'Synthetic fixture checks records only, not scientific truth.'}
+        self.data['shots'][0]['shotbook']['realism'] = {
+            'role': 'main', 'medium': 'pure_2d', 'renderer': 'raster_animation',
+            'scientific_basis': 'Synthetic blue field, no real scientific claim.',
+            'visible_motion': 'Synthetic fixture with no actual motion acceptance.',
+            'exception': {'shot_id': 'SH1', 'scope': 'nonrealistic_full_frame_shot',
+                          'reason': 'Explicit synthetic test-only exception, no production authorization.',
+                          'user_evidence': self.ref('approval.txt')}}
         attach_topic_selection_fixture(self.data)
         self.save()
 
@@ -73,7 +84,8 @@ shutil.copyfile('baseline.mp4',a.output)
         return gate.run_render(self.root/'episode.json', 'sample', ['SH1'], 'sample'+suffix+'.mp4', 'run'+suffix+'.json')
 
     def final_data(self):
-        code, record = self.run_sample(); self.assertEqual(code,0)
+        self.prepared_sample()
+        record = json.loads((self.root/'run1.json').read_text())
         # Fabricated full history solely for final-record validation, not a real full render.
         record['phase']='full'; (self.root/'full.json').write_text(json.dumps(record))
         self.data['execution']['full_receipt']=self.ref('full.json')
@@ -285,7 +297,9 @@ shutil.copyfile('baseline.mp4',a.output)
         self.assertEqual(self.run_sample()[0],0)
         self.data['execution']['sample_receipt']=self.ref('run1.json')
         animation=self.data['qa']['visual_frames']['animation']
-        animation.update(next_action='expand',viewing={**self.ref('sample1.mp4'),'reviewed_at':gate.now()},
+        animation.update(next_action='expand',viewing={**copy.deepcopy(self.data['design']['approved_film_reference']['viewing']),
+             **self.ref('sample1.mp4'), 'scope':'representative', 'reviewer':'independent synthetic reviewer', 'reviewed_at':gate.now()},
+             independent_review_evidence=self.ref('approval.txt'),
              style_comparison={'status':'pass','actually_compared':True,'baseline_sha256':self.ref('baseline.mp4')['sha256'],
                  'sample_sha256':self.ref('sample1.mp4')['sha256'],'observation':'Synthetic same-style comparison, no actual perception.'})
         self.save()

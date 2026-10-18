@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.6.1",
+  "version": "1.6.3",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -37934,6 +37934,44 @@
       "applicability_contract": "hard",
       "failure_contract": "hard",
       "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "REALISM-main-picture",
+      "rule": "简单2D动画、信息图、幻灯片、静图推拉、文字/箭头/粒子运动及漂亮背景不得替代写实主镜。精细2D仍不是写实视频路径的默认替代。",
+      "action": "简单2D动画、信息图、幻灯片、静图推拉、文字/箭头/粒子运动及漂亮背景不得替代写实主镜。精细2D仍不是写实视频路径的默认替代。",
+      "modality": "hard",
+      "owner": "references/realistic-production.md",
+      "owner_anchor": "主画面与工具边界",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "REALISM-main-picture-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "REALISM-continuous-review",
+      "rule": "未实看实听、看不到原媒体或只有技术检测时保持未验，不得写通过。独审不能由同一制作者换名字自签。",
+      "action": "未实看实听、看不到原媒体或只有技术检测时保持未验，不得写通过。独审不能由同一制作者换名字自签。",
+      "modality": "hard",
+      "owner": "references/realistic-production.md",
+      "owner_anchor": "制作前引用与连续短样",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "REALISM-continuous-review-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -39058,12 +39096,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "当前基准与引用",
-          "quote": "当前系列沿用下节随Skill携带的已确认外观参考；项目可另提供适用的私有设计板，记录版本/哈希与认可范围，私有原图、账号或链接不入公共资源。参数辅助实现、视觉参考定义样貌；两者不一致先修，不以数值正确签画面通过。规范/参数采用仅为实现基准，静态方向认可不扩大为新机制近景、动作、声音、科学或成片批准。",
+          "quote": "仅具体获准的历史2D范围沿用下节随Skill携带的已确认外观参考；项目可另提供适用的私有设计板，记录版本/哈希与认可范围，私有原图、账号或链接不入公共资源。参数辅助实现、视觉参考定义样貌；两者不一致先修，不以数值正确签画面通过。规范/参数采用仅为实现基准，静态方向认可不扩大为新机制近景、动作、声音、科学或成片批准。",
           "lines": [
             11,
             11
           ],
-          "quote_sha256": "0090ac47328e510fe1b3751a5344492e958cd084f9cfba5c2ceb0fb9ba7a260c"
+          "quote_sha256": "7dc1bb7f2e6068378e4e4ffc58afd49b02c064be96390a679061d0ecd806cc39"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -43426,12 +43464,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "当前基准与引用",
-          "quote": "当前系列沿用下节随Skill携带的已确认外观参考；项目可另提供适用的私有设计板，记录版本/哈希与认可范围，私有原图、账号或链接不入公共资源。参数辅助实现、视觉参考定义样貌；两者不一致先修，不以数值正确签画面通过。规范/参数采用仅为实现基准，静态方向认可不扩大为新机制近景、动作、声音、科学或成片批准。",
+          "quote": "仅具体获准的历史2D范围沿用下节随Skill携带的已确认外观参考；项目可另提供适用的私有设计板，记录版本/哈希与认可范围，私有原图、账号或链接不入公共资源。参数辅助实现、视觉参考定义样貌；两者不一致先修，不以数值正确签画面通过。规范/参数采用仅为实现基准，静态方向认可不扩大为新机制近景、动作、声音、科学或成片批准。",
           "lines": [
             11,
             11
           ],
-          "quote_sha256": "0090ac47328e510fe1b3751a5344492e958cd084f9cfba5c2ceb0fb9ba7a260c"
+          "quote_sha256": "7dc1bb7f2e6068378e4e4ffc58afd49b02c064be96390a679061d0ecd806cc39"
         },
         {
           "file": "references/visual-system.md",
@@ -43466,12 +43504,12 @@
         {
           "file": "references/shotbook.md",
           "anchor": "设计和资产引用绑定",
-          "quote": "采用当前系列画风时，将Skill内 [参考图](../assets/style/accepted-style-reference.png) 和 [美术规格](../assets/style/bright-nature.art-direction.json) 的固定版本/哈希登记到简报引用清单；实际看图与本镜采用点写在美术记录，不能用文案推定已看。以其生成项目设计板时，`design.board_reference/board_sha256` 仍指当前实际设计板；参考的外观认可与新设计板的实际审查范围分开，不能把系列参考哈希填成新板批准。需要阶段冻结时，把所用参考副本、规格及实际对照文件分别列入既有gate evidence，不从后续安装版本反推旧项目使用内容。",
+          "quote": "仅采用具体获准的历史2D画风时，将Skill内 [参考图](../assets/style/accepted-style-reference.png) 和 [美术规格](../assets/style/bright-nature.art-direction.json) 的固定版本/哈希登记到简报引用清单；实际看图与本镜采用点写在美术记录，不能用文案推定已看。以其生成项目设计板时，`design.board_reference/board_sha256` 仍指当前实际设计板；参考的外观认可与新设计板的实际审查范围分开，不能把系列参考哈希填成新板批准。需要阶段冻结时，把所用参考副本、规格及实际对照文件分别列入既有gate evidence，不从后续安装版本反推旧项目使用内容。",
           "lines": [
             45,
             45
           ],
-          "quote_sha256": "46e14002940b6c124d978f6370ced6bc8a8d4b41b35191fe5fa975f2e0fbc929"
+          "quote_sha256": "c8cd72b42cf926f798cc4b0f3be9a45a981a02330a44477b7ba541f0a0a8ccbe"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -44053,12 +44091,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "已确认画风的视觉锚点",
-          "quote": "当前默认画风是**结构可信、光影细腻、材质通透的精细2D绘画式自然插画**。实际视觉锚点是 [已确认外观参考](../assets/style/accepted-style-reference.png)，可执行的对象/整景/机制美术任务填写 [美术规格](../assets/style/bright-nature.art-direction.json)。该图的外观方向已获用户认可，无须每期重新询问这套偏好；新内容的结构、动作、科学准确性及最终合成仍按实际范围审查。参考只用于看图比较，不作为可直接入片的素材许可。白色查看器背景、侧栏缩略图、蓝色选框及截图裁切不属于画风；景观和透明物体缩略图支持外观方向，不能据小图签内部科学结构或细节正确。",
+          "quote": "历史2D参考的画风是**结构可信、光影细腻、材质通透的精细2D绘画式自然插画**。实际视觉锚点是 [已确认外观参考](../assets/style/accepted-style-reference.png)，可执行的对象/整景/机制美术任务填写 [美术规格](../assets/style/bright-nature.art-direction.json)。该图的外观方向已获用户认可，无须每期重新询问这套偏好；新内容的结构、动作、科学准确性及最终合成仍按实际范围审查。参考只用于看图比较，不作为可直接入片的素材许可。白色查看器背景、侧栏缩略图、蓝色选框及截图裁切不属于画风；景观和透明物体缩略图支持外观方向，不能据小图签内部科学结构或细节正确。",
           "lines": [
             15,
             15
           ],
-          "quote_sha256": "41063a3ee563d4c1f872e73c374e4184a4a9573877fdff4fbb877a055ee1bd24"
+          "quote_sha256": "67f3481131391a091336e52add82337b0bfcaab967f2c9463862068517278043"
         },
         {
           "file": "references/visual-system.md",
@@ -44918,9 +44956,35 @@
           "quote_sha256": "a77eb8de6dbbbd61ae8234e2baadb8696c36f2fdde2e0787a88fb446b0045a93"
         }
       ]
+    },
+    {
+      "id": "REALISM-main-picture-failure",
+      "failure_condition": "Missing applicable realism contract or actual independent continuous A/V review blocks progression; technical records do not establish perceptual quality.",
+      "application": "New production and explicitly realistic repair within authorized scope.",
+      "clauses": [
+        {
+          "file": "references/realistic-production.md",
+          "anchor": "主画面与工具边界",
+          "quote": "简单2D动画、信息图、幻灯片、静图推拉、文字/箭头/粒子运动及漂亮背景不得替代写实主镜。精细2D仍不是写实视频路径的默认替代。",
+          "quote_sha256": "fdc15424217935f45c8a08a36b2c1f819014e65b8e0047ef1f36c074da6099ec"
+        }
+      ]
+    },
+    {
+      "id": "REALISM-continuous-review-failure",
+      "failure_condition": "Missing applicable realism contract or actual independent continuous A/V review blocks progression; technical records do not establish perceptual quality.",
+      "application": "New production and explicitly realistic repair within authorized scope.",
+      "clauses": [
+        {
+          "file": "references/realistic-production.md",
+          "anchor": "制作前引用与连续短样",
+          "quote": "未实看实听、看不到原媒体或只有技术检测时保持未验，不得写通过。独审不能由同一制作者换名字自签。",
+          "quote_sha256": "205996cb2d36954d74dfd2590b55a334f7c8bd2aefa64657fd6d236a6c28389f"
+        }
+      ]
     }
   ],
-  "rule_count": 918,
+  "rule_count": 920,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

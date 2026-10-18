@@ -1,24 +1,25 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "结构可信、光影细腻、材质通透的精细纯2D绘画式自然插画；整景、主体和机制同一完成度",
+    "direction": "真实写实连续主画面；结构、光影、材质、空间与动作可信，工具按镜头选择",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
     "art_direction": "../assets/style/bright-nature.art-direction.json",
     "style_reference": "../assets/style/accepted-style-reference.png",
     "style_reference_sha256": "d7a43878e348893804216aceca29004945d05b81e4c68abf934a8f0aa52c8a77",
-    "style_reference_scope": "visual_style_only"
+    "style_reference_scope": "legacy_2d_only; not approval for realistic main footage"
   },
   "medium": {
-    "mechanism": "pure_2d",
+    "mechanism": "realistic_main_with_scoped_explanation",
     "real_anchor": "authentic_continuous_video",
     "real_opening": "preferred_when_relevant",
-    "no_photo_motion_substitution": true
+    "no_photo_motion_substitution": true,
+    "realism_contract": "references/realistic-production.md"
   },
   "audio": {
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",

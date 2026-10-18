@@ -16,8 +16,30 @@ def attach_execution_fixture(data, root):
     producer = data.setdefault('brief', {}).setdefault('roles', {}).get('producer')
     if producer == 'synthetic software fixture, not an actual reviewer':
         data['brief']['roles']['producer'] = 'synthetic producer identity, no real person'
-    for shot in data.get('shots', []):
+    # Deliberately fabricated test declarations, never real user approval.
+    style = data.setdefault('design', {})
+    style['visual_intent'] = {
+        'target': 'scientific_realism',
+        'scientific_constraints': 'Synthetic fixture verifies consistency only, never science or actual appearance.',
+        'style_reference': {'file': style['board_reference'], 'sha256': style['board_sha256']}}
+    review = root / 'synthetic-independent-review.json'
+    review.write_text(json.dumps({
+        'fixture_only': 'FABRICATED SOFTWARE FIXTURE, NO REAL VIEWING OR LISTENING',
+        'viewing': data['qa']['visual_frames']['animation']['viewing']}))
+    data['qa']['visual_frames']['animation']['independent_review_evidence'] = ref(root, review.name)
+    for index, shot in enumerate(data.get('shots', [])):
         book = shot.setdefault('shotbook', {})
+        exception = root / ('synthetic-nonrealistic-exception-' + str(index) + '.json')
+        exception.write_text(json.dumps({
+            'fixture_only': 'FABRICATED SOFTWARE FIXTURE, NOT AN ACTUAL USER MESSAGE OR AUTHORIZATION',
+            'shot_id': shot['id'], 'scope': 'nonrealistic_full_frame_shot'}))
+        book['realism'] = {
+            'role':'main', 'medium':'pure_2d', 'renderer':'raster_animation',
+            'scientific_basis':'Synthetic media only, no scientific claim.',
+            'visible_motion':'Synthetic fixture has no actual motion acceptance.',
+            'exception':{'shot_id':shot['id'], 'scope':'nonrealistic_full_frame_shot',
+                'reason':'Synthetic non-realistic test media, explicitly not a production approval.',
+                'user_evidence':ref(root, exception.name)}}
         book.setdefault('connections', {'applicable': False, 'not_applicable_reason': 'Synthetic fixture has no inter-part connector.', 'links': []})
         for key in ('claim_support', 'subject', 'action', 'attention_target', 'viewer_takeaway'):
             if not book.get(key):

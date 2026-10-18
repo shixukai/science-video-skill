@@ -945,7 +945,7 @@ def validation_resources():
     """Fingerprint the local rules used by this checker, not external evidence."""
     root = Path(__file__).resolve().parents[1]
     names = (
-        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/render_gate.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
+        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/render_gate.py", "scripts/realism_guard.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
         "config/production-policy.json", "config/series-profile.json",
         "assets/production-asset.schema.json", "indexes/rule-owners.json",
     )

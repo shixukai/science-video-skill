@@ -111,6 +111,15 @@
         "user-feedback-dimension-isolation",
         "internal-engagement-review"
       ]
+    },
+    {
+      "id": "realism",
+      "file": "references/realistic-production.md",
+      "owns": [
+        "realistic-main-picture",
+        "nonrealistic-exception-scope",
+        "realistic-style-and-sample-contract"
+      ]
     }
   ]
 }

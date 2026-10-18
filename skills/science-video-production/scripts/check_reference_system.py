@@ -8,7 +8,7 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 
-OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "production", "visual", "voice", "shotbook", "quality"}
+OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "production", "visual", "voice", "shotbook", "quality", "realism"}
 HEX = re.compile(r"#[0-9A-Fa-f]{6}$")
 PRIVATE_ID = re.compile(r"(?:libfile_|Sentinel_)[0-9a-f]{20,}|file_[0-9a-f]{24,}")
 
@@ -110,7 +110,7 @@ def check(root):
         return json.loads((root / name).read_text(encoding="utf-8"))
     try:
         owners = read("indexes/rule-owners.json")["owners"]
-        need({o["id"] for o in owners} == OWNER_IDS and len(owners) == 8, "exactly eight responsibility owners required")
+        need({o["id"] for o in owners} == OWNER_IDS and len(owners) == len(OWNER_IDS), "complete responsibility owners required")
         assigned = []
         owner_files = []
         for o in owners:
@@ -124,9 +124,9 @@ def check(root):
 
         errors.extend(check_platform_record_formats(read("assets/project-ledger-template.json")))
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.6.2", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.6.3", "unsupported profile schema/version")
         errors.extend(check_operations(profile.get("operations")))
-        need(profile["medium"]["mechanism"] == "pure_2d", "current series requires pure 2D")
+        need(profile["medium"]["mechanism"] == "realistic_main_with_scoped_explanation", "current series requires realistic main footage with scoped explanation")
         need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
         voice = profile["audio"]
@@ -174,8 +174,8 @@ def check(root):
         if style_path.is_file():
             need(hashlib.sha256(style_path.read_bytes()).hexdigest() == selected_style_hash,
                  "selected style image hash mismatch")
-        need(profile["design"].get("style_reference_scope") == "visual_style_only",
-             "selected style scope must remain appearance only")
+        need(profile["design"].get("style_reference_scope") == "legacy_2d_only; not approval for realistic main footage",
+             "selected historical style must remain scoped to legacy 2D appearance")
         reference = direction["reference"]
         need(local_path(root, direction_path.parent, reference["file"]) == style_path
              and reference["sha256"] == selected_style_hash, "art direction reference binding mismatch")
