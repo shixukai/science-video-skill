@@ -26,6 +26,9 @@ class RenderGateTests(unittest.TestCase):
                         '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=mono', '-t', '0.5', '-c:v', 'libx264',
                         '-pix_fmt', 'yuv420p', '-c:a', 'aac', str(cls.media)], check=True)
 
+        cls.silent_media = Path(cls.media_tmp.name) / 'silent-film.mp4'
+        subprocess.run(['ffmpeg', '-v', 'error', '-i', str(cls.media), '-map', '0:v:0', '-c:v', 'copy', '-an', str(cls.silent_media)], check=True)
+
     @classmethod
     def tearDownClass(cls):
         cls.media_tmp.cleanup()
@@ -111,6 +114,42 @@ shutil.copyfile('baseline.mp4',a.output)
                     'image': self.ref('frame.png'), 'actually_opened': True,
                     'observation': 'Synthetic blue field at this point; no motion or hearing claim.'}])
         return view
+
+    def silent_visual_baseline(self):
+        (self.root/'baseline.mp4').write_bytes(self.silent_media.read_bytes())
+        baseline = self.data['design']['approved_film_reference']
+        baseline['viewing'].update(self.ref('baseline.mp4'))
+        baseline['approved_media_sha256'] = self.ref('baseline.mp4')['sha256']
+        self.data['design']['visual_intent']['style_reference'] = self.ref('baseline.mp4')
+        return self.visual_only_baseline()
+
+    def test_actual_silent_film_is_valid_appearance_only_baseline(self):
+        self.silent_visual_baseline()
+        probe = Checks(self.data,self.root); probe.duration(self.root/'baseline.mp4')
+        self.assertTrue(any('has no audio' in e for e in probe.errors))
+        self.assertEqual(gate.preflight(self.data,self.root,'sample',['SH1']), [])
+
+    def test_silent_baseline_scope_and_approved_hash_still_enforced(self):
+        view = self.silent_visual_baseline(); view['scope'] = 'representative'
+        checks = Checks(self.data,self.root); gate.check_baseline(checks)
+        self.assertTrue(any('appearance-only scoped' in e for e in checks.errors))
+        view['scope'] = 'approved_film_visual_reference'
+        self.data['design']['approved_film_reference']['approved_media_sha256'] = '0'*64
+        checks = Checks(self.data,self.root); gate.check_baseline(checks)
+        self.assertTrue(checks.errors)
+
+    def test_silent_baseline_cannot_be_continuous_audiovisual_reference(self):
+        view = self.silent_visual_baseline()
+        view.update(method='continuous_playback',scope='approved_film',heard=True,playback_speed=1,ranges=[[0,.5]])
+        checks = Checks(self.data,self.root); gate.check_baseline(checks)
+        self.assertTrue(any('has no audio' in e for e in checks.errors))
+
+    def test_frame_samples_cannot_replace_audible_representative_review(self):
+        view = self.visual_only_baseline()  # Actual fixture includes an audio track.
+        view['scope'] = 'representative'
+        checks = Checks(self.data,self.root); checks.viewing(view,'representative','representative')
+        self.assertTrue(any('frame samples do not qualify' in e for e in checks.errors))
+        self.assertTrue(any('actual viewing and listening required' in e for e in checks.errors))
 
     def test_finite_real_visual_reference_can_create_only_unreviewed_sample(self):
         self.visual_only_baseline(); code, record = self.run_sample()

@@ -184,7 +184,7 @@ def check_baseline(checks):
         # of motion/hearing or a replacement for G3/full-episode playback.
         from cover_guard import image_size
         path = checks.evidence(view, "execution approved baseline")
-        duration = checks.duration(path) if path else None
+        duration = checks.duration(path, require_audio=False) if path else None
         checks.need(view.get("scope") == "approved_film_visual_reference" and view.get("purpose") == "appearance_only",
                     "execution finite baseline reference must be appearance-only scoped")
         checks.need(view.get("watched") is True and view.get("heard") is False
