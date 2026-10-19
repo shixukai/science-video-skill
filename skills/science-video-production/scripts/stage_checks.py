@@ -138,7 +138,7 @@ def used_asset_ids(data):
 
 def context_sha256(data, gate):
  """Version binding at the relevant production scope, not evidence of review."""
- keys=['topic','topic_alignment','sources','claims','brief','scope','series_profile','presentation_text']
+ keys=['topic','topic_alignment','sources','claims','brief','scope','series_profile','origin_contract','presentation_text']
  if gate!='G1': keys += ['shots','narration']
  if gate not in ('G1','G2'): keys += ['assets','design']
  if gate in ('G4','G5','G6','G7'): keys += ['deliverables','production_statement']
@@ -157,6 +157,10 @@ def context_sha256(data, gate):
   result['representative_media']={k:viewing.get(k) for k in ('file','sha256')}
  if gate not in ('G6','G7'):result['scope']=content_scope(data)
  if gate in ('G4','G5','G6','G7'):result['deliverable_asset_ids']=data.get('deliverable_asset_ids')
+ if gate in ('G3','G4','G5','G6','G7'):
+  from origin_guard import context_assets as origin_assets
+  origin_shots = list(dependencies(data, True)[1]) if gate == 'G3' else [obj(s).get('id') for s in seq(data.get('shots'))]
+  result['origin_assets'] = origin_assets(data, origin_shots, final=gate != 'G3')
  if gate in ('G4','G5','G6','G7'):result['assets']=[a for a in seq(data.get('assets')) if obj(a).get('id') in used_asset_ids(data)]
  if gate=='G3':
   used,shot_ids,_=dependencies(data,True)
@@ -728,8 +732,8 @@ class Checks:
     if profile.get('id')==default['id']:
      self.need(obj(profile.get('medium')).get('real_anchor')==default['medium']['real_anchor'],'current series real-video requirement cannot be silently removed')
   mode=obj(profile.get('medium')).get('real_anchor')
-  self.need(mode in ('authentic_continuous_video','not_required'),'explicit project real-anchor policy required')
-  return mode!='not_required'
+  self.need(mode in ('authentic_continuous_video','not_required','verified_authorized_user_capture_only'),'explicit project real-anchor policy required')
+  return mode=='authentic_continuous_video'
  def tool_applications(self,expanding=False,current_shots=None):
   if 'tool_applications' not in self.data:return
   rows=self.data['tool_applications']

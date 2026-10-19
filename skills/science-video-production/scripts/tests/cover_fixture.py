@@ -54,6 +54,21 @@ def attach_cover_fixture(data, root):
                                export_sha256=export["sha256"], preview_sha256=preview["sha256"]),
             "observations": {key: {"status": "pass", "observation": "Synthetic record check only; no actual visual review."} for key in OBSERVATIONS}}
     qa.setdefault("covers", {}).update(status="pass", reviewer=record["reviewer"], note="Synthetic declared cover review only", evidence="synthetic-cover-review.json")
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("cover_origin_fixture", Path(__file__).with_name("origin_fixture.py"))
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    attach_origin_fixture = module.attach_origin_fixture
+    originals = []
+    for name in VARIANTS:
+        originals.append({'id':'synthetic-' + name, 'kind':'graphic', **ref(root, exports[name]),
+            'source':'Synthetic fixture creation, no actual production', 'creator':'Synthetic fixture',
+            'rights':{'status':'cleared', 'evidence':'Synthetic fixture only', 'scope':'Synthetic tests only'}})
+        data.setdefault('deliverable_asset_ids', {})[name] = ['synthetic-' + name]
+    packet = {'assets':originals}
+    attach_origin_fixture(packet, root)
+    data.setdefault('origin_contract', packet['origin_contract'])
+    original_ids = {a['id'] for a in originals}
+    data['assets'] = [a for a in data.get('assets', []) if a.get('id') not in original_ids] + originals
     save_cover_fixture(data, root, record)
     return record
 

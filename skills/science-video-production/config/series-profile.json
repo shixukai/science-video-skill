@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -16,10 +16,11 @@
   },
   "medium": {
     "mechanism": "realistic_main_with_scoped_explanation",
-    "real_anchor": "authentic_continuous_video",
-    "real_opening": "preferred_when_relevant",
+    "real_anchor": "verified_authorized_user_capture_only",
+    "real_opening": "only_when_verified_user_capture_available_and_relevant",
     "no_photo_motion_substitution": true,
-    "realism_contract": "references/realistic-production.md"
+    "realism_contract": "references/realistic-production.md",
+    "origin_contract": "references/science-and-rights.md#原创视觉来源契约"
   },
   "audio": {
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",

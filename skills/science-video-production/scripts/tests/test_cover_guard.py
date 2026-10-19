@@ -35,6 +35,13 @@ class CoverGuardTests(unittest.TestCase):
     def row(self):
         return self.record["variants"]["cover_3_4"]
 
+    def test_origin_dependencies_cannot_be_missing_or_ambiguous(self):
+        self.data['deliverable_asset_ids']['cover_3_4'].append('UNREGISTERED_VISUAL')
+        self.assertTrue(any('dependency missing or ambiguous' in e for e in self.errors()))
+        self.data['deliverable_asset_ids']['cover_3_4'].pop()
+        self.data['assets'].append(copy.deepcopy(self.data['assets'][0]))
+        self.assertTrue(any('dependency missing or ambiguous' in e for e in self.errors()))
+
     def test_complete_synthetic_record_passes_structure_only(self):
         self.assertEqual(self.errors(), [])
 

@@ -70,6 +70,8 @@ shutil.copyfile('baseline.mp4',a.output)
             'exception': {'shot_id': 'SH1', 'scope': 'nonrealistic_full_frame_shot',
                           'reason': 'Explicit synthetic test-only exception, no production authorization.',
                           'user_evidence': self.ref('approval.txt')}}
+        from origin_fixture import attach_origin_fixture
+        attach_origin_fixture(self.data, self.root)
         attach_topic_selection_fixture(self.data)
         self.save()
 
@@ -317,6 +319,8 @@ shutil.copyfile('baseline.mp4',a.output)
         self.data['assets']=[{'id':'A1',**self.ref('asset.txt')}];self.data['shots'][0]['asset_ids']=['A1']
         with (self.root/'adapter.py').open('a') as f:f.write('\npathlib.Path("asset.txt").write_text("after")\n')
         self.data['execution']['entrypoint']=self.ref('adapter.py')
+        from origin_fixture import attach_origin_fixture
+        attach_origin_fixture(self.data, self.root)
         code,r=self.run_sample();self.assertEqual(code,2);self.assertTrue(any('input bytes changed' in e for e in r['output_checks']))
 
     def test_pure_g3_review_updates_do_not_change_render_design(self):

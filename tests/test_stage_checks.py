@@ -156,9 +156,9 @@ class CanonicalStageTests(unittest.TestCase):
   for asset in s.d['assets']:
    if asset['kind']=='ai_generated':asset['kind']='graphic'
   asset=copy.deepcopy(s.d['assets'][0]);asset.update(id='UNUSED_AI',kind='ai_generated');s.d['assets'].append(asset);refresh(s.d);s.assertEqual(s.errors(),[])
- def test_anchor_inventory_not_used(s):
+ def test_optional_user_capture_inventory_need_not_be_used(s):
   for shot in s.d['shots']:shot['asset_ids']=[i for i in shot['asset_ids'] if i!='A1']
-  refresh(s.d);s.rejects('actually used real continuous-video anchor')
+  refresh(s.d);s.assertEqual(s.errors(),[])
  def test_used_real_anchor_needs_viewing(s):s.d['assets'][0]['observation']['viewing_reference']='';refresh(s.d);s.rejects('source footage viewing required')
  def test_used_real_anchor_needs_interval(s):s.d['assets'][0]['observation']['source_interval']=[];refresh(s.d);s.rejects('actual footage interval required')
 
@@ -506,9 +506,9 @@ class CoverageStageTests(unittest.TestCase):
   for asset in s.d['assets']:
    if asset['kind']=='ai_generated':asset['kind']='graphic'
   asset=copy.deepcopy(s.d['assets'][0]);asset.update(id='UNUSED_AI',kind='ai_generated');s.d['assets'].append(asset);refresh(s.d);s.assertEqual(s.errors(),[])
- def test_anchor_inventory_not_used(s):
+ def test_optional_user_capture_inventory_need_not_be_used(s):
   for shot in s.d['shots']:shot['asset_ids']=[i for i in shot['asset_ids'] if i!='A1']
-  refresh(s.d);s.rejects('actually used real continuous-video anchor')
+  refresh(s.d);s.assertEqual(s.errors(),[])
  def test_used_real_anchor_needs_viewing(s):s.d['assets'][0]['observation']['viewing_reference']='';refresh(s.d);s.rejects('source footage viewing required')
  def test_used_real_anchor_needs_interval(s):s.d['assets'][0]['observation']['source_interval']=[];refresh(s.d);s.rejects('actual footage interval required')
 

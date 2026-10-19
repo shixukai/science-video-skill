@@ -124,10 +124,10 @@ def check(root):
 
         errors.extend(check_platform_record_formats(read("assets/project-ledger-template.json")))
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.6.4", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and profile["version"] == "1.6.5", "unsupported profile schema/version")
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "realistic_main_with_scoped_explanation", "current series requires realistic main footage with scoped explanation")
-        need(profile["medium"]["real_anchor"] == "authentic_continuous_video", "real video anchor required")
+        need(profile["medium"]["real_anchor"] == "verified_authorized_user_capture_only", "real video anchor must be verified authorized user capture only")
         need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
         voice = profile["audio"]
         need(voice.get("backend") == "confirm_at_invocation" and voice.get("provider") == "Qwen",

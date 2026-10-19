@@ -16,7 +16,10 @@
 ## 原题与科学
 按 [主题契约](../references/topic-contract.md) 记录原题、问题类型、必答范围、首屏/口播/结尾映射及局部所属范围；复制topic-anchor-template并固定来源/哈希。
 候选的直觉预期、真实差异/待解释观察、核心答案、可视证据及条件；采用方案的 curiosity_gap / viewer_payoff / payoff_steps 引用正文范围和镜号，沿用 ending 回答（无可靠反直觉差异时用具体问题，不强造）：
-按 [科学与素材](../references/science-and-rights.md) 记录主张、依据、可用真实视频/权利、实际选段与缺项：
+按 [科学与素材](../references/science-and-rights.md) 记录主张、依据、自产画面及已核实用户自拍/权利、实际选段与缺项：
+
+## 视觉原创来源（待填写，非批准）
+按 [原创视觉来源契约](../references/science-and-rights.md#原创视觉来源契约) 记录 `origin_contract.mode=self_created_visuals`，逐镜计划方法、制作前设计、实际入口版本和哈希；实际资产保留输入/输出、抽帧及审查证据。用户自拍事实与本次授权必须可核，未取得保持缺项。第三方公开视频/CC/Commons/论文影像仅研究参考，不作填充或成片背景；不改写历史来源和验收。
 
 ## 固定引用
 - Skill提交/版本：

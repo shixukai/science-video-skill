@@ -68,6 +68,8 @@ def image_size(checks, reference, label):
 
 def validate_cover_review(checks):
     """Required for cover-only delivery and G5–G7; old missing records do not pass."""
+    from origin_guard import validate_cover_origins
+    validate_cover_origins(checks)
     qa = obj(checks.data.get("qa"))
     covers = obj(qa.get("covers"))
     checks.need(covers.get("status") == "pass", "covers review must pass after actual inspection")

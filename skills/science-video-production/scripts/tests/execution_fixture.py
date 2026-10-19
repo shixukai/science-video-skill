@@ -47,6 +47,8 @@ def attach_execution_fixture(data, root):
     adapter = root / 'synthetic-render-adapter.py'
     adapter.write_text('# Synthetic declaration fixture only; not an actual rendering entrypoint.\n')
     data['execution']['entrypoint'] = ref(root, adapter.name)
+    from origin_fixture import attach_origin_fixture
+    attach_origin_fixture(data, root)
     refresh_execution_fixture(data, root)
 
 

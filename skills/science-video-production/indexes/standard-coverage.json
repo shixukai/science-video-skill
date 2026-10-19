@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.6.4",
+  "version": "1.6.5",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -38124,6 +38124,63 @@
       "applicability_contract": "conditional",
       "failure_contract": "conditional",
       "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "ORIGIN-self-created",
+      "rule": "当前系列默认 `origin_contract.mode=self_created_visuals`。最终视频、代表段与封面的可见视觉内容只使用本项目自行AI生成、自行建模/渲染、自行设计的解释画面，或确已核实由用户自己拍摄且获本次使用授权的原始素材。不得假定用户已有自拍、已有授权或已完成生成。原创来源与写实模态是不同维度：自行设计2D也不能绕过写实主镜要求。",
+      "action": "当前系列默认 `origin_contract.mode=self_created_visuals`。最终视频、代表段与封面的可见视觉内容只使用本项目自行AI生成、自行建模/渲染、自行设计的解释画面，或确已核实由用户自己拍摄且获本次使用授权的原始素材。不得假定用户已有自拍、已有授权或已完成生成。原创来源与写实模态是不同维度：自行设计2D也不能绕过写实主镜要求。",
+      "modality": "hard",
+      "owner": "references/science-and-rights.md",
+      "owner_anchor": "原创视觉来源契约",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "ORIGIN-self-created-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "ORIGIN-reference-only",
+      "rule": "第三方公开视频、公共领域、CC、Commons、机构视频及论文补充影像只作研究、科学依据或风格/动作参考，不进入主镜、填充镜、背景、封面或其他交付视觉依赖。许可允许复用也不等于符合本系列原创范围；工具条款和权利检查仍不可省略。裁切水印、重新命名、改标签、调色、配中文旁白或套字幕不改变第三方来源。不能把第三方片段经过转码、合成或生成式改写后登记成自行原创，也不将参考图暗作成片背景或输入素材洗来源；实际输入及用途必须如实可追溯。",
+      "action": "第三方公开视频、公共领域、CC、Commons、机构视频及论文补充影像只作研究、科学依据或风格/动作参考，不进入主镜、填充镜、背景、封面或其他交付视觉依赖。许可允许复用也不等于符合本系列原创范围；工具条款和权利检查仍不可省略。裁切水印、重新命名、改标签、调色、配中文旁白或套字幕不改变第三方来源。不能把第三方片段经过转码、合成或生成式改写后登记成自行原创，也不将参考图暗作成片背景或输入素材洗来源；实际输入及用途必须如实可追溯。",
+      "modality": "hard",
+      "owner": "references/science-and-rights.md",
+      "owner_anchor": "原创视觉来源契约",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "ORIGIN-reference-only-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
+    },
+    {
+      "id": "ORIGIN-evidence",
+      "rule": "计划模板的空路径、空哈希、空方法和待验状态是诚实占位，不是制作准入。实际生成前须有本阶段适用的设计与入口记录，生成后及时绑定真实输出和抽帧/审查证据。视频入口冻结所选镜头及其上游素材；封面不冒充视频渲染输入，使用既有封面审查与G5–G7整包上下文绑定，最终来源检查覆盖封面/设计交付依赖。检查器只检字段、文件/哈希、引用闭包和一致性，不证明作者身份、原创事实、授权真实性或审查发生；执行者与独立审查者必须核原始证据及实际媒体。",
+      "action": "计划模板的空路径、空哈希、空方法和待验状态是诚实占位，不是制作准入。实际生成前须有本阶段适用的设计与入口记录，生成后及时绑定真实输出和抽帧/审查证据。视频入口冻结所选镜头及其上游素材；封面不冒充视频渲染输入，使用既有封面审查与G5–G7整包上下文绑定，最终来源检查覆盖封面/设计交付依赖。检查器只检字段、文件/哈希、引用闭包和一致性，不证明作者身份、原创事实、授权真实性或审查发生；执行者与独立审查者必须核原始证据及实际媒体。",
+      "modality": "hard",
+      "owner": "references/science-and-rights.md",
+      "owner_anchor": "逐镜来源证据",
+      "evidence_locations": [],
+      "mapping_status": "verified_semantic_mapping",
+      "failure_condition_ref": {
+        "contract_ids": [
+          "ORIGIN-evidence-failure"
+        ]
+      },
+      "actual_execution": "not_established",
+      "applicability_contract": "hard",
+      "failure_contract": "hard",
+      "sample_reference": "pending_private_evidence"
     }
   ],
   "mapping_review": "current_owner_clause_and_selector_integrity_reviewed_not_actual_execution",
@@ -39302,12 +39359,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "竖屏画幅与构图",
-          "quote": "不为铺满画幅拉伸、裁掉科学主体/脚点/接触或补造影像。素材无法安全重构就换合法片段或做明确示意，仍不假称实拍已满足。标题、字幕与必要局部背板随场景组织；背景细节服从主体，不用粒子、纹理或扩大底板填满每块空白。",
+          "quote": "不为铺满画幅拉伸、裁掉科学主体/脚点/接触或补造影像。素材无法安全重构就换符合 [原创视觉来源契约](science-and-rights.md#原创视觉来源契约) 的自产片段或在获准范围做自设计示意，仍不假称实拍已满足。标题、字幕与必要局部背板随场景组织；背景细节服从主体，不用粒子、纹理或扩大底板填满每块空白。",
           "lines": [
             66,
             66
           ],
-          "quote_sha256": "4782c636506b094f14bcc5504cd1637a1495cfcab24e0c9e7068df0d1ca797f6"
+          "quote_sha256": "de07776492b254cd6ba9af3665cf9ba8e766cf77932e62c4778f0558ca67bbfb"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -39836,12 +39893,12 @@
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；优先换合法来源。",
+          "quote": "自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；第三方视觉即使权利核清也仅作参考，生产画面按原创契约自行制作。",
           "lines": [
             24,
             24
           ],
-          "quote_sha256": "409456cb065b0237a38ef6e8ac85e6c7f3385d8d61eb966cad924b6790d2080f"
+          "quote_sha256": "a936d164af94393f1ef5761469a6a22d58892c6982c8919efd50bab28b933d93"
         }
       ],
       "application": "Retain the linked rule modality, actual trigger, calibrated D status and source/reference-only scope. This is an existing failure/boundary or necessary record relationship, not a newly invented hard gate and not evidence of actual execution."
@@ -43132,12 +43189,12 @@
         {
           "file": "references/science-and-rights.md",
           "anchor": "素材台账",
-          "quote": "- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置\n\n自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；优先换合法来源。\n\n机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。\n\n购买素材、接受新条款、分享个人数据或向外部账号传素材均按当前权限处理。未取得的权利可以阻塞交付，不能靠制作声明免责。",
+          "quote": "每个会进入成片/封面的镜头、照片、录屏、图表、旁白、音乐、音效、字体记一条即可。视觉资产先符合本页原创视觉来源契约，音频、字体和工具许可仍按实际权利单独核验。台账允许记录静态科学参考、解释图或封面，不代表它们能替代真实视频锚点：\n\n- ID、素材类型、具体原始来源、作者/权利人、文件相对路径\n- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据\n- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可\n- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置\n\n自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；第三方视觉即使权利核清也仅作参考，生产画面按原创契约自行制作。\n\n机构素材也逐项查看 credit 和具体条款，不笼统写“NASA/科研机构都可自由用”。CC BY 等许可核对版本、署名和改编标记，并结合实际发布方式核实呈现位置；有署名义务不等于必须烧录，允许采用配套位置也不等于免除署名，不按许可名称一概判断。[CC BY 4.0 第3(a)(2)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)允许依据分享媒介、方式和语境采用合理方式（包括适当链接）；实际采用方式仍须履行第3(a)(1)条所列信息要求。保留依具体条款须保留的来源与权利标识；不把 NC 用于不符合条件的用途，不在不允许改编时擅剪。审核结论是检查者基于实际证据的判断，脚本中 `status: cleared` 不是法律证明。\n\n购买素材、接受新条款、分享个人数据或向外部账号传素材均按当前权限处理。未取得的权利可以阻塞交付，不能靠制作声明免责。",
           "lines": [
             19,
             28
           ],
-          "quote_sha256": "6b3c0d101f9fb171f893d0fcf51582ccfed15a96e3c44fbc137f5211fbe2ce16"
+          "quote_sha256": "3583db9b71013d8f68fd46b6777b1fef5ace8d2b9539ab21bc730f930a444f57"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -43346,12 +43403,12 @@
         {
           "file": "references/visual-system.md",
           "anchor": "竖屏画幅与构图",
-          "quote": "9:16以完整画幅组织场景，画面边缘纳入构图；天空、水面、纯色环境和其他有目的的低细节区域均可成为场景的一部分。负空间用于隔开对象、容纳视线或动作、突出机制、安排必要文字，不因空白而补装饰。须能说明它与主体及解释任务的关系；缺失场景、无依据边框和闲置的大标题板不能冒充留白。真实宇宙/阴影暗区与人为黑边区分。\n\n居中、偏置、对角、上下分区或对照构图按本镜对象关系选择，不把几何中线当质量标准，也不为变化而强套构图法则。结合主体轮廓与光学重心，安排视线、运动方向、接触位置及相邻镜头的注意中心；只在选择不明时用粗缩略图比较。主图、图内标签、字幕与平台覆盖分别布局，不能为躲UI把整幅缩小/左上移；审片辅助线不入成片。\n\n不为铺满画幅拉伸、裁掉科学主体/脚点/接触或补造影像。素材无法安全重构就换合法片段或做明确示意，仍不假称实拍已满足。标题、字幕与必要局部背板随场景组织；背景细节服从主体，不用粒子、纹理或扩大底板填满每块空白。",
+          "quote": "本节标题及9:16示例保留供既有竖版恢复；通用构图原则同样用于当前16:9横版，后续默认与独立布局见下文“后续横版与适度亲和化”。\n\n9:16以完整画幅组织场景，画面边缘纳入构图；天空、水面、纯色环境和其他有目的的低细节区域均可成为场景的一部分。负空间用于隔开对象、容纳视线或动作、突出机制、安排必要文字，不因空白而补装饰。须能说明它与主体及解释任务的关系；缺失场景、无依据边框和闲置的大标题板不能冒充留白。真实宇宙/阴影暗区与人为黑边区分。\n\n居中、偏置、对角、上下分区或对照构图按本镜对象关系选择，不把几何中线当质量标准，也不为变化而强套构图法则。结合主体轮廓与光学重心，安排视线、运动方向、接触位置及相邻镜头的注意中心；只在选择不明时用粗缩略图比较。主图、图内标签、字幕与平台覆盖分别布局，不能为躲UI把整幅缩小/左上移；审片辅助线不入成片。\n\n不为铺满画幅拉伸、裁掉科学主体/脚点/接触或补造影像。素材无法安全重构就换符合 [原创视觉来源契约](science-and-rights.md#原创视觉来源契约) 的自产片段或在获准范围做自设计示意，仍不假称实拍已满足。标题、字幕与必要局部背板随场景组织；背景细节服从主体，不用粒子、纹理或扩大底板填满每块空白。\n\n### 整片色彩与构图缩略带\n\n沿用整期分镜，将实际所需的关键状态按顺序排成色彩与构图缩略带，纳入实拍、2D及媒介接缝；无需每镜精绘或规定图数。标出主体尺度、注意中心、背景明度、强调色角色和细节密度，查看相邻镜与整期的重复、变化、过渡和收束。持续同景别、同密度或高对比可有用途，但不能未经选择就让全片均匀用力；变化须服务认识、解释、比较或回归，不套固定远—中—近循环。\n\n科学对象与变量的身份保持稳定，色彩起伏优先通过环境、非语义明暗及构图组织实现。可在理解关键处收敛背景、突出必要关系，再回到可识别的日常场景；不为制造视觉高潮改变现象本色或科学条件。缩略带用于前期选择，随后在已有有声草排中检验时长、注意力接续与实拍/2D衔接；它不能代替连续声画审查，不新增审批阶段。\n\n同时标出各段在本题的职责，如提出可观察问题、进入机制、对照条件、展示适用结果及回扣；不是每片必备五段或固定顺序。避免长期同一框架只换标签，让景别、对象状态和注意中心随解释任务推进。确需展示应用时，以观众能认回的具体对象及其前后状态承载效果，把成立条件与局限放在对应结果处；不用抽象赞美、氛围变化或无来源数字代替应用证据，不为戏剧性添加本题未承诺的应用。结尾回到已解释的原现象/问题，不临时增加未经建立的结论。",
           "lines": [
             62,
             66
           ],
-          "quote_sha256": "6cd11b62359264a80c76c02c113ca3be9bf441dea9b26b221e4f4002a228660e"
+          "quote_sha256": "8c15a4a006135e6274813c70a483b4fa47d59c6488b8624bba33f4b8ab16cc9b"
         }
       ],
       "application": "Only when this record or policy is applicable and a conformance/completion claim is being made. Honest empty templates or pending work do not themselves assert failure/success; retain the original H/D/conditional/boundary meaning."
@@ -44592,8 +44649,8 @@
         {
           "file": "references/quality-acceptance.md",
           "anchor": "主体动态与长静帧",
-          "quote": "视频必须在真实时间内推进所讲的观察或机制。真实锚点是有合法来源、原片区间和权利证据的连续动态实拍/观测；2D解释须让主画面主体的状态、形态、位置或相互作用随口播持续发展。字幕/标题变化、装饰粒子、整图平移缩放（包括Ken Burns）、静图转场或频繁硬切静图均不算有效主体推进。精美静态插画和旁白不能代替视频，静态背景无需强迫运动。",
-          "quote_sha256": "251b6dd6c6e901ca03b44f32b4d6a1936c3f662c8600819ca576e7df37222cc3",
+          "quote": "视频必须在真实时间内推进所讲的观察或机制。真实锚点仅是有已核实用户自拍及本次授权、原片区间和权利证据的连续动态实拍/观测；2D解释须让主画面主体的状态、形态、位置或相互作用随口播持续发展。字幕/标题变化、装饰粒子、整图平移缩放（包括Ken Burns）、静图转场或频繁硬切静图均不算有效主体推进。精美静态插画和旁白不能代替视频，静态背景无需强迫运动。",
+          "quote_sha256": "d21bb043321b0ff30e72d3285e51609787f179559a86fdef67312dfe118268d4",
           "lines": [
             41,
             41
@@ -45143,8 +45200,8 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "动作状态与可见成功条件",
-          "quote": "逐镜先写动作起态、关键转变和终态，列出主体、参照物、接触或遮挡关系、运动方向与应保持不变的身份；成功条件必须能在实际画面中辨认，不能只写“自然、真实、精美”。将“应看见什么、在哪段出现、什么现象算失败”对应到正常速度观看和必要相邻帧检查。确需受力、因果次序或量值准确的镜头，优先选有权且适用的观测证据或可核参数、边界和简化的可控模拟；AI环境画面不得充当机制证据，可控模拟也不自动等于科学正确。",
-          "quote_sha256": "28a2c2c10bc44bb98c5b6eb959932abc2b3c2cfcabce270a03c38f60aec9768b"
+          "quote": "逐镜先写动作起态、关键转变和终态，列出主体、参照物、接触或遮挡关系、运动方向与应保持不变的身份；成功条件必须能在实际画面中辨认，不能只写“自然、真实、精美”。将“应看见什么、在哪段出现、什么现象算失败”对应到正常速度观看和必要相邻帧检查。确需受力、因果次序或量值准确的镜头，优先用可核科学观测作研究依据，生产画面选已核实授权的用户自拍或自行制作且可核参数、边界和简化的可控模拟；第三方观测影像不进入交付视觉，按 [原创视觉来源契约](science-and-rights.md#原创视觉来源契约) 区分；AI环境画面不得充当机制证据，可控模拟也不自动等于科学正确。",
+          "quote_sha256": "97418687e059077ce995919ee6eb5fd88d7fac8f2da4bc64297d76c8b9f5199d"
         }
       ]
     },
@@ -45262,9 +45319,48 @@
           "quote_sha256": "eb1d949924406762c5ab1646398a3d29d8041740fa0a85cbd13d8319e0744386"
         }
       ]
+    },
+    {
+      "id": "ORIGIN-self-created-failure",
+      "failure_condition": "Third-party visual use, missing/conflicting origin evidence, or structural checks misrepresented as actual authorship/review.",
+      "application": "Current original-visual series production and delivery, preserving history and current permissions.",
+      "clauses": [
+        {
+          "file": "references/science-and-rights.md",
+          "anchor": "原创视觉来源契约",
+          "quote": "当前系列默认 `origin_contract.mode=self_created_visuals`。最终视频、代表段与封面的可见视觉内容只使用本项目自行AI生成、自行建模/渲染、自行设计的解释画面，或确已核实由用户自己拍摄且获本次使用授权的原始素材。不得假定用户已有自拍、已有授权或已完成生成。原创来源与写实模态是不同维度：自行设计2D也不能绕过写实主镜要求。",
+          "quote_sha256": "2fd08af28ae1fe062d8ab2ad505649e75bd42f9b10acc09136bae36cb192655e"
+        }
+      ]
+    },
+    {
+      "id": "ORIGIN-reference-only-failure",
+      "failure_condition": "Third-party visual use, missing/conflicting origin evidence, or structural checks misrepresented as actual authorship/review.",
+      "application": "Current original-visual series production and delivery, preserving history and current permissions.",
+      "clauses": [
+        {
+          "file": "references/science-and-rights.md",
+          "anchor": "原创视觉来源契约",
+          "quote": "第三方公开视频、公共领域、CC、Commons、机构视频及论文补充影像只作研究、科学依据或风格/动作参考，不进入主镜、填充镜、背景、封面或其他交付视觉依赖。许可允许复用也不等于符合本系列原创范围；工具条款和权利检查仍不可省略。裁切水印、重新命名、改标签、调色、配中文旁白或套字幕不改变第三方来源。不能把第三方片段经过转码、合成或生成式改写后登记成自行原创，也不将参考图暗作成片背景或输入素材洗来源；实际输入及用途必须如实可追溯。",
+          "quote_sha256": "c97095abd37241526e150ef4f4c9b57e843075eedca371b6248054b4f7207a72"
+        }
+      ]
+    },
+    {
+      "id": "ORIGIN-evidence-failure",
+      "failure_condition": "Third-party visual use, missing/conflicting origin evidence, or structural checks misrepresented as actual authorship/review.",
+      "application": "Current original-visual series production and delivery, preserving history and current permissions.",
+      "clauses": [
+        {
+          "file": "references/science-and-rights.md",
+          "anchor": "逐镜来源证据",
+          "quote": "计划模板的空路径、空哈希、空方法和待验状态是诚实占位，不是制作准入。实际生成前须有本阶段适用的设计与入口记录，生成后及时绑定真实输出和抽帧/审查证据。视频入口冻结所选镜头及其上游素材；封面不冒充视频渲染输入，使用既有封面审查与G5–G7整包上下文绑定，最终来源检查覆盖封面/设计交付依赖。检查器只检字段、文件/哈希、引用闭包和一致性，不证明作者身份、原创事实、授权真实性或审查发生；执行者与独立审查者必须核原始证据及实际媒体。",
+          "quote_sha256": "03b561af45ae024b2fc1352d1be7652a0807ba290a12154e9adc798a96734b3f"
+        }
+      ]
     }
   ],
-  "rule_count": 928,
+  "rule_count": 931,
   "explanation_standard": {
     "status": "navigation_only",
     "authority": "responsibility_body",

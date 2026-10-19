@@ -110,7 +110,29 @@
         "anchor_points": []
       },
       "usage": "catalog_reuse",
-      "origin": "",
+      "origin": {
+        "category": "",
+        "method": "",
+        "entry_version": "",
+        "entrypoint": {
+          "file": "",
+          "sha256": ""
+        },
+        "design": {
+          "file": "",
+          "sha256": ""
+        },
+        "inputs": [],
+        "output": {
+          "file": "",
+          "sha256": ""
+        },
+        "frames": [],
+        "review": {
+          "file": "",
+          "sha256": ""
+        }
+      },
       "source_file": "",
       "source_sha256": "",
       "scientific_review": {
@@ -245,6 +267,18 @@
           "applicable": null,
           "not_applicable_reason": "",
           "links": []
+        },
+        "origin": {
+          "planned_method": "",
+          "design": {
+            "file": "",
+            "sha256": ""
+          },
+          "entrypoint": {
+            "file": "",
+            "sha256": ""
+          },
+          "entry_version": ""
         }
       }
     }
@@ -1921,5 +1955,8 @@
       "file": "",
       "sha256": ""
     }
+  },
+  "origin_contract": {
+    "mode": "self_created_visuals"
   }
 }
