@@ -16,7 +16,7 @@ class IterationStandardTests(unittest.TestCase):
   profile=json.loads((ROOT/'config/series-profile.json').read_text())
   registry=json.loads((ROOT/'indexes/standard-coverage.json').read_text())
   owners=json.loads((ROOT/'indexes/rule-owners.json').read_text())
-  self.assertEqual(profile['version'],'1.6.5');self.assertEqual(registry['version'],'1.6.5')
+  self.assertEqual(profile['version'],'1.6.6');self.assertEqual(registry['version'],'1.6.6')
   self.assertEqual(len(owners['owners']),9)
   rules=[r for r in registry['rules'] if r['id'].startswith('ITERATE-')]
   self.assertEqual(len(rules),8)

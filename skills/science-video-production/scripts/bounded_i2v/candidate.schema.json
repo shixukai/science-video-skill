@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bounded immutable I2V candidate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "shot_id",
+    "task_root",
+    "candidate_root",
+    "workspace_gpu_lock_path",
+    "execution_authorized",
+    "purpose",
+    "parent_prompt_id",
+    "lineage",
+    "output_prefix",
+    "api_sha256",
+    "image_sha256",
+    "image_node",
+    "design_path",
+    "design_sha256",
+    "scope_path",
+    "scope_sha256",
+    "skill_manifest_path",
+    "skill_manifest_sha256",
+    "skill_version",
+    "skill_file_count",
+    "environment",
+    "bindings",
+    "review_basis"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "shot_id": {
+      "type": "string"
+    },
+    "task_root": {
+      "type": "string"
+    },
+    "candidate_root": {
+      "type": "string"
+    },
+    "workspace_gpu_lock_path": {
+      "type": "string"
+    },
+    "execution_authorized": {
+      "type": "boolean"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "parent_prompt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lineage": {
+      "type": "object"
+    },
+    "output_prefix": {
+      "type": "string"
+    },
+    "api_sha256": {
+      "type": "string"
+    },
+    "image_sha256": {
+      "type": "string"
+    },
+    "image_node": {
+      "type": "string"
+    },
+    "design_path": {
+      "type": "string"
+    },
+    "design_sha256": {
+      "type": "string"
+    },
+    "scope_path": {
+      "type": "string"
+    },
+    "scope_sha256": {
+      "type": "string"
+    },
+    "skill_manifest_path": {
+      "type": "string"
+    },
+    "skill_manifest_sha256": {
+      "type": "string"
+    },
+    "skill_version": {
+      "type": "string"
+    },
+    "skill_file_count": {
+      "type": "integer"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "bindings": {
+      "type": "object"
+    },
+    "review_basis": {
+      "type": "string"
+    }
+  },
+  "$comment": "runner.validate_config is the authoritative executable validator; JSON Schema describes shape. Execution additionally requires prior independent reviewed config/core hashes, real asset hashes, lineage, shared lock, fresh independent collector and fixed graph capability."
+}

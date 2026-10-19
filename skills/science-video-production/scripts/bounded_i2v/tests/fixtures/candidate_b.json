@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "candidate_id": "synthetic-b",
+  "shot_id": "SYNTHETIC_SHOT",
+  "task_root": "C:\\FixtureTask",
+  "candidate_root": "C:\\FixtureTask\\i2v-candidates\\synthetic-b",
+  "workspace_gpu_lock_path": "C:\\FixtureTask\\local-gpu-execution.lock",
+  "execution_authorized": false,
+  "purpose": "internal_silent_49_frame_i2v",
+  "parent_prompt_id": null,
+  "lineage": {
+    "kind": "new_candidate"
+  },
+  "output_prefix": "synthetic_b",
+  "api_sha256": "fd277484a125da45b5951f2e85b84db5236b57e6df6a2689c71da1f470bb15c2",
+  "image_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "image_node": "image",
+  "design_path": "C:\\FixtureAssets\\design.json",
+  "design_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "scope_path": "C:\\FixtureAssets\\scope.json",
+  "scope_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "skill_manifest_path": "C:\\FixtureAssets\\skill.json",
+  "skill_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "skill_version": "1.6.5",
+  "skill_file_count": 92,
+  "environment": {
+    "tools": {
+      "python": {
+        "path": "C:\\FixtureTools\\python.exe",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "base_python": {
+        "path": "C:\\FixtureTools\\python.exe",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "powershell": {
+        "path": "C:\\FixtureTools\\pwsh.exe",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "nvidia_smi": {
+        "path": "C:\\FixtureTools\\nvidia-smi.exe",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    "service_executables": {
+      "C:\\FixtureTools\\python.exe": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "comfy_root": "C:\\FixtureComfy",
+    "comfy_entrypoint": "C:\\FixtureComfy\\main.py",
+    "models_directory": "C:\\FixtureModels",
+    "extra_model_paths": "C:\\FixtureModels\\extra.yaml"
+  },
+  "bindings": {
+    "kind": "reviewed_one_shot_rain_test_bindings_v1",
+    "minimum_resources": {
+      "ram_available_bytes": 17179869184,
+      "vram_available_bytes": 12884901888,
+      "disk_available_bytes": 2147483648
+    },
+    "gpu_load_policy": {
+      "max_utilization_percent": 10,
+      "minimum_window_seconds": 6,
+      "minimum_sample_count": 4,
+      "basis": "Synthetic fixed admission policy"
+    },
+    "observation_budget_seconds": 600,
+    "submission_budget_seconds": 600,
+    "observation_timeout_is_not_gpu_termination": true,
+    "case_id": "SYNTHETIC_SHOT",
+    "project_root": "C:\\FixtureTask\\i2v-candidates\\synthetic-b",
+    "endpoint": "http://127.0.0.1:8199",
+    "condition_image": {
+      "basename": "synthetic.png",
+      "path": "C:\\FixtureInput\\synthetic.png",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "service_identity": {
+      "endpoint": "http://127.0.0.1:8199",
+      "service_pid": 902,
+      "parent_pid": 901,
+      "identity_processes": [
+        {
+          "ProcessId": 901,
+          "ParentProcessId": 900,
+          "ExecutablePath": "C:\\FixtureTools\\python.exe",
+          "CreationDate": "2001-01-01T00:00:00Z"
+        },
+        {
+          "ProcessId": 902,
+          "ParentProcessId": 901,
+          "ExecutablePath": "C:\\FixtureTools\\python.exe",
+          "CreationDate": "2001-01-01T00:00:01Z"
+        }
+      ]
+    },
+    "api_source_path": "C:\\FixtureAssets\\graph.json",
+    "derived_graph_sha256": "fd277484a125da45b5951f2e85b84db5236b57e6df6a2689c71da1f470bb15c2"
+  },
+  "review_basis": "Synthetic offline fixture, never authorizes actual submission."
+}
