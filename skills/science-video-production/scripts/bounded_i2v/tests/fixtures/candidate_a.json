@@ -58,10 +58,9 @@
       "disk_available_bytes": 2147483648
     },
     "gpu_load_policy": {
-      "max_utilization_percent": 10,
       "minimum_window_seconds": 6,
       "minimum_sample_count": 4,
-      "basis": "Synthetic fixed admission policy"
+      "basis": "Aggregate utilization is telemetry only; capacity and ownership admission are independently checked."
     },
     "observation_budget_seconds": 600,
     "submission_budget_seconds": 600,

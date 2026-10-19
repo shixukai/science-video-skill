@@ -41,6 +41,11 @@ For an explicit known-no-start recovery, preserve the old claim, failure outcome
 - `python -I -S -B test_blender_continuous.py -v`: continuous delta and forbidden scope/argv/output cases.
 - `pwsh -NoProfile -File test-blender-contract.ps1 -ReportPath <new-path>`: baseline config prefix/service fixtures and C# compile only.
 - `pwsh -NoProfile -File test-blender-continuous-contract.ps1 -ReportPath <new-path>`: one valid continuous prefix, eight invalid changes and C# compile only.
+- `pwsh -NoProfile -File test-utilization-telemetry.ps1 -CorePath run-blender-local.ps1 -ReportPath <new-path>`: extract and evaluate the actual resource condition AST for 11%, 12%, 100%, unavailable telemetry and retained capacity/shape refusals. No native/GPU execution.
 - `pwsh -NoProfile -File test-lifetime-precision.ps1 -ReportPath <new-path>`: actual JSON-to-DateTime conversion, actual admission function, timezone/fractional ticks and negative identity cases. No live queries or compiler.
 
 Run only tests affected by a change, plus necessary compatibility checks. Preserve original failures before fixing, use new receipt paths, and do not regenerate unrelated assets or repeat unchanged environment preparation. These test harnesses never invoke Guardian.Run, Blender, live CIM/HTTP/GPU tools or rendering. Synthetic checks, successful compilation and an individual bounded execution each prove only their observed scope, not general end-to-end speedup, audiovisual acceptance, or publication authorization.
+
+## GPU utilization telemetry
+
+Aggregate GPU utilization is recorded only. There is no utilization admission ceiling, and 11% or 12% does not by itself refuse a run. Existing VRAM/RAM/disk capacity checks, exact process/service/queue identity, shared locking, unknown inhibition, one-shot claim and Job terminal verification remain unchanged. Historical failed receipts are immutable and do not define the current admission rule.

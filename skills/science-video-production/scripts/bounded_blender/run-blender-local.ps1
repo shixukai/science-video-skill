@@ -196,7 +196,7 @@ try {
     $g = $gpu[0].Split(',') | ForEach-Object Trim
     $resources = [ordered]@{CheckedUTC=[DateTime]::UtcNow.ToString('o');GPUFields='name,driver_version,totalMiB,freeMiB,usedMiB,utilizationPercent';GPU=$gpu;FreeRAMBytes=[long]$osInfo.FreePhysicalMemory*1024;Disks=$disks;OtherInferenceRenderEncoderWorkers=$otherWorkerCount;VerifiedIdleComfyServiceWorkers=$workers;IdleServiceObservationSHA256=(Digest (Join-Path $taskRoot 'idle-service-admission-observation.json'));OwnedGPUQueueLock=$lockPath;PendingOwnedGPUJobs='only the reviewed fixed local diagnostic profile in one process; configured prerequisites verified'}
     Write-NewJson (Join-Path $taskRoot 'preflight-resources.json') $resources
-    if ($g.Count -ne 6 -or $g[0] -ne 'NVIDIA GeForce RTX 5060 Ti' -or [int]$g[3] -lt 10240 -or [int]$g[5] -gt 10 -or ([long]$osInfo.FreePhysicalMemory*1024) -lt 12GB -or ($disks | Where-Object DeviceID -eq 'C:').FreeSpace -lt 2GB) { throw 'GPU/RAM/disk busy or insufficient; no Blender started' }
+    if ($g.Count -ne 6 -or $g[0] -ne 'NVIDIA GeForce RTX 5060 Ti' -or [int]$g[3] -lt 10240 -or ([long]$osInfo.FreePhysicalMemory*1024) -lt 12GB -or ($disks | Where-Object DeviceID -eq 'C:').FreeSpace -lt 2GB) { throw 'GPU/RAM/disk busy or insufficient; no Blender started' }
     $intent = [ordered]@{
         Status='frozen_not_started';CreatedUTC=[DateTime]::UtcNow.ToString('o');Executable=$exe;ExecutableSHA256=$exeSHA;Arguments=$arguments;WorkingDirectory=$package;InputDirectory=$package;OutputDirectory=(Join-Path $package 'output');OutputPNGs=$outputPNGs
         ManifestSHA256=(Digest (Join-Path $package 'manifest.json'));WrapperPath=$PSCommandPath;WrapperSHA256=(Digest $PSCommandPath);ControllerPath=$controller;ControllerSHA256=$controllerSHA

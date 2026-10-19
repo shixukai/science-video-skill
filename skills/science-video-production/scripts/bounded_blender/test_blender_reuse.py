@@ -71,5 +71,14 @@ class OfflineReuse(unittest.TestCase):
         self.assertLess(ps.index("Test-Path -LiteralPath $uncertainPath"),ps.index("$guardianCalled = $true"))
         self.assertIn("$nativeResult.RootExited -and $nativeResult.TreeExitVerified",ps)
         self.assertIn("$ownedMarker.Nonce -cne $markerNonce",ps)
+    def test_utilization_no_longer_controls_resource_admission(self):
+        ps=(HERE/'run-blender-local.ps1').read_text()
+        decision=next(line for line in ps.splitlines() if "if ($g.Count -ne 6" in line)
+        self.assertNotIn('$g[5]',decision)
+        self.assertIn('[int]$g[3] -lt 10240',decision)
+        self.assertIn('-lt 12GB',decision);self.assertIn('-lt 2GB',decision)
+        self.assertIn('utilization.gpu',ps)  # Raw observation is retained.
+        fixture=(HERE/'test-utilization-telemetry.ps1').read_text()
+        self.assertIn("@(0,11,12,100,'N/A')",fixture)
     def test_guardian_hash_pin(self): self.assertIn(digest(HERE/'blender-guardian.cs'),(HERE/'run-blender-local.ps1').read_text())
 if __name__=='__main__':unittest.main()

@@ -172,8 +172,10 @@ def collect(request):
     for i in range(4):
         rows=run([NV,'--query-gpu=index,memory.free,utilization.gpu','--format=csv,noheader,nounits']).splitlines()
         require(len(rows) == 1, 'unexpected GPU count')
-        index,free,util=[int(x.strip()) for x in rows[0].split(',')]
-        samples.append({'observed_at':now(),'utilization_percent':util,'gpu_index':index,
+        index_text,free_text,util_text=[x.strip() for x in rows[0].split(',')]
+        index,free=int(index_text),int(free_text)
+        util=int(util_text) if util_text.isdigit() else None  # Telemetry only; N/A is not refusal.
+        samples.append({'observed_at':now(),'utilization_percent':util,'utilization_raw':util_text,'gpu_index':index,
                         'vram_available_bytes':free*1024*1024,'ram_available_bytes':ram()})
         trace('gpu_sample',samples[-1])
         if i < 3:time.sleep(2)
@@ -187,8 +189,7 @@ def collect(request):
         'inspection_source':str(Path(__file__).resolve())+'; fixed actual PS listener/parent identity, HTTP200 queue, NVIDIA short-window measurements, GlobalMemoryStatusEx and disk_usage',
         'unique_executor_lock':lock['lock_id'],'ram_available_bytes':min(x['ram_available_bytes'] for x in samples),
         'vram_available_bytes':min(x['vram_available_bytes'] for x in samples),'disk_available_bytes':shutil.disk_usage(output).free,
-        'heavy_load_assessment':'not_observed_in_sample_window' if all(x['utilization_percent'] <= request['gpu_load_policy']['max_utilization_percent'] for x in samples) else 'observed_above_budget',
-        'gpu_load':{'status':'measured','metric':'gpu_total_utilization_percent',
+        'gpu_load':{'status':'measured' if all(x['utilization_percent'] is not None for x in samples) else 'telemetry_unavailable','metric':'gpu_total_utilization_percent',
             'observation_source':'fixed nvidia-smi actual utilization.gpu; no per-PID idle inference',
             'samples':[{'observed_at':x['observed_at'],'utilization_percent':x['utilization_percent']} for x in samples]},
         'lock_evidence':{'path':request['executor_lock']['path'],'holder_pid':holder,

@@ -62,14 +62,14 @@ def validate_config(c):
  need(isinstance(c['review_basis'],str) and c['review_basis'].strip(),'independent design basis required')
  need(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,180}',c['output_prefix']) is not None,'unsafe output prefix')
  for k in ('api_sha256','image_sha256','design_sha256','scope_sha256','skill_manifest_sha256'):need(re.fullmatch('[0-9a-f]{64}',c[k]) is not None,'invalid content hash')
- need(c['skill_version'] in ('1.6.5','1.6.6','1.6.7') and type(c['skill_file_count']) is int and c['skill_file_count']>0,'explicit supported actual Skill1.6.5/1.6.6/1.6.7 required')
+ need(c['skill_version'] in ('1.6.5','1.6.6','1.6.7','1.6.8') and type(c['skill_file_count']) is int and c['skill_file_count']>0,'explicit supported actual Skill1.6.5/1.6.6/1.6.7/1.6.8 required')
  env=c['environment'];b=c['bindings']
  need(set(env)=={'tools','service_executables','comfy_root','comfy_entrypoint','models_directory','extra_model_paths'},'environment schema differs')
  need(set(env['tools'])=={'python','base_python','powershell','nvidia_smi'},'only fixed tool roles allowed')
  for role,t in env['tools'].items():
   need(set(t)=={'path','sha256'} and PureWindowsPath(t['path']).is_absolute() and re.fullmatch('[0-9a-f]{64}',t['sha256']) is not None,'tool reference malformed')
  need(b['endpoint']=='http://127.0.0.1:8199' and b['service_identity']['endpoint']==b['endpoint'],'only fixed localhost endpoint')
- need(b['gpu_load_policy']['max_utilization_percent']==10 and b['gpu_load_policy']['minimum_window_seconds']==6 and b['gpu_load_policy']['minimum_sample_count']==4,'load policy is fixed, cannot relax via config')
+ need(set(b['gpu_load_policy'])=={'minimum_window_seconds','minimum_sample_count','basis'} and b['gpu_load_policy']['minimum_window_seconds']==6 and b['gpu_load_policy']['minimum_sample_count']==4 and isinstance(b['gpu_load_policy']['basis'],str) and b['gpu_load_policy']['basis'].strip(),'fixed telemetry sampling policy required; utilization admission thresholds are not supported')
  need(b['minimum_resources']=={'ram_available_bytes':17179869184,'vram_available_bytes':12884901888,'disk_available_bytes':2147483648},'resource thresholds cannot drift')
  need(b['submission_budget_seconds']==600 and b['observation_budget_seconds']==600 and b['observation_timeout_is_not_gpu_termination'] is True,'fixed admission budget required')
  need(b['case_id']==c['shot_id'] and b['project_root']==c['candidate_root'] and b['condition_image']['sha256']==c['image_sha256'],'candidate binding mismatch')

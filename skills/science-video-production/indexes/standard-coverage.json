@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.6.7",
+  "version": "1.6.8",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -45232,8 +45232,8 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "静态证据条件复用与动态新鲜检查",
-          "quote": "资源余量、实际服务身份、任务唯一执行者、队列与时限每次提交前重新采集和验证，不复用上一轮动态快照。静态独审与大文件校验尽量先完成，再采集动态证据并在提交前复核；不得把旧时间改为现在，也不得为适配等待时间扩大既定新鲜度窗口。唯一执行者是本任务防重复提交，不凭桌面进程存在就声称整机独占；未知重负载或证据缺失按实际资源策略停止，不擅杀其他任务。",
-          "quote_sha256": "ebeeee828acf24cfa3431d8231460015c5d4af6ea5283bd0ab1cefec6b2bb044"
+          "quote": "资源余量、实际服务身份、任务唯一执行者、队列与时限每次提交前重新采集和验证，不复用上一轮动态快照。静态独审与大文件校验尽量先完成，再采集动态证据并在提交前复核；不得把旧时间改为现在，也不得为适配等待时间扩大既定新鲜度窗口。唯一执行者是本任务防重复提交，不凭桌面进程存在就声称整机独占。GPU利用率只作观测信息，不设利用率百分比准入阈值，也不据其单独判定重负载而阻塞；实际可用显存、内存、磁盘、进程身份、已知冲突任务、独占任务锁与执行预算仍按该任务的既有约束核验，缺失这些必要证据或实际容量不足时停止，不擅杀其他任务。",
+          "quote_sha256": "2fc29bd4d30511e225660ea84bb90c711d59101c37403f695d14296d323e9d80"
         }
       ]
     },

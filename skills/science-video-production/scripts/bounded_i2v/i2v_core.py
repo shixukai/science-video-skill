@@ -78,28 +78,23 @@ def freshness(record, max_age=60):
     require(0 <= age <= max_age, 'stale/future resource or service observation')
 
 def check_gpu_observation(resource, policy):
-    """Preserve WDDM PID evidence; low aggregate load is not per-PID attribution."""
+    """Retain full PID evidence. Aggregate utilization is telemetry, not admission."""
     pids = resource['gpu_process_pids']
     require(isinstance(pids, list) and all((type(pid) is int and pid > 0 for pid in pids)) and (len(set(pids)) == len(pids)), 'complete GPU PID observation must be a unique integer list')
     unknown = resource.get('unattributed_gpu_process_pids', [])
     require(isinstance(unknown, list) and all((type(pid) is int and pid in pids for pid in unknown)), 'unattributed PIDs must remain within observed full list')
+    # Preserve the reviewed collector's observation provenance and timing. No
+    # utilization value, including unavailable telemetry, determines admission.
     load = resource['gpu_load']
-    require(load['status'] == 'measured' and load['metric'] == 'gpu_total_utilization_percent' and isinstance(load['observation_source'], str) and load['observation_source'].strip(), 'actual short-window aggregate GPU observation required; unknown heavy load blocks')
-    require(resource['heavy_load_assessment'] == 'not_observed_in_sample_window', 'observed or unknown heavy load blocks this attempt')
-    number = lambda x: type(x) in (int, float) and x == x and (abs(x) != float('inf'))
-    maximum = policy['max_utilization_percent']
-    window = policy['minimum_window_seconds']
-    count = policy['minimum_sample_count']
-    require(number(maximum) and 0 <= maximum < 100 and number(window) and (0 < window <= 60) and (type(count) is int) and (2 <= count <= 60) and isinstance(policy['basis'], str) and policy['basis'].strip(), 'independently justified finite load threshold and short-window policy required')
+    require(load['status'] in ('measured', 'telemetry_unavailable') and load['metric'] == 'gpu_total_utilization_percent' and isinstance(load['observation_source'], str) and load['observation_source'].strip(), 'actual collector observation provenance required')
+    window, count = policy['minimum_window_seconds'], policy['minimum_sample_count']
     samples = load['samples']
-    require(isinstance(samples, list) and count <= len(samples) <= 120, 'insufficient aggregate load samples')
+    require(isinstance(samples, list) and count <= len(samples) <= 120, 'incomplete collector observation window')
     times = []
     for sample in samples:
         freshness(sample)
-        value = sample['utilization_percent']
-        require(number(value) and 0 <= value <= 100 and (value <= maximum), 'aggregate GPU load exceeds reviewed budget or is unknown')
         times.append(stamp(sample['observed_at']))
-    require(all((a < b for a, b in zip(times, times[1:]))) and times[-1] - times[0] >= window and (times[-1] <= stamp(resource['observed_at'])), 'aggregate sample timestamps/window invalid')
+    require(all((a < b for a, b in zip(times, times[1:]))) and times[-1] - times[0] >= window and times[-1] <= stamp(resource['observed_at']), 'collector sample timestamps/window invalid')
 
 def check_condition_image(bindings, *, c):
     row = bindings['condition_image']
