@@ -102,3 +102,5 @@ description: 为普通大众制作自然现象与生活科学视频，以真实�
 ## 候选学习记录（不构成规范）
 
 仅在研究可试方法时阅读 [雨滴形态的示意与不同来源影像](references/learning-candidates/nasa-raindrop-evidence-boundaries.md)。该记录保留公开案例的有限观察及未验证迁移假设，不代表实际应用、视听通过或效果提升，不新增制作门槛。
+
+另见 [比较镜头的对象身份与时间尺度](references/learning-candidates/rain-causal-observation-and-original-staging.md)：仅含公开参考的有限画面观察及未验证迁移假设，不代表完整看听、实际应用或改善效果，不改变正式规则或制作门槛。
