@@ -5,6 +5,18 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 function Digest([string]$Path) { (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant() }
+function Get-ExactUtcTicks($Value) {
+    # JSON may yield DateTime; never send it through an implicit string conversion.
+    if ($Value -is [DateTimeOffset]) { return $Value.UtcTicks }
+    if ($Value -is [DateTime]) {
+        if ($Value.Kind -eq [DateTimeKind]::Unspecified) { throw 'Service lifetime timezone is unspecified' }
+        return $Value.ToUniversalTime().Ticks
+    }
+    if ($Value -is [string] -and $Value -cmatch '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,7})?(?:Z|[+-]\d{2}:\d{2})$') {
+        return ([DateTimeOffset]::Parse($Value,[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::None)).UtcTicks
+    }
+    throw 'Service lifetime must be an exact timezone-qualified timestamp'
+}
 function ExactFields($Object,[string[]]$Fields) {
     $actual = @($Object.PSObject.Properties.Name | Sort-Object)
     if (($actual -join '|') -cne (($Fields | Sort-Object) -join '|')) { throw 'Unknown or missing configuration fields' }
@@ -23,7 +35,7 @@ function RelativeFile([string]$Root,[string]$Relative) {
 if ((Digest $ConfigPath) -cne $ReviewedConfigSHA256) { throw 'Independent reviewed configuration hash mismatch' }
 $c = [IO.File]::ReadAllText($ConfigPath) | ConvertFrom-Json
 ExactFields $c @('schema_version','executor','candidate_id','candidate_root','input_manifest','skill_lock','skill_root','blender','service_evidence','expected_outputs','argv','prerequisite_receipts','scope')
-if ($c.schema_version -ne 1 -or $c.executor -cne 'blender-local-three-keyframes' -or $c.candidate_id -notmatch '^[A-Za-z0-9_-]{1,80}$') { throw 'Unsupported configuration profile' }
+if ($c.schema_version -ne 1 -or @('blender-local-three-keyframes','blender-local-bounded-reveal') -cnotcontains $c.executor -or $c.candidate_id -notmatch '^[A-Za-z0-9_-]{1,80}$') { throw 'Unsupported configuration profile' }
 $taskRoot = [IO.Path]::GetFullPath($c.candidate_root)
 if ($c.candidate_root -notmatch '^[A-Za-z]:\\' -or -not [IO.Path]::IsPathFullyQualified($c.candidate_root) -or -not (Test-Path -LiteralPath $taskRoot -PathType Container)) { throw 'Existing absolute candidate root required' }
 $workspace = Split-Path -Parent $taskRoot
@@ -33,19 +45,30 @@ $exe = $c.blender.path
 $exeSHA = $c.blender.sha256
 if ($exe -notmatch '^[A-Za-z]:\\' -or -not [IO.Path]::IsPathFullyQualified($exe) -or [IO.Path]::GetFileName($exe) -cne 'blender.exe' -or $exeSHA -notmatch '^[a-f0-9]{64}$') { throw 'Only reviewed Blender binary permitted' }
 $controller = Join-Path $PSScriptRoot 'blender-guardian.cs'
-$controllerSHA = '07fe9fd30f257960939edd08a0740e8cf75a989cfe9f40a451c22c4e687882be'
+$controllerSHA = '8feaec4e34bfbc74a8e55152d691f79a0918f535740abab7d3991e3d5f887f4b'
 ExactFields $c.skill_lock @('path','sha256')
 $skillLockPath = RelativeFile $taskRoot $c.skill_lock.path
 if ((Digest $skillLockPath) -cne $c.skill_lock.sha256 -or $c.skill_root -notmatch '^[A-Za-z]:\\' -or -not [IO.Path]::IsPathFullyQualified($c.skill_root)) { throw 'Actual Skill lock mismatch' }
-$arguments = @('--background','--factory-startup','--disable-autoexec','--threads','2','--python-exit-code','1','--python',(Join-Path $package 'run_three_keyframes.py'),'--','--skill-root',$c.skill_root,'--skill-lock',$skillLockPath)
+$entryName = if ($c.executor -ceq 'blender-local-three-keyframes') { 'run_three_keyframes.py' } else { 'run_bounded_reveal.py' }
+$arguments = @('--background','--factory-startup','--disable-autoexec','--threads','2','--python-exit-code','1','--python',(Join-Path $package $entryName),'--','--skill-root',$c.skill_root,'--skill-lock',$skillLockPath)
 if (@($c.argv).Count -ne $arguments.Count) { throw 'Only fixed diagnostic argv profile permitted' }
 for ($i=0;$i -lt $arguments.Count;$i++) { if ($c.argv[$i] -cne $arguments[$i]) { throw 'Argument outside fixed allowlist' } }
-$expectedNames = @('output\frame_0000.png','output\frame_0033.png','output\frame_0047.png')
-if (@($c.expected_outputs).Count -ne 3) { throw 'Exactly three fixed diagnostic outputs required' }
+if ($c.executor -ceq 'blender-local-three-keyframes') {
+    $expectedNames = @('output\frame_0000.png','output\frame_0033.png','output\frame_0047.png')
+    $states = @('frame_0000','frame_0033','frame_0047')
+    ExactFields $c.scope @('FrameCount','Width','Height','Samples','Device','States','Animation')
+    if ($c.scope.FrameCount -ne 3 -or $c.scope.Animation -cne $false) { throw 'Static profile scope mismatch' }
+} else {
+    # One bounded diagnostic capability, not arbitrary duration or render-anim.
+    $expectedNames = @(0..47 | ForEach-Object { 'output\frame_{0:d4}.png' -f $_ })
+    $states = @(0..47 | ForEach-Object { 'frame_{0:d4}' -f $_ })
+    ExactFields $c.scope @('FrameCount','Width','Height','Samples','Device','States','Animation','StartFrame','EndFrame','FPS')
+    if ($c.scope.FrameCount -ne 48 -or $c.scope.StartFrame -ne 0 -or $c.scope.EndFrame -ne 47 -or $c.scope.FPS -ne 24 -or $c.scope.Animation -cne $true) { throw 'Continuous profile must be exactly 0..47 at 24fps' }
+}
+if (@($c.expected_outputs).Count -ne $expectedNames.Count) { throw 'Fixed profile output count mismatch' }
 $outputPNGs = @()
-for ($i=0;$i -lt 3;$i++) { if ($c.expected_outputs[$i] -cne $expectedNames[$i]) { throw 'Unexpected diagnostic output' }; $outputPNGs += RelativeFile $package $c.expected_outputs[$i] }
-ExactFields $c.scope @('FrameCount','Width','Height','Samples','Device','States','Animation')
-if ($c.scope.FrameCount -ne 3 -or $c.scope.Width -ne 960 -or $c.scope.Height -ne 540 -or $c.scope.Samples -ne 256 -or $c.scope.Device -cne 'RTX5060Ti OptiX' -or $c.scope.Animation -cne $false -or (@($c.scope.States) -join '|') -cne 'frame_0000|frame_0033|frame_0047') { throw 'Scope is outside fixed diagnostic profile' }
+for ($i=0;$i -lt $expectedNames.Count;$i++) { if ($c.expected_outputs[$i] -cne $expectedNames[$i]) { throw 'Unexpected diagnostic output' }; $outputPNGs += RelativeFile $package $c.expected_outputs[$i] }
+if ($c.scope.Width -ne 960 -or $c.scope.Height -ne 540 -or $c.scope.Samples -ne 256 -or $c.scope.Device -cne 'RTX5060Ti OptiX' -or (@($c.scope.States) -join '|') -cne ($states -join '|')) { throw 'Scope is outside fixed diagnostic profile' }
 ExactFields $c.service_evidence @('path','sha256')
 $servicePath = RelativeFile $taskRoot $c.service_evidence.path
 if ((Digest $servicePath) -cne $c.service_evidence.sha256) { throw 'Reviewed startup evidence changed' }
@@ -55,7 +78,7 @@ if ($service.schema_version -ne 1 -or $service.startup_verified -cne $true -or @
 foreach ($e in $service.workers) {
     ExactFields $e @('PID','Parent','Exe','Created','SHA')
     if ($e.PID -le 0 -or $e.Parent -le 0 -or $e.Exe -notmatch '^[A-Za-z]:\\' -or -not [IO.Path]::IsPathFullyQualified($e.Exe) -or [IO.Path]::GetFileName($e.Exe) -cne 'python.exe' -or $e.SHA -notmatch '^[a-f0-9]{64}$') { throw 'Invalid service identity' }
-    [void][DateTimeOffset]::Parse($e.Created)
+    [void](Get-ExactUtcTicks $e.Created)
 }
 ExactFields $service.listener @('LocalAddress','LocalPort','OwningProcess')
 if ($service.listener.LocalAddress -cne '127.0.0.1' -or $service.listener.LocalPort -ne 8199 -or $service.listener.OwningProcess -ne $service.workers[1].PID -or $service.workers[1].Parent -ne $service.workers[0].PID -or $service.workers[0].PID -eq $service.workers[1].PID) { throw 'Invalid service topology' }
@@ -85,7 +108,7 @@ function Assert-ExactIdleComfyService($Snapshot) {
         if ($matches.Count -ne 1) { throw 'Known service PID missing or duplicated' }
         $w = $matches[0]
         if ($w.ParentProcessId -ne $e.Parent -or $w.Name -ine 'python.exe' -or $w.ExecutablePath -cne $e.Exe -or $w.CreationDate -isnot [datetime]) { throw 'Service identity missing or changed' }
-        if ($w.CreationDate.ToUniversalTime().Ticks -ne ([DateTimeOffset]::Parse($e.Created)).UtcTicks) { throw 'Service lifetime changed; possible PID reuse' }
+        if ((Get-ExactUtcTicks $w.CreationDate) -ne (Get-ExactUtcTicks $e.Created)) { throw 'Service lifetime changed; possible PID reuse' }
         if ($Snapshot.BinaryHashes[$e.Exe] -cne $e.SHA) { throw 'Service binary changed' }
     }
     $listeners = @($Snapshot.Listeners)
@@ -119,7 +142,7 @@ try {
         $seen[$member.ToLowerInvariant()] = $true
         if ($item.sha256 -notmatch '^[a-f0-9]{64}$' -or (Get-Item -LiteralPath $member).Length -ne $item.bytes -or (Digest $member) -cne $item.sha256) { throw 'Frozen package member changed' }
     }
-    foreach ($required in @('run_three_keyframes.py','manifest.json')) { if (-not $seen.ContainsKey((RelativeFile $package $required).ToLowerInvariant())) { throw 'Required entry/manifest not frozen' } }
+    foreach ($required in @($entryName,'manifest.json')) { if (-not $seen.ContainsKey((RelativeFile $package $required).ToLowerInvariant())) { throw 'Required entry/manifest not frozen' } }
     $actualFiles = @(Get-ChildItem -LiteralPath $package -Recurse -File -Force)
     if ($actualFiles.Count -ne $seen.Count) { throw 'Unfrozen package files present' }
     foreach ($file in $actualFiles) { if (-not $seen.ContainsKey($file.FullName.ToLowerInvariant())) { throw 'Unfrozen package member' } }
@@ -171,7 +194,7 @@ try {
     } catch { $rawResources.Error = $_.Exception.Message; throw }
     finally { Write-NewJson (Join-Path $taskRoot 'preflight-resource-observation.json') $rawResources }
     $g = $gpu[0].Split(',') | ForEach-Object Trim
-    $resources = [ordered]@{CheckedUTC=[DateTime]::UtcNow.ToString('o');GPUFields='name,driver_version,totalMiB,freeMiB,usedMiB,utilizationPercent';GPU=$gpu;FreeRAMBytes=[long]$osInfo.FreePhysicalMemory*1024;Disks=$disks;OtherInferenceRenderEncoderWorkers=$otherWorkerCount;VerifiedIdleComfyServiceWorkers=$workers;IdleServiceObservationSHA256=(Digest (Join-Path $taskRoot 'idle-service-admission-observation.json'));OwnedGPUQueueLock=$lockPath;PendingOwnedGPUJobs='only the reviewed three static diagnostic frames in one process; configured prerequisites verified'}
+    $resources = [ordered]@{CheckedUTC=[DateTime]::UtcNow.ToString('o');GPUFields='name,driver_version,totalMiB,freeMiB,usedMiB,utilizationPercent';GPU=$gpu;FreeRAMBytes=[long]$osInfo.FreePhysicalMemory*1024;Disks=$disks;OtherInferenceRenderEncoderWorkers=$otherWorkerCount;VerifiedIdleComfyServiceWorkers=$workers;IdleServiceObservationSHA256=(Digest (Join-Path $taskRoot 'idle-service-admission-observation.json'));OwnedGPUQueueLock=$lockPath;PendingOwnedGPUJobs='only the reviewed fixed local diagnostic profile in one process; configured prerequisites verified'}
     Write-NewJson (Join-Path $taskRoot 'preflight-resources.json') $resources
     if ($g.Count -ne 6 -or $g[0] -ne 'NVIDIA GeForce RTX 5060 Ti' -or [int]$g[3] -lt 10240 -or [int]$g[5] -gt 10 -or ([long]$osInfo.FreePhysicalMemory*1024) -lt 12GB -or ($disks | Where-Object DeviceID -eq 'C:').FreeSpace -lt 2GB) { throw 'GPU/RAM/disk busy or insufficient; no Blender started' }
     $intent = [ordered]@{
@@ -188,7 +211,7 @@ try {
     Write-NewJson $uncertainPath ([ordered]@{State='launch_may_start_or_be_active';Nonce=$markerNonce;CandidateID=$c.candidate_id;TaskRoot=$taskRoot;ConfigSHA256=$ReviewedConfigSHA256;CreatedUTC=[DateTime]::UtcNow.ToString('o');AutomaticRetry=$false})
     $uncertainMarkerOwned = $true
     $guardianCalled = $true
-    $nativeResult = [ReviewedBlenderLocal.Guardian]::Run($taskRoot,$exe,[string[]]$arguments,$package,$PID,$exeSHA,$c.skill_root,$skillLockPath)
+    $nativeResult = [ReviewedBlenderLocal.Guardian]::Run($taskRoot,$exe,[string[]]$arguments,$package,$PID,$exeSHA,$c.skill_root,$skillLockPath,$c.executor)
     $unchanged = $true
     $verificationErrors = @()
     foreach ($item in $frozen.files) {

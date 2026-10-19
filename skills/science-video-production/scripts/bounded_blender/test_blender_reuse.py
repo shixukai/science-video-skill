@@ -41,7 +41,7 @@ class OfflineReuse(unittest.TestCase):
             c=fixture(1); c['argv']+=[extra]
             with self.assertRaises(ValueError): check(c)
     def test_reject_changed_entry(self):
-        c=fixture(1); c['argv'][9]=r'C:\Synthetic\evil.py'
+        c=fixture(1); c['argv'][8]=r'C:\Synthetic\evil.py'
         with self.assertRaises(ValueError): check(c)
     def test_reject_paths_and_fields(self):
         for path in ('../input.json',r'..\input.json','C:\\other.json','a:stream',r'foo\..\x'):
@@ -57,7 +57,7 @@ class OfflineReuse(unittest.TestCase):
         with self.assertRaises(ValueError): check(c)
     def test_required_safety_code_retained(self):
         ps=(HERE/'run-blender-local.ps1').read_text();cs=(HERE/'blender-guardian.cs').read_text()
-        for token in ('[IO.FileMode]::CreateNew','[IO.FileShare]::None','Get-CimInstance Win32_Process','Get-NetTCPConnection','Invoke-RestMethod','queue_running.Count -ne 0','CreationDate.ToUniversalTime().Ticks','preflight-resources.json','TreeExitVerified','AutomaticRetry=$false','--factory-startup','--disable-autoexec','ReparsePoint','ReviewedConfigSHA256'):
+        for token in ('[IO.FileMode]::CreateNew','[IO.FileShare]::None','Get-CimInstance Win32_Process','Get-NetTCPConnection','Invoke-RestMethod','queue_running.Count -ne 0','Get-ExactUtcTicks $w.CreationDate','preflight-resources.json','TreeExitVerified','AutomaticRetry=$false','--factory-startup','--disable-autoexec','ReparsePoint','ReviewedConfigSHA256'):
             self.assertIn(token,ps)
         for token in ('CutoffMilliseconds = 295000','MaximumMilliseconds = 300000','JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE','CREATE_SUSPENDED','Interlocked.CompareExchange(ref CloseClaimed','private_job_ACTIVE_PROCESS_ZERO_completion','InvocationClaimed','unknown_requires_reconciliation'):
             self.assertIn(token,cs)

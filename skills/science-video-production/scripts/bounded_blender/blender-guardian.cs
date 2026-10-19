@@ -202,7 +202,7 @@ namespace ReviewedBlenderLocal
             r.LimitBreach = !r.RootExited || !r.TreeExitVerified;
         }
 
-        public static GuardianResult Run(string taskRoot, string executable, string[] arguments, string directory, int parentLauncherPID, string executableSHA256, string skillRoot, string skillLock)
+        public static GuardianResult Run(string taskRoot, string executable, string[] arguments, string directory, int parentLauncherPID, string executableSHA256, string skillRoot, string skillLock, string profile)
         {
             // One invocation per process: no mutable shared root can race a prior watchdog.
             Need(Interlocked.CompareExchange(ref InvocationClaimed, 1, 0) == 0, "Guardian already invoked; reconcile instead of retry");
@@ -219,7 +219,8 @@ namespace ReviewedBlenderLocal
             {
                 Need(IntPtr.Size == 8 && Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major >= 10, "64-bit Windows 10+ is required; no fallback launch");
                 string package = Path.Combine(Root, "package");
-                string script = Path.Combine(package, "run_three_keyframes.py");
+                Need(profile == "blender-local-three-keyframes" || profile == "blender-local-bounded-reveal", "Unsupported fixed render profile");
+                string script = Path.Combine(package, profile == "blender-local-three-keyframes" ? "run_three_keyframes.py" : "run_bounded_reveal.py");
                 string[] expected = { "--background", "--factory-startup", "--disable-autoexec", "--threads", "2", "--python-exit-code", "1", "--python", script, "--", "--skill-root", skillRoot, "--skill-lock", skillLock };
                 Need(String.Equals(Path.GetFullPath(taskRoot), Root, StringComparison.OrdinalIgnoreCase) && String.Equals(Path.GetFullPath(executable), Exe, StringComparison.OrdinalIgnoreCase) && String.Equals(Path.GetFullPath(directory), package, StringComparison.OrdinalIgnoreCase), "Frozen absolute invocation paths required");
                 Need(arguments != null && arguments.Length == expected.Length, "Frozen argument vector required");

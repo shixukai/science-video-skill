@@ -8,7 +8,7 @@ Deploy `runner.py`, `i2v_core.py`, and `rain_resource_collector.py` once. Review
 
 This version deliberately supports only: Windows, an existing reviewed service at 127.0.0.1:8199, reviewed Wan graph classes, original conditioning PNG, 832×480, 49 frames, 24fps, batch1, seed20261018, 20 steps, cfg5, uni_pc/simple, denoise1, shift8, mp4/h264, silent internal testing. Its existing conservative admission thresholds remain GPU utilization≤10%, four samples spanning≥6s, RAM≥16GiB, free VRAM≥12GiB, free disk≥2GiB; 600s admission/observation budget is not GPU termination. These limits are not new defaults for other models, topics or Blender.
 
-Actual Skill 1.6.5 or 1.6.6 must match the exact referenced installed-file manifest; arbitrary versions do not pass. Changing tools, weights, loader roots, interpreter, service launch configuration or reviewed scope requires corresponding fresh checks and affected review. This implementation still rehashes actual model/tool/Skill bytes where the inherited entry requires it. It removes code rewrites and cross-cloud holder waiting, **not** integrity checks, and makes no measured speed claim.
+Actual Skill 1.6.5, 1.6.6 or 1.6.7 must match the exact referenced installed-file manifest; arbitrary versions do not pass. Changing tools, weights, loader roots, interpreter, service launch configuration or reviewed scope requires corresponding fresh checks and affected review. This implementation still rehashes actual model/tool/Skill bytes where the inherited entry requires it. It removes code rewrites and cross-cloud holder waiting, **not** integrity checks, and makes no measured speed claim.
 
 ## Configuration and independent review
 

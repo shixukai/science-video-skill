@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.6.6",
+  "version": "1.6.7",
   "scope": "Current requirement and record navigation. Companion fields and E01–E12 entries navigate the sole responsibility bodies, not extra production gates or another episode checklist. Read the exact responsible body and actual applicability; this index does not establish execution, viewing or publication. Internal explanation review does not require real audience feedback.",
   "contracts": {
     "hard": {
@@ -38108,8 +38108,8 @@
     },
     {
       "id": "ITERATE-stable-executor",
-      "rule": "使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。",
-      "action": "使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。",
+      "rule": "使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧/固定48帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。",
+      "action": "使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧/固定48帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。",
       "modality": "conditional",
       "owner": "references/production-checkpoints.md",
       "owner_anchor": "静态证据条件复用与动态新鲜检查",
@@ -45315,14 +45315,14 @@
         {
           "file": "references/production-checkpoints.md",
           "anchor": "静态证据条件复用与动态新鲜检查",
-          "quote": "使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。",
-          "quote_sha256": "a1e1faa6c58fffcbbdf14a71f4d04655fb020b3d1052f8b7bbff480cb5c86f63"
+          "quote": "使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧/固定48帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。",
+          "quote_sha256": "45524f48ea6a6a17ba66950fb7a98006256265a2e015924d8df04bb37823e687"
         },
         {
           "file": "references/production-checkpoints.md",
           "anchor": "静态证据条件复用与动态新鲜检查",
-          "quote": "实际执行者身份由受控本地启动及锁证据绑定，不再要求云端逐轮抄写 holder 身份后等待手签；这不是取消独审或本地身份核验。已有静态独审先完成，冻结入口在本地连续执行动态采集、资源检查与受限提交，避免人为跨端往返使快照过期。",
-          "quote_sha256": "163a35e1e306c9b8be0ec3bf1345a082a33edecb68f55ec63d8b53dec795b216"
+          "quote": "实际执行者身份由受控本地启动及锁证据绑定，不再要求云端逐轮抄写 holder 身份后等待手签；这不是取消独审或本地身份核验。 独审明确限定的动态绑定槽可在本地依据实际证据物化，静态源码、路径、范围不得替换；这不授权重启服务或扩权。核服务创建时间时保留 DateTime/DateTimeOffset 原有精度或解析带时区字符串，禁止经隐式字符串转换丢失小数秒；仍按精确 UTC ticks 匹配，不放宽容差。已有静态独审先完成，冻结入口在本地连续执行动态采集、资源检查与受限提交，避免人为跨端往返使快照过期。",
+          "quote_sha256": "a602ff6a24a76882ac10b6f39b77946acc41be600d0cd7afc9dd82c1c3bce989"
         }
       ]
     },

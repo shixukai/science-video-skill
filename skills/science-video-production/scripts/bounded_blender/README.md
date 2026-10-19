@@ -1,31 +1,46 @@
-# Fixed Blender local diagnostic adapter
+# Fixed bounded Blender executor
 
-This is a deliberately narrow implementation, not a general renderer or a new production gate. It supports the existing three-frame profile only: frames 0/33/47, 960×540, 256 samples, the reviewed RTX5060Ti OptiX configuration, a single background factory-startup Blender process, and the existing 295-second shutdown / 300-second native limit. It does not authorize a new render, change a Skill quality requirement, or accept a video.
+One PowerShell entry and one pinned C# guardian support two explicit local diagnostic capabilities. Candidate changes belong in independently reviewed JSON data and a closed, hash-bound scene package, not generated PowerShell/C# wrappers.
 
-## What stays fixed
+| executor | fixed Python entry | output |
+| --- | --- | --- |
+| `blender-local-three-keyframes` | `run_three_keyframes.py` | Frames 0, 33, 47; Animation=false |
+| `blender-local-bounded-reveal` | `run_bounded_reveal.py` | Exactly frames 0..47 at 24 fps; Animation=true |
 
-`run-blender-local.ps1` and `blender-guardian.cs` are versioned execution code. Candidate changes are JSON data, not textual substitution or generated PowerShell/C#. The C# source hash is pinned in the PowerShell core. The native Job, suspended atomic assignment, private completion port, identity check, one-close cleanup, no-breakaway semantics and bounded tree observation retain their previous implementation. One invocation per PowerShell process is mandatory; restart is not authorization to repeat a candidate.
+Both profiles require 960×540, 256 samples and the existing reviewed RTX5060Ti OptiX setting. The continuous scope adds StartFrame=0, EndFrame=47 and FPS=24, and requires all 48 ordered States and PNG paths. There is no arbitrary entry, executable command, Python expression, `--render-anim`, timeout or full-video mode. The Python scene entry is private, independently reviewed project code and must implement the selected profile using distinct source states. Repeating three stills is not a continuous result. This adapter does not replace applicable Skill, source-rights, design or audiovisual requirements.
 
-The local configuration and its exact SHA256 must undergo the existing independent candidate review. Supply that externally reviewed digest as `-ReviewedConfigSHA256`; computing the current file hash yourself is not independent approval. Review includes the frozen Python entry and all imported project code, executable provenance, actual Skill lock, stage authorization, startup evidence, prerequisite receipts, expected output and fresh candidate destination. A SHA digest proves binding, not reviewer identity or permission. Do not use synthetic fixtures as approval records.
+## Configuration and immutable code
 
-## Data interface
+`run-blender-local.ps1` pins `blender-guardian.cs`. The fixed argv uses background/factory startup/disable-autoexec and exactly the selected Python entry plus actual Skill root and lock. The input manifest freezes the complete package, including entry and manifest. Unknown fields, extra files, escaping or reparse-point paths, old execution records and existing outputs fail closed. No user scene is opened or preferences saved.
 
-See `fixture()` in `test_blender_reuse.py` for a synthetic configuration. Fields: `schema_version`, `executor`, `candidate_id`, `candidate_root`, `input_manifest`, `skill_lock`, `skill_root`, `blender`, `service_evidence`, `expected_outputs`, `argv`, `prerequisite_receipts`, `scope`. Unknown fields are rejected. Fixed argv must match exactly; no shell, arbitrary command, Python expression, alternate entry, animation render flag, output path or timeout can be supplied.
+Configuration fields are `schema_version`, `executor`, `candidate_id`, `candidate_root`, `input_manifest`, `skill_lock`, `skill_root`, `blender`, `service_evidence`, `expected_outputs`, `argv`, `prerequisite_receipts`, `scope`. The synthetic fixture in `test_blender_reuse.py` shows the static shape; `test_blender_continuous.py` shows the continuous extension.
 
-The input manifest is `{schema_version: 1, files: [{path, bytes, sha256}]}`. It freezes the complete package, including `manifest.json` and `run_three_keyframes.py`. Relative paths cannot escape roots or cross reparse points. Package extras, existing output and prior execution records fail closed. The Python entry remains responsible for the current Skill render-entry checks; this adapter does not replace them.
+The config or a precisely bounded materialization template must receive the existing independent review. A reviewed template may allow named digest slots to be populated locally from verified evidence while requiring every static value unchanged. Perform that local comparison and the real evidence checks in the same turn, then pass the concrete config digest as `-ReviewedConfigSHA256`. The digest binds bytes, not permission or reviewer identity. Do not create a new cloud round trip merely to sign a fresh PID, timestamp or lock hash. A static source/path/scope change is not an allowed dynamic substitution.
 
-`service_evidence` binds an independently checked, current startup record. Its shape is `{schema_version: 1, startup_verified: true, workers: [{PID, Parent, Exe, Created, SHA}, ...], listener: {LocalAddress, LocalPort, OwningProcess}}`. Exactly two Python service processes, their parent relationship and localhost:8199 listener are supported. The recorded values are not a permanent PID allowance: every invocation reads live process lifetimes/binary hashes/listener/empty queue under the shared lock. Any missing, unreadable, extra or mismatching worker refuses launch. A restarted service requires new startup evidence and configuration review, not a source edit.
+`prerequisite_receipts` preserves every applicable existing prerequisite, including previously required voice/ASR deliveries. Each receipt binds its exact path, digest and expected saved-file count. An empty array is valid only when no such prerequisite applies; it cannot waive an existing requirement.
 
-`prerequisite_receipts` contains `{path, sha256, count}` for existing task prerequisites. Candidate review must preserve all applicable prerequisites, including already required voice/ASR deliveries. An empty array means no such prerequisite applies to that candidate; it cannot waive an existing requirement.
+Local digest substitution is limited to the exact slots authorized by the independent template review. It does not authorize starting, stopping or restarting a service, obtaining new access, changing source paths, dropping prerequisites or relaxing a failed check.
 
-## Failure and recovery
+## Lifetime precision and admission
 
-Raw service and resource observations are persisted before admission decisions, including failed resource reads. The shared lock is `parent(candidate_root)/local-gpu-execution.lock`. Both engine adapters must use the same workspace and lock location. Before native invocation, a CreateNew `local-gpu-execution-uncertain.json` is written beside that lock. Any existing marker blocks a fresh execution. Only this invocation's nonce/config/root-matching marker may be cleared after confirmed no-process or root+tree exit; uncertainty or wrapper death preserves it even when the OS lock is released. No service is stopped and no arbitrary PID/name kill is performed. Reconciliation first reads actual evidence; it never means erase the marker and retry blindly.
+`Get-ExactUtcTicks` preserves DateTime and DateTimeOffset values directly. It parses only timezone-qualified ISO strings and rejects unspecified or ambiguous times. Never pass a typed DateTime through implicit string formatting: that can discard fractional seconds. Matching remains exact UTC ticks, with zero tolerance, alongside PID, parent, executable path/hash and listener checks. A one-tick mismatch still refuses execution.
 
-## Tests and limits
+The service record binds independently verified startup evidence for exactly two Python processes and localhost:8199. It is not a permanent PID allowlist. The wrapper reads current workers, lifetimes, hashes, listener and empty queue under the shared lock. Extra/missing/mismatching workers or failed observations refuse launch; it never stops services. Raw observations are saved before admission decisions.
 
-`python test_blender_reuse.py -v` runs synthetic offline configuration-mirror and source-invariant checks. These are not execution of PowerShell or Windows APIs. Private historical replay can verify original archive hashes against different configs without publishing projects.
+## Limits and recovery
 
-`pwsh -NoProfile -File test-blender-contract.ps1 -ReportPath <new-json-path>` is a scratch-only test. It parses the actual launcher, evaluates only the config-validation prefix ending before `$queueLock`, exercises the actual admission function on fake objects, and compiles C# in memory without calling Guardian.Run. It does not read live services, call HTTP/CIM/GPU tools, invoke native Job operations, start Blender, or render. Temporary synthetic files are retained for diagnosis. Run in a fresh PowerShell process; do not run the full launcher as a test.
+The C# native safety implementation retains its suspended, atomic Job assignment, process identity checks, no-breakaway policy, one-close cleanup, 295-second shutdown and 300-second limit, and private completion-port tree-exit evidence. Only one guardian invocation is permitted per process. A 48-frame capability does not promise completion within the cap.
 
-Cloud author environment had no pwsh/C# compiler. At author handoff, Windows parsing/compilation and actual Job/runtime acceptance were NOT verified. Even a successful contract/compile test will not prove Job lifecycle execution, performance improvement, or audiovisual quality. Rendering remains paused until the user-authorized stage is resumed and all applicable requirements hold.
+The common lock is `parent(candidate_root)/local-gpu-execution.lock`. A durable `local-gpu-execution-uncertain.json` beside it is created before native invocation. Any existing marker blocks a new candidate. Only the matching owned nonce/config/root marker can be cleared after confirmed no-process or root+tree exit. Unknown state or wrapper death preserves the inhibit even when an OS lock is released. Never switch roots or delete markers to bypass uncertainty.
+
+For an explicit known-no-start recovery, preserve the old claim, failure outcome and raw evidence. Verify the terminal no-start result and absence of native/output artifacts, and require the shared unknown marker to be absent without deleting it. A separately reviewed recovery identity in the same workspace may reuse immutable inputs and still-valid binding evidence. Its record must link the predecessor; it is not an automatic retry or a new first attempt disguised by erased logs.
+
+## Targeted tests and evidence limits
+
+- `python -I -S -B test_blender_reuse.py -v`: static contract mirror/source invariants.
+- `python -I -S -B test_blender_continuous.py -v`: continuous delta and forbidden scope/argv/output cases.
+- `pwsh -NoProfile -File test-blender-contract.ps1 -ReportPath <new-path>`: baseline config prefix/service fixtures and C# compile only.
+- `pwsh -NoProfile -File test-blender-continuous-contract.ps1 -ReportPath <new-path>`: one valid continuous prefix, eight invalid changes and C# compile only.
+- `pwsh -NoProfile -File test-lifetime-precision.ps1 -ReportPath <new-path>`: actual JSON-to-DateTime conversion, actual admission function, timezone/fractional ticks and negative identity cases. No live queries or compiler.
+
+Run only tests affected by a change, plus necessary compatibility checks. Preserve original failures before fixing, use new receipt paths, and do not regenerate unrelated assets or repeat unchanged environment preparation. These test harnesses never invoke Guardian.Run, Blender, live CIM/HTTP/GPU tools or rendering. Synthetic checks, successful compilation and an individual bounded execution each prove only their observed scope, not general end-to-end speedup, audiovisual acceptance, or publication authorization.

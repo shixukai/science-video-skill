@@ -14,6 +14,12 @@ class Tests(unittest.TestCase):
   self.assertEqual(results[0]['core_sha256'],results[1]['core_sha256']);self.assertEqual(before,r.core_hashes());self.assertNotEqual(results[0]['config_sha256'],results[1]['config_sha256'])
  def test_two_graphs_within_capability(self):
   for n in ('a','b'):r.validate_graph(json.loads((R/f'tests/fixtures/graph_{n}.json').read_text()),json.loads((R/f'tests/fixtures/candidate_{n}.json').read_text()))
+ def test_supported_skill_patch_versions(self):
+  for version in ('1.6.5','1.6.6','1.6.7'):
+   c=cfg();c['skill_version']=version;r.validate_config(c)
+  for version in ('1.6.8','latest',''):
+   c=cfg();c['skill_version']=version
+   with self.assertRaises(ValueError):r.validate_config(c)
  def test_threshold_change_rejected(self):
   c=cfg();c['bindings']['gpu_load_policy']['max_utilization_percent']=11
   with self.assertRaises(ValueError):r.validate_config(c)

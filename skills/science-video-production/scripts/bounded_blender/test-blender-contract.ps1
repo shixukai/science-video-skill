@@ -13,9 +13,11 @@ if (@($parseErrors).Count) { throw "Launcher parse errors: $parseErrors" }
 $boundary = $source.IndexOf('$queueLock = $null',[StringComparison]::Ordinal)
 if ($boundary -lt 0) { throw 'Validation boundary absent' }
 $validationSource = $source.Substring(0,$boundary)
-$serviceAst = $ast.Find({param($a) $a -is [Management.Automation.Language.FunctionDefinitionAst] -and $a.Name -eq 'Assert-ExactIdleComfyService'},$true)
-if ($null -eq $serviceAst) { throw 'Service function missing' }
-. ([ScriptBlock]::Create($serviceAst.Extent.Text))
+foreach ($functionName in @('Get-ExactUtcTicks','Assert-ExactIdleComfyService')) {
+    $functionAst = $ast.Find({param($a) $a -is [Management.Automation.Language.FunctionDefinitionAst] -and $a.Name -eq $functionName},$true)
+    if ($null -eq $functionAst) { throw "Required admission function missing: $functionName" }
+    . ([ScriptBlock]::Create($functionAst.Extent.Text))
+}
 Add-Type -TypeDefinition ([IO.File]::ReadAllText($guardianPath)) -Language CSharp -ErrorAction Stop
 $beforeRunner = (Get-FileHash $runnerPath -Algorithm SHA256).Hash
 $beforeGuardian = (Get-FileHash $guardianPath -Algorithm SHA256).Hash
