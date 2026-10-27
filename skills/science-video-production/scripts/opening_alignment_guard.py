@@ -6,6 +6,7 @@ that a generic hook answers the promised question, or that a cut feels smooth.
 import hashlib
 import json
 import math
+from task_scope import cover_keys
 
 COVERS = ("cover_3_4", "cover_4_3")
 REVIEW_ITEMS = {"cover_question", "spoken_question", "answer_route", "visual_handoff"}
@@ -38,7 +39,7 @@ def opening_context_sha256(data):
     qa = obj(data.get("qa"))
     heard = obj(obj(qa.get("topic_alignment")).get("opening_voiceover"))
     return digest({
-        **{k: data.get(k) for k in ("topic", "topic_alignment", "shots", "narration", "deliverables")},
+        **{k: data.get(k) for k in ("topic", "topic_alignment", "shots", "narration", "deliverables", "delivery_scope", "requested_cover_keys")},
         "media_hashes": qa.get("reviewed_sha256"),
         "heard": {k: heard.get(k) for k in ("heard_question", "heard_answer_route")},
     })
@@ -50,7 +51,7 @@ def check_opening_plan(data):
         return []
     opening = obj(obj(data.get("topic_alignment")).get("opening"))
     errors = []
-    for key in ("title", "voiceover", "spoken_question", "answer_route", "cover_question", "question_comparison", "visual_handoff"):
+    for key in ("title", "voiceover", "spoken_question", "answer_route", "question_comparison", "visual_handoff") + (("cover_question",) if cover_keys(data) else ()):
         if not concrete(opening.get(key)):
             errors.append("opening alignment: opening." + key + " concrete plan required")
     if opening.get("question_relation") != "specific_equivalent":
@@ -147,8 +148,8 @@ def validate_opening_review(checks):
     need(answer_review.get("status") == "pass" and concrete(answer_review.get("observation")),
          "concise accurate answer/route actual observation required")
     covers = obj(review.get("covers"))
-    need(set(covers) == set(COVERS), "both actual cover variants required")
-    for key in COVERS:
+    need(set(covers) == set(cover_keys(data)), "requested actual cover variants required")
+    for key in cover_keys(data):
         cover = obj(covers.get(key))
         checks.evidence(cover, "opening alignment " + key)
         need(cover.get("status") == "pass", key + " actual cover review failed/unreviewed")
@@ -204,4 +205,5 @@ def validate_opening_review(checks):
         if "visual_handoff" in selected:
             need(source.get("actually_watched") is True and source.get("method") == "normal_speed_continuous_av",
                  label + " actual normal-speed continuous visual handoff review required")
-    need(covered == REVIEW_ITEMS, "sources must explicitly cover all opening items; general praise is insufficient")
+    required_items = REVIEW_ITEMS if cover_keys(data) else REVIEW_ITEMS - {"cover_question"}
+    need(covered == required_items, "sources must explicitly cover all opening items applicable to this scope; general praise is insufficient")

@@ -1,14 +1,15 @@
 """Classified text and declared continuous listening; no perceptual verdicts."""
 import re
 import html
+from task_scope import cover_keys
 from pathlib import Path
 from subject_motion import text as meaningful
-from label_permission_guard import validate_label_plan, validate_overlay_review, marking_cue
+from label_permission_guard import validate_label_plan, validate_overlay_review, marking_cue, scientific_subject_review
 
 SURFACES = {"frame", "caption", "voiceover", "cover"}
-ALLOWED = {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license"}
+ALLOWED = {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license", "ai_simulation", "watermark"}
 PROTECTED = {"scientific_condition", "attribution", "license", "ai_simulation"}
-FORBIDDEN = {"material_defect", "internal_qa", "production_excuse", "production_meta", "ai_simulation", "watermark"}
+FORBIDDEN = {"material_defect", "internal_qa", "production_excuse", "production_meta"}
 VOICE_CRITERIA = {"tone", "rhythm", "speech_rate", "loudness", "joins"}
 # Screening is supplementary: category/necessity and actual-media reviews remain
 # required, including for wording that does not match any of these patterns.
@@ -28,7 +29,9 @@ def prohibited_cue(item, record):
     """
     wording = item.get("text", "")
     if marking_cue(wording):
-        return True
+        purposes = item.get("purposes", [])
+        if not (scientific_subject_review(item) or (isinstance(purposes, list) and ("watermark" in purposes or ("ai_simulation" in purposes and meaningful(item.get("notice_id")))))):
+            return True
     for index, pattern in enumerate(EXCUSE_CUES):
         if not pattern.search(wording): continue
         notices = record.get("required_notices", [])
@@ -98,6 +101,11 @@ def validate_text_plan(checks):
             checks.need(substantive(item.get(key)), "presentation text "+key+" required")
         if text(item.get("text")):
             checks.need(not prohibited_cue(item, record), "presentation text production/material-defect cue requires removal or concise scientific rewrite")
+        if scientific_subject_review(item):
+            review = obj(item.get('cue_review'))
+            known = {obj(c).get('id') for c in seq(checks.data.get('claims')) if text(obj(c).get('id'))}
+            checks.need(set(review['claim_ids']) <= known, 'scientific subject cue review must link actual claim IDs')
+            checks.evidence(review.get('evidence'), 'scientific subject semantic review')
     for surface in SURFACES:
         channel = obj(channels.get(surface)); state = channel.get("status")
         checks.need(state in ("present", "absent") and substantive(channel.get("note")), "presentation text explicit channel coverage required: "+surface)
@@ -111,8 +119,8 @@ def validate_text_plan(checks):
         if text(ident): notice_ids.add(ident)
         checks.need(isinstance(notice.get("purpose"), str) and notice.get("purpose") in PROTECTED and substantive(notice.get("text")) and substantive(notice.get("basis")), "presentation protected notice scientific/rights basis required")
         placement = notice.get("placement")
-        checks.need(notice.get("purpose") != "ai_simulation" or placement == "companion",
-                    "AI production disclosure belongs in companion/platform fields, not audience media")
+        checks.need(notice.get("purpose") != "ai_simulation" or placement == "companion" or (placement == "audience" and bool([x for x in items if obj(x).get("notice_id") == ident])),
+                    "on-frame AI disclosure needs a matching notice item and specific user consent")
         checks.need(placement in ("audience", "companion") and substantive(notice.get("placement_basis")),
                     "presentation protected notice explicit placement and basis required")
         matches = [x for x in items if obj(x).get("notice_id") == ident]
@@ -142,7 +150,7 @@ def validate_text_review(checks, gate, viewing, items):
     need(r.get("context_sha256") == context_sha256(checks.data, gate) and r.get("media_sha256") == viewing.get("sha256"), "stale stage/media")
     need(r.get("inventory_sha256") == digest(checks.data.get("presentation_text")), "stale classified inventory")
     need(r.get("actual_media_inspected") is True and substantive(r.get("evidence")), "actual media text/voice inspection required; OCR/source-only checks do not qualify")
-    channels = SURFACES if gate == "G5" else SURFACES-{"cover"}
+    channels = SURFACES if gate == "G5" and cover_keys(checks.data) else SURFACES-{"cover"}
     reviews = obj(r.get("channel_reviews"))
     need(set(reviews) == channels, "complete applicable surface review required")
     ids = set()
@@ -176,8 +184,8 @@ def validate_text_review(checks, gate, viewing, items):
         refs = r.get("cover_files"); actual = []
         for ref in seq(refs):
             checks.evidence(ref, label+"cover"); actual.append(obj(ref).get("file"))
-        need(isinstance(refs, list) and len(actual) == 2 and set(actual) == {
-            obj(checks.data.get("deliverables")).get("cover_3_4"), obj(checks.data.get("deliverables")).get("cover_4_3")}, "both actual cover versions required")
+        need(isinstance(refs, list) and len(actual) == len(cover_keys(checks.data)) and set(actual) == {
+            obj(checks.data.get("deliverables")).get(k) for k in cover_keys(checks.data)}, "requested actual cover versions required")
     need(substantive(r.get("protected_notices_review")), "required scientific/rights/AI notice preservation review required")
     required = [obj(n) for n in seq(obj(checks.data.get("presentation_text")).get("required_notices"))
                 if obj(n).get("placement") == "companion"]

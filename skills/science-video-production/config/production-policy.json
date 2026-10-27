@@ -80,8 +80,8 @@
   },
   "defaults": {
     "output": {
-      "width": 1080,
-      "height": 1920,
+      "width": 1920,
+      "height": 1080,
       "fps": 30,
       "constant_frame_rate": true,
       "color": "SDR Rec.709",
@@ -138,7 +138,7 @@
       "right": 180,
       "bottom": 360,
       "left": 72,
-      "status": "provisional_nonofficial_requires_actual_device_preview"
+      "status": "legacy_portrait_only_nonofficial; do_not_apply_to_landscape"
     },
     "legacy_caption_rect_reference": {
       "x": 72,
@@ -187,7 +187,7 @@
     "caption_geometry": "series-profile.json captions; does not adopt legacy y=1390",
     "art_direction": "series-profile.json design and approved project board; supplied base assets are reference only",
     "voice": "series-profile.json audio; no forced regeneration or rate adjustment",
-    "real_anchor": "series-profile.json medium; authentic dynamic footage remains required"
+    "real_anchor": "series-profile.json medium; verified_authorized_user_capture_only requires verified original capture evidence for selected real footage; when_real_footage_selected also requires an actually used real source; neither forces footage into approved AI/3D; legacy authentic_continuous_video retains an episode-wide anchor; pure_2d still requires the existing scoped exception"
   },
   "source_metadata": {
     "manual_version": "1.0",
@@ -243,7 +243,7 @@
   ],
   "subject_motion": {
     "owner": "references/quality-acceptance.md#主体动态与长静帧",
-    "classification": "Conservative executable project limits, not user-specified seconds or industry standards; no score or read-pause override.",
+    "classification": "Review triggers for unexplained stasis and purposeful observation. Actual progression/observation review decides; no fabricated motion to meet seconds.",
     "required_stages": [
       "G2",
       "G3",
@@ -258,8 +258,10 @@
       "candidate_min_seconds": 3.0
     },
     "automatic_screen_is_not_semantic_acceptance": true,
-    "no_whole_semantic_unit_exception": true,
-    "no_cut_or_speed_workaround": true
+    "no_whole_semantic_unit_exception": false,
+    "no_cut_or_speed_workaround": true,
+    "timing_mode": "review_triggers",
+    "observation_hold_requires_actual_review": true
   },
   "audience_text": {
     "owner": "references/visual-system.md#可见文字用途与制作辩解",
@@ -281,15 +283,15 @@
       "accessibility",
       "scientific_condition",
       "attribution",
-      "license"
+      "license",
+      "ai_simulation",
+      "watermark"
     ],
     "forbidden_purposes": [
       "material_defect",
       "internal_qa",
       "production_excuse",
-      "production_meta",
-      "ai_simulation",
-      "watermark"
+      "production_meta"
     ],
     "protected_purposes": [
       "scientific_condition",
@@ -300,9 +302,11 @@
     "source_screening_is_not_actual_media_inspection": true,
     "label_permission_owner": "references/visual-system.md#画内标识须有具体同意",
     "actual_overlay_evidence_required": true,
-    "companion_only_purposes": [
+    "companion_only_purposes": [],
+    "default_companion_purposes": [
       "ai_simulation"
-    ]
+    ],
+    "on_frame_disclosure_requires_specific_consent": true
   },
   "voice_continuity": {
     "owner": "references/voice-reference.md#整期旁白连续性",

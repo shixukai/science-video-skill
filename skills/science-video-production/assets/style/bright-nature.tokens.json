@@ -151,7 +151,7 @@
   "id": "bright-nature-style",
   "version": "1.2.0",
   "status": "working_baseline_v1",
-  "scope": "Editable implementation defaults for the selected painterly 2D direction; not art or motion approval.",
+  "scope": "Historical approved 2D appearance and requested illustration covers only. Realistic main footage uses its own applicable reference; these tokens do not prohibit Blender or impose illustration colors on scientific objects.",
   "color_space": "sRGB preview; video color conversion not performed",
   "palette_method": "Visual role-based working palette; not a pixel-extraction claim.",
   "science_color_priority": true,

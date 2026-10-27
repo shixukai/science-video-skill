@@ -8,7 +8,7 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 
-OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "production", "visual", "voice", "shotbook", "quality", "realism"}
+OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "production", "visual", "voice", "shotbook", "quality", "realism", "engineering", "tools", "render-evidence"}
 HEX = re.compile(r"#[0-9A-Fa-f]{6}$")
 PRIVATE_ID = re.compile(r"(?:libfile_|Sentinel_)[0-9a-f]{20,}|file_[0-9a-f]{24,}")
 
@@ -124,7 +124,7 @@ def check(root):
 
         errors.extend(check_platform_record_formats(read("assets/project-ledger-template.json")))
         profile = read("config/series-profile.json")
-        need(profile["schema_version"] == 1 and profile["version"] == "1.6.8", "unsupported profile schema/version")
+        need(profile["schema_version"] == 1 and bool(re.fullmatch(r"\d+\.\d+\.\d+", str(profile.get("version", "")))), "unsupported profile schema/version")
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "realistic_main_with_scoped_explanation", "current series requires realistic main footage with scoped explanation")
         need(profile["medium"]["real_anchor"] == "verified_authorized_user_capture_only", "real video anchor must be verified authorized user capture only")
@@ -207,13 +207,13 @@ def check(root):
         need(audience["owner"] == "references/visual-system.md#可见文字用途与制作辩解"
              and audience["plan_stage"] == "G1" and audience["actual_review_stages"] == ["G2", "G3", "G5"], "audience text owner/stages required")
         need(set(audience["surfaces"]) == {"frame", "caption", "voiceover", "cover"}
-             and set(audience["forbidden_purposes"]) == {"material_defect", "internal_qa", "production_excuse", "production_meta", "ai_simulation", "watermark"}
+             and set(audience["forbidden_purposes"]) == {"material_defect", "internal_qa", "production_excuse", "production_meta"}
              and set(audience["protected_purposes"]) == {"scientific_condition", "attribution", "license", "ai_simulation"}
              and audience["source_screening_is_not_actual_media_inspection"] is True, "audience purpose/protected notice boundaries required")
         need(audience.get("label_permission_owner") == "references/visual-system.md#画内标识须有具体同意"
              and audience.get("actual_overlay_evidence_required") is True
-             and set(audience["allowed_purposes"]) == {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license"}
-             and audience.get("companion_only_purposes") == ["ai_simulation"], "specific label permission and default off-frame AI disclosure required")
+             and set(audience["allowed_purposes"]) == {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license", "ai_simulation", "watermark"}
+             and audience.get("default_companion_purposes") == ["ai_simulation"] and audience.get("on_frame_disclosure_requires_specific_consent") is True, "specific label permission and default off-frame AI disclosure required")
         continuity = policy["voice_continuity"]
         need(continuity["owner"] == "references/voice-reference.md#整期旁白连续性"
              and continuity["required_stages"] == ["G2", "G3", "G5"]
@@ -229,10 +229,11 @@ def check(root):
              and type(motion["max_purposeful_read_seconds"]) in (int, float)
              and 0 < motion["max_purposeful_read_seconds"] <= 1.6, "conservative subject motion project limits required")
         need(motion["automatic_screen_is_not_semantic_acceptance"] is True
-             and motion["no_whole_semantic_unit_exception"] is True
+             and motion.get("timing_mode") == "review_triggers" and motion.get("observation_hold_requires_actual_review") is True
              and motion["no_cut_or_speed_workaround"] is True, "subject motion screening/semantic boundaries required")
         need(motion["screen"] == {"sample_fps": 4, "sample_size": 64, "mae_threshold": .002, "candidate_min_seconds": 3.0},
              "subject motion screen settings must match current project revision")
+        need([policy["defaults"]["output"]["width"], policy["defaults"]["output"]["height"]] == limits["canvas"], "policy output must match current series default canvas")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
         need("cold_view" not in policy and policy["internal_review"]["real_audience_required"] is False
@@ -249,70 +250,9 @@ def check(root):
         need(set(policy["listening"]["required_environments"]) == {"headphones", "phone_speaker"}, "dual listening environments required")
         need(policy["defaults"]["semantic_sync_warning_ms"] == 150, "semantic warning starting point changed")
         registry = read("indexes/standard-coverage.json")
-        # Exact references prove only integrity, not the semantics or actual execution.
-        failure_contracts = {}
-        for contract in registry.get("failure_contracts", []):
-            ident = contract.get("id")
-            need(isinstance(ident, str) and bool(ident) and ident not in failure_contracts, "failure contract ID missing/duplicate")
-            failure_contracts[ident] = contract
-            need(bool(contract.get("failure_condition")) and bool(contract.get("application")), "specific failure/application condition required")
-            clauses = contract.get("clauses")
-            need(isinstance(clauses, list) and bool(clauses), "precise failure clauses required")
-            for clause in clauses or []:
-                p = local_path(root, root, clause["file"])
-                body = p.read_text(encoding="utf-8")
-                quote = clause.get("quote")
-                valid = isinstance(quote, str) and bool(quote.strip())
-                need(valid and quote in body, "failure clause text missing/stale")
-                need(valid and hashlib.sha256(quote.encode()).hexdigest() == clause.get("quote_sha256"), "failure clause digest inconsistent")
-                headings = list(re.finditer(r"^(#+) (.+)$", body, re.M))
-                matching = [i for i, h in enumerate(headings) if slug(h.group(2)) == clause.get("anchor")]
-                need(bool(matching), "failure clause anchor missing")
-                if matching and valid:
-                    i = matching[0]; start = headings[i].end(); level = len(headings[i].group(1))
-                    end = next((h.start() for h in headings[i+1:] if len(h.group(1)) <= level), len(body))
-                    need(quote in body[start:end], "failure clause outside referenced section")
-        need(bool(failure_contracts), "precise failure contracts missing")
-        navigation = registry.get("explanation_standard", {})
-        need(navigation.get("status") == "navigation_only" and navigation.get("authority") == "responsibility_body", "explanation navigation must defer to responsibility body")
-        entries = navigation.get("entries", [])
-        need(isinstance(entries, list) and len(entries) == 12 and {e.get("id") for e in entries if isinstance(e, dict)} == {f"E{i:02}" for i in range(1, 13)}, "E01-E12 explanation navigation missing/duplicate")
-        for entry in entries:
-            target = local_path(root, root, entry.get("owner"))
-            need(str(target) in owner_files, "explanation navigation has no canonical owner")
-            heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
-            need(entry.get("owner_anchor") in heads, "explanation navigation anchor missing")
-            contracts = entry.get("contract_ids", [])
-            valid = isinstance(contracts, list) and bool(contracts) and all(isinstance(i, str) and i in failure_contracts for i in contracts)
-            need(valid, "explanation navigation contract missing")
-            if valid:
-                for ident in contracts:
-                    clauses = failure_contracts[ident].get("clauses", [])
-                    need(bool(clauses) and all(c.get("file") == entry.get("owner") and c.get("anchor") == entry.get("owner_anchor") for c in clauses), "explanation navigation contract owner/anchor mismatch")
-        rule_ids = []
-        for rule in registry["rules"]:
-            rule_ids.append(rule["id"])
-            failure_ref = rule.get("failure_condition_ref", {})
-            ref_ids = failure_ref.get("contract_ids", [failure_ref.get("contract_id")]) if isinstance(failure_ref, dict) else []
-            need(isinstance(ref_ids, list) and bool(ref_ids) and all(isinstance(i, str) and i in failure_contracts for i in ref_ids) and len(set(ref_ids)) == len(ref_ids), "rule precise failure reference missing")
-            need(rule.get("action") == rule.get("rule") and bool(rule.get("action")), "rule concrete action missing")
-            need(rule.get("mapping_status") in ("verified_semantic_mapping", "source_boundary_or_conditional"), "rule semantic mapping unresolved")
-            need(bool(rule["rule"]) and rule["modality"] in ("hard", "recommended", "default", "conditional", "permission", "boundary"), "invalid standard rule")
-            target = local_path(root, root, rule["owner"])
-            need(str(target) in owner_files, "standard rule has no canonical owner")
-            heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
-            need(rule.get("owner_anchor") in heads, "standard rule anchor missing")
-            need(rule.get("applicability_contract") in registry.get("contracts", {}) and rule.get("failure_contract") in registry.get("contracts", {}), "rule conditions/failure contract missing")
-            need(rule.get("sample_reference") in registry.get("sample_references", {}), "rule sample scope missing")
-            for location in rule.get("evidence_locations", []):
-                evidence_path = local_path(root, root, location["file"])
-                value = json.loads(evidence_path.read_text())
-                for key in re.findall(r"[^.\[\]]+", location["selector"]):
-                    value = value[int(key)] if isinstance(value, list) else value[key]
-        need(len(rule_ids) == registry.get("rule_count") and len(set(rule_ids)) == len(rule_ids)
-             and len(rule_ids) > 0, "current requirement coverage count missing/duplicate")
-        need({"EX-structure", "EX-expression-card", "EX-internal-review", "ART-finesse", "VOICE-execution", "MOTION-subject-continuity", "CONTINUITY-prerequisites", "CONTINUITY-master-script", "CONTINUITY-voice", "TEXT-audience-purpose", "TEXT-label-permission", "VOICE-continuity"} <= set(rule_ids),
-             "current explanation/finesse/voice coverage missing")
+        from rebuild_standard_index import build as build_navigation
+        need(registry == build_navigation(root), "stale/incomplete chapter navigation; review changes then run rebuild_standard_index.py")
+        need(registry.get("schema_version") == 2 and registry.get("authority") == "responsibility_body", "navigation must defer to canonical bodies")
         schema = read("assets/production-asset.schema.json")
         need(schema["$schema"] == "https://json-schema.org/draft/2020-12/schema", "asset schema version required")
         need({"name", "category", "approval", "sha256"} <= set(schema["required"]), "formal asset fields missing")

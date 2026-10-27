@@ -1,0 +1,3 @@
+# Canonical text bytes must stay stable for Skill/evidence hashes on Windows too.
+* text=auto eol=lf
+*.png -text

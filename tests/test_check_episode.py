@@ -28,7 +28,7 @@ class TopicAnchorDiagnosticsTests(unittest.TestCase):
 
 def test(label, data, root, stage, expected=None):
  global count
- if stage=="delivery" and expected is None:
+ if stage in ("delivery", "publish_ready") and expected is None:
   refresh(data)  # Synthetic positive fixture explicitly rebinds amended context.
  errors,notes=mod.check(data,root,stage)
  assert (not errors) if expected is None else any(expected in e for e in errors),(label,errors)
@@ -108,14 +108,14 @@ class EpisodePacketRegressionTests(unittest.TestCase):
    y=copy.deepcopy(x);y['qa']['comprehension']['status']='audience_checked';test('audience-checked claim needs actual feedback reference',y,root,'delivery','actual audience feedback reference required')
    y=copy.deepcopy(x);y['qa']['visual_frames']['status']='fail';test('known visual failure blocks delivery despite prior technical success',y,root,'delivery','qa.visual_frames')
    y=copy.deepcopy(x);y['qa']['visual_frames']['status']='pending';test('reopened visual review blocks delivery after prior technical success',y,root,'delivery','qa.visual_frames')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['review_scope']='local_player';test('local player review cannot approve target-platform fit',y,root,'delivery','actual target_platform review required')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['surface']='bare_player';test('bare player is not an actual platform surface',y,root,'delivery','surface must distinguish')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['surface']='thumbnail_proxy';test('proxy thumbnail cannot stand in for platform preview',y,root,'delivery','surface must distinguish')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['review_scope']='local_player';test('local player review cannot approve target-platform fit',y,root,'publish_ready','actual target_platform review required')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['surface']='bare_player';test('bare player is not an actual platform surface',y,root,'publish_ready','surface must distinguish')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['surface']='thumbnail_proxy';test('proxy thumbnail cannot stand in for platform preview',y,root,'publish_ready','surface must distinguish')
    for key,value in [('title','新的标题'),('description','后来填入的完整简介'),('tags',['#新的相关标签'])]:
-    y=copy.deepcopy(x);y[key]=value;test(f'changed {key} invalidates previous preview context',y,root,'delivery','missing/stale preview context hash')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['account']='different test account';test('changed account invalidates previous preview context',y,root,'delivery','missing/stale preview context hash')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['platform']='';test('require actual platform identity in review record',y,root,'delivery','actual platform and account required')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['surface']='actual_device';y['qa']['mobile_preview']['reviewed_metadata_sha256']=mod.platform_metadata_sha256(y,y['qa']['mobile_preview']);test('accept distinct actual-device metadata fixture',y,root,'delivery')
+    y=copy.deepcopy(x);y[key]=value;test(f'changed {key} invalidates previous preview context',y,root,'publish_ready','missing/stale preview context hash')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['account']='different test account';test('changed account invalidates previous preview context',y,root,'publish_ready','missing/stale preview context hash')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['platform']='';test('require actual platform identity in review record',y,root,'publish_ready','actual platform and account required')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['surface']='actual_device';y['qa']['mobile_preview']['reviewed_metadata_sha256']=mod.platform_metadata_sha256(y,y['qa']['mobile_preview']);test('accept distinct actual-device metadata fixture',y,root,'publish_ready')
    y=copy.deepcopy(x);y['qa']['narration']['review_scope']='short_sample';test('approved short sample cannot approve a full episode',y,root,'delivery','final_export listening scope required')
    y=copy.deepcopy(x);y['qa']['narration']['review_scope']='pending';test('pending full-export listening cannot pass delivery',y,root,'delivery','final_export listening scope required')
    y=copy.deepcopy(x);y['qa']['narration'].pop('review_scope');test('missing listening scope cannot pass delivery',y,root,'delivery','final_export listening scope required')
@@ -128,7 +128,7 @@ class EpisodePacketRegressionTests(unittest.TestCase):
    y=copy.deepcopy(x);y['qa']['narration']['status']='pending';test('unheard narration cannot pass delivery',y,root,'delivery','qa.narration')
    y=copy.deepcopy(x);y['deliverables']['cover_3_4']='l.png';y['qa']['reviewed_sha256']['cover_3_4']=y['qa']['reviewed_sha256']['cover_4_3'];test('reject wrong cover aspect',y,root,'delivery','incorrect aspect ratio')
    y=copy.deepcopy(x);y['qa']['reviewed_sha256']['video']='0'*64;test('reject stale review hash',y,root,'delivery','missing/stale')
-   y=copy.deepcopy(x);y['qa']['mobile_preview']['status']='pending';test('require mobile review',y,root,'delivery','qa.mobile_preview')
+   y=copy.deepcopy(x);y['qa']['mobile_preview']['status']='pending';test('require mobile review',y,root,'publish_ready','qa.mobile_preview')
    y=copy.deepcopy(x);y['deliverables']['video']='../outside.mp4';test('reject traversal path',y,root,'delivery','path must stay inside')
    y=copy.deepcopy(x);(root/'bad.mp4').write_bytes(b'not a media file');y['deliverables']['video']='bad.mp4';test('reject corrupt video',y,root,'delivery','ffprobe failed')
    y=copy.deepcopy(x);y['deliverables']['video']='p.png';test('reject missing audio/duration',y,root,'delivery','audio stream missing')

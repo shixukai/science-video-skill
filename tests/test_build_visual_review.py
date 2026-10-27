@@ -11,6 +11,7 @@ import sys
 import tempfile
 import unittest
 from unittest import mock
+from fs_support import symlink_or_skip
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,13 +157,13 @@ class VisualReviewTests(unittest.TestCase):
             self.build()
         self.assertEqual(accepted.read_text(), "keep this review")
         alternate = self.root / "review-link"
-        alternate.symlink_to(self.root / "missing-review", target_is_directory=True)
+        symlink_or_skip(self, alternate, self.root / "missing-review", target_is_directory=True)
         with self.assertRaisesRegex(review.ReviewError, "already exists"):
             self.build(output=alternate)
         self.assertFalse((self.root / "missing-review").exists())
 
     def test_paths_cannot_escape_episode_directory_including_symlinks(self):
-        self.root.joinpath("outside-video.mp4").symlink_to(self.source)
+        symlink_or_skip(self, self.root.joinpath("outside-video.mp4"), self.source)
         for media in (str(self.source), "../outside.mp4", "outside-video.mp4"):
             with self.subTest(media=media):
                 with self.assertRaisesRegex(review.ReviewError, "relative|inside"):
@@ -251,7 +252,7 @@ class VisualReviewTests(unittest.TestCase):
     def test_local_playlists_cannot_load_media_outside_the_episode(self):
         playlist = self.root / "indirect.ffconcat"
         playlist.write_text("ffconcat version 1.0\nfile '" + str(self.source) + "'\n")
-        with self.assertRaisesRegex(review.ReviewError, "ffprobe failed"):
+        with self.assertRaisesRegex(review.ReviewError, r"(?i)ffprobe(?:\.exe)? failed"):
             self.build(media=playlist.name)
         self.assert_no_output()
 

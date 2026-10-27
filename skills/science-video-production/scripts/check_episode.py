@@ -13,6 +13,7 @@ import sys
 from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from task_scope import cover_keys, validate_scope
 from opening_alignment_guard import check_opening_plan
 from cover_guard import validate_cover_review, LIMITS as COVER_LIMITS
 from stage_checks import Checks
@@ -519,7 +520,7 @@ def check(data, root, stage):
         return checks.errors, [COVER_LIMITS]
     if stage in GATES:
         # Quality reuses actual episode checks; release also reuses the platform path.
-        base = "delivery" if stage in ("G6", "G7") else "quality" if stage == "G5" else "plan"
+        base = "publish_ready" if stage in ("G6", "G7") else "quality" if stage == "G5" else "plan"
         errors, notes = check(data, root, base)
         if stage != "G1":
             for shot in data.get("shots", []):
@@ -533,8 +534,8 @@ def check(data, root, stage):
             errors.extend(check_stage(data, root, stage))
         notes.append("Stage evidence checks only; no actual viewing, quality or authorization is supplied by the checker")
         return errors, notes
-    complete = stage in ("delivery", "quality")
-    selection = Checks(data, root); validate_topic_selection(selection)
+    complete = stage in ("delivery", "quality", "publish_ready")
+    selection = Checks(data, root); validate_scope(selection); validate_topic_selection(selection)
     errors, notes = list(selection.errors), semantic_warnings(data)
 
     def require(ok, message):
@@ -847,7 +848,7 @@ def check(data, root, stage):
         notes.append("PLAN ONLY: no footage, rights, decoding, scientific accuracy or visual/mobile approval is established")
         return errors, notes
 
-    errors.extend(check_stage(data, root, "G5" if stage == "quality" else "G6"))
+    errors.extend(check_stage(data, root, "G6" if stage == "publish_ready" else "G5"))
     errors.extend(check_finesse(data))
     require(nonempty(data.get("production_statement")), "actual production_statement required")
     deliverables = data.get("deliverables", {})
@@ -859,7 +860,7 @@ def check(data, root, stage):
         require(False, "qa must be an object")
         qa = {}
     for key in REVIEW_KEYS:
-        if stage == "quality" and key == "mobile_preview":
+        if (stage != "publish_ready" and key == "mobile_preview") or (key == "covers" and not cover_keys(data)):
             continue
         record = qa.get(key, {})
         require(isinstance(record, dict) and record.get("status") == "pass" and nonempty(record.get("note")), f"qa.{key}: actual pass and specific review note required")
@@ -874,7 +875,7 @@ def check(data, root, stage):
         notes.append("Comprehension: internal explanation/expression acceptance is distinct from audience research; no population understanding rate is established")
     narration_review = qa.get("narration", {})
     require(isinstance(narration_review, dict) and narration_review.get("review_scope") == "final_export", "qa.narration: final_export listening scope required; short-sample approval does not approve a full episode")
-    if stage != "quality":
+    if stage == "publish_ready":
         preview = qa.get("mobile_preview", {})
         if not isinstance(preview, dict):
             preview = {}
@@ -890,7 +891,7 @@ def check(data, root, stage):
     probe, decoder = shutil.which("ffprobe"), shutil.which("ffmpeg")
     require(bool(probe), "ffprobe unavailable: dimensions/streams cannot be verified")
     require(bool(decoder), "ffmpeg unavailable: full decoding cannot be verified")
-    for key in OUTPUTS:
+    for key in ("video", *cover_keys(data)):
         target = local_file(deliverables.get(key), key)
         if target is None:
             continue
@@ -945,7 +946,7 @@ def validation_resources():
     """Fingerprint the local rules used by this checker, not external evidence."""
     root = Path(__file__).resolve().parents[1]
     names = (
-        "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/render_gate.py", "scripts/realism_guard.py", "scripts/origin_guard.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
+        "scripts/task_scope.py", "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/render_gate.py", "scripts/realism_guard.py", "scripts/origin_guard.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
         "config/production-policy.json", "config/series-profile.json",
         "assets/production-asset.schema.json", "indexes/rule-owners.json",
     )
@@ -955,7 +956,7 @@ def validation_resources():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path)
-    parser.add_argument("--stage", choices=("plan", "covers", "delivery", *GATES), required=True)
+    parser.add_argument("--stage", choices=("plan", "covers", "delivery", "publish_ready", *GATES), required=True)
     parser.add_argument("--report", type=Path,
                         help="save a JSON local-check receipt to a NEW file; never changes QA or approvals")
     args = parser.parse_args()

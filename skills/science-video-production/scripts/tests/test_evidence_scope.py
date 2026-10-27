@@ -10,6 +10,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import subject_motion as motion
 from stage_checks import Checks, context_sha256
+from realism_guard import validate_realism
 
 
 class EvidenceScopeTests(unittest.TestCase):
@@ -177,6 +178,133 @@ class EvidenceScopeTests(unittest.TestCase):
         self.record["screen"] = {}
         self.viewing["frame_scope"] = "roi_only"
         self.assertTrue(any("declared viewing frame_scope" in e for e in self.errors()))
+
+
+class RealAnchorPolicyTests(unittest.TestCase):
+    """Synthetic source-selection contracts, never authenticity or media approval."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        self.default = json.loads((Path(__file__).resolve().parents[2] /
+                                   "config/series-profile.json").read_text(encoding="utf-8"))
+        self.data = {"shots": [{"id": "A", "modality": "ai_generated", "asset_ids": ["generated"]}],
+                     "assets": [{"id": "generated", "kind": "ai_generated"}]}
+        self.profile("when_real_footage_selected")
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def profile(self, mode, same_series=True):
+        profile = {"id": self.default["id"] if same_series else "synthetic-legacy-project",
+                   "medium": {"real_anchor": mode}}
+        path = self.root / "profile.json"
+        path.write_text(json.dumps(profile), encoding="utf-8")
+        self.data["series_profile"] = {"file": path.name, "sha256": motion.sha(path),
+                                       "scope_reference": "Synthetic declared project scope, not authorization"}
+
+    def errors(self):
+        checks = Checks(self.data, self.root)
+        checks.real_anchor()
+        return checks.errors
+
+    def test_default_ai_and_controlled_3d_do_not_require_unselected_real_footage(self):
+        self.data.pop("series_profile")
+        for modalities in (("ai_generated",), ("controlled_3d",), ("ai_generated", "controlled_3d")):
+            with self.subTest(modalities=modalities):
+                self.data["shots"] = [{"id": str(i), "modality": mode, "asset_ids": ["generated"]}
+                                      for i, mode in enumerate(modalities)]
+                self.assertEqual(self.errors(), [])
+
+    def test_selected_real_footage_requires_an_actually_used_real_source(self):
+        self.data["shots"][0]["modality"] = "real_footage"
+        self.assertTrue(any("actually used real continuous-video anchor" in e for e in self.errors()))
+        self.data["assets"].append({"id": "real", "kind": "real_capture"})
+        self.assertTrue(self.errors())  # Merely cataloguing unused footage is insufficient.
+        self.data["shots"][0]["asset_ids"] = ["real"]
+        self.assertEqual(self.errors(), [])  # Provenance and viewing remain separate validators.
+
+    def test_missing_unknown_and_malformed_modalities_cannot_remove_anchor_requirement(self):
+        for value in (None, "unknown", "", "AI", True, [], {}):
+            with self.subTest(value=value):
+                self.data["shots"][0]["modality"] = value
+                errors = self.errors()
+                self.assertTrue(any("explicit recognized modality" in e for e in errors), errors)
+                self.assertTrue(any("actually used real continuous-video anchor" in e for e in errors), errors)
+        self.data["shots"][0].pop("modality")
+        self.assertTrue(any("explicit recognized modality" in e for e in self.errors()))
+        self.data["shots"] = []
+        self.assertTrue(any("explicit recognized modality" in e for e in self.errors()))
+
+    def test_a_valid_ai_shot_cannot_hide_another_shots_missing_modality(self):
+        self.data["shots"].append({"id": "B", "asset_ids": []})
+        self.assertTrue(any("explicit recognized modality" in e for e in self.errors()))
+
+    def test_legacy_authentic_policy_retains_episode_wide_anchor_for_ai_or_3d(self):
+        for same_series in (True, False):
+            self.profile("authentic_continuous_video", same_series)
+            for modality in ("ai_generated", "controlled_3d"):
+                self.data["shots"][0]["modality"] = modality
+                self.assertTrue(any("actually used real continuous-video anchor" in e for e in self.errors()))
+            self.data["assets"].append({"id": "real", "kind": "real_observation"})
+            self.data["shots"][0]["asset_ids"].append("real")
+            self.assertEqual(self.errors(), [])
+            self.data["assets"].pop()
+            self.data["shots"][0]["asset_ids"].remove("real")
+
+    def test_legacy_other_project_not_required_remains_compatible(self):
+        self.profile("not_required", same_series=False)
+        self.assertEqual(self.errors(), [])
+
+    def test_current_series_cannot_downgrade_to_not_required(self):
+        self.profile("not_required")
+        errors = self.errors()
+        self.assertTrue(any("cannot be silently removed" in e for e in errors))
+        self.assertTrue(any("actually used real continuous-video anchor" in e for e in errors))
+
+    def test_invalid_profiles_cannot_silently_disable_anchor_requirement(self):
+        for mode in (None, "", "unknown", False, [], {}):
+            with self.subTest(mode=mode):
+                self.profile(mode, same_series=False)
+                errors = self.errors()
+                self.assertTrue(any("explicit project real-anchor policy" in e for e in errors), errors)
+                self.assertTrue(any("actually used real continuous-video anchor" in e for e in errors), errors)
+        self.profile("not_required", same_series=False)
+        self.data["series_profile"].pop("scope_reference")
+        self.assertTrue(self.errors())
+        self.data["series_profile"] = {"file": "missing.json", "scope_reference": "Synthetic scope"}
+        self.assertTrue(self.errors())
+
+    def test_stale_profile_hash_and_missing_profile_id_cannot_pass(self):
+        self.profile("not_required", same_series=False)
+        self.data["series_profile"]["sha256"] = "0" * 64
+        self.assertTrue(any("evidence hash stale" in e for e in self.errors()))
+        self.profile("not_required", same_series=False)
+        path = self.root / "profile.json"
+        path.write_text(json.dumps({"medium": {"real_anchor": "not_required"}}), encoding="utf-8")
+        self.data["series_profile"]["sha256"] = motion.sha(path)
+        self.assertTrue(any("profile id required" in e for e in self.errors()))
+
+    def test_conditional_policy_does_not_bypass_existing_pure_2d_scoped_exception(self):
+        path = self.root / "synthetic-evidence.txt"
+        path.write_text("Synthetic structural fixture, not user approval", encoding="utf-8")
+        ref = {"file": path.name, "sha256": motion.sha(path)}
+        self.data["design"] = {"visual_intent": {"target": "scientific_realism",
+                              "scientific_constraints": "Synthetic constraints only", "style_reference": ref}}
+        shot = self.data["shots"][0]
+        shot["modality"] = "pure_2d"
+        shot["shotbook"] = {"realism": {"role": "main", "medium": "pure_2d", "renderer": "raster_animation",
+                             "scientific_basis": "Synthetic model", "visible_motion": "Synthetic state change"}}
+        checks = Checks(self.data, self.root)
+        checks.real_anchor()
+        validate_realism(checks, ["A"], "sample")
+        self.assertTrue(any("explicit per-shot user exception" in e for e in checks.errors))
+        shot["shotbook"]["realism"]["exception"] = {"shot_id": "A", "scope": "nonrealistic_full_frame_shot",
+                           "reason": "Synthetic software fixture only", "user_evidence": ref}
+        checks = Checks(self.data, self.root)
+        checks.real_anchor()
+        validate_realism(checks, ["A"], "sample")
+        self.assertEqual(checks.errors, [])  # Only structural checks, never real authorization.
 
 
 if __name__ == "__main__":

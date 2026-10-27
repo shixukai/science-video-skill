@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run a project renderer only after phase-appropriate checks. No quality approval."""
 import argparse
+import copy
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -104,7 +105,7 @@ def input_asset_ids(data, shot_ids):
     return required
 
 
-def input_snapshot(checks, shot_ids):
+def input_snapshot(checks, shot_ids, phase=None):
     """Declared actual dependencies only, not every unused candidate in the library."""
     data = checks.data; refs = []
     required = input_asset_ids(data, shot_ids)
@@ -123,10 +124,16 @@ def input_snapshot(checks, shot_ids):
         refs.append(({"file": design.get("board_reference"), "sha256": design.get("board_sha256")}, "design board"))
     execution = obj(data.get("execution")); baseline = obj(design.get("approved_film_reference"))
     refs += [(execution.get(k), k) for k in ("entrypoint", "skill_lock")]
-    refs += [(baseline.get(k), "baseline " + k) for k in ("approval_evidence", "viewing")]
+    if phase == "roughcut":
+        pass
+    elif baseline.get("kind") == "initial_style_reference":
+        refs.append((baseline.get("reference"), "initial style reference"))
+    else:
+        refs += [(baseline.get(k), "baseline " + k) for k in ("approval_evidence", "viewing")]
     refs += [(obj(frame).get("image"), "baseline visual frame") for frame in seq(obj(baseline.get("viewing")).get("frames"))]
     from realism_guard import references as realism_references
-    refs += list(realism_references(data, shot_ids))
+    if phase != "roughcut":
+        refs += list(realism_references(data, shot_ids))
     from origin_guard import references as origin_references
     refs += list(origin_references(data, shot_ids))
     snapshot = {}
@@ -177,8 +184,46 @@ def selected_design(checks, shot_ids):
             checks.need(meaningful(book.get(field)), "execution shot " + str(row.get("id")) + " design missing " + field)
 
 
+def roughcut_plan_context(data):
+    """G2 inputs without its eventual output, and without later art refinements."""
+    from stage_checks import context_sha256
+    snapshot = copy.deepcopy(data)
+    snapshot.setdefault('qa', {}).setdefault('shotbook', {}).pop('viewing', None)
+    return context_sha256(snapshot, 'G2')
+
+
+def validate_roughcut_execution(checks):
+    """New execution contract binds actual G2 output, not G3's refined design."""
+    execution = obj(checks.data.get('execution'))
+    version = execution.get('contract_version', 1)
+    checks.need(type(version) is int and version in (1, 2), 'execution unsupported contract version')
+    if version == 1 and 'roughcut_receipt' not in execution:
+        return  # Preserve unmodified historical records; do not fabricate old calls.
+    r = read_record(checks, execution.get('roughcut_receipt'), 'execution roughcut receipt')
+    checks.need(r.get('kind') == 'guarded_render_receipt' and r.get('schema_version') == 1
+                and r.get('phase') == 'roughcut' and r.get('result') == 'rendered_unreviewed'
+                and r.get('returncode') == 0 and r.get('preflight_errors') == [], 'execution actual successful roughcut invocation required')
+    checks.need(r.get('shot_ids') == [obj(s).get('id') for s in seq(checks.data.get('shots'))], 'execution roughcut must cover all planned shots')
+    checks.need(r.get('roughcut_plan_sha256') == roughcut_plan_context(checks.data), 'execution roughcut G2 plan changed; review a new matching roughcut')
+    checks.need(r.get('skill_tree_sha256') == skill_snapshot()['tree_sha256'], 'execution roughcut uses a different frozen Skill; migrate explicitly')
+    view = obj(checks.record('shotbook').get('viewing'))
+    checks.need(obj(r.get('output')) == {k:view.get(k) for k in ('file','sha256')}, 'execution G2 viewing must bind actual roughcut output')
+    checks.evidence(r.get('output'), 'execution roughcut output')
+    lock = read_record(checks, execution.get('skill_lock'), 'execution roughcut Skill lock')
+    locked, start, end, reviewed = [stamp(v) for v in (lock.get('created_at'), r.get('started_at'), r.get('completed_at'), view.get('reviewed_at'))]
+    checks.need(bool(locked and start and end and reviewed and locked <= start <= end <= reviewed), 'execution roughcut must be reviewed after actual execution with prior lock')
+
+
 def check_baseline(checks):
     baseline = obj(obj(checks.data.get("design")).get("approved_film_reference"))
+    if baseline.get("kind") == "initial_style_reference":
+        from cover_guard import image_size
+        image_size(checks, baseline.get("reference"), "execution initial style reference")
+        checks.need(baseline.get("actually_opened") is True, "execution initial reference must actually be viewed")
+        for key in ("selection_reason", "applicable_style", "observation", "reviewer"):
+            checks.need(meaningful(baseline.get(key)), "execution initial reference " + key + " required")
+        checks.need(stamp(baseline.get("reviewed_at")) is not None, "execution initial reference actual review timestamp required")
+        return obj(baseline.get("reference")).get("sha256")
     checks.need(baseline.get("kind") == "approved_finished_film", "execution approved actual finished-film baseline required, not generic stills")
     checks.need(meaningful(baseline.get("approval_reference")) and meaningful(baseline.get("applicable_style")), "execution traceable baseline approval and applicable style required")
     checks.evidence(baseline.get("approval_evidence"), "execution baseline approval evidence")
@@ -237,14 +282,20 @@ from topic_selection_guard import validate_topic_selection, selection_context_sh
 def preflight(data, root, phase, shot_ids):
     from stage_checks import Checks, check_stage
     c = Checks(data, root)
-    c.need(phase in ("sample", "full"), "execution phase must be sample or full")
+    c.need(phase in ("roughcut", "sample", "full"), "execution phase must be roughcut, sample or full")
     validate_topic_selection(c)
     from realism_guard import validate_realism
-    validate_realism(c, shot_ids, phase)
+    check_lock(c); selected_design(c, shot_ids)
+    if phase == "roughcut":
+        c.need(shot_ids == [obj(s).get("id") for s in seq(data.get("shots"))], "roughcut must cover the whole planned episode in order")
+        c.errors.extend(check_stage(data, root, "G1"))
+        baseline_hash = None  # Technical placeholders are not a style approval.
+    else:
+        validate_realism(c, shot_ids, phase)
+        baseline_hash = check_baseline(c)
+    input_snapshot(c, shot_ids, phase)
     from origin_guard import validate_origin
     validate_origin(c, shot_ids, final=phase == "full")
-    check_lock(c); selected_design(c, shot_ids); baseline_hash = check_baseline(c)
-    input_snapshot(c, shot_ids)
     from connection_guard import plans as connection_plans
     connection_plans(c, shot_ids)
     entry = c.evidence(obj(data.get("execution")).get("entrypoint"), "execution renderer entrypoint")
@@ -308,7 +359,7 @@ def run_render(episode, phase, shot_ids, output, receipt):
     if out == rec:
         raise ValueError("output and receipt must differ")
     errors = preflight(data, root, phase, shot_ids)
-    input_checks = Checks(data, root); inputs = input_snapshot(input_checks, shot_ids); errors.extend(input_checks.errors)
+    input_checks = Checks(data, root); inputs = input_snapshot(input_checks, shot_ids, phase); errors.extend(input_checks.errors)
     entry = (root / obj(obj(data.get("execution")).get("entrypoint")).get("file", "")).resolve()
     command = [sys.executable, str(entry), "--episode", str(episode), "--phase", phase,
                "--shot-ids", ",".join(shot_ids), "--output", str(out)]
@@ -318,6 +369,8 @@ def run_render(episode, phase, shot_ids, output, receipt):
               "skill_tree_sha256": skill_snapshot()["tree_sha256"], "command": command,
               "input_files": inputs, "preflight_errors": errors, "returncode": None, "result": "blocked" if errors else "started",
               "limits": LIMITS}
+    if phase == 'roughcut':
+        record['roughcut_plan_sha256'] = roughcut_plan_context(data)
     # Persist the real pre-render design/version snapshot BEFORE invoking the
     # renderer. A crash leaves started, never a successful or reviewed receipt.
     with rec.open("x", encoding="utf-8") as f:
@@ -338,7 +391,7 @@ def run_render(episode, phase, shot_ids, output, receipt):
             record.update(returncode=result.returncode, completed_at=now(), result="render_failed")
             if result.returncode == 0 and out.is_file() and not out.is_symlink():
                 probe = Checks(data, root); probe.duration(out)
-                if input_snapshot(probe, shot_ids) != inputs:
+                if input_snapshot(probe, shot_ids, phase) != inputs:
                     probe.errors.append("actual render input bytes changed during invocation")
                 if file_hash(episode) != record["episode_sha256"] or skill_snapshot()["tree_sha256"] != record["skill_tree_sha256"]:
                     probe.errors.append("render inputs changed during invocation")
@@ -358,7 +411,7 @@ def main():
     sub = parser.add_subparsers(dest="action", required=True)
     lock = sub.add_parser("lock"); lock.add_argument("output", type=Path)
     run = sub.add_parser("run"); run.add_argument("episode", type=Path)
-    run.add_argument("--phase", choices=("sample", "full"), required=True)
+    run.add_argument("--phase", choices=("roughcut", "sample", "full"), required=True)
     run.add_argument("--shot-ids", required=True, help="ordered comma-separated shot IDs; adapter must honor this scope")
     run.add_argument("--output", required=True, help="new episode-relative audiovisual output")
     run.add_argument("--receipt", required=True, help="new episode-relative execution receipt")

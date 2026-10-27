@@ -5,9 +5,11 @@ visual observations. No OCR/perceptual approval is claimed and no older guard is
 replaced. Scientific labels and ordinary captions do not need label permission.
 """
 import json
+import hashlib
 import math
 import re
 import unicodedata
+from task_scope import cover_keys
 
 MARKING_PURPOSES = {"attribution", "license", "ai_simulation", "production_meta",
                     "watermark", "internal_qa", "production_excuse", "material_defect"}
@@ -38,10 +40,21 @@ def marking_cue(value):
                 or re.search(r"(?:(?:本片|视频|製作|制作|版权|版權).{0,8}水印|(?:video|production|copyright|creator)[ -]*watermark|制作说明|製作說明|内部验收|內部驗收|验收记录|驗收記錄|测试通过|測試通過|非实拍|非實拍)", raw))
 
 
+def scientific_subject_review(item):
+    """A traceable semantic review, not a blanket keyword exemption."""
+    review = obj(item.get('cue_review'))
+    ids = review.get('claim_ids')
+    return (review.get('status') == 'pass' and review.get('interpretation') == 'scientific_subject'
+            and all(text(review.get(k)) for k in ('reviewer', 'scientific_basis', 'audience_task', 'note'))
+            and isinstance(ids, list) and bool(ids) and all(text(i) for i in ids)
+            and review.get('text_sha256') == hashlib.sha256(str(item.get('text', '')).encode()).hexdigest()
+            and bool(obj(review.get('evidence')).get('file')))
+
+
 def is_marking(item):
     return (item.get("kind") == "marking" or bool(item.get("graphic_sha256"))
             or bool(set(p for p in seq(item.get("purposes")) if isinstance(p, str)) & MARKING_PURPOSES)
-            or marking_cue(item.get("text", "")))
+            or (marking_cue(item.get("text", "")) and not scientific_subject_review(item)))
 
 
 def valid_range(value):
@@ -57,7 +70,7 @@ def scope(item):
 def validate_label_plan(checks, items):
     """G1 checks consent only; it never requires a not-yet-rendered video."""
     for ident, item in items.items():
-        if item.get("surface") not in VISUAL_SURFACES or not is_marking(item):
+        if (item.get("surface") not in VISUAL_SURFACES and 'ai_simulation' not in seq(item.get('purposes'))) or not is_marking(item):
             continue
         label = "label permission " + str(ident) + ": "
         checks.need(text(item.get("position")) and valid_range(item.get("time_range")),
@@ -117,7 +130,7 @@ def validate_overlay_review(checks, gate, viewing, review, items, selected_ids):
         expected = sorted(obj(ref).get("sha256", "") for ref in seq(review.get("cover_files")))
         actual = data.get("cover_sha256")
         need(isinstance(actual, list) and all(isinstance(h, str) for h in actual)
-             and sorted(actual) == expected and len(expected) == 2, "both current covers must be bound")
+             and sorted(actual) == expected and len(expected) == len(cover_keys(checks.data)), "requested current covers must be bound")
     sources = {}
     entries = data.get("sources")
     need(isinstance(entries, list) and bool(entries), "complete renderer/caption/asset source inventory required")

@@ -6,10 +6,12 @@ import importlib.util
 import json
 from pathlib import Path
 import shutil
+import sys
 import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1] / "skills/science-video-production"
+sys.path.insert(0, str(ROOT / "scripts"))
 spec = importlib.util.spec_from_file_location("reference_checks", ROOT / "scripts/check_reference_system.py")
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
@@ -62,18 +64,6 @@ class ReferenceSystemTests(unittest.TestCase):
         p = self.root / "third-party/videozero-motion-canvas/TWEENING.md"
         p.write_text(p.read_text() + "\nAltered example\n")
         self.errors("copied external reference hash mismatch")
-    def test_explanation_navigation_required(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d.pop("explanation_standard"))
-        self.errors("E01-E12 explanation navigation")
-    def test_explanation_navigation_duplicate_rejected(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][1].update(id="E01"))
-        self.errors("E01-E12 explanation navigation")
-    def test_explanation_navigation_contract_required(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][0].update(contract_ids=["missing-contract"]))
-        self.errors("explanation navigation contract missing")
-    def test_explanation_navigation_anchor_required(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["explanation_standard"]["entries"][0].update(owner_anchor="nonexistent"))
-        self.errors("explanation navigation anchor missing")
     def test_optional_feedback_cannot_be_mandatory(self):
         self.edit("config/production-policy.json", lambda d: d["optional_audience_feedback"].update(required=True))
         self.errors("must not depend on audience")
@@ -178,179 +168,127 @@ class ReferenceSystemTests(unittest.TestCase):
         self.errors("malformed")
 
 
-    def test_failure_clause_text_stale(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["failure_contracts"][0]["clauses"][0].update(quote="invented reference text"))
-        self.errors("failure clause text missing/stale")
-    def test_failure_clause_digest_stale(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["failure_contracts"][0]["clauses"][0].update(quote_sha256="0" * 64))
-        self.errors("failure clause digest inconsistent")
-    def test_failure_contract_unresolved(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["rules"][0].update(failure_condition_ref={"contract_id":"unknown"}))
-        self.errors("rule precise failure reference missing")
-    def test_unreviewed_mapping_cannot_claim_complete(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d["rules"][0].update(mapping_status="pending"))
-        self.errors("rule semantic mapping unresolved")
-
-    def test_requirement_count_must_match_current_registry(self):
-        self.edit("indexes/standard-coverage.json", lambda d: d.update(rule_count=d["rule_count"] + 1))
-        self.errors("current requirement coverage count missing/duplicate")
-
-    def test_requirement_count_tracks_new_unique_rules(self):
-        def append_rule(registry):
-            rule = copy.deepcopy(registry["rules"][0])
-            rule["id"] = "TEST-unique-current-requirement"
-            registry["rules"].append(rule)
-            registry["rule_count"] = len(registry["rules"])
-        self.edit("indexes/standard-coverage.json", append_rule)
-        self.assertEqual(m.check(self.root), [])
-
-    def test_current_explanation_finesse_voice_rules_cannot_be_removed(self):
-        def remove_rule(registry):
-            registry["rules"] = [r for r in registry["rules"] if r["id"] != "VOICE-execution"]
-            registry["rule_count"] = len(registry["rules"])
-        self.edit("indexes/standard-coverage.json", remove_rule)
-        self.errors("current explanation/finesse/voice coverage missing")
-
-    def test_art_handoff_rule_removal_breaks_reference_integrity(self):
-        """Deleting an execution boundary must fail structurally, not judge art."""
-        contracts = {c["id"]: c for c in json.loads(
-            (self.root / "indexes/standard-coverage.json").read_text())["failure_contracts"]}
-        cases = [
-            ("field-gates", "G2的低精细度指尚未精修", "references/production-checkpoints.md"),
-            ("field-style_approval", "把当前生产资产经实际渲染", "references/visual-system.md"),
-            ("field-style_approval", "若实际资产已变成另一种造型语言", "references/visual-system.md"),
-            ("V-natural_editable_shapes", "对本镜需要独立显隐", "references/visual-system.md"),
-            ("field-art", "已有批准画风时，美术审查须核", "references/quality-acceptance.md"),
-        ]
-        for ident, prefix, owner in cases:
-            with self.subTest(contract=ident, clause=prefix):
-                matches = [c for c in contracts[ident]["clauses"] if c["quote"].startswith(prefix)]
-                self.assertEqual(len(matches), 1, "Execution rule must have a precise existing-contract reference")
-                clause = matches[0]
-                self.assertEqual(clause["file"], owner)
-                p = self.root / owner
-                original = p.read_text()
-                try:
-                    p.write_text(original.replace(clause["quote"], ""))
-                    self.errors("failure clause text missing/stale")
-                finally:
-                    p.write_text(original)
-        self.assertEqual(m.check(self.root), [])
-
-    def test_spatial_relation_owner_clauses_cannot_be_removed(self):
-        """Test owner/reference integrity, not whether a scene is understandable."""
-        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
-        contracts = {c["id"]: c for c in registry["failure_contracts"]}
-        owners = {o["id"]: o["file"] for o in json.loads(
-            (self.root / "indexes/rule-owners.json").read_text())["owners"]}
-        routes = [
-            ("H-h-failure-100", "production", "逐段声画与图内文字对应", 2),
-            ("field-art", "visual", "纯2d解释与真实素材", 1),
-        ]
-        for ident, owner, anchor, expected_count in routes:
-            clauses = [c for c in contracts[ident]["clauses"]
-                       if c["file"] == owners[owner] and c["anchor"] == anchor]
-            self.assertEqual(len(clauses), expected_count)
-            for clause in clauses:
-                with self.subTest(contract=ident, digest=clause["quote_sha256"]):
-                    p = self.root / owners[owner]
-                    original = p.read_text()
-                    try:
-                        p.write_text(original.replace(clause["quote"], ""))
-                        self.errors("failure clause text missing/stale")
-                    finally:
-                        p.write_text(original)
-        self.assertEqual(m.check(self.root), [])
-
-    def test_spatial_quality_cross_reference_rejects_broken_owner_anchor(self):
-        """A synchronized quote/hash must not hide a broken responsibility link."""
-        target = "production-checkpoints.md#逐段声画与图内文字对应"
-        broken = "production-checkpoints.md#missing-spatial-relation"
-        registry_path = self.root / "indexes/standard-coverage.json"
-        registry = json.loads(registry_path.read_text())
-        contract = next(c for c in registry["failure_contracts"] if c["id"] == "field-art")
-        matches = [c for c in contract["clauses"]
-                   if c["file"] == "references/quality-acceptance.md" and target in c["quote"]]
-        self.assertEqual(len(matches), 1)
-        p = self.root / "references/quality-acceptance.md"
-        p.write_text(p.read_text().replace(target, broken))
-        for contract in registry["failure_contracts"]:
-            for clause in contract["clauses"]:
-                if clause["file"] == "references/quality-acceptance.md" and target in clause["quote"]:
-                    clause["quote"] = clause["quote"].replace(target, broken)
-                    clause["quote_sha256"] = hashlib.sha256(clause["quote"].encode()).hexdigest()
-        registry_path.write_text(json.dumps(registry, ensure_ascii=False))
-        self.errors("broken heading link")
-
-    def test_feedback_scope_clauses_keep_their_responsibility_owners(self):
-        """Missing scope/closure references fail; no media scope is inferred."""
-        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
-        contracts = {c["id"]: c for c in registry["failure_contracts"]}
-        owners = {o["id"]: o["file"] for o in json.loads(
-            (self.root / "indexes/rule-owners.json").read_text())["owners"]}
-        routes = [
-            ("V-allowed_stage", "production", "3-阶段推进与代表样", 2),
-            ("V-failure_scope", "quality", "失败后的处理", 1),
-            ("V-regression", "quality", "失败后的处理", 1),
-        ]
-        for ident, owner, anchor, expected_count in routes:
-            clauses = contracts[ident]["clauses"]
-            self.assertEqual(len(clauses), expected_count)
-            for clause in clauses:
-                with self.subTest(contract=ident, digest=clause["quote_sha256"]):
-                    self.assertEqual((clause["file"], clause["anchor"]), (owners[owner], anchor))
-                    p = self.root / owners[owner]
-                    original = p.read_text()
-                    try:
-                        p.write_text(original.replace(clause["quote"], ""))
-                        self.errors("failure clause text missing/stale")
-                    finally:
-                        p.write_text(original)
-        self.assertEqual(m.check(self.root), [])
-
-    def test_feedback_scope_links_fail_even_with_synchronized_quotes(self):
-        registry_path = self.root / "indexes/standard-coverage.json"
-        original_registry = registry_path.read_text()
-        routes = [
-            ("references/production-checkpoints.md", "quality-acceptance.md#失败后的处理"),
-            ("references/quality-acceptance.md", "production-checkpoints.md#3-阶段推进与代表样"),
-            ("references/quality-acceptance.md", "#记录与技术检查"),
-        ]
-        for file, target in routes:
-            with self.subTest(file=file, target=target):
-                p = self.root / file
-                original = p.read_text()
-                self.assertIn("](" + target + ")", original)
-                broken = target.split("#", 1)[0] + "#missing-feedback-scope-target"
-                registry = json.loads(original_registry)
-                try:
-                    p.write_text(original.replace(target, broken))
-                    for contract in registry["failure_contracts"]:
-                        for clause in contract["clauses"]:
-                            if clause["file"] == file and target in clause["quote"]:
-                                clause["quote"] = clause["quote"].replace(target, broken)
-                                clause["quote_sha256"] = hashlib.sha256(clause["quote"].encode()).hexdigest()
-                    registry_path.write_text(json.dumps(registry, ensure_ascii=False))
-                    self.errors("broken heading link")
-                finally:
-                    p.write_text(original)
-                    registry_path.write_text(original_registry)
-        self.assertEqual(m.check(self.root), [])
-
-    def test_subject_motion_policy_cannot_enable_slideshow_exceptions(self):
-        self.edit("config/production-policy.json", lambda d: d["subject_motion"].update(no_whole_semantic_unit_exception=False))
+    def test_observation_hold_cannot_bypass_actual_review(self):
+        self.edit("config/production-policy.json", lambda d: d["subject_motion"].update(observation_hold_requires_actual_review=False))
         self.errors("subject motion screening/semantic boundaries required")
 
     def test_subject_motion_project_limit_cannot_be_weakened_to_ten_seconds(self):
         self.edit("config/production-policy.json", lambda d: d["subject_motion"].update(max_no_progress_seconds=10))
         self.errors("conservative subject motion project limits required")
 
-    def test_subject_motion_rule_cannot_be_removed(self):
-        def remove(registry):
-            registry["rules"] = [r for r in registry["rules"] if r["id"] != "MOTION-subject-continuity"]
-            registry["rule_count"] = len(registry["rules"])
-        self.edit("indexes/standard-coverage.json", remove)
-        self.errors("current explanation/finesse/voice coverage missing")
+
+    def test_navigation_cannot_be_promoted_to_rule_authority(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d.update(authority="rules"))
+        self.errors("navigation must defer to canonical bodies")
+
+    def test_navigation_must_cover_every_canonical_body(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["sections"].pop())
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_duplicate_navigation_entry_is_rejected(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["sections"].append(copy.deepcopy(d["sections"][0])))
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_navigation_cannot_invent_an_owner(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["sections"][0].update(owner_id="unknown"))
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_navigation_rejects_a_forged_body_digest(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["sections"][0].update(sha256="0" * 64))
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_navigation_rejects_a_missing_heading(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["sections"][0]["anchors"].pop())
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_navigation_rejects_a_forged_heading(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d["sections"][0]["anchors"].append("invented"))
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_navigation_cannot_reintroduce_copied_requirements(self):
+        self.edit("indexes/standard-coverage.json", lambda d: d.update(rules=[{"quote":"invented requirement"}]))
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_body_edit_invalidates_navigation_even_without_heading_changes(self):
+        p = self.root / "references/quality-acceptance.md"
+        p.write_bytes(p.read_bytes() + b"\nChanged body.\n")
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_supporting_body_edit_invalidates_navigation(self):
+        p = self.root / "references/animation-scene-design.md"
+        p.write_bytes(p.read_bytes() + b"\nChanged supporting body.\n")
+        self.errors("stale/incomplete chapter navigation")
+
+    def test_rebuild_is_navigation_only_and_does_not_claim_review(self):
+        from rebuild_standard_index import build
+        p = self.root / "references/quality-acceptance.md"
+        p.write_bytes(p.read_bytes() + b"\nAdditional editorial guidance.\n")
+        registry = build(self.root)
+        self.assertEqual(registry["status"], "navigation_only")
+        self.assertNotIn("rules", registry)
+        self.assertNotIn("failure_contracts", registry)
+        self.edit("indexes/standard-coverage.json", lambda d: (d.clear(), d.update(registry)))
+        self.assertEqual(m.check(self.root), [])
+
+    def test_unsupported_profile_version_format_is_rejected(self):
+        self.edit("config/series-profile.json", lambda d: d.update(version="latest"))
+        self.errors("unsupported profile schema/version")
+
+    def test_new_maintenance_version_does_not_require_validator_edit(self):
+        self.edit("config/series-profile.json", lambda d: d.update(version="1.6.10"))
+        self.assertEqual(m.check(self.root), [])
+
+    def test_navigation_does_not_make_learning_candidates_mandatory(self):
+        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
+        self.assertTrue(all("learning-candidates/" not in row["file"] for row in registry["sections"]))
+
+    def test_art_and_feedback_sections_keep_canonical_owners(self):
+        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
+        sections = {row["file"]: row for row in registry["sections"]}
+        for file, owner, anchors in (
+            ("references/production-checkpoints.md", "production", ("3-阶段推进与代表样", "逐段声画与图内文字对应")),
+            ("references/visual-system.md", "visual", ("纯2d解释与真实素材",)),
+            ("references/quality-acceptance.md", "quality", ("失败后的处理", "主体动态与长静帧")),
+        ):
+            with self.subTest(file=file):
+                self.assertEqual(sections[file]["owner_id"], owner)
+                self.assertTrue(set(anchors) <= set(sections[file]["anchors"]))
+
+    def test_navigation_rebuild_cannot_hide_broken_cross_references(self):
+        from rebuild_standard_index import build
+        routes = (
+            ("references/production-checkpoints.md", "quality-acceptance.md#失败后的处理"),
+            ("references/quality-acceptance.md", "production-checkpoints.md#逐段声画与图内文字对应"),
+            ("references/quality-acceptance.md", "production-checkpoints.md#3-阶段推进与代表样"),
+            ("references/quality-acceptance.md", "#记录与技术检查"),
+        )
+        registry_path = self.root / "indexes/standard-coverage.json"
+        original_registry = registry_path.read_bytes()
+        for file, target in routes:
+            with self.subTest(file=file, target=target):
+                p = self.root / file
+                original = p.read_bytes()
+                self.assertIn(target.encode(), original)
+                try:
+                    broken = target.split("#", 1)[0] + "#missing-owner-anchor"
+                    p.write_bytes(original.replace(target.encode(), broken.encode()))
+                    registry_path.write_text(json.dumps(build(self.root), ensure_ascii=False), encoding="utf-8")
+                    self.errors("broken heading link")
+                finally:
+                    p.write_bytes(original)
+                    registry_path.write_bytes(original_registry)
+        self.assertEqual(m.check(self.root), [])
+
+    def test_navigation_path_cannot_escape_skill(self):
+        self.edit("indexes/rule-owners.json", lambda d: d["owners"][0].update(file="../../outside.md"))
+        self.assertTrue(m.check(self.root))
+
+    def test_deleted_subject_motion_section_requires_reviewed_index_update(self):
+        p = self.root / "references/quality-acceptance.md"
+        original = p.read_bytes()
+        p.write_bytes(original.replace("## 主体动态与长静帧".encode(), b"## Deleted section"))
+        self.errors("stale/incomplete chapter navigation")
+
 
 if __name__ == "__main__":
     unittest.main()

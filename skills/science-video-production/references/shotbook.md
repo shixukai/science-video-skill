@@ -38,6 +38,8 @@ manifest记录生成时episode原字节SHA-256、源视频摘要、工具版本�
 
 ## 设计和资产引用绑定
 
+写实新作的模板包含design.visual_intent和逐镜shotbook.realism，按实际实现填写；默认空值不是获准。G1仅绑定文字意义与用途，坐标/时段变化在后续布局和媒体阶段复核；不能因局部移动标签重做未变的选题。首样基准、roughcut/sample/full回执见[制作入口](production-checkpoints.md#开工锁定与真实渲染入口)。
+
 简报固定Skill提交、series-profile和tokens版本/哈希、私有设计板ID/哈希及批准范围。真实使用的设计图、组件、视频和音轨在现有 `assets` 中按实际kind、来源/权利、版本说明与 `sha256`登记，通过 `shots[].asset_ids` 关联；配置参数或索引本身不假报为实拍。复制到项目的配置/设计证据版本与位置留简报及 `qa.visual_frames.note`，不能写“使用最新版”或仅凭公开tokens认设计板通过。
 
 当前 `episode.json` 字段不增加一套平行审批状态。素材/语义拍/文件hash由现有检查器绑定；设计板、配置引用与实际画面是否一致按质量正文实看。本仓索引检查只验证公开组件哈希，不能验证私有媒体或批准的真实性。
@@ -100,7 +102,7 @@ manifest记录生成时episode原字节SHA-256、源视频摘要、工具版本�
 
 库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。
 
-开工先按 [入口路由](../SKILL.md#阶段路由逐项执行适用的责任正文) 阅读当前阶段适用的责任章节、固定版本配置/tokens与实际资产清单，再登记本片引用；推进阶段时补读新增适用章节，不遗漏其约束。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。
+开工先按 [入口路由](../SKILL.md#按需读取责任正文) 阅读当前阶段适用的责任章节、固定版本配置/tokens与实际资产清单，再登记本片引用；推进阶段时补读新增适用章节，不遗漏其约束。固定引用记录不替代先读规则。库的id/version/manifest hash及adoption（已采用或仅参考）记design.library_reference；不要把风格版本、原资料包版本或当期允许库版本当同一个值。
 
 如果采用雷声机制配方，另读 [条件式完整示例](../assets/examples/thunder-brief.md)，保留其具体禁画、首次慢放即披露和未制作状态；其他题材不因此强制讲雷声，也不恢复被取消题材。
 

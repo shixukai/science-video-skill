@@ -36,7 +36,7 @@ def validate_topic_selection(checks):
     data = checks.data; brief = obj(data.get("brief")); card = obj(brief.get("topic_selection"))
     need = lambda ok, text: checks.need(ok, "topic selection: " + text)
     need(bool(card), "editorial selection card required before production")
-    need(card.get("audience_category") == "ordinary_adults", "current series requires ordinary adult audience")
+    need(card.get("audience_category") == "ordinary_adults" or (card.get("selection_origin") == "user_requested" and meaningful(card.get("audience_category"))), "default ordinary adult audience or explicit user-requested audience required")
     need(meaningful(brief.get("audience")), "specific adult audience context required")
     known = obj(brief.get("audience_start")).get("assumed_knowledge")
     need(isinstance(known, list) and bool(known) and all(meaningful(k) for k in known), "explicit audience prior knowledge required")
@@ -49,7 +49,13 @@ def validate_topic_selection(checks):
         need(meaningful(feasibility.get(field)), "feasibility " + field + " required; existing assets are not a selection rationale")
     need(feasibility.get("blocking_gaps") == [], "unresolved feasibility gaps block production")
     reasons = card.get("disqualifiers")
-    need(isinstance(reasons, list) and not reasons, "declared disqualifiers block selection; do not clear them by renaming the title")
+    user_selected = card.get("selection_origin") == "user_requested"
+    if user_selected:
+        checks.evidence(card.get("user_request_evidence"), "topic selection original user request")
+        need(meaningful(card.get("user_request_reference")) and meaningful(card.get("scope_reason")), "user-requested topic needs original scope and explanation rationale")
+    preference_only = {"common_knowledge_only", "definition_only", "title_only_change"}
+    valid_reasons = isinstance(reasons, list) and all(isinstance(x, str) and x in DISQUALIFIERS for x in reasons)
+    need(valid_reasons and (not reasons or (user_selected and set(reasons) <= preference_only)), "declared factual/feasibility disqualifiers block selection; editorial taste alone cannot veto a user-requested topic")
     refs = card.get("source_ids"); sources = seq(data.get("sources"))
     valid = isinstance(refs, list) and bool(refs) and all(isinstance(i, str) and i for i in refs)
     need(valid and len(refs) == len(set(refs)) if valid else False, "unique factual main-source IDs required")

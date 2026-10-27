@@ -211,6 +211,10 @@ def validate(checks, record, viewing, gate, policy, step_ids):
     except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as exc:
         need(False, "screen/timeline invalid: "+str(exc))
         return
+    flexible_holds = policy.get("timing_mode") == "review_triggers"
+    def reviewed_hold(item):
+        review = item.get("hold_review", {})
+        return flexible_holds and isinstance(review, dict) and review.get("status") == "pass" and all(text(review.get(k)) for k in ("reviewer", "observation", "evidence"))
     inactive_start, longest = None, 0
     unclassified = []
     for span in spans:
@@ -232,14 +236,16 @@ def validate(checks, record, viewing, gate, policy, step_ids):
         elif inactive_start is None:
             inactive_start = span["start"]
         if kind == "purposeful_read":
-            need(span["end"]-span["start"] <= policy["max_purposeful_read_seconds"], "purposeful read too long")
+            need(span["end"]-span["start"] <= policy["max_purposeful_read_seconds"] or reviewed_hold(span), "long purposeful read needs actual observation-task review")
             need(text(span.get("purpose")) and text(span.get("resume_evidence")), "read purpose/resumption evidence required")
     if inactive_start is not None:
         longest = max(longest, duration-inactive_start)
+    held = [s for s in spans if not isinstance(s.get("kind"), str) or s.get("kind") not in ACTIVE]
+    all_holds_reviewed = bool(held) and all(s.get("kind") == "purposeful_read" and reviewed_hold(s) for s in held)
     if unclassified:
         need(longest <= policy["max_no_progress_seconds"], "observed no-progression interval exceeds project limit; other intervals unreviewed")
     else:
-        need(longest <= policy["max_no_progress_seconds"], "longest interval without effective subject progression exceeds project limit")
+        need(longest <= policy["max_no_progress_seconds"] or all_holds_reviewed, "longest interval without effective subject progression exceeds project limit without reviewed purposeful holds")
         need(finite(record.get("longest_no_progress_seconds")) and abs(record["longest_no_progress_seconds"]-longest) <= .001,
              "longest interval declaration inconsistent")
     def unknown_overlap(start, end):
@@ -256,20 +262,23 @@ def validate(checks, record, viewing, gate, policy, step_ids):
         if unknown_overlap(unit["start"], unit["end"]):
             need(False, "semantic unit has unreviewed span classification; subject progression not established")
         else:
-            need(any(isinstance(s.get("kind"), str) and s["kind"] in ACTIVE and min(s["end"], unit["end"])-max(s["start"], unit["start"]) > .001 for s in spans),
+            observation_hold = unit.get("task_type") == "observation" and reviewed_hold(unit) and all(s.get("kind") == "purposeful_read" and reviewed_hold(s) for s in spans if min(s["end"], unit["end"])-max(s["start"], unit["start"]) > .001)
+            need(observation_hold or any(isinstance(s.get("kind"), str) and s["kind"] in ACTIVE and min(s["end"], unit["end"])-max(s["start"], unit["start"]) > .001 for s in spans),
                  "complete spoken semantic unit is a slideshow; read pauses do not exempt it")
     need(covered == set(step_ids), "semantic units omit reviewed explanation coverage")
     resolutions = record.get("screen_resolutions")
     need(isinstance(resolutions, list) and len(resolutions) == len(actual["low_motion_ranges"]), "unresolved low-motion screen candidates")
     for interval, resolution in zip(actual["low_motion_ranges"], resolutions if isinstance(resolutions, list) else []):
+        hold_resolution = (isinstance(resolution, dict) and resolution.get("result") == "purposeful_observation" and reviewed_hold(resolution)
+                           and all(s.get("kind") == "purposeful_read" and reviewed_hold(s) for s in spans if min(s["end"], interval[1])-max(s["start"], interval[0]) > .001))
         need(isinstance(resolution, dict) and resolution.get("range") == interval
-             and resolution.get("result") == "effective_subject_progression"
+             and (resolution.get("result") == "effective_subject_progression" or hold_resolution)
              and text(resolution.get("observation")) and text(resolution.get("evidence")),
              "low-motion candidate needs actual continuous subject-change recheck; static/read-only resolution fails")
         if unknown_overlap(interval[0], interval[1]):
             need(False, "screen resolution overlaps unreviewed spans; effective progression not established")
         else:
-            need(any(isinstance(s.get("kind"), str) and s["kind"] in ACTIVE and min(s["end"], interval[1])-max(s["start"], interval[0]) > .001 for s in spans),
+            need(hold_resolution or any(isinstance(s.get("kind"), str) and s["kind"] in ACTIVE and min(s["end"], interval[1])-max(s["start"], interval[0]) > .001 for s in spans),
                  "screen resolution contradicts observed no-progression timeline")
 
 

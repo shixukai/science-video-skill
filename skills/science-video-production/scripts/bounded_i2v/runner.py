@@ -62,7 +62,7 @@ def validate_config(c):
  need(isinstance(c['review_basis'],str) and c['review_basis'].strip(),'independent design basis required')
  need(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,180}',c['output_prefix']) is not None,'unsafe output prefix')
  for k in ('api_sha256','image_sha256','design_sha256','scope_sha256','skill_manifest_sha256'):need(re.fullmatch('[0-9a-f]{64}',c[k]) is not None,'invalid content hash')
- need(c['skill_version'] in ('1.6.5','1.6.6','1.6.7','1.6.8') and type(c['skill_file_count']) is int and c['skill_file_count']>0,'explicit supported actual Skill1.6.5/1.6.6/1.6.7/1.6.8 required')
+ need(c['skill_version'] in ('1.6.5','1.6.6','1.6.7','1.6.8','1.6.9') and type(c['skill_file_count']) is int and c['skill_file_count']>0,'explicit supported actual Skill1.6.5/1.6.6/1.6.7/1.6.8/1.6.9 required')
  env=c['environment'];b=c['bindings']
  need(set(env)=={'tools','service_executables','comfy_root','comfy_entrypoint','models_directory','extra_model_paths'},'environment schema differs')
  need(set(env['tools'])=={'python','base_python','powershell','nvidia_smi'},'only fixed tool roles allowed')

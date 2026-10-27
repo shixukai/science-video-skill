@@ -193,19 +193,16 @@ class SceneCompositionTests(unittest.TestCase):
         for parent in (data["qa"]["shotbook"], data["qa"]["visual_frames"]["animation"], data["qa"]["visual_frames"]):
             self.assertEqual(parent["subject_motion"]["object_result_review"], {"status": "pending", "media_sha256": "", "units": []})
 
-    def test_owner_reference_clauses_are_present_and_bound(self):
+    def test_navigation_is_complete_without_duplicating_rules(self):
         from check_reference_system import check
+        from rebuild_standard_index import build
         root = Path(motion.__file__).resolve().parents[1]
         self.assertEqual(check(root), [])
         registry = json.loads((root / "indexes/standard-coverage.json").read_text())
-        contracts = {c["id"]: c for c in registry["failure_contracts"]}
-        cases = [("field-art", "精细独立资产合成后仍可能像拼贴"), ("V-feedback_issue", "关键美术失败"), ("MOTION-subject-continuity-failure", "在上述主体ROI复查中，另做对象结果诊断")]
-        for ident, prefix in cases:
-            found = [c for c in contracts[ident]["clauses"] if c["quote"].startswith(prefix)]
-            self.assertEqual(len(found), 1)
-            clause = found[0]
-            self.assertIn(clause["quote"], (root / clause["file"]).read_text())
-            self.assertEqual(hashlib.sha256(clause["quote"].encode()).hexdigest(), clause["quote_sha256"])
+        self.assertEqual(registry, build(root))
+        self.assertNotIn("rules", registry)
+        self.assertEqual({s["file"] for s in registry["sections"]},
+                         {p.relative_to(root).as_posix() for p in (root / "references").glob("*.md")})
 
 
 if __name__ == "__main__":

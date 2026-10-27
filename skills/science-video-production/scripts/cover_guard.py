@@ -68,6 +68,10 @@ def image_size(checks, reference, label):
 
 def validate_cover_review(checks):
     """Required for cover-only delivery and G5–G7; old missing records do not pass."""
+    from task_scope import cover_keys, validate_scope
+    validate_scope(checks)
+    requested = cover_keys(checks.data)
+    checks.need(bool(requested), "covers stage requires requested cover outputs")
     from origin_guard import validate_cover_origins
     validate_cover_origins(checks)
     qa = obj(checks.data.get("qa"))
@@ -106,21 +110,26 @@ def validate_cover_review(checks):
         checks.need(False, "covers reviewed_at invalid")
 
     baseline = obj(record.get("baseline"))
-    checks.need(baseline.get("kind") == "approved_cover" and baseline.get("scope") == "cover_appearance",
-                "covers baseline must be a traceable approved cover, not a generic style description")
+    initial = baseline.get("kind") == "initial_style_reference"
+    checks.need((initial or baseline.get("kind") == "approved_cover") and baseline.get("scope") == "cover_appearance",
+                "covers baseline must be an approved cover or explicit initial style reference")
     checks.need(baseline.get("actually_opened") is True and meaningful(baseline.get("observation")),
-                "covers approved baseline must actually be opened and observed")
-    image_size(checks, baseline.get("image"), "covers approved baseline")
-    checks.evidence(baseline.get("approval_evidence"), "covers private approval evidence")
-    checks.need(meaningful(baseline.get("approval_reference")), "covers approval reference required")
-    checks.need(baseline.get("approved_image_sha256") == obj(baseline.get("image")).get("sha256"),
-                "covers approval must bind the exact baseline image")
+                "covers baseline must actually be opened and observed")
+    image_size(checks, baseline.get("image"), "covers baseline")
+    if initial:
+        checks.need(meaningful(baseline.get("selection_reason")), "initial cover reference needs selection reason; no historical approval implied")
+    else:
+        checks.evidence(baseline.get("approval_evidence"), "covers private approval evidence")
+        checks.need(meaningful(baseline.get("approval_reference")), "covers approval reference required")
+        checks.need(baseline.get("approved_image_sha256") == obj(baseline.get("image")).get("sha256"),
+                    "covers approval must bind the exact baseline image")
 
     variants = obj(record.get("variants"))
-    checks.need(set(variants) == set(VARIANTS), "covers both independently composed variants required")
+    checks.need(set(variants) == set(requested), "covers both independently composed variants required")
     exports = obj(checks.data.get("deliverables"))
     hashes = obj(qa.get("reviewed_sha256"))
-    for name, ratio in VARIANTS.items():
+    for name in requested:
+        ratio = VARIANTS[name]
         row = obj(variants.get(name)); label = "covers " + name
         reference = obj(row.get("export"))
         checks.need(reference.get("file") == exports.get(name) and meaningful(exports.get(name)),

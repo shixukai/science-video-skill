@@ -128,7 +128,8 @@ def validate_cover_origins(checks):
     from stage_checks import Checks
     data = checks.data
     mapping = obj(data.get('deliverable_asset_ids'))
-    cover_mapping = {key: mapping.get(key) for key in ('cover_3_4', 'cover_4_3')}
+    from task_scope import cover_keys
+    cover_mapping = {key: mapping.get(key) for key in cover_keys(data)}
     for key, ids in cover_mapping.items():
         checks.need(isinstance(ids, list) and bool(ids) and all(meaningful(i) for i in seq(ids)),
                     'origin ' + key + ' nonempty visual asset ID list required')

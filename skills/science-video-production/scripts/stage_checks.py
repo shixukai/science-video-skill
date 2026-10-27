@@ -7,9 +7,10 @@ import re
 from pathlib import Path
 import shutil
 import subprocess
+from task_scope import cover_keys, validate_scope
 from subject_motion import validate as validate_subject_motion
 from cover_guard import validate_cover_review
-from render_gate import validate_final_execution
+from render_gate import validate_final_execution, validate_roughcut_execution
 from topic_selection_guard import validate_topic_selection
 from connection_guard import validate_connection_review
 from feedback_guard import validate_feedback
@@ -136,6 +137,14 @@ def used_asset_ids(data):
  return dependencies(data)[0]
 
 
+def shot_plan(value):
+ """Keep render/semantic inputs while excluding later review bookkeeping."""
+ if isinstance(value,list):return [shot_plan(x) for x in value]
+ if not isinstance(value,dict):return value
+ return {k:shot_plan(v) for k,v in value.items() if k not in
+         ('status','reviewer','reviewed_at','evidence','keyframe_review','render_file','render_sha256','review_scope','checks')}
+
+
 def context_sha256(data, gate):
  """Version binding at the relevant production scope, not evidence of review."""
  keys=['topic','topic_alignment','sources','claims','brief','scope','series_profile','origin_contract','presentation_text']
@@ -144,6 +153,16 @@ def context_sha256(data, gate):
  if gate in ('G4','G5','G6','G7'): keys += ['deliverables','production_statement']
  if gate in ('G6','G7'): keys += ['title','description','tags']
  result={k:data.get(k) for k in keys}
+ # G1 binds meaning and purpose; later gates also bind exact layout and timing.
+ # Moving an unchanged label does not invalidate scientific selection/logic.
+ if gate=='G1' and isinstance(result.get('presentation_text'),dict):
+  inventory=dict(result['presentation_text'])
+  inventory['items']=[{k:v for k,v in obj(item).items() if k not in ('position','time_range','user_approval','graphic_source','graphic_sha256')} for item in seq(inventory.get('items'))]
+  result['presentation_text']=inventory
+ if 'delivery_scope' in data:result['delivery_scope']=data['delivery_scope']
+ if 'requested_cover_keys' in data:result['requested_cover_keys']=data['requested_cover_keys']
+ if gate!='G1' and 'contract_version' in obj(data.get('execution')):
+  result['execution_contract_version']=obj(data.get('execution'))['contract_version']
  if data.get("workflow_version") not in (None,2):result["workflow_version"]=data.get("workflow_version")
  if gate=='G1':
   result['viewing_order']=[obj(shot).get('id') for shot in seq(data.get('shots'))]
@@ -179,6 +198,10 @@ def context_sha256(data, gate):
   result['cover_review']=obj(obj(data.get('qa')).get('covers')).get('visual_review')
  if gate in ('G6','G7'):
   result['platform']=obj(data.get('qa')).get('mobile_preview')
+ if obj(data.get('execution')).get('contract_version')==2:
+  if 'shots' in result:result['shots']=shot_plan(result['shots'])
+  if isinstance(result.get('design'),dict):
+   result['design']={k:v for k,v in result['design'].items() if k not in ('approval','actual_deviations')}
  return digest(result)
 
 class Checks:
@@ -721,19 +744,31 @@ class Checks:
    for key in ('current_rule_reference','declaration_evidence'):self.need(text(declaration.get(key)),'AI disclosure '+key+' required')
   else:self.need(text(declaration.get('not_applicable_reason')),'AI disclosure non-applicability reason required')
  def real_anchor_required(self):
-  default=json.loads((Path(__file__).resolve().parents[1]/'config/series-profile.json').read_text())
+  default=json.loads((Path(__file__).resolve().parents[1]/'config/series-profile.json').read_text(encoding='utf-8'))
   profile=default
+  valid_profile=True
   if 'series_profile' in self.data:
    ref=obj(self.data.get('series_profile'));path=self.evidence(ref,'project series profile')
-   self.need(text(ref.get('scope_reference')),'project profile needs actual project-scope reference')
+   valid_profile=self.need(text(ref.get('scope_reference')),'project profile needs actual project-scope reference') and path is not None
    if path:
-    profile=obj(json.loads(path.read_text()))
-    self.need(text(profile.get('id')),'project profile id required')
+    profile=obj(json.loads(path.read_text(encoding='utf-8')))
+    valid_profile=self.need(text(profile.get('id')),'project profile id required') and valid_profile
     if profile.get('id')==default['id']:
-     self.need(obj(profile.get('medium')).get('real_anchor')==default['medium']['real_anchor'],'current series real-video requirement cannot be silently removed')
+     valid_profile=self.need(obj(profile.get('medium')).get('real_anchor') in (default['medium']['real_anchor'],'authentic_continuous_video','when_real_footage_selected'),'current series real-video requirement cannot be silently removed') and valid_profile
   mode=obj(profile.get('medium')).get('real_anchor')
-  self.need(mode in ('authentic_continuous_video','not_required','verified_authorized_user_capture_only'),'explicit project real-anchor policy required')
+  valid_mode=self.need(mode in ('authentic_continuous_video','when_real_footage_selected','not_required','verified_authorized_user_capture_only'),'explicit project real-anchor policy required')
+  if not valid_profile or not valid_mode:return True
+  if mode=='when_real_footage_selected':
+   shots=seq(self.data.get('shots'))
+   valid_shots=self.need(bool(shots) and all(obj(s).get('modality') in ('real_footage','ai_generated','controlled_3d','pure_2d') for s in shots),'conditional real-anchor policy requires explicit recognized modality for every shot')
+   return not valid_shots or any(obj(s).get('modality')=='real_footage' for s in shots)
   return mode=='authentic_continuous_video'
+ def real_anchor(self):
+  required=self.real_anchor_required()
+  if not required:return
+  real_ids={obj(a).get('id') for a in seq(self.data.get('assets')) if obj(a).get('kind') in ('real_capture','real_observation')}
+  shot_used={i for shot in seq(self.data.get('shots')) for i in seq(obj(shot).get('asset_ids')) if text(i)}
+  self.need(bool(real_ids & shot_used),'selected real-anchor policy requires an actually used real continuous-video anchor; declarations do not prove authenticity')
  def tool_applications(self,expanding=False,current_shots=None):
   if 'tool_applications' not in self.data:return
   rows=self.data['tool_applications']
@@ -785,6 +820,7 @@ class Checks:
    self.need(not(item.get('status')=='open' and item.get('scope') in ('whole_episode','series_style','segment')),
              'known visual failure blocks expansion; repair and re-review before extending')
  def run(self,target,policy):
+  validate_scope(self)
   validate_topic_selection(self)
   self.errors.extend(check_opening_plan(self.data))
   n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
@@ -802,12 +838,13 @@ class Checks:
   self.need(substantive(brief.get('must_see_relation',brief.get('must_make_understandable',brief.get('must_see_change')))),'brief must_see_relation required (must_make_understandable and legacy must_see_change accepted)')
   for k in ('out_of_scope','forbidden_misrepresentations'):self.need(isinstance(brief.get(k),list),'brief '+k+' required')
   self.need(brief.get('production_class') in ('R','N','B'),'production class R/N/B required')
-  for role in ('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher'):self.need(text(obj(brief.get('roles')).get(role)),'responsible '+role+' required')
+  for role in (('producer','science_editor','director','art_animation','audio_caption','reviewer','publisher') if n>=5 else ('producer','science_editor','director','art_animation','audio_caption','reviewer')):self.need(text(obj(brief.get('roles')).get(role)),'responsible '+role+' required')
   for gate in GATES[:n+1]:
    r=obj(gates.get(gate));self.need(r.get('status')=='passed',gate+' not passed; no automatic promotion')
    for k in ('reviewer','reviewed_at','scope'):self.need(text(r.get(k)),gate+' '+k+' required')
    self.need(r.get('context_sha256')==context_sha256(self.data,gate),gate+' stale stage context')
    refs=r.get('review_refs');expected={ref for ref in REQUIRED_REVIEWS[gate] if ref not in ('explanation_logic','expression_plan','explanation_review','expression_review') or ref in self.qa}
+   if not cover_keys(self.data):expected.discard('covers')
    self.need(isinstance(refs,list) and expected<=set(x for x in seq(refs) if text(x)),gate+' required QA references missing')
    for ref in seq(refs):
     if not text(ref):self.need(False,gate+' invalid QA reference');continue
@@ -818,6 +855,7 @@ class Checks:
    evidence=r.get('evidence');self.need(isinstance(evidence,list) and bool(evidence),gate+' evidence required')
    for e in seq(evidence):self.evidence(e,gate)
   if n>=1:
+   validate_roughcut_execution(self)
    self.viewing(self.record('shotbook').get('viewing'),'G2 roughcut','full_roughcut')
    validate_subject_motion(self,self.record('shotbook').get('subject_motion'),obj(self.record('shotbook').get('viewing')),'G2',policy['subject_motion'],set(steps))
    validate_text_review(self,'G2',obj(self.record('shotbook').get('viewing')),text_items)
@@ -851,7 +889,7 @@ class Checks:
     self.evidence(frame,'G3 '+scale)
    if 'new_style' in seq(brief.get('validation_triggers')):
     variants=seq(design.get('comparison_variants'))
-    self.need(len(variants)>=2,'new style needs two comparable variants')
+    self.need(len(variants)>=2 or substantive(design.get('single_direction_reason')),'new style needs comparable variants or a documented already-selected direction')
     for variant in variants:
      variant=obj(variant)
      self.evidence(variant,'style comparison')
@@ -863,7 +901,7 @@ class Checks:
   if n>=4:
    validate_final_execution(self)
    validate_connection_review(self,'G5',[obj(s).get('id') for s in seq(self.data.get('shots'))])
-   validate_cover_review(self)
+   if cover_keys(self.data):validate_cover_review(self)
    validate_opening_review(self)
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)
    validate_subject_motion(self,self.record('visual_frames').get('subject_motion'),obj(self.record('visual_frames').get('viewing')),'G5',policy['subject_motion'],set(steps))
@@ -881,12 +919,10 @@ class Checks:
     if text(ident):seen.add(ident)
     self.need(e.get('status')=='pass' and text(e.get('evidence')),'G5 actual process evidence required')
    self.need(seen==set(steps),'G5 full primary explanation evidence incomplete (legacy full primary causal chain evidence incomplete)')
-   real_ids={obj(a).get('id') for a in seq(self.data.get('assets')) if obj(a).get('kind') in ('real_capture','real_observation')}
-   shot_used={i for shot in seq(self.data.get('shots')) for i in seq(obj(shot).get('asset_ids')) if text(i)}
-   if self.real_anchor_required():
-    self.need(bool(real_ids & shot_used),'current series requires an actually used real continuous-video anchor; declarations do not prove authenticity')
+   self.real_anchor()
    self.caption_and_flicker(policy);self.scores(policy);self.internal_review('explanation_review','G5',steps,cards,final=True);self.internal_review('expression_review','G5',steps,cards,final=True);self.cold_view(policy)
   if n>=5:
+   self.need(self.data.get('delivery_scope','release_package')=='release_package','publish_ready requires a release_package scope; local delivery grants no platform authority')
    self.need(obj(self.data.get('scope')).get('kind')=='episode' and obj(self.data.get('scope')).get('publication_ready') is True,'release requires a complete episode explicitly ready for publication')
    self.platform_and_disclosure()
    self.evidence({'file':obj(self.data.get('deliverables')).get('post_copy'),'sha256':obj(self.qa.get('reviewed_sha256')).get('post_copy')},'release independent post copy')

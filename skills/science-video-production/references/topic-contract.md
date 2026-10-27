@@ -31,23 +31,23 @@
 
 ## 成人受众的选题筛选
 
-面向有日常常识、无相关专业训练的成年人，不能把小学常识验证、概念定义复述或平淡问题换标题作为选题。制作前必须有完整且与当前题目绑定的选题卡；存在已声明的淘汰理由、事实主源或解释回报缺失、不可行的视觉方案时先退回选题，不调用渲染器。
+本系列自主选题默认面向有日常常识、无专业训练的成年人，优先有具体解释价值的问题，避免只换标题。用户已明确指定基础问题或受众时保留该范围，用清楚的例子、成立条件或可见关系讲明白；不能因题目朴素而拒绝或擅改。科学错误、无权使用、缺失必要解释与确实不可行仍须修复；未研究完可先交明确待研究的策划草案，正式G1和渲染前再核主源及可行性。
 
-“容易听懂”不等于“只讲早已知道的结论”。先问这个具体受众已经知道什么，再找值得追问的真实冲突、条件、现实关联或未解观察；新所得可以是机制、约束、权衡、证据或可迁移的发现，不要求高深术语、热门事件、惊人数字或所有题都反直觉。现实关联可以来自日常判断，也可以是理解一个真实自然现象或工程选择，不强塞生活技巧。基本原理可作为解释工具，但不能把验证基本常识当成整期回报。
+“容易听懂”不等于“只讲早已知道的结论”。先问这个具体受众已经知道什么，再找值得追问的真实冲突、条件、现实关联或未解观察；新所得可以是机制、约束、权衡、证据或可迁移的发现，不要求高深术语、热门事件、惊人数字或所有题都反直觉。现实关联可以来自日常判断，也可以是理解一个真实自然现象或工程选择，不强塞生活技巧。自主推荐时避免只重复常识；用户指定教学目标时，准确建立这个基础概念本身可以是回报。
 
 在现有 `brief.topic_selection` 写选题卡，不另建评分榜或审批链。复用 `brief.audience`、`audience_start.assumed_knowledge`、`one_sentence_answer`、`understanding_targets.transfer` 与 `topic.current`，分别说明具体受众的知识起点、核心问题/答案和看完可用于解释或判断什么。卡内写：
-- `audience_category=ordinary_adults`；`conflict_or_question` 写值得追问的真实问题，`adult_relevance` 写为何值得这个受众花时间，`knowledge_increment` 写比其已有常识多得到什么。
+- 默认 `audience_category=ordinary_adults`；明确指定其他受众时记录实际类别及原请求；`conflict_or_question` 写值得追问的真实问题，`adult_relevance` 写为何值得这个受众花时间，`knowledge_increment` 写比其已有常识多得到什么。
 - `source_ids` 引用已实际查核的事实主源；沿用 sources 的标题、机构、URL、核验日期与 `scope_note`，定位支撑哪个机制、条件和边界。优先原研究、机构技术资料及权威解释，不将二手转述冒充一手实验；来源真实性和结论支持度仍须研究判断。
 - `causal_visualization` 说明如何让对象、关系、条件变化与解释回报可见；非因果题写其实际需要的结构、比较或证据关系，不硬造因果链。
 - `feasibility` 写素材/权利计划、制作方法、实际约束与 `blocking_gaps`。先判断题目值不值得讲，再选择资产；已有管道、动画或配音不能成为保留弱题的理由。此时无需已制好素材或声音；有可信的制作/取材路径即可，不能因手里没有现成资产错杀好题，也不能承诺无法表达的关键过程。
 
-编辑明确写 `review.status=selected/revise/rejected/pending`、真实审题者和理由，用 `selection_context_sha256(data)` 绑定实际题目、受众、增量、主源与可行性。`disqualifiers` 明列已发现的 `common_knowledge_only/definition_only/title_only_change/asset_led/unsupported_hook/no_explanatory_payoff/unvisualizable/unfeasible`，没有已知淘汰项时才留空。`selected` 只是编辑决定，不等于用户批准、事实正确、作品合格或保证观众喜欢。题目、受众起点、解释回报、来源或制作约束变化时重新审题；不能只刷新哈希或删除淘汰项。
+编辑明确写 `review.status=selected/revise/rejected/pending`、真实审题者和理由，用 `selection_context_sha256(data)` 绑定实际题目、受众、增量、主源与可行性。`disqualifiers` 明列已发现的 `common_knowledge_only/definition_only/title_only_change/asset_led/unsupported_hook/no_explanatory_payoff/unvisualizable/unfeasible`，没有已知淘汰项时才留空。用户指定题目时记 `selection_origin=user_requested`、`user_request_reference/user_request_evidence={file,sha256}/scope_reason`，保留原始请求；common_knowledge_only、definition_only、title_only_change可作为编辑风险保留，不阻断明确委托，其他科学、素材和可行性失败仍阻断。默认selection_origin=editorial。`selected` 只是编辑决定，不等于用户批准、事实正确、作品合格或保证观众喜欢。题目、受众起点、解释回报、来源或制作约束变化时重新审题；不能只刷新哈希或删除淘汰项。
 
-默认 `interest_basis=editorial_hypothesis`，`audience_evidence=[]`：这是可说明理由的编辑假设，不是实际调研。已有真实受众证据时才选 `observed_audience_evidence`，绑定原始证据文件/哈希、来源、所观察范围和局限；不编参与者、兴趣比例、播放量或完播改善，不要求实时招募、额外观众反馈或特定受欢迎分数。程序只核选题记录的完整性、来源引用/文件绑定、已声明失败和版本，不理解兴趣、不验证事实或预测爆款。普通平淡问题不能靠填满字段过编辑这一关。
+默认 `interest_basis=editorial_hypothesis`，`audience_evidence=[]`：这是可说明理由的编辑假设，不是实际调研。已有真实受众证据时才选 `observed_audience_evidence`，绑定原始证据文件/哈希、来源、所观察范围和局限；不编参与者、兴趣比例、播放量或完播改善，不要求实时招募、额外观众反馈或特定受欢迎分数。程序只核选题记录的完整性、来源引用/文件绑定、已声明失败和版本，不理解兴趣、不验证事实或预测爆款。字段完整不证明题目吸引人，编辑判断也不能推翻明确的用户教学目标。
 
 有权可用的平台数据优先按 [平台选题与数据复核](production-checkpoints.md#平台选题与数据复核) 检查科普话题、往期作品与AI建议，将可追踪证据引用进现有卡。数据不可用时保留具体缺口，不要求实时反馈；平台热度不能代替事实主源或成年人解释回报。
 
-`plan`、G1及后续阶段检查复用同一张卡，实际 `render_gate` 的 sample/full 调用前也核卡。旧包在本版恢复制作前补真实审题记录，不能以缺卡为兼容放行；仅保存历史文件不补签过去执行。未选定时继续查源、比较和改题，不能先花时间制作再补选题理由。封面单独核验不要求为已完成作品重开选题。
+`plan`、G1及后续阶段检查复用同一张卡，实际 `render_gate` 的 sample/full 调用前也核卡。旧包在本版恢复制作前补真实审题记录，不能以缺卡为兼容放行；仅保存历史文件不补签过去执行。自主选题未选定时继续查源、比较和改题；用户指定题目则在原范围补研究和解释方案，不能先花时间制作再补选题理由。封面单独核验不要求为已完成作品重开选题。
 
 ### 好坏题成对比较
 
@@ -101,7 +101,7 @@
 
 在既有 `topic_alignment.opening` 增记 `cover_question`（封面承诺的具体问题）、`question_relation`、`question_comparison`（对照原题、封面与 spoken_question 的对象、条件及要解释的关系）和 `visual_handoff`（计划怎样承接封面主体/场景，或为什么切向另一观察）。计划自查具体题意成立记 `specific_equivalent`；`generic_only`、`different_question`、`pending` 不能通过 plan/G1 及后续对应检查。计划阶段只核问题和衔接方案，不要求尚不存在的媒体；这份声明也不代表最终口播或过渡已验。
 
-G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的主题导入/路线；`video` 和两种 `covers` 各绑定当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`heard_question` 与 `question_range_s` 对应上述 `spoken_question` 的主题导入，可为结论式主题陈述；它已经给核心答案时，后续 `answer_route` 说明怎样解释或验证，不强迫重新提问或重复答案。`viewed_range_s` 从实际导出首帧开始，覆盖主题导入、随后的答案/路线和承接；两段标真实时码且主题导入在解释路线前，不编固定时长。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。
+G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的主题导入/路线；`video`和本次要求的`covers`各绑定（video_only的covers为空对象，不核cover_question）当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`heard_question` 与 `question_range_s` 对应上述 `spoken_question` 的主题导入，可为结论式主题陈述；它已经给核心答案时，后续 `answer_route` 说明怎样解释或验证，不强迫重新提问或重复答案。`viewed_range_s` 从实际导出首帧开始，覆盖主题导入、随后的答案/路线和承接；两段标真实时码且主题导入在解释路线前，不编固定时长。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。
 
 `visual_handoff` 分别记录实际 opening_subject、relationship、observation、从首帧开始且在已审范围内的 range_s 及 status：可为 `continuous_subject`（可识别的主体/场景关系延续），也可为 `motivated_transition`（能跟上的、有观察/解释动机的切换）。记录封面主体如何在首段被识别、切换处如何承接提问和路线，并由实际连续看听判断是否突兀；只有漂亮封面、首帧抽查、脚本、ASR或重排设想都不能填 pass。新转场方案在实际审看前保持 pending，已知突兀保持 fail；不能被总体 pass 隐藏。
 

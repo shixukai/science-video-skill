@@ -148,7 +148,7 @@ class SubjectMotionTests(unittest.TestCase):
         pause = dict(active, kind="purposeful_read", start=0, end=2, purpose="Read", resume_evidence="Resume")
         r["spans"] = [pause, dict(active, start=2)]
         r["longest_no_progress_seconds"] = 2
-        self.assertTrue(any("read too long" in e for e in self.errors(d, v, r)))
+        self.assertTrue(any("actual observation-task review" in e for e in self.errors(d, v, r)))
         r["spans"] = [dict(pause, start=i, end=i+1) for i in range(4)]+[dict(active, start=4)]
         r["longest_no_progress_seconds"] = 4
         self.assertTrue(any("exceeds project limit" in e for e in self.errors(d, v, r)))

@@ -279,8 +279,19 @@
             "sha256": ""
           },
           "entry_version": ""
+
+        },
+        "realism": {
+          "role": "main",
+          "medium": "",
+          "renderer": "",
+          "scientific_basis": "",
+          "visible_motion": "",
+          "motion_kind": "subject_motion",
+          "disclosure": ""
         }
-      }
+      },
+      "modality": ""
     }
   ],
   "deliverables": {
@@ -696,8 +707,8 @@
         },
         "overlay_coordinate_space": "video_pixels",
         "canvas": [
-          1080,
-          1920
+          1920,
+          1080
         ],
         "note": ""
       }
@@ -1839,7 +1850,8 @@
         "reviewer": "",
         "reason": "",
         "context_sha256": ""
-      }
+      },
+      "selection_origin": "editorial"
     }
   },
   "design": {
@@ -1880,31 +1892,25 @@
     },
     "render_asset_ids": [],
     "approved_film_reference": {
-      "kind": "approved_finished_film",
-      "approval_reference": "",
-      "approval_evidence": {
+      "kind": "initial_style_reference",
+      "reference": {
         "file": "",
         "sha256": ""
       },
-      "approved_media_sha256": "",
+      "selection_reason": "",
       "applicable_style": "",
-      "viewing": {
+      "actually_opened": false,
+      "observation": "",
+      "reviewer": "",
+      "reviewed_at": ""
+    },
+    "visual_intent": {
+      "target": "scientific_realism",
+      "style_reference": {
         "file": "",
-        "sha256": "",
-        "duration": null,
-        "ranges": [],
-        "method": "pending",
-        "playback_speed": null,
-        "watched": false,
-        "heard": false,
-        "reviewer": "",
-        "capability": "",
-        "reviewed_at": "",
-        "note": "",
-        "scope": "approved_film",
-        "purpose": "",
-        "frames": []
-      }
+        "sha256": ""
+      },
+      "scientific_constraints": ""
     }
   },
   "template": true,
@@ -1954,8 +1960,15 @@
     "full_receipt": {
       "file": "",
       "sha256": ""
-    }
+    },
+    "roughcut_receipt": {
+      "file": "",
+      "sha256": ""
+    },
+    "contract_version": 2
   },
+  "delivery_scope": "release_package",
+  "delivery_scope_note": "",
   "origin_contract": {
     "mode": "self_created_visuals"
   }

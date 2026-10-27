@@ -52,6 +52,9 @@
         "retention-retrospective",
         "platform-topic-evidence",
         "precise-control-and-efficient-iteration"
+      ],
+      "supporting_files": [
+        "references/viewer-retention-design.md"
       ]
     },
     {
@@ -70,6 +73,10 @@
         "on-frame-label-permission",
         "scene-substance-and-art-finesse",
         "animation-scene-design"
+      ],
+      "supporting_files": [
+        "references/animation-scene-design.md",
+        "references/snow-crystal-scene-example.md"
       ]
     },
     {
@@ -121,6 +128,32 @@
         "realistic-main-picture",
         "nonrealistic-exception-scope",
         "realistic-style-and-sample-contract"
+      ]
+    },
+    {
+      "id": "engineering",
+      "file": "references/engineering-blender.md",
+      "owns": [
+        "controlled-3d-production",
+        "independent-3d-assets",
+        "shared-asset-library"
+      ]
+    },
+    {
+      "id": "tools",
+      "file": "references/tool-routing.md",
+      "owns": [
+        "tool-selection-and-installation"
+      ],
+      "supporting_files": [
+        "references/video-skills-curation.md"
+      ]
+    },
+    {
+      "id": "render-evidence",
+      "file": "references/render-evidence.md",
+      "owns": [
+        "render-edge-diagnostics"
       ]
     }
   ]

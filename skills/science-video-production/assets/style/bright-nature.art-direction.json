@@ -151,5 +151,6 @@
     "每个新镜头按实际内容核对结构、科学禁画、三尺度连续性和观看尺寸；使用参考不自动填写通过。",
     "涉及运动时另核轨迹、连接约束、前后状态与声画配合；静态风格参考和静帧检查不代替连续观看。",
     "当科学准确性与装饰、暖光、通透感或细节密度冲突时，保留科学准确性并调整美术表达。"
-  ]
+  ],
+  "scope": "Historical approved 2D appearance and requested illustration covers only. Realistic main footage uses its own applicable reference; these tokens do not prohibit Blender or impose illustration colors on scientific objects."
 }

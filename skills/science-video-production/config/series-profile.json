@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -21,6 +21,33 @@
     "no_photo_motion_substitution": true,
     "realism_contract": "references/realistic-production.md",
     "origin_contract": "references/science-and-rights.md#原创视觉来源契约"
+  },
+  "video_generation": {
+    "primary_backend": "topic_routed",
+    "default_modality": "ai_generated",
+    "runtime_policy": "reuse_existing_confirmed_project_workflow_environment_and_weights",
+    "assembly_project": "MoneyPrinterTurbo",
+    "assembly_input": "Actual locally generated or rendered video files, including Blender controlled_3d output; existing complete picture tracks may use the verified local postproduction adapter.",
+    "voice_policy": "reuse_confirmed_full_narration",
+    "repository_policy": "bind_user_selected_or_existing_checkout_origin_and_commit; do_not_replace_or_clone_by_name",
+    "alternative_path": "Follow topic routing or current explicit user scope; preserve an already locked project choice and actual permissions.",
+    "evidence_boundary": "actual_model_job_and_output_required; assembly_or_stock_editing_alone_is_not_video_model_generation",
+    "default_scope": "Other suitable natural/life topics when engineering routing and an explicit current project choice do not take precedence.",
+    "routing_precedence": "current_explicit_project_choice > topic_routing > default_modality",
+    "topic_routing": {
+      "engineering": {
+        "when": "Precise engineering structures, sections, assembly, mechanism motion and continuous spatial localization benefit from controllable geometry.",
+        "preferred_renderer": "Blender",
+        "modality": "controlled_3d",
+        "ai_failure_trial_required": false,
+        "guide": "references/engineering-blender.md"
+      },
+      "other_suitable_natural_and_life": {
+        "backend": "local_video_model",
+        "modality": "ai_generated",
+        "guide": "references/ai-generated-video.md"
+      }
+    }
   },
   "audio": {
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
@@ -136,7 +163,8 @@
       ],
       "new_work_eligibility": "current_new_work_scope_with_source_and_version_evidence",
       "unpublished_inventory": "not_automatically_eligible; determine new-work scope from source/version evidence"
-    }
+    },
+    "scope": "Historical series planning defaults; apply targets only when the current task requests this production cadence. No task or automation is created by loading this Skill."
   },
   "landscape_captions": {
     "canvas": [
@@ -146,5 +174,19 @@
     "status": "project_layout_review_required",
     "baselines": null,
     "policy": "Design against actual scene and platform, then inspect exported text and tight backgrounds. Never scale legacy portrait Y coordinates into this layout."
-  }
+  },
+  "shared_3d_library": {
+    "root": "\\\\Douya_Synology\\home\\3D-material",
+    "guide": "references/engineering-blender.md",
+    "reuse_first": true,
+    "archive_used_assets": true,
+    "storage": "Versioned copies of editable used assets with dependencies, source/rights, scale/axes, preview and SHA manifest; retain project originals.",
+    "verification": "Read back destination files and compare SHA before claiming archived; unavailable NAS remains local_pending_sync.",
+    "quality_boundary": "Library availability is not current scientific, visual, hearing or publication approval; superseded and rejected variants are not default reusable assets.",
+    "lookup_script": "scripts/find_3d_assets.py",
+    "index_filename": "asset-index.json",
+    "selection_scope": "current_engine is current only within its version index; multiple indexed versions remain candidates, not an automatically approved global latest.",
+    "supporting_assets": "Baseline sources, rebuild-only intermediate models and cover layouts are non-default roles; list only when explicitly requested."
+  },
+  "maintenance_revision": "2026-10-27-conflict-cleanup"
 }

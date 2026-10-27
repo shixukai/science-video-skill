@@ -278,7 +278,8 @@ class DesignBoardEvidenceTests(unittest.TestCase):
  def test_board_symlink_escape_rejected(s):
   with tempfile.TemporaryDirectory() as outside:
    target=Path(outside)/'board.svg';target.write_bytes((s.root/s.d['design']['board_reference']).read_bytes())
-   link=s.root/'outside-board.svg';link.symlink_to(target);s.addCleanup(link.unlink)
+   from fs_support import symlink_or_skip
+   link=s.root/'outside-board.svg';symlink_or_skip(s,link,target);s.addCleanup(link.unlink)
    s.d['design']['board_reference']=link.name;refresh(s.d)
    s.rejects('G3 design board evidence path missing/unsafe','G3')
  def test_replaced_board_cannot_reuse_old_matching_hashes(s):

@@ -1,106 +1,75 @@
 ---
 name: science-video-production
-description: 为普通大众制作自然现象与生活科学视频，以真实写实的连续主画面为默认，按自行AI生成、自行建模渲染或已核实授权的用户自拍选型；按引用式标准规划、制作、审查或修改单集及发布包，不用于自动发布或普通问答。
+description: 策划、制作、审查或修改自然、生活与工程科普视频、封面及3D资产。精确结构优先 Blender，其他适用题材复用已确认的本地视频模型与 MoneyPrinterTurbo；制作与发布按委托范围分别执行。
 ---
 
-# 自然科普视频制作
+# 科普视频制作
 
-用真实现象中的具体疑问或有依据的反直觉结论点明原问题，让观众知道为什么值得看，沿可见证据逐步兑现并在结尾回答。吸引力、解释清楚与写实画面完成度同时成立；制作端通过内部审查完成闭环。实际结果按媒介、版本与审查范围分别成立，目录、参数、技术测试和局部认可不能代替成片或证明留存改善。
+从一个具体问题出发，用有依据的画面、连续中文讲解和同步字幕逐步给出答案。工程精确结构、剖切、装配与机构优先 Blender；其他适用题材默认复用已有本地视频模型与 MoneyPrinterTurbo。当前明确工具选择优先于默认路线。
 
-解释、美术、动作、声音与验收原则适用于本Skill范围内各题材、各期视频。已确认的系列配置提供实现默认值；具体对象、科学模型、镜头数量与时长、表达动作及处理参数由当期问题和实际素材决定，记录在单集工作包。示例只说明方法及其适用条件，跨集复用须核当前题材与关系；单集方案与验收结果留在该集记录中。
+## 范围与规则优先级
 
-## 核心边界
+先遵循宿主指令、工具和权限约束，再落实用户当前明确请求及仍有效的授权。新要求覆盖与它冲突的旧偏好，已有授权不重复询问。正文负责规则，配置负责默认参数，单集记录负责本次范围和证据；模板、示例和索引不产生额外门槛。
 
-- **原创视觉来源硬约束**：先读 [原创视觉来源契约](references/science-and-rights.md#原创视觉来源契约)。当前系列交付只用自行生成/建模渲染/设计或已核实授权的用户自拍；第三方公开、CC、Commons及论文影像仅研究参考，不作主镜或填充。逐镜绑定真实设计、入口版本、输入输出哈希及帧证据；改标签、裁水印或加中文旁白不改变来源。原创不降低写实、有声代表段独审及任何既有质量门槛。
+本 Skill 的写实主画面、中文旁白、声音、画幅和封面配置是当前系列基准。明确项目选择可覆盖默认值；不得用历史2D参考擅自降低当前写实要求。非写实全幅镜头沿用已有具体授权，新增偏离才需要明确范围。科学真实、权利和如实审看仍须满足；趣味、工具偏好和数值起点不能推翻明确委托。用户指定基础题目时保留原题，设计适合其受众的解释。
 
-- **写实主画面硬约束**：制作前必须读 [写实制作契约](references/realistic-production.md)，先绑定适用风格参考与逐镜设计，再生成连续短样并独立实看实听。不得以简单2D、静图推拉、信息图或辅助机制层替代写实主镜；任何偏离必须取得具体镜头与范围的用户批准。写实不等于实拍，AI与3D须明确非实拍，不以模型逼真保证科学因果。旧2D参考/配置不覆盖用户当前写实要求。
+| 本次委托 | 执行范围与入口 |
+| --- | --- |
+| 整理 Skill | 检查正文、配置、模板、脚本与适当回归；不调用模型、恢复制作或发布 |
+| 只策划 | 读[主题契约](references/topic-contract.md)、[科学与素材](references/science-and-rights.md)、[解释设计](references/production-checkpoints.md)；可交明确待研究的草案，不编来源、音轨或秒数。`plan`是已有主源的结构检查，不是所有草案的必需验收 |
+| 仅3D模型、静态预览、检索或入库 | 读[资产任务](references/engineering-blender.md#仅做资产时的任务范围)；核模型、科学关系、依赖和归档，不造音轨、整期episode或G3。完整视频中的中间建模仍保留后续视频义务 |
+| 新片或续做视频 | 原包优先；G1解释设计 → G2有声草排 → G3代表段 → G4完整候选 → G5成片质量。先验适用范围的样片，再扩制 |
+| 局部修复 | 读取当前媒体、原请求、最新反馈；保留稳定ID及仍有效资产/声音，按[受影响依赖](references/quality-acceptance.md#失败后的处理)复查。纯布局修复不重做选题；新整片仍需完整看听 |
+| 只交视频，不做封面 | 记录 `delivery_scope=video_only` 及 `delivery_scope_note`，止于G5；旁白、字幕、科学与整片审查照常，不造封面或平台授权 |
+| 封面或完整发布包 | 读[封面设计](references/visual-system.md#两种封面各自设计)。系列发布包默认 `delivery_scope=release_package`，含独立排版的3:4和4:3封面；封面单独用 `--stage covers` |
+| 平台预览或发布 | 仅在请求覆盖相应动作时执行G6发布准备、G7发布读回。交付不等于授权上传或公开发布 |
 
-- 管道、线缆、连杆等有连接件的镜头，先按 [连接拓扑与接口连续性](references/visual-system.md#连接拓扑与接口连续性) 设计端点角色与接合几何，再实看全景、接口近景和运动/跨镜关键态；不把线条碰在一起或技术字段齐全当作正确连接。
+## 制作关键约束
 
-- 选题先按 [成人受众兴趣筛选](references/topic-contract.md#成人受众的选题筛选) 完成brief选题卡；常识验证、定义复述和换标题不能开工，门禁通过不证明观众兴趣。选题与复盘读取有权可用的 [平台证据](references/production-checkpoints.md#平台选题与数据复核)，先核更新/窗口/分母，再把AI建议与下一轮措施作为待验证假设。
+- **画面**：主镜先读[写实制作契约](references/realistic-production.md)，实际看适用参考并确定逐镜主体、关系、动作、注意对象和观众所得。AI/3D不是实拍或科学观测；静图推拉、字幕变化和装饰运动不替代所讲过程。观察停顿按[主体动态](references/quality-acceptance.md#主体动态与长静帧)实审，不为凑秒数捏造动作。
+- **首次试制**：有认可成片时复用；没有时，用已实际查看的适用参考和明确设计制作候选，记录 `design.approved_film_reference.kind=initial_style_reference`，不伪造历史认可。扩片仍须新样连续声画及独立审查。
+- **声音**：先写完整讲解再拆镜，复用已确认完整声音。调用Qwen前从上下文和已有工程确定位置，确实缺位置才询问；整理或策划不触发询问，不自动下载权重或另建语音环境。方法见[中文声音](references/voice-reference.md)。
+- **来源与模态**：逐镜记录主要画面来源：`controlled_3d`、`ai_generated`、`real_footage` 或获准的 `pure_2d`；混合层分别登记资产。科学依据、风格参考和使用权分开核查。当前系列交付视觉遵循[原创视觉来源契约](references/science-and-rights.md#原创视觉来源契约)，只用自行生成、自建模/渲染、自设计或已核实授权的用户自拍；第三方公开视频、CC/Commons和论文影像仅供研究参考，不能转作填充镜。
+- **执行**：复用已有环境；成片级有声草排、代表段与整片通过[执行入口](references/production-checkpoints.md#开工锁定与真实渲染入口)固定规则、设计、输入和输出。无声模型镜头和静态技术试验属于中间资产，记录真实任务和版本，不强迫每个底层操作带音轨或先有G3。
+- **工具**：按[场景调用表](references/tool-routing.md)补缺，只读所选工具正文。已有同版环境验证可复用。缺工具先查安装与已有授权；Skill不预授未来安装、云传输、费用或外发权限。相同失败无新依据时停止依赖步骤，继续独立工作。需要有界执行时读[Blender执行核心](scripts/bounded_blender/README.md)或[I2V执行核心](scripts/bounded_i2v/README.md)，保留身份核验、唯一任务与恢复保护；GPU利用率只供观测，不单独设准入门槛。
+- **画内标识**：必要字幕、科学标注保留；新增署名、水印、AI标识按[具体范围同意](references/visual-system.md#画内标识须有具体同意)处理。默认在平台字段和简介披露AI/模拟；实际义务需要片内标识时核依据及已有同意，不隐瞒或未经同意加字。
+- **证据与反馈**：技术检测、哈希、静帧、连续样段、整片看听、平台结果分别成立。缺能力保持未验，已知失败修后实审；[反馈](references/quality-acceptance.md#用户意见逐项登记与维度隔离)按原媒体、范围和维度保存。独审需真实独立过程和对应感知能力，换名字不算独审。
+- **版本**：已发布、取消或禁止版本不自动恢复。更新Skill不迁移运行中制作；续做使用原冻结副本，或明确记录迁移并重核受影响依赖，不能把旧回执改成新版执行。
 
-- 每次实际制作先按 [开工锁定与真实渲染入口](references/production-checkpoints.md#开工锁定与真实渲染入口) 锁定实际Skill文件版本/哈希；逐镜设计和认可真实成片基准先于调用。样稿、扩整片与最终审查分阶段拦截，修复样稿不要求尚未产生的G3；不能绕开入口后补记录冒充执行。
+## 按需读取责任正文
 
-- 设计主要动画、将静图转为动态或修复“真实但空洞”时，先读 [动画场景设计与执行](references/visual-system.md#动画场景设计与执行) 及其详细标准；先设计实体状态、情境关系和逐镜发现，再精绘资产。雪花案例是待评审设计示例，不是成片通过证据
+| 问题 | 正文 |
+| --- | --- |
+| 原题、受众、开场、范围和答案 | [主题契约](references/topic-contract.md) |
+| 科学、来源、权利和披露 | [科学与素材](references/science-and-rights.md) |
+| 写实主镜和首样 | [写实制作契约](references/realistic-production.md) |
+| 本地模型与MoneyPrinterTurbo | [AI生成视频](references/ai-generated-video.md) |
+| 精确结构、连续定位、3D库 | [工程类Blender](references/engineering-blender.md)；[只读素材检索](scripts/find_3d_assets.py) |
+| 阶段、解释顺序、实际调用、平台动作 | [制作检查点](references/production-checkpoints.md) |
+| 画风、构图、文字、封面、接口连接 | [视觉系统](references/visual-system.md)；主要动画再读[场景设计](references/animation-scene-design.md) |
+| 旁白生成、连续性和审听 | [中文声音](references/voice-reference.md) |
+| 分镜、素材、版本和动作记录 | [逐镜记录](references/shotbook.md) |
+| 验收、未验、失败和修复 | [质量验收](references/quality-acceptance.md) |
+| 工具与可选方法 | [工具路由](references/tool-routing.md) |
+| 留存编排或透明度/画幅故障 | 按需读[持续观看](references/viewer-retention-design.md)或[渲染取证](references/render-evidence.md) |
 
-- 不得擅自在视频加标识：按 [具体同意与输出门禁](references/visual-system.md#画内标识须有具体同意) 核用户对内容/位置/时段的原始同意及实际overlay来源；必要科学标签和正常字幕保留，AI合规优先平台字段与简介
+[责任索引](indexes/rule-owners.json)和[章节覆盖索引](indexes/standard-coverage.json)只用于导航和维护，不复制规则或充当逐集检查单。历史案例与 `references/learning-candidates/` 中的未验证经验候选不是所有题材的固定镜头、阈值或通过证据。
 
-- 明确主问题及必要的从属问题与联系；用户明确改方向时更新当前范围，局部修复不擅改题；主图、口播、必要图内字须共同解释
-- 先按镜头解释任务选择工具与画面模态（`real_footage` / `pure_2d` / `ai_generated` / `controlled_3d`，见 [AI生成视频](references/ai-generated-video.md)）；机制辅助层与具体获准的2D例外按写实契约限定；主画面不得自动退回2D；真实锚点仅 `real_footage`；AI不得冒充实拍；照片运动不得顶替任一视频模态
-- 美术制作先实际查看本期适用的写实风格参考；[历史2D参考](assets/style/accepted-style-reference.png) 只适用于明确获准的2D范围，按 [外观与制作约束](references/visual-system.md#已确认画风的视觉锚点) 制作对应资产；正式静态候选须先达到相应完成度，再进入用户风格选择。低完成度占位仅用于明确的技术/构图草排
-- 观众通道先按 [文字用途规则](references/visual-system.md#可见文字用途与制作辩解) 排除制作辩解并保留必要标识；旁白按 [整期连续性](references/voice-reference.md#整期旁白连续性) 实听，已知语气失败不放行
-- 每条有中文解说及同步字幕；先形成连续完整讲解再拆镜，切镜不作为配音生成边界，按[逐镜记录](references/shotbook.md)和[声音正文](references/voice-reference.md)安排；沿用项目已确认声音，不能用纯字幕配乐冒充完成
-- 实际调用千问前，先检查当前及前文上下文中的工程、运行环境或服务位置；上下文已经明确指定时直接使用，只有上下文没有指定时才询问。优先已有工程，具体路径留当期记录；本地脚本是可选适配器，不自动创建环境或下载权重。仅整理Skill或做纸面计划时无需询问调用位置
-- 视频主体动态按 [长静帧失败规则](references/quality-acceptance.md#主体动态与长静帧) 执行；G2/G3/G5须有实际导出筛查与连续声画证据，静图配旁白不放行
-- 静态方向、组件、连续样段、整片理解、声音、平台与发布分别验；已知失败不得带病放行
-- 每条实际用户意见先按 [反馈闭环与维度隔离](references/quality-acceptance.md#用户意见逐项登记与维度隔离) 登记来源、原媒体、范围和逐维结果，再落实规则或执行改进；理解获认可不抵消美术失败，未实看新样段不宣称改善。画面空洞按 [场景表达](references/visual-system.md#画面充实与精细场景表达) 修可见关系与完成度，不靠放大粗糙控件或堆装饰
-- 精细资产不等于完整场景成立：按 [同场景合成对照](references/visual-system.md#画面充实与精细场景表达) 和 [主体ROI对象结果诊断](references/quality-acceptance.md#主体动态与长静帧) 核实际代表段；已知关键美术失败沿现有反馈/阶段门禁先闭环，不靠P2标签扩片
-- 已发布、明确取消或禁止的版本不自动重做/恢复；本Skill写入或升级本身不提供制作恢复、外传或发布权限
+## 配置、记录与校验
 
-## 阶段路由：逐项执行适用的责任正文
+新作采用[系列配置](config/series-profile.json)的1920×1080横版默认值；旧竖版字幕修订只作用于指定旧项目。写实项目绑定适用参考；随包[历史插画](assets/style/accepted-style-reference.png)、[美术规格](assets/style/bright-nature.art-direction.json)和[色彩参数](assets/style/bright-nature.tokens.json)只在适用2D/封面范围使用。科学本色优先。质量和可校准起点见[制作策略](config/production-policy.json)，配置状态不代表实审通过或行动授权。
 
-先辨认用户本次要的产物、允许推进的阶段与已有工作包，再按下表读取当前适用章节；进入后续阶段时补读对应正文，不必为纸面策划预读声音、平台和最终美术验收细则。
+按交付深度使用[简报](assets/brief-template.md)、[单集记录](assets/episode-template.json)、[原题锚点](assets/topic-anchor-template.json)。模板是空记录结构，不是预先认可；删除不适用示例，缺证据保持未验。单集文件放用户工作目录；相对媒体/证据路径以 `episode.json` 所在目录为根。
 
-| 阶段/问题 | 唯一责任正文 | 产物 |
-| --- | --- | --- |
-| 原题、封面到开场、局部范围和答案 | [主题契约](references/topic-contract.md) | 原题锚点与覆盖证据 |
-| 科学、视频原源、权利与两类素材索引 | [科学与素材](references/science-and-rights.md) | 主张/来源/权利及候选 |
-| 写实主画面、风格锁定与连续样片 | [写实制作契约](references/realistic-production.md) | 前置参考、逐镜角色/实现、独立实看实听证据 |
-| 画面模态锁定与AI生成连续视频主路径 | [AI生成视频](references/ai-generated-video.md) | 逐镜modality与生成样片/披露 |
-| 顺序、前提、解释关系、整期草排与交付发布 | [制作检查点](references/production-checkpoints.md) | 整期计划、有声代表段、发布回执 |
-| 系列画风、三尺度、色与字、布局和封面 | [视觉设计系统](references/visual-system.md) | 当前设计板引用与实现版本 |
-| 音轨生成、传输边界与实际听验 | [中文声音](references/voice-reference.md) | 成品音轨及审听范围 |
-| 语义拍、候选、动作卡、方向图形与版本绑定 | [逐镜记录](references/shotbook.md) | episode.json与私有证据 |
-| 检查对象、证据、失败/未验和反馈复查 | [质量验收](references/quality-acceptance.md) | 分项实际验收记录 |
+从使用中的Skill目录运行；`python`替换为已有可用解释器，Windows不使用应用商店占位：
 
-同一规则仅在对应正文展开；模板只记录结果，其他章节用链接调用。规则归属与阶段见 [责任索引](indexes/rule-owners.json)，它不创建第二套规则。[完整条款覆盖索引](indexes/standard-coverage.json) 逐项指向责任正文，配套字段重复不算新增独立门槛。
+    python -X utf8 scripts/check_reference_system.py .
+    python -X utf8 scripts/render_gate.py lock <单集绝对路径>/skill-lock.json
+    python -X utf8 scripts/render_gate.py run <episode.json> --phase roughcut --shot-ids SH1,SH2 --output roughcut-001.mp4 --receipt roughcut-run-001.json
+    python -X utf8 scripts/render_gate.py run <episode.json> --phase sample --shot-ids SH1 --output sample-001.mp4 --receipt sample-run-001.json
+    python -X utf8 scripts/check_episode.py <episode.json> --stage G3 --report <新回执.json>
+    python -X utf8 scripts/check_episode.py <episode.json> --stage delivery --report <新交付回执.json>
 
-按任务使用入口：
+按实际阶段选命令，不照抄镜号。`roughcut`用于G2整期有声草排，`sample`用于待审代表段；两者不要求已有G3，`full`才要求当前G3后扩片。已有匹配规则锁可复用，不每次制造新锁。`plan`不晋级；G1–G7按适用阶段核证据；`delivery`检查本地成片至G5，`publish_ready`检查至G6，`covers`只验封面。发布仍需实际动作和G7读回。
 
-- **AI 生成视频主路径**：读 [AI生成视频](references/ai-generated-video.md)；用户明确指定使用视频生成模型 / AI生成连续视频时才直接锁 `modality=ai_generated` 推进，不得再索要实拍或擅自改回纯2D样片。
-- **选择并调用制作工具**：按 [场景调用表](references/tool-routing.md) 选择匹配的 Skill；实际制作选作运行工具的外部 Skill 缺失时，必须依 [调用前安装](references/tool-routing.md#调用前安装必需) 先安装并验证，再读取执行，不重复询问是否安装，不因缺失自行绕过。先按该表的 [逐镜选择与同目标小样](references/tool-routing.md#逐镜选择与同目标小样) 比较适用路径，不默认整片使用单一工具；选定可控2D时可用 `huashu-art-motion` 的引擎与对象动作能力；素材剪辑、产品动效、React模板、网页演示与字幕分别路由。当前 Skill 负责整期讲解、画风、声音与成片审查，方法参考按同表记录固定正文及镜头采用证据，不自动运行整套框架；子工具完成明确的局部产物；不为接入工具迁移已有工程或逐镜重配声音。
-- **只做策划**：先读主题契约、科学与素材、制作检查点的选题与解释设计部分；按所需交付深度写简报/分镜。尚未核实的主张标待研究；缺来源可交待研究策划，不为通过 `plan` 伪造出处。需要机器检查的计划包时，再读逐镜记录的 [无音轨 G1 计划](references/shotbook.md#无音轨的-g1-纸面计划)。`plan` 通过只证明基础计划结构，G1另需完整解释设计及科学/逻辑内审。
-- **新建单集**：读取当阶段配置与正文，在用户工作目录复制所需模板；模板中的ID、候选和审查项是字段示例，按真实情况填写或保留未验，不签假通过。
-- **续做或局部修复**：先读原包、当前媒体版本、最新反馈及已有授权，按 [失败后的处理](references/quality-acceptance.md#失败后的处理) 确定受影响证据。沿用已有文件与稳定ID，不重新复制模板覆盖；未取得原包或目标镜头时先做修复准备，索取必要定位信息后再改实际媒体。修改后旧验收是否有效以当前依赖与导出版本为准，不能凭“其余不动”保留过期整片通过。
-- **优化持续观看与整片编排**：读 [持续观看设计](references/viewer-retention-design.md)，在既有解释分镜中明确下一观察任务、关键发现和结尾回报；用有声草排检查必要停留与删改依据，真实留存效果按已有发布数据另验。
-- **精确控制与迭代效率**：读 [精确可控与高效迭代](references/production-checkpoints.md#精确可控与高效迭代)，先定可见成功条件与有界假设，静态核验有条件复用、动态每次新鲜核查；实际视频审看反馈优先，效率改进不替代现有质量关卡。
-- **只整理 Skill**：检查规则引用、模板、脚本与适当回归；不因此询问千问位置、生成媒体或恢复制作。
-- **制作或重做封面**：读 [两种封面各自设计](references/visual-system.md#两种封面各自设计)，按本系列封面硬限制及实际认可样图制作；交付前运行 `check_episode.py --stage covers`，G5–G7同时强制核封面证据；不把整片截图直接当封面，不因封面任务改动成片或自动替换已发布内容。
-
-- **学习参考并持续改进**：按 [从参考到实际改进](references/production-checkpoints.md#从参考学习到实际改进) 先实看、按时点拆解，再在当前授权的未完成影片代表段应用和对照；区分观察、迁移假设与已验证效果，不以报告或Skill写入代替制作。
-
-## 当前系列实现基准
-
-- [完整制作策略](config/production-policy.json)：G1–G7、H/D区分、评分、内部解释审查及产能/复盘起点；缺实际能力记未满足
-- [系列配置](config/series-profile.json)：写实连续主画面、按镜头选实现、Qwen/Serena、画幅/字幕与交付默认值
-- [视觉参数](assets/style/bright-nature.tokens.json)：色角色、可调配比、字阶/线条起点；科学本色优先
-- Skill携带已确认外观参考及 [美术规格](assets/style/bright-nature.art-direction.json)；额外项目设计板及批准范围留私有工作包
-- 采用本版完整标准及参数只确定工作基准，未自动批准新动作、科学机制、平台布局或整片；按当前任务范围推进，不从配置状态推断复工
-
-新建时按需使用 [简报](assets/brief-template.md)、[单集记录](assets/episode-template.json) 和 [原题锚点](assets/topic-anchor-template.json)。逐镜实际使用的基准/资产版本与哈希记入私有单集，不以“最新版”代替固定引用。相对媒体/证据路径以 `episode.json` 所在目录为根；Skill脚本路径以安装位置为准，不把单集文件放入Skill公共资源目录。
-
-将封面完成度迁入影片时，按 [封面完成度到可控动态场景](references/visual-system.md#从封面完成度到可控动态场景) 把完整场景、主体尺度与光影延续到机制镜头，先实际审过“现象→局部→一个机制→可见结果”的连续代表段，再扩制；分层资产与口播驱动动作共同承载可见关系，再按 [视觉方法](references/visual-system.md#代表样与-l2l3-校准) 选风险代表样、校准同镜完成度并检查整片编排；用 [美术与画质记录](assets/art-direction-template.md) 保存实际差距及修复。已有真实秒数分镜和媒体时，可按 [抽帧工具](references/shotbook.md#整片视觉抽帧工具) 生成缩略页；它只辅助审看，结论归既有阶段QA。
-
-## 检查与交付
-
-排查透明度端点、镜头四边覆盖或审片截图新增伪影时，读 [渲染边界与取证副本](references/render-evidence.md)；技术回归不替代实际观看，也不证明画面改善。
-
-从本Skill目录运行：
-
-    python scripts/check_reference_system.py .
-    python scripts/render_gate.py lock /absolute/private/episode/skill-lock.json
-    python scripts/render_gate.py run /absolute/private/episode/episode.json --phase sample --shot-ids SH1 --output sample-001.mp4 --receipt sample-run-001.json
-    python scripts/check_episode.py path/to/episode.json --stage covers --report path/to/cover-check-001.json
-    python scripts/check_episode.py path/to/episode.json --stage plan --report path/to/plan-check-001.json
-    python scripts/check_episode.py path/to/episode.json --stage G3 --report path/to/G3-check-001.json
-    python scripts/check_episode.py path/to/episode.json --stage delivery --report path/to/delivery-check-001.json
-
-第一项只核规则归属、参数与公共索引结构/哈希；阶段检查必须在对应推进前调用并保存回执，plan不晋级，G1–G7逐关核证据，delivery含G6。`--report` 保存带输入与检查资源摘要的本地回执，使用新文件名，不改QA或授予批准；退出码0为本地检查通过、1为检查阻塞、2为输入/执行/回执写入错误。范围与限制见 [技术检查](references/quality-acceptance.md#记录与技术检查)。通过命令不等于科学、权利、美术、听觉、理解或发布通过。缺实际视听时按质量正文保持未验，可交明确待审材料，不能包装成验收完成。
-
-所有适用标准逐项执行，基本素材仅作参考；用户最新要求与写实硬约束优先，旧项目/系列2D配置不能作为豁免。只整理Skill时，不动媒体；用户明确要求完成整理后恢复制作时，先核版本发布/读回结果，再在原授权范围进入对应阶段。任何新的暂停、取消或版本限制优先。
-
-## 候选学习记录（不构成规范）
-
-仅在研究可试方法时阅读 [雨滴形态的示意与不同来源影像](references/learning-candidates/nasa-raindrop-evidence-boundaries.md)。该记录保留公开案例的有限观察及未验证迁移假设，不代表实际应用、视听通过或效果提升，不新增制作门槛。
-
-另见 [比较镜头的对象身份与时间尺度](references/learning-candidates/rain-causal-observation-and-original-staging.md)：仅含公开参考的有限画面观察及未验证迁移假设，不代表完整看听、实际应用或改善效果，不改变正式规则或制作门槛。
+回执用新文件名；退出码0为本地检查通过、1为记录阻塞、2为输入/执行错误。脚本不授予审美、科学、权利、听感或发布批准；如实交付待审材料不等于验收通过。

@@ -7,20 +7,15 @@
   "independent_review": false,
   "method": "pending",
   "baseline": {
-    "kind": "approved_cover",
+    "kind": "initial_style_reference",
     "scope": "cover_appearance",
     "image": {
       "file": "",
       "sha256": ""
     },
-    "approval_evidence": {
-      "file": "",
-      "sha256": ""
-    },
-    "approval_reference": "",
-    "approved_image_sha256": "",
     "actually_opened": false,
-    "observation": ""
+    "observation": "",
+    "selection_reason": ""
   },
   "variants": {
     "cover_3_4": {

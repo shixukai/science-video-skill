@@ -130,9 +130,9 @@ class LabelPermissionTests(unittest.TestCase):
         for wording in ['AI模拟大气环流用于预测天气','人工智能辅助识别细胞结构']:
             self.assertTrue(guard.marking_cue(wording))
 
-    def test_ai_category_stays_forbidden_even_with_synthetic_consent(self):
+    def test_ai_disclosure_requires_notice_as_well_as_specific_consent(self):
         self.item.update(text='AI生成画面',purposes=['ai_simulation']);consent_item(self.item,self.root)
-        self.assert_blocked(self.plan(),'production excuses')
+        self.assert_blocked(self.plan(),'production/material-defect cue')
         self.item.update(text='AI模拟示意',purposes=['mechanism']);consent_item(self.item,self.root)
         self.assert_blocked(self.plan(),'production/material-defect cue')
 

@@ -136,7 +136,7 @@ class SynthesisTests(unittest.TestCase):
         self.assertEqual(load["dtype"], "torch.float32")
         self.assertIs(load["local_files_only"], True)
         call = self.model.generate_custom_voice.call_args.kwargs
-        self.assertEqual(call["text"], self.text.read_text(encoding="utf-8"))
+        self.assertEqual(call["text"], self.text.read_bytes().decode("utf-8"))
         self.assertEqual((call["speaker"], call["language"]), ("Serena", "Chinese"))
         self.assertEqual(call["top_p"], 0.75)
         self.assertEqual(result["effective_generation_params"]["temperature"], 0.9)
@@ -158,7 +158,7 @@ class SynthesisTests(unittest.TestCase):
 
     def test_multiple_paragraphs_remain_one_unchanged_generation_input(self):
         narration = "  这是第一段。它包含两句话。\n\n因此，第二段继续前面的解释！\n最后一句收束全文。\n"
-        self.text.write_text(narration, encoding="utf-8")
+        self.text.write_bytes(narration.encode("utf-8"))
 
         result = self.run_synthesis()
 
@@ -181,7 +181,8 @@ class SynthesisTests(unittest.TestCase):
 
     def test_broken_output_symlink_is_not_followed_or_overwritten(self):
         missing = self.root / "unrelated.wav"
-        self.output.symlink_to(missing)
+        from fs_support import symlink_or_skip
+        symlink_or_skip(self, self.output, missing)
         with self.assertRaisesRegex(voice.SynthesisError, "already exists"):
             self.run_synthesis()
         self.assertTrue(self.output.is_symlink())
@@ -374,7 +375,10 @@ class SynthesisTests(unittest.TestCase):
         import_cwd = []
         def loader():
             import_cwd.append(Path.cwd())
-            Path(':memory:.ses').write_text('simulated dependency import side effect')
+            # The dependency's POSIX session filename contains a colon, which
+            # Windows cannot create; use a valid synthetic name there.
+            name = 'dependency.ses' if sys.platform == 'win32' else ':memory:.ses'
+            Path(name).write_text('simulated dependency import side effect')
             return real_loader()
         with mock.patch.object(voice, 'load_runtime', side_effect=loader):
             self.run_synthesis()

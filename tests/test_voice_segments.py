@@ -311,7 +311,8 @@ class VoiceSegmentTests(unittest.TestCase):
         for name in ("\x00", "loop.json"):
             with self.subTest(name=repr(name)):
                 if name == "loop.json":
-                    (self.root / name).symlink_to(name)
+                    from fs_support import symlink_or_skip
+                    symlink_or_skip(self, self.root / name, name)
                 self.narration["generation_manifest"]["file"] = name
                 self.rejects("unsafe")
 

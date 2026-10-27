@@ -204,7 +204,7 @@ class PresentationBoundaryTests(unittest.TestCase):
         self.d["qa"]["presentation_text"]["G5"]["channel_reviews"].pop("cover")
         self.rejects("complete applicable surface review required")
         self.d = copy.deepcopy(self.base); self.d["qa"]["presentation_text"]["G5"]["cover_files"] = []
-        self.rejects("both actual cover versions required")
+        self.rejects("requested actual cover versions required")
 
     def test_same_serena_seed_and_asr_cannot_replace_continuous_listening(self):
         self.d["narration"]["speaker"] = "Serena"; self.d["narration"]["seed"] = 42

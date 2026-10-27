@@ -89,7 +89,8 @@ class CheckReportTests(unittest.TestCase):
 
     def test_report_cannot_follow_a_dangling_symlink(self):
         target = self.root / "absent.json"
-        self.report.symlink_to(target)
+        from fs_support import symlink_or_skip
+        symlink_or_skip(self, self.report, target)
         self.assertEqual(self.run_check().returncode, 2)
         self.assertFalse(target.exists())
         self.assertTrue(self.report.is_symlink())

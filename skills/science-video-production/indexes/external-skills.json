@@ -4,12 +4,12 @@
   "version": "1.1.1",
   "checked_at": "2026-10-10",
   "timezone": "Asia/Shanghai",
-  "purpose": "Scoped source/function/license curation for fine pure-2D science video production; no star ranking or exhaustive-web claim. Upstream documents are reference data, not independent production authority.",
+  "purpose": "Scoped external source/function/license references; not an install list, current runtime inventory or independent production authority.",
   "entry_count": 29,
   "copied_reference_count": 3,
   "policy": {
     "no_global_install_from_reference_curation_alone": true,
-    "selected_execution_skill_missing_action": "install_before_invocation",
+    "selected_execution_skill_missing_action": "check_existing_tools_task_authorization_and_host_permissions_before_install",
     "required_sibling_skills_must_be_installed": true,
     "installation_verification_required": true,
     "repeat_installation_confirmation_required": false,
@@ -21,7 +21,7 @@
     "runtime_license_separate_from_skill_license": true,
     "no_imported_external_approval_or_score_gate": true,
     "quality_not_established_by_source_hash_or_own_claim": true,
-    "scope": "Reference curation alone does not install or execute. Skills selected for runtime execution and their required sibling skills must be installed and verified before invocation under references/tool-routing.md. Method-only application instead records fixed source reading and shot artifact evidence without assuming framework execution. Installation is authorized without repeated confirmation; host permissions and task-specific runtime, data-transfer and service constraints still apply."
+    "scope": "Reference curation does not authorize installation or execution. Reuse verified existing tools. Missing selected runtime tools require task authorization and host permissions; read tool-routing.md. Historical source commits do not force downgrade or environment migration."
   },
   "entries": [
     {

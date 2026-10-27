@@ -15,9 +15,9 @@ class Tests(unittest.TestCase):
  def test_two_graphs_within_capability(self):
   for n in ('a','b'):r.validate_graph(json.loads((R/f'tests/fixtures/graph_{n}.json').read_text()),json.loads((R/f'tests/fixtures/candidate_{n}.json').read_text()))
  def test_supported_skill_patch_versions(self):
-  for version in ('1.6.5','1.6.6','1.6.7','1.6.8'):
+  for version in ('1.6.5','1.6.6','1.6.7','1.6.8','1.6.9'):
    c=cfg();c['skill_version']=version;r.validate_config(c)
-  for version in ('1.6.9','latest',''):
+  for version in ('1.6.10','latest',''):
    c=cfg();c['skill_version']=version
    with self.assertRaises(ValueError):r.validate_config(c)
  def test_utilization_admission_ceiling_cannot_be_reintroduced(self):
