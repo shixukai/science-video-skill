@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "18283252b1a4427a65fe154728eaf8f280b4383ccd89a2f67ad3095ab107a086",
+      "sha256": "16c2b4cfc500969bb69fcf80a2adefd3f660149fb238e59194a031830ce0b215",
       "anchors": [
         "原题问题类型与交付范围不能在局部返工中丢失",
         "为什么当前主题清楚仍会跑题",
@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "86562617c0286028bdc322b7dc04ce1621a285a3377cc92d4ae6accfa240ed6d",
+      "sha256": "f5caff10141d2a3344910a5cc2b652a5292ef454c0f71e72a7ed6665ce1bbc7a",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -95,9 +95,10 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "5b97beaec6b62d5270e504f52a47e88474e406cc8823ace71caffb7c3635821a",
+      "sha256": "87870907bb5f135db5b14f4ac6c30f96106ef043473a5a917064a526d621dc87",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
+        "先建立情境和看点再进入解释",
         "先定位继续观看的阻力",
         "一段结束后为什么值得看下一段",
         "把关键发现编排到声画里",
@@ -234,7 +235,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "91d210f9ba2710cdf16408b1d5b29c798aa2cf627e31920fd2728ab393202784",
+      "sha256": "3f9cbeb261df32b8ad3612df66bdc95c2b3b44b7286e37d07180e26a5e45ae93",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
