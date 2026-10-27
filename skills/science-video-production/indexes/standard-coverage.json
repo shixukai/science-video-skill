@@ -110,7 +110,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "7e38edc675e2580c63de187507314b7eafd50460935548a62f3ec4879b105b46",
+      "sha256": "38b92da2fc5473f5b65630519c1004ec104ccced49378d3649210a8653cc3c6e",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -128,6 +128,8 @@
         "可见文字用途与制作辩解",
         "画内标识须有具体同意",
         "两种封面各自设计",
+        "封面成品标准与工程制造题材",
+        "制作流程",
         "封面实图绑定与放行",
         "已认可封面的可迁移做法",
         "声音质感",
@@ -252,7 +254,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "f6c505884dac579d5ed72d897042a08e278ee19cba7266f6362d12b06752c81a",
+      "sha256": "65ea3638f0bae48a6997f8ad48a627e725d09514315eabfd07cfdc3de822dcd1",
       "anchors": [
         "工程类科普blender-与-3d-素材复用",
         "仅做资产时的任务范围",
