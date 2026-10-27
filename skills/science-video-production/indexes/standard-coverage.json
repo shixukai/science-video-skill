@@ -7,11 +7,12 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "8268d46e55d3800fd82ed0c69ba2d59836424ea3ad16f098803bbfdb05e2b0c3",
+      "sha256": "18283252b1a4427a65fe154728eaf8f280b4383ccd89a2f67ad3095ab107a086",
       "anchors": [
         "原题问题类型与交付范围不能在局部返工中丢失",
         "为什么当前主题清楚仍会跑题",
         "保存原始锚点",
+        "工程与制造题材的全链路和片长",
         "整期章节与局部样片分开",
         "成人受众的选题筛选",
         "好坏题成对比较",
@@ -251,7 +252,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "a08202b7b06a9c66ddd364e2a461ea185ee0dbc03f637463d1aeaeaa391e7409",
+      "sha256": "f6c505884dac579d5ed72d897042a08e278ee19cba7266f6362d12b06752c81a",
       "anchors": [
         "工程类科普blender-与-3d-素材复用",
         "仅做资产时的任务范围",

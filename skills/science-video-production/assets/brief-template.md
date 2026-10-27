@@ -15,6 +15,7 @@
 - 有权平台证据按 [数据复核](../references/production-checkpoints.md#平台选题与数据复核) 引用私有台账，记更新/窗口/样本/分母及缺口；AI与热点建议需说明核验和采用范围：
 
 ## 原题与科学
+工程科学/工业生产/高端制造的[全链路范围](../references/topic-contract.md#工程与制造题材的全链路和片长)与章节顺序；各环节输入、原理/操作、输出及衔接；关键难点/质量验证和待研究缺口；按解释需要暂估片长，实际配音/演示后更新：
 按 [主题契约](../references/topic-contract.md) 记录原题、问题类型、必答范围、首屏/口播/结尾映射及局部所属范围；复制topic-anchor-template并固定来源/哈希。
 候选的直觉预期、真实差异/待解释观察、核心答案、可视证据及条件；采用方案的 curiosity_gap / viewer_payoff / payoff_steps 引用正文范围和镜号，沿用 ending 回答（无可靠反直觉差异时用具体问题，不强造）：
 按 [科学与素材](../references/science-and-rights.md) 记录主张、依据、自产画面及已核实用户自拍/权利、实际选段与缺项：
