@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "precision-annotations",
+  "version": "1.0.0",
+  "status": "series_style_baseline",
+  "scope": "Scientific-video annotation appearance only; not captions, covers, scientific evidence or media approval. Values are adjustable starting points, subordinate to actual local contrast and viewing tests.",
+  "reference_canvas": [1920, 1080],
+  "colors": {
+    "light": {"text": "#192E3A", "line": "#4E6975", "focus": "#247985"},
+    "dark": {"text": "#F3F5F4", "line": "#CBD6DC", "focus": "#77C6C8"}
+  },
+  "type": {
+    "family": "Noto Sans CJK SC",
+    "fallbacks": ["Source Han Sans SC", "Microsoft YaHei", "sans-serif"],
+    "font_files_bundled": false,
+    "label_px": 60,
+    "label_adjustable_range_px": [52, 64],
+    "weight": 500,
+    "line_height": 1.25,
+    "stroke_px": 0,
+    "secondary_text": "Only when needed and readable at the actual viewing size; not a way to shrink essential information."
+  },
+  "leader": {
+    "width_px": 4,
+    "adjustable_width_range_px": [4, 6],
+    "endpoint_diameter_range_px": [8, 12],
+    "label_gap_range_px": [18, 24],
+    "default_max_bends": 1,
+    "cap": "round",
+    "directional": false
+  },
+  "arrow": {
+    "shaft_width_px": 6,
+    "head_length_px": 20,
+    "head_width_px": 20,
+    "straight_geometry": "single_closed_fill_outline",
+    "head_stroke_px": 0,
+    "separate_shaft_end": "head_base",
+    "separate_shaft_join_cap": "butt",
+    "curve_head_orientation": "actual_end_tangent",
+    "tip_is_unique_forward_extremum": true
+  },
+  "region": {"fill_opacity_range": [0.08, 0.12], "boundary": "actual_target_boundary"},
+  "motion": {
+    "enter_ms_range": [180, 280],
+    "exit_ms_range": [120, 200],
+    "hold": "Narration, reading and observation task; no universal fixed duration.",
+    "target_endpoint": "Exact tracked/projected feature; do not smooth away from the object.",
+    "label_layout": "Stable screen-space region with hysteresis when repositioning."
+  },
+  "review": {
+    "full_frame_proxy_width_px": 360,
+    "original_size": true,
+    "continuous_motion_and_actual_encode": true,
+    "automatic_aesthetic_approval": false
+  }
+}

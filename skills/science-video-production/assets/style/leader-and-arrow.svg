@@ -1,1 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370 150"><defs><marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#243840" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><g id="leader" fill="none" stroke="#243840" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="34" cy="92" r="6" fill="#FFFBF1"/><path d="M40 87 L88 36 H171"/></g><g id="label"><rect x="164" y="14" width="112" height="43" rx="9" fill="#FFFBF1"/><text x="220" y="44" text-anchor="middle" font-size="22" fill="#243840" font-family="Noto Sans CJK SC,sans-serif">定位标签</text></g><g id="arrow" fill="none" stroke="#243840" stroke-width="4" stroke-linecap="round"><circle cx="37" cy="130" r="4" fill="#243840"/><path d="M43 130 C133 130 128 92 222 92 H315" marker-end="url(#arrowhead)"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">精密技术标注：浅景与暗景的定位、方向和范围示例</title>
+  <desc id="desc">仅示范可编辑标注。直箭头为单个闭合填充轮廓，没有穿过头部的独立箭杆。按当前镜头核实际落点、方向、字体和最终编码。</desc>
+  <defs>
+    <g id="leader" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M0 80 L75 0 H160"/>
+      <circle cx="0" cy="80" r="5" fill="currentColor" stroke="none"/>
+    </g>
+    <g id="arrow" fill="currentColor" stroke="none">
+      <polygon id="direction-arrow-outline" points="0,-3 380,-3 380,-10 400,0 380,10 380,3 0,3"/>
+    </g>
+    <g id="region" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="butt">
+      <path d="M0 0 H180"/>
+    </g>
+  </defs>
+  <g font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif" font-size="60" font-weight="500" dominant-baseline="middle">
+    <g id="light-example">
+      <rect width="1920" height="540" fill="#E9EEEC"/>
+      <text x="96" y="92" fill="#192E3A">浅景</text>
+      <path d="M96 290 H230 V418 H96 Z" fill="#658590"/>
+      <use href="#leader" x="230" y="270" color="#4E6975"/>
+      <text x="414" y="270" fill="#192E3A">定位</text>
+      <text x="736" y="240" fill="#192E3A">方向</text>
+      <use href="#arrow" x="736" y="340" color="#4E6975"/>
+      <path d="M1320 300 H1640 L1700 430 H1380 Z" fill="#658590"/>
+      <path d="M1380 300 H1560 L1620 430 H1440 Z" fill="#247985" opacity="0.1"/>
+      <use href="#region" x="1380" y="298" color="#247985"/>
+      <path d="M1470 298 L1610 218 H1660" fill="none" stroke="#4E6975" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1684" y="218" fill="#192E3A">范围</text>
+    </g>
+    <g id="dark-example" transform="translate(0 540)">
+      <rect width="1920" height="540" fill="#13212C"/>
+      <text x="96" y="92" fill="#F3F5F4">暗景</text>
+      <path d="M96 290 H230 V418 H96 Z" fill="#536E7C"/>
+      <use href="#leader" x="230" y="270" color="#CBD6DC"/>
+      <text x="414" y="270" fill="#F3F5F4">定位</text>
+      <text x="736" y="240" fill="#F3F5F4">方向</text>
+      <use href="#arrow" x="736" y="340" color="#CBD6DC"/>
+      <path d="M1320 300 H1640 L1700 430 H1380 Z" fill="#536E7C"/>
+      <path d="M1380 300 H1560 L1620 430 H1440 Z" fill="#77C6C8" opacity="0.1"/>
+      <use href="#region" x="1380" y="298" color="#77C6C8"/>
+      <path d="M1470 298 L1610 218 H1660" fill="none" stroke="#CBD6DC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1684" y="218" fill="#F3F5F4">范围</text>
+    </g>
+  </g>
+</svg>

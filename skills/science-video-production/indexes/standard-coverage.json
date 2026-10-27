@@ -110,7 +110,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "38b92da2fc5473f5b65630519c1004ec104ccced49378d3649210a8653cc3c6e",
+      "sha256": "c6e70f8f9b90640f0a3100d74a0ee17e5d9f3db3ee814ee220713b0b376c01b3",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -181,6 +181,21 @@
       ]
     },
     {
+      "owner_id": "visual",
+      "file": "references/annotation-style.md",
+      "sha256": "3295519aa26e70af8af6897fe1fb0fd5dc65fa746c7ef03264700ab2ece740fa",
+      "anchors": [
+        "视频指示信息精密技术标注",
+        "适用范围与确认",
+        "图形与信息层级",
+        "箭头尖端与头杆连接",
+        "参数尺度与可读性",
+        "动态与对象绑定",
+        "实审与记录",
+        "参考边界"
+      ]
+    },
+    {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
       "sha256": "6e9d19ae6693737ed9045feaf87c080378508193e3f3da6bed7e19517dfa1be0",
@@ -219,7 +234,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "ad2e2c76dec86660f89832e2a5247c50d1338b9e905b5af38a3a46ee68ff9b33",
+      "sha256": "91d210f9ba2710cdf16408b1d5b29c798aa2cf627e31920fd2728ab393202784",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -254,7 +269,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "65ea3638f0bae48a6997f8ad48a627e725d09514315eabfd07cfdc3de822dcd1",
+      "sha256": "534aa77210004f033cf09144f835055e83ec77a35638ec370c1b99a39f8b5d2c",
       "anchors": [
         "工程类科普blender-与-3d-素材复用",
         "仅做资产时的任务范围",

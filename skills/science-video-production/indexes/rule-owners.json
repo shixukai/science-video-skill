@@ -72,11 +72,13 @@
         "audience-text-purpose",
         "on-frame-label-permission",
         "scene-substance-and-art-finesse",
-        "animation-scene-design"
+        "animation-scene-design",
+        "precision-video-annotations"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",
-        "references/snow-crystal-scene-example.md"
+        "references/snow-crystal-scene-example.md",
+        "references/annotation-style.md"
       ]
     },
     {

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "catalog": "reusable_assets",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "purpose": "Generic editable examples; project-specific media and rights records stay private.",
   "entries": [
     {
       "id": "leader-arrow-example",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "kind": "graphic",
       "file": "assets/style/leader-and-arrow.svg",
-      "sha256": "05716a4381e14c7c1a866d7e0b41ab33a8460d3399cf974d67b781c3af56a116",
+      "sha256": "cdd9b54177d5fc082c5fda04812724f1abd1e8ec14b8cd1f02b3100438e3bd77",
       "status": "implementation_example",
       "source": "Original generic vector constructed for this repository",
       "rights": {
@@ -17,9 +17,9 @@
         "evidence": "Local SVG source contains only authored paths and text; no external image/font file embedded",
         "scope": "Evaluation and project adaptation; verify font rights and any modified content separately"
       },
-      "use": "Distinguish undirected object leader from directional arrow",
+      "use": "Precision annotation example: undirected leader, single-outline sharp directional arrow, and region emphasis on light/dark backgrounds",
       "not_for": "Automatic proof of flow, force, scientific direction or final composition",
-      "approval_scope": "code example only; final transformed placement and motion remain unreviewed"
+      "approval_scope": "Implementation example for the confirmed annotation language; actual font, scientific placement, transformed tip and continuous media remain separately reviewed"
     },
     {
       "id": "explanation-recipes",
@@ -37,6 +37,23 @@
       "use": "Design concrete actions for eight relationship types",
       "not_for": "Scientific evidence, approved art assets, actual audio timestamps or media quality approval",
       "approval_scope": "Expression skeleton only; actual work requires applicable internal review"
+    },
+    {
+      "id": "precision-annotation-parameters",
+      "version": "1.0.0",
+      "kind": "configuration",
+      "file": "assets/style/precision-annotations.tokens.json",
+      "sha256": "d338eb3e5250164812689bec68bd2251d5e46f66bdb5ebf3dfac304376bf4b8e",
+      "status": "adjustable_series_baseline",
+      "source": "Original project annotation settings",
+      "rights": {
+        "basis": "original_configuration",
+        "evidence": "Authored JSON; no embedded media or fonts",
+        "scope": "Project adaptation; verify actual font and media rights separately"
+      },
+      "use": "1920x1080 annotation appearance starting values; re-layout other aspect ratios",
+      "not_for": "Captions, covers, physical object colors, fixed readability gates or media approval",
+      "approval_scope": "Confirmed style direction only; actual local contrast, tip geometry, readability and motion require review"
     }
   ]
 }

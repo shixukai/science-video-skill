@@ -135,7 +135,7 @@ class ReferenceSystemTests(unittest.TestCase):
         self.errors("exactly one URL or local file")
     def test_changed_component_needs_new_hash(self):
         p = self.root / "assets/style/leader-and-arrow.svg"
-        p.write_text(p.read_text().replace("#243840", "#000000"))
+        p.write_text(p.read_text().replace("<svg ", '<svg data-test-mutation="1" ', 1))
         self.errors("hash mismatch")
     def test_external_svg_dependency(self):
         p = self.root / "assets/style/leader-and-arrow.svg"
