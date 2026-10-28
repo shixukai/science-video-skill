@@ -289,11 +289,12 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "194dd4c730e1adb26043f96e9f5e84b7db3463aec248eeb5f32c23a38077d25b",
+      "sha256": "0df67f9ae0b49992409f65d0696dc40d86a64306a45ab14ba73e28ea20a740a1",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
         "scene-adapter",
+        "hand-off-raw-frames-to-the-edit",
         "device-ownership-and-recovery",
         "rendering-cost-and-scheduling"
       ]

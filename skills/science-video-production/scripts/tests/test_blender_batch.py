@@ -1,10 +1,13 @@
 """Offline behavior tests; synthetic images are not production quality evidence."""
 import copy
 import json
+import os
+import py_compile
 from pathlib import Path
 import struct
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 import zlib
 
@@ -184,6 +187,91 @@ class BatchTests(unittest.TestCase):
         check.write_text("def check(spec):\n return {'ok': True, 'gpu_utilization': 100}\n")
         self.spec["resource_check"] = str(check); job = self.prepare("telemetry-job.json")
         self.assertEqual(batch.execute(job, FakeRenderer())["status"], "complete_unreviewed")
+
+
+    def test_entry_module_uses_current_source_despite_stale_bytecode(self):
+        source = self.root / "scene.py"
+        source.write_text("VALUE = 11\n", encoding="utf-8")
+        os.utime(source, (1700000000, 1700000000))
+        py_compile.compile(str(source), doraise=True)
+        source.write_text("VALUE = 22\n", encoding="utf-8")
+        os.utime(source, (1700000000, 1700000000))
+        self.assertEqual(batch.load_module(source, "fixture_entry").VALUE, 22)
+        sys.modules.pop("fixture_entry", None)
+
+    def test_declared_helper_uses_source_and_restores_host_import_state(self):
+        source = self.root / "fixture_helper.py"
+        source.write_text("VALUE = 11\n", encoding="utf-8")
+        os.utime(source, (1700000000, 1700000000))
+        py_compile.compile(str(source), doraise=True)
+        cached = batch.load_module(source, "fixture_helper")
+        source.write_text("VALUE = 22\n", encoding="utf-8")
+        os.utime(source, (1700000000, 1700000000))
+        (self.root / "scene.py").write_text("import fixture_helper\nVALUE = fixture_helper.VALUE\n", encoding="utf-8")
+        self.spec["inputs"].append(str(source)); job = self.prepare("source-job.json")
+        original_path = list(sys.path)
+        with batch.declared_source_imports(job["spec"]):
+            module = batch.load_module(self.root / "scene.py", "fixture_driver")
+            self.assertEqual(module.VALUE, 22)
+        self.assertIs(sys.modules["fixture_helper"], cached)
+        self.assertEqual(sys.path, original_path)
+        self.assertNotIn("fixture_driver", sys.modules)
+        sys.modules.pop("fixture_helper", None)
+
+    def test_declared_package_relative_import_uses_current_source(self):
+        package = self.root / "fixture_package"; package.mkdir()
+        entry = package / "__init__.py"; entry.write_text("from .values import VALUE\n", encoding="utf-8")
+        helper = package / "values.py"; helper.write_text("VALUE = 11\n", encoding="utf-8")
+        os.utime(helper, (1700000000, 1700000000)); py_compile.compile(str(helper), doraise=True)
+        helper.write_text("VALUE = 22\n", encoding="utf-8"); os.utime(helper, (1700000000, 1700000000))
+        (self.root / "scene.py").write_text("from fixture_package import VALUE\n", encoding="utf-8")
+        self.spec["inputs"].extend([str(entry), str(helper)]); job = self.prepare("package-job.json")
+        with batch.declared_source_imports(job["spec"]):
+            self.assertEqual(batch.load_module(self.root / "scene.py", "fixture_driver").VALUE, 22)
+        self.assertNotIn("fixture_package", sys.modules)
+
+    def test_source_driver_supports_dataclass_annotations(self):
+        source = self.root / "scene.py"
+        source.write_text("from __future__ import annotations\nfrom dataclasses import dataclass\n@dataclass\nclass Params:\n value: int = 22\n", encoding="utf-8")
+        job = self.prepare("dataclass-job.json")
+        with batch.declared_source_imports(job["spec"]):
+            self.assertEqual(batch.load_module(source, "fixture_driver").Params().value, 22)
+
+    def test_resource_hook_uses_current_declared_helper(self):
+        helper = self.root / "fixture_resource_helper.py"
+        helper.write_text("ALLOW = True \n", encoding="utf-8")
+        os.utime(helper, (1700000000, 1700000000)); py_compile.compile(str(helper), doraise=True)
+        helper.write_text("ALLOW = False\n", encoding="utf-8"); os.utime(helper, (1700000000, 1700000000))
+        hook = self.root / "resource.py"
+        hook.write_text("from fixture_resource_helper import ALLOW\ndef check(spec):\n return {'ok': ALLOW, 'reason': 'current project ownership'}\n", encoding="utf-8")
+        self.spec["inputs"].append(str(helper)); self.spec["resource_check"] = str(hook)
+        job = self.prepare("resource-source-job.json"); renderer = FakeRenderer()
+        with self.assertRaises(RuntimeError): batch.execute(job, renderer)
+        self.assertEqual(renderer.builds, 0)
+        self.assertFalse(batch.read(self.root / "frames/state.json")["resource_check"]["ok"])
+
+
+    def test_udim_tiles_are_each_required_and_tile_names_are_resolved(self):
+        image = SimpleNamespace(filepath="surface.<UDIM>.png", source="TILED", packed_file=None,
+                                library=None, tiles=[SimpleNamespace(number=1001), SimpleNamespace(number=1012)])
+        def abspath(name, library=None): return str(self.root / name)
+        paths = batch.image_file_paths(image, abspath)
+        self.assertEqual([path.name for path in paths], ["surface.1001.png", "surface.1012.png"])
+        for path in paths: png(path)
+        self.spec["inputs"].append(str(paths[0])); job = self.prepare("tiles-incomplete.json")
+        batch.check_external_path(paths[0], job["spec"])
+        with self.assertRaises(ValueError): batch.check_external_path(paths[1], job["spec"])
+        self.spec["inputs"].append(str(paths[1])); job = self.prepare("tiles-complete.json")
+        for path in paths: batch.check_external_path(path, job["spec"])
+        image.filepath = "surface.<UVTILE>.png"
+        self.assertEqual([path.name for path in batch.image_file_paths(image, abspath)],
+                         ["surface.u1_v1.png", "surface.u2_v2.png"])
+
+    def test_dependency_loaded_after_build_must_also_be_declared(self):
+        later = self.root / "later.png"; png(later)
+        with self.assertRaises(ValueError): batch.check_external_path(later, self.job["spec"])
+        self.spec["inputs"].append(str(later)); job = self.prepare("later-dependency.json")
+        batch.check_external_path(later, job["spec"])
 
 
 class ReviewDeltaTests(unittest.TestCase):

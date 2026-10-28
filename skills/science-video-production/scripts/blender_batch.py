@@ -8,6 +8,7 @@ import argparse
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import importlib.machinery
 import importlib.util
 import json
 import math
@@ -273,11 +274,131 @@ def archive_invalid(output, paths):
         path.replace(destination / path.name)
 
 
+@contextmanager
+def declared_source_imports(spec):
+    """Execute declared project .py bytes, never timestamp-valid stale bytecode."""
+    sources = {str(Path(path).resolve()): sha for path, sha in spec["inputs"].items()
+               if Path(path).suffix == ".py"}
+
+    class SourceLoader(importlib.machinery.SourceFileLoader):
+        def get_code(self, fullname):
+            data = Path(self.path).read_bytes()
+            if hashlib.sha256(data).hexdigest() != sources[str(Path(self.path).resolve())]:
+                raise ValueError("Imported source changed: " + self.path)
+            return self.source_to_code(data, self.path)
+
+    class SourceFinder:
+        def find_spec(self, fullname, path=None, target=None):
+            found = importlib.machinery.PathFinder.find_spec(fullname, path, target)
+            if (found and found.origin and
+                    isinstance(found.loader, importlib.machinery.SourceFileLoader) and
+                    str(Path(found.origin).resolve()) in sources):
+                found.loader = SourceLoader(fullname, found.origin)
+                return found
+            return None
+
+    def declared(module):
+        origin = getattr(module, "__file__", None)
+        return bool(origin and str(Path(origin).resolve()) in sources)
+
+    previous = {name: module for name, module in list(sys.modules.items()) if declared(module)}
+    for name in previous:
+        del sys.modules[name]
+    original_path = list(sys.path)
+    finder = SourceFinder(); sys.meta_path.insert(0, finder)
+    try:
+        yield
+    finally:
+        sys.meta_path.remove(finder)
+        sys.path[:] = original_path
+        for name, module in list(sys.modules.items()):
+            if declared(module):
+                del sys.modules[name]
+        sys.modules.update(previous)
+
+
 def load_module(path, name):
     sys.path.insert(0, str(Path(path).parent))
     module_spec = importlib.util.spec_from_file_location(name, path)
-    module = importlib.util.module_from_spec(module_spec); module_spec.loader.exec_module(module)
+    module = importlib.util.module_from_spec(module_spec)
+    previous = sys.modules.get(name)
+    sys.modules[name] = module
+    try:
+        # Direct entry modules also bypass .pyc and support normal dataclasses.
+        exec(compile(Path(path).read_bytes(), str(path), "exec"), module.__dict__)
+    except BaseException:
+        if previous is None:
+            sys.modules.pop(name, None)
+        else:
+            sys.modules[name] = previous
+        raise
     return module
+
+
+
+def image_file_paths(image, abspath):
+    """External file/tile paths; evaluated ImageUser adds sequence frames below."""
+    raw = getattr(image, "filepath", "")
+    if not raw or raw.startswith("<") or getattr(image, "packed_file", None):
+        return []
+    if getattr(image, "source", "FILE") == "TILED":
+        if "<UDIM>" not in raw and "<UVTILE>" not in raw:
+            raise ValueError("UDIM image needs an explicit <UDIM> or <UVTILE> file pattern")
+        names = []
+        for tile in image.tiles:
+            number = tile.number; u = (number - 1001) % 10 + 1; v = (number - 1001) // 10 + 1
+            names.append(raw.replace("<UDIM>", str(number)).replace("<UVTILE>", f"u{u}_v{v}"))
+    else:
+        names = [raw]
+    return [Path(abspath(name, library=getattr(image, "library", None))).resolve() for name in names]
+
+
+def check_external_path(path, spec):
+    path = Path(path).resolve()
+    if not path.is_file() or str(path) not in spec["inputs"]:
+        raise ValueError("Declare actual external Blender dependency in inputs: " + str(path))
+
+
+def audit_blender_inputs(spec, bpy, evaluated=False):
+    # Recheck after state changes: an adapter can load a different image/library.
+    for collection in (bpy.data.libraries, bpy.data.images, bpy.data.fonts):
+        for block in collection:
+            for path in image_file_paths(block, bpy.path.abspath):
+                check_external_path(path, spec)
+    if not evaluated:
+        return
+    graph = bpy.context.evaluated_depsgraph_get(); graph.update()
+
+    def check_user(owner):
+        image = getattr(owner, "image", None); user = getattr(owner, "image_user", None)
+        if (image is not None and user is not None and image.source == "SEQUENCE" and
+                not getattr(image, "packed_file", None)):
+            # Original image_user.frame_current can stay at 0 until rendering.
+            # The evaluated datablock carries Blender's real offset/cyclic mapping.
+            check_external_path(image.filepath_from_user(image_user=user), spec)
+
+    visited = set()
+    def check_tree(tree):
+        if tree is None or tree.as_pointer() in visited:
+            return
+        visited.add(tree.as_pointer())
+        for node in tree.nodes:
+            check_user(node)
+            check_tree(getattr(node, "node_tree", None))
+
+    # A saved fake-user material can have users=1 yet not participate in this
+    # scene's dependency graph. Its unevaluated frame_current=0 is not evidence
+    # of a missing texture. Inspect actual evaluated IDs and their node trees.
+    for block in graph.ids:
+        check_tree(block if isinstance(block, bpy.types.NodeTree) else getattr(block, "node_tree", None))
+        check_user(block)
+        if isinstance(block, bpy.types.Object) and block.type == "EMPTY" and isinstance(block.data, bpy.types.Image):
+            if block.data.source == "SEQUENCE":
+                check_external_path(block.data.filepath_from_user(image_user=block.image_user), spec)
+        if isinstance(block, bpy.types.Camera):
+            for background in block.background_images:
+                check_user(background)
+
 
 
 def configure(scene, render, bpy, refresh_devices=False):
@@ -338,7 +459,7 @@ def execute(job, renderer, resume=False, selected=None):
     frames = parse_frames(selected) if selected is not None else spec["frames"]
     if not set(frames) <= set(spec["frames"]):
         raise ValueError("Selected frames are outside this job")
-    with job_lock(output):
+    with job_lock(output), declared_source_imports(spec):
         owner = output / "job.json"
         if owner.exists():
             if not resume or read(owner).get("signature") != job["signature"]:
@@ -422,16 +543,7 @@ class BlenderRenderer:
                 raise ValueError("driver.build(spec) must return its scene")
         bpy.context.window.scene = self.scene
         configure(self.scene, spec["render"], bpy, refresh_devices=True)
-        # Resolve actual external Blender resources as well as the declared list.
-        # Packed images and built-in fonts have no external file dependency.
-        for collection in (bpy.data.libraries, bpy.data.images, bpy.data.fonts):
-            for block in collection:
-                raw = getattr(block, "filepath", "")
-                if not raw or raw.startswith("<") or getattr(block, "packed_file", None):
-                    continue
-                path = Path(bpy.path.abspath(raw, library=getattr(block, "library", None))).resolve()
-                if not path.is_file() or str(path) not in spec["inputs"]:
-                    raise ValueError("Declare actual external Blender dependency in inputs: " + str(path))
+        audit_blender_inputs(spec, bpy)
         if spec.get("driver"):
             parent = Path(spec["driver"]).parent
             for module in list(sys.modules.values()):
@@ -446,6 +558,7 @@ class BlenderRenderer:
         metadata = self.driver.set_frame(self.scene, frame, spec) if self.driver else {}
         self.bpy.context.view_layer.update()
         actual = configure(self.scene, spec["render"], self.bpy)
+        audit_blender_inputs(spec, self.bpy, evaluated=True)
         actual['blender_version'] = self.bpy.app.version_string
         actual['blender_build_hash'] = self.bpy.app.build_hash.decode('ascii')
         return metadata, actual
