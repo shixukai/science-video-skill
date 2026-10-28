@@ -86,20 +86,8 @@
 实际发送对象/渠道/版本；发布批准覆盖；当前状态（未上传/草稿/已提交未知/审核中/已发布/失败）；成功链接/ID与核验时间；未知查重与下一步：
 
 ## 全标准执行与运营记录
-完整条款责任见 [覆盖索引](../indexes/standard-coverage.json)，H/D及条件按 [策略](../config/production-policy.json)；该索引用于规范维护和定位，不要求每期复制全量条款表；本期在既有阶段记录中保存实际适用结果、有据不适用、证据及缺项/责任/复查。评分、解释/表达内审及逐步骤实际证据、可选真实反馈、L3精美程度、双环境听检、平台实机遮罩、失败历史、对应阶段命令回执保存在episode.qa及所引用私有文件，不复制另一套批准。
-[项目台账](project-ledger-template.json) 记录工时/成本/库存/唯一发布/追加任务/真实复盘及1标杆+3机制成果；这些系统里程碑不前置为首条草排条件。
-发布后按 [真实复盘](../references/production-checkpoints.md#产能成本与复盘) 在同一台账记录平台原始字段/定义/分母/窗口、媒体版本、实际曲线位置和开头/正文/时长观察、样本/流量可比性及下一轮假设；无数据保持未知，不用内审代留存结论：
+适用标准、实际审查和命令回执引用 `episode.qa`；工时、成本、库存、发布及复盘引用项目台账。平台数据缺失时记未知。
 
-## 解释设计（沿用本页与episode范围记录，不另建批准）
+## 解释设计引用
 
-按 [E01](../references/topic-contract.md#e01解释承诺与问题范围)、[E02–E07](../references/production-checkpoints.md#e02e07精制作前的解释设计) 和 [E08–E12内审](../references/quality-acceptance.md#自主解释与表达审查) 记录；已在上方填写的信息直接引用，不重复录证据。
-
-- 主从问题与范围：引用主题锚点及全部 required_scope；每项承诺对应答案和承担解释的段落，结尾如何把现象、关系与答案整合：
-- brief.audience_start：assumed_knowledge（可合理假设）、new_knowledge（本片必须先交代）、deferred_knowledge（范围外）；先建立对象、概念、参照及必要前提：
-- brief.understanding_targets：answer（明确回答）、relationships（关键关系）、transfer（同等难度的小变化或相近情形的判断/区分）、boundaries（条件及示意边界）；每项对应本片已提供的信息，不要求收集观众回答：
-- topic_alignment.coverage[].explanation_steps：按实际 relation_type 记录完整关系路径、推导、边界、对象映射和镜头承接；所有必答范围有证据，非因果关系不套 before/change/after：
-- topic_alignment.expression_cards：关键难点四项 difficulty / prerequisites / visual_action / inferable_outcome，加 misconception、boundary、step_ids、uncertain；uncertain=true 才做低成本 variants 与基于解释效果的 selection。已有 brief.explanation_difficulties 可按兼容映射归一，不要求再填另一套卡：
-- G1相对阶段计划：无音轨时填具体相对语义阶段/观察任务和待补项；进入G2前取得实际音轨、确定真实时点并完整看听草排：
-- 简化、误导风险与对应镜头：核心关系、类比/图形与对象的映射、必要差异、不适用范围和可复用表达方法的适用条件/失败依据：
-- 内部逻辑审查、实际表达检查及修订证据：qa.explanation_logic / expression_plan / explanation_review / expression_review 引用阶段作品及同一证据；旧 comprehension.logic_review / internal_review 按同职责兼容。G5逐步骤记录实际前提、关系、推导、边界、声画与指代证据及四目标结论，不借作者未呈现知识补空：
-- 可选真实反馈：qa.comprehension.optional_audience_feedback；未收集记 not_run，不阻塞制作。取得时按实际轮次/当前版本保留真实原答及样本范围，已知误解进入修复：
+引用本页已有记录：主题锚点及 `required_scope`、`brief.audience_start`、`brief.understanding_targets`、`topic_alignment.coverage[].explanation_steps`、`topic_alignment.expression_cards`。审查引用 `qa.explanation_logic / expression_plan / explanation_review / expression_review`；进入G2后用实际有声草排更新时点。真实反馈仅记录已取得的原答及发现的修复项。

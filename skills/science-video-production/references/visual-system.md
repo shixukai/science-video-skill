@@ -297,17 +297,6 @@ G2/G3/G5输出前在现有文字审查记录绑定 `overlay_evidence={file,sha25
 
 [外部技能选型](video-skills-curation.md) 按原始仓库、许可证和功能选择实现参考。Remotion、Motion Canvas、Manim等可用于具体获准的2D范围及辅助图层；引擎选择须服从已锁定媒介和当前适用的认可资产，不能凭框架支持动画就替代写实主画面。不以安装更多Skill替代美术设计或真实音轨，也不根据代码示例承诺已经达到L3。
 
-### 方法来源与适配边界
-
-- [School of Motion：Design Value Structure and Color Theory](https://schoolofmotion.com/blog/design-value-structure-color-theory) 与 [Composition Rules for Designers](https://schoolofmotion.com/blog/fundamental-composition-rules-for-designers)：教学示例讨论明度组织、视觉重量与负空间。本文把灰度/缩小检查用于定位主次，不将构图法则或灰度表现作为科学证明或独立美术门槛。
-- [NASA：Subtleties of Color](https://science.nasa.gov/blogs/earth-matters/2013/08/06/subtleties-of-color-part-2-of-6/) 与 [Peter Kovesi：Perceptually Uniform Colour Maps](https://peterkovesi.com/projects/colourmaps/)：讨论颜色感知与色图如何隐藏或夸大数据结构。本文仅在科学色义实际适用处检查变量映射及造型光影，不要求自然插画统一改成数据色图。
-- [Adobe：Color basics](https://helpx.adobe.com/uk/after-effects/desktop/adjust-colors/color-basics/color-basics.html) 与 [Apple ProRes White Paper](https://www.apple.com/final-cut-pro/docs/Apple_ProRes.pdf)：说明位深、色彩处理和压缩保真相关技术。本文据此要求在本片实际输出上比较风险细节；不将更高位深、某种编码器或固定码率设为L3充分条件。
-- [Myth Studio：Styleframes vs Storyboards](https://www.mythstudio.co.uk/glossary/styleframes-vs-storyboards)：工作室区分外观样帧与动作分镜，并按视觉范围选样。本文将选样进一步用于本片风险覆盖；其项目帧数经验不作通用门槛。
-- [MoMA：Toy Story 色彩脚本创作者口述](https://www.moma.org/audio/playlist/192/2581)：创作者说明以场景小稿统筹整片基本色彩。[Disney Animation：Lighting](https://www.disneyanimation.com/process/lighting/) 说明按叙事组织视觉状态、运用色彩关键稿及克制强调。本文借用整片编排方法，不照搬故事片的情绪配色、3D光照或固定视觉状态数量。
-- [School of Motion：A Guide to Completing Your Motion Design Project](https://schoolofmotion.com/blog/guide-completing-motion-design-project)：其教学流程以分镜、风格帧、有声草排和制作板推进，并用具体批评迭代。本文的同镜L2/L3校准、构图缩略带、精修顺序及编码对照是面向本项目的实施建议，不是该来源确立的审美阈值或理解效果实验。
-
-这些专业流程支持制作方法，不授予参考画面复制权，也不证明本片已经达到L3。数量、色数、面积配比与精修投入不能代替当前作品的实际结果。
-
 ### 连接拓扑与接口连续性
 
 出现管道、线缆、连杆等连接件时，先设计正确对象/端口角色与连接拓扑，明确管径或截面变化、实体接头、中心线与接合/插入深度、遮挡层次，以及运动全程和跨镜的端点身份。连接不连续、接错端口、无合理实体接头的突变、悬浮断口或仅视觉搭桥均失败；按连接类型判断，不能机械要求所有线等粗。

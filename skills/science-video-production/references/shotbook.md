@@ -65,19 +65,13 @@ manifest记录生成时episode原字节SHA-256、源视频摘要、工具版本�
 
 在 `candidates` 保留来源、`viewing_note` 与取舍理由。指定一个主要候选，所选 `asset_id` 必须属于本镜；辅助层仍通过 `asset_ids` 单独记账。`source_interval` 写原素材入点/出点及时间基准，只有非真实视频锚点的静态参考/原创图才写 `still`/`full`；真实视频锚点必须给所用原片连续入出点及实际观看记录，不能因文件已封装成视频就把照片推拉填成实拍。此字段是人工可追溯声明，检查器只查非空，不会自动验证原素材时长或区间真实性。如确实只有一个合法可用候选，用 `alternatives_note` 解释限制，不伪造看过多个候选。每项素材已有的来源、创作者、权利证据、使用范围和署名仍必须独立齐全；搜索命中和候选入选都不授予使用权。
 
-## 可选工作方式与参考边界
+## 可选工作方式
 
 可编辑剪辑工程可按解说、字幕、音乐/音效、画面、图内标注分别建轨，以便替换和复核。只有实际导出并在目标编辑器打开验证，才能称为可编辑工程已交付；当前规则不承诺特定剪辑器兼容。
 
 使用参考图/视频辅助生成时，为每份参考明确“对象身份、结构事实、风格、动作或构图”的角色，按时间段写对象动作及保持不变的关系。参考角色不能混用，生成结果仍逐镜审查。不要把任何示例中的健康/科学断言或某模型当时的时长、分辨率、价格写成永久制作规则。
 
-以下是工作方法来源，本文及检查逻辑为本项目独立编写。逐项许可、固定版本、实际采用点及条件式技术引用见 [外部技能选型](video-skills-curation.md)；这些链接不授予不受限的复制或素材使用权：
-
-- [Talkcraft](https://github.com/Vincentwei1021/video-talkcraft/blob/main/SKILL.md)：关注成品音频、语义拍及注意力对象
-- [Vox Director](https://github.com/Alisa0808/vox-director/blob/main/SKILL.md)：关注先关键帧后分层运动
-- OpenMontage [素材选择](https://github.com/calesthio/OpenMontage/blob/main/skills/pipelines/documentary-montage/asset-director.md)与[剪辑组织](https://github.com/calesthio/OpenMontage/blob/main/skills/pipelines/documentary-montage/edit-director.md)：关注逐镜需求、候选实看和素材可追溯性
-- [剪映编辑技能](https://github.com/luoluoluo22/jianying-editor-skill)：仅参考可编辑分轨交付思路，未作兼容性验证
-- [Seedance 技能](https://github.com/dexhunter/seedance2-skill)：仅参考素材角色与分时段动作描述
+外部方法的来源、许可、固定版本及实际采用点见[外部技能选型](video-skills-curation.md)。
 
 ## 动作卡、镜头配方与事件复核
 

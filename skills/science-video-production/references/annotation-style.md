@@ -50,11 +50,3 @@
 查看实际编码成片中本次出现的浅景、暗景、复杂底、移动和遮挡等情况；原尺寸、小屏和正常速度连续播放分别看。没有出现的情况不造证据，不额外制造固定测试镜头。按现有[美术记录](../assets/art-direction-template.md#指示信息与动态绑定)与动作卡记录对象/锚点、必要性、文字与时段、符号语义、参数版本及实际观察，沿已有图内文字与视觉QA引用，不新增一套批准表。
 
 误指、线穿字或遮关键结构、尖端变平/穿杆/断接、字线在交付尺寸不可辨、抖动闪烁或方向错误，修复后重看受影响版本。静帧、几何测试、文件和哈希仅证明各自检查范围，不抵消实际视觉失败；缺少连续观看能力保持该项未验。局部修复不扩大重审无关内容，新整片仍完整看听。
-
-## 参考边界
-
-- [Nature figure guide](https://research-figure-guide.nature.com/figures/preparing-figures-our-specifications/)：借鉴可读字体、克制装饰、清楚背景和可编辑图层；印刷字号/DPI不移植为视频规则，其文字转轮廓要求也不是本页禁厚描边的依据。
-- [IBM Carbon Motion](https://www.carbondesignsystem.com/building-blocks/foundations/motion/overview)：借鉴有目的、克制的运动和按变化幅度调整过渡；不将UI交互反馈时长照搬为视频阅读时长。
-- [External Labeling Techniques](https://arxiv.org/abs/1902.01454)：借鉴目标特征—引线—外置标签的关系，不声称已实现或验证其自动布局算法。
-
-这些来源提供设计原则，本页与参数是本系列已选择的实现基准，不是行业认证。研究引用不授予使用第三方视觉素材的权利。

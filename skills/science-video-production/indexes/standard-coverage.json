@@ -7,10 +7,9 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "16c2b4cfc500969bb69fcf80a2adefd3f660149fb238e59194a031830ce0b215",
+      "sha256": "ff12311c00bbdde5e01b131b1c49f4c8ddd68124eb613b6334ec3c2764457a38",
       "anchors": [
         "原题问题类型与交付范围不能在局部返工中丢失",
-        "为什么当前主题清楚仍会跑题",
         "保存原始锚点",
         "工程与制造题材的全链路和片长",
         "整期章节与局部样片分开",
@@ -42,7 +41,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "52b73c0e4612e8036ad969353eb09771ae8fbdd85d9145cb89715a8e00b2f40e",
+      "sha256": "cd13b2b3145921bdfd767cc909051cc8f89bb3345a3b3a8f5010f5907148f6a4",
       "anchors": [
         "写实风格moneyprinterturbo-制作与本地模型素材",
         "开工模态锁定",
@@ -60,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a03da31666e7e0d712df80bdac730dd90a4957f69d7902f4d5a621a4897bd958",
+      "sha256": "495cf8c3cc14d449b2883e917b3296b90ee4648f7a04979a66b802835e4d0b21",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -73,12 +72,10 @@
         "5-质量判定的唯一入口",
         "6-从导出到实际平台完成检查",
         "交付包与发布回执",
-        "研究依据与适用边界",
         "g1g7-的实际推进记录",
         "产能成本与复盘",
         "平台选题与数据复核",
         "标杆与可复制性的完成定义",
-        "实施参考的用途",
         "全片覆盖与扩制边界",
         "从参考学习到实际改进",
         "e02e07精制作前的解释设计",
@@ -95,7 +92,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "8be45ffd16c426bd646e6326256d08dd1a4e60171864fffec8d07e3430bffca3",
+      "sha256": "e8b71e9a14bb3df1628d1c4dc101347d3affeda29afd42a9272f086380b94552",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
@@ -108,14 +105,13 @@
         "把关键发现编排到声画里",
         "用草排决定顺序和片长",
         "结尾让开头的画面变得能看懂",
-        "交给制作-agent-与内部审查",
-        "依据与效果边界"
+        "交给制作-agent-与内部审查"
       ]
     },
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "27647f1a558663933e4abb5a398badaacd0610910585326126e6e981b1a77d08",
+      "sha256": "4328ebfbcf8953839c0b46ad566b12f3d64820c5b6847985650791c1b1e8a0ec",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -148,14 +144,13 @@
         "连续动作-d01d08",
         "整片整合-i01i05",
         "可复用的表达骨架与实现选择",
-        "方法来源与适配边界",
         "连接拓扑与接口连续性"
       ]
     },
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "43b44759a7d8bbfc39aef0a837ff20603a05840272a0de83703c23c14777d06b",
+      "sha256": "a31d81b3a935e5bcc6a1d72fdb3bc29f644e1a97f80093934fc122902b9accb6",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
@@ -188,7 +183,7 @@
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "3295519aa26e70af8af6897fe1fb0fd5dc65fa746c7ef03264700ab2ece740fa",
+      "sha256": "ac435adbbae1bc8e8337894ba11e44a24f23db32a4fc2862c85c5be2bf0d4bb9",
       "anchors": [
         "视频指示信息精密技术标注",
         "适用范围与确认",
@@ -196,14 +191,13 @@
         "箭头尖端与头杆连接",
         "参数尺度与可读性",
         "动态与对象绑定",
-        "实审与记录",
-        "参考边界"
+        "实审与记录"
       ]
     },
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "247b029e58cec54b35ada8c134fa9dd88d2df036af409a4db545d3a06c74677f",
+      "sha256": "a2eaf237e3c70b90bcaa8f05e2aee09ca75bc6ef7213e3492da76cbd5fd5331a",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
@@ -214,14 +208,13 @@
         "必要分段的有序多源清单",
         "源音轨与最终混音分别听验",
         "整期旁白连续性",
-        "来源与传输范围",
-        "适配器验证边界"
+        "来源与传输范围"
       ]
     },
     {
       "owner_id": "shotbook",
       "file": "references/shotbook.md",
-      "sha256": "84744202b18e69619d0b9fd7237f17e471c81eafa468b8f6dcfd4dac91530fa2",
+      "sha256": "7ca9b69f52d7bbd87d91670260e1ee04edb0a998411abdbf0cdcbf9a14efca56",
       "anchors": [
         "从成品音轨到可复核的逐镜记录",
         "音频先行但不牺牲画面",
@@ -230,7 +223,7 @@
         "设计和资产引用绑定",
         "逐镜结构与方向图形记录",
         "素材选择要能复核",
-        "可选工作方式与参考边界",
+        "可选工作方式",
         "动作卡镜头配方与事件复核",
         "按动作类别补充信息",
         "无音轨的-g1-纸面计划",
@@ -240,7 +233,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "893af69ad49f305edb4a8420e9f40492453f180f8d6fa90fa06f01e9245e66a9",
+      "sha256": "009a158deb812d85b825e6b88c4ead05c4dc3e5499f2d73000d06825b97e51b5",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -263,7 +256,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-production.md",
-      "sha256": "161e8935ad963456b9728ab127589c0b0edaca42017813f924131ea61c810e84",
+      "sha256": "710759693334254a9f2e2df6b70a5ef8fe4433dd17ed1d4da6617b1a65d968e8",
       "anchors": [
         "写实制作契约",
         "主画面与工具边界",
@@ -295,7 +288,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "f1453e2d4d20b5db0d233703b5c438310de17960d36f03806f009d44a5bdf68d",
+      "sha256": "3b2c9ec72f2972bc431259c444228c6748a8801991a35082c68c211c1792246a",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
@@ -324,7 +317,7 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "c2e6856f03374c356f44324e0125a098e84a6047e2b5d542ab79dced36130a47",
+      "sha256": "0d6467a3f1e9aca94f727bf08b8625a01a10f652844a29d2fb11e082e067bb9a",
       "anchors": [
         "一个全局-skill项目只保存制作数据",
         "项目保存什么",
