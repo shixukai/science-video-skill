@@ -59,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "f20fa0a7d64cfdc114fcca73c9d31594fe5b85c9016988084861c9505b9437e5",
+      "sha256": "b7fc83796aad82b595a8192ae357ca4761cbb0b680deee4afd238adffada7f01",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -93,7 +93,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "8e3e748dea75407a36efe7281b396c88eb8c983fe144ee6958ed69c943ac9dce",
+      "sha256": "8c42c97d17b059682a20572498cc02b27e10a2fd813a8f50158542bdda57b9e3",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
@@ -112,7 +112,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "63e2c213647618f73f5fc4d69a60024f76ff8b22de8caf7c6771ab730048882b",
+      "sha256": "d8027f5cdcb2f8a16d62406258cd2aec0c9ac600120bf1c077f5cce8bc912e75",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -151,7 +151,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "ffe23e3a794eb0e16c476c43f85445f5932b5e239976cb216320b6f781cbc9e1",
+      "sha256": "a846c7c98c8dadd37fd87d2ee9a6f92868c6120c630bb2ccac45336b78bdc455",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
@@ -160,6 +160,7 @@
         "镜头内容的四种职责",
         "场景设计检查",
         "把已有变化变成可读的证据",
+        "工艺动作要留下可观察的结果",
         "把动作写到可以制作",
         "可交给制作-agent-的任务写法",
         "制作端如何检查",
@@ -198,7 +199,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "f59f3abf2ffd2e742ebb3b1fd62b772959a35a09332b06581546626021426fdb",
+      "sha256": "25588248351b64d705aea7e9e37390aefb9e71fc99b3f2afd07ee745e2468faa",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
@@ -270,7 +271,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "eeaa80fdc316b972188218d6a889290e3b09a8c39c8f599797e8331bd8ac0eee",
+      "sha256": "3d8a97ac5d572d500bbacfbce44c726c1a3c72e27520b086b2bd21557e2a91d4",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -278,6 +279,7 @@
         "blender-场景背景与空间完成度",
         "同一几何与方位基准",
         "从整体连续进入局部",
+        "爆炸图与剖切的选择",
         "冷却与管道机制的可见连接",
         "有界试制与可靠复用",
         "3d-正片与系列封面分别设计",

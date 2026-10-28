@@ -46,6 +46,15 @@
 - 局部检视先核遮挡件的角色；随移去外壳才成立的支撑、紧固件应在适用的检查显示组中一起处理，避免留下遮住主体、无接合关系的粗杆。用命名视图或显示层保存检视状态，同时保留默认完整资产；不为画面清爽一概删除仍需解释的支承。
 - 壳体、内部结构和孔口共用同一形状定义。移开壳体后，原壳上的孔列、后缘出口及主体轮廓应仍能对应；不能用薄片遮住错误连接，或以镜头切换隐藏几何不连续。
 
+### 爆炸图与剖切的选择
+
+Use an exploded view to explain component order, interfaces and assembly relationships; use a cutaway to reveal a path or mechanism that must remain connected. Select the view for the observation task, rather than cutting and rejoining an object repeatedly to create motion.
+
+- Start from the recognizable assembled object and keep a fixed reference part. In the existing action card, name the component groups, assembly axis/axes, separation vectors, reveal order and interfaces the viewer must see. A layered stack usually reads clearly along one principal axis; choose other paths when its actual topology requires them.
+- Separate each group once along an intentional path, preserving orientation during that move. A translation-only plan is `M_i(t) = T(e(t) * d_i) * M_i(0)`, with initial evaluated world transform `M_i(0)`, planned world-space offset `d_i` and smooth non-overshooting progress `e(t)`. Convert to the actual parent space; avoid applying the offset to both a parent and its children. Rotation, when needed for inspection, is a separate readable phase.
+- Stage **assembled recognition → separation → interface observation → reassembly or matched handoff**. Reassembly is useful only when the next explanation needs it. Space parts enough to expose their connections at phone size; preserve necessary fasteners, supports and connector identity. Keep camera movement quiet while the layers become distinguishable.
+- Check start, intermediate, fully separated and handoff states, then normal-speed playback: the same parts remain recognizable, paths do not intersect accidentally, and the exposed interfaces answer the question. Explain the transition from a structural tour to a manufacturing sequence through the narration/edit; display order does not establish real production or servicing order.
+
 ## 冷却与管道机制的可见连接
 
 - 流道、分隔壁、进出口、孔道与表面气膜应从共同几何/表面函数取位置和方向，修改叶型后联动更新；不能只搬外壳而把内部通路或风线留在旧坐标。

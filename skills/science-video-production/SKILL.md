@@ -56,7 +56,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 | 科学、来源、权利和披露 | [科学与素材](references/science-and-rights.md) |
 | 写实主镜和首样 | [写实制作契约](references/realistic-production.md) |
 | 写实视频的MoneyPrinterTurbo制作与模型素材 | [写实制作流程](references/ai-generated-video.md) |
-| 3D动画、精确结构、连续定位与3D库 | [Blender制作](references/engineering-blender.md)；[只读素材检索](scripts/find_3d_assets.py) |
+| 3D动画、精确结构、连续定位与3D库 | [Blender制作](references/engineering-blender.md)、[爆炸图与剖切](references/engineering-blender.md#爆炸图与剖切的选择)；[只读素材检索](scripts/find_3d_assets.py) |
 | 阶段、解释顺序、实际调用、平台动作 | [制作检查点](references/production-checkpoints.md) |
 | 画风、构图、文字、封面、接口连接 | [视觉系统](references/visual-system.md)；主要动画再读[场景设计](references/animation-scene-design.md) |
 | 旁白生成、连续性和审听 | [中文声音](references/voice-reference.md) |

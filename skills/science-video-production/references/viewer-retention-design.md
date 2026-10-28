@@ -21,7 +21,7 @@
 
 ### 让开场画面兑现应用情境
 
-口播讲用途，画面就展示可识别的应用对象和动作，再进入材料或微观关系。暗色材料块、纹理特写和标题不能代替整机情境；按本题科学条件与已定风格取材或制作，不能用任意设备镜头冒充具体应用证据。
+口播讲用途，画面就展示可识别的应用对象和动作，再进入材料或微观关系。设备屏幕、仪表和操作界面也是情境资产：显示与当句用途一致、可辨的任务状态与反馈，不能用本片后续镜头或同一张主体截图填满所有屏幕。暗色材料块、纹理特写和标题不能代替整机情境；按本题科学条件与已定风格取材或制作，不能用任意设备镜头冒充具体应用证据。
 
 扩片前以正常播放速度连续看听开场，直到正文第一项观察兑现；核首屏识别、观看理由、语速、细节与衔接。具体失败按下表修复，复看同一区间后再扩制；字幕或封面修订不能关闭声音、主体或运动缺陷。
 
@@ -93,12 +93,13 @@
 可采用以下推进方式，按本题选择：
 
 - **Follow the process**: Keep the evolving object or result recognizable. For a transfer chain, track the relevant material, signal or energy through connected subsystems: show each stage's input, action and output, then carry that output into the next stage using a recognizable location, interface or direction. Make a change of carrier or energy form explicit instead of implying that the same substance simply continues unchanged.
+- **Parallel inputs converge**: When distinct preparation paths contribute to one operation, establish each path's input/output, use a split view or route diagram only as needed, and carry both outputs into their actual junction. Guide attention between branches before showing the convergence. Diagram simultaneity must not imply synchronized real production when only a dependency relationship is known.
 - **检查解释**：先建立关系，再看改变一个有据条件时，结果是否符合该关系；不编造“大家都会猜错”。
 - **从局部回到整体**：已看懂一个作用点，接下来找它怎样组成整体或如何出现在其他对应部位。
 - **说明边界**：主解释已成立，再用确有必要的对照说明何时不同；不把可有可无的支线包装成新谜题。
 - **重新观看原现象**：结尾让观众看见起初只能觉得漂亮、此刻已能指出其意义的特征。
 
-先兑现当前观察再引入必要下一项；“接下来更惊人”“看到最后就知道”不能代替具体任务。
+先兑现当前观察再引入必要下一项；“接下来更惊人”“看到最后就知道”不能代替具体任务。 Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
 
 ## 把关键发现编排到声画里
 
@@ -127,12 +128,13 @@
 | 提前关键证据 | 第一项能推进原题的观察是否更早成立，后续是否仍有真实推进 | 保留解释所需定位与条件；不靠剧透式闪帧后退回冗长铺垫 |
 | 延长观察窗口 | 差异出现后能否完成定位、比较和推断；是否已经读清仍在空等 | 先改善构图/指代，再调停留；必要时减少同期旁白负荷，不能硬塞进固定片长 |
 | 合并相近全景 | 两次返回各自增加什么观察所得 | 第二次若只是换标题可合并；若认回新的对应结构或完成整体整合，应保留其任务 |
+| Compress a learned cycle | Has one necessary cycle already been understood, and what accumulates or differs on later passes? | Use a short montage, time compression or layered overview to show the accumulating result with a stable reference. Keep new operations/constraints readable; do not merely replay old shots faster or prescribe one duration/count for all processes |
 
 对照修订保留前后版本与主要变量，便于判断哪项改动解决了卡点。
 
 ## 结尾让开头的画面变得能看懂
 
-`ending.answer` 回答原问题，让观众重新识别或判断开场对象及关键关系；不复述全片，也不另起支题延长收尾。
+`ending.answer` 回答原问题，让观众重新识别或判断开场对象及关键关系；不复述全片，也不另起支题延长收尾。 Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
 
 例如雪晶案例可从“一眼看到精美六枝”走到“认出对应阶段的相似结构，也看见局部差别”。审美停留服务于这个最终观察。片尾的满足感不能仅靠音乐收束、品牌片尾或再说一遍标题代替。
 

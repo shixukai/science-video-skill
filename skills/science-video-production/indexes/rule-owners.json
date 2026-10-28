@@ -51,7 +51,9 @@
         "payoff-progression",
         "retention-retrospective",
         "platform-topic-evidence",
-        "precise-control-and-efficient-iteration"
+        "precise-control-and-efficient-iteration",
+        "analogy-to-mechanism-mapping",
+        "parallel-process-handoff-and-cycle-editing"
       ],
       "supporting_files": [
         "references/viewer-retention-design.md"
@@ -73,7 +75,9 @@
         "on-frame-label-permission",
         "scene-substance-and-art-finesse",
         "animation-scene-design",
-        "precision-video-annotations"
+        "precision-video-annotations",
+        "process-state-and-test-result-visualization",
+        "chapter-orientation-and-attention-hierarchy"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",
@@ -88,7 +92,8 @@
         "voice-generation",
         "voice-transmission",
         "listening-method",
-        "episode-narration-continuity"
+        "episode-narration-continuity",
+        "semantic-prosody-and-purposeful-pauses"
       ]
     },
     {
@@ -142,7 +147,8 @@
         "blender-scene-environment",
         "generic-library-reuse-and-coverage",
         "shared-library-standing-authorization",
-        "deduplicated-asset-catalog-and-reuse-first"
+        "deduplicated-asset-catalog-and-reuse-first",
+        "exploded-view-and-cutaway-selection"
       ],
       "supporting_files": [
         "references/blender-execution.md"

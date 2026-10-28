@@ -32,6 +32,10 @@ G1 的“选题六项”统一指六组内容：①主问题及必要从属问�
 
 拿不准的关键难点（uncertain=true）先比较至少两个低成本表达方案，variants 记录具体动作、low_cost=true 和 explanation_effect；selection 指定采用方案、理由及比较项 missing_prerequisites、reasoning_gaps、relation_visibility、ambiguity。只对不确定的关键难点做对照，不给每个镜头强制两版，也不把两种配色当两种解释方法。G1检查目标与推理，G2检查方案和有声草排是否实际建立了这些关系。
 
+Use a brief familiar analogy when a new relationship would otherwise require several unexplained terms. Map the familiar object/action to the actual parts and operation, then return immediately to the real process and its visible result. Keep only the correspondence that helps; avoid borrowing a familiar material, force or manufacturing method that changes the mechanism. An analogy supplements the explanation and does not become its scientific source.
+
+For example, channels between floors can introduce the geometry of multilayer wiring; the technical return should describe copper filling vias/trenches by electrochemical deposition and removal of excess by planarization, rather than depict molten copper being poured into a mold. [Applied Materials' copper process overview](https://ir.appliedmaterials.com/static-files/fb8a1b4a-210a-4e44-84ff-0c9b336945af) provides the actual operation sequence. Record the useful correspondence and likely misconception in the existing expression card, not a second script checklist.
+
 | relation_type | 需要记录的关系字段 |
 | --- | --- |
 | causal | before、change、after，必要中间过程写入分镜 |

@@ -74,6 +74,12 @@
 
 定位标记可以短暂出现并退去，帮助找到对象结果；不能让高亮本身充当新增物质。相同阶段的多个区域需要对应时，标记的顺序仅表示讲解顺序，不暗示它们依次发生。标签仍可承担必要身份、条件与数值；检验目标是文字与可见证据相互对应，不是强求无字也能理解所有机制。
 
+### 工艺动作要留下可观察的结果
+
+For a process explanation, show the workpiece before the operation, the interaction at the active region, and the resulting changed material/structure. Equipment travel alone does not demonstrate what happened to the workpiece. Bind geometry, overlays and narration to the same process state; use particles, rays or color only to explain the carrier, interaction or measured result. Prefer a lightweight controlled boundary/mesh/material animation when it communicates that state correctly; add a costly simulation only when the explanation needs it.
+
+Choose the actual mechanism before adding effects. ALD, for example, uses sequential surface reactions and can coat complex topography; generic downward particle rain can misrepresent it. [Lam Research's ALD explanation](https://newsroom.lamresearch.com/Tech-Brief-A-Look-at-Atomic-Layer-Deposition-ALD) is an example of a process-specific visual basis. Likewise, an optical-path graphic must follow the selected system: [ASML's EUV description](https://www.asml.com/en/products/euv-lithography-systems) uses reflective reticles and mirrors. An illustrative ray path must not imply that invisible radiation is an ordinary visible beam. These examples guide verification, not a particle/beam preset for every manufacturing video.
+
 ## 把动作写到可以制作
 
 “雪花慢慢形成”“水流自然”“镜头有电影感”都不足以执行。动作指令至少要能回答：
@@ -85,6 +91,9 @@
 | 关系 | 主要可控状态 | 有意义的视觉变化 | 典型错误 |
 | --- | --- | --- | --- |
 | 边界沉积型生长（如雪晶；其他生长另选相应模型） | 生长边界、分支连接、新增区域、随时间保留的形态 | 已有结构延续，边界附近新增实体 | 从中心揭开最终图；整图放大；分支整齐逐根点亮冒充同时生长 |
+| Material processing | Active surface/boundary, supplied or removed material, protected region and endpoint | Show deposition, reaction, removal or filling progressing at the correct interface; retain the workpiece reference and resulting structure | Reveal an already finished layer; shrink a whole solid to fake etching; use decorative particles with no corresponding material change |
+| Test and classification | Test location, stimulus/contact, acquisition, decision and accumulated result | Distinguish untested, testing and classified states; update a map/table from actual measurements, the chosen simulation or clearly illustrative data, with symbols/text as well as color | Hold a probe still while narration alone describes results; random red/green flashing presented as real yield |
+| Multiple transfer paths | Each carrier/quantity, source, interfaces, destination and any relevant return path | Establish each route in one coherent section/view, then compare them with stable color/line meaning | Repeatedly jump between shell and section; assume different carriers must travel in opposite directions |
 | 形变/受力 | 支点、接触、约束与局部形状 | 约束不变处保持，受影响区域发生相应变化 | 全层摇摆；硬物强加果冻回弹 |
 | 传递/传播 | 载体局部状态、传播位置、前后响应 | 区分局部对象运动与传播范围 | 所有物体同向平移；波纹循环却没有响应 |
 | 条件比较 | 共同初态/尺度/参照、改变条件、结果差异 | 区分被比较的状态，差异落在主体上 | 两幅图各自好看却尺度、光照和条件全变 |

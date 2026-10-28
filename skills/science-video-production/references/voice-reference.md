@@ -14,6 +14,8 @@
 
 Treat `audio.instruct` in the [series profile](../config/series-profile.json) as the default delivery direction. Apply it through the confirmed project's supported instruction field and verify the actual request/record, retaining its validated model and runtime. Before expanding, compare a continuous sample covering the opening, difficult wording and adjacent semantic sections against an applicable accepted reference when available; otherwise use the first actually reviewed continuous sample as this episode's comparison anchor. Compare speaker timbre, natural register, vocal effort, pace and phrase endings. Aim for clear onsets, concise endings and compact phrasing without rushed words or empty waits. Preserve Mandarin lexical tones and meaningful emphasis; consistency does not mean a fixed pitch. Reuse valid evidence without adding another user-approval step.
 
+Plan emphasis around a question, contrast, causal turn and result within the same continuous voice. Keep speaker identity and natural register stable while varying meaningful stress, phrase length and cadence; do not generate a different voice/style per shot or pitch-shift phrases for excitement. At a substantial topic handoff, let the completed sentence and current visual result settle before the next idea. A roughly one-second breath can be an initial edit trial, adjusted to the actual speech and observation task, never a fixed silence quota. Keep purposeful pauses and remove empty waits. A restrained transition sound may support that handoff when it has a clear role; it must not mask speech or become a cue on every cut. Record actual edits and realign picture/captions through the existing source chain and listening review.
+
 先标问题词句及实际时码，再按原因修复：
 
 | 实听问题 | 先改什么 | 修后怎么查 |
