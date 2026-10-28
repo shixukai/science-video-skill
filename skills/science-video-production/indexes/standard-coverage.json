@@ -59,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "9a9c637b544dba4d014a73bb5d685f187ab52c747ba9b4691fd965876860f781",
+      "sha256": "87502cf63e03b19d97d88d75df43f528adc51fb5c8b07403214ba216a5e889ea",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",

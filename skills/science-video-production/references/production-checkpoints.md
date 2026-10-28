@@ -93,7 +93,7 @@ G1 的“选题六项”统一指六组内容：①主问题及必要从属问�
 - `full`：整期全部镜头，核当前G3、真实样片回执、同风格对照及未闭环失败；通过后扩制完整候选。设计或输入改变使相关样片失效时，先修样复查，不倒填历史。
 - 完整候选回执绑定 `execution.full_receipt`；G5核当前最终导出与技术、视觉、听感分别成立的完整审查。审查者须有真实独立过程和实际感知能力，不能由制作者换名字自签。
 
-生成或执行失败时，先定位具体原因并做有依据的修复；相同输入/环境的同类失败没有新证据时不盲目重试。继续不依赖该缺项的工作，说明未完成项。用户要求查看失败候选时可按该范围交付并如实标明结果；待审交付不等于验收或发布授权。工程适配器的副作用和范围仍须读实际代码核对，通用入口不能沙箱化任意外部程序。
+生成或执行失败时，先定位具体原因并做有依据的修复；相同输入/环境的同类失败没有新证据时不盲目重试。继续不依赖该缺项的工作，说明未完成项。用户要求查看失败候选时可按该范围交付并如实标明结果；待审交付不等于验收或发布授权。Inspect the actual adapter and launcher for side effects, scope and resource-refusal conditions before using them. Trace each such condition to the [resource-decision rules](#静态证据条件复用与动态新鲜检查); remove unsupported agent-invented gates through the normal code-change/review path before launch, preserving historical scripts and receipts. The generic entrypoint cannot sandbox arbitrary external programs.
 
 ## 5. 质量判定的唯一入口
 
@@ -257,7 +257,11 @@ G2核实际有声草排是否成立，G5按[E08–E12](quality-acceptance.md#自
 
 实际执行者身份由受控本地启动及锁证据绑定，不再要求云端逐轮抄写 holder 身份后等待手签；这不是取消独审或本地身份核验。 独审明确限定的动态绑定槽可在本地依据实际证据物化，静态源码、路径、范围不得替换；这不授权重启服务或扩权。核服务创建时间时保留 DateTime/DateTimeOffset 原有精度或解析带时区字符串，禁止经隐式字符串转换丢失小数秒；仍按精确 UTC ticks 匹配，不放宽容差。已有静态独审先完成，冻结入口在本地连续执行动态采集、资源检查与受限提交，避免人为跨端往返使快照过期。
 
-资源余量、实际服务身份、任务唯一执行者、队列与时限每次提交前重新采集和验证，不复用上一轮动态快照。静态独审与大文件校验尽量先完成，再采集动态证据并在提交前复核；不得把旧时间改为现在，也不得为适配等待时间扩大既定新鲜度窗口。唯一执行者是本任务防重复提交，不凭桌面进程存在就声称整机独占。GPU利用率只作观测信息，不设利用率百分比准入阈值，也不据其单独判定重负载而阻塞；实际可用显存、内存、磁盘、进程身份、已知冲突任务、独占任务锁与执行预算仍按该任务的既有约束核验，缺失这些必要证据或实际容量不足时停止，不擅杀其他任务。
+Refresh applicable resource headroom, service identity, task ownership/queue and execution budget immediately before submission. Complete static reviews and large-file checks first. Preserve the selected device identity, collection time and raw observations in existing execution records; never relabel an old sample as current or enlarge an existing freshness window. Recheck stale or contradicted observations. The executor lock prevents duplicate work for this task, not all desktop use.
+
+GPU utilization is telemetry, not a launch criterion. Do not block, wait for idle or select CPU solely because of an instantaneous value, historical peak, average load, unavailable telemetry or a self-imposed utilization ceiling. Do not substitute an invented used-VRAM ceiling, capacity margin, sample count or waiting period. A resource refusal must identify the applicable requirement, its source, the current observation and the concrete shortfall/error; an agent-written wrapper is not authority for its own threshold. Explicit user/host limits and validated task-specific executor requirements remain binding, but are not defaults for unrelated tasks.
+
+Preserve applicable capacity, process/service identity, queue, locking, unresolved-task and execution-budget checks. Actual OOM, device faults, verified capacity shortfalls or missing required evidence need appropriate handling; identify the affected check rather than reporting unknown telemetry as “GPU busy.” Keep the selected device and output settings; use an authorized CPU fallback only for a demonstrated capability/execution problem or an applicable explicit resource constraint, not an unsupported load claim. Do not stop another task. When no supported resource blocker remains, continue within the current authorization without inventing another resource approval step.
 
 ### 一次提交与最小恢复记录
 
