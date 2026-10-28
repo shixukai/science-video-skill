@@ -14,7 +14,7 @@
 
 - 研究公开实物照片、剖视图和可信技术资料，先核轮廓、关键部件、相对尺度与空间关系。现代客机发动机的识别不能只靠一个圆筒和重复叶片；按本题需要保留风扇、短舱、旁通与核心流道等关系，再做局部精细化。不为所有题材强制同一机型、级数或部件清单。
 - 公开产品资料可指导外形，不能由此声称自建模型是厂商官方 CAD、精确维修图或已验证的流场。外观接近、教学几何和工程仿真分别说明，来源、权利与适用限制留在 [科学与素材记录](science-and-rights.md)。
-- 先在整体、中景和机制近景看必要结构是否清楚，再补材质、紧固件与表面细节。管路、线缆和流道必须有实际端点与接口；装饰性细节不能掩盖缺失的结构关系。
+- Check necessary structures in whole-object, medium and mechanism close-ups before surface polish. Give pipes, cables and passages real endpoints and interfaces. Distinguish materials through appropriate roughness and reflection response. For metallic mechanisms, controlled broad reflections can reveal curvature, edges and separations; adjust light size and direction so glare does not erase the interfaces being explained. Check these relationships at the target viewing size. Surface detail cannot conceal missing structural connections.
 
 ## Blender 场景背景与空间完成度
 
@@ -40,7 +40,7 @@
 
 ## 从整体连续进入局部
 
-- 先让观众认出目标部件所在位置，再沿空间关系进入近景。保留轮廓、孔列、缺口、根部或其他真实识别线索；仅靠镜号、相同名称、硬切或叠化不能证明是同一实件。
+- Locate the target within the whole before moving closer. When exposing internals, choose a local cutaway, shell removal or selective transparency that reveals the needed region while retaining enough silhouette, adjacent structure and interfaces to recognize its original position. Keep relevant wall thickness and cut edges readable. Preserve recognizable features across shots; a matching name, hard cut or dissolve alone does not establish component identity.
 - 过桥动作从装配场景在实际起始帧求得的世界变换出发，并对齐目标近景的结束姿态、相机与光照。注意父级变换、动画求值、单位及缩放，避免抽离时对象突然翻面、跳位或替换。
 - 按实际场景先解除遮挡、让对象离开相邻几何，再旋转至便于观察的姿态；检查起点、障碍最近处、旋转极值和跨镜边界，也实看中间运动。教学性的分离、剖开或抽出不冒称真实维护拆装流程。
 - 局部检视先核遮挡件的角色；随移去外壳才成立的支撑、紧固件应在适用的检查显示组中一起处理，避免留下遮住主体、无接合关系的粗杆。用命名视图或显示层保存检视状态，同时保留默认完整资产；不为画面清爽一概删除仍需解释的支承。

@@ -92,7 +92,7 @@
 
 可采用以下推进方式，按本题选择：
 
-- **追踪过程**：已经认出变化，下一段看它如何形成，并保留能认回的结果。
+- **Follow the process**: Keep the evolving object or result recognizable. For a transfer chain, track the relevant material, signal or energy through connected subsystems: show each stage's input, action and output, then carry that output into the next stage using a recognizable location, interface or direction. Make a change of carrier or energy form explicit instead of implying that the same substance simply continues unchanged.
 - **检查解释**：先建立关系，再看改变一个有据条件时，结果是否符合该关系；不编造“大家都会猜错”。
 - **从局部回到整体**：已看懂一个作用点，接下来找它怎样组成整体或如何出现在其他对应部位。
 - **说明边界**：主解释已成立，再用确有必要的对照说明何时不同；不把可有可无的支线包装成新谜题。

@@ -92,7 +92,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "319a7548b63449b9ca2856050e535b77112e4561c0df7d4b0254c139dadf9b62",
+      "sha256": "8e3e748dea75407a36efe7281b396c88eb8c983fe144ee6958ed69c943ac9dce",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
@@ -269,7 +269,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "7608cad6401491230e45fd14573fcf02523cfe7e1db050020d4563fe7942fcc7",
+      "sha256": "17e3acc5020e128a7c8d27af76ba03fd95cfcb02befe9dbafd1a3e82e68d28b2",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
