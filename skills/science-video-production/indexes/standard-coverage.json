@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "55f3bb23b6bff0535ceed04cf1ce20f12d01bff90ef1e3dff8fe1531011297bb",
+      "sha256": "0164190383e56fdeaa46aff39933b2399d8d2cc866395bc8c428142ac03e8be4",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -95,10 +95,11 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "87870907bb5f135db5b14f4ac6c30f96106ef043473a5a917064a526d621dc87",
+      "sha256": "fdd77306083abbe3e4564a0e6008938ff4b31a68875fba34fad9faf86130c301",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
+        "让开场画面兑现应用情境",
         "先定位继续观看的阻力",
         "一段结束后为什么值得看下一段",
         "把关键发现编排到声画里",
@@ -199,10 +200,11 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "6e9d19ae6693737ed9045feaf87c080378508193e3f3da6bed7e19517dfa1be0",
+      "sha256": "247b029e58cec54b35ada8c134fa9dd88d2df036af409a4db545d3a06c74677f",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
+        "本期语速先试听",
         "连续讲述与合成单元",
         "可选本地适配器",
         "运行记录与音轨绑定",
@@ -235,10 +237,11 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "434bee354850f5ce07241c116eb4704ae3c5b6df2c49a6a97bedb2fbae651005",
+      "sha256": "763cae8e25c92f683c3bbb518fae7a51d810a77c056c02e0c3225c4df1c7c3fe",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
+        "用户观看版本与内部代理",
         "可检查项目",
         "主体动态与长静帧",
         "方位映射与图形复用",
@@ -287,7 +290,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "03a4452ba8aa788f12d73a5ac4e225023c1bd76739ac1a911a586e4997591dd4",
+      "sha256": "28c324006baba27a7e3360b97714995437d9b50817e7fb6cae0d1a803ec72a15",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
@@ -311,6 +314,17 @@
         "优先参考的来源",
         "扩展检索中保留或排除的候选",
         "引擎服务文本传输与成本"
+      ]
+    },
+    {
+      "owner_id": "tools",
+      "file": "references/global-skill-installation.md",
+      "sha256": "c2e6856f03374c356f44324e0125a098e84a6047e2b5d542ab79dced36130a47",
+      "anchors": [
+        "一个全局-skill项目只保存制作数据",
+        "项目保存什么",
+        "清理已有副本",
+        "可执行检查"
       ]
     },
     {

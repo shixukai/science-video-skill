@@ -3,7 +3,9 @@ import copy
 from datetime import datetime, timedelta, timezone
 import importlib.util
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -198,8 +200,12 @@ shutil.copyfile('baseline.mp4',a.output)
         self.assertEqual(self.data['qa']['visual_frames']['status'],'pending')
 
     def test_real_cli_invokes_adapter_with_exact_scope(self):
-        p=subprocess.run([sys.executable,str(Path(gate.__file__)),'run',str(self.root/'episode.json'),
-             '--phase','sample','--shot-ids','SH1','--output','cli.mp4','--receipt','cli.json'],capture_output=True,text=True)
+        codex_home = self.root / 'isolated-test-home'
+        installed = codex_home / 'skills/science-video-production-test'
+        shutil.copytree(gate.SKILL_ROOT, installed, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+        p=subprocess.run([sys.executable,str(installed/'scripts/render_gate.py'),'run',str(self.root/'episode.json'),
+             '--phase','sample','--shot-ids','SH1','--output','cli.mp4','--receipt','cli.json'],capture_output=True,text=True,
+             env=dict(os.environ, CODEX_HOME=str(codex_home)))
         self.assertEqual(p.returncode,0,p.stdout+p.stderr)
         actual=json.loads((self.root/'invoked.json').read_text());self.assertEqual(actual['phase'],'sample');self.assertEqual(actual['shot_ids'],'SH1')
 

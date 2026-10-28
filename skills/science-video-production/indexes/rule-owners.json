@@ -146,10 +146,14 @@
       "file": "references/tool-routing.md",
       "owns": [
         "tool-selection-and-installation",
-        "style-production-routing"
+        "style-production-routing",
+        "single-global-skill",
+        "project-copy-retirement",
+        "global-rule-migration"
       ],
       "supporting_files": [
-        "references/video-skills-curation.md"
+        "references/video-skills-curation.md",
+        "references/global-skill-installation.md"
       ]
     },
     {

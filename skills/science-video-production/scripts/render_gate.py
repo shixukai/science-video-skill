@@ -417,6 +417,8 @@ def main():
     run.add_argument("--receipt", required=True, help="new episode-relative execution receipt")
     args = parser.parse_args()
     try:
+        from global_skill import require_global_runtime
+        require_global_runtime(SKILL_ROOT)
         if args.action == "lock":
             record = make_lock(args.output); print(record["version"], record["tree_sha256"]); return 0
         code, record = run_render(args.episode, args.phase, args.shot_ids.split(","), args.output, args.receipt)
