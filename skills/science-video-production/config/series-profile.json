@@ -191,7 +191,13 @@
     "lookup_script": "scripts/find_3d_assets.py",
     "index_filename": "asset-index.json",
     "selection_scope": "current_engine is current only within its version index; multiple indexed versions remain candidates, not an automatically approved global latest.",
-    "supporting_assets": "Baseline sources, rebuild-only intermediate models and cover layouts are non-default roles; list only when explicitly requested."
+    "supporting_assets": "Baseline sources, rebuild-only intermediate models and cover layouts are non-default roles; list only when explicitly requested.",
+    "standing_authorization": {
+      "status": "not_configured",
+      "target_root": null,
+      "operations": [],
+      "policy": "Use an actual recorded user grant; preserve local grants when synchronizing maintenance changes. No repeated confirmation within the granted scope."
+    }
   },
   "maintenance_revision": "2026-10-28-style-routing"
 }

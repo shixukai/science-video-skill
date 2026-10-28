@@ -140,7 +140,8 @@
         "independent-3d-assets",
         "shared-asset-library",
         "blender-scene-environment",
-        "generic-library-reuse-and-coverage"
+        "generic-library-reuse-and-coverage",
+        "shared-library-standing-authorization"
       ]
     },
     {

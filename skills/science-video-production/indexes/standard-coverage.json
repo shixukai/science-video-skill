@@ -273,7 +273,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "1ca96b2561e776c6c5fd538e370a27752a1cccd1544d00fa9e45777efb054afd",
+      "sha256": "3beb2fb9457acdfe76926b97d602484489ba8936d721999139df0fb89c114ef8",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -285,13 +285,14 @@
         "有界试制与可靠复用",
         "3d-正片与系列封面分别设计",
         "使用过的-3d-素材统一归档",
+        "素材库归档的持续授权",
         "查找与选择已有素材"
       ]
     },
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "28c324006baba27a7e3360b97714995437d9b50817e7fb6cae0d1a803ec72a15",
+      "sha256": "f1453e2d4d20b5db0d233703b5c438310de17960d36f03806f009d44a5bdf68d",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
