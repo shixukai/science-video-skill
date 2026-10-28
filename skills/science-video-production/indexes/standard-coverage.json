@@ -59,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b070adcfbe890a1462abf2e2ec5dec7394ad431f137dbedd4e75ae42d940517f",
+      "sha256": "f20fa0a7d64cfdc114fcca73c9d31594fe5b85c9016988084861c9505b9437e5",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -289,7 +289,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "0df67f9ae0b49992409f65d0696dc40d86a64306a45ab14ba73e28ea20a740a1",
+      "sha256": "610531b4bfee5e7855628bf1143611416ce080b1dc77faa5d4785fcb1cf1f9cf",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -302,10 +302,11 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "7d0652b8d259145c39452dc99ba241024ea088466e2b230036ae48d05aeca053",
+      "sha256": "5545cfccd1179d18a1a213dfe798a3a88f4596ae1a77e99a0d30ae6e4cfed9bd",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
+        "本地执行最少传输与吞吐",
         "按需选择与应用证据",
         "逐镜选择与同目标小样",
         "调用前准备与安装",

@@ -156,7 +156,10 @@
         "style-production-routing",
         "single-global-skill",
         "project-copy-retirement",
-        "global-rule-migration"
+        "global-rule-migration",
+        "local-first-execution",
+        "minimal-data-transfer",
+        "measured-local-throughput"
       ],
       "supporting_files": [
         "references/video-skills-curation.md",

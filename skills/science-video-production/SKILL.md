@@ -44,6 +44,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 
 - **制作基准**：有适用认可成片就复用；首次试制用实际查看的适用参考，记 `design.approved_film_reference.kind=initial_style_reference`。按[场景背景](references/engineering-blender.md#blender-场景背景与空间完成度)设计有依据的环境、层次和跨镜变化；局部简化须服务解释。
 - **来源与标识**：逐镜记录 `controlled_3d/ai_generated/real_footage/pure_2d`，混合层分别登记；科学依据、风格参考和使用权分开；当前系列执行[原创视觉来源契约](references/science-and-rights.md#原创视觉来源契约)，只用自行生成、建模/渲染、设计或已核实授权的用户自拍，第三方影像仅供研究参考。字幕/科学标注保留；新增署名、水印或片内AI标识按[具体范围同意](references/visual-system.md#画内标识须有具体同意)处理。
+- **本地优先与性能**：能在本机完成的制作、素材处理与检测优先在本机执行；按[本地执行、最少传输与吞吐](references/tool-routing.md#本地执行最少传输与吞吐)复用本地数据、最小化跨端传输，主动发挥GPU、CPU并行和缓存能力，以同质量的端到端耗时与有效产出优化。
 - **执行与复用**：复用现有环境；调用Qwen前查上下文和已有工程，确缺位置才问，不自动下载或另建环境。有声草排、样段与整片走[执行入口](references/production-checkpoints.md#开工锁定与真实渲染入口)；无声镜头/静态测试按中间资产保存实际版本。工具补缺按[路由](references/tool-routing.md)及已有授权，连续相同失败无新依据时停止该依赖。有界候选按[Blender](scripts/bounded_blender/README.md)或[I2V](scripts/bounded_i2v/README.md)核心执行，保留身份、唯一任务与恢复保护。 Resource refusals and device fallback follow the [current-evidence rule](references/production-checkpoints.md#静态证据条件复用与动态新鲜检查); generated launchers cannot invent admission thresholds.
 - **审查与版本**：技术检测、静帧、连续声画和平台结果分别记录；独立审查须有独立过程及实际感知能力。[反馈](references/quality-acceptance.md#用户意见逐项登记与维度隔离)按媒体/范围/维度保留，缺能力未验、已知失败修后重审。规则更新不热切运行任务，也不恢复已发布、取消或禁止版本；续做显式迁移，不改写旧锁和旧回执。
 
