@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "0164190383e56fdeaa46aff39933b2399d8d2cc866395bc8c428142ac03e8be4",
+      "sha256": "a03da31666e7e0d712df80bdac730dd90a4957f69d7902f4d5a621a4897bd958",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -95,11 +95,14 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "fdd77306083abbe3e4564a0e6008938ff4b31a68875fba34fad9faf86130c301",
+      "sha256": "8be45ffd16c426bd646e6326256d08dd1a4e60171864fffec8d07e3430bffca3",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
         "让开场画面兑现应用情境",
+        "从本题选择开场看点",
+        "把开场接成正文的第一项观察",
+        "工程示例从应用走进芯片刻蚀",
         "先定位继续观看的阻力",
         "一段结束后为什么值得看下一段",
         "把关键发现编排到声画里",
@@ -237,7 +240,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "199df49386cdd3582c5154d324ee9dde5a63ad6bb7eecbbae4bca255a6bdaa85",
+      "sha256": "893af69ad49f305edb4a8420e9f40492453f180f8d6fa90fa06f01e9245e66a9",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
