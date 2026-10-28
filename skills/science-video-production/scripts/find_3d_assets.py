@@ -32,8 +32,8 @@ def reparse(path):
     return stat.S_ISLNK(info.st_mode) or bool(getattr(info, 'st_file_attributes', 0) & 1024)
 
 
-def safe_path(base, relative):
-    """Index paths are local to their bundle, even when running on POSIX."""
+def lexical_path(base, relative):
+    """Validate path syntax without filesystem calls for every catalog record."""
     if not isinstance(relative, str) or not relative.strip():
         raise ValueError('nonempty relative file path required')
     parts = relative.replace('\\', '/').split('/')
@@ -45,8 +45,17 @@ def safe_path(base, relative):
         if part in ('', '.'):
             continue
         path = path / part
+    return path
+
+
+def safe_path(base, relative):
+    """Index paths are local to their bundle, even when running on POSIX."""
+    path = lexical_path(base, relative)
+    current = base
+    for part in path.relative_to(base).parts:
+        current = current / part
         try:
-            if reparse(path):
+            if reparse(current):
                 raise ValueError('symbolic link or reparse-point path rejected')
         except FileNotFoundError:
             pass
@@ -116,6 +125,11 @@ def manifest_hashes(base):
 
 def candidates(index, data, args, errors):
     base = index.parent
+    reference_cache = {}
+    def cached_reference(relative):
+        if relative not in reference_cache:
+            reference_cache[relative] = reference(base, relative)
+        return reference_cache[relative]
     try:
         hashes = manifest_hashes(base)
     except (OSError, ValueError) as error:
@@ -150,6 +164,8 @@ def candidates(index, data, args, errors):
                 aliases = ' '.join([str(record.get('id', '')), str(record.get('name', '')), kind, *keywords])
             if (role in PRIMARY or generic) and args.kind not in ('all', kind):
                 continue
+            if args.status != 'all' and record.get('status') != args.status:
+                continue
             if not isinstance(record.get('non_default', False), bool):
                 raise ValueError('non_default must be a boolean')
             non_default = (role in SUPPORTING or record.get('non_default', False)
@@ -163,17 +179,18 @@ def candidates(index, data, args, errors):
             if any(not isinstance(record.get(key, []), list) for key in ('previews', 'additional_sources')):
                 raise ValueError('previews and additional_sources must be lists: ' + role)
             for relative in files:
-                info = reference(base, relative)
                 haystack = f"{aliases} {relative} {data.get('revision', '')}".casefold()
                 if args.query and not all(word in haystack for word in args.query.casefold().split()):
                     continue
-                refs = ['blender-dependencies.json', 'provenance.json', 'scientific-reference.json']
+                info = reference(base, relative)
+                refs = [] if data.get('catalog_type') == 'deduplicated_3d' else ['blender-dependencies.json', 'provenance.json', 'scientific-reference.json']
                 refs += [record[k] for k in ('builder', 'scientific_reference', 'review') if k in record]
                 refs += record.get('additional_sources', [])
                 results.append({
                     'index': str(index), 'revision': data.get('revision'), 'role': role,
                     'kind': kind, 'non_default': non_default,
                     'asset_id': record.get('id'), 'name': record.get('name'),
+                    'asset_type': record.get('asset_type'), 'has_failed_context': record.get('has_failed_context', False),
                     'recorded_status': record.get('status'),
                     'recorded_review_status': record.get('review_status'),
                     'current_scope': 'within_index' if role in ('current_engine', 'current_asset') else None,
@@ -181,8 +198,8 @@ def candidates(index, data, args, errors):
                     'recorded_sha256': record.get('sha256') or hashes.get(relative.replace('\\', '/')),
                     'file_sha256_verified': False, 'quality_status': 'not_evaluated',
                     'source_version': record.get('source_version'), 'role_note': record.get('role'),
-                    'previews': [reference(base, p) for p in record.get('previews', [])],
-                    'metadata_refs': [reference(base, p) for p in dict.fromkeys(refs)],
+                    'previews': [cached_reference(p) for p in record.get('previews', [])],
+                    'metadata_refs': [cached_reference(p) for p in dict.fromkeys(refs)],
                     'limits': data.get('limits'),
                 })
         except (OSError, ValueError, TypeError, KeyError) as error:
@@ -195,14 +212,18 @@ def main(argv=None):
     parser.add_argument('--root', help='Library root or version directory; default: series-profile shared_3d_library.root')
     parser.add_argument('--kind', default='all', help='Exact indexed category, e.g. engine, environment, material, lighting, chip-manufacturing; default all')
     parser.add_argument('--query', default='')
+    parser.add_argument('--status', choices=['all', 'reusable', 'pending', 'failed'], default='all',
+                        help='Filter the recorded catalog classification; failed includes historical diagnostics')
     parser.add_argument('--include-supporting', action='store_true', help='Also list explicitly non-default, historical, failed, baseline, rebuild and cover assets')
     parser.add_argument('--max-depth', type=int, default=6)
     args = parser.parse_args(argv)
+    if args.status in ('pending', 'failed'):
+        args.include_supporting = True
     if args.max_depth < 0:
         parser.error('--max-depth must be nonnegative')
     output = {'status': None, 'root': args.root, 'indexes_read': 0, 'results': [], 'errors': [],
               'scan_depth_limit': args.max_depth, 'scan_depth_limited': False,
-              'global_current': 'not_defined_by_supported_schema',
+              'global_current': 'not_defined_by_supported_schema', 'catalog_read': False,
               'limits': 'Metadata lookup only. Current roles are current within one index, not globally latest or quality-approved. Recorded reviews remain scoped source claims. Models are never opened, executed or hashed.'}
     try:
         if args.root is None:
@@ -212,16 +233,37 @@ def main(argv=None):
         output['root'] = str(root)
         if not root.is_absolute() or reparse(root) or not stat.S_ISDIR(root.stat().st_mode):
             raise OSError('library root must be an accessible absolute directory without a reparse point')
+        catalog_paths = set()
+        catalog = root / 'asset-catalog.json'
+        if catalog.is_file():
+            if reparse(catalog):
+                raise ValueError('catalog is a symbolic link or reparse point')
+            catalog_data = read_json(catalog)
+            if not isinstance(catalog_data, dict) or catalog_data.get('schema_version') != 1 or not isinstance(catalog_data.get('assets'), list):
+                raise ValueError('unsupported asset catalog')
+            for record in catalog_data['assets']:
+                try:
+                    if not isinstance(record, dict) or not isinstance(record.get('aliases', []), list):
+                        raise ValueError('catalog entry/aliases malformed')
+                    for relative in [record['file'], *record.get('aliases', [])]:
+                        catalog_paths.add(os.path.normcase(os.path.abspath(str(lexical_path(root, relative)))))
+                except (ValueError, OSError, KeyError, TypeError) as error:
+                    output['errors'].append({'path':str(catalog), 'error':str(error)})
+            output['catalog_read'] = True
+            output['results'].extend(candidates(catalog, catalog_data, args, output['errors']))
         indexes, limited = scan(root, args.max_depth, output['errors'])
         output['indexes_read'] = len(indexes)
         output['scan_depth_limited'] = limited
         for index, data in indexes:
-            output['results'].extend(candidates(index, data, args, output['errors']))
+            for result in candidates(index, data, args, output['errors']):
+                if os.path.normcase(os.path.abspath(result['file'])) not in catalog_paths:
+                    output['results'].append(result)
         output['multiple_indexes_require_selection'] = len({r['index'] for r in output['results']}) > 1
+        output['multiple_candidates_require_selection'] = len(output['results']) > 1
         if output['errors']:
-            output['status'] = 'partial_results' if indexes else 'errors'
+            output['status'] = 'partial_results' if indexes or output['catalog_read'] else 'errors'
         else:
-            output['status'] = 'ok' if output['results'] else ('no_matches' if indexes else 'no_indexes_found')
+            output['status'] = 'ok' if output['results'] else ('no_matches' if indexes or output['catalog_read'] else 'no_indexes_found')
     except (OSError, ValueError, KeyError, TypeError) as error:
         output['status'] = 'library_unavailable_or_not_visible'
         output['errors'].append({'path': output['root'], 'error': str(error)})

@@ -190,8 +190,8 @@
     "quality_boundary": "Library availability is not current scientific, visual, hearing or publication approval; superseded and rejected variants are not default reusable assets.",
     "lookup_script": "scripts/find_3d_assets.py",
     "index_filename": "asset-index.json",
-    "selection_scope": "current_engine is current only within its version index; multiple indexed versions remain candidates, not an automatically approved global latest.",
-    "supporting_assets": "Baseline sources, rebuild-only intermediate models and cover layouts are non-default roles; list only when explicitly requested.",
+    "selection_scope": "Find suitable existing models, environments, materials and lighting before creating new ones; a recorded reusable status is limited to its documented scope and never automatic approval for the new film.",
+    "supporting_assets": "Failed and explicitly non-default historical or diagnostic assets are not default choices; searchable using --include-supporting or --status pending/failed.",
     "standing_authorization": {
       "status": "not_configured",
       "target_root": null,

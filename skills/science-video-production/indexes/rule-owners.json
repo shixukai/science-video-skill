@@ -141,7 +141,8 @@
         "shared-asset-library",
         "blender-scene-environment",
         "generic-library-reuse-and-coverage",
-        "shared-library-standing-authorization"
+        "shared-library-standing-authorization",
+        "deduplicated-asset-catalog-and-reuse-first"
       ]
     },
     {

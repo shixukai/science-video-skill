@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 path = Path(__file__).resolve().parents[1] / 'skills/science-video-production/scripts/find_3d_assets.py'
 spec = importlib.util.spec_from_file_location('finder', path)
@@ -81,6 +82,58 @@ class AssetLookupTests(unittest.TestCase):
         code, result = self.lookup()
         self.assertEqual(code, 1)
         self.assertEqual(result['status'], 'library_unavailable_or_not_visible')
+
+    def test_catalog_deduplicates_legacy_but_keeps_later_additions(self):
+        self.bundle('old', current_engine={'file': 'model.blend'})
+        self.bundle('new', current_asset={'file': 'model.blend', 'kind': 'environment'})
+        (self.root/'asset-catalog.json').write_text(json.dumps({'schema_version':1,'assets':[{
+            'id':'old-engine','kind':'engine','asset_type':'model','file':'old/model.blend','status':'reusable'}]}),encoding='utf-8')
+        data = self.lookup()[1]
+        self.assertTrue(data['catalog_read'])
+        self.assertEqual(len(data['results']),2)
+        self.assertEqual([r['recorded_status'] for r in data['results'] if r['kind']=='engine'],['reusable'])
+        self.assertEqual([r['asset_type'] for r in data['results'] if r['kind']=='engine'],['model'])
+
+    def test_failed_filter_includes_nondefault_diagnostic(self):
+        self.bundle('old', current_asset={'file':'model.blend','kind':'model'})
+        (self.root/'asset-catalog.json').write_text(json.dumps({'schema_version':1,'assets':[{
+            'kind':'model','file':'old/model.blend','status':'failed','non_default':True}]}),encoding='utf-8')
+        self.assertEqual(self.lookup()[1]['status'],'no_matches')
+        rows = self.lookup('--status','failed')[1]['results']
+        self.assertEqual(len(rows),1)
+        self.assertEqual(rows[0]['recorded_status'],'failed')
+
+    def test_catalog_alias_prevents_duplicate_legacy_result(self):
+        self.bundle('one', current_engine={'file':'model.blend'})
+        self.bundle('two', current_engine={'file':'model.blend'})
+        (self.root/'asset-catalog.json').write_text(json.dumps({'schema_version':1,'assets':[{
+            'kind':'engine','file':'one/model.blend','aliases':['two/model.blend'],'status':'pending'}]}),encoding='utf-8')
+        rows = self.lookup('--status','pending')[1]['results']
+        self.assertEqual(len(rows),1)
+
+    def test_catalog_path_escape_is_reported(self):
+        (self.root/'asset-catalog.json').write_text(json.dumps({'schema_version':1,'assets':[{
+            'kind':'model','file':'../outside.blend','status':'pending'}]}),encoding='utf-8')
+        code, result = self.lookup()
+        self.assertEqual(code,1)
+        self.assertTrue(result['errors'])
+
+    def test_pending_filter_includes_nondefault_history(self):
+        self.bundle('historic', current_asset={'file':'model.blend','kind':'model'})
+        (self.root/'asset-catalog.json').write_text(json.dumps({'schema_version':1,'assets':[{
+            'kind':'model','file':'historic/model.blend','status':'pending','non_default':True}]}),encoding='utf-8')
+        self.assertEqual(self.lookup()[1]['status'],'no_matches')
+        self.assertEqual(len(self.lookup('--status','pending')[1]['results']),1)
+
+    def test_large_catalog_query_does_not_stat_unmatched_files(self):
+        self.bundle('one', current_asset={'file':'model.blend','kind':'model'})
+        records = [{'kind':'model','file':f'missing-{i}.blend','name':f'other-{i}','status':'pending'} for i in range(300)]
+        records.append({'kind':'model','file':'one/model.blend','name':'needle','status':'pending'})
+        (self.root/'asset-catalog.json').write_text(json.dumps({'schema_version':1,'catalog_type':'deduplicated_3d','assets':records}),encoding='utf-8')
+        with patch.object(finder,'reference',wraps=finder.reference) as refs:
+            result = self.lookup('--query','needle')[1]
+        self.assertEqual(len(result['results']),1)
+        self.assertLessEqual(refs.call_count,2)
 
 if __name__ == '__main__':
     unittest.main()
