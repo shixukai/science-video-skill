@@ -138,7 +138,9 @@
       "owns": [
         "controlled-3d-production",
         "independent-3d-assets",
-        "shared-asset-library"
+        "shared-asset-library",
+        "blender-scene-environment",
+        "generic-library-reuse-and-coverage"
       ]
     },
     {

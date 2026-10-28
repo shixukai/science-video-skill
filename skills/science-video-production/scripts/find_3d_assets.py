@@ -18,6 +18,8 @@ SUPPORTING = {
     'rebuild_only_intermediate_blends': ('rebuild_dependency', '重建 依赖 中间 rebuild dependency'),
     'cover_camera_layouts': ('cover_layout', '封面 机位 cover layout'),
 }
+GENERIC = ('current_asset', 'assets')
+NON_DEFAULT_STATUSES = {'failed', 'rejected', 'superseded', 'historical', 'archived_unreviewed'}
 
 
 def read_json(path):
@@ -84,7 +86,7 @@ def scan(root, max_depth, errors):
                 if reparse(index):
                     raise ValueError('index is a symbolic link or reparse point')
                 data = read_json(index)
-                if not isinstance(data, dict) or type(data.get('schema_version')) is not int or data['schema_version'] != 1 or not any(k in data for k in PRIMARY):
+                if not isinstance(data, dict) or type(data.get('schema_version')) is not int or data['schema_version'] != 1 or not any(k in data for k in (*PRIMARY, *GENERIC)):
                     raise ValueError('unsupported asset-index schema or roles')
                 indexes.append((index, data))
                 continue  # A version bundle is a leaf; do not traverse models/previews.
@@ -122,16 +124,39 @@ def candidates(index, data, args, errors):
     kinds = dict(PRIMARY)
     if args.include_supporting:
         kinds.update(SUPPORTING)
+    records = [(role, kind, aliases, data.get(role)) for role, (kind, aliases) in kinds.items()]
+    if 'current_asset' in data:
+        records.append(('current_asset', None, '', data['current_asset']))
+    if 'assets' in data:
+        if isinstance(data['assets'], list):
+            records.extend(('asset', None, '', record) for record in data['assets'])
+        else:
+            errors.append({'path': str(index), 'error': 'assets must be a list'})
     results = []
-    for role, (kind, aliases) in kinds.items():
-        if role in PRIMARY and args.kind not in ('all', kind):
-            continue
-        record = data.get(role)
+    for role, kind, aliases, record in records:
         if record is None:
             continue
         try:
             if not isinstance(record, dict):
                 raise ValueError('role record must be an object: ' + role)
+            generic = role in ('current_asset', 'asset')
+            if generic:
+                kind = record.get('kind', data.get('kind', 'model'))
+                if not isinstance(kind, str) or not kind.strip():
+                    raise ValueError('asset kind must be a nonempty string')
+                keywords = record.get('keywords', [])
+                if not isinstance(keywords, list) or any(not isinstance(word, str) for word in keywords):
+                    raise ValueError('keywords must be a list of strings')
+                aliases = ' '.join([str(record.get('id', '')), str(record.get('name', '')), kind, *keywords])
+            if (role in PRIMARY or generic) and args.kind not in ('all', kind):
+                continue
+            if not isinstance(record.get('non_default', False), bool):
+                raise ValueError('non_default must be a boolean')
+            non_default = (role in SUPPORTING or record.get('non_default', False)
+                           or record.get('status') in NON_DEFAULT_STATUSES
+                           or record.get('review_status') in NON_DEFAULT_STATUSES)
+            if non_default and not args.include_supporting:
+                continue
             files = [record['file']] if 'file' in record else record.get('files', [])
             if not isinstance(files, list):
                 raise ValueError('role files must be a list: ' + role)
@@ -147,8 +172,11 @@ def candidates(index, data, args, errors):
                 refs += record.get('additional_sources', [])
                 results.append({
                     'index': str(index), 'revision': data.get('revision'), 'role': role,
-                    'kind': kind, 'non_default': role in SUPPORTING,
-                    'current_scope': 'within_index' if role == 'current_engine' else None,
+                    'kind': kind, 'non_default': non_default,
+                    'asset_id': record.get('id'), 'name': record.get('name'),
+                    'recorded_status': record.get('status'),
+                    'recorded_review_status': record.get('review_status'),
+                    'current_scope': 'within_index' if role in ('current_engine', 'current_asset') else None,
                     **info,
                     'recorded_sha256': record.get('sha256') or hashes.get(relative.replace('\\', '/')),
                     'file_sha256_verified': False, 'quality_status': 'not_evaluated',
@@ -165,9 +193,9 @@ def candidates(index, data, args, errors):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', help='Library root or version directory; default: series-profile shared_3d_library.root')
-    parser.add_argument('--kind', choices=['engine', 'cooled-blade', 'bridge', 'all'], default='all')
+    parser.add_argument('--kind', default='all', help='Exact indexed category, e.g. engine, environment, material, lighting, chip-manufacturing; default all')
     parser.add_argument('--query', default='')
-    parser.add_argument('--include-supporting', action='store_true', help='Also list non-default baseline, rebuild and cover roles')
+    parser.add_argument('--include-supporting', action='store_true', help='Also list explicitly non-default, historical, failed, baseline, rebuild and cover assets')
     parser.add_argument('--max-depth', type=int, default=6)
     args = parser.parse_args(argv)
     if args.max_depth < 0:
@@ -175,7 +203,7 @@ def main(argv=None):
     output = {'status': None, 'root': args.root, 'indexes_read': 0, 'results': [], 'errors': [],
               'scan_depth_limit': args.max_depth, 'scan_depth_limited': False,
               'global_current': 'not_defined_by_supported_schema',
-              'limits': 'Metadata lookup only. current_engine is current within one index, not globally latest or quality-approved. Models are never opened, executed or hashed.'}
+              'limits': 'Metadata lookup only. Current roles are current within one index, not globally latest or quality-approved. Recorded reviews remain scoped source claims. Models are never opened, executed or hashed.'}
     try:
         if args.root is None:
             profile = read_json(Path(__file__).resolve().parents[1] / 'config/series-profile.json')

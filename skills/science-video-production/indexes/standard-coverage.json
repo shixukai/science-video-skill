@@ -152,7 +152,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "514918bc57744537ca7ed748c9ba7b1f3666fee2fcd0a6ed60bb38ca1ab1f142",
+      "sha256": "43b44759a7d8bbfc39aef0a837ff20603a05840272a0de83703c23c14777d06b",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
@@ -237,7 +237,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "763cae8e25c92f683c3bbb518fae7a51d810a77c056c02e0c3225c4df1c7c3fe",
+      "sha256": "199df49386cdd3582c5154d324ee9dde5a63ad6bb7eecbbae4bca255a6bdaa85",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -273,11 +273,12 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "8173f0aca9038010ec76d9e804e1a897e9cfabf2d3bd0045d38ebea72993470b",
+      "sha256": "1ca96b2561e776c6c5fd538e370a27752a1cccd1544d00fa9e45777efb054afd",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
         "先认得出真实对象再解释内部",
+        "blender-场景背景与空间完成度",
         "同一几何与方位基准",
         "从整体连续进入局部",
         "冷却与管道机制的可见连接",
