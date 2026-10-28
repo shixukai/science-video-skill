@@ -101,7 +101,7 @@
 
 ## 文字、居中与运动
 
-标题/机制标签/说明/旁白字幕各有职责。标题手机首屏可读，与具体对象对应；字幕通常1–2行、按语义断句，不拆术语或数字单位，位于画面下方可读区，不与主体争中心。3:4/4:3封面与实际目标画幅首屏独立看。
+Design text by role: chapter titles introduce a topic, short object/state labels identify the current observation, and synchronized captions carry the spoken meaning. Use the approved font and weight, a clear hierarchy, consistent alignment and margins, and space away from critical structures and motion. Do not give every shot a corner headline. Keep necessary text readable at the actual phone size; tiny, ultra-thin or low-contrast gray type is not refinement. Show labels while their explanation is needed, then remove them; retain context for as long as understanding requires it. Captions normally use 1–2 semantic lines in the lower readable area without splitting terms or numbers from units. Render overlay text from editable glyphs at delivery resolution after scene resizing; do not enlarge labels baked into a draft proxy. Check chapter titles in the actual opening frame and design each cover ratio separately.
 
 字幕背景由实际字体、字号、行距、描边字形外缘加必要padding生成，不按字数估算，不固定大横框；短行不套两行大框。字层锚点/末行基线稳定，背景变宽高不拖动字层；同一句可缓存布局，不能逐帧重算抖动。超宽先断行/分句，不缩字号硬塞或侵入平台安全区。
 
@@ -117,7 +117,7 @@
 
 ### 可见文字用途与制作辩解
 
-画面、字幕、口播和封面的文字分类为主题、机制、中文可访问性、科学条件、来源署名或许可证；一条可有多种真实用途。制作辩解、素材缺陷、工具限制及内部QA状态移入私有记录。AI/模拟披露默认放平台字段与配套；确需片内标识按下节核具体同意。
+On-screen, caption, voiceover and cover text must serve the topic, object/mechanism, accessibility, scientific conditions or necessary attribution/license information; one item may have several real purposes. Shot-list names, working titles, generic scene-description captions, production-status notes, material defects, tool limits and internal QA belong in private records or appropriate companion material, not persistent corner overlays. Apply the deletion test before styling a label. When a real object/state needs identification, use the shortest accurate term. If a qualification is necessary to avoid mistaking a teaching model for a specific real object, preserve that meaning in a concise cue at the first relevant point and wherever later understanding requires it; do not merely rename or conceal the limitation. AI/simulation production disclosures default to platform fields and companion material, with specific on-frame consent handled below. No keyword, including a word meaning “illustration” or “model,” is automatically forbidden.
 
 例如“素材不足只能这样画”“本片验收已通过”属于制作辩解，改写措辞或移到口播/封面仍删除。素材无原声时不添加虚构原声；科学任务需要声音比较时取得适配素材或调整有依据的表达。
 
