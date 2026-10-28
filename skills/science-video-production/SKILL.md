@@ -1,17 +1,17 @@
 ---
 name: science-video-production
-description: 策划、制作、审查或修改自然、生活与工程科普视频、封面及3D资产。精确结构优先 Blender，其他适用题材复用已确认的本地视频模型与 MoneyPrinterTurbo；制作与发布按委托范围分别执行。
+description: 策划、制作、审查或修改自然、生活与工程科普视频、封面及3D资产。写实风格视频使用 MoneyPrinterTurbo，3D动画风格视频使用 Blender；制作与发布按委托范围分别执行。
 ---
 
 # 科普视频制作
 
-从一个具体问题出发，用有依据的画面、连续中文讲解和同步字幕逐步给出答案。工程精确结构、剖切、装配与机构优先 Blender；其他适用题材默认复用已有本地视频模型与 MoneyPrinterTurbo。当前明确工具选择优先于默认路线。
+从一个具体问题出发，用有依据的画面、连续中文讲解和同步字幕逐步给出答案。严格按[成片风格选择主制作工具](references/tool-routing.md#按成片风格锁定主制作工具)：写实风格使用 MoneyPrinterTurbo，3D动画风格使用 Blender；不再按工程/自然题材分流。AI模型可为写实路线生成素材，不能代替MoneyPrinterTurbo制作环节。
 
 ## 范围与规则优先级
 
 先遵循宿主指令、工具和权限约束，再落实用户当前明确请求及仍有效的授权。新要求覆盖与它冲突的旧偏好，已有授权不重复询问。正文负责规则，配置负责默认参数，单集记录负责本次范围和证据；模板、示例和索引不产生额外门槛。
 
-本 Skill 的写实主画面、中文旁白、声音、画幅和封面配置是当前系列基准。明确项目选择可覆盖默认值；不得用历史2D参考擅自降低当前写实要求。非写实全幅镜头沿用已有具体授权，新增偏离才需要明确范围。科学真实、权利和如实审看仍须满足；趣味、工具偏好和数值起点不能推翻明确委托。用户指定基础题目时保留原题，设计适合其受众的解释。
+本 Skill 未指定风格时沿系列写实默认值使用MoneyPrinterTurbo；用户已选3D动画时直接使用Blender，无须再为3D路线索要批准。中文旁白、声音、画幅和封面配置沿适用基准；历史2D参考不能覆盖本期风格。混合风格及额外全幅2D按明确委托范围处理，不能借辅助层静默改变主体风格。科学真实、权利和如实审看仍须满足；趣味、工具偏好和数值起点不能推翻明确委托。用户指定基础题目时保留原题，设计适合其受众的解释。
 
 | 本次委托 | 执行范围与入口 |
 | --- | --- |
@@ -28,7 +28,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 
 - **开场**：完整新片先建立[整体情境与观看理由](references/viewer-retention-design.md#先建立情境和看点再进入解释)，让观众认出对象、用途或真实难点，再收束到原题与第一步解释；不从定义、公式或工序名直接开讲，也不靠空泛片头拖延。明确要求直接答案或局部片段时按委托范围处理。
 - **片长与全链路**：视频可按解释需要做得更长。工程科学、工业生产和高端制造优先讲清本题从原理与输入、关键过程到结果和验证的[完整链路](references/topic-contract.md#工程与制造题材的全链路和片长)，按章节组织，再由实际讲解与演示确定时长。
-- **画面**：主镜先读[写实制作契约](references/realistic-production.md)，实际看适用参考并确定逐镜主体、关系、动作、注意对象和观众所得。AI/3D不是实拍或科学观测；静图推拉、字幕变化和装饰运动不替代所讲过程。观察停顿按[主体动态](references/quality-acceptance.md#主体动态与长静帧)实审，不为凑秒数捏造动作。
+- **画面**：写实主镜按[写实制作契约](references/realistic-production.md)，3D动画按[Blender制作要求](references/engineering-blender.md)，实际看适用参考并确定逐镜主体、关系、动作、注意对象和观众所得。AI/3D不是实拍或科学观测；静图推拉、字幕变化和装饰运动不替代所讲过程。观察停顿按[主体动态](references/quality-acceptance.md#主体动态与长静帧)实审，不为凑秒数捏造动作。
 - **指示信息**：按已确认的[精密技术标注](references/annotation-style.md)统一标签、定位线、方向箭头与范围强调，读取独立横版参数；箭头须尖端清楚、头杆连续，不能圆头穿尖。实际核目标绑定、遮挡、小屏和连续运动，风格复用不等于媒体验收。
 - **封面**：按[封面成品标准](references/visual-system.md#封面成品标准与工程制造题材)独立制作系列精细插画封面，明确大主体、左上主题名与短问题。工程主体核结构和材质，长片封面对应全链路的核心承诺；本次所需比例独立构图，实际看原图、手机缩略与系列对照后交付。
 - **首次试制**：有认可成片时复用；没有时，用已实际查看的适用参考和明确设计制作候选，记录 `design.approved_film_reference.kind=initial_style_reference`，不伪造历史认可。扩片仍须新样连续声画及独立审查。
@@ -47,8 +47,8 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 | 原题、受众、开场、范围和答案 | [主题契约](references/topic-contract.md) |
 | 科学、来源、权利和披露 | [科学与素材](references/science-and-rights.md) |
 | 写实主镜和首样 | [写实制作契约](references/realistic-production.md) |
-| 本地模型与MoneyPrinterTurbo | [AI生成视频](references/ai-generated-video.md) |
-| 精确结构、连续定位、3D库 | [工程类Blender](references/engineering-blender.md)；[只读素材检索](scripts/find_3d_assets.py) |
+| 写实视频的MoneyPrinterTurbo制作与模型素材 | [写实制作流程](references/ai-generated-video.md) |
+| 3D动画、精确结构、连续定位与3D库 | [Blender制作](references/engineering-blender.md)；[只读素材检索](scripts/find_3d_assets.py) |
 | 阶段、解释顺序、实际调用、平台动作 | [制作检查点](references/production-checkpoints.md) |
 | 画风、构图、文字、封面、接口连接 | [视觉系统](references/visual-system.md)；主要动画再读[场景设计](references/animation-scene-design.md) |
 | 旁白生成、连续性和审听 | [中文声音](references/voice-reference.md) |

@@ -23,6 +23,11 @@
 ## 视觉原创来源（待填写，非批准）
 按 [原创视觉来源契约](../references/science-and-rights.md#原创视觉来源契约) 记录 `origin_contract.mode=self_created_visuals`，逐镜计划方法、制作前设计、实际入口版本和哈希；实际资产保留输入/输出、抽帧及审查证据。用户自拍事实与本次授权必须可核，未取得保持缺项。第三方公开视频/CC/Commons/论文影像仅研究参考，不作填充或成片背景；不改写历史来源和验收。
 
+## 成片风格与主制作工程
+按[固定分流](../references/tool-routing.md#按成片风格锁定主制作工具)记录：写实风格→MoneyPrinterTurbo，3D动画→Blender；不按题材换路。
+- 本期风格及请求/设计依据、对应主制作工具与已有工程版本；混合项目仅填已明确范围及镜号：
+- 素材来源与辅助工具的具体职责；MoneyPrinterTurbo实际编排/合成或Blender实际渲染的输入、输出及现有execution证据引用，未执行保持待验：
+
 ## 固定引用
 - Skill提交/版本：
 - 系列配置ID/版本与文件SHA-256：

@@ -42,14 +42,14 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "4419dadb0a858bae459177d73630fc026554aa18bad4a23a9cd39f4ac13a9f16",
+      "sha256": "52b73c0e4612e8036ad969353eb09771ae8fbdd85d9145cb89715a8e00b2f40e",
       "anchors": [
-        "ai-生成连续视频主路径",
+        "写实风格moneyprinterturbo-制作与本地模型素材",
         "开工模态锁定",
-        "ai-路径步骤",
+        "写实路线步骤",
         "本地视频模型与-moneyprinterturbo-交接",
         "定位预检与运行记录",
-        "moneyprinterturbo-的辅助范围",
+        "moneyprinterturbo-的实际制作范围",
         "主体或起态偏离时的条件输入修复",
         "硬禁",
         "权利与披露",
@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "f5caff10141d2a3344910a5cc2b652a5292ef454c0f71e72a7ed6665ce1bbc7a",
+      "sha256": "55f3bb23b6bff0535ceed04cf1ce20f12d01bff90ef1e3dff8fe1531011297bb",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -111,7 +111,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "c6e70f8f9b90640f0a3100d74a0ee17e5d9f3db3ee814ee220713b0b376c01b3",
+      "sha256": "27647f1a558663933e4abb5a398badaacd0610910585326126e6e981b1a77d08",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -235,7 +235,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "3f9cbeb261df32b8ad3612df66bdc95c2b3b44b7286e37d07180e26a5e45ae93",
+      "sha256": "434bee354850f5ce07241c116eb4704ae3c5b6df2c49a6a97bedb2fbae651005",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -257,7 +257,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-production.md",
-      "sha256": "0f3dcb2084ac320c03453a6851b620ed3906d12aa40e7c36522469b9b51c1a39",
+      "sha256": "161e8935ad963456b9728ab127589c0b0edaca42017813f924131ea61c810e84",
       "anchors": [
         "写实制作契约",
         "主画面与工具边界",
@@ -270,9 +270,9 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "534aa77210004f033cf09144f835055e83ec77a35638ec370c1b99a39f8b5d2c",
+      "sha256": "8173f0aca9038010ec76d9e804e1a897e9cfabf2d3bd0045d38ebea72993470b",
       "anchors": [
-        "工程类科普blender-与-3d-素材复用",
+        "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
         "先认得出真实对象再解释内部",
         "同一几何与方位基准",
@@ -287,9 +287,10 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "565928158e45d18519e17a9a3a2bbd6a9af8bb86252d46cdef2aa61ceb58f2fd",
+      "sha256": "03a4452ba8aa788f12d73a5ac4e225023c1bd76739ac1a911a586e4997591dd4",
       "anchors": [
         "按制作场景调用工具",
+        "按成片风格锁定主制作工具",
         "按需选择与应用证据",
         "逐镜选择与同目标小样",
         "调用前准备与安装",

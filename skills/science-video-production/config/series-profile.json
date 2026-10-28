@@ -6,7 +6,7 @@
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "真实写实连续主画面；结构、光影、材质、空间与动作可信，工具按镜头选择",
+    "direction": "按成片风格制作：写实视频使用MoneyPrinterTurbo，3D动画使用Blender；结构、科学关系与连续动作可信",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
     "art_direction": "../assets/style/bright-nature.art-direction.json",
@@ -23,31 +23,36 @@
     "origin_contract": "references/science-and-rights.md#原创视觉来源契约"
   },
   "video_generation": {
-    "primary_backend": "topic_routed",
-    "default_modality": "ai_generated",
+    "primary_backend": "style_routed",
+    "default_style": "realistic",
     "runtime_policy": "reuse_existing_confirmed_project_workflow_environment_and_weights",
-    "assembly_project": "MoneyPrinterTurbo",
-    "assembly_input": "Actual locally generated or rendered video files, including Blender controlled_3d output; existing complete picture tracks may use the verified local postproduction adapter.",
     "voice_policy": "reuse_confirmed_full_narration",
     "repository_policy": "bind_user_selected_or_existing_checkout_origin_and_commit; do_not_replace_or_clone_by_name",
-    "alternative_path": "Follow topic routing or current explicit user scope; preserve an already locked project choice and actual permissions.",
-    "evidence_boundary": "actual_model_job_and_output_required; assembly_or_stock_editing_alone_is_not_video_model_generation",
-    "default_scope": "Other suitable natural/life topics when engineering routing and an explicit current project choice do not take precedence.",
-    "routing_precedence": "current_explicit_project_choice > topic_routing > default_modality",
-    "topic_routing": {
-      "engineering": {
-        "when": "Precise engineering structures, sections, assembly, mechanism motion and continuous spatial localization benefit from controllable geometry.",
-        "preferred_renderer": "Blender",
-        "modality": "controlled_3d",
-        "ai_failure_trial_required": false,
-        "guide": "references/engineering-blender.md"
-      },
-      "other_suitable_natural_and_life": {
-        "backend": "local_video_model",
-        "modality": "ai_generated",
+    "routing_precedence": "current_explicit_user_instruction > selected_video_style > default_style; topic_is_not_a_router",
+    "style_routing": {
+      "realistic": {
+        "production_project": "MoneyPrinterTurbo",
+        "required_operation": "actual_local_material_assembly_or_verified_video_compositing",
+        "visual_sources": [
+          "ai_generated",
+          "real_footage"
+        ],
+        "generation_backend_when_needed": "existing_confirmed_local_video_model",
         "guide": "references/ai-generated-video.md"
+      },
+      "three_d_animation": {
+        "production_project": "Blender",
+        "required_operation": "actual_scene_animation_and_render",
+        "modality": "controlled_3d",
+        "includes_photorealistic_3d": true,
+        "ai_failure_trial_required": false,
+        "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_Blender",
+        "guide": "references/engineering-blender.md"
       }
-    }
+    },
+    "mixed_style": "Only within explicit project scope; each segment follows its style route and records its actual production evidence.",
+    "unavailable_tool": "Report the concrete missing capability; continue independent work without silently replacing the required production project.",
+    "evidence_boundary": "Actual MoneyPrinterTurbo assembly or Blender rendering required for the selected route; names, configuration, text generation and structural checks alone do not prove execution or media quality."
   },
   "audio": {
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
@@ -188,5 +193,5 @@
     "selection_scope": "current_engine is current only within its version index; multiple indexed versions remain candidates, not an automatically approved global latest.",
     "supporting_assets": "Baseline sources, rebuild-only intermediate models and cover layouts are non-default roles; list only when explicitly requested."
   },
-  "maintenance_revision": "2026-10-27-conflict-cleanup"
+  "maintenance_revision": "2026-10-28-style-routing"
 }

@@ -145,7 +145,8 @@
       "id": "tools",
       "file": "references/tool-routing.md",
       "owns": [
-        "tool-selection-and-installation"
+        "tool-selection-and-installation",
+        "style-production-routing"
       ],
       "supporting_files": [
         "references/video-skills-curation.md"
