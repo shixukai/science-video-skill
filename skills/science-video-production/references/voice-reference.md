@@ -1,6 +1,6 @@
 # 中文解说：确认千问调用位置与实际听验
 
-声音方案沿[系列配置](../config/series-profile.json)：官方 Qwen CustomVoice、Serena、Chinese 与项目口语指令。已有认可且仍匹配稿件的完整音轨优先复用。
+声音方案沿[系列配置](../config/series-profile.json)：官方 Qwen CustomVoice、Serena、Chinese 与项目口语指令。Reuse a matching accepted full track only within its still-valid review scope. Acceptance of speaking rate does not approve timbre, pitch continuity or the whole mix; current negative feedback reopens the affected dimension and version.
 
 ## 调用位置与确认
 
@@ -12,16 +12,17 @@
 
 ## 本期语速先试听
 
-生成整稿前，在已确认声音方案下试听含开场与本期难点的完整语义样段：术语清楚、重点突出、停顿够看又不空等。已有同条件的适用认可样本可复用；音色认可不能代本期语速认可，不要求每片再找用户批准。
+Treat `audio.instruct` in the [series profile](../config/series-profile.json) as the default delivery direction. Apply it through the confirmed project's supported instruction field and verify the actual request/record, retaining its validated model and runtime. Before expanding, compare a continuous sample covering the opening, difficult wording and adjacent semantic sections against an applicable accepted reference when available; otherwise use the first actually reviewed continuous sample as this episode's comparison anchor. Compare speaker timbre, natural register, vocal effort, pace and phrase endings. Aim for clear onsets, concise endings and compact phrasing without rushed words or empty waits. Preserve Mandarin lexical tones and meaningful emphasis; consistency does not mean a fixed pitch. Reuse valid evidence without adding another user-approval step.
 
 先标问题词句及实际时码，再按原因修复：
 
 | 实听问题 | 先改什么 | 修后怎么查 |
 | --- | --- | --- |
 | 长句难跟、术语连续堆积 | 改写句式、拆成短句，保留科学含义 | 不看字幕听完整段，核意思和重音 |
-| 拖音、机械空等或整段偏慢 | 在当前声音方案内改生效指令/停顿；不自动套固定倍速或改变音高 | 正常速度连听，并看目标动作是否留够观察时间 |
+| Drawn-out endings, word-by-word delivery or empty waits | Locate delay in the raw voice or edit first. Remove unjustified edit-added gaps or correct processing; for sluggish source delivery, shorten overloaded clauses and revise instructions/semantic pauses before retaking the complete unit. Preserve necessary observation time; no universal speed multiplier or blanket silence removal | Listen at normal speed for decisive starts and endings, intelligible terms and unhurried comprehension |
 | 错词、漏词或断句改义 | 按下节补录包含必要上下文的语义段 | 对稿核词，连听替换段前后 |
-| 每段都像重新开场、接缝语气突变 | 核全局指令与分段边界，修对应合成单元 | 连听前文—接缝—后文，再查当前完整混音 |
+| Timbre/register changes, or every section restarts like an introduction | Compare with the same comparison anchor; inspect actual text, voice conditioning supported by the backend, effective instructions and processing. Retake a complete contextual unit; widespread drift calls for rebuilding the affected continuous chapter/track | Listen to the anchor, neighboring units and their join. Matching speaker names, seeds or parameters is not a listening pass |
+| Only level changes while voice character remains consistent | Adjust measured gain/loudness on the clean source, keeping dynamics and headroom | Recheck the join and full mix; loudness matching does not repair timbre, pitch or articulation |
 
 声音变化后重对齐字幕和关键动作。缺实际听验能力时保持未验，继续独立工作，不把未验长音轨标合格。
 
@@ -33,7 +34,7 @@
 
 初次生成仅在整稿遇到已核实的接口长度限制或实际生成稳定性问题时按完整语义段拆分，在当期记录原因、段落顺序和各段生成记录。边界落在完整意思及自然停顿处，不在因果连接、指代或一句话中间截断。同一期各段沿用已确认的模型版本证据、音色、语言、风格指令、运行配置和可取得的有效生成参数；未暴露的参数如实说明，不逐镜另拟风格或临时调参。已采用的 seed 策略一并记录，相同 seed 或参数不能保证听感一致。先生成并连听相邻语义段，确认接续方式可用后再扩展；不能根据单段样本推定整期连贯。
 
-局部错词或语气问题先定位到实际音轨。需要补录时，以包含问题及必要前后文的完整语义段重新生成，优先替换完整语义段；实际需要裁接时，在自然停顿处选点并连听前后接缝，不把孤立词句直接贴回。这里的上下文通过输入稿件和替换范围提供，具体接口能力按已确认工程核实。沿用已有认可且仍匹配的部分，按 [运行记录与音轨绑定](#运行记录与音轨绑定) 保存新版本及实际处理步骤，再重对齐受影响的声画与字幕。
+局部错词或语气问题先定位到实际音轨。需要补录时，以包含问题及必要前后文的完整语义段重新生成，优先替换完整语义段；实际需要裁接时，在自然停顿处选点并连听前后接缝，不把孤立词句直接贴回。Verify what text or supported voice conditioning actually reached the model. `context_before/context_after` notes alone are not synthesis context, and an interface must not be credited with cross-request voice memory it does not provide. If extra context is generated and then cropped, record the real inputs and edits through a supported source chain; do not label cropped output as an untouched full segment.沿用已有认可且仍匹配的部分，按 [运行记录与音轨绑定](#运行记录与音轨绑定) 保存新版本及实际处理步骤，再重对齐受影响的声画与字幕。
 
 ## 可选本地适配器
 
@@ -65,7 +66,7 @@
 
 当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。
 
-裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。单源后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。多源采用下述 `sources` 路径。未形成连续来源链时不以旧生成记录证明当前文件。可试用的响度/编码起点见系列配置 `audio.postprocess_example`，先实测并试听，不把起点当通用响度标准，也不用处理或音乐掩盖生硬语调。
+裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。单源后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。多源采用下述 `sources` 路径。未形成连续来源链时不以旧生成记录证明当前文件。Prefer available original lossless sources for the narration master and revise processing from them instead of repeatedly speeding up or extracting speech from encoded videos. An otherwise valid accepted track available only as an encoded source may still be reused within its scope; record that source honestly and do not regenerate it merely because this rule changed. Use a coherent processing chain; any necessary local rate change must preserve natural pitch and pass the adjacent-unit listening check. Do not use pitch flattening, loudness matching or music to hide a different-sounding voice. Optional loudness/encoding starting points remain in `audio.postprocess_example`; measure and listen before adopting them.
 
 已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。
 
@@ -112,7 +113,7 @@
 
 G2完整有声草排、G3实际代表段和G5最终整期混音分别在 `qa.audio.continuity.<stage>` 记录 status、context_sha256、media_sha256、audio_sha256、plan_sha256、method=normal_speed_continuous_listening、actually_heard、reviewer/capability/evidence 与完整 ranges。criteria 的 tone/rhythm/speech_rate/loudness/joins 各有 status/observation/evidence；逐分镜衔接 transitions 记 from_shot/to_shot、当前媒体时码at、确实跨越该点的listen_range、status/observation/evidence。at必须对齐当前实际媒体分镜边界：G2/G5用实际对齐的有序shots[].shotbook.start/end；G3在既有qa.visual_frames.animation.shot_intervals按代表段本地时码记shot_id/start/end，覆盖当前完整代表段及所选镜头并绑定G3摘要。时间轴不得缺段、重叠或漏镜；自报at与listen_range不能替代边界，成片改变后重新对齐。连续音轨没有拼接也要听相邻画面之间的叙述承接，G3只覆盖所选片段，不能代整期通过；G5仍完成耳机与手机外放完整听检。
 
-已知语气不一致、接缝突变或分段播报在 `qa.visual_frames.failures` 记 `scope=audio`、原版本/时码/反馈引用，`qa.audio` 及连续性项保持 fail/needs_changes。局部短样只解决对应范围；整期否定须当前完整混音连续复听及接缝证据才能关闭。
+Known voice/register drift, abrupt joins, repeated announcer-style resets, drawn-out endings or mechanical pauses stay `fail/needs_changes` in `qa.audio` and the affected continuity criteria. Record `scope=audio`, the actual version/time range and feedback reference in `qa.visual_frames.failures`; prior approval of another dimension or an older version cannot close the defect.局部短样只解决对应范围；整期否定须当前完整混音连续复听及接缝证据才能关闭。
 
 ## 来源与传输范围
 

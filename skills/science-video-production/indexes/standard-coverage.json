@@ -197,7 +197,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "f533caf08b4dd2045bf683401b5759003a48f1f2b055e68edf0002aefa50d1b1",
+      "sha256": "f59f3abf2ffd2e742ebb3b1fd62b772959a35a09332b06581546626021426fdb",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
