@@ -59,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "87502cf63e03b19d97d88d75df43f528adc51fb5c8b07403214ba216a5e889ea",
+      "sha256": "b070adcfbe890a1462abf2e2ec5dec7394ad431f137dbedd4e75ae42d940517f",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -83,6 +83,7 @@
         "动作状态与可见成功条件",
         "固定基线与有据假设",
         "静态证据条件复用与动态新鲜检查",
+        "记录整理与增量复查",
         "一次提交与最小恢复记录",
         "分段计时与受控服务复用",
         "输出审看反馈优先与归档",
@@ -111,7 +112,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "88eaccc5d4217df33b117b0d319d5c1653c08a6af8c8c3f515b72fe203d73add",
+      "sha256": "63e2c213647618f73f5fc4d69a60024f76ff8b22de8caf7c6771ab730048882b",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -269,7 +270,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "17e3acc5020e128a7c8d27af76ba03fd95cfcb02befe9dbafd1a3e82e68d28b2",
+      "sha256": "eeaa80fdc316b972188218d6a889290e3b09a8c39c8f599797e8331bd8ac0eee",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -283,6 +284,18 @@
         "使用过的-3d-素材统一归档",
         "素材库归档的持续授权",
         "查找与选择已有素材"
+      ]
+    },
+    {
+      "owner_id": "engineering",
+      "file": "references/blender-execution.md",
+      "sha256": "194dd4c730e1adb26043f96e9f5e84b7db3463aec248eeb5f32c23a38077d25b",
+      "anchors": [
+        "reusable-blender-sequence-execution",
+        "prepare-one-job-per-shot-or-coherent-scene",
+        "scene-adapter",
+        "device-ownership-and-recovery",
+        "rendering-cost-and-scheduling"
       ]
     },
     {

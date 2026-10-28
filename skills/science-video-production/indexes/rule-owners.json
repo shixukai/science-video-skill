@@ -143,6 +143,9 @@
         "generic-library-reuse-and-coverage",
         "shared-library-standing-authorization",
         "deduplicated-asset-catalog-and-reuse-first"
+      ],
+      "supporting_files": [
+        "references/blender-execution.md"
       ]
     },
     {

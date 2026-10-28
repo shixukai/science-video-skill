@@ -157,6 +157,10 @@ def context_sha256(data, gate):
  # Moving an unchanged label does not invalidate scientific selection/logic.
  if gate=='G1' and isinstance(result.get('presentation_text'),dict):
   inventory=dict(result['presentation_text'])
+  # Coverage status/notes are derived bookkeeping, not scientific meaning.
+  # validate_text_plan still rejects missing/conflicting/invalid coverage.
+  inventory['channels']={surface:{k:v for k,v in obj(channel).items() if k not in ('status','note')}
+                         for surface,channel in obj(inventory.get('channels')).items()}
   inventory['items']=[{k:v for k,v in obj(item).items() if k not in ('position','time_range','user_approval','graphic_source','graphic_sha256')} for item in seq(inventory.get('items'))]
   result['presentation_text']=inventory
  if 'delivery_scope' in data:result['delivery_scope']=data['delivery_scope']

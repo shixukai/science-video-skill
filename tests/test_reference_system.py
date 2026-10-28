@@ -260,7 +260,7 @@ class ReferenceSystemTests(unittest.TestCase):
             ("references/production-checkpoints.md", "quality-acceptance.md#失败后的处理"),
             ("references/quality-acceptance.md", "production-checkpoints.md#逐段声画与图内文字对应"),
             ("references/quality-acceptance.md", "production-checkpoints.md#3-阶段推进与代表样"),
-            ("references/quality-acceptance.md", "#记录与技术检查"),
+            ("references/quality-acceptance.md", "#自主解释与表达审查"),
         )
         registry_path = self.root / "indexes/standard-coverage.json"
         original_registry = registry_path.read_bytes()

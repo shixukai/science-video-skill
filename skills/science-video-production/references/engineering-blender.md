@@ -54,15 +54,23 @@
 
 ## 有界试制与可靠复用
 
-- 进入动态视频制作时，风险代表段优先包含本片最容易出错的关系，例如定位、抽离、迎流、接口与剖开；漂亮的静态特写不足以覆盖这些动作。按 [已有阶段与质量证据](quality-acceptance.md#从小样到整片的证据) 审查，不另增一套审批层。
-- 先用便宜的几何/依赖诊断和小尺寸实际渲染定位问题，再批量高质量输出；近景先看是否被机匣或前景件挡住、目标结构是否入画。固定相机、显示组与光照后才做同条件前后对照，条件变了就重建受影响的基准，不重复渲染未变化的有效基准。
-- 重复件大量增加、逐个建模操作使构建明显变慢时，优先共享网格/实例或批量数据构建；需要独立变形的部分再分件。性能改法仍须保持装配角色、实际求值几何和可编辑性，不用减少必要结构或跳过实图检查换速度。
-- 在单集工程固定实际构建代码、`.blend`、引擎版本、相机/光照、渲染种子、帧范围、字幕与混音依赖，保留真实输出和版本摘要。冻结后改几何时生成新版本，不边渲染边覆盖同一来源。
-- 以依赖确定重渲范围：共同叶型或表面函数改变，所有引用它的装配、过桥、内部和气膜镜头都需复核。只修最后一张截图，不能消除其他镜头中的旧方向。
-- 复用原始帧须能核到同一实际场景、代码及渲染依赖、帧号与逐帧摘要。来源不符或不清楚时重渲受影响部分；带旧字幕/旧标注的编码画面不能充当无字原始帧再次烧录。
-- 图内指示按[精密技术标注的动态绑定](annotation-style.md#动态与对象绑定)：目标端使用同一场景/对象局部锚点的真实投影，标签避让与锚点跟踪分开；镜头运动、遮挡和切镜后核实际落点。箭头的头杆共用几何与方向状态，不能各自缓动后穿尖或错位。
-- 涉及视频剪辑时复用已经确认的完整旁白。必要的观察停顿可插在自然语义间隙，并同时更新镜头、字幕和标注时码；保留原始音频与实际剪辑记录，不截断字音，不为延长镜头逐镜重新生成另一套声音。
-- 全解码、帧数、音轨相关性、矩阵或几何数值只证明对应技术项；静帧抽查、连续运动与完整听验分别如实记录，不能相互代签通过。
+Use the existing G2/G3 workflow in three production passes; these are work products, not extra approvals:
+
+| Pass | Produce and check | Keep costly work out until |
+| --- | --- | --- |
+| Continuous motion preview | Use existing assets or adequate placeholders at normal playback fps. Include the opening context, transition and first topic observation; check camera path, object identity, occlusion, attention and timing with the available narration. Lower spatial/shading cost, not temporal sampling. | The route and adjacent-shot handoff work in continuous playback. Do not wait for polished geometry to discover a weak transition. |
+| Final-engine look development | Check representative final-resolution frames and a short continuous risk segment for structure, reflections, transparency, cut edges, fibers and temporal noise. Use the approved final engine and closest planned viewing scale. | The actual material/geometry risks are covered. Preview-engine success alone does not establish final appearance. |
+| Shot render and edit | Render only affected shots/ranges to original image sequences, then assemble with separate text/caption layers and the accepted voice track. Check the resulting joints and complete applicable audiovisual scope. | Existing G3 conditions are met before expansion; final quality still requires actual viewing/listening. |
+
+Keep one reusable asset source and a stable shot driver; store shot-specific camera, animation and frame parameters in the project. Build/import scenes once per process and update their states per frame. Repeated parts can share meshes/instances; retain required structure at the actual closest shot. Do not recreate whole assets or launch scripts for every label, camera or duration revision.
+
+Use the [global sequence executor](blender-execution.md) for suitable local intermediate frames: immutable input jobs, native frame ranges, exact-device selection, per-frame hashes, resumable output and separate build/render timing. Reuse an existing compatible executor where it already implements these behaviors. Existing task-specific safeguards remain applicable. A saved procedural scene must be baked or supplied with its actual state driver before background/farm rendering.
+
+Determine rerender scope from changed dependencies: common geometry/material changes affect referencing shots; camera changes affect the shot and its junctions; screen-text or audio changes normally require recomposition, not 3D rendering. Validate reused raw frames against their original scene/input/settings and frame hashes. Keep captions/titles/screen labels editable outside the raw 3D sequence; export actual object-anchor projections and visibility for [dynamic annotations](annotation-style.md#动态与对象绑定). Physical lettering or labels that must participate in scene lighting/occlusion can remain in 3D.
+
+Freeze code, assets, engine/settings and frame mapping before a batch. A changed source creates a new version; a retry with identical inputs verifies and resumes the original job. Keep historical outputs and failed attempts. Review unchanged evidence within its original scope instead of redoing it for bookkeeping; use the [context comparison](production-checkpoints.md#记录整理与增量复查) for triage. Newly exposed geometry, changed meaning, known failures and changed audiovisual joins still need the affected checks.
+
+Reuse the accepted continuous narration; place necessary observation pauses at semantic breaks and update picture, captions and annotations together. Measure preparation, scene build, render/write, edit and review separately. Technical frame/geometry checks do not certify actual appearance, science or hearing, and an optimization is not a measured speedup until comparable work has been timed.
 
 ## 3D 正片与系列封面分别设计
 

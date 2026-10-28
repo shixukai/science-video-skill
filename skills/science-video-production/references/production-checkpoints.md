@@ -253,7 +253,9 @@ G2核实际有声草排是否成立，G5按[E08–E12](quality-acceptance.md#自
 
 不可变环境、工具和模型来源核验可有条件复用：原记录须可读且绑定实际文件、校验值、版本、来源和原检查范围，并有可信未变依据；换文件、配置、解释器、加载路径或核验范围失效时，重查受影响部分。仅同名、曾经成功或复制旧回执不证明当前仍相同；缺少可信完整性依据时重新核实际文件。是否允许缓存复用还取决于当前冻结入口，入口要求现场重哈希时照做，不为提速绕过它。
 
-使用“已验证且不变的执行器＋每轮不可变参数和资产清单”，避免为每个候选重写硬编码入口。当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧/固定48帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。
+Use a stable verified executor with per-job immutable scene parameters and dependencies. For local Blender intermediate sequences, the [reusable runner](blender-execution.md) implements frame receipts, locking and verified resume; use compatible existing executors without rewriting launchers. Review changed code/dependencies or changed assumptions at the affected scope. Dynamic resource checks remain current, and executor completion is not a quality pass. Measured comparison is required before claiming time saved.
+
+当前附带两个有限候选适配器：[49帧原始无声 I2V](../scripts/bounded_i2v/README.md) 与 [Blender 三关键帧/固定48帧](../scripts/bounded_blender/README.md)。两者仅覆盖各自 README 的既有能力和授权范围，不能替换 render_gate、origin_guard、G3 或科学、美术与视听验收；条件图实际来源权利仍须独审，哈希不证明原创。冻结核心由不同候选配置复用；配置绑定实际输入、设计、权限、版本及有限参数，图节点、连接、argv 与资源边界不得因配置化而扩大。源码、依赖、权限或原审查假设改变时重新审受影响部分，不用旧签名覆盖新行为。已提供合成/离线测试；目标 Windows 的解析、编译、纯测试与真实 GPU 执行分别报告，不把离线通过称为生产通过，也不自动替换历史入口。未经实际比较不宣称节省时间；动态资源仍逐次现采。
 
 实际执行者身份由受控本地启动及锁证据绑定，不再要求云端逐轮抄写 holder 身份后等待手签；这不是取消独审或本地身份核验。 独审明确限定的动态绑定槽可在本地依据实际证据物化，静态源码、路径、范围不得替换；这不授权重启服务或扩权。核服务创建时间时保留 DateTime/DateTimeOffset 原有精度或解析带时区字符串，禁止经隐式字符串转换丢失小数秒；仍按精确 UTC ticks 匹配，不放宽容差。已有静态独审先完成，冻结入口在本地连续执行动态采集、资源检查与受限提交，避免人为跨端往返使快照过期。
 
@@ -262,6 +264,14 @@ Refresh applicable resource headroom, service identity, task ownership/queue and
 GPU utilization is telemetry, not a launch criterion. Do not block, wait for idle or select CPU solely because of an instantaneous value, historical peak, average load, unavailable telemetry or a self-imposed utilization ceiling. Do not substitute an invented used-VRAM ceiling, capacity margin, sample count or waiting period. A resource refusal must identify the applicable requirement, its source, the current observation and the concrete shortfall/error; an agent-written wrapper is not authority for its own threshold. Explicit user/host limits and validated task-specific executor requirements remain binding, but are not defaults for unrelated tasks.
 
 Preserve applicable capacity, process/service identity, queue, locking, unresolved-task and execution-budget checks. Actual OOM, device faults, verified capacity shortfalls or missing required evidence need appropriate handling; identify the affected check rather than reporting unknown telemetry as “GPU busy.” Keep the selected device and output settings; use an authorized CPU fallback only for a demonstrated capability/execution problem or an applicable explicit resource constraint, not an unsupported load claim. Do not stop another task. When no supported resource blocker remains, continue within the current authorization without inventing another resource approval step.
+
+### 记录整理与增量复查
+
+Keep science/logic review tied to meaning, scope, claims and viewing order. G1 includes text content, surface, purpose and required notices; layout/timing and actual media remain bound by their applicable later checks. Text-channel `status` and `note` summarize declared inventory membership and do not change G1 meaning. Invalid or contradictory inventory still fails structural validation; removing a scientific condition or changing a label is not bookkeeping.
+
+Before review, derive channel coverage once with `python <global-skill>/scripts/review_delta.py normalize-text episode.json episode-normalized.json`; this writes a new file and never marks a review passed. Compare versions with `python <global-skill>/scripts/review_delta.py compare before.json after.json`. Its changed-stage report is triage, not approval: verify actual source/media hashes, original review scope and outstanding failures before reusing evidence. A corrected status alone does not require a new scientific review; changes to actual words, mechanisms, shot order or required conditions do.
+
+Keep source identity, job ownership and the applicable launch checks before execution. Consolidate duplicate paperwork and automate derived fields; extensive copying/summary can follow the actual preview and feedback. Do not route every silent intermediate render back through the complete G1–G3 approval chain. New assembled samples/finals still use the phase entry. When hash semantics or global rules change, record explicit migration and references to still-applicable prior evidence; do not alter historical receipts or silently copy a pass onto changed media.
 
 ### 一次提交与最小恢复记录
 

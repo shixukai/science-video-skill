@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "job_id": "shot-motion-v1",
+  "purpose": "motion_preview",
+  "driver": "scene_driver.py",
+  "blender_executable": "",
+  "inputs": [],
+  "output_dir": "renders/shot-motion-v1",
+  "frames": "1:100",
+  "params": {},
+  "render": {
+    "engine": "CYCLES",
+    "device": "GPU",
+    "backend": "OPTIX",
+    "device_name": "",
+    "width": 960,
+    "height": 540,
+    "fps": 25,
+    "fps_base": 1,
+    "samples": 16,
+    "denoise": true,
+    "persistent_data": true,
+    "format": "PNG",
+    "color_mode": "RGBA"
+  }
+}
