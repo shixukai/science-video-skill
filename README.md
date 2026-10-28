@@ -1,84 +1,42 @@
 # science-video-skill
 
-面向普通大众自然现象、生活科学与工程解释的制作Skill。当前系列交付画面只用自行AI生成、自建模/渲染、自设计解释画面或已核实授权的用户自拍，第三方公开视频仅研究参考；规范采用不代表任何成片已通过或可发布。
+面向自然、生活、工程科学与工业制造的科普视频制作 Skill。当前版本1.6.9；具体修订以Git提交为准。
 
-当前版本 **1.6.9**（2026-10-27）：合并本地制作流程优化与冲突清理，保留1.6.5–1.6.8的原创来源校验、有界执行核心和恢复保护。
+- **写实 → MoneyPrinterTurbo，3D动画 → Blender**。主体风格决定主工具；模型生成、字幕和编码作为辅助环节。
+- **只有一个全局生产安装**。项目只保存数据和规则哈希锁，不复制Skill；维护源码不作生产入口。续做先读全局差异并显式迁移，保留旧执行记录。
+- **开场先有情境和观看理由**。从正文第一观察倒推开场，成对设计末句/末画面与正文首句/首画面，连续审看到第一观察兑现。主题与路线可自然合句，不为时间字段硬拆。
+- **工程制造讲完整链路**。输入、原理、关键过程、结果和验证按题目范围分章，真实讲解及观察需要决定片长。
+- **先样后片**。实际播放节奏验证主体、动作、声音和接缝；低帧率布局代理限内部使用。整片仍完整看听。
+- **精密标注与独立封面**。标注区分定位、方向和范围，尖箭头头杆连续且杆不穿尖；封面按本次所需比例独立构图并看手机缩略。
+- **声音可修可验**。复用认可声音，先试听开场与难句；错读、拖慢、断句及接缝按原因修复，源音轨与最终混音分别听验。
+- **当前系列原创视觉来源**。自行生成、建模/渲染、设计或已核实授权的用户自拍；第三方视频、论文影像仅供研究参考。
 
-- 入口按策划、3D资产、视频、封面与发布分流；严格按成片风格分流：写实视频必须使用MoneyPrinterTurbo，3D动画必须使用Blender；工程/自然题材不改变对应关系，本地视频模型仅为写实路线准备所需素材。已有授权不重复询问，Skill不预授未来安装、收费或发布权限。
-- 只保留一个全局生产安装：项目副本归档清理，维护源码不作为生产入口，`render_gate.py lock/run`会在执行前拒绝非全局目录。
-- 可观看短样先验证应用场景、语速、主体细节与连续运动；低帧率代理限内部用途，静帧/技术通过不能抵消用户指出的观感失败。
-- 规则只保留能指导制作的动作、参数、示例和失败处理；清理研究综述、方法背书与重复免责声明。
-- 完整开场用具体情境、可见看点与观看承诺引出主题；补齐[开场到正文的声画桥接](skills/science-video-production/references/viewer-retention-design.md#把开场接成正文的第一项观察)：成对设计开场末句/末态与正文首句/首项观察，按任务选择整体到局部、成品回溯、匹配剪辑或声音桥接，连续短样验证，不用固定秒数、炫技转场或再播预告替代。
-- 工程科学、工业生产和高端制造优先讲清本题全链路；视频可按完整讲解、工序演示和观察需要延长，分章衔接，单次生成时长不限定整片长度。
-- 统一已确认的[精密技术标注](skills/science-video-production/references/annotation-style.md)：独立横版参数、清楚字阶、准确锚点与稳定跟踪，区分定位/方向/范围；默认直箭头用单一闭合轮廓，避免圆头穿尖。同步更新可编辑明暗示例与实际观看要求，历史插画/字幕参数不覆盖新标注。
-- 明确封面成品标准：系列精细插画、大主体与短标题问题、工程结构和材质、双比例独立构图、手机缩略和系列实图对照；长片封面承诺须由正片实际覆盖。
-- 统一1920×1080默认画幅，历史2D资产仅用于适用范围；首次试制可绑定实际看过的风格参考，无需伪造已认可成片。
-- 增加`roughcut`阶段与执行合同版本2，核G1后生成有声草排；`sample`无需已有G3，`full`仍核G3。草排占位画面仍登记真实媒介和原创来源。新草排回执绑定真实执行、输出、镜号顺序和当前计划；后续美术及审查记录不会无故使G2失效。
-- `delivery`止于本地G5质量验收，`publish_ready`核G6，发布后才核G7读回；支持有说明的`video_only`及明确的单一封面比例，来源校验同步遵守该范围。
-- 用户明确指定的基础题目保留原题；观察停顿由实际语义审查判断，默认秒数用于触发复查；科学AI主题与生产水印分开核对。
-- 用生成的章节导航替代重复条款索引，正文保持唯一规则来源；补充范围、来源、启动流程与导航回归，并固定跨平台文本换行以稳定文件摘要。
+本轮统一开场、转场、画面、声音的制作动作和退回条件，删去重复解释、工具百科和无操作用途文字；修正旧2D、旧冻结版本及题材偏置。正文和脚本契约保持对应，实际媒体结果仍由对应看听记录确认。
 
-版本与迁移：新任务使用唯一全局安装及`execution.contract_version=2`；项目只保存规则哈希锁，不再复制Skill。已有任务续做先读取全局规则，明确记录迁移并重核受影响证据；历史副本归档取证。旧回执不能仅刷新哈希后冒充新版执行。本次不创建或恢复任何生产视频，也不证明实际声画验收。
+## 使用入口
 
-1.6.8：删除GPU利用率百分比准入限制及其配置、标签和回归假设。利用率仅供观测，不单独阻塞任务；实际容量、进程身份、唯一执行、冲突任务和质量要求保留。旧冻结回执只作历史，不作为新执行规则。
+从[SKILL.md](skills/science-video-production/SKILL.md)按本次委托读取所需正文。新作默认1920×1080；历史2D与竖版参数仅用于明确适用的范围。视频交付止于G5；平台准备和发布仅在任务覆盖时进入G6/G7。
 
-1.6.7：将已验证的 Blender 固定48帧连续模式与服务时间精度修复收敛到原有单一执行核心，保留三关键帧兼容、严格身份与范围检查。实际 Windows 有界执行已核48张原始PNG、正常进程退出与原生生命周期；定向测试和精度断言另有验证，不把原生生命周期计时称为纯GPU耗时、全链路提速或G3视听验收。新增公开合成日期测试的静态等价审查不冒充该测试文件在Windows实跑。
+| 要解决的问题 | 正文 |
+| --- | --- |
+| 原题、全链路与开场 | [主题契约](skills/science-video-production/references/topic-contract.md)、[开场与转场](skills/science-video-production/references/viewer-retention-design.md) |
+| 实际工具与执行阶段 | [工具路由](skills/science-video-production/references/tool-routing.md)、[制作检查点](skills/science-video-production/references/production-checkpoints.md) |
+| 画面、标注与封面 | [视觉系统](skills/science-video-production/references/visual-system.md)、[精密标注](skills/science-video-production/references/annotation-style.md) |
+| 声音 | [语音与听验](skills/science-video-production/references/voice-reference.md) |
+| 失败和验收 | [质量验收](skills/science-video-production/references/quality-acceptance.md) |
+| 3D资产复用 | [Blender与素材库](skills/science-video-production/references/engineering-blender.md) |
 
-1.6.6：增加有界 I2V 与 Blender 固定执行核心/候选配置、失败原样本留存及未知提交恢复保护；已通过云端合成回归与 Windows 无 GPU 合同验证：31 项 Python 合成测试（含两候选 CLI dry-run）、8 项 PowerShell 合成断言及 C# 编译，冻结源码前后不变；不宣称生产、原生 Job 生命周期或 GPU 运行验收，也未测量提速。保留并落实 [原创视觉来源契约](skills/science-video-production/references/science-and-rights.md#原创视觉来源契约)，逐镜设计/入口版本与输入输出、帧及审查证据可追溯；公开、CC、Commons及论文影像仅研究参考，不作填充镜。不改写历史来源或批准，不降低写实、有声代表段独审及既有质量门槛。结构检查不证明原创或真实授权。
+脚本从全局安装调用。`render_gate.py lock/run` 拒绝非全局生产入口；`roughcut`用于G2，`sample`生成待审代表段，`full`才要求G3通过。新回执不用旧文件名，不刷新旧哈希冒充新版通过。私有媒体、账号和审查记录不提交本仓。
 
-1.6.4：新增[精确可控与高效迭代](skills/science-video-production/references/production-checkpoints.md#精确可控与高效迭代)通用制作规范。逐镜可见状态、固定基线与有界假设、静态证据条件复用与动态新鲜核验、分段计时、一次提交、审看反馈与恢复归档、受控服务复用及失败止损分别约束。未实测优化不宣称提质提速；不改1.6.3运行门禁，不扩大任何权限。
+## 维护检查
 
-1.6.4入口热修订（以提交标识区分）：仅修正已明确获准的有限静帧外观基准分支，原片可无音轨；仍核真实视频、完整原片哈希、时长、scope及实际帧证据。连续视听基准、有声代表段、G3/full与最终审查不变，不加静音伪造音轨。此为既有规范的实现纠错，不新增规范或另升语义版。
-
-1.6.3：强化[写实主画面硬约束](skills/science-video-production/references/realistic-production.md)。禁止2D、静图推拉、信息图替代写实主镜，非写实范围须具体批准；锁定风格参考，连续短样实看实听及独审先于扩片。区分AI写实与实拍，工具不保证科学因果；同步更新实际入口检查。历史2D参考只用于获准范围，不再作为全片默认。
-
-1.6.2（文档与逐镜工具选型更新）：按逐镜解释任务选择生成视频、可控3D或2D与实拍；同目标小样记录实际效果、时间和返工，字幕与证据标注后期合成。工具不是科学正确性保证，未测不宣称提速。保留既有质量关卡；安装更新仅作用后续新任务，运行任务保持冻结版本或明确迁移。
-
-当前Skill版本由系列配置标识；章节索引采用schema 2，仅记录责任正文、文件摘要和标题锚点，不复制规则或另创质量门槛。
-
-1.6.1更新：补齐有权平台选题与真实数据复核方法；未知/未更新零值、入口差异、热点活动和AI建议分开记录。加入普通成年人选题卡与制作前淘汰检查；机器只核声明完整性，不证明观众兴趣。加入实际Skill开工锁、先设计与认可成片对照、包住真实调用的样稿/扩片入口和独立完整审看听验。封面强制绑定已认可实图、独立横竖构图与手机缩略对照证据，覆盖封面单独交付及G5–G7；技术检查不代替真实美术审查。在既有主题、制作与验收章节整合真实好奇缺口、具体观看收益、逐段兑现和发布后留存复盘。支持问题或准确结论式主题导入，不固定每集句式或时长；内部审查与平台真实结果分别成立，不保证完播提升。
-
-- [入口与阶段路由](skills/science-video-production/SKILL.md)
-- [按场景调用动画、剪辑、字幕与演示工具](skills/science-video-production/references/tool-routing.md)：逐镜按解释目标与实际小样选工具；缺工具先查已有环境与当前授权，安装并验证后才声称调用成功
-- [工程类Blender与3D资产](skills/science-video-production/references/engineering-blender.md)：同源几何、连续定位、只读检索和可迁移归档
-- [视觉设计系统](skills/science-video-production/references/visual-system.md)
-- [动画场景详细设计标准](skills/science-video-production/references/animation-scene-design.md) 与 [雪花生长设计示例](skills/science-video-production/references/snow-crystal-scene-example.md)：主体状态、场景内容、镜头发现与连续审查；示例待评审，未制作验证
-- [持续观看的制作方法](skills/science-video-production/references/viewer-retention-design.md)：下一观察任务、关键发现、草排删改与结尾回报；内部表达审查与真实留存分开
-- [美术与画质记录模板](skills/science-video-production/assets/art-direction-template.md)
-- [当前系列配置](skills/science-video-production/config/series-profile.json)
-- [外部视频Skill选型与许可证](skills/science-video-production/references/video-skills-curation.md)
-- [中文语音调用与听验](skills/science-video-production/references/voice-reference.md)
-- [规则唯一归属](skills/science-video-production/indexes/rule-owners.json)
-- [待拍纸上示例](examples/blue-sky/brief.md)，不是已完成视频
-
-制作规范由责任正文维护，以适用的G1–G7记录、H/D策略、实际视听与内部解释审查区分阶段放行。项目数值与通用原则分开。私有设计板、媒体、账户和反馈不入公仓；公仓提供解释配方和可编辑技术示例；完整成品美术资产与设计板仍由项目按实际版本提供，不自动安装至全局。
-
-验证（从仓库根目录，Python3.11+、ffmpeg/ffprobe）：
+从维护仓库根目录运行，Python3.11+；涉及媒体的测试需要ffmpeg/ffprobe。按改动范围选择回归。
 
 ```bash
+python -X utf8 skills/science-video-production/scripts/rebuild_standard_index.py
 python -X utf8 skills/science-video-production/scripts/check_reference_system.py skills/science-video-production
 python -X utf8 -m unittest discover -s tests -t .
 python -X utf8 -m unittest discover -s skills/science-video-production/scripts/tests
 ```
 
-仓库测试使用包名发现，避免与随Skill携带的同名测试冲突；独立的随包测试另行发现。正文修改经审查后运行`python -X utf8 skills/science-video-production/scripts/rebuild_standard_index.py`重建导航。检查器拒绝缺失/冲突/过期记录，不会自动判断艺术、科学、听感或授权真实性；仍须实际媒体审查。旧计划可用于草排，旧交付须补齐当前适用要求。
-
-从仓库根目录检查并保存本地回执：
-
-```bash
-python3 skills/science-video-production/scripts/check_episode.py /path/to/episode.json --stage plan --report /path/to/plan-check-001.json
-```
-
-回执记录输入与检查资源摘要、错误和未验提示；目标必须是新文件，父目录须存在。它不改QA或签成片通过。G2/G3回执绑定实际草排/代表段媒体；使用旧版上下文的记录须按当前媒体重新核对，不能仅刷新哈希沿用旧结论。
-
-视觉制作包含风险代表样与同镜L2/L3校准、明度/边缘/细节主次、目的性留白、整片色彩与构图编排、主体分步精修、科学色义与光影分开控制、母版及最终编码细节对照。方法进入现有G2/G3/G5/G6记录，不新增审批或通用审美数值。
-
-历史2D范围参考为 [精细2D绘画式自然插画](skills/science-video-production/references/visual-system.md#已确认画风的视觉锚点)，随Skill携带仅作外观比较的参考图和 [三类美术任务规格](skills/science-video-production/assets/style/bright-nature.art-direction.json)。正式风格候选在交付前实际看图、并排对照和美术回查；配色参数与未批准标签都不代替主体、光影和材质完成度。G3还实际核对本地设计板文件及哈希，拒绝只填写两个一致的声明值。
-
-已有真实秒数分镜与媒体时，可生成静态审片页：
-
-```bash
-python3 skills/science-video-production/scripts/build_visual_review.py /path/to/episode.json --media renders/candidate.mp4 --output reviews/visual-v1
-```
-
-媒体及相对输出路径均以单集目录为根，输出必须是新目录。生成完整画幅抽帧、HTML、带版本摘要的manifest与逐文件证据列表；详见 [工具用法与限制](skills/science-video-production/references/shotbook.md#整片视觉抽帧工具)。生成材料不代表实际审看，也不替代连续声画或平台检查。
+章节索引只维护正文链接、摘要和锚点。`scripts/bounded_blender`、`scripts/bounded_i2v`的README维护各自有限执行范围和恢复方法；`third-party`保留原许可和固定版本来源。历史纸面例子与`references/learning-candidates`是待核研究记录，不作为当前制作许可或通过证据；历次变更见Git历史。

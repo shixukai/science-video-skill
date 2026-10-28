@@ -2,7 +2,7 @@
 
 本系列只保留一个全局可执行的 `science-video-production` 安装，以本次实际调用位置为准。默认在 `${CODEX_HOME}/skills`，未设置时为用户主目录的 `.codex/skills`；按SKILL的`name`定位，不能根据旧目录名猜版本。项目内禁止另装、复制或修改本Skill，不创建`rules/<skill>`、`skill-snapshot-*`、项目`.agents/skills`或`.codex/skills`副本。
 
-开始新片、续做或修复时先读取全局入口与本次路线正文，核当前用户要求是否已覆盖旧偏好。项目旧锁和历史制作记录证明当时用了什么，不能覆盖用户最新的写实/3D工具要求。写实片使用MoneyPrinterTurbo，3D动画使用Blender；不得因旧副本或工程题材重新分流。
+开始及续做先读取全局入口与本次路线正文，按用户最新要求核旧工程；旧锁只证明历史执行，不决定当前规则。
 
 ## 项目保存什么
 

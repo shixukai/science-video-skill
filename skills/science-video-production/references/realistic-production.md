@@ -1,16 +1,15 @@
 # 写实制作契约
 
-本页唯一负责主画面的写实要求、风格前置锁定与禁止替代；适用于写实风格视频及其修复；明确选择3D动画的项目按[Blender制作](engineering-blender.md)执行，可信结构、科学条件与连续性检查仍按实际镜头适用。科学与权利仍归[科学与素材](science-and-rights.md)，实际审看听验仍归[质量验收](quality-acceptance.md)，执行入口归[制作检查点](production-checkpoints.md)。旧纯2D条文及示例只在具体获准的2D范围内适用，不能覆盖本页或用户最新要求。
+写实风格视频及其修复按本页确定主画面与连续样段；3D动画按[Blender制作](engineering-blender.md)。科学与权利见[科学与素材](science-and-rights.md)，看听验收见[质量验收](quality-acceptance.md)。
 
 ## 主画面与工具边界
 
 写实风格指具有实拍观感的画面目标，不等于真实拍摄：对象身份、比例、材质、光向、空间、接触和动作在正常速度下可信，并与科学来源及适用条件相符。此类视频必须通过MoneyPrinterTurbo制作；素材需要生成时复用已确认的本地视频模型，用户自拍另核来源权利。工程题材也执行此路线，不能以结构精度为由自动改用Blender。3D动画即使采用拟真材质，仍归[Blender路线](tool-routing.md#按成片风格锁定主制作工具)。
 
 - MoneyPrinterTurbo是本路线必需的制作工程，不能只在文案中提及或仅运行文案功能；实际编排/合成须有输入、调用与输出记录。模型生成、FFmpeg编码等辅助步骤不能替代它，写实素材不足时不静默换成3D动画或纯2D。 交付视觉仍遵循[原创视觉来源契约](science-and-rights.md#原创视觉来源契约)：自行生成、自建模/渲染、自设计或已核实授权的用户自拍；第三方影像仅作研究参考。
-- AI写实必须清楚披露“AI生成，非实拍/观测”，3D模拟明确标为模拟；依科学与素材正文落实观众可见的配套披露与平台义务。片内新增标识仍遵守具体同意；若必要披露没有合规可用位置，先说明并取得具体批准，不隐瞒也不擅自叠字。
-- 视频模型不自然保证科学因果、结构、力学、接触次序或实验真实性。画面再逼真也须逐项核实际状态与来源；不能把模型输出当观测证据，不能用提示词声明代替输出验证。
-- SVG/Canvas/Manim等图形绘制、代码动画、图片工具输出或静图推拉不是视频模型生成。分别准确登记实际渲染器与来源，不用“AI辅助写代码”冒称已调用视频模型。
-- 简单2D动画、信息图、幻灯片、静图推拉、文字/箭头/粒子运动及漂亮背景不得替代写实主镜。精细2D仍不是写实视频路径的默认替代。
+- AI/3D如实披露生成/模拟，不能充当观测证据；位置按[生成内容声明](science-and-rights.md#生成内容声明的实际发布步骤)及画内标识同意要求执行。
+- 逐项核输出中的结构、因果、接触次序与来源；提示词声明不能代替实际状态。
+- 代码动画、图片与静图推拉按实际渲染器登记，不写成视频模型生成；它们及文字/粒子/背景运动不能替代写实主体动作。
 - 机制可视化、剖面和辅助标注仅服务解释，不得悄悄占据主体画面或整段替换写实主体。需要非写实全幅机制镜头时，先说明具体镜头、时段、目的与偏离，取得用户具体批准；“机制需要”“技术更稳”或旧系列配置不构成批准。批准不降低科学、权利和实际视听要求。
 
 ## 写实画面的可观察标准
@@ -36,24 +35,25 @@
 4. 制作端与独立审查者实际正常速完整观看并听完对应有声样段，记录媒体哈希、时段、身份/材质/光影、动作连续性、科学偏差、声音和对引用的具体差距。未实看实听、看不到原媒体或只有技术检测时保持未验，不得写通过。独审不能由同一制作者换名字自签。
 5. 扩整片前，连续样片应满足现行G3及适用认可范围；已知失败先修复。修改主体、素材、模型、动作或构图后重验受影响证据。
 
-缺能力时准确说明缺哪种能力、已尝试的有权路径及可继续的局部工作，不静默降级交付。新例外需用户具体批准；未批准前只做合规设计、修复与局部验证。版本升级不自动批准扩片、发布或热切正在运行的任务；迁移时保留冻结旧版并重核受影响依赖。
+缺能力时说明具体缺口及已尝试路径，继续可独立完成的工作；新例外需用户对具体范围批准。续做按[全局迁移](global-skill-installation.md)核差异，旧锁与历史记录只供追溯，不恢复冻结Skill副本。
 
 ## 运行记录
 
-在私有单集记录设计、输入与审批证据，不把用户审片或项目细节提交公共Skill。实际入口的声明结构见本页下节；声明缺失、伪造、过期或与媒体不符均不放行。
+设计、输入、真实运行与审查记录存私有单集，缺失或与当前媒体不符时先补齐、修正。
 
 ### 声明结构与验证范围
 
-兼容既有记录的 `target: scientific_realism` 表示科学结构与视觉可信要求，不是主制作工具的风格分类；3D动画可沿用此值，不能据此改走写实路线。实际风格与工具按[工具路由](tool-routing.md#按成片风格锁定主制作工具)在简报和执行记录中说明；已有媒介检查不自动验证MoneyPrinterTurbo或Blender是否真实运行。
+兼容字段 `target: scientific_realism` 表示科学结构与视觉可信要求，3D动画也可使用；实际风格及主工具仍由[工具路由](tool-routing.md#按成片风格锁定主制作工具)确定。
 
 `design.visual_intent` 必须包含 `target: scientific_realism`、实际 `style_reference: {file, sha256}` 和非空 `scientific_constraints`。逐镜设计及运行冻结证据继续必需；已有认可成片或诚实的initial_style_reference首样基准按制作检查点二选一，引用文件存在不等于实际看过或获认可。
 
 每个所选镜头的 `shotbook.realism` 记录：
+
 - `role`: `main` 或 `explanation`。字幕与辅助标注是镜内图层，不登记成独立镜头。
 - `medium` 与实际 `renderer` 配对：`authentic_recording/camera`、`ai_realistic/video_model`、`three_d/three_d_engine`、`pure_2d/vector_renderer|raster_animation`、`static_pan/still_pan`、`infographic/vector_renderer|raster_animation`。
 - 已核实授权的用户自拍须以 `source_asset_id` 关联本镜 `asset_ids` 中的真实视频素材；素材种类为 `real_capture` 或 `real_observation`，保留来源、创作者、已核权利状态及依据/范围、实际视频文件与哈希。若另填 `shot.modality`，须与上述实际媒体一致：实拍 `real_footage`、AI `ai_generated`、3D `controlled_3d`、其余图形 `pure_2d`。
-- `scientific_basis`、`visible_motion`；写实媒体另需 `motion_kind: subject_motion`，AI/3D另需明确非实拍的 `disclosure`。文字声明只供一致性核对，不能自动证明输出或真实权利。
-- 非写实 `main` 或 `explanation` 须有 `exception: {shot_id, scope: nonrealistic_full_frame_shot, reason, user_evidence: {file, sha256}}`。证据必须是用户对该镜头实际范围的明确批准；泛化允许、制作者自述、其他镜头或旧偏好无效，机器不能认证内容，执行者必须读原证据核实。
+- `scientific_basis`、`visible_motion`；`authentic_recording`、`ai_realistic`、`three_d` 另需 `motion_kind: subject_motion`，AI/3D另需明确非实拍的 `disclosure`。文字声明只供一致性核对，不能自动证明输出或真实权利。
+- `medium` 为 `pure_2d`、`static_pan` 或 `infographic` 的全幅 `main`/`explanation` 须有 `exception: {shot_id, scope: nonrealistic_full_frame_shot, reason, user_evidence: {file, sha256}}`。证据必须是用户对该镜头实际范围的明确批准；泛化允许、制作者自述、其他镜头或旧偏好无效，执行者须读原证据；已明确选定的Blender 3D镜头不填此例外。
 - 不接受独立镜头改名为 `auxiliary` 规避全幅替代检查：现有镜头时间轴互不重叠，另一个写实镜头的存在不能证明本镜保留主画面。普通字幕/标注沿现有镜内字幕与图层记录即可，不因本条被误拒。
 
 扩片时，`qa.visual_frames.animation.viewing` 须绑定实际连续有声代表段，范围为 `representative`，保留既有媒体、SHA-256、观看/听验及时间证据，审查者须独立于 `brief.roles.producer`；同一动画记录附 `independent_review_evidence: {file, sha256}`。已有G3和输入冻结检查不变。缺少适用证据时先补齐，再扩片。

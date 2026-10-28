@@ -17,7 +17,6 @@
 ## 原题与科学
 工程科学/工业生产/高端制造的[全链路范围](../references/topic-contract.md#工程与制造题材的全链路和片长)与章节顺序；各环节输入、原理/操作、输出及衔接；关键难点/质量验证和待研究缺口；按解释需要暂估片长，实际配音/演示后更新：
 按 [主题契约](../references/topic-contract.md) 记录原题、问题类型、必答范围、首屏/口播/结尾映射及局部所属范围；复制topic-anchor-template并固定来源/哈希。
-候选的直觉预期、真实差异/待解释观察、核心答案、可视证据及条件；采用方案的 curiosity_gap / viewer_payoff / payoff_steps 引用正文范围和镜号，沿用 ending 回答（无可靠反直觉差异时用具体问题，不强造）：
 按 [科学与素材](../references/science-and-rights.md) 记录主张、依据、自产画面及已核实用户自拍/权利、实际选段与缺项：
 
 ## 视觉原创来源（待填写，非批准）
@@ -30,8 +29,8 @@
 
 ## 全局入口与先行短样
 - 全局Skill实际路径、版本及规则锁；已有项目与当前全局的差异、迁移记录和需重新实审项（不复制Skill）：
-- 开场应用对象与主画面如何对应；本期语速/停顿短样及实际听验范围：
-- 可观看连续短样的目标帧率、实际帧率与运动连续性、主体完成度；内部代理用途及不支持的结论；已知失败修复情况：
+- 本期声音样段、问题时码/修复、实际听验范围；开场设计见下节：
+- 可观看连续短样的目标/实际帧率、主体细节与运动观察；已知失败修复及复查：
 
 ## 固定引用
 - Skill提交/版本：
@@ -46,10 +45,10 @@
 
 ## 开场情境与观看理由
 按[开场编排](../references/viewer-retention-design.md#先建立情境和看点再进入解释)填写；完整新片适用，章节/局部修样沿实际范围。复用 opening 与动作卡，不新增批准。
-- 观众先看到的整体对象/场景、用途或必要背景；对应画面与口播，删去会失去什么：
-- 选用的开场看点及可制作的对应画面；真实难点/差异/疑问、科学依据、与原题的关系及看完所得；首项有效信息：
+- 首屏对象/场景与用途；对应主画面和口播：
+- 真实看点、科学依据及可制作的画面；原题/观看收益与首项有效信息，引用 curiosity_gap / viewer_payoff：
 - 开场末句与正文首句连写；第一观察/解释为何必要，前镜留下的对象/状态、后镜的观察落点与识别锚点，换尺度/时间/对象如何交代；所选切镜/声音衔接及实际工具可行性，引用 opening.visual_handoff 与动作卡，不另建表；实际口播及 shot_ids，未配音不编秒数：
-- G2实际有声草排的开场观察、是否缺动机或无效拖延、修订版本与既有QA引用；真实留存数据另记，不能预填提升：
+- 正常速度从首帧看听至正文第一观察的时段、卡点/修复与复看记录，引用G2现有QA：
 
 ## 整期草排与逐镜
 按 [制作顺序](../references/production-checkpoints.md) 写原题简短答案、必要前提、每个新增概念用途/可见对应、首遍编辑复述断点；记录逻辑内审、表达方案内审与实际作品内审。
@@ -58,7 +57,7 @@
 代表段：覆盖镜号/问题、实际有声文件/哈希、连续审看结果、退回/复查；局部认可的版本/时段/维度：
 文字清单：按 [删除测试](../references/visual-system.md#观众画面与交付记录) 逐条记文字/时段、观众当前理解任务、删去损失、保留或删改及配套落点；署名/披露另记义务依据、要求的呈现位置与实际落实位置：
 
-持续观看编排按 [制作细则](../references/viewer-retention-design.md)，在既有 payoff_steps / handoff / 动作卡中引用第一项有效信息、各重要段落新增所得与下一观察任务、关键发现的观察窗口、存疑段删改依据及结尾可认回的结果；计划、实际看听与真实留存分别记录：
+按[持续观看编排](../references/viewer-retention-design.md)在 payoff_steps / handoff 引用各段新增所得与下一观察任务、关键观察窗口和结尾认回的结果：
 
 ## 封面制作（仅本次包含封面时）
 按[封面成品标准](../references/visual-system.md#封面成品标准与工程制造题材)填写；本段是设计记录，实际审看沿 `qa.covers` 绑定，不预填通过。
@@ -72,7 +71,7 @@
 
 按 [质量验收](../references/quality-acceptance.md) 逐项写对象版本、证据文件/时点、结果与缺项；模板不重复规则正文：
 - 科学/权利：
-- 主题/内部解释与表达审查：好奇缺口、第一块有效信息、各段推进、结尾兑现的实际位置/首次卡点/修订；沿既有G1/G2/G3/G5记录（editor_reviewed不代表真实受众理解率或留存效果；可选真实反馈单记，已知fail不能覆盖）：
+- 主题/解释与表达：开场至正文、各段推进、结尾兑现的实际位置、首次卡点与修复，引用G1/G2/G3/G5现有记录：
 - 静态美术/完整画幅/文字/方向结构及L3参照差距：
 - 连续动作、全片整合及各自L3证据：
 - 完整音轨/混音/字幕与实际试听范围：
@@ -90,4 +89,4 @@
 
 ## 解释设计引用
 
-引用本页已有记录：主题锚点及 `required_scope`、`brief.audience_start`、`brief.understanding_targets`、`topic_alignment.coverage[].explanation_steps`、`topic_alignment.expression_cards`。审查引用 `qa.explanation_logic / expression_plan / explanation_review / expression_review`；进入G2后用实际有声草排更新时点。真实反馈仅记录已取得的原答及发现的修复项。
+引用已有主题锚点、`required_scope`、`brief.audience_start`、`brief.understanding_targets`、`topic_alignment.coverage[].explanation_steps` 和 `topic_alignment.expression_cards`；审查引用 `qa.explanation_logic / expression_plan / explanation_review / expression_review`。G2起按实际音轨更新时点。

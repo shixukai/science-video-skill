@@ -225,10 +225,39 @@ class OpeningAlignmentTests(unittest.TestCase):
         (self.root / 'review.json').write_text('{}')
         self.rejects('evidence hash stale')
 
-    def test_review_ranges_must_cover_entry_and_order_question_before_route(self):
-        for key, value in [('viewed_range_s', [1, 12]), ('question_range_s', [0, 13]), ('answer_route_range_s', [0, 1])]:
+    def test_review_ranges_must_cover_actual_entry(self):
+        for key, value in [('viewed_range_s', [1, 12]), ('question_range_s', [0, 13])]:
             old = self.review[key]; self.review[key] = value; self.save(); self.assertTrue(self.errors()); self.review[key] = old
         self.review['visual_handoff']['range_s'] = [1, 2]; self.save(); self.rejects('include actual opening entry')
+
+    def test_topic_and_route_can_share_or_overlap_a_spoken_clause(self):
+        # All references remain bound to the same synthetic reviewed media.
+        # This verifies interval handling, not actual semantic/listening quality.
+        for question, route in (([0, 6], [0, 6]), ([0, 6], [2, 5]), ([0, 6], [4, 8]),
+                                ([2, 6], [2, 6]), ([2, 6], [6, 9])):
+            with self.subTest(question=question, route=route):
+                self.review['question_range_s'] = question
+                self.review['answer_route_range_s'] = route
+                self.save()
+                self.assertEqual(self.errors(), [])
+
+    def test_route_starting_before_topic_still_rejected(self):
+        self.review['question_range_s'] = [3, 6]
+        for route in ([1, 2], [1, 5]):
+            self.review['answer_route_range_s'] = route
+            self.save()
+            self.rejects('actual topic entry must start no later')
+
+    def test_overlap_does_not_waive_range_bounds_or_actual_review(self):
+        self.review['question_range_s'] = [2, 6]
+        for route in ([2, 13], [5, 4], [2, 2]):
+            self.review['answer_route_range_s'] = route
+            self.save()
+            self.rejects('answer/route must be a nonempty bounded time range')
+        self.review['answer_route_range_s'] = [2, 6]
+        self.review['sources'][0]['actually_heard'] = False
+        self.save()
+        self.assertTrue(self.errors())
 
     def test_scoped_user_review_does_not_claim_assistant_listening(self):
         self.review['sources'][0].update(kind='user', reviewer='synthetic user')

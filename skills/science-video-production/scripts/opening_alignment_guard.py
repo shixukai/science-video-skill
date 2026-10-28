@@ -136,9 +136,9 @@ def validate_opening_review(checks):
     question = span(review.get("question_range_s"), "spoken question", viewed)
     answer = span(review.get("answer_route_range_s"), "answer/route", viewed)
     if question and answer:
-        # Legacy question_* names include an accurate conclusion-led topic
-        # entry. This checks ranges, not grammar or the truth of that entry.
-        need(question[1] <= answer[0], "actual topic entry must precede concise answer/route")
+        # A topic and its explanation route may share a spoken clause.
+        # Check their onset order without inventing separate utterances.
+        need(question[0] <= answer[0], "actual topic entry must start no later than answer/route")
     heard = obj(obj(qa.get("topic_alignment")).get("opening_voiceover"))
     for key in ("heard_question", "heard_answer_route"):
         need(concrete(heard.get(key)), "actual " + key + " required")

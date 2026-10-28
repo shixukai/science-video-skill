@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "ff12311c00bbdde5e01b131b1c49f4c8ddd68124eb613b6334ec3c2764457a38",
+      "sha256": "c050602819bdc81486c7cc17e35d67e22753ab4b25101dd07b37355e0e9795a9",
       "anchors": [
         "原题问题类型与交付范围不能在局部返工中丢失",
         "保存原始锚点",
@@ -24,7 +24,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "09022767c897b3ceb9c53c633aa7f676f6c554931a3540b107b50372ab24726b",
+      "sha256": "f03ef0013a886245bcd875b433b67fe0cf3b92731e1bc5ed7b52be6dd29d204b",
       "anchors": [
         "事实素材权利与制作声明",
         "原创视觉来源契约",
@@ -41,7 +41,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "cd13b2b3145921bdfd767cc909051cc8f89bb3345a3b3a8f5010f5907148f6a4",
+      "sha256": "6b47e4361f90bde78eabbd2669b31b82e9fa36dba33525fb4b0826596b76d150",
       "anchors": [
         "写实风格moneyprinterturbo-制作与本地模型素材",
         "开工模态锁定",
@@ -59,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "495cf8c3cc14d449b2883e917b3296b90ee4648f7a04979a66b802835e4d0b21",
+      "sha256": "9a9c637b544dba4d014a73bb5d685f187ab52c747ba9b4691fd965876860f781",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -92,7 +92,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "e8b71e9a14bb3df1628d1c4dc101347d3affeda29afd42a9272f086380b94552",
+      "sha256": "319a7548b63449b9ca2856050e535b77112e4561c0df7d4b0254c139dadf9b62",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
@@ -111,7 +111,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "4328ebfbcf8953839c0b46ad566b12f3d64820c5b6847985650791c1b1e8a0ec",
+      "sha256": "68a5e2c38d0e51eb7727a4095b5bebc01c6239670a8e5ba17ca970eac8a52cac",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -150,14 +150,14 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "a31d81b3a935e5bcc6a1d72fdb3bc29f644e1a97f80093934fc122902b9accb6",
+      "sha256": "ffe23e3a794eb0e16c476c43f85445f5932b5e239976cb216320b6f781cbc9e1",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
         "先区分缺失与不显著",
         "开工顺序动作意图先于精绘",
         "镜头内容的四种职责",
-        "十二项详细设计标准",
+        "场景设计检查",
         "把已有变化变成可读的证据",
         "把动作写到可以制作",
         "可交给制作-agent-的任务写法",
@@ -168,7 +168,7 @@
     {
       "owner_id": "visual",
       "file": "references/snow-crystal-scene-example.md",
-      "sha256": "6ee0bd84399aeef77c994eb01243138e74baf1c5c9760d91c001218b8f78daad",
+      "sha256": "876d5e067d67262c1fab622072887be5b7559ba96d62722f1db3d960a86bca66",
       "anchors": [
         "雪花生长场景与动作设计示例",
         "题目与科学范围",
@@ -183,7 +183,7 @@
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "ac435adbbae1bc8e8337894ba11e44a24f23db32a4fc2862c85c5be2bf0d4bb9",
+      "sha256": "0cff228aef144b9c0aa322482a99fc773639ed2b97961a2944712798f9797a44",
       "anchors": [
         "视频指示信息精密技术标注",
         "适用范围与确认",
@@ -197,7 +197,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "a2eaf237e3c70b90bcaa8f05e2aee09ca75bc6ef7213e3492da76cbd5fd5331a",
+      "sha256": "f533caf08b4dd2045bf683401b5759003a48f1f2b055e68edf0002aefa50d1b1",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
@@ -214,7 +214,7 @@
     {
       "owner_id": "shotbook",
       "file": "references/shotbook.md",
-      "sha256": "7ca9b69f52d7bbd87d91670260e1ee04edb0a998411abdbf0cdcbf9a14efca56",
+      "sha256": "6dfa03db1ea4fe9a0f69636ad75325c6550c8b71bf0b6b3ee7af739b6761b315",
       "anchors": [
         "从成品音轨到可复核的逐镜记录",
         "音频先行但不牺牲画面",
@@ -233,7 +233,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "009a158deb812d85b825e6b88c4ead05c4dc3e5499f2d73000d06825b97e51b5",
+      "sha256": "933fe39dcfaa42261e6322af88272aca7fae05f7077bcd6796cae76896db8736",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -256,7 +256,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-production.md",
-      "sha256": "710759693334254a9f2e2df6b70a5ef8fe4433dd17ed1d4da6617b1a65d968e8",
+      "sha256": "b4343a8a045c360369df3d32d247f9f753df3fd2f7ee632b06d51a1f0c61ac0d",
       "anchors": [
         "写实制作契约",
         "主画面与工具边界",
@@ -269,7 +269,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "1760f58ba0faa720ada82d20eba513b88db14d9f276c2e3f663a581c103a1d50",
+      "sha256": "7608cad6401491230e45fd14573fcf02523cfe7e1db050020d4563fe7942fcc7",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -288,7 +288,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "3b2c9ec72f2972bc431259c444228c6748a8801991a35082c68c211c1792246a",
+      "sha256": "7d0652b8d259145c39452dc99ba241024ea088466e2b230036ae48d05aeca053",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
@@ -305,9 +305,9 @@
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "ad11dd72f094f5121f6a8c13628305ec426db15f9df62648f0902829596187c9",
+      "sha256": "a229d70fa5bf7deaff9ff4db852d76a855e63bf7385906ebedbe7c533efb2e65",
       "anchors": [
-        "外部视频-skills选择采用点与使用边界",
+        "外部视频-skills采用点与许可",
         "已纳入的少量参考与生产路由",
         "优先参考的来源",
         "扩展检索中保留或排除的候选",
@@ -317,7 +317,7 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "0d6467a3f1e9aca94f727bf08b8625a01a10f652844a29d2fb11e082e067bb9a",
+      "sha256": "83931fbaaae5dd5214f2ccbf1226a4aeeb04f9ebfa1c93f08a58f5033e1cca14",
       "anchors": [
         "一个全局-skill项目只保存制作数据",
         "项目保存什么",
@@ -328,7 +328,7 @@
     {
       "owner_id": "render-evidence",
       "file": "references/render-evidence.md",
-      "sha256": "0d46d48744407985bed292b4aac3e2f894c46d51628c9e98552c97e980c09bac",
+      "sha256": "1be701bf44d11d423cb50c267083206f42e5520c90117d376f25b839b971babc",
       "anchors": [
         "渲染边界与取证副本",
         "透明度最后赋值前检查",
