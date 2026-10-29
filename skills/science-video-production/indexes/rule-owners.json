@@ -77,7 +77,8 @@
         "animation-scene-design",
         "precision-video-annotations",
         "process-state-and-test-result-visualization",
-        "chapter-orientation-and-attention-hierarchy"
+        "chapter-navigation-without-body-corner-headers",
+        "auxiliary-text-eligibility-and-readable-dwell"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",

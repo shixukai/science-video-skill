@@ -40,10 +40,10 @@
     },
     {
       "id": "precision-annotation-parameters",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "kind": "configuration",
       "file": "assets/style/precision-annotations.tokens.json",
-      "sha256": "d338eb3e5250164812689bec68bd2251d5e46f66bdb5ebf3dfac304376bf4b8e",
+      "sha256": "1e7eb988cba5324147969d2c2edccfc2c035bd1f8c3f0a37da045f2f071b5892",
       "status": "adjustable_series_baseline",
       "source": "Original project annotation settings",
       "rights": {
@@ -52,7 +52,7 @@
         "scope": "Project adaptation; verify actual font and media rights separately"
       },
       "use": "1920x1080 annotation appearance starting values; re-layout other aspect ratios",
-      "not_for": "Captions, covers, physical object colors, fixed readability gates or media approval",
+      "not_for": "Captions, covers, physical object colors, automatic readability or media approval",
       "approval_scope": "Confirmed style direction only; actual local contrast, tip geometry, readability and motion require review"
     }
   ]

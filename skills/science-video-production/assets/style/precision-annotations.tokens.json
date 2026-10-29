@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "precision-annotations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "series_style_baseline",
   "scope": "Scientific-video annotation appearance only; not captions, covers, scientific evidence or media approval. Values are adjustable starting points, subordinate to actual local contrast and viewing tests.",
   "reference_canvas": [1920, 1080],
@@ -44,7 +44,7 @@
   "motion": {
     "enter_ms_range": [180, 280],
     "exit_ms_range": [120, 200],
-    "hold": "Narration, reading and observation task; no universal fixed duration.",
+    "hold": "Use config/production-policy.json audience_text.auxiliary_reading and references/visual-system.md#正文辅助文字的使用与停留; transitions do not count toward stable reading time. Extend for the observation task.",
     "target_endpoint": "Exact tracked/projected feature; do not smooth away from the object.",
     "label_layout": "Stable screen-space region with hysteresis when repositioning."
   },

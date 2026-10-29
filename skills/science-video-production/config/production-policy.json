@@ -306,7 +306,13 @@
     "default_companion_purposes": [
       "ai_simulation"
     ],
-    "on_frame_disclosure_requires_specific_consent": true
+    "on_frame_disclosure_requires_specific_consent": true,
+    "auxiliary_reading": {
+      "owner": "references/visual-system.md#正文辅助文字的使用与停留",
+      "short_label_min_stable_seconds": 3.0,
+      "explanation_or_comparison_min_stable_seconds": 5.0,
+      "basis": "Editorial minimums for auxiliary text; extend for actual reading and observation. Not subtitle-word timing or automatic perceptual acceptance."
+    }
   },
   "voice_continuity": {
     "owner": "references/voice-reference.md#整期旁白连续性",

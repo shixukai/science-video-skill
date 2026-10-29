@@ -5,7 +5,8 @@
     "必须实际检查最终输出和所有文字/图形overlay来源，含底图内置水印；未知或覆盖不完整不能填pass。",
     "sources列id/kind/file/sha256；observed逐项列item_id/source_ids/text/surface/position/time_range及有图形时graphic_sha256。",
     "普通科学文字和字幕不需user_approval；标识同意存presentation_text.items，不在这里自签。",
-    "G5的cover_sha256绑定实际请求的当前封面；video_only为[]；静态封面时段[0,1]。本证据不证明机器OCR或人类审看已发生。"
+    "G5的cover_sha256绑定实际请求的当前封面；video_only为[]；静态封面时段[0,1]。本证据不证明机器OCR或人类审看已发生。",
+    "正文辅助文字按visual-system.md的用途与停留标准实看：在observation逐项注明item_id、连续完整稳定可读起止及正常速小屏读后定位结果；time_range含淡入淡出时不能直接充当阅读时间。检查左右上角无场景/工序抬头；未观察不填pass，不新增自签审批。"
   ],
   "status": "pending",
   "stage": "",

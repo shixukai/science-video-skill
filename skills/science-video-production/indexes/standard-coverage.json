@@ -112,7 +112,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "d8027f5cdcb2f8a16d62406258cd2aec0c9ac600120bf1c077f5cce8bc912e75",
+      "sha256": "cfa273e1b06e0bbe6520cb05cfccfe03c030be7d0cc2cd696ec793509bd47cd8",
       "anchors": [
         "视觉设计系统",
         "当前基准与引用",
@@ -126,6 +126,7 @@
         "整片色彩与构图缩略带",
         "后续横版与适度亲和化",
         "文字居中与运动",
+        "正文辅助文字的使用与停留",
         "观众画面与交付记录",
         "可见文字用途与制作辩解",
         "画内标识须有具体同意",
@@ -185,7 +186,7 @@
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "0cff228aef144b9c0aa322482a99fc773639ed2b97961a2944712798f9797a44",
+      "sha256": "91a53d303afa720f2288e854f725e5ca8927bd33ac280119ddd1094e114dd5f0",
       "anchors": [
         "视频指示信息精密技术标注",
         "适用范围与确认",
@@ -235,7 +236,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "933fe39dcfaa42261e6322af88272aca7fae05f7077bcd6796cae76896db8736",
+      "sha256": "c3d44ce0dddb352c1534cda7713e31d522fb7a58c131590ccad7000f0953a827",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
