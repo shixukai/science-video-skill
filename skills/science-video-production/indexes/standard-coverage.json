@@ -236,7 +236,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "dc25d6dd86f0066833e0cf6a41ab1105342a7b617116c3acb6c226cb86fdc116",
+      "sha256": "a74dfcc5ca7b7abe98c8a1754d9f366c63afe92e60d8988abfb88be0dc6c8a4e",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -308,11 +308,12 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "99de9cf04813dfad30e1c842f741e36a942f4f92cb67b2382f89b8eb89b096b3",
+      "sha256": "5bae46279e344489881b2ee80dad20a12de1eac8e6f30dd9c70dd3a63d02336a",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
         "本地执行最少传输与吞吐",
+        "review-media-without-repeated-uploads",
         "按需选择与应用证据",
         "逐镜选择与同目标小样",
         "blender-to-comfyui-pipeline-trials",
@@ -350,7 +351,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "980a1d17223e01a6f79e0004c618f0cf6f3fde529dc8298faf5a230a4cae0abc",
+      "sha256": "12cb8b2fbbd0dfbdaad14c260516632a5962453c42f90d35c3b0ff353cd2556d",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
