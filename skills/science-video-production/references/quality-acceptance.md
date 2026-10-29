@@ -50,7 +50,7 @@ Blender视频另核[场景背景与空间完成度](engineering-blender.md#blend
 
 G2完整有声草排、G3代表连续样段和G5最终完整导出分别核全时域。先正常速度连续看听，再屏蔽字幕/标题/装饰或只看主体ROI，核口播所需变化是否实际发生，标出每个完整语义段及最长无有效主体推进区间；跨镜、硬切、改字幕不重置该区间。机械每2秒切镜、加速片段或随机微动不修复失败。已有被否定版本沿失败台账保持失败，只有对应实际新导出重审才可关闭。
 
-`config/production-policy.json subject_motion` 中3.0秒无推进和1.6秒读图是复查触发起点，不是每秒必须运动的硬规则。过程镜头必须呈现承诺的状态发展；无目的停滞、仅靠装饰/切镜或把完整过程改名读图仍失败。科学上需要的观察、比较和结果停留可以更长，须实际正常速看听，说明观众在观察什么、时间为何必要及如何接回讲解；不能为达秒数伪造运动或压缩必要阅读。
+`config/production-policy.json subject_motion` 中3.0秒无推进和1.6秒读图是复查触发起点，不是每秒必须运动的硬规则。过程镜头必须呈现承诺的状态发展；无目的停滞、仅靠装饰/切镜或把完整过程改名读图仍失败。 过程解释在G2核动作如何引发对象响应和结果，G3须覆盖关键交互及最难状态变化；不能用转台、平移或慢爆炸小样代替该范围的动态完成度验证。正常速指出作用在哪里发生、哪个对象响应、结果怎样留下；缺失时按[共享状态与交互设计](animation-scene-design.md#工艺动作要留下可观察的结果)修复，沿现有QA复查。科学上需要的观察、比较和结果停留可以更长，须实际正常速看听，说明观众在观察什么、时间为何必要及如何接回讲解；不能为达秒数伪造运动或压缩必要阅读。
 
 `qa.shotbook.subject_motion`（G2）、`qa.visual_frames.animation.subject_motion`（G3）、`qa.visual_frames.subject_motion`（G5）分别记录 `status`、当前阶段 `context_sha256`、所审 `media_sha256`、实际 `roi_review`、五类 `excluded_motion_review` 和不可变 `screen {file,sha256}`。`spans` 按秒连续覆盖完整所审文件，每项有 `start/end/kind/subject/observation/narration_relation/evidence`；kind为 `subject_change`、`authentic_motion`、`purposeful_read` 或 `no_progress`，前两项须记录有依据的主体变化，停顿另记 `purpose/resume_evidence`。超过触发起点的purposeful_read在同一记录加 `hold_review={status:pass,reviewer,observation,evidence}`，绑定本条已有的当前媒体/上下文；整个语义单元确实只作观察或比较时用 `task_type=observation` 并附同样实审，讲过程的单元不能借此省略过程。`semantic_units` 同样完整连续覆盖，记录 `start/end/step_ids/spoken_point/progression_observed/evidence`，不得省略开头、结尾或无动作口播；G3覆盖所选解释步骤，G2/G5覆盖全部步骤。记录计算所得 `longest_no_progress_seconds`，不以平均帧差、运动总量、局部漂亮动作或高分抵扣最差区间。
 

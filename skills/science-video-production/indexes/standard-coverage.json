@@ -152,7 +152,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "a846c7c98c8dadd37fd87d2ee9a6f92868c6120c630bb2ccac45336b78bdc455",
+      "sha256": "2b0e1bbcfd7f3d6df9fd93aaf2469cfbaceee524f66ee1b1a18660a9ef25ee81",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
@@ -236,7 +236,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "c3d44ce0dddb352c1534cda7713e31d522fb7a58c131590ccad7000f0953a827",
+      "sha256": "dc25d6dd86f0066833e0cf6a41ab1105342a7b617116c3acb6c226cb86fdc116",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -272,12 +272,14 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "3d8a97ac5d572d500bbacfbce44c726c1a3c72e27520b086b2bd21557e2a91d4",
+      "sha256": "47200435a28f990adc949dfb5024a79753139d5515a7032604d2114e743b72e2",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
         "先认得出真实对象再解释内部",
         "blender-场景背景与空间完成度",
+        "人物绑定动捕与口型",
+        "按需选择人物工具",
         "同一几何与方位基准",
         "从整体连续进入局部",
         "爆炸图与剖切的选择",
@@ -305,7 +307,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "fc21e901e102d144b1188b353747ccaf0bbd9275772a5f53b1a38b3c58c2a997",
+      "sha256": "f67f7e799b23d5cef7b7c896f9587f04603d23a166e45af4f8b1a43c1956183b",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",

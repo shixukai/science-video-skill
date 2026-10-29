@@ -78,7 +78,8 @@
         "precision-video-annotations",
         "process-state-and-test-result-visualization",
         "chapter-navigation-without-body-corner-headers",
-        "auxiliary-text-eligibility-and-readable-dwell"
+        "auxiliary-text-eligibility-and-readable-dwell",
+        "shared-state-interaction-animation"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",
@@ -149,7 +150,8 @@
         "generic-library-reuse-and-coverage",
         "shared-library-standing-authorization",
         "deduplicated-asset-catalog-and-reuse-first",
-        "exploded-view-and-cutaway-selection"
+        "exploded-view-and-cutaway-selection",
+        "character-rigging-mocap-and-lipsync"
       ],
       "supporting_files": [
         "references/blender-execution.md"

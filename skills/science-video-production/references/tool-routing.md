@@ -74,6 +74,7 @@ Use a short paired trial when a neural redraw is a plausible improvement for the
 | --- | --- | --- |
 | 写实视频 | [MoneyPrinterTurbo流程](ai-generated-video.md) → 合成成片 | 显式素材顺序/裁切，复用完整旁白，核循环、字幕和发布副作用 |
 | 3D动画或独立资产 | [Blender制作](engineering-blender.md)；[查库脚本](../scripts/find_3d_assets.py) → 源工程、渲染镜头或资产 | 先查库；独立资产任务不造整期音轨或G3 |
+| 人物绑定、动捕与口型 | [人物表演](engineering-blender.md#人物绑定动捕与口型) → 可编辑角色/动作/面部曲线，或明确的生成视频层 | 按镜头需要启用，复用角色与音轨；骨架、蒙皮、重定向、接触及口型分别核，工具候选不等于已安装/实测 |
 | AI写实连续素材 | 当前本地视频模型/ComfyUI工作流 → 视频与调用记录 | 核视频节点、权重及实际输出；图片模型不算视频生成 |
 | 剪接、混音、转码、画幅 | `ffmpeg-skill` → 新媒体及检测结果 | 先核本机编码器/滤镜，保留源文件 |
 | 中文识别、字幕对齐 | 已准备的本地ASR/对齐引擎 → SRT/字幕版 | 对齐最终时间线，核中文模型及字幕渲染能力 |

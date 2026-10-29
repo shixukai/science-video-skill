@@ -29,6 +29,29 @@
 
 示例：讲设备整体用途，可先在有依据的安装/试验环境建立尺度，再进入仍有定位线索的结构近景；讲制造过程，可用适配的工位及真实输入/输出衔接工序，再在局部剖切中减弱外围；讲微观材料，可先交代宏观应用与载体，再用有边界的材料空间解释。示例是选择方法，不是固定片头或必须添加的设施清单。
 
+## 人物绑定、动捕与口型
+
+Enable this branch when a character's performance helps demonstrate an operation, interaction or explanation. Reuse a suitable local character, rig, actions and facial controls before building new ones. Choose the required output first: editable 3D performance belongs in Blender; generated face-video postprocessing produces a video layer. Follow the selected [production route](tool-routing.md#按成片风格锁定主制作工具) and the actual [source/usage requirements](science-and-rights.md); an available tool or animation library does not expand the allowed asset origins or external uploads.
+
+1. **Define the performance.** In the existing action card, name the character, target, gaze, action, contact/release events and resulting object response. Plan only the body, hands and facial detail visible at the closest shot. Reuse the same character identity and performance across camera cuts; a presenter need not speak or gesture continuously.
+2. **Rig and skin separately.** Check mesh topology, scale, axes, transforms and rest pose. Fit joint positions, create or correct the skeleton, bind deformation weights, and test the actual bending/turning/grasping poses. Skeleton generation alone is not skinning. Correct collapsing shoulders/hips, elbow/knee twisting, disconnected clothing and hand/object penetration before rendering; preserve the editable source rig and mesh.
+3. **Retarget and clean motion.** Map source/target bones, rest poses, units and root movement. Preserve the source fps, time origin and resampling map rather than silently treating every capture as 30 fps. Keep source motion separate from cleaned actions; correct foot sliding, ground contact, balance and held-object constraints. Body-motion recovery does not automatically supply reliable fingers, face or device operation. Bake the required actions/constraints for the actual batch-render path and test a different frame order when random-access evaluation is used.
+4. **Animate speech from the approved audio.** Reuse the current [voice track](voice-reference.md), then map audio-relative mouth cues to facial bones/visemes or relative shape keys at the project fps and offset. Use a language-compatible aligner or manually corrected cues; Chinese characters/subtitle timings are not one-to-one mouth shapes. Keep curves editable, blend neighboring mouth shapes, preserve pauses/closed lips, and combine jaw, lips, expression and gaze without double deformation. Audio or edit changes invalidate the affected alignment, not automatically the entire rig.
+5. **Test the real difficulty.** Use the existing G2/G3 sample to cover the planned close-up and difficult turn, occlusion, grasp/release or speech transition. Check deformation/contact in motion, watch normal-speed with the actual audio for synchronization, and inspect mouth/teeth/tongue clipping, identity, edge stability and silent sections. An idle pose, a walk cycle or one frontal talking still cannot validate these harder uses. Record actual observations and unreviewed ranges in the existing QA; tool completion is not performance approval.
+
+### 按需选择人物工具
+
+These are capability candidates, not preinstalled or production-validated claims. Select only what the shot needs, verify the current release and loaded dependencies, and run its representative use before expansion.
+
+| Need | Candidate and handoff | Selection detail |
+| --- | --- | --- |
+| Editable local rig | Blender [Rigify](https://docs.blender.org/manual/en/4.0/addons/rigging/rigify/basics.html), or [UniRig](https://github.com/VAST-AI-Research/UniRig#usage) for suitable meshes | Fit/generate the rig and bind/test skinning. UniRig separates skeleton and skin-weight prediction; check the actual release/checkpoint supports the required stages. |
+| Recover body motion from video | [GVHMR](https://github.com/zju3dv/GVHMR) → body parameters → conversion/retargeting to the character | Not a ready target-character FBX, finger or lip-sync service. Its [repository license](https://github.com/zju3dv/GVHMR/blob/main/LICENSE) limits use to educational/research/nonprofit purposes; required SMPL/SMPL-X and other models have their own terms. Choose a use-compatible alternative when these do not fit. |
+| External humanoid auto-rig/actions | [Mixamo](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html) → rigged character/action → Blender | External upload service, restricted to supported humanoids; confirm account availability, current usage/source rules and upload scope. It is not a local default. |
+| Rough audio-driven mouth cues | [Rhubarb](https://github.com/DanielSWolf/rhubarb-lip-sync#recognizers) → timestamped cues → character-specific mouth shapes | Default recognizer is English; language-independent `phonetic` can be tried for Chinese but has lower accuracy. Validate and correct it instead of claiming Chinese-specific alignment. |
+| Face-video animation or lip redraw | [LivePortrait](https://github.com/KlingAIResearch/LivePortrait#3-inference-) for image/video + driving performance; [LatentSync](https://github.com/bytedance/LatentSync) for video + audio | Outputs generated video, not an editable Blender facial rig or viseme curves. Record the generated layer and inspect identity, mouth, occlusions and temporal continuity. Check the exact weights/detector terms, not only the code license: bundled InsightFace model restrictions and version-specific capacity can affect use. |
+
+
 ## 同一几何与方位基准
 
 - 为需跨镜复用的实件保留一份几何来源，装配镜、抽离镜、剖切镜和结尾镜引用同一资产或同一组构建函数；不要分别重建“看起来差不多”的替身。
