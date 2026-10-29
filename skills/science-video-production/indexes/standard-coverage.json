@@ -308,7 +308,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "5bae46279e344489881b2ee80dad20a12de1eac8e6f30dd9c70dd3a63d02336a",
+      "sha256": "cb06bf5a4f2b2963843f615ba5319f82513caacd04ceec42c1100adbda241a36",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
@@ -351,7 +351,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "12cb8b2fbbd0dfbdaad14c260516632a5962453c42f90d35c3b0ff353cd2556d",
+      "sha256": "641e2d608823f0cc7f0b7c91c0c10b32ac412f121c853dae9bab69a1b490d671",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
