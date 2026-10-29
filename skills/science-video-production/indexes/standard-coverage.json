@@ -307,7 +307,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "f67f7e799b23d5cef7b7c896f9587f04603d23a166e45af4f8b1a43c1956183b",
+      "sha256": "99de9cf04813dfad30e1c842f741e36a942f4f92cb67b2382f89b8eb89b096b3",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
@@ -338,12 +338,25 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "83931fbaaae5dd5214f2ccbf1226a4aeeb04f9ebfa1c93f08a58f5033e1cca14",
+      "sha256": "e7a1ad907a310cabe78c259ddef766b3a2e33e8a99e2c56bfc1d4225c4f0860d",
       "anchors": [
         "一个全局-skill项目只保存制作数据",
         "项目保存什么",
         "清理已有副本",
         "可执行检查"
+      ]
+    },
+    {
+      "owner_id": "tools",
+      "file": "references/subagent-orchestration.md",
+      "sha256": "d1494725300c0ebb1819e921afc01384b3c81fc3947b7c8bfdfd0a86ce32d19c",
+      "anchors": [
+        "video-subagents",
+        "roles-and-ownership",
+        "shared-assignment-contract",
+        "scheduling-and-handoff",
+        "independent-review",
+        "installation-and-invocation"
       ]
     },
     {

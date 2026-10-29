@@ -25,8 +25,13 @@
 | 声音 | [语音与听验](skills/science-video-production/references/voice-reference.md) |
 | 失败和验收 | [质量验收](skills/science-video-production/references/quality-acceptance.md) |
 | 3D资产复用 | [Blender与素材库](skills/science-video-production/references/engineering-blender.md) |
+| 子代理分工、安装与调用 | [六个专业角色与主代理统筹](skills/science-video-production/references/subagent-orchestration.md)、[可安装TOML定义](skills/science-video-production/agents) |
 
 脚本从全局安装调用。`render_gate.py lock/run` 拒绝非全局生产入口；`roughcut`用于G2，`sample`生成待审代表段，`full`才要求G3通过。新回执不用旧文件名，不刷新旧哈希冒充新版通过。私有媒体、账号和审查记录不提交本仓。
+
+## 子代理
+
+主代理保留导演与整合职责，按需调用研究、视觉、动画、声音剪辑、本地执行、独立审片六个角色；定义数量不等于同时运行数量。角色从唯一全局Skill读取制作标准，模型与权限沿宿主设置。安装与自然语言调用示例见[协作说明](skills/science-video-production/references/subagent-orchestration.md#installation-and-invocation)。
 
 ## 维护检查
 

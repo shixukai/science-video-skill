@@ -85,6 +85,8 @@ Use a short paired trial when a neural redraw is a plausible improvement for the
 
 其他工具只在明确需求出现时查[来源与能力索引](../indexes/external-skills.json)，不照目录逐一安装。
 
+复杂任务有可独立推进的工作或需要独立审查时，按[子代理协作](subagent-orchestration.md)委派；主代理保留整体叙事与交付责任，本地执行者协调实际作业。角色定义不改变风格路由、制作阶段或实际工具权限。
+
 ## 交给子工具的任务
 
 交接主问题、镜头/语义段时码、前态与结束态、正式旁白及确认声音、适用画风/资产、画幅/fps、允许的文字和输出目录。产物回同一单集工程并接回完整旁白；镜头切换不重选声音或重新生成一句TTS。

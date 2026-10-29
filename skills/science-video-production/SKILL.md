@@ -65,6 +65,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 | 分镜、素材、版本和动作记录 | [逐镜记录](references/shotbook.md) |
 | 验收、未验、失败和修复 | [质量验收](references/quality-acceptance.md) |
 | 工具与可选方法 | [工具路由](references/tool-routing.md) |
+| 复杂任务分工、调用与独立审查 | [子代理协作](references/subagent-orchestration.md)：主代理统筹，按需调用研究、视觉、动画、声音剪辑、本地执行和审片角色；小修改直接完成 |
 | 留存编排或透明度/画幅故障 | 按需读[持续观看](references/viewer-retention-design.md)或[渲染取证](references/render-evidence.md) |
 
 [责任索引](indexes/rule-owners.json)和[章节覆盖索引](indexes/standard-coverage.json)只用于导航和维护，不复制规则或充当逐集检查单。历史案例与 `references/learning-candidates/` 中的未验证经验候选不是所有题材的固定镜头、阈值或通过证据。

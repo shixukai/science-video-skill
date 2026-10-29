@@ -168,11 +168,14 @@
         "global-rule-migration",
         "local-first-execution",
         "minimal-data-transfer",
-        "measured-local-throughput"
+        "measured-local-throughput",
+        "video-subagent-orchestration",
+        "personal-video-agent-installation"
       ],
       "supporting_files": [
         "references/video-skills-curation.md",
-        "references/global-skill-installation.md"
+        "references/global-skill-installation.md",
+        "references/subagent-orchestration.md"
       ]
     },
     {
