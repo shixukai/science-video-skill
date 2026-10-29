@@ -59,7 +59,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b7fc83796aad82b595a8192ae357ca4761cbb0b680deee4afd238adffada7f01",
+      "sha256": "775fd989b7d3a84cee0c48cf55e2655a612d42f6fe5edf247031a6c0f9831b42",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -272,7 +272,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "47200435a28f990adc949dfb5024a79753139d5515a7032604d2114e743b72e2",
+      "sha256": "a4d3d62832f38be5a5e9768742e981fe7a6245c693f6bcf76b6f57ea834ca560",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -294,12 +294,13 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "610531b4bfee5e7855628bf1143611416ce080b1dc77faa5d4785fcb1cf1f9cf",
+      "sha256": "60181f199adf8d5f9110bcc572b22dbaccd23d4ea2ff57fd901e5ee6e4ffa0a5",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
         "scene-adapter",
         "hand-off-raw-frames-to-the-edit",
+        "complete-a-repair-cycle-before-expanding",
         "device-ownership-and-recovery",
         "rendering-cost-and-scheduling"
       ]
@@ -349,7 +350,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "d1494725300c0ebb1819e921afc01384b3c81fc3947b7c8bfdfd0a86ce32d19c",
+      "sha256": "980a1d17223e01a6f79e0004c618f0cf6f3fde529dc8298faf5a230a4cae0abc",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

@@ -39,7 +39,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 | 标注 | 复用已确认[精密技术标注](references/annotation-style.md)及横版参数；区分定位引线、方向箭头和范围强调 | 尖端清楚、头杆连续且杆不穿尖；在实际缩放/遮挡/运动极值和小屏核目标绑定 |
 | 声音 | 按[中文声音](references/voice-reference.md)优先复用仍有效的认可主轨；新增合成按连续讲述，稳定音色与自然音区，起音清楚、句尾利落，先连听基准段、难句与接缝再扩合成 | 源轨与最终混音分别实听；语速认可不代音调连续通过。漂移或拖沓先修稿件、合成单元及处理链，不以统一响度或反复倍速掩盖 |
 | 封面 | 仅按委托制作，按[封面标准](references/visual-system.md#封面成品标准与工程制造题材)独立排版本次所需比例 | 原图、手机缩略及系列对照核主体、结构、标题和真实观看承诺 |
-| 先样后片 | 先以正常帧率的低成本连续预演核开场/转场，再做最终引擎细节样段；G2检查整期解释，G3核正式代表段后扩制。[Blender执行与复用](references/blender-execution.md) | 先修已知粗糙、卡顿、失焦和慢旁白；低帧率布局代理不作为用户判断观感的唯一样段；新整片仍完整看听 |
+| 先样后片 | 先以正常帧率的低成本连续预演核开场/转场，再做最终引擎细节样段；G2检查整期解释，G3核正式代表段后扩制。[Blender执行与复用](references/blender-execution.md)，局部动态修复按[完整周期](references/blender-execution.md#complete-a-repair-cycle-before-expanding)验证开合与接缝 | 先修已知粗糙、卡顿、失焦和慢旁白；低帧率布局代理不作为用户判断观感的唯一样段；新整片仍完整看听 |
 
 
 
@@ -65,7 +65,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 | 分镜、素材、版本和动作记录 | [逐镜记录](references/shotbook.md) |
 | 验收、未验、失败和修复 | [质量验收](references/quality-acceptance.md) |
 | 工具与可选方法 | [工具路由](references/tool-routing.md) |
-| 复杂任务分工、调用与独立审查 | [子代理协作](references/subagent-orchestration.md)：主代理统筹，按需调用研究、视觉、动画、声音剪辑、本地执行和审片角色；小修改直接完成 |
+| 复杂任务分工、调用与独立审查 | [子代理协作](references/subagent-orchestration.md)：主代理统筹，复杂制作/返工按独立任务实际委派适用角色，分别核角色载入、原生/备用调用与产物；小修改直接完成 |
 | 留存编排或透明度/画幅故障 | 按需读[持续观看](references/viewer-retention-design.md)或[渲染取证](references/render-evidence.md) |
 
 [责任索引](indexes/rule-owners.json)和[章节覆盖索引](indexes/standard-coverage.json)只用于导航和维护，不复制规则或充当逐集检查单。历史案例与 `references/learning-candidates/` 中的未验证经验候选不是所有题材的固定镜头、阈值或通过证据。

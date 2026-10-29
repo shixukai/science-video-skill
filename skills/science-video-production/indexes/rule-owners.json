@@ -151,7 +151,8 @@
         "shared-library-standing-authorization",
         "deduplicated-asset-catalog-and-reuse-first",
         "exploded-view-and-cutaway-selection",
-        "character-rigging-mocap-and-lipsync"
+        "character-rigging-mocap-and-lipsync",
+        "complete-cycle-animation-repair"
       ],
       "supporting_files": [
         "references/blender-execution.md"
@@ -170,7 +171,8 @@
         "minimal-data-transfer",
         "measured-local-throughput",
         "video-subagent-orchestration",
-        "personal-video-agent-installation"
+        "personal-video-agent-installation",
+        "video-role-dispatch-verification"
       ],
       "supporting_files": [
         "references/video-skills-curation.md",

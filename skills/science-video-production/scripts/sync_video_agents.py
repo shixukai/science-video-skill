@@ -137,6 +137,9 @@ def main(argv=None):
         if args.install:
             install(records, args.replace_existing)
         print(json.dumps({"mode": "install" if args.install else "check",
+                          "validation_scope": "definition_files_only",
+                          "runtime_discovery": "not_checked_by_this_helper",
+                          "runtime_invocation": "not_checked_by_this_helper",
                           "roles": public_records(records)}, ensure_ascii=False, indent=2))
         return 0 if all(row["status"] in ("current", "installed") for row in records) else 1
     except (OSError, ValueError) as exc:
