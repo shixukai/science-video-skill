@@ -305,7 +305,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "5545cfccd1179d18a1a213dfe798a3a88f4596ae1a77e99a0d30ae6e4cfed9bd",
+      "sha256": "249d8a1bccecdce7d69407c22f425aa137fd168cccceb35616ea0d53aab2c2b9",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
