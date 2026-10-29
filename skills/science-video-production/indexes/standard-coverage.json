@@ -305,13 +305,14 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "249d8a1bccecdce7d69407c22f425aa137fd168cccceb35616ea0d53aab2c2b9",
+      "sha256": "fc21e901e102d144b1188b353747ccaf0bbd9275772a5f53b1a38b3c58c2a997",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
         "本地执行最少传输与吞吐",
         "按需选择与应用证据",
         "逐镜选择与同目标小样",
+        "blender-to-comfyui-pipeline-trials",
         "调用前准备与安装",
         "场景选择",
         "交给子工具的任务",
