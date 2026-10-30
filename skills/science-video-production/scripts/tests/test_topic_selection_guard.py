@@ -192,4 +192,37 @@ class TopicSelectionTests(unittest.TestCase):
         self.assertFalse(any('topic selection' in e for e in errors)); self.assertTrue(errors)
 
 
+    def test_editorial_selection_requires_a_real_alternative(self):
+        for value in (None, [], 'another topic'):
+            self.card['alternatives']=value
+            self.rejected('alternative')
+
+    def test_alternative_needs_a_question_and_specific_reason(self):
+        for field in ('question','not_selected_reason'):
+            self.card['alternatives']=[{'question':'A different synthetic question','not_selected_reason':'Synthetic comparative editorial rationale'}]
+            self.card['alternatives'][0][field]='有趣'
+            self.rejected('alternative')
+
+    def test_selected_question_cannot_be_its_own_alternative(self):
+        self.card['alternatives'][0]['question']=' SYNTHETIC TOPIC QUESTION?! '
+        self.rejected('distinct question')
+
+    def test_duplicate_alternative_questions_are_rejected(self):
+        self.card['alternatives']*=2
+        self.rejected('distinct question')
+
+    def test_changed_comparison_requires_selection_review(self):
+        self.card['alternatives'][0]['not_selected_reason']+=' changed'
+        self.rejected('stale',False)
+
+    def test_explicit_user_topic_does_not_require_fabricated_alternatives(self):
+        (self.root/'request.txt').write_text('Synthetic explicit technical teaching request.',encoding='utf-8')
+        self.card.update(selection_origin='user_requested',user_request_reference='synthetic request',
+            user_request_evidence={'file':'request.txt','sha256':hashlib.sha256((self.root/'request.txt').read_bytes()).hexdigest()},
+            scope_reason='Explain the requested technical foundation to its specified audience')
+        self.card.pop('alternatives',None)
+        self.card['disqualifiers']=['specialist_only_hook']
+        self.assertEqual(self.errors(),[])
+
+
 if __name__ == '__main__': unittest.main()

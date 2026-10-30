@@ -21,6 +21,7 @@ def attach_topic_selection_fixture(data):
         'source_ids':[ident],'causal_visualization':'Synthetic objects visibly change under a controlled condition',
         'feasibility':{'materials_and_rights_plan':'Synthetic original drawing plan','method':'Synthetic layered 2D',
                        'constraints':'Synthetic scope limits; no real production','blocking_gaps':[]},
+        'alternatives':[{'question':'A different synthetic question','not_selected_reason':'Synthetic comparison of audience entry and visible payoff, not actual interest evidence'}],
         'interest_basis':'editorial_hypothesis','audience_evidence':[],'disqualifiers':[],
         'review':{'status':'selected','reviewer':'synthetic editor, not a real review','reason':'Synthetic test of selection structure only'}}
     refresh_topic_selection_fixture(data)

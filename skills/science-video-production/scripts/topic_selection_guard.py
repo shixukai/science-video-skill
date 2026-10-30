@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from datetime import date
 
 LIMITS = "Topic checks verify a declared editorial decision and its inputs, not real audience interest, scientific truth or production approval."
-DISQUALIFIERS = {"common_knowledge_only", "definition_only", "title_only_change", "asset_led", "unsupported_hook", "no_explanatory_payoff", "unvisualizable", "unfeasible"}
+DISQUALIFIERS = {"common_knowledge_only", "definition_only", "title_only_change", "asset_led", "unsupported_hook", "no_explanatory_payoff", "unvisualizable", "unfeasible", "specialist_only_hook", "no_viewer_entry"}
 
 
 def obj(x):
@@ -53,9 +53,21 @@ def validate_topic_selection(checks):
     if user_selected:
         checks.evidence(card.get("user_request_evidence"), "topic selection original user request")
         need(meaningful(card.get("user_request_reference")) and meaningful(card.get("scope_reason")), "user-requested topic needs original scope and explanation rationale")
-    preference_only = {"common_knowledge_only", "definition_only", "title_only_change"}
+    preference_only = {"common_knowledge_only", "definition_only", "title_only_change", "specialist_only_hook", "no_viewer_entry"}
     valid_reasons = isinstance(reasons, list) and all(isinstance(x, str) and x in DISQUALIFIERS for x in reasons)
     need(valid_reasons and (not reasons or (user_selected and set(reasons) <= preference_only)), "declared factual/feasibility disqualifiers block selection; editorial taste alone cannot veto a user-requested topic")
+    if not user_selected:
+        alternatives = card.get("alternatives")
+        need(isinstance(alternatives, list) and bool(alternatives), "editorial choice needs a feasible alternative question and comparison reason")
+        question = obj(obj(data.get("topic")).get("current")).get("question")
+        key = lambda value: "".join(c.casefold() for c in value if c.isalnum()) if isinstance(value, str) else ""
+        seen = {key(question)}
+        for raw in seq(alternatives):
+            alternative = obj(raw); candidate = alternative.get("question")
+            valid_question = meaningful(candidate) and bool(key(candidate))
+            need(valid_question and key(candidate) not in seen, "alternative must be a distinct question, not the selected question or a duplicate")
+            need(meaningful(alternative.get("not_selected_reason")), "alternative needs a concrete not_selected_reason comparing viewer entry, visual payoff or feasibility")
+            if valid_question: seen.add(key(candidate))
     refs = card.get("source_ids"); sources = seq(data.get("sources"))
     valid = isinstance(refs, list) and bool(refs) and all(isinstance(i, str) and i for i in refs)
     need(valid and len(refs) == len(set(refs)) if valid else False, "unique factual main-source IDs required")

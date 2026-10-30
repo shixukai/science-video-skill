@@ -279,7 +279,6 @@
             "sha256": ""
           },
           "entry_version": ""
-
         },
         "realism": {
           "role": "main",
@@ -1851,7 +1850,8 @@
         "reason": "",
         "context_sha256": ""
       },
-      "selection_origin": "editorial"
+      "selection_origin": "editorial",
+      "alternatives": []
     }
   },
   "design": {
