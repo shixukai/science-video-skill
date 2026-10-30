@@ -80,6 +80,49 @@ def parse_frames(value):
     return sorted(frames)
 
 
+RENDER_KEYS = frozenset((
+    "engine", "width", "height", "fps", "fps_base", "format", "color_mode", "threads",
+    "device", "samples", "persistent_data", "denoise", "denoiser", "max_bounces",
+    "noise_threshold", "backend", "device_name", "device_id", "color_management",
+))
+COLOR_MANAGEMENT_KEYS = ("display_device", "view_transform", "look", "exposure", "gamma")
+
+
+def validate_render_settings(render):
+    """Job settings are explicit; scene-specific settings stay in the scene/driver."""
+    if not isinstance(render, dict):
+        raise ValueError("render must be an object")
+    unknown = set(render) - RENDER_KEYS
+    if unknown:
+        raise ValueError("Unsupported job render setting(s): " +
+                         ", ".join("render." + str(key) for key in sorted(unknown, key=str)) +
+                         ". Supported job render keys: " + ", ".join(sorted(RENDER_KEYS)) +
+                         ". Color settings belong in render.color_management; other scene, "
+                         "material and light settings belong in the driver or baked blend")
+    if "color_management" not in render:
+        return
+    color = render["color_management"]
+    if not isinstance(color, dict):
+        raise ValueError("render.color_management must be an object")
+    unknown = set(color) - set(COLOR_MANAGEMENT_KEYS)
+    if unknown:
+        raise ValueError("Unsupported render.color_management setting(s): " +
+                         ", ".join(str(key) for key in sorted(unknown, key=str)) +
+                         ". Supported color keys: " + ", ".join(COLOR_MANAGEMENT_KEYS))
+    for key, value in color.items():
+        if key in ("display_device", "view_transform", "look"):
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError("render.color_management." + key + " must be a nonempty string")
+        else:
+            try:
+                finite = type(value) in (int, float) and math.isfinite(value)
+            except OverflowError:
+                finite = False
+            if not finite or (key == "gamma" and value <= 0):
+                raise ValueError("render.color_management." + key + " must be finite" +
+                                 (" and positive" if key == "gamma" else ""))
+
+
 def validate_spec(spec):
     if spec.get("schema_version") != 1 or not re.fullmatch(r"[A-Za-z0-9_.-]+", spec.get("job_id", "")):
         raise ValueError("schema_version=1 and a simple job_id are required")
@@ -93,6 +136,7 @@ def validate_spec(spec):
     if spec["purpose"] == "motion_preview" and frames != list(range(frames[0], frames[-1] + 1)):
         raise ValueError("Motion previews require every native frame; use lookdev for sparse stills")
     render = spec.get("render", {})
+    validate_render_settings(render)
     for key in ("width", "height", "fps"):
         if type(render.get(key)) is not int or render[key] <= 0:
             raise ValueError("Positive integer render." + key + " required")
@@ -401,7 +445,29 @@ def audit_blender_inputs(spec, bpy, evaluated=False):
 
 
 
+def apply_color_management(scene, color):
+    # Display changes can affect transforms, and transforms can affect looks.
+    # Omitted properties are inherited from the authored scene, with no style preset.
+    for key in COLOR_MANAGEMENT_KEYS:
+        if key not in color:
+            continue
+        owner = scene.display_settings if key == "display_device" else scene.view_settings
+        value = color[key]
+        try:
+            setattr(owner, key, value)
+            actual = getattr(owner, key)
+        except (AttributeError, TypeError, ValueError, RuntimeError, OverflowError) as error:
+            raise ValueError(f"Cannot apply render.color_management.{key}={value!r} "
+                             f"in this Blender/OCIO configuration: {error}") from error
+        matches = (math.isclose(actual, value, rel_tol=1e-6, abs_tol=0.0)
+                   if key in ("exposure", "gamma") else actual == value)
+        if not matches:
+            raise ValueError(f"render.color_management.{key}={value!r} was not applied "
+                             f"by this Blender/OCIO configuration (actual {actual!r})")
+
+
 def configure(scene, render, bpy, refresh_devices=False):
+    validate_render_settings(render)
     scene.render.engine = render["engine"]
     scene.render.resolution_x = render["width"]; scene.render.resolution_y = render["height"]
     scene.render.resolution_percentage = 100
@@ -411,6 +477,7 @@ def configure(scene, render, bpy, refresh_devices=False):
     scene.render.use_file_extension = True
     if "threads" in render:
         scene.render.threads_mode = "FIXED"; scene.render.threads = render["threads"]
+    apply_color_management(scene, render.get("color_management", {}))
     devices = []
     if scene.render.engine == "CYCLES":
         scene.cycles.device = render["device"]; scene.cycles.samples = render["samples"]
@@ -446,9 +513,19 @@ def configure(scene, render, bpy, refresh_devices=False):
             "color_mode": scene.render.image_settings.color_mode,
             "motion_blur": scene.render.use_motion_blur,
             "view_transform": scene.view_settings.view_transform,
+            "look": scene.view_settings.look,
+            "exposure": scene.view_settings.exposure,
+            "gamma": scene.view_settings.gamma,
+            "display_device": scene.display_settings.display_device,
             "persistent_data": scene.render.use_persistent_data,
             "cycles": {key: getattr(scene.cycles, key) for key in
-                       ("use_denoising", "denoiser", "denoising_use_gpu", "use_adaptive_sampling", "adaptive_threshold", "max_bounces", "seed")}
+                       ("use_denoising", "denoiser", "denoising_use_gpu", "denoising_input_passes",
+                        "denoising_prefilter", "denoising_quality", "use_adaptive_sampling",
+                        "adaptive_threshold", "adaptive_min_samples", "max_bounces", "diffuse_bounces",
+                        "glossy_bounces", "transmission_bounces", "volume_bounces", "transparent_max_bounces",
+                        "sample_clamp_direct", "sample_clamp_indirect", "blur_glossy",
+                        "caustics_reflective", "caustics_refractive", "seed", "use_animated_seed")
+                       if hasattr(scene.cycles, key)}
                       if scene.render.engine == "CYCLES" else None}
 
 

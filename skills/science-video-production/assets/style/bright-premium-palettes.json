@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "status": "candidate_start_points_not_media_approval",
+  "scope": "Original environment/design color roles only; preserve scientific meaning and real material/skin/nature colors.",
+  "color_space": "sRGB display-reference hex values; not unconverted scene-linear shader values",
+  "adoption": "Select an applicable direction and adapt to the actual subject; not a fixed series LUT, subject-category router or requirement to render all variants.",
+  "looks": [
+    {
+      "id": "LOOK_A",
+      "name": "明朗精密工位",
+      "use_when": "有真实依据的设备、制造工序、精密机构或装配环境。可对应写实或Blender路线，不自动切换工具。",
+      "palette": [
+        {
+          "hex": "#E7E2D7",
+          "role": "明亮暖灰墙面/邻近承载面；保持可见接缝与体积"
+        },
+        {
+          "hex": "#C7D6CD",
+          "role": "安静的低饱和灰绿环境面，与白壳/金属形成局部区分"
+        },
+        {
+          "hex": "#42675A",
+          "role": "有用途的中等明度结构面或设备外环境；避免整面变暗棚"
+        },
+        {
+          "hex": "#BD8A38",
+          "role": "仅在真实对象已有对应漆色，或确需的自设计强调层使用；不抢科学功能色"
+        }
+      ],
+      "palette_note": "以下为自制环境/设计层的sRGB视觉起点；不是科学对象强制色，也不是Blender场景线性数值或全片固定调色。",
+      "optional_accent": {
+        "hex": "#2D6CDF",
+        "role": "Small clean cobalt accent on a legitimately designed environment/graphic area; avoid competing with the observation target or existing semantic colors."
+      }
+    },
+    {
+      "id": "LOOK_B",
+      "name": "日光自然本色",
+      "use_when": "本题确属日间自然/生活场景，环境与现象允许明亮自然光。夜间、深海、发光或光谱现象按自身观察条件处理。",
+      "palette": [
+        {
+          "hex": "#D9E8ED",
+          "role": "有依据的天空/远处明亮空气或自制中性观察背景"
+        },
+        {
+          "hex": "#D0B58B",
+          "role": "有依据的土/木/承载面的温暖中性参照"
+        },
+        {
+          "hex": "#7D916B",
+          "role": "真实低饱和环境植被的参考色；以实际物种/光照为准"
+        },
+        {
+          "hex": "#4B6752",
+          "role": "仅必要的叶片/地形暗部；保留局部结构，不作整片暗滤镜"
+        }
+      ],
+      "palette_note": "是可选择的日光/载体色关系；真实生态、肤色、物种、液体与科学伪彩必须按依据保持，不把所有自然题材强套此色板。",
+      "optional_accent": {
+        "hex": "#DFA12F",
+        "role": "Small warm sunlit/carrier accent only when the actual scene supports it; retain natural subject colors."
+      }
+    },
+    {
+      "id": "LOOK_C",
+      "name": "清透材料观察台",
+      "use_when": "有依据的实验/材料/透明流体观察、陶瓷或局部剖切；适于机制近景与有实体承载的对照，不作为整片唯一空背景。",
+      "palette": [
+        {
+          "hex": "#DCE5ED",
+          "role": "明亮低饱和蓝灰环境面"
+        },
+        {
+          "hex": "#E5DDEA",
+          "role": "与蓝灰有区分的浅紫灰远侧面；用于真实空间转折"
+        },
+        {
+          "hex": "#EEE7D9",
+          "role": "温暖浅中性承载面，衬出透明边缘与颜色"
+        },
+        {
+          "hex": "#6D657D",
+          "role": "克制的中间明度结构/反射控制面；非全场暗背景"
+        }
+      ],
+      "palette_note": "浅蓝紫只组织自制的背景/载体；灯光尽量保持材料本色，避免彩色背景反射改变待比较样品的色义。",
+      "optional_accent": {
+        "hex": "#4C72D8",
+        "role": "Restrained cooler design accent outside color-critical sample regions; do not tint the specimen or its illumination."
+      }
+    }
+  ]
+}

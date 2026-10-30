@@ -14,7 +14,7 @@
     "style_reference_sha256": "d7a43878e348893804216aceca29004945d05b81e4c68abf934a8f0aa52c8a77",
     "style_reference_scope": "legacy_2d_only; not approval for realistic main footage",
     "lighting_material_standard": {
-      "owner": "references/visual-system.md#明亮风格与高级材质",
+      "owner": "references/art-direction.md",
       "target": "bright_clear_premium_material_finish",
       "applies_to": [
         "realistic",
@@ -23,7 +23,10 @@
       "direction_status": "requested_default; actual_sample_review_required",
       "material_identity_and_scientific_colors_preserved": true,
       "dark_context": "only_where_required_by_the_explained_phenomenon_or_actual_scene; keep_required_referents_legible",
-      "review": "existing_G3_and_G5_actual_media; statistics_and_parameters_do_not_approve_appearance"
+      "review": "existing_G3_and_G5_actual_media; statistics_and_parameters_do_not_approve_appearance",
+      "palette_start_points": "../assets/style/bright-premium-palettes.json",
+      "composition": "specific_observation_target; color_roles; meaningful_depth; quiet_supporting_background; no_texture_or_bright_spot_competition",
+      "cleanliness": "diagnose_sampling_grain_fireflies_shader_texture_aliasing_denoise_and_encoding_separately; no_default_film_grain"
     }
   },
   "medium": {

@@ -33,6 +33,12 @@ Keep the accepted narration and editable text/annotation source separate from th
 
 Use the existing editor or FFmpeg composition adapter to apply the delivery-size typography after resizing, then combine picture, captions, narration and sound. Preserve linear/color-transform handling for EXR rather than treating it as display-ready PNG. An ordinary text/layout correction reuses the same verified raw frames and anchor metadata; a voice edit reuses picture when timing still matches. New timing, camera, geometry or visibility can change the dependent ranges. Verify the recomposed frames and applicable audiovisual scope through the existing phase entry; frame reuse is not automatic review reuse.
 
+## Explicit color settings and actual readback
+
+The generic runner accepts only its documented `render` keys; an unsupported key is an error, not an applied setting. Optional `render.color_management` accepts `display_device`, `view_transform`, `look`, `exposure` and `gamma`; use enum names supported by the actual Blender/OCIO configuration. Absent keys inherit the authored scene. Explicit values are applied in order and read back; invalid/clamped/mismatched values fail before rendering. Do not put a flat `render.exposure` or invented material/light parameter in the spec and assume it works. Other scene, material, texture, light and output controls belong in the declared driver/baked scene. The receipt records actual color state plus available sampling, denoising and light-path diagnostic settings; it does not certify appearance.
+
+For [grain, shimmer and compression diagnosis](art-direction.md#画面洁净度先定位雪花感的来源), compare the local raw output and affected post-processing stages before changing quality. The `motion_preview` template is a technical preview, not a final-look preset. No universal sample/exposure/brightness pass line is implied. Existing frozen jobs keep their input/signature history; a changed executor or settings requires an explicit new job/migration rather than editing its old receipt.
+
 ## Complete a repair cycle before expanding
 
 For a motion defect, keep one owner responsible for the whole changed interval and its entry/exit joins. Identify the reproducible failure, intended state relationships and the next usable output before editing. A corrected still is diagnostic progress, not completion of that interval.
