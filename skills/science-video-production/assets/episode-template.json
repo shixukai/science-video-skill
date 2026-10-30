@@ -1911,6 +1911,10 @@
         "sha256": ""
       },
       "scientific_constraints": ""
+    },
+    "output": {
+      "width": 1920,
+      "height": 1080
     }
   },
   "template": true,

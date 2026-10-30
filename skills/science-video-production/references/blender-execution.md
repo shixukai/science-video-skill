@@ -27,6 +27,8 @@ An adapter for an existing `build_once()` / `set_state(index)` project should ca
 
 Screen labels, captions and titles normally stay outside the raw 3D image sequence. `set_frame` can return anchor metadata for the compositor: frame/time, stable object/anchor ID, pixel coordinates, depth and visibility. Derive coordinates from evaluated world transforms and the actual camera. For example, use `bpy_extras.object_utils.world_to_camera_view(scene, camera, world_point)` and convert `(x, y)` to `(x * width, (1-y) * height)` for a top-left image origin; test bounds, positive depth and any required occlusion separately. Projection alone does not establish visibility. Final typography and arrowhead/stem geometry remain editable in the overlay stage. Physical lettering on an object can remain in 3D when needed for that object's identity.
 
+正式帧和画质样段按[高清输出](quality-acceptance.md#高清视频输出)使用本片 `design.output.width/height`，并在实际渲染中核100%尺寸；合成与编码保持该目标。`blender-job-template.json` 的960×540仅是内部 `motion_preview` 起点，不能原样作为正式画质样段/成片配置；正式任务须明确覆盖宽高与本片帧率，并按真实风险配置采样，不把技术预演参数当正式画质。
+
 ## Hand off raw frames to the edit
 
 Keep the accepted narration and editable text/annotation source separate from the raw sequence. The edit records each source job/signature, verified frame files, source fps, selected native range and its destination timeline interval. A sparse patch replaces those exact frame numbers in the original sequence; it is not a shorter consecutive clip. Check the completed range for missing/duplicate frames before encoding at its recorded fps. Do not stretch picture or cut voice with `-shortest` merely to hide a duration mismatch.

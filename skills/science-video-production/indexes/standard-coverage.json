@@ -261,11 +261,12 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "1ce05e1261e1c00235c5f153fd4954a00ff4487b1825440142fefdaea2a31104",
+      "sha256": "0b3d99ccbdf4d26b913990c27249ce066da387df8f3267b3c7e1cd6685812082",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
         "用户观看版本与内部代理",
+        "高清视频输出",
         "可检查项目",
         "主体动态与长静帧",
         "方位映射与图形复用",
@@ -320,7 +321,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "ed0c34af0627df2f68bfec4ada0dffd4b4b731ab15b01cba02724ef113d2a846",
+      "sha256": "6a3e702cf6f57e0154bb395dfad47b3d4905252fac2e4f722671319eb2f45c09",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",

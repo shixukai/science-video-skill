@@ -24,7 +24,7 @@ class RenderGateTests(unittest.TestCase):
     def setUpClass(cls):
         cls.media_tmp = tempfile.TemporaryDirectory()
         cls.media = Path(cls.media_tmp.name) / 'film.mp4'
-        subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'color=c=blue:s=48x64:d=0.5:r=10',
+        subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'color=c=blue:s=1080x1920:d=0.5:r=10',
                         '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=mono', '-t', '0.5', '-c:v', 'libx264',
                         '-pix_fmt', 'yuv420p', '-c:a', 'aac', str(cls.media)], check=True)
 

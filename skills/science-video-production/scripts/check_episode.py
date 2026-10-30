@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from task_scope import cover_keys, validate_scope
 from opening_alignment_guard import check_opening_plan
 from cover_guard import validate_cover_review, LIMITS as COVER_LIMITS
-from stage_checks import Checks
+from stage_checks import Checks, validate_output_dimensions
 from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive, local_repair_scope
 
 
@@ -911,7 +911,10 @@ def check(data, root, stage):
             if not require(bool(videos), f"{key}: no visual stream"):
                 continue
             width, height = videos[0].get("width", 0), videos[0].get("height", 0)
-            require(width > 0 and height > 0, f"{key}: invalid pixel dimensions")
+            if not require(all(type(v) is int and v > 0 for v in (width, height)), f"{key}: invalid pixel dimensions"):
+                continue
+            if key == "video":
+                validate_output_dimensions(data, videos[0], require, "video")
             require(videos[0].get("sample_aspect_ratio", "1:1") in ("1:1", "N/A", "0:1"), f"{key}: normalize non-square pixels before checking layout")
             rotations = [s.get("rotation", 0) for s in videos[0].get("side_data_list", [])]
             rotations.append(videos[0].get("tags", {}).get("rotate", 0))

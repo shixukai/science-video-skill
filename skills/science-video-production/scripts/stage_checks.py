@@ -208,6 +208,26 @@ def context_sha256(data, gate):
    result['design']={k:v for k,v in result['design'].items() if k not in ('approval','actual_deviations')}
  return digest(result)
 
+def output_target(data,need,label='formal video'):
+ """Optional episode canvas, already bound by the existing design context."""
+ design=obj(data.get('design'))
+ if 'output' not in design:return None
+ target=design['output']
+ valid=isinstance(target,dict) and all(type(target.get(k)) is int and target[k]>0 for k in ('width','height'))
+ if not need(valid,label+': design.output must contain positive integer width and height'):return None
+ width,height=target['width'],target['height']
+ need(min(width,height)>=1080,label+': design.output short edge must be at least 1080 pixels')
+ return width,height
+
+def validate_output_dimensions(data,stream,need,label='formal video'):
+ """Technical dimensions only; no statement about visible detail or quality."""
+ target=output_target(data,need,label)
+ width,height=obj(stream).get('width'),obj(stream).get('height')
+ if not need(all(type(v) is int and v>0 for v in (width,height)),label+': ffprobe pixel dimensions missing/invalid; positive integer width and height required'):return
+ need(min(width,height)>=1080,f'{label}: actual {width}x{height} is below the 1080-pixel short-edge minimum')
+ if target is not None:
+  need((width,height)==target,f'{label}: actual {width}x{height} must match design.output {target[0]}x{target[1]} exactly')
+
 class Checks:
  def __init__(self,data,root):
   self.data=data;self.root=Path(root).resolve();self.qa=obj(data.get('qa'));self.errors=[];self.cache={}
@@ -234,8 +254,8 @@ class Checks:
   if not self.need(not Path(name).is_absolute() and p.is_relative_to(self.root) and p.is_file(),label+' evidence path missing/unsafe'):return None
   self.need(r.get('sha256')==file_digest(p),label+' evidence hash stale')
   return p
- def duration(self,path,require_audio=True,require_video=True,label='viewing media'):
-  cache_key=(path,require_audio,require_video)
+ def duration(self,path,require_audio=True,require_video=True,label='viewing media',formal_output=False):
+  cache_key=(path,require_audio,require_video,formal_output)
   if cache_key in self.cache:return self.cache[cache_key]
   value=None;probe=shutil.which('ffprobe')
   if not self.need(bool(probe),'ffprobe required for actual viewing interval bounds'):return None
@@ -243,7 +263,10 @@ class Checks:
    p=subprocess.run([probe,'-v','error','-show_format','-show_streams','-of','json',str(path)],capture_output=True,text=True,timeout=60)
    meta=obj(json.loads(p.stdout));value=float(obj(meta.get('format')).get('duration',0))
    self.need(p.returncode==0 and math.isfinite(value) and value>0,label+' duration invalid')
-   if require_video:self.need(any(obj(s).get('codec_type')=='video' for s in seq(meta.get('streams'))),label+' has no video')
+   if require_video:
+    videos=[obj(s) for s in seq(meta.get('streams')) if obj(s).get('codec_type')=='video']
+    if self.need(bool(videos),label+' has no video') and formal_output:
+     validate_output_dimensions(self.data,videos[0],self.need,label)
    if require_audio:self.need(any(obj(s).get('codec_type')=='audio' for s in seq(meta.get('streams'))),label+' has no audio')
   except (OSError,ValueError,TypeError,OverflowError,subprocess.TimeoutExpired):self.need(False,label+' unreadable')
   self.cache[cache_key]=value
@@ -256,7 +279,7 @@ class Checks:
   self.need(r.get('heard') is True and (listening_only or r.get('watched') is True),label+' actual viewing and listening required' if not listening_only else label+' actual listening required')
   if listening_only and 'watched' in r:self.need(isinstance(r['watched'],bool),label+' optional watched declaration must be boolean')
   if final:self.need(r.get('file')==obj(self.data.get('deliverables')).get('video'),label+' must bind final deliverable')
-  dur=self.duration(p) if p else None
+  dur=self.duration(p,formal_output=(scope=='representative' or final) and not listening_only) if p else None
   self.need(number(r.get('duration')) and number(dur) and abs(r['duration']-dur)<0.05,label+' duration must match actual file')
   ranges=r.get('ranges');cursor=0
   if self.need(isinstance(ranges,list) and bool(ranges),label+' continuous ranges required'):

@@ -280,9 +280,11 @@ from topic_selection_guard import validate_topic_selection, selection_context_sh
 
 
 def preflight(data, root, phase, shot_ids):
-    from stage_checks import Checks, check_stage
+    from stage_checks import Checks, check_stage, output_target
     c = Checks(data, root)
     c.need(phase in ("roughcut", "sample", "full"), "execution phase must be roughcut, sample or full")
+    if phase in ("sample", "full"):
+        output_target(data, c.need, "execution " + phase + " output")
     validate_topic_selection(c)
     from realism_guard import validate_realism
     check_lock(c); selected_design(c, shot_ids)
@@ -390,7 +392,7 @@ def run_render(episode, phase, shot_ids, output, receipt):
             result = subprocess.run(command, cwd=root, check=False)
             record.update(returncode=result.returncode, completed_at=now(), result="render_failed")
             if result.returncode == 0 and out.is_file() and not out.is_symlink():
-                probe = Checks(data, root); probe.duration(out)
+                probe = Checks(data, root); probe.duration(out, formal_output=phase in ("sample", "full"), label="execution " + phase + " output")
                 if input_snapshot(probe, shot_ids, phase) != inputs:
                     probe.errors.append("actual render input bytes changed during invocation")
                 if file_hash(episode) != record["episode_sha256"] or skill_snapshot()["tree_sha256"] != record["skill_tree_sha256"]:
