@@ -16,6 +16,28 @@
 - 公开产品资料可指导外形，不能由此声称自建模型是厂商官方 CAD、精确维修图或已验证的流场。外观接近、教学几何和工程仿真分别说明，来源、权利与适用限制留在 [科学与素材记录](science-and-rights.md)。
 - Check necessary structures in whole-object, medium and mechanism close-ups before surface polish. Give pipes, cables and passages real endpoints and interfaces. Distinguish materials through appropriate roughness and reflection response. For metallic mechanisms, controlled broad reflections can reveal curvature, edges and separations; adjust light size and direction so glare does not erase the interfaces being explained. Check these relationships at the target viewing size. Surface detail cannot conceal missing structural connections.
 
+## 明亮灯光与材质的实际执行
+
+沿[明亮风格标准](visual-system.md#明亮风格与高级材质)在本次实际相机、最近景别及最终引擎下完成，记录到现有场景参数、可编辑工程和美术审查，不另设一轮全项目试验。
+
+1. **先核形体与表层。** 核真实尺度、应用缩放、法线、接缝、必要厚度及与工艺相符的边缘过渡。对解释重要的轮廓和接口用真实几何；贴图不能补穿插、面片感或悬空。逐材质确定实际可见的是裸基材、氧化/涂层、抛光面还是粗糙表面，再设PBR响应。
+2. **让物体有光可反射。** 按需要布置面积主光、补光与环境反射：主光建立体积，补光使接口和暗部可读，反射形状说明曲率与表面，必要时以克制的边缘光分离背景。调整光的方向、形状和尺寸，不统一套固定灯数/功率；单一World环境过平或物体大面积反射到黑处时，要改光与反射场。只用符合来源规则的环境输入，不借第三方画面当背景。面积光形状与柔和阴影的依据见[Blender灯光手册](https://docs.blender.org/UATEST/manual/en/4.5/render/lights/light_object.html)。
+3. **分别制作材料。** 以下是按事实选择的起点，不是每镜必须凑齐的材质配额；节点与层次依当前引擎版本核查。
+
+| 实际可见表层 | 要呈现的差异 |
+| --- | --- |
+| 裸金属、加工金属 | 使用金属响应；通过受控反射表现曲面，粗糙度与加工方向服从表面处理。拉丝需要正确方向与尺度，不靠随机噪声 |
+| 漆面、粉末涂层、阳极/氧化表层 | 按实际涂层设计底色与表面反射；不能因基体是金属就把可见漆层一律设为裸金属。透明保护层仅在实际存在时加入 |
+| 工程塑料、橡胶、陶瓷 | 保持非金属表面及各自粗糙度/反射特征，用真实边缘、接缝和形体体现完成度；不统一涂亮油或改成镀铬 |
+| 玻璃、液体 | 核厚度、透射/折射及适用的折射率、表面粗糙度和吸收；避免透明件变成不明原因的灰白实体，真实气泡或波纹才添加 |
+| 碳纤维等复合材料 | 纤维方向、编织/纹理尺度与真实结构相符，表面树脂层按实际完成状态处理；黑色保留深度，用反射和背景分离显示形体 |
+
+PBR分层、粗糙度、金属与透射等含义见[Blender Principled BSDF手册](https://docs.blender.org/manual/sr/4.5/render/shader_nodes/shader/principled.html)。不要以相同参数覆盖性质不同的材料，也不把增加采样等同于完成材质设计。
+
+4. **校准颜色到最终输出。** 记录实际OCIO配置、工作/纹理色彩空间、View Transform、Look、Exposure及编码转换。颜色贴图与粗糙度/法线等数据贴图区分；线性EXR不是已显示映射的PNG，避免遗漏或重复显示变换。可在已核支持的环境中以AgX等适用变换保护亮部，再按目标校准明暗；不靠换一个Look或统一加曝光修整片。保持科学色义，检查SDR/Rec.709转换和像素范围，不能只补色彩标签。线性/显示工作流参见[Blender色彩管理](https://docs.blender.org/manual/en/4.4/render/color_management.html)。
+5. **在运动中交付细节。** 复用已有代表镜头，在相机/主体转动、最暗朝向、强反射角和透明重叠处检查；按本镜需求选支持所需反射、透射和间接光的最终引擎与参数。去噪不能抹掉细纹和接缝，采样、纹理过滤与编码不能产生闪烁或塑料化。对照工作母版和最终编码定位差异，再修对应环节；使用本地GPU、缓存和批处理提高吞吐，不预先牺牲材质和灯光质量。
+
+
 ## Blender 场景背景与空间完成度
 
 背景是本镜的空间、用途和观察条件的一部分，按与主体一致的成品标准设计。完整视频不能默认让所有对象悬浮在同一纯色/渐变底、无边地台或通用暗棚里，再只换相机、底色和字幕。先在既有场景设计卡中选定本段所需环境、参考依据、可复用资产和由整体进入局部的方式，不以“高级感”代替可制作的场景方案。

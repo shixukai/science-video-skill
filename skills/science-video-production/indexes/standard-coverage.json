@@ -113,9 +113,10 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "cfa273e1b06e0bbe6520cb05cfccfe03c030be7d0cc2cd696ec793509bd47cd8",
+      "sha256": "19d63c99136b49c06711b42c6139fe39b329ed158eb95aa28ac8148169d37beb",
       "anchors": [
         "视觉设计系统",
+        "明亮风格与高级材质",
         "当前基准与引用",
         "已确认画风的视觉锚点",
         "从视觉锚点到实际资产",
@@ -237,7 +238,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "a74dfcc5ca7b7abe98c8a1754d9f366c63afe92e60d8988abfb88be0dc6c8a4e",
+      "sha256": "6cf6ad6048bdead7cb153be80729b13892bdf14f6027b985e657eee72997802e",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -260,7 +261,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-production.md",
-      "sha256": "b4343a8a045c360369df3d32d247f9f753df3fd2f7ee632b06d51a1f0c61ac0d",
+      "sha256": "130445c40bb98d0b1e31e777e3f23fbeedb16bec8d00799cdec5105680bd6288",
       "anchors": [
         "写实制作契约",
         "主画面与工具边界",
@@ -273,11 +274,12 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "a4d3d62832f38be5a5e9768742e981fe7a6245c693f6bcf76b6f57ea834ca560",
+      "sha256": "ec98fc863d5321f12eafcab4f93ef5136b3436638ec2f93af820173d691060f6",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
         "先认得出真实对象再解释内部",
+        "明亮灯光与材质的实际执行",
         "blender-场景背景与空间完成度",
         "人物绑定动捕与口型",
         "按需选择人物工具",

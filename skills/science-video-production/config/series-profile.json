@@ -6,13 +6,25 @@
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "按成片风格制作：写实视频使用MoneyPrinterTurbo，3D动画使用Blender；结构、科学关系与连续动作可信",
+    "direction": "按成片风格制作：写实视频使用MoneyPrinterTurbo，3D动画使用Blender；默认明亮清晰、环境明朗、主体与暗部可读、高光有层次；材质按真实表层精细呈现，结构、科学关系与连续动作可信",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
     "art_direction": "../assets/style/bright-nature.art-direction.json",
     "style_reference": "../assets/style/accepted-style-reference.png",
     "style_reference_sha256": "d7a43878e348893804216aceca29004945d05b81e4c68abf934a8f0aa52c8a77",
-    "style_reference_scope": "legacy_2d_only; not approval for realistic main footage"
+    "style_reference_scope": "legacy_2d_only; not approval for realistic main footage",
+    "lighting_material_standard": {
+      "owner": "references/visual-system.md#明亮风格与高级材质",
+      "target": "bright_clear_premium_material_finish",
+      "applies_to": [
+        "realistic",
+        "three_d_animation"
+      ],
+      "direction_status": "requested_default; actual_sample_review_required",
+      "material_identity_and_scientific_colors_preserved": true,
+      "dark_context": "only_where_required_by_the_explained_phenomenon_or_actual_scene; keep_required_referents_legible",
+      "review": "existing_G3_and_G5_actual_media; statistics_and_parameters_do_not_approve_appearance"
+    }
   },
   "medium": {
     "mechanism": "realistic_main_with_scoped_explanation",
