@@ -94,7 +94,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "8c42c97d17b059682a20572498cc02b27e10a2fd813a8f50158542bdda57b9e3",
+      "sha256": "da5c1957cd04191574bf3d25c123ddcb7fbbaac799a123e2e9e2a30582eaa39f",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
         "先建立情境和看点再进入解释",
@@ -104,6 +104,7 @@
         "工程示例从应用走进芯片刻蚀",
         "先定位继续观看的阻力",
         "一段结束后为什么值得看下一段",
+        "用镜头关系表达按需使用蒙太奇",
         "把关键发现编排到声画里",
         "用草排决定顺序和片长",
         "结尾让开头的画面变得能看懂",
@@ -113,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "19d63c99136b49c06711b42c6139fe39b329ed158eb95aa28ac8148169d37beb",
+      "sha256": "186bb6cb3fc9ae3cb61675fe850c78f46ebb46da91561ae79b00bf0fb9b05a3b",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",

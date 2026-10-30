@@ -101,6 +101,18 @@
 
 先兑现当前观察再引入必要下一项；“接下来更惊人”“看到最后就知道”不能代替具体任务。 Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
 
+## 用镜头关系表达，按需使用蒙太奇
+
+先设计观众要观察的对象、变化及前后关系，再决定是否需要文字。整体定位 → 保留同一对象/参照进入局部 → 连续看关键变化 → 回到整体结果，通常用有动机的连续性剪辑即可；一次连续推近本身不等于蒙太奇。删去“这里在展示什么”这类句子后若无法定位，先修镜头与动作，不换成另一种标题框。
+
+蒙太奇通过有目的的镜头组合组织信息，常用于压缩时间或概括一段过程；参见[美国电影学会的剪辑说明](https://www.afi.com/news/what-is-film-editing-and-what-does-a-film-editor-do/)。在科普中按任务选择：
+
+- **压缩重复**：先完整展示并解释一轮关键动作，再选能显示阶段进展的镜头概括后续重复；保留工件身份、方向和阶段差异，让旁白/已有进度信息说明时间被压缩。不能用不相关机器快切代替过程。
+- **建立对照或并行关系**：让观众知道比较了什么、条件如何对应，或两条准备路线在哪里汇合。剪接相邻不证明因果，同时出现不证明真实同步；结论仍须科学依据和实际可见证据。
+- **承接尺度与动作**：用稳定位置、形状、运动方向或动作阶段连接视图；先让必要变化发生并被看懂，再切向结果或下一任务。切速由理解需要决定，不为“电影感”强制快切、闪白或音效。
+
+必要的“可能”、适用条件和示意/实证区别应在相关旁白、字幕或既有披露位置准确保留，不能因删图内文字把不确定性说成确定事实。沿现有动作卡、`handoff` 和编辑时间线记录对应关系；G2/G3/G5实看定位、状态变化和声画对应，不增加文字清单或新审批阶段。
+
 ## 把关键发现编排到声画里
 
 对真正承担解释的生长、对照、结构揭示或预测检验，先设计其可见兑现，再装饰镜头：
