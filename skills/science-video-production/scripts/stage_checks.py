@@ -183,7 +183,7 @@ def context_sha256(data, gate):
  if gate in ('G3','G4','G5','G6','G7'):
   from origin_guard import context_assets as origin_assets
   origin_shots = list(dependencies(data, True)[1]) if gate == 'G3' else [obj(s).get('id') for s in seq(data.get('shots'))]
-  result['origin_assets'] = origin_assets(data, origin_shots, final=gate != 'G3')
+  result['origin_assets'] = origin_assets(data, origin_shots, final=gate != 'G3', representative=gate == 'G3')
  if gate in ('G4','G5','G6','G7'):result['assets']=[a for a in seq(data.get('assets')) if obj(a).get('id') in used_asset_ids(data)]
  if gate=='G3':
   used,shot_ids,_=dependencies(data,True)
@@ -827,6 +827,12 @@ class Checks:
   validate_scope(self)
   validate_topic_selection(self)
   self.errors.extend(check_opening_plan(self.data))
+  from origin_guard import validate_origin, validate_origin_plan
+  origin_all = [obj(shot).get('id') for shot in seq(self.data.get('shots'))]
+  validate_origin_plan(self, origin_all, final=GATES.index(target) >= 3)
+  if GATES.index(target) >= 1:
+   origin_selected = list(dependencies(self.data, True)[1]) if target == 'G3' else origin_all
+   validate_origin(self, origin_selected, final=GATES.index(target) >= 3, representative=target == 'G3')
   n=GATES.index(target);gates=obj(self.qa.get('gates'));steps=self.causal();self.explanation_design(steps)
   action=self.record('visual_frames.animation').get('next_action')
   if n>=2:self.need(action in ('expand','repair_sample'),'G3 next_action must explicitly be expand or repair_sample')

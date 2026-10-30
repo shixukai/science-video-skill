@@ -6,10 +6,20 @@ def seq(value):
     return value if isinstance(value, list) else []
 
 
-def selected_assets(data, shot_ids, final=False):
+def selected_asset_ids(data, shot_ids, final=False, representative=False):
     from render_gate import input_asset_ids
     from stage_checks import used_asset_ids
-    ids = used_asset_ids(data) if final else input_asset_ids(data, shot_ids)
+    ids = set(used_asset_ids(data) if final else input_asset_ids(data, shot_ids))
+    # G3's declared three-scale visual dependencies live in the design record.
+    # They must not evade provenance simply because they are outside shot.asset_ids.
+    if representative and not final:
+        for frame in obj(obj(data.get('design')).get('keyframe_scales')).values():
+            ids.update(i for i in seq(obj(frame).get('asset_ids')) if isinstance(i, str))
+    return ids
+
+
+def selected_assets(data, shot_ids, final=False, representative=False):
+    ids = selected_asset_ids(data, shot_ids, final, representative)
     # Follow all declared visual parents. Unknown IDs are rejected by validate_origin.
     assets = [obj(a) for a in seq(data.get('assets'))]
     pending = set(ids)
@@ -25,19 +35,121 @@ def selected_assets(data, shot_ids, final=False):
     return [a for a in assets if a.get('id') in ids]
 
 
-def context_assets(data, shot_ids, final=False):
+def validate_origin_plan(checks, shot_ids, final=False, representative=True):
+    """Validate declared creation intent, without pretending future media exists.
+
+    This is the G1 contract only. Actual audiovisual gates and render entrypoints
+    still call validate_origin for output bytes, frame evidence and authorization.
+    Scientific literature URLs and unselected research assets are not visual inputs.
+    """
+    data = checks.data
+    allowed = ('self_generated', 'self_rendered', 'self_designed', 'user_capture')
+    methods = {'ai_realistic': 'self_generated', 'three_d': 'self_rendered',
+               'authentic_recording': 'user_capture', 'pure_2d': 'self_rendered',
+               'static_pan': 'self_rendered', 'infographic': 'self_rendered'}
+    checks.need(obj(data.get('origin_contract')).get('mode') == 'self_created_visuals',
+                'origin explicit self_created_visuals contract required; no legacy bypass')
+    for raw in seq(data.get('shots')):
+        shot = obj(raw)
+        if shot.get('id') not in shot_ids:
+            continue
+        book = obj(shot.get('shotbook')); origin = obj(book.get('origin'))
+        label = 'origin shot ' + str(shot.get('id'))
+        method = origin.get('planned_method')
+        checks.need(isinstance(method, str) and method in ('self_generated', 'self_rendered', 'user_capture'),
+                    label + ' self-created planned method required')
+        checks.need(meaningful(origin.get('entry_version')), label + ' entry version required')
+        medium = obj(book.get('realism')).get('medium')
+        checks.need(isinstance(medium, str) and method == methods.get(medium),
+                    label + ' origin method conflicts with actual medium')
+
+    assets = [obj(a) for a in seq(data.get('assets'))]
+    pending = list(selected_asset_ids(data, shot_ids, final, representative))
+    seen, graph = set(), {}
+    while pending:
+        ident = pending.pop()
+        if ident in seen:
+            continue
+        seen.add(ident)
+        matches = [a for a in assets if a.get('id') == ident]
+        checks.need(meaningful(ident) and len(matches) == 1,
+                    'origin visual dependency ' + str(ident) + ' needs unique upstream asset_id')
+        for asset in matches:
+            if asset.get('kind') in ('audio', 'font'):
+                continue
+            origin = obj(asset.get('origin')); category = origin.get('category')
+            label = 'origin asset ' + str(ident)
+            checks.need(isinstance(category, str) and category in allowed,
+                        label + ' third-party/CC/reference media is not self-created production visual')
+            checks.need(meaningful(origin.get('method')) and meaningful(origin.get('entry_version')),
+                        label + ' creation method and entry version required')
+            checks.need(isinstance(origin.get('inputs'), list),
+                        label + ' explicit input inventory required (empty only for no external inputs)')
+            conflicts = [a for a in assets if meaningful(asset.get('sha256'))
+                         and a.get('sha256') == asset.get('sha256')
+                         and obj(a.get('origin')).get('category') == 'third_party_reference']
+            checks.need(not conflicts,
+                        label + ' bytes also declared third-party reference; cannot relabel as original')
+            expected = {'ai_generated': 'self_generated', 'simulation': 'self_rendered',
+                        'real_capture': 'user_capture', 'real_observation': 'user_capture'}
+            if isinstance(asset.get('kind'), str) and asset.get('kind') in expected:
+                checks.need(category == expected[asset.get('kind')],
+                            label + ' creation category conflicts with media kind')
+            if category == 'user_capture':
+                checks.need(asset.get('kind') in ('real_capture', 'real_observation'),
+                            label + ' capture category conflicts with media kind')
+            parents = graph.setdefault(ident, set())
+            for raw_input in seq(origin.get('inputs')):
+                item = obj(raw_input); parent_id = item.get('asset_id')
+                valid_id = meaningful(parent_id)
+                checks.need(valid_id and parent_id != ident,
+                            label + ' visual input needs unique upstream asset_id, not self-reference')
+                if not valid_id:
+                    continue
+                parents.add(parent_id); pending.append(parent_id)
+                upstream = [a for a in assets if a.get('id') == parent_id]
+                parent = upstream[0] if len(upstream) == 1 else {}
+                parent_category = obj(parent.get('origin')).get('category')
+                checks.need(len(upstream) == 1,
+                            label + ' visual input needs unique upstream asset_id')
+                checks.need(parent_category in allowed,
+                            label + ' third-party or unclassified visual input cannot become original by rendering')
+                # Plans need no future file/hash, but supplied provenance cannot
+                # contradict an upstream record. Actual validation requires both.
+                checks.need(all(item[k] == parent.get(k) for k in ('file', 'sha256') if k in item)
+                            and ('origin_category' not in item or item['origin_category'] == parent_category),
+                            label + ' visual input contradicts upstream asset provenance')
+
+    # Iterative traversal also handles arbitrarily long declared ancestor chains.
+    visited, active = set(), set()
+    cyclic = False
+    for root in graph:
+        stack = [(root, False)]
+        while stack:
+            node, leaving = stack.pop()
+            if leaving:
+                active.discard(node); visited.add(node)
+            elif node in active:
+                cyclic = True
+            elif node not in visited:
+                active.add(node); stack.append((node, True))
+                stack.extend((parent, False) for parent in graph.get(node, ()))
+    checks.need(not cyclic, 'origin cyclic provenance cannot establish a creation root')
+
+
+def context_assets(data, shot_ids, final=False, representative=False):
     """Freeze provenance, not later catalog/rights review conclusions."""
     return [{k: a.get(k) for k in ('id', 'kind', 'file', 'sha256', 'origin', 'disclosure')}
-            for a in selected_assets(data, shot_ids, final)]
+            for a in selected_assets(data, shot_ids, final, representative)]
 
 
-def references(data, shot_ids, final=False):
+def references(data, shot_ids, final=False, representative=False):
     for shot in seq(data.get('shots')):
         if obj(shot).get('id') in shot_ids:
             origin = obj(obj(obj(shot).get('shotbook')).get('origin'))
             for key in ('design', 'entrypoint'):
                 yield origin.get(key), 'origin shot ' + str(shot.get('id')) + ' ' + key
-    for asset in selected_assets(data, shot_ids, final):
+    for asset in selected_assets(data, shot_ids, final, representative):
         if asset.get('kind') in ('audio', 'font'):
             continue
         origin = obj(asset.get('origin'))
@@ -50,20 +162,9 @@ def references(data, shot_ids, final=False):
             yield origin.get('user_authorization'), 'origin user capture authorization'
 
 
-def validate_origin(checks, shot_ids, final=False):
+def validate_origin(checks, shot_ids, final=False, representative=False):
+    validate_origin_plan(checks, shot_ids, final, representative)
     data = checks.data
-    selected = selected_assets(data, shot_ids, final)
-    graph = {a.get('id'): [obj(i).get('asset_id') for i in seq(obj(a.get('origin')).get('inputs'))
-                         if isinstance(obj(i).get('asset_id'), str)] for a in selected if isinstance(a.get('id'), str)}
-    visited, active = set(), set()
-    def acyclic(node):
-        if node in active: return False
-        if node in visited: return True
-        active.add(node)
-        valid = all(acyclic(parent) for parent in graph.get(node, []))
-        active.remove(node); visited.add(node)
-        return valid
-    checks.need(all(acyclic(node) for node in graph), 'origin cyclic provenance cannot establish a creation root')
     checks.need(obj(data.get('origin_contract')).get('mode') == 'self_created_visuals',
                 'origin explicit self_created_visuals contract required; no legacy bypass')
     for shot in seq(data.get('shots')):
@@ -81,7 +182,7 @@ def validate_origin(checks, shot_ids, final=False):
                    'static_pan': 'self_rendered', 'infographic': 'self_rendered'}
         checks.need(isinstance(medium, str) and method == allowed.get(medium),
                     label + ' origin method conflicts with actual medium')
-    for asset in selected_assets(data, shot_ids, final):
+    for asset in selected_assets(data, shot_ids, final, representative):
         if asset.get('kind') in ('audio', 'font'):
             continue
         origin = obj(asset.get('origin')); label = 'origin asset ' + str(asset.get('id'))
@@ -119,7 +220,7 @@ def validate_origin(checks, shot_ids, final=False):
             checks.need(asset.get('kind') in ('real_capture', 'real_observation'), label + ' capture category conflicts with media kind')
         if category in ('self_generated', 'self_rendered'):
             checks.need(meaningful(asset.get('disclosure')), label + ' generated/rendered visual requires non-live disclosure')
-    for ref, label in references(data, shot_ids, final):
+    for ref, label in references(data, shot_ids, final, representative):
         checks.evidence(ref, label)
 
 
