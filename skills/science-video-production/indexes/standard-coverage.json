@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "7f346bf47f592038f7a55838c4277316788c03c3c2763372eb40707515e4ea71",
+      "sha256": "fff99c04f1daed5b24b6f9f42efdabafa1a3a5b704cc114a086325bd8425bf9f",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -203,7 +203,7 @@
     {
       "owner_id": "visual",
       "file": "references/art-direction.md",
-      "sha256": "bd7cae158a3c5fa7d027d6e7660e07955f3d0eb075a796bc8ca5ec099d8691e4",
+      "sha256": "a2f287d3a387b28091ec79ce6ace8aa376eba409c460ab85161a195634f1feb4",
       "anchors": [
         "专业美术编排与洁净渲染",
         "明亮风格与高级材质",
@@ -261,7 +261,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "b581c15ece38fcecbb032ea9c2bc4663254798cef926abb2d07754220909a028",
+      "sha256": "4456a165707c7b1c1b5adf6c324937d42f86f130f79061360cb11bdda52abde6",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -336,7 +336,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "34b1b4442fb53201fccf6920c33c125bfaf881a0ae65d5504ff08973ba2c98e0",
+      "sha256": "845a70c7dd14190cdfea344220d8fbea8bcfd56ac3db67790b018cfde997ce1b",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
