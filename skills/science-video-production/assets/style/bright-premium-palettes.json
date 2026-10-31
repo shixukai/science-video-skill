@@ -3,7 +3,7 @@
   "status": "candidate_start_points_not_media_approval",
   "scope": "Original environment/design color roles only; preserve scientific meaning and real material/skin/nature colors.",
   "color_space": "sRGB display-reference hex values; not unconverted scene-linear shader values",
-  "adoption": "Select an applicable direction and adapt to the actual subject; not a fixed series LUT, subject-category router or requirement to render all variants.",
+  "adoption": "Select an applicable direction and adapt to the actual subject; not a fixed series LUT, subject-category router or requirement to render all variants. Bright appearance is a lighting outcome, not a light-background requirement; background value is independent.",
   "looks": [
     {
       "id": "LOOK_A",
@@ -20,7 +20,7 @@
         },
         {
           "hex": "#42675A",
-          "role": "有用途的中等明度结构面或设备外环境；避免整面变暗棚"
+          "role": "有用途的中等明度结构面或设备外环境；可与深色布景配合，用照明和反射读出结构与接触"
         },
         {
           "hex": "#BD8A38",
@@ -52,7 +52,7 @@
         },
         {
           "hex": "#4B6752",
-          "role": "仅必要的叶片/地形暗部；保留局部结构，不作整片暗滤镜"
+          "role": "真实叶片/地形暗部的参考；保留本题所需结构和环境深度，不强制把自然阴影提亮"
         }
       ],
       "palette_note": "是可选择的日光/载体色关系；真实生态、肤色、物种、液体与科学伪彩必须按依据保持，不把所有自然题材强套此色板。",
@@ -80,7 +80,7 @@
         },
         {
           "hex": "#6D657D",
-          "role": "克制的中间明度结构/反射控制面；非全场暗背景"
+          "role": "中间明度结构/反射控制面；与浅色或深色背景按实际布光配合，不能据此限制布景明度"
         }
       ],
       "palette_note": "浅蓝紫只组织自制的背景/载体；灯光尽量保持材料本色，避免彩色背景反射改变待比较样品的色义。",
@@ -88,6 +88,31 @@
         "hex": "#4C72D8",
         "role": "Restrained cooler design accent outside color-critical sample regions; do not tint the specimen or its illumination."
       }
+    },
+    {
+      "id": "LOOK_D",
+      "name": "深色布景·主体塑光",
+      "use_when": "深色工位、材料展示或局部机制需要安静背景和受控反射；背景深色不要求科学暗环境，也不改变既定制作工具。",
+      "palette": [
+        {
+          "hex": "#17212A",
+          "role": "可选深石墨背景/远侧面，保留适用空间层次而不抬灰"
+        },
+        {
+          "hex": "#2F3F49",
+          "role": "可选暗中间调承载/邻接面，按实际支承和构图安排"
+        },
+        {
+          "hex": "#CBD6DD",
+          "role": "中性反射控制面/亮带的显示参考；不改主体真实底色，也不要求亮面进入画幅"
+        },
+        {
+          "hex": "#E4A348",
+          "role": "仅有依据的对象色或自设计强调层，避开既有科学色义"
+        }
+      ],
+      "lighting_note": "宽面积主光塑形、按需局部补光读接口、控光与反射面组织曲率；主体不能只剩亮轮廓，背景和黑材质保持深度。没有固定灯数、灯比或曝光通过值。",
+      "palette_note": "自制环境的可选sRGB显示参考，不是全片固定暗底、科学材料强制色或未转换的场景线性着色值。"
     }
   ]
 }

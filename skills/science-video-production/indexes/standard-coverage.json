@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "404e4469cf462d5debf8f74ae0d06c3a2542154b04758e171a9c82d64c454147",
+      "sha256": "7f346bf47f592038f7a55838c4277316788c03c3c2763372eb40707515e4ea71",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -203,7 +203,7 @@
     {
       "owner_id": "visual",
       "file": "references/art-direction.md",
-      "sha256": "f537fa9c22cffcaa7ed02887a7e273ca66cd3d5419b4c0da1441a115c536aec8",
+      "sha256": "bd7cae158a3c5fa7d027d6e7660e07955f3d0eb075a796bc8ca5ec099d8691e4",
       "anchors": [
         "专业美术编排与洁净渲染",
         "明亮风格与高级材质",
@@ -219,7 +219,7 @@
     {
       "owner_id": "visual",
       "file": "assets/style/bright-premium-palettes.json",
-      "sha256": "a408cd17f72f42f917cf818a4708551f721a3cd5624bf657fc77fa4b8850bf26",
+      "sha256": "f4d524faf239cd9eed73b7258a0fc8880dcfc9b7c3a2586d70ce1f5da324a391",
       "anchors": []
     },
     {
@@ -261,7 +261,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "0b3d99ccbdf4d26b913990c27249ce066da387df8f3267b3c7e1cd6685812082",
+      "sha256": "b581c15ece38fcecbb032ea9c2bc4663254798cef926abb2d07754220909a028",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -298,7 +298,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "e44908a87d3cf118017e96fe851778a31e6a9f88e5e6ccd9fdfd3497cb944cce",
+      "sha256": "8ec691ede3661f65aedb34e19dfe6161641588b3f48aec3665174d83ba636210",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",

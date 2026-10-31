@@ -6,7 +6,7 @@
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "按成片风格制作：写实视频使用MoneyPrinterTurbo，3D动画使用Blender；默认明亮清晰、环境明朗、主体与暗部可读、高光有层次；材质按真实表层精细呈现，结构、科学关系与连续动作可信",
+    "direction": "按成片风格制作：写实视频使用MoneyPrinterTurbo，3D动画使用Blender；默认以有效布光使主体明亮清晰、体积与必要暗部可读、高光有层次；背景可浅可深，保持必要阴影与黑位；材质按真实表层精细呈现，结构、科学关系与连续动作可信",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
     "art_direction": "../assets/style/bright-nature.art-direction.json",
@@ -15,18 +15,20 @@
     "style_reference_scope": "legacy_2d_only; not approval for realistic main footage",
     "lighting_material_standard": {
       "owner": "references/art-direction.md",
-      "target": "bright_clear_premium_material_finish",
+      "target": "well_lit_clear_subject_premium_material_finish",
       "applies_to": [
         "realistic",
         "three_d_animation"
       ],
       "direction_status": "requested_default; actual_sample_review_required",
       "material_identity_and_scientific_colors_preserved": true,
-      "dark_context": "only_where_required_by_the_explained_phenomenon_or_actual_scene; keep_required_referents_legible",
       "review": "existing_G3_and_G5_actual_media; statistics_and_parameters_do_not_approve_appearance",
       "palette_start_points": "../assets/style/bright-premium-palettes.json",
       "composition": "specific_observation_target; color_roles; meaningful_depth; quiet_supporting_background; no_texture_or_bright_spot_competition",
-      "cleanliness": "diagnose_sampling_grain_fireflies_shader_texture_aliasing_denoise_and_encoding_separately; no_default_film_grain"
+      "cleanliness": "diagnose_sampling_grain_fireflies_shader_texture_aliasing_denoise_and_encoding_separately; no_default_film_grain",
+      "background_value": "independent_design_choice; light_mid_dark_or_black_allowed; preserve_subject_form_action_and_material_readability",
+      "lighting": "shape_with_key_light; fill_only_needed_structure; control_spill_and_reflection_shapes; preserve_shadows_blacks_and_highlight_detail; no_background_or_global_exposure_brightness_substitute",
+      "low_light_observation": "preserve_actual_scientific_observation_conditions; do_not_add_light_that_changes_the_explained_phenomenon"
     }
   },
   "medium": {
