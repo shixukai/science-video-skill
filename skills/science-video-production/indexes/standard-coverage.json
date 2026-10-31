@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "775fd989b7d3a84cee0c48cf55e2655a612d42f6fe5edf247031a6c0f9831b42",
+      "sha256": "8e6a1120cda74809dfab8ed8379d868f9d17cd86dc9ffecb2fb99f757a4d33d0",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -242,7 +242,7 @@
     {
       "owner_id": "shotbook",
       "file": "references/shotbook.md",
-      "sha256": "6dfa03db1ea4fe9a0f69636ad75325c6550c8b71bf0b6b3ee7af739b6761b315",
+      "sha256": "fc30674c04211e2d8c6342d5279af7ed84f0846a68d670d5a58b7511b56dd5d0",
       "anchors": [
         "从成品音轨到可复核的逐镜记录",
         "音频先行但不牺牲画面",
@@ -261,7 +261,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "4456a165707c7b1c1b5adf6c324937d42f86f130f79061360cb11bdda52abde6",
+      "sha256": "ea68219d9c9f8c3fefad901fcd30c7198c7430238dbd4bc1b8d44e0c8dcea082",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -271,6 +271,7 @@
         "主体动态与长静帧",
         "方位映射与图形复用",
         "审片者与观看安全",
+        "按风险复查与证据复用",
         "从小样到整片的证据",
         "记录与技术检查",
         "失败后的处理",
@@ -321,7 +322,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "6a3e702cf6f57e0154bb395dfad47b3d4905252fac2e4f722671319eb2f45c09",
+      "sha256": "0dfb5ec1a2833757e0d567f1ae73c6ca3f0ead2a896ae334c73aff43dac5d6f7",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -330,6 +331,7 @@
         "explicit-color-settings-and-actual-readback",
         "complete-a-repair-cycle-before-expanding",
         "device-ownership-and-recovery",
+        "integrity-validation-without-repeated-visual-review",
         "rendering-cost-and-scheduling"
       ]
     },
@@ -379,7 +381,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "641e2d608823f0cc7f0b7c91c0c10b32ac412f121c853dae9bab69a1b490d671",
+      "sha256": "720fb1900544468a936890f707aaa382a21afc10ec323d770170810b3f57715e",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

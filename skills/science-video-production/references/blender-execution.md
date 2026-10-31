@@ -60,6 +60,14 @@ The Blender process holds an OS lock for its output job. If its launcher disconn
 
 Each frame has a hash, source-job signature, actual settings, optional anchor metadata and measured state/render-write times. Resume reuses only matching files/receipts; incomplete or corrupt job-owned files are preserved under `invalid/` before replacement. Completed attempts remain in `attempts/`. If source changes during execution, the attempt is marked `inputs_changed`; restored source bytes do not retroactively validate those frames. Keep that output and prepare a fresh job. Completion is always `complete_unreviewed`, not a quality pass.
 
+## Integrity validation without repeated visual review
+
+自动文件完整性与视觉审片分开：新帧须实际校验内容与目标尺寸，损坏/改变帧不可复用；已有解码结果仅在内容SHA、任务/渲染与验证器身份匹配时复用，跨调用仍核内容哈希，不能只信存在、大小或mtime。不重复解压同一已验证内容，也不把缓存或 `complete_unreviewed` 当画质批准。完成统计仍覆盖整项job，不能只看本次选帧就宣称整项完成。
+
+合并同一场景的连续帧与已知风险状态为一次有意义的执行请求，避免反复单帧启动；保留实际锁、输入变化检查及失败历史。全任务内容扫描仍可能产生I/O，不宣称缓存消除了所有扫描或已证明生产加速。校验/哈希/解码耗时与状态更新、渲染写盘分开记录，涵盖续跑的启动扫描，实际优化以同质量测量为准。
+
+正常速观看后按[风险复查](quality-acceptance.md#按风险复查与证据复用)定位疑点和完整修复周期；无需把整序列逐帧交给模型。最终编码的完整解码检查的是另一个产物，不能由原始帧通过代替；同一职责不为多项表格重复发起同样的终检。
+
 ## Rendering cost and scheduling
 
 Apply the shared [local execution, minimal transfer and throughput policy](tool-routing.md#本地执行最少传输与吞吐) to working data, devices, concurrency and output review. Keep raw image sequences local; send only the evidence or changed assets actually needed by a remote step.

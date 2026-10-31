@@ -237,10 +237,11 @@ def frame_paths(output, frame, spec):
     return output / (stem + (".png" if spec["render"].get("format", "PNG") == "PNG" else ".exr")), output / (stem + ".json")
 
 
-def check_image(path, render):
+def check_image(path, render, raw=None):
     width, height = render["width"], render["height"]
     if render.get("format", "PNG") == "PNG":
-        raw = path.read_bytes(); offset = 8; compressed = bytearray(); ihdr = None; ended = False
+        raw = path.read_bytes() if raw is None else raw
+        offset = 8; compressed = bytearray(); ihdr = None; ended = False
         if raw[:8] != b"\x89PNG\r\n\x1a\n":
             raise ValueError("Invalid PNG signature: " + str(path))
         while offset + 12 <= len(raw):
@@ -293,16 +294,118 @@ def check_image(path, render):
             if image is not None: bpy.data.images.remove(image)
 
 
-def valid_frame(job, frame):
-    spec = job["spec"]; image, receipt = frame_paths(Path(spec["output_dir"]), frame, spec)
-    try:
-        record = read(receipt)
-        if record.get("signature") != job["signature"] or record.get("frame") != frame or record.get("sha256") != file_hash(image):
+FRAME_VALIDATOR_VERSION = 1
+
+
+class FrameVerifier:
+    """Content-bound technical decode evidence; never visual approval.
+
+    Every reuse reads and hashes the actual image. PNG hashing and decoding use
+    the same bytes. EXR's path-based Blender decoder needs a second hash after
+    decoding. The derived cache upgrades legacy receipts without rewriting them.
+    """
+    def __init__(self, job):
+        self.job = job; self.spec = job["spec"]
+        self.cache_path = Path(self.spec["output_dir"]) / "frame-validation-cache.json"
+        decoder = {"python": sys.version, "zlib": zlib.ZLIB_RUNTIME_VERSION}
+        if self.spec["render"].get("format", "PNG") == "OPEN_EXR":
+            try:
+                import bpy
+                app = getattr(bpy, "app", None)
+                decoder["blender"] = {"version": getattr(app, "version_string", None),
+                                      "build_hash": str(getattr(app, "build_hash", None))}
+            except ImportError:
+                decoder["blender"] = None
+        self.context = digest({"validator_version": FRAME_VALIDATOR_VERSION,
+                               "executor_sha256": file_hash(__file__),
+                               "job_signature": job["signature"], "render": self.spec["render"],
+                               "decoder": decoder})
+        self.records = {}
+        try:
+            cache = read(self.cache_path)
+            if (isinstance(cache, dict) and cache.get("schema_version") == 1 and
+                    cache.get("context_sha256") == self.context and isinstance(cache.get("frames"), dict)):
+                self.records = cache["frames"]
+        except (OSError, ValueError):
+            pass
+        self.metrics = {"validation_seconds": 0.0, "content_hash_seconds": 0.0,
+                        "decode_seconds": 0.0, "frame_checks": 0, "content_hashes": 0,
+                        "decoded_frames": 0, "cached_decode_reuses": 0}
+
+    def content(self, image):
+        tic = time.perf_counter()
+        try:
+            if self.spec["render"].get("format", "PNG") == "PNG":
+                raw = image.read_bytes()
+                return hashlib.sha256(raw).hexdigest(), raw
+            return file_hash(image), None
+        finally:
+            self.metrics["content_hashes"] += 1
+            self.metrics["content_hash_seconds"] += time.perf_counter() - tic
+
+    def evidence_matches(self, evidence, sha):
+        return (isinstance(evidence, dict) and evidence.get("context_sha256") == self.context and
+                evidence.get("sha256") == sha and isinstance(evidence.get("validated_at"), str) and
+                bool(evidence["validated_at"]))
+
+    def decode(self, image, sha, raw):
+        tic = time.perf_counter()
+        try:
+            self.metrics["decoded_frames"] += 1
+            check_image(image, self.spec["render"], raw=raw)
+        finally:
+            self.metrics["decode_seconds"] += time.perf_counter() - tic
+        if raw is None and self.content(image)[0] != sha:
+            raise ValueError("EXR changed during verification: " + str(image))
+        return {"context_sha256": self.context, "sha256": sha, "validated_at": now()}
+
+    def rendered_image(self, image, frame):
+        tic = time.perf_counter()
+        try:
+            sha, raw = self.content(image)
+            evidence = self.decode(image, sha, raw)
+            self.records[str(frame)] = evidence
+            return sha, evidence
+        finally:
+            self.metrics["validation_seconds"] += time.perf_counter() - tic
+
+    def valid_frame(self, frame):
+        image, receipt = frame_paths(Path(self.spec["output_dir"]), frame, self.spec)
+        tic = time.perf_counter(); self.metrics["frame_checks"] += 1
+        try:
+            record = read(receipt)
+            if (not isinstance(record, dict) or record.get("signature") != self.job["signature"] or
+                    type(record.get("frame")) is not int or record["frame"] != frame or
+                    not isinstance(record.get("sha256"), str) or
+                    not re.fullmatch(r"[0-9a-f]{64}", record["sha256"])):
+                self.records.pop(str(frame), None)
+                return False
+            sha, raw = self.content(image)
+            if record["sha256"] != sha:
+                self.records.pop(str(frame), None)
+                return False
+            evidence = self.records.get(str(frame))
+            if not self.evidence_matches(evidence, sha):
+                evidence = record.get("validation")
+            if self.evidence_matches(evidence, sha):
+                self.metrics["cached_decode_reuses"] += 1
+            else:
+                evidence = self.decode(image, sha, raw)
+            self.records[str(frame)] = evidence
+            return True
+        except (OSError, ValueError, KeyError):
+            self.records.pop(str(frame), None)
             return False
-        check_image(image, spec["render"])
-        return True
-    except (OSError, ValueError, KeyError):
-        return False
+        finally:
+            self.metrics["validation_seconds"] += time.perf_counter() - tic
+
+    def save(self):
+        write(self.cache_path, {"schema_version": 1, "context_sha256": self.context,
+                                "frames": self.records})
+
+
+def valid_frame(job, frame):
+    return FrameVerifier(job).valid_frame(frame)
 
 
 def archive_invalid(output, paths):
@@ -549,17 +652,25 @@ def execute(job, renderer, resume=False, selected=None):
         if state_path.exists() and read(state_path).get("status") == "inputs_changed":
             raise ValueError("Inputs changed during a prior attempt; keep outputs untrusted and prepare a new job")
         verify(job)
-        todo = [frame for frame in frames if not valid_frame(job, frame)]
+        started = time.monotonic()
+        verifier = FrameVerifier(job)
         attempt = {"kind": "blender_sequence_attempt", "signature": job["signature"], "started_at": now(),
                    "pid": os.getpid(), "status": "running", "selected_frames": frames,
-                   "reused_frames": len(frames) - len(todo), "rendered_frames": 0,
+                   "reused_frames": 0, "rendered_frames": 0,
                    "resource_check_seconds": 0.0, "build_seconds": 0.0,
-                   "frame_state_seconds": 0.0, "render_write_seconds": 0.0}
+                   "frame_state_seconds": 0.0, "render_write_seconds": 0.0,
+                   "initial_scan_seconds": 0.0, "completion_scan_seconds": 0.0,
+                   "frame_validation": verifier.metrics}
         attempts = output / "attempts"; attempts.mkdir(exist_ok=True)
         attempt_path = attempts / (uuid.uuid4().hex + ".json")
         write(attempt_path, attempt); write(state_path, attempt)
-        started = time.monotonic()
         try:
+            tic = time.monotonic()
+            initial = {frame: verifier.valid_frame(frame) for frame in frames}
+            todo = [frame for frame in frames if not initial[frame]]
+            attempt["initial_scan_seconds"] = time.monotonic() - tic
+            attempt["reused_frames"] = len(frames) - len(todo)
+            write(attempt_path, attempt); write(state_path, attempt)
             if todo:
                 if spec.get("resource_check"):
                     tic = time.monotonic()
@@ -579,8 +690,11 @@ def execute(job, renderer, resume=False, selected=None):
                 state_seconds = time.monotonic() - tic
                 tic = time.monotonic(); renderer.render(image)
                 render_seconds = time.monotonic() - tic
-                check_image(image, spec["render"])
-                write(receipt, {"frame": frame, "signature": job["signature"], "sha256": file_hash(image),
+                before = dict(verifier.metrics)
+                sha, evidence = verifier.rendered_image(image, frame)
+                write(receipt, {"frame": frame, "signature": job["signature"], "sha256": sha,
+                                "validation": evidence,
+                                "validation_metrics": {key: value - before[key] for key, value in verifier.metrics.items()},
                                 "actual_render": actual, "metadata": metadata, "state_seconds": state_seconds,
                                 "render_write_seconds": render_seconds, "completed_at": now()})
                 attempt["rendered_frames"] += 1
@@ -589,7 +703,14 @@ def execute(job, renderer, resume=False, selected=None):
                 write(state_path, attempt)
                 print(json.dumps({"frame": frame, "rendered": attempt["rendered_frames"], "remaining": len(todo)-attempt["rendered_frames"]}), flush=True)
             verify(job)
-            attempt["valid_frames"] = sum(valid_frame(job, frame) for frame in spec["frames"])
+            tic = time.monotonic()
+            # A later render can modify an earlier frame, including an unselected
+            # one. Rehash the entire spec whenever a renderer ran. Without any
+            # render, the initial selected checks already belong to this scan.
+            attempt["valid_frames"] = sum(
+                initial[frame] if not todo and frame in initial else verifier.valid_frame(frame)
+                for frame in spec["frames"])
+            attempt["completion_scan_seconds"] = time.monotonic() - tic
             attempt["status"] = "complete_unreviewed" if attempt["valid_frames"] == len(spec["frames"]) else "partial_unreviewed"
         except Exception as error:
             attempt.update(status="failed", error=str(error))
@@ -599,6 +720,12 @@ def execute(job, renderer, resume=False, selected=None):
                 attempt["status"] = "inputs_changed"
             raise
         finally:
+            try:
+                verifier.save()
+            except (OSError, ValueError) as error:
+                # The derived cache is optional. Preserve the render outcome and
+                # finalize its attempt even when cache persistence is unavailable.
+                attempt["frame_validation_cache_error"] = str(error)
             attempt.update(finished_at=now(), batch_seconds=time.monotonic()-started)
             write(attempt_path, attempt); write(state_path, attempt)
         return attempt

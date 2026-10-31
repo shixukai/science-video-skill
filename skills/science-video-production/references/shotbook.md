@@ -20,7 +20,7 @@ G2 将各镜 `narration_exact_text` 按镜头顺序拼回完整稿，仅忽略�
 
 ## 整片视觉抽帧工具
 
-已有与媒体对齐的 `shotbook.start/end` 时，用[build_visual_review.py](../scripts/build_visual_review.py)生成静态审片材料。从Skill目录运行：
+需要静态定位/诊断且已有与媒体对齐的 `shotbook.start/end` 时，可用[build_visual_review.py](../scripts/build_visual_review.py)生成本地辅助材料；已有适用抽帧则复用，不把工具运行当成每阶段必做工序。从Skill目录运行：
 
 ```bash
 python3 scripts/build_visual_review.py /path/to/episode.json --media renders/candidate-v3.mp4 --output reviews/G5-v3
@@ -28,11 +28,11 @@ python3 scripts/build_visual_review.py /path/to/episode.json --media renders/can
 
 需Python3.11+和本地ffmpeg/ffprobe。`--media` 与相对 `--output` 以episode目录为根，均须位于该目录；输出为新目录，不修改episode/QA。只收本地自包含视频，拒绝播放列表；非方形像素或特殊显示变换先在制作软件导出校正副本。`relative_plan`、空/非有限时点、重叠/乱序或越界镜头会失败。
 
-输出 `index.html`、每镜首/中/末PNG、`manifest.json` 和 `gate-evidence.json`。总览保留完整画幅并列出覆盖/未覆盖区间；末样取镜尾边界前实际帧。manifest记录请求时点和实际帧时间，短镜或低帧率可能重复帧；关键机制、接缝或极值未抽到时另补。
+工具默认输出 `index.html`、每镜首/中/末PNG、`manifest.json` 和 `gate-evidence.json`；这是技术抽样数量，不是人工审看、模型调用或上传配额。按[风险复查](quality-acceptance.md#按风险复查与证据复用)选实际需看的时点，必要过程仍连续看。总览保留完整画幅并列出覆盖/未覆盖区间；末样取镜尾边界前实际帧。manifest记录请求时点和实际帧时间，短镜或低帧率可能重复帧；关键机制、接缝或极值未抽到时另补。
 
 manifest保存episode快照、源视频、HTML/PNG摘要与工具版本；帧路径相对抽帧目录，媒体/episode路径相对单集目录。`timeline_sha256`只绑定镜号及start/end；只改QA会改变快照哈希，媒体/时点/内容变化则需新目录重建并重审受影响范围。
 
-`gate-evidence.json` 是可按实际审查范围复制到 `qa.gates.<stage>.evidence` 的文件列表，路径以单集目录为根，直接列出manifest、HTML和所有PNG及其SHA-256，不包含列表自身。记录观察、对照母版或补充片段时须另列这些文件；只引用该列表或manifest不会让阶段检查递归绑定图片，详见 [阶段证据](quality-acceptance.md#美术方法的阶段证据)。
+`gate-evidence.json` 是可按实际审查范围复制到 `qa.gates.<stage>.evidence` 的文件列表，路径以单集目录为根，直接列出manifest、HTML和所有PNG及其SHA-256，不包含列表自身。只按实际采用的证据范围引用；生成全部PNG不要求逐张审看、复制进每份QA或出站。记录观察、对照母版或补充片段时须另列实际所用文件；只引用该列表或manifest不会让阶段检查递归绑定图片，详见 [阶段证据](quality-acceptance.md#美术方法的阶段证据)。
 
 该页用于[整片编排](visual-system.md#整片色彩与构图缩略带)及静态定位；色彩保真、小屏/平台显示、运动与完整声画另实际审查。
 
