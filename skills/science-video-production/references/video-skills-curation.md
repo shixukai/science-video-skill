@@ -30,6 +30,19 @@ Motion Canvas引擎另按[MIT许可证](https://github.com/motion-canvas/motion-
 | [jianying-editor-skill](https://github.com/luoluoluo22/jianying-editor-skill) | 仅需剪映分轨工程交付时核实际兼容性；主体MIT、内置pyJianYingDraft Apache-2.0，应用/云素材另核。不替换本期声音。 |
 | [seedance2-skill](https://github.com/dexhunter/seedance2-skill) | 参考身份/结构/风格/动作/构图分角色提示；MIT指南不是可执行模型或渲染器。 |
 
+## Scenario：只接入有增量的方法
+
+按固定提交研究[Scenario Skills](https://github.com/scenario-labs/skills/tree/7f4b801c7248d51b093ec365aceb114bd06139e6)的选定文本，许可证据和所读文件哈希见[来源索引](../indexes/external-skills.json)。这是方法采用；不安装整个技能族，不复制其脚本或运行/媒体资产，也不导入Scenario云端制作链。
+
+| 所读方法来源 | 接入现有制作的位置 |
+| --- | --- |
+| [多参考分工](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-multi-reference/SKILL.md)、[一致性](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-consistency/SKILL.md)、[故事板](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-storyboards/SKILL.md) | [视觉锚点到资产](visual-system.md#从视觉锚点到实际资产)：每份参考限贡献/禁继承，共同有效基准加本镜变化，保留科学状态记忆，防止失败输出逐镜扩散。 |
+| [材质](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-texturing-shading/SKILL.md) | [Blender材质步骤](engineering-blender.md#明亮灯光与材质的实际执行)：用可编辑遮罩/单通道诊断作用范围与坐标，再恢复真实材质复查。 |
+| [动画](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-animation/SKILL.md) | [停驻与接触](animation-scene-design.md#手调曲线先分清停驻与持续接触)：按真实动作处理hold、持续接触及局部曲线，避免全局平滑造成漂移。 |
+| [灯光/渲染](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-lighting-rendering/SKILL.md) | [可选光照分组复用](blender-execution.md#可选复用光照分组而非每次重渲)：限已有且经本机核实的通道；不把主帧导出等同多层通道能力。 |
+
+所读精修、同条件比较、实测输入时长、保留干净母版等已被本Skill覆盖，不重复增加流程。源文的云模型/帐号、在线显示或上传、固定候选/重试次数、逐秒抽帧与评分门槛不采用。仍按既定MoneyPrinterTurbo/Blender路线、本地优先、流量硬约束、可点击本地审阅链接和按风险复查执行；外部作者的应用测试不证明本机或本片已通过。
+
 ## 扩展检索中保留或排除的候选
 
 完整候选及排除理由查[来源索引](../indexes/external-skills.json)的 `classification`、`limitations` 和 `license`。许可缺失/不完整不复制；明确禁止生产使用的来源不采用。需要新能力时再核当前版本与适用文件，不把检索目录当安装清单。

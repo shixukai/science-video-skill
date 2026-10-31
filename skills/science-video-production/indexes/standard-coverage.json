@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "fff99c04f1daed5b24b6f9f42efdabafa1a3a5b704cc114a086325bd8425bf9f",
+      "sha256": "5795dbea668c6ac4161221ad852cb959fdf81db137134e143f31af3fb16f2935",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -155,12 +155,13 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "2b0e1bbcfd7f3d6df9fd93aaf2469cfbaceee524f66ee1b1a18660a9ef25ee81",
+      "sha256": "95c21694933818659d46be66602d523eeaee9daa9095b4fb7c3acae68d06bb13",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
         "先区分缺失与不显著",
         "开工顺序动作意图先于精绘",
+        "手调曲线先分清停驻与持续接触",
         "镜头内容的四种职责",
         "场景设计检查",
         "把已有变化变成可读的证据",
@@ -299,7 +300,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "8ec691ede3661f65aedb34e19dfe6161641588b3f48aec3665174d83ba636210",
+      "sha256": "e4ce9e4180e368d066e557685393e68965c6f96facd43c69813d7371aa8ffe57",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -322,12 +323,13 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "0dfb5ec1a2833757e0d567f1ae73c6ca3f0ead2a896ae334c73aff43dac5d6f7",
+      "sha256": "2261531ee94a8609578b91fec586a80bed40b2a8dbd451557e145db7a9a78562",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
         "scene-adapter",
         "hand-off-raw-frames-to-the-edit",
+        "可选复用光照分组而非每次重渲",
         "explicit-color-settings-and-actual-readback",
         "complete-a-repair-cycle-before-expanding",
         "device-ownership-and-recovery",
@@ -358,11 +360,12 @@
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "a229d70fa5bf7deaff9ff4db852d76a855e63bf7385906ebedbe7c533efb2e65",
+      "sha256": "4e42dc200260eefe9bdb136c9c2a1e4d835568d5dca99cf3a3dcc497b41a17c7",
       "anchors": [
         "外部视频-skills采用点与许可",
         "已纳入的少量参考与生产路由",
         "优先参考的来源",
+        "scenario只接入有增量的方法",
         "扩展检索中保留或排除的候选",
         "引擎服务文本传输与成本"
       ]

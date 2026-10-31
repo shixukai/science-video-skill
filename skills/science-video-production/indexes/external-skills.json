@@ -5,7 +5,7 @@
   "checked_at": "2026-10-10",
   "timezone": "Asia/Shanghai",
   "purpose": "Scoped external source/function/license references; not an install list, current runtime inventory or independent production authority.",
-  "entry_count": 29,
+  "entry_count": 30,
   "copied_reference_count": 3,
   "policy": {
     "no_global_install_from_reference_curation_alone": true,
@@ -2580,6 +2580,121 @@
         "installation_required": true
       },
       "media_quality_validation": "tool_execution_is_not_science_narrative_voice_or_art_acceptance"
+    },
+    {
+      "id": "scenario-labs-selected-methods",
+      "repository": "https://github.com/scenario-labs/skills",
+      "commit": "7f4b801c7248d51b093ec365aceb114bd06139e6",
+      "checked_at": "2026-11-01",
+      "review_scope": "Text-only README/license, four consistency/reference/storyboard/refinement skills, Blender family README plus three selected specialists, and two assembly/grading guides. Directory inventory only for the rest; no upstream runtime, visual demo or local pipeline validation.",
+      "classification": "selected_method_reference_only",
+      "production_stages": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "adopt": "Reference contribution/exclusion; stable shared baseline plus shot delta; editable material-mask diagnosis; keyed hold versus continuous contact; optional reuse of actually verified light-group passes.",
+      "limitations": "Original paraphrases only, no copied Skill/script. No Scenario account/MCP/cloud/model/installer, package version, engine migration, asset display/upload, fixed variants/retries, per-frame review quota or additional approval imported. Current PNG/OPEN_EXR runner is not a verified Light Groups/multilayer exporter. Existing scientific, originality, local-first, bandwidth and risk-review rules take priority. Upstream application-test claims do not validate this computer or film.",
+      "license": {
+        "classification": "MIT_at_pinned_repository_root",
+        "metadata_spdx": "MIT",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/LICENSE",
+            "sha256": "26f54ae8c2f3d1fb0e3f810a599e6fb51852d1f176b97578961826be3bb98cef",
+            "bytes": 1070
+          }
+        ],
+        "repository_tree_complete": false
+      },
+      "source_files": [
+        {
+          "path": "skills/scenario-multi-reference/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-multi-reference/SKILL.md",
+          "sha256": "5562ca4b3bff08850f955aa677a71b72055cd884b95001a110459aa5f2b1c4be",
+          "bytes": 10632,
+          "local_copy": null
+        },
+        {
+          "path": "skills/scenario-consistency/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-consistency/SKILL.md",
+          "sha256": "314e1deb56fe1a322860b53789e6bf4ced60fdc8d206af1e4950f37aa31786c6",
+          "bytes": 14944,
+          "local_copy": null
+        },
+        {
+          "path": "skills/scenario-storyboards/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-storyboards/SKILL.md",
+          "sha256": "0251ce0fcc96b8049cb0277958902271f9572ecc95a1d7ba6bcf544befe5e69d",
+          "bytes": 7257,
+          "local_copy": null
+        },
+        {
+          "path": "skills/scenario-refine-loop/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-refine-loop/SKILL.md",
+          "sha256": "43c37cc916808c7ad903bba60f9e29eeecab314e30025548d43f25b66365ac8a",
+          "bytes": 7419,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/README.md",
+          "sha256": "6e77bfa6f345bcc2a30db11c40386ee82d0b0da0797087b1dcfe5427ba8d9d6d",
+          "bytes": 69282,
+          "local_copy": null
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/LICENSE",
+          "sha256": "26f54ae8c2f3d1fb0e3f810a599e6fb51852d1f176b97578961826be3bb98cef",
+          "bytes": 1070,
+          "local_copy": null
+        },
+        {
+          "path": "skills/scenario-video-color-grade/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-video-color-grade/SKILL.md",
+          "sha256": "42b687324a386a2f8b32e2234d71d5f0ed03d0c6cfcd95f13a0f263ca6e7ccb1",
+          "bytes": 11352,
+          "local_copy": null
+        },
+        {
+          "path": "skills/scenario-video-assembly/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-video-assembly/SKILL.md",
+          "sha256": "f8cb1ba3976b2e7b6e391772a178466e7e505f5d6d7aee82b450a0f4f76941ad",
+          "bytes": 9480,
+          "local_copy": null
+        },
+        {
+          "path": "skills/dcc/blender/README.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/README.md",
+          "sha256": "a92fd41f07c937e82f5f298d24107ed2ec5db757140cadae69423d053fcb4094",
+          "bytes": 7960,
+          "local_copy": null
+        },
+        {
+          "path": "skills/dcc/blender/scenario-blender-lighting-rendering/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-lighting-rendering/SKILL.md",
+          "sha256": "2d428bcf7d7af12be58a680dc670fb965335b742bb7fa69fc560870a7a45403a",
+          "bytes": 20329,
+          "local_copy": null
+        },
+        {
+          "path": "skills/dcc/blender/scenario-blender-texturing-shading/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-texturing-shading/SKILL.md",
+          "sha256": "a178cdb8cee1e0406d0eacd577aa9fcc3bce5766abcf8fba274f55b8c4aebe3a",
+          "bytes": 15909,
+          "local_copy": null
+        },
+        {
+          "path": "skills/dcc/blender/scenario-blender-animation/SKILL.md",
+          "url": "https://raw.githubusercontent.com/scenario-labs/skills/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-animation/SKILL.md",
+          "sha256": "7000c7bab1569343ee8e50ca41e34de03ec0cb7dde1e4ed6ed04a19b117caf67",
+          "bytes": 20818,
+          "local_copy": null
+        }
+      ]
     }
   ]
 }

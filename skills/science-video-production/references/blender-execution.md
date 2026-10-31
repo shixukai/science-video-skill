@@ -35,6 +35,12 @@ Keep the accepted narration and editable text/annotation source separate from th
 
 Use the existing editor or FFmpeg composition adapter to apply the delivery-size typography after resizing, then combine picture, captions, narration and sound. Preserve linear/color-transform handling for EXR rather than treating it as display-ready PNG. An ordinary text/layout correction reuses the same verified raw frames and anchor metadata; a voice edit reuses picture when timing still matches. New timing, camera, geometry or visibility can change the dependent ranges. Verify the recomposed frames and applicable audiovisual scope through the existing phase entry; frame reuse is not automatic review reuse.
 
+### 可选复用光照分组，而非每次重渲
+
+确需反复平衡主/补光贡献且当前工程已有可用Light Groups或分离光照通道时，可在本地合成重平衡增益，保留线性母版、通道对应、实际输出文件/哈希和可编辑合成。这里只复用真实存在且已在当前环境核过的通道；通用runner的PNG/OPEN_EXR主帧支持不代表已提供多层EXR或Light Groups，不写入臆造的JSON渲染键。需要新设通道时由作者在支持的场景/合成流程中配置，沿已有代表段核实际输出与复用收益，不为每期另设通道试验关卡。
+
+光源位置/尺寸、阴影、遮挡、几何、材质或所讲现象变化仍重渲受影响范围；普通调色或二维提亮不能制造缺失的真实反射/投影。缺所需通道时沿当前可用流程制作，不自动换引擎、装外部工具或调用云服务。通道文件属于作者声明的额外交付，仍核版本和实际范围；工具完成不代画质批准。
+
 ## Explicit color settings and actual readback
 
 The generic runner accepts only its documented `render` keys; an unsupported key is an error, not an applied setting. Optional `render.color_management` accepts `display_device`, `view_transform`, `look`, `exposure` and `gamma`; use enum names supported by the actual Blender/OCIO configuration. Absent keys inherit the authored scene. Explicit values are applied in order and read back; invalid/clamped/mismatched values fail before rendering. Do not put a flat `render.exposure` or invented material/light parameter in the spec and assume it works. Other scene, material, texture, light and output controls belong in the declared driver/baked scene. The receipt records actual color state plus available sampling, denoising and light-path diagnostic settings; it does not certify appearance.
