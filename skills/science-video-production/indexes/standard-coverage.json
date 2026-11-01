@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "6b040cf66917fba2236cb40df37044cf374209f37acc7fead78bfebe90af9f0a",
+      "sha256": "ff71cb9315bde0b100a26673daf37bb5ca1353ac88c5b42a07bd6627a1276de4",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "96371430b5cd0d2e6f35521fbc2ef5ff749cc0593783f1695ba43a656345db0f",
+      "sha256": "68884e3a709e967a4e0c4ca8553df88dad04dc5f376fc093020d1f9b04b9567e",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -137,6 +137,7 @@
         "封面成品标准与工程制造题材",
         "制作流程",
         "封面实图绑定与放行",
+        "发布时的系列封面一致性",
         "已认可封面的可迁移做法",
         "声音质感",
         "三尺度造型与制作细节",
