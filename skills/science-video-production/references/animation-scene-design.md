@@ -69,14 +69,14 @@
 | 主体很大，实际变化只在细小末端 | 先圈出支持本镜结论的最小特征，如一个新分叉、边界位移或接触点；按此特征决定景别，同时保留必要旧结构。降低无关纹理与背景边缘的竞争 | 在目标播放尺寸的完整画面里能定位该特征；不能只报主体占屏比例，或靠审片时临时裁大才看见 |
 | 生长与镜头移动混在一起 | 让关键关系出现时有稳定观察窗口；保留旧分叉、接触面等参照。需要运镜时共同变换对象与参照，离开近景前交代结果 | 能区分对象实际改变与相机缩放/平移；固定相机只作诊断，正式镜头仍需正常速复查 |
 | 对照已有差别，但第一眼读不出 | 写出具体判别特征，例如侧枝形成位置、宽窄或疏密；固定与结论无关的初态、尺度、视角、光照和观察时点。必要时让两边同类局部对齐 | 看见的是所选条件造成的目标差异，而非随机纹理、亮暗或比例差；形态不能为增强对比而超出科学依据 |
-| 已承诺的条件变化只由一句话宣布 | 为确需解释的条件变化设置可读节点，并将该节点与对象后续变化对应。不可见条件可用必要标签或明确示意；结果落到主体结构上 | 能追踪“条件改变 → 哪些部位响应 → 留下什么结果”；装饰性变色、雾量或粒子流不冒充测量与机制 |
+| 已承诺的条件变化只由一句话宣布 | 为确需解释的条件变化设置可读节点，并将该节点与对象后续变化对应。不可见条件用有依据的动作/状态、口播及同步字幕交代；3D仅允许必要单字母，其他媒介可用必要短标签；结果落到主体结构上 | 能追踪“条件改变 → 哪些部位响应 → 留下什么结果”；装饰性变色、雾量或粒子流不冒充测量与机制 |
 | 多次返回相近全景，没有新的观察收获 | 在分镜上注明本次返回要认回的局部、同时比较的区域或累积结果；用前镜身份与状态接回全景。没有新增证据则合并或缩短 | 每次回全景都能指出新结论对应的位置；不只换标题，不凭材质闪动宣布共同生长 |
 
 比较“何时开始变化”时，应统一观察时刻、显示各自变化节点，不能又强行统一变化后的持续时间。比较“同样持续时间后的结果”时则相反。先声明比较什么，再选择要固定的时间参照；不能把所有变量不同的两个自然个体当作受控实验。
 
 若解释的是持续共享的条件，展示同一情境、对应区域与相似结果即可，不强制新增条件变化节点。
 
-定位标记可以短暂出现并退去，帮助找到对象结果；不能让高亮本身充当新增物质。相同阶段的多个区域需要对应时，标记的顺序仅表示讲解顺序，不暗示它们依次发生。标签仍可承担必要身份、条件与数值；检验目标是文字与可见证据相互对应，不是强求无字也能理解所有机制。
+定位标记可以短暂出现并退去，帮助找到对象结果；不能让高亮本身充当新增物质。相同阶段的多个区域需要对应时，标记的顺序仅表示讲解顺序，不暗示它们依次发生。3D辅助字仅允许必要单字母标记，名称/条件/数值由口播及真正同步字幕交代；其他媒介沿原必要标签规范。检验目标是实际讲解与可见证据对应，不是增加画内说明句。
 
 ### 工艺动作要留下可观察的结果
 
@@ -106,7 +106,7 @@ Choose the actual mechanism before adding effects. ALD, for example, uses sequen
 | --- | --- | --- | --- |
 | 边界沉积型生长（如雪晶；其他生长另选相应模型） | 生长边界、分支连接、新增区域、随时间保留的形态 | 已有结构延续，边界附近新增实体 | 从中心揭开最终图；整图放大；分支整齐逐根点亮冒充同时生长 |
 | Material processing | Active surface/boundary, supplied or removed material, protected region and endpoint | Show deposition, reaction, removal or filling progressing at the correct interface; retain the workpiece reference and resulting structure | Reveal an already finished layer; shrink a whole solid to fake etching; use decorative particles with no corresponding material change |
-| Test and classification | Test location, stimulus/contact, acquisition, decision and accumulated result | Distinguish untested, testing and classified states; update a map/table from actual measurements, the chosen simulation or clearly illustrative data, with symbols/text as well as color | Hold a probe still while narration alone describes results; random red/green flashing presented as real yield |
+| Test and classification | Test location, stimulus/contact, acquisition, decision and accumulated result | Distinguish untested, testing and classified states; update a map/table from actual measurements, the chosen simulation or clearly illustrative data, with non-color cues (3D permits only necessary single-letter markers, with meaning/quantities in narration and genuine synchronized subtitles; other media retain their text rules) | Hold a probe still while narration alone describes results; random red/green flashing presented as real yield |
 | Multiple transfer paths | Each carrier/quantity, source, interfaces, destination and any relevant return path | Establish each route in one coherent section/view, then compare them with stable color/line meaning | Repeatedly jump between shell and section; assume different carriers must travel in opposite directions |
 | 形变/受力 | 支点、接触、约束与局部形状 | 约束不变处保持，受影响区域发生相应变化 | 全层摇摆；硬物强加果冻回弹 |
 | 传递/传播 | 载体局部状态、传播位置、前后响应 | 区分局部对象运动与传播范围 | 所有物体同向平移；波纹循环却没有响应 |

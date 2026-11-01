@@ -219,12 +219,12 @@ class PresentationBoundaryTests(unittest.TestCase):
             self.d["qa"]["audio"]["continuity"]["G5"]["criteria"][criterion]["status"] = "fail"
             self.rejects(criterion+" failure cannot be offset")
 
-    def test_complete_range_and_cross_shot_join_evidence_are_required(self):
+    def test_complete_listening_required_and_visual_cut_rows_optional(self):
         self.d["qa"]["audio"]["continuity"]["G2"]["ranges"] = [[0, .5]]
         self.rejects("complete reviewed clip/export", "G2")
         self.d = copy.deepcopy(self.base)
         self.d["qa"]["audio"]["continuity"]["G5"]["transitions"] = []
-        self.rejects("cross-shot continuous listening coverage incomplete")
+        self.assertEqual(self.errors(), [])  # Full listening remains; per-visual-cut rows are optional.
         self.d = copy.deepcopy(self.base)
         self.d["qa"]["audio"]["continuity"]["G3"]["transitions"][0]["listen_range"] = [.6, 1]
         self.rejects("must actually straddle", "G3")

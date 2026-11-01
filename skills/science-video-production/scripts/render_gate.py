@@ -286,6 +286,9 @@ def preflight(data, root, phase, shot_ids):
     if phase in ("sample", "full"):
         output_target(data, c.need, "execution " + phase + " output")
     validate_topic_selection(c)
+    from label_permission_guard import validate_three_d_frame_text
+    for item in seq(obj(data.get('presentation_text')).get('items')):
+        validate_three_d_frame_text(c, obj(item), shot_ids)
     from realism_guard import validate_realism
     check_lock(c); selected_design(c, shot_ids)
     if phase == "roughcut":

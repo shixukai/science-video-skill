@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "2f5565cc7ddcdc965ec1c13f92bc246ce34f03658741b7fa59a0ed67b94f2985",
+      "sha256": "6b040cf66917fba2236cb40df37044cf374209f37acc7fead78bfebe90af9f0a",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "aec4ed0e7c62c956d1b2fe5e4d355b5de2286771b59084fb8d8670270361e69e",
+      "sha256": "96371430b5cd0d2e6f35521fbc2ef5ff749cc0593783f1695ba43a656345db0f",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -155,7 +155,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "95c21694933818659d46be66602d523eeaee9daa9095b4fb7c3acae68d06bb13",
+      "sha256": "056fd6e11d6ab6f06ef7f2595930d8f5d465a90329fb7fbfebdac6b1e8d54f22",
       "anchors": [
         "动画场景设计从实体状态到完整镜头",
         "先诊断空在哪里",
@@ -190,7 +190,7 @@
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "f14643e59dffb0582f76c6164914322bc8e5297894d57f2cf89e3f21915608af",
+      "sha256": "29957c1a4a216b984414cca3a28c71dc670969652da15da2f2f7130b6b99e7da",
       "anchors": [
         "视频指示信息精密技术标注",
         "适用范围与确认",
@@ -226,11 +226,11 @@
     {
       "owner_id": "visual",
       "file": "references/spatial-typography.md",
-      "sha256": "6932829c3e96502bde8cb6bb9b0301c2e186a8a5c6b09e54d20c02527d43d081",
+      "sha256": "3eec4e0cc54f3d93631d08703b8d672b8dccc544cf84cd59e9715ccb2ca01807",
       "anchors": [
-        "necessary-spatial-typography-in-3d-body-shots",
-        "decide-before-styling",
-        "build-the-necessary-text-in-space",
+        "letter-markers-only-in-3d-picture",
+        "scope-and-prohibition",
+        "build-permitted-letters-in-space",
         "reuse-the-existing-inventory-and-actual-review",
         "reject-and-repair",
         "implementation-sources"
@@ -275,7 +275,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "e4f7ace74311c6ef3a02533e581f2db6c2ee5859039ab426002862c0f83ce191",
+      "sha256": "3f16e859eae04aae3a64e0b71a3e6df0cb96d8989339468f3971bcd9bbbe8420",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -313,7 +313,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "b99301f66a73090a27a39fdc3c756ca9b15b935f25bd6e74b31d75df16c65398",
+      "sha256": "029ca1271ecf982a787256c0e80b16c9b4ce8ffb3f6134f2377759f89d3fe488",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -336,7 +336,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "f47dec6a0447401b960016444b339421a5e9d83c0f2c5a6bf810c02274904ca6",
+      "sha256": "a62973fd6aa8a46fbd60628d9eec9f69d16f825421f778c61497b04af7681a2c",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",

@@ -68,7 +68,12 @@ class NecessaryTextTests(unittest.TestCase):
 
     def three_d(self):
         self.data['shots'] = [{'id': 'SH1', 'modality': 'controlled_3d', 'asset_ids': []}]
-        self.item.update(kind='auxiliary_text', shot_ids=['SH1'], representation='spatial_3d')
+        self.item.update(kind='auxiliary_text', shot_ids=['SH1'], representation='spatial_3d', text='A')
+
+    def surface(self, name):
+        self.item['surface'] = name
+        for key, channel in self.data['presentation_text']['channels'].items():
+            channel['status'] = 'present' if key == name else 'absent'
 
     def observe(self):
         row = {'item_id': 'T1', 'source_ids': ['SRC'], 'text': self.item['text'],
@@ -94,6 +99,8 @@ class NecessaryTextTests(unittest.TestCase):
         return checks.errors
 
     def ordinary_caption(self, role='spoken_sync'):
+        if self.item['text'] == 'A':
+            self.item['text'] = '出口压力升至 2 MPa'
         self.item.update(surface='caption', caption_role=role, representation='screen_2d')
         self.item.pop('kind', None)
         for key, value in self.data['presentation_text']['channels'].items():
@@ -145,17 +152,21 @@ class NecessaryTextTests(unittest.TestCase):
             self.item.update(text=text, purposes=[purpose])
             self.assertEqual(self.plan(), [], text)
 
-    def test_current_scientific_scale_exception_needs_no_per_label_user_consent(self):
+    def test_current_scientific_review_cannot_waive_single_letter_restriction(self):
         self.three_d()
         self.item['text'] = '观察角度说明·非比例'
         self.science_review()
-        self.assertEqual(self.plan(), [])
+        self.blocked(self.plan(), 'only single-letter markers')
+        self.observe()
+        self.blocked(self.overlay(), 'only single-letter markers')
         self.assertNotIn('user_approval', self.item)
 
     def test_scale_exception_rejects_changed_text_claim_basis_or_stale_evidence(self):
         self.three_d()
         self.item['text'] = '观察角度说明·非比例'
         self.science_review()
+        self.surface('voiceover')
+        self.assertEqual(self.plan(), [])
         original = copy.deepcopy(self.data)
         cases = [('text', '局部布局示意', 'production/material-defect cue'),
                  ('claim_ids', ['missing'], 'actual claim IDs'),
@@ -174,17 +185,19 @@ class NecessaryTextTests(unittest.TestCase):
         self.three_d()
         self.item['text'] = '气体模型受限于低压条件'
         self.science_review()
+        self.surface('voiceover')
         self.assertEqual(self.plan(), [])
         self.item['cue_review'].pop('text_sha256')
         self.blocked(self.plan(), 'production/material-defect cue')
 
-    def test_physical_ai_and_model_science_keep_semantic_path_in_actual_overlay(self):
+    def test_scientific_subject_keeps_semantic_path_in_genuine_synchronized_captions(self):
         self.three_d()
         for text in ('AI模拟大气环流用于预测天气', '神经网络模型示意'):
             self.item['text'] = text
             self.science_review('scientific_subject')
+            self.manifest['sources'] = [s for s in self.manifest['sources'] if s['id'] != 'CAP']
+            self.ordinary_caption()
             self.assertEqual(self.plan(), [])
-            self.observe()
             self.assertEqual(self.overlay(), [])
 
     def test_scoped_three_d_auxiliary_accepts_only_spatial_representation(self):
@@ -295,6 +308,7 @@ class NecessaryTextTests(unittest.TestCase):
             self.data['shots'] = [{'id': 'SH1', 'modality': modality}]
             self.assertEqual(self.plan(), [], modality)
         self.three_d()
+        self.item['text'] = '气体模型受限于低压条件'
         self.blocked(self.plan(), 'production/material-defect cue')
 
     def test_physical_lettering_source_strengthening_does_not_touch_non_three_d(self):
@@ -427,7 +441,7 @@ class NecessaryTextTests(unittest.TestCase):
         self.data['shots'][0]['asset_ids'] = ['A1']
         self.assertEqual(self.plan(), [])
         row = self.observe()
-        row['observation'] = 'Synthetic observation: original pressure gauge lettering belongs to the actual instrument face'
+        row['observation'] = 'Synthetic observation: original single-letter marker A belongs to the actual instrument face'
         self.blocked(self.overlay(), 'same object/asset file')
         self.manifest['sources'].append({'id': 'OBJ', 'kind': 'renderer', 'asset_id': 'A1',
                                         'file': asset['file'], 'sha256': asset['sha256']})
@@ -466,6 +480,110 @@ class NecessaryTextTests(unittest.TestCase):
         checks = Checks(self.data, self.root)
         validate_text_review(checks, 'G2', self.view, {'T1': self.item})
         self.blocked(checks.errors, 'actual review failed/unreviewed')
+
+
+    def test_3d_picture_rejects_all_explanatory_content_even_when_spatial(self):
+        self.three_d()
+        for wording in ('阀门流向说明', '出口压力', '局部排列', 'Pressure', 'EUV', '2 MPa',
+                        '100', 'A1', 'A B', 'AB', 'A\nB', 'A=2', '字', '2', '→', 'A\u200b'):
+            self.item['text'] = wording
+            self.blocked(self.plan(), 'only single-letter markers')
+            self.observe()
+            self.blocked(self.overlay(), 'only single-letter markers')
+
+    def test_single_latin_or_greek_markers_keep_spatial_binding_and_actual_review(self):
+        self.three_d()
+        for letter in ('A', 'B', 'z', 'α', 'Δ'):
+            self.item['text'] = letter
+            self.assertEqual(self.plan(), [], letter)
+            self.observe()
+            self.assertEqual(self.overlay(), [], letter)
+
+    def test_physical_or_consented_marking_classification_cannot_waive_letters_only(self):
+        self.three_d()
+        for kind in ('auxiliary_text', 'physical_lettering', 'marking'):
+            self.item.update(kind=kind, text='Pressure')
+            self.item['user_approval'] = {'scope': guard.scope(self.item), 'user_quote': 'Synthetic obsolete approval'}
+            self.blocked(self.plan(), 'only single-letter markers')
+            self.observe()
+            self.blocked(self.overlay(), 'only single-letter markers')
+
+    def test_actual_words_fail_even_when_inventory_declares_a_letter(self):
+        self.three_d()
+        self.observe()['text'] = 'Pressure'
+        self.blocked(self.overlay(), 'only single-letter markers')
+        self.blocked(self.overlay(), 'differs from classified content')
+
+    def test_marking_caption_needs_real_synchronized_role_and_correspondence_too(self):
+        self.three_d()
+        self.surface('caption')
+        self.item.update(kind='marking', text='Pressure')
+        self.observe()
+        self.blocked(self.plan(), 'ordinary synchronized role required')
+        self.blocked(self.overlay(), 'correspondence review')
+
+    def test_preflight_content_check_is_bound_to_selected_three_d_shots(self):
+        self.three_d()
+        self.data['shots'].extend([{'id': 'SH2', 'modality': 'ai_generated'},
+                                   {'id': 'SH3', 'modality': 'controlled_3d'}])
+        self.item.update(text='Pressure', shot_ids=['SH1'])
+        for selected, blocked in ((['SH1'], True), (['SH2'], False), (['SH3'], False),
+                                  (['SH1', 'SH2'], True)):
+            checks = Checks(self.data, self.root)
+            guard.validate_three_d_frame_text(checks, self.item, selected)
+            self.assertEqual(bool(checks.errors), blocked, selected)
+        self.item['shot_ids'] = ['missing']
+        checks = Checks(self.data, self.root)
+        guard.validate_three_d_frame_text(checks, self.item, ['SH1'])
+        self.blocked(checks.errors, 'only single-letter markers')
+
+    def test_render_preflight_rejects_declared_3d_explanation_before_execution(self):
+        import render_gate
+        self.three_d()
+        self.item['text'] = 'Pressure'
+        for phase in ('roughcut', 'sample', 'full'):
+            errors = render_gate.preflight(self.data, self.root, phase, ['SH1'])
+            self.blocked(errors, 'only single-letter markers')
+
+    def test_mixed_frame_binding_cannot_register_actual_3d_words_as_non_3d(self):
+        self.three_d()
+        self.data['shots'].append({'id': 'REAL', 'modality': 'real_footage'})
+        self.item.update(shot_ids=['REAL'], text='OUTLET', representation='screen_2d')
+        self.assertEqual(self.plan(), [])
+        row = self.observe()
+        self.assertEqual(self.overlay(), [])
+        row['shot_ids'] = ['SH1']
+        self.blocked(self.overlay(), 'only single-letter markers')
+        self.blocked(self.overlay(), 'shot/kind binding differs')
+
+    def test_mixed_caption_cannot_switch_actual_shot_to_bypass_synchronized_role(self):
+        self.three_d()
+        self.data['shots'].append({'id': 'REAL', 'modality': 'real_footage'})
+        self.surface('caption')
+        self.item.update(shot_ids=['REAL'], text='OUTLET', representation='screen_2d')
+        self.assertEqual(self.plan(), [])
+        row = self.observe()
+        self.assertEqual(self.overlay(), [])
+        row['shot_ids'] = ['SH1']
+        self.blocked(self.overlay(), 'shot/kind binding differs')
+        self.blocked(self.overlay(), 'caption role must match')
+
+    def test_prior_consent_does_not_exempt_single_letter_from_spatial_checks(self):
+        self.three_d()
+        self.item.update(kind='marking', representation='screen_2d', position='beside outlet', time_range=[0, 1])
+        quote = 'Synthetic historical consent fixture for letter A; not actual user consent.'
+        self.item['user_approval'] = {'scope': guard.scope(self.item), 'user_message_ref': 'synthetic-consent-only',
+            'user_quote': quote, 'evidence': self.write('synthetic-consent.txt', quote)}
+        self.blocked(self.plan(), 'requires spatial_3d')
+        row = self.observe()
+        self.blocked(self.overlay(), 'spatial representation missing/mismatched')
+        self.item['representation'] = 'spatial_3d'
+        row['representation'] = 'spatial_3d'
+        self.assertEqual(self.plan(), [])
+        row.pop('spatial_review')
+        self.blocked(self.overlay(), 'return for repair')
+        self.observe()
+        self.assertEqual(self.overlay(), [])
 
 
 if __name__ == '__main__':

@@ -2,7 +2,8 @@
 
 This validates evidence bindings, not the truth of a user's consent or a human's
 visual observations. No OCR/perceptual approval is claimed and no older guard is
-replaced. Scientific labels and ordinary captions do not need label permission.
+replaced. Ordinary captions keep their existing role. 3D picture text permits
+only necessary single-letter markers; scientific/consent flags do not waive it.
 """
 import json
 import hashlib
@@ -91,14 +92,40 @@ def three_d_text_scope(item, data):
     return True
 
 
+def single_letter_marker(value):
+    """Marker content only, not proof of a real referent or visible necessity."""
+    if not isinstance(value, str):
+        return False
+    raw = value.strip()
+    normalized = unicodedata.normalize('NFKC', raw)
+    return (len(raw) == len(normalized) == 1 and raw.isalpha()
+            and unicodedata.name(normalized, '').startswith(('LATIN ', 'GREEK ')))
+
+
+def validate_three_d_frame_text(checks, item, shot_ids=None):
+    """Fail closed for declared 3D frame words, including marked/object text."""
+    if item.get('surface') != 'frame' or not three_d_text_scope(item, checks.data):
+        return
+    if shot_ids is not None:
+        if not (three_d_shots(checks.data) & set(shot_ids)):
+            return
+        ids = item.get('shot_ids')
+        known = {obj(s).get('id') for s in seq(checks.data.get('shots')) if text(obj(s).get('id'))}
+        if (isinstance(ids, list) and bool(ids) and all(text(i) and i in known for i in ids)
+                and not (set(ids) & set(shot_ids))):
+            return
+    checks.need(single_letter_marker(item.get('text')),
+                'presentation 3D picture permits only single-letter markers; explanatory words/numbers/units must be removed')
+
+
 def spatial_auxiliary(item, data):
-    return (item.get('surface') == 'frame' and not is_marking(item)
+    return (item.get('surface') == 'frame'
             and item.get('kind') != 'physical_lettering'
             and bool({i for i in seq(item.get('shot_ids')) if text(i)} & three_d_shots(data)))
 
 
 def scoped_caption(item, data):
-    return item.get('surface') == 'caption' and not is_marking(item) and three_d_text_scope(item, data)
+    return item.get('surface') == 'caption' and three_d_text_scope(item, data)
 
 
 def validate_spatial_text_plan(checks, item):
@@ -110,12 +137,13 @@ def validate_spatial_text_plan(checks, item):
     turn an auxiliary label into a synchronized caption. Physical lettering is
     inspected as part of the object.
     """
+    validate_three_d_frame_text(checks, item)
     if scoped_caption(item, checks.data):
         checks.need(isinstance(item.get('caption_role'), str) and item.get('caption_role') in ORDINARY_CAPTION_ROLES
                     and item.get('kind') != 'auxiliary_text',
                     'presentation 3D caption ordinary synchronized role required; auxiliary labels must use frame shot_ids/spatial_3d')
         return
-    if item.get('surface') != 'frame' or is_marking(item) or not three_d_text_scope(item, checks.data):
+    if item.get('surface') != 'frame' or not three_d_text_scope(item, checks.data):
         return
     ids = item.get('shot_ids')
     known = {obj(s).get('id') for s in seq(checks.data.get('shots')) if text(obj(s).get('id'))}
@@ -125,7 +153,7 @@ def validate_spatial_text_plan(checks, item):
     if not valid:
         return
     if bool(set(ids) & three_d_shots(checks.data)):
-        checks.need(item.get('kind') in (None, 'auxiliary_text', 'physical_lettering'),
+        checks.need(item.get('kind') in (None, 'auxiliary_text', 'physical_lettering', 'marking'),
                     'presentation 3D frame text kind must identify auxiliary text or physical lettering')
     if item.get('kind') == 'physical_lettering':
         asset_id = item.get('source_asset_id')
@@ -254,9 +282,13 @@ def validate_overlay_review(checks, gate, viewing, review, items, selected_ids):
         if not valid:
             continue
         seen.add(ident); item = items[ident]
+        actual_item = {**item, **{key: observed.get(key) for key in
+                       ('text', 'surface', 'shot_ids', 'kind', 'representation')}}
+        validate_three_d_frame_text(checks, item)
+        validate_three_d_frame_text(checks, actual_item)
         need(observed.get("text") == item.get("text") and observed.get("surface") == item.get("surface")
              and observed.get("graphic_sha256") == item.get("graphic_sha256"), "actual overlay differs from classified content")
-        if scoped_caption(item, checks.data):
+        if scoped_caption(item, checks.data) or scoped_caption(actual_item, checks.data):
             need(isinstance(item.get('caption_role'), str) and item.get('caption_role') in ORDINARY_CAPTION_ROLES
                  and item.get('kind') != 'auxiliary_text'
                  and observed.get('caption_role') == item.get('caption_role'),
@@ -268,10 +300,10 @@ def validate_overlay_review(checks, gate, viewing, review, items, selected_ids):
                          and obj(sources.get(source_id)).get('sha256') == formal.get('sha256')
                          for source_id in seq(refs) if isinstance(source_id, str)),
                  'actual ordinary caption source must bind the current formal caption file and SHA-256')
-        if item.get('surface') == 'frame' and not is_marking(item) and three_d_text_scope(item, checks.data):
+        if item.get('surface') in ('frame', 'caption') and (three_d_text_scope(item, checks.data) or three_d_text_scope(actual_item, checks.data)):
             need(observed.get('shot_ids') == item.get('shot_ids') and observed.get('kind') == item.get('kind'),
                  'actual frame text shot/kind binding differs from classified inventory')
-        if spatial_auxiliary(item, checks.data):
+        if spatial_auxiliary(item, checks.data) or spatial_auxiliary(actual_item, checks.data):
             need(item.get('representation') == 'spatial_3d' and observed.get('representation') == 'spatial_3d',
                  'actual 3D auxiliary text spatial representation missing/mismatched')
             spatial = obj(observed.get('spatial_review'))
