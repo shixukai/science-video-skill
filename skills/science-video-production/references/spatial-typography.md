@@ -1,0 +1,38 @@
+# Necessary spatial typography in 3D body shots
+
+## Decide before styling
+
+This strengthened prohibition and spatial-text requirement apply only to 3D videos and 3D body shots in an explicitly mixed episode. Realistic/2D videos retain their existing text standards; this update does not require spatial lettering there. Ordinary synchronized narration/accessibility subtitles remain 2D in 3D videos too.
+
+Apply the [body-text deletion test](visual-system.md#正文辅助文字的使用与停留) first. Production notes, generic view/model descriptions, scene headings and defensive boilerplate are forbidden by default anywhere in body shots. Turning an unnecessary sentence into a plaque, subtitle, voiceover or 3D object does not make it useful. Fix the visible action, framing or shot relationship instead.
+
+Keep only text whose removal causes a concrete loss for the current observation: an otherwise ambiguous object identity, necessary value/unit, scale, comparison, relationship or scientific condition. Preserve actual attribution/disclosure obligations through their established placement and consent rules; this page grants no new on-frame permission. A real scientific subject or condition is not forbidden merely because its name contains “model” or “illustration”.
+
+## Build the necessary text in space
+
+For 3D body-shot auxiliary text, use editable real text geometry or genuine lettering on the relevant object. Bind the text to a meaningful world/object position and observation interval. It must participate in the shot's perspective, depth, occlusion and lighting; a flat screen card with a bevel filter, fake perspective or a drop shadow is insufficient. Camera-facing geometry is allowed when its real scene position and depth remain coherent. Ordinary synchronized narration subtitles and necessary sound-accessibility captions retain a separate clear 2D reading layer. Covers and independent chapter cards keep their own scope.
+
+- Choose an available, legally usable font with complete glyphs. Keep the phrase short, with a readable face, restrained depth and bevel. Set world dimensions by the actual camera distance, angle and final projected size, not by copying pixel tokens into scene units.
+- Give the faces and edges a deliberate, restrained material response under the scene lights. A matte/satin surface, appropriate metal or an actual surface inscription can work; distinguish planes with controlled highlights and subtle contact cues. Avoid oversized chrome letters, blown-out emissive faces, noisy reflections, heavy outlines and decorative spinning. No fixed extrusion, material or light ratio is a universal recipe.
+- Place the text near its referent without hiding the action or fabricating a physical attachment. A leader or dimension line still needs correct target/quantity semantics. Keep target identity, depth order and the lighting relationship stable through movement; do not float the label through foreground solids or display a ghost label after its target leaves.
+- Arrange angle, focus, contrast and motion for reading at final phone size. Do not let depth of field, blur, perspective foreshortening or glints erase glyphs. Use the existing continuous stable-reading interval and dwell rules; entrance animation is not reading time. If the scene cannot support readable text, shorten/remove it and use the narration or replan the observation.
+
+Keep editable text/glyph or genuine-lettering source and its font/material dependencies in a named collection (Text objects where used). A separate 3D text view layer/render pass is allowed to avoid rerendering unchanged beauty frames, provided the camera, color handling, depth/holdouts, occlusion and relevant lighting agree with the scene. Rerender the changed text pass; rerender affected receiving shadows/reflections or occluders when their dependencies change. Recomposition alone suffices for an unchanged pass or an ordinary 2D subtitle edit, not for changed 3D geometry/material. See [Blender execution](blender-execution.md#hand-off-raw-frames-to-the-edit).
+
+## Reuse the existing inventory and actual review
+
+In `presentation_text.items`, bind body frame text to actual `shot_ids`; use `kind=auxiliary_text` and `representation=spatial_3d` for necessary auxiliary text in 3D shots. An object's own genuine lettering uses `kind=physical_lettering` and `source_asset_id` bound to the actual referenced asset, not a category renamed to evade this rule. Markings/notices keep their existing special permission path. Mixed episodes bind each item's actual shots, rather than declaring all labels 2D globally.
+
+Mirror `shot_ids`, `kind` and `representation` in the existing overlay evidence `observed[]`. For spatial auxiliary text, record `spatial_review={status, observation}` based on the actual current output: describe the observed perspective/depth, target binding, light/material and legibility in motion. Physical lettering also binds the actual asset/file/hash through the existing evidence sources. Reuse substantive observations already made within the same assigned responsibility/version; do not create another approval stage or upload a frame sequence.
+
+For the applicable declared 3D scope, ordinary `surface=caption` items identify `caption_role=spoken_sync` or `sound_accessibility`. Bind the observed caption role and source IDs to the current formal caption file/SHA in the existing review `sources.caption`. In `channel_reviews.caption`, one `caption_correspondence={status, item_ids, observation}` covers the ordinary caption IDs and actual correspondence with narration/audible accessibility information. Semantic condensation or spoken/written unit differences are allowed; exact word-for-word identity is not required. A detached object/value annotation goes back to `surface=frame` with shot binding and spatial representation, rather than gaining exemption through an SRT file or role flag. The existing media/context/inventory and formal narration/caption sources remain bound; missing or failed actual review blocks acceptance.
+
+The automated guard uses declared 3D shots (`modality=controlled_3d` or that shot’s `shotbook.realism.medium=three_d`) and actual item shot binding for the new production-prose screening and spatial evidence checks. Explicitly bound non-3D items in mixed episodes retain their original rules; an absent/invalid binding cannot opt out of a declared 3D scope. Undeclared or misleading metadata does not exempt actual 3D content from this standard. A status field, geometry name, hash, OCR result or successful render cannot establish actual necessity, spatial integration or visual quality.
+
+## Reject and repair
+
+During the existing G2/G3/G5 review, unnecessary production prose anywhere in body shots, a relabeled 2D auxiliary overlay, incoherent depth/occlusion, poor material integration or unreadable duration is a failure. Return the affected version with the item/time and concrete problem. G3 does not authorize expansion with this failure; G5 does not authorize delivery. Scores, stylistic praise and an old pass cannot offset it. Remove the unnecessary item or repair the necessary text and recheck the affected sequence; preserve earlier failed records. Missing actual perception remains unreviewed.
+
+## Implementation sources
+
+Blender's [Text introduction](https://docs.blender.org/manual/en/4.5/modeling/texts/introduction.html) documents editable font geometry and extrusion; [View Layers](https://docs.blender.org/manual/en/4.5/render/layers/introduction.html) documents separate rendering/compositing. These support the implementation; neither certifies the resulting design.

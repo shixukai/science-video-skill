@@ -82,14 +82,16 @@
         "auxiliary-text-eligibility-and-readable-dwell",
         "shared-state-interaction-animation",
         "bright-style-and-material-finish",
-        "color-depth-and-clean-render-art-direction"
+        "color-depth-and-clean-render-art-direction",
+        "necessary-spatial-3d-body-typography"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",
         "references/snow-crystal-scene-example.md",
         "references/annotation-style.md",
         "references/art-direction.md",
-        "assets/style/bright-premium-palettes.json"
+        "assets/style/bright-premium-palettes.json",
+        "references/spatial-typography.md"
       ]
     },
     {

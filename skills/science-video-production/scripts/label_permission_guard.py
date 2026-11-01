@@ -15,6 +15,7 @@ MARKING_PURPOSES = {"attribution", "license", "ai_simulation", "production_meta"
                     "watermark", "internal_qa", "production_excuse", "material_defect"}
 VISUAL_SURFACES = {"frame", "caption", "cover"}
 ZONES = {"subtitles", "corners", "opening", "closing", "in_art", "body"}
+ORDINARY_CAPTION_ROLES = {'spoken_sync', 'sound_accessibility'}
 
 
 def obj(value):
@@ -49,6 +50,94 @@ def scientific_subject_review(item):
             and isinstance(ids, list) and bool(ids) and all(text(i) for i in ids)
             and review.get('text_sha256') == hashlib.sha256(str(item.get('text', '')).encode()).hexdigest()
             and bool(obj(review.get('evidence')).get('file')))
+
+
+def scientific_condition_review(item, record):
+    """A current-text scientific condition, never a purpose-label exemption."""
+    review = obj(item.get('cue_review'))
+    ids = review.get('claim_ids')
+    return (review.get('status') == 'pass' and review.get('interpretation') == 'scientific_condition'
+            and 'scientific_condition' in seq(item.get('purposes'))
+            and all(text(review.get(k)) for k in ('reviewer', 'scientific_basis', 'audience_task', 'note'))
+            and isinstance(ids, list) and bool(ids) and all(text(i) for i in ids)
+            and review.get('text_sha256') == hashlib.sha256(str(item.get('text', '')).encode()).hexdigest()
+            and bool(obj(review.get('evidence')).get('file'))
+            and any(obj(n).get('id') == item.get('notice_id')
+                    and obj(n).get('purpose') == 'scientific_condition'
+                    and obj(n).get('placement') == 'audience'
+                    and obj(n).get('text') == item.get('text')
+                    and obj(n).get('basis') == review.get('scientific_basis')
+                    for n in seq(record.get('required_notices'))))
+
+
+def three_d_shots(data):
+    """Declared shot bindings only; this does not establish visible 3D quality."""
+    return {s.get('id') for s in seq(data.get('shots')) if isinstance(s, dict) and text(s.get('id'))
+            and (s.get('modality') == 'controlled_3d'
+                 or obj(obj(s.get('shotbook')).get('realism')).get('medium') == 'three_d')}
+
+
+def three_d_text_scope(item, data):
+    """Use declared 3D shots; valid explicit bindings narrow mixed episodes."""
+    declared = three_d_shots(data)
+    if not declared or item.get('surface') == 'cover':
+        return False
+    ids = item.get('shot_ids')
+    known = {obj(s).get('id') for s in seq(data.get('shots')) if text(obj(s).get('id'))}
+    if isinstance(ids, list) and bool(ids) and all(text(i) and i in known for i in ids):
+        return bool(set(ids) & declared)
+    # Do not silently exempt an unbound/malformed item in a declared 3D episode.
+    # The frame plan separately rejects missing/invalid actual shot bindings.
+    return True
+
+
+def spatial_auxiliary(item, data):
+    return (item.get('surface') == 'frame' and not is_marking(item)
+            and item.get('kind') != 'physical_lettering'
+            and bool({i for i in seq(item.get('shot_ids')) if text(i)} & three_d_shots(data)))
+
+
+def scoped_caption(item, data):
+    return item.get('surface') == 'caption' and not is_marking(item) and three_d_text_scope(item, data)
+
+
+def validate_spatial_text_plan(checks, item):
+    """Extend the existing inventory only where actual shot metadata scopes it.
+
+    Unbound frame text in a declared 3D episode cannot silently opt out. Mixed
+    episodes bind each item to its actual shots. Ordinary captions also need a
+    current spoken/audible correspondence review; changing the surface does not
+    turn an auxiliary label into a synchronized caption. Physical lettering is
+    inspected as part of the object.
+    """
+    if scoped_caption(item, checks.data):
+        checks.need(isinstance(item.get('caption_role'), str) and item.get('caption_role') in ORDINARY_CAPTION_ROLES
+                    and item.get('kind') != 'auxiliary_text',
+                    'presentation 3D caption ordinary synchronized role required; auxiliary labels must use frame shot_ids/spatial_3d')
+        return
+    if item.get('surface') != 'frame' or is_marking(item) or not three_d_text_scope(item, checks.data):
+        return
+    ids = item.get('shot_ids')
+    known = {obj(s).get('id') for s in seq(checks.data.get('shots')) if text(obj(s).get('id'))}
+    valid = (isinstance(ids, list) and bool(ids) and all(text(i) and i in known for i in ids)
+             and len(set(ids)) == len(ids))
+    checks.need(valid, 'presentation frame text actual shot_ids required in declared 3D episodes')
+    if not valid:
+        return
+    if bool(set(ids) & three_d_shots(checks.data)):
+        checks.need(item.get('kind') in (None, 'auxiliary_text', 'physical_lettering'),
+                    'presentation 3D frame text kind must identify auxiliary text or physical lettering')
+    if item.get('kind') == 'physical_lettering':
+        asset_id = item.get('source_asset_id')
+        assets = [obj(a) for a in seq(checks.data.get('assets')) if text(asset_id) and obj(a).get('id') == asset_id]
+        shots = [obj(s) for s in seq(checks.data.get('shots')) if obj(s).get('id') in ids]
+        checks.need(len(assets) == 1 and all(asset_id in seq(s.get('asset_ids')) for s in shots),
+                    'presentation physical lettering must bind an actual object/source asset in every linked shot')
+        if len(assets) == 1:
+            checks.evidence(assets[0], 'presentation physical lettering actual object/source asset')
+    if spatial_auxiliary(item, checks.data):
+        checks.need(item.get('representation') == 'spatial_3d',
+                    'presentation 3D auxiliary text requires spatial_3d representation; captions remain clear 2D')
 
 
 def is_marking(item):
@@ -147,6 +236,14 @@ def validate_overlay_review(checks, gate, viewing, review, items, selected_ids):
     need(isinstance(observations, list), "actual text and graphic overlay inventory required, even when empty")
     seen = set()
     applicable = {i for i in selected_ids if i in items and items[i].get("surface") in VISUAL_SURFACES}
+    caption_ids = {i for i in applicable if scoped_caption(items[i], checks.data)}
+    if caption_ids:
+        correspondence = obj(obj(obj(review.get('channel_reviews')).get('caption')).get('caption_correspondence'))
+        covered = correspondence.get('item_ids')
+        need(correspondence.get('status') == 'pass' and text(correspondence.get('observation'))
+             and isinstance(covered, list) and all(text(i) for i in covered)
+             and len(set(covered)) == len(covered) and set(covered) == caption_ids,
+             'actual ordinary captions require current speech/audible accessibility correspondence review; detached auxiliary annotations must be repaired')
     for observed in seq(observations):
         observed = obj(observed); ident = observed.get("item_id")
         valid = isinstance(ident, str) and ident in applicable
@@ -159,6 +256,38 @@ def validate_overlay_review(checks, gate, viewing, review, items, selected_ids):
         seen.add(ident); item = items[ident]
         need(observed.get("text") == item.get("text") and observed.get("surface") == item.get("surface")
              and observed.get("graphic_sha256") == item.get("graphic_sha256"), "actual overlay differs from classified content")
+        if scoped_caption(item, checks.data):
+            need(isinstance(item.get('caption_role'), str) and item.get('caption_role') in ORDINARY_CAPTION_ROLES
+                 and item.get('kind') != 'auxiliary_text'
+                 and observed.get('caption_role') == item.get('caption_role'),
+                 'actual caption role must match ordinary synchronized narration/sound accessibility; auxiliary relabeling is not exempt')
+            formal = obj(obj(review.get('sources')).get('caption'))
+            need(text(formal.get('file')) and text(formal.get('sha256'))
+                 and any(obj(sources.get(source_id)).get('kind') == 'caption'
+                         and obj(sources.get(source_id)).get('file') == formal.get('file')
+                         and obj(sources.get(source_id)).get('sha256') == formal.get('sha256')
+                         for source_id in seq(refs) if isinstance(source_id, str)),
+                 'actual ordinary caption source must bind the current formal caption file and SHA-256')
+        if item.get('surface') == 'frame' and not is_marking(item) and three_d_text_scope(item, checks.data):
+            need(observed.get('shot_ids') == item.get('shot_ids') and observed.get('kind') == item.get('kind'),
+                 'actual frame text shot/kind binding differs from classified inventory')
+        if spatial_auxiliary(item, checks.data):
+            need(item.get('representation') == 'spatial_3d' and observed.get('representation') == 'spatial_3d',
+                 'actual 3D auxiliary text spatial representation missing/mismatched')
+            spatial = obj(observed.get('spatial_review'))
+            need(spatial.get('status') == 'pass' and text(spatial.get('observation')),
+                 'actual spatial text appearance/readability/target-binding review failed/unreviewed; return for repair')
+        if (item.get('surface') == 'frame' and item.get('kind') == 'physical_lettering'
+                and three_d_text_scope(item, checks.data)):
+            asset_id = item.get('source_asset_id')
+            assets = [obj(a) for a in seq(checks.data.get('assets')) if text(asset_id) and obj(a).get('id') == asset_id]
+            need(observed.get('source_asset_id') == asset_id and text(observed.get('observation')),
+                 'actual pre-existing/functional physical lettering and object binding must be observed')
+            need(len(assets) == 1 and any(obj(sources.get(source_id)).get('asset_id') == asset_id
+                 and obj(sources.get(source_id)).get('file') == assets[0].get('file')
+                 and obj(sources.get(source_id)).get('sha256') == assets[0].get('sha256')
+                 for source_id in seq(refs) if isinstance(source_id, str)),
+                 'actual physical lettering source must bind the same object/asset file and SHA-256')
         need(text(observed.get("position")) and valid_range(observed.get("time_range")), "actual overlay position/time range missing")
         interval = observed.get("time_range")
         if valid_range(interval) and item.get("surface") != "cover":
@@ -174,5 +303,7 @@ def validate_overlay_review(checks, gate, viewing, review, items, selected_ids):
         if is_marking(item):
             need(scope(observed) == scope(item), "actual label differs from specifically consented position/time/content")
         # Changing the source classification cannot disguise a visible marking.
-        need(not marking_cue(observed.get("text", "")) or is_marking(item), "visible marking misclassified as scientific text")
+        need(not marking_cue(observed.get("text", "")) or is_marking(item)
+             or (three_d_text_scope(item, checks.data) and scientific_subject_review(item)),
+             "visible marking misclassified as scientific text")
     need(seen == applicable, "actual output inventory does not cover all classified visible items")

@@ -1,10 +1,13 @@
 """Classified text and declared continuous listening; no perceptual verdicts."""
 import re
 import html
+import unicodedata
 from task_scope import cover_keys
 from pathlib import Path
 from subject_motion import text as meaningful
-from label_permission_guard import validate_label_plan, validate_overlay_review, marking_cue, scientific_subject_review
+from label_permission_guard import (validate_label_plan, validate_overlay_review, marking_cue,
+                                    scientific_subject_review, scientific_condition_review,
+                                    validate_spatial_text_plan, three_d_text_scope)
 
 SURFACES = {"frame", "caption", "voiceover", "cover"}
 ALLOWED = {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license", "ai_simulation", "watermark"}
@@ -19,32 +22,56 @@ EXCUSE_CUES = (
     re.compile(r"(?:素材|模型|渲染|制作|导出).{0,8}(?:受限|不足|失败|不支持|方便|省时)"),
     re.compile(r"(?:不作|不做|未做).{0,8}(?:飞行声音|原声|音轨).{0,4}(?:比较|对比)"),
 )
+# Bounded combinations of view/scene description + explanatory wording screen
+# generic production headings, wherever positioned. "示意" alone, scientific
+# units, comparison conditions and named mechanisms are not prohibited cues.
+BODY_META_CUES = (
+    re.compile(r"(?:投影|观察|观看|镜头|摄像机|相机)(?:方向|角度|视角)(?:示意|说明)"),
+    re.compile(r"(?:局部|通用|一般|简化|泛化).{0,12}(?:结构|排列|布局|构型|场景|模型)(?:示意|说明)"),
+    re.compile(r"(?:场景|模型|动画|渲染|镜头)(?:结构|效果|视角|内容)?(?:示意|说明)"),
+    re.compile(r"本(?:片|视频|画面|镜头|模型|场景).{0,8}(?:仅为|仅作|仅供|示意|说明)"),
+)
 
 
-def prohibited_cue(item, record):
+def body_meta_cue(item, data):
+    if item.get('surface') not in {'frame', 'caption', 'voiceover'} or not three_d_text_scope(item, data):
+        return False
+    raw = unicodedata.normalize('NFKC', str(item.get('text', '')))
+    raw = ''.join(c for c in raw if not c.isspace() and not unicodedata.category(c).startswith('C'))
+    return any(pattern.search(raw) for pattern in BODY_META_CUES)
+
+
+def prohibited_cue(item, record, data=None):
     """Ambiguous scientific-model limits require a matching protected notice.
 
     Purpose labels never exempt material defects, QA or production-choice
     excuses. Actual scientific purpose still requires current-media review.
     """
     wording = item.get("text", "")
+    data = data if isinstance(data, dict) else {}
+    if body_meta_cue(item, data) and not (scientific_condition_review(item, record) or scientific_subject_review(item)):
+        return True
     if marking_cue(wording):
         purposes = item.get("purposes", [])
         if not (scientific_subject_review(item) or (isinstance(purposes, list) and ("watermark" in purposes or ("ai_simulation" in purposes and meaningful(item.get("notice_id")))))):
             return True
     for index, pattern in enumerate(EXCUSE_CUES):
         if not pattern.search(wording): continue
-        notices = record.get("required_notices", [])
-        if not isinstance(notices, list): notices = []
         review = item.get("cue_review")
         review = review if isinstance(review, dict) else {}
-        protected = any(isinstance(n, dict) and n.get("id") == item.get("notice_id")
-                        and n.get("purpose") == "scientific_condition" and n.get("text") == wording
-                        and meaningful(n.get("basis")) and review.get("scientific_basis") == n.get("basis")
-                        for n in notices)
         purposes = item.get("purposes", [])
         if not isinstance(purposes, list): purposes = []
-        scientific_model = (index == 2 and "scientific_condition" in purposes and protected
+        # The stronger current-text/claim/evidence exception is part of the 3D
+        # rule. Other routes retain the pre-existing scientific-model exception.
+        notices = record.get('required_notices', [])
+        if not isinstance(notices, list): notices = []
+        protected = any(isinstance(n, dict) and n.get('id') == item.get('notice_id')
+                        and n.get('purpose') == 'scientific_condition' and n.get('text') == wording
+                        and meaningful(n.get('basis')) and review.get('scientific_basis') == n.get('basis')
+                        for n in notices)
+        scientific_condition = (scientific_condition_review(item, record) if three_d_text_scope(item, data)
+                                else 'scientific_condition' in purposes and protected)
+        scientific_model = (index == 2 and scientific_condition
                             and not (set(p for p in purposes if isinstance(p, str)) & FORBIDDEN)
                             and review.get("status") == "pass" and review.get("interpretation") == "scientific_condition"
                             and meaningful(review.get("audience_task")) and meaningful(review.get("note"))
@@ -100,12 +127,13 @@ def validate_text_plan(checks):
         for key in ("text", "necessity", "removal_loss"):
             checks.need(substantive(item.get(key)), "presentation text "+key+" required")
         if text(item.get("text")):
-            checks.need(not prohibited_cue(item, record), "presentation text production/material-defect cue requires removal or concise scientific rewrite")
-        if scientific_subject_review(item):
+            checks.need(not prohibited_cue(item, record, checks.data), "presentation text production/material-defect cue requires removal or concise scientific rewrite")
+        validate_spatial_text_plan(checks, item)
+        if scientific_subject_review(item) or (three_d_text_scope(item, checks.data) and scientific_condition_review(item, record)):
             review = obj(item.get('cue_review'))
             known = {obj(c).get('id') for c in seq(checks.data.get('claims')) if text(obj(c).get('id'))}
-            checks.need(set(review['claim_ids']) <= known, 'scientific subject cue review must link actual claim IDs')
-            checks.evidence(review.get('evidence'), 'scientific subject semantic review')
+            checks.need(set(review['claim_ids']) <= known, 'scientific subject/condition cue review must link actual claim IDs')
+            checks.evidence(review.get('evidence'), 'scientific subject/condition semantic review')
     for surface in SURFACES:
         channel = obj(channels.get(surface)); state = channel.get("status")
         checks.need(state in ("present", "absent") and substantive(channel.get("note")), "presentation text explicit channel coverage required: "+surface)

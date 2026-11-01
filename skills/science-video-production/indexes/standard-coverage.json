@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "5795dbea668c6ac4161221ad852cb959fdf81db137134e143f31af3fb16f2935",
+      "sha256": "94bae35824c9f891807c8b50d89d15ebbad260c17fea58ebfb8234c18e8ebdaf",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -190,7 +190,7 @@
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "91a53d303afa720f2288e854f725e5ca8927bd33ac280119ddd1094e114dd5f0",
+      "sha256": "f14643e59dffb0582f76c6164914322bc8e5297894d57f2cf89e3f21915608af",
       "anchors": [
         "视频指示信息精密技术标注",
         "适用范围与确认",
@@ -222,6 +222,19 @@
       "file": "assets/style/bright-premium-palettes.json",
       "sha256": "f4d524faf239cd9eed73b7258a0fc8880dcfc9b7c3a2586d70ce1f5da324a391",
       "anchors": []
+    },
+    {
+      "owner_id": "visual",
+      "file": "references/spatial-typography.md",
+      "sha256": "6932829c3e96502bde8cb6bb9b0301c2e186a8a5c6b09e54d20c02527d43d081",
+      "anchors": [
+        "necessary-spatial-typography-in-3d-body-shots",
+        "decide-before-styling",
+        "build-the-necessary-text-in-space",
+        "reuse-the-existing-inventory-and-actual-review",
+        "reject-and-repair",
+        "implementation-sources"
+      ]
     },
     {
       "owner_id": "voice",
@@ -262,7 +275,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "ea68219d9c9f8c3fefad901fcd30c7198c7430238dbd4bc1b8d44e0c8dcea082",
+      "sha256": "6fa80faf4acfc49429188b81c451cd562307215a1bf583fe984ea854d4e67889",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -300,7 +313,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "e4ce9e4180e368d066e557685393e68965c6f96facd43c69813d7371aa8ffe57",
+      "sha256": "b99301f66a73090a27a39fdc3c756ca9b15b935f25bd6e74b31d75df16c65398",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -323,7 +336,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "2261531ee94a8609578b91fec586a80bed40b2a8dbd451557e145db7a9a78562",
+      "sha256": "5ec393e4174c8bae8413639f5a496ac905663d8f2542876be05a4a552359d6f2",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
