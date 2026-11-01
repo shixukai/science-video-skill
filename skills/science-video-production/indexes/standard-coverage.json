@@ -42,7 +42,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "6b47e4361f90bde78eabbd2669b31b82e9fa36dba33525fb4b0826596b76d150",
+      "sha256": "17881e03c01947b64b7cab10a952641953dd19969952618e5b28ca3251a27adc",
       "anchors": [
         "写实风格moneyprinterturbo-制作与本地模型素材",
         "开工模态锁定",
@@ -275,7 +275,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "6fa80faf4acfc49429188b81c451cd562307215a1bf583fe984ea854d4e67889",
+      "sha256": "413f52a0518ed72399616bcfa91641c546e10b2807abc70853e296fda6140ee3",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -300,7 +300,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-production.md",
-      "sha256": "130445c40bb98d0b1e31e777e3f23fbeedb16bec8d00799cdec5105680bd6288",
+      "sha256": "68d311f63c7dcaae05c80b4a744966014a043465bcbfcfab804c29920d88e706",
       "anchors": [
         "写实制作契约",
         "主画面与工具边界",
@@ -353,7 +353,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "845a70c7dd14190cdfea344220d8fbea8bcfd56ac3db67790b018cfde997ce1b",
+      "sha256": "08f1a4ff66fe4b339f6227f0fb66ff0871652fda8a7d0a9ff36563aef2dcb5c6",
       "anchors": [
         "按制作场景调用工具",
         "按成片风格锁定主制作工具",
@@ -397,7 +397,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "720fb1900544468a936890f707aaa382a21afc10ec323d770170810b3f57715e",
+      "sha256": "60799148c936d8429ba40659b39e0021fea157e5c8d78f044edee95fa1b0a357",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
