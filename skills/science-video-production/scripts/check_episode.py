@@ -82,7 +82,12 @@ def file_sha256(path):
 
 
 def shotbook_sha256(data):
-    """Bind semantic timing and selected visuals to the declared audio revision."""
+    """Versioned review binding; untouched v1 hashes retain their raw meaning."""
+    qa = data.get("qa") if isinstance(data.get("qa"), dict) else {}
+    book = qa.get("shotbook") if isinstance(qa.get("shotbook"), dict) else {}
+    execution = data.get("execution") if isinstance(data.get("execution"), dict) else {}
+    if book.get("review_binding_version") == 2 and execution.get("contract_version") == 2:
+        return stage_context_sha256(data, "G2")
     narration = data.get("narration")
     narration = narration if isinstance(narration, dict) else {}
     payload = {"audio_sha256": narration.get("audio_sha256"),
@@ -840,6 +845,11 @@ def check(data, root, stage):
         if not isinstance(qa_book, dict):
             qa_book = {}
         require(qa_book.get("status") == "pass" and nonempty(qa_book.get("note")), "qa.shotbook: actual representative audiovisual review required")
+        binding_version = qa_book.get("review_binding_version", 1)
+        require(type(binding_version) is int and binding_version in (1, 2), "qa.shotbook: unknown review binding version")
+        if binding_version == 2:
+            require(isinstance(data.get("execution"), dict) and data["execution"].get("contract_version") == 2,
+                    "qa.shotbook: semantic review binding requires explicit execution contract version 2")
         require(qa_book.get("reviewed_sha256") == shotbook_sha256(data), "qa.shotbook: stale audio/shotbook context; review again")
     errors.extend(check_topic(data, root, "delivery" if complete else stage, shots))
     if complete:

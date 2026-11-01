@@ -321,8 +321,14 @@ def validate_voice_continuity(checks, gate, viewing):
             timeline.append(ident); cursor = end
     need(valid_timeline and selected <= set(timeline) and number(viewing.get("duration")) and abs(cursor-viewing["duration"]) <= .001,
          "current-media shot timeline must cover complete reviewed media and selected shots")
+    # Full current-media listening above covers ordinary picture cuts. A cut
+    # is not an audio splice and does not require its own pass ledger row.
+    # Retain validation of any supplied targeted/legacy cut observations;
+    # actual source-segment joins remain in source_listen_review.
+    transitions = r.get("transitions", [])
+    need(isinstance(transitions, list), "transition observations must be a list when supplied")
     expected = set(boundaries); found = set()
-    for row in seq(r.get("transitions")):
+    for row in seq(transitions):
         row = obj(row); pair = (row.get("from_shot"), row.get("to_shot"))
         if not all(isinstance(v, str) for v in pair): need(False, "transition shot IDs invalid"); continue
         need(pair in expected and pair not in found, "transition missing/duplicate/irrelevant"); found.add(pair)
@@ -333,7 +339,6 @@ def validate_voice_continuity(checks, gate, viewing):
         need(pair in boundaries and number(at) and abs(at-boundaries.get(pair, 0)) <= .001,
              "transition time must match actual current-media shot boundary")
         need(row.get("status") == "pass" and substantive(row.get("observation")) and substantive(row.get("evidence")), "cross-shot change failed/unreviewed")
-    need(found == expected, "cross-shot continuous listening coverage incomplete")
     if mode == "context_preserving_segments":
         segments = plan.get("segments"); need(isinstance(segments, list) and len(segments) >= 2, "segmented source/context records required")
         source_segments = seq(manifest.get("segments"))

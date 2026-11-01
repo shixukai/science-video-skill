@@ -1083,32 +1083,6 @@
         "evidence": []
       }
     },
-    "scorecard": {
-      "media_sha256": "",
-      "scores": {
-        "understanding": {
-          "score": null,
-          "evidence": ""
-        },
-        "art": {
-          "score": null,
-          "evidence": ""
-        },
-        "motion": {
-          "score": null,
-          "evidence": ""
-        },
-        "sound": {
-          "score": null,
-          "evidence": ""
-        },
-        "packaging": {
-          "score": null,
-          "evidence": ""
-        }
-      },
-      "total": null
-    },
     "captions": {
       "status": "pending",
       "note": "",

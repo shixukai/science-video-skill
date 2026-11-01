@@ -60,7 +60,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "8e6a1120cda74809dfab8ed8379d868f9d17cd86dc9ffecb2fb99f757a4d33d0",
+      "sha256": "2f5565cc7ddcdc965ec1c13f92bc246ce34f03658741b7fa59a0ed67b94f2985",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -114,7 +114,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "94bae35824c9f891807c8b50d89d15ebbad260c17fea58ebfb8234c18e8ebdaf",
+      "sha256": "aec4ed0e7c62c956d1b2fe5e4d355b5de2286771b59084fb8d8670270361e69e",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
@@ -239,7 +239,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "25588248351b64d705aea7e9e37390aefb9e71fc99b3f2afd07ee745e2468faa",
+      "sha256": "3b9a26aa931eaeeb3d19f0f3f2a677fbfc9326cf1539022e80e22bc3337b4489",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
@@ -275,7 +275,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "413f52a0518ed72399616bcfa91641c546e10b2807abc70853e296fda6140ee3",
+      "sha256": "e4f7ace74311c6ef3a02533e581f2db6c2ee5859039ab426002862c0f83ce191",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -397,7 +397,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "60799148c936d8429ba40659b39e0021fea157e5c8d78f044edee95fa1b0a357",
+      "sha256": "b0e1539cac4373acc85265bbed0ccf2db1c29e5d474cc206a79964725b9c518a",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

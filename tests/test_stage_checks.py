@@ -6,7 +6,7 @@ class CanonicalStageTests(unittest.TestCase):
  @classmethod
  def setUpClass(c):
   c.tmp=tempfile.TemporaryDirectory();c.root=Path(c.tmp.name)
-  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=blue:s=48x64:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'v.mp4')],check=True)
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=blue:s=1080x1440:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'v.mp4')],check=True)
   d=json.loads((Path(__file__).resolve().parents[1]/'examples/blue-sky/episode.json').read_text());d['deliverables']={k:'v.mp4' for k in ('video','cover_3_4','cover_4_3')}
   d['qa']={k:{'status':'pass','note':'synthetic only'} for k in ('science','rights','visual_frames','audio','narration','covers','shotbook','mobile_preview')};d['qa']['mobile_preview'].update(platform='synthetic',account='synthetic');d['qa']['comprehension']={'status':'editor_reviewed','note':'synthetic only'};d['qa']['reviewed_sha256']={k:gates.file_digest(c.root/'v.mp4') for k in d['deliverables']};c.base=upgrade(d,c.root)
  @classmethod
@@ -298,7 +298,7 @@ class EvidenceMediaIntegrityTests(unittest.TestCase):
  @classmethod
  def setUpClass(c):
   CanonicalStageTests.setUpClass.__func__(c)
-  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=green:s=48x64:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'replacement.mp4')],check=True)
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=green:s=1080x1440:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'replacement.mp4')],check=True)
   subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(c.root/'v.mp4'),'-vn',str(c.root/'voice.wav')],check=True)
   subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(c.root/'v.mp4'),'-an','-c:v','copy',str(c.root/'silent.mp4')],check=True)
  tearDownClass=classmethod(CanonicalStageTests.tearDownClass.__func__)
@@ -358,7 +358,7 @@ class CoverageStageTests(unittest.TestCase):
  @classmethod
  def setUpClass(c):
   c.tmp=tempfile.TemporaryDirectory();c.root=Path(c.tmp.name)
-  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=blue:s=48x64:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'v.mp4')],check=True)
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=blue:s=1080x1440:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'v.mp4')],check=True)
   d=json.loads((Path(__file__).resolve().parents[1]/'examples/blue-sky/episode.json').read_text());d['deliverables']={k:'v.mp4' for k in ('video','cover_3_4','cover_4_3')}
   d['qa']={k:{'status':'pass','note':'synthetic only'} for k in ('science','rights','visual_frames','audio','narration','covers','shotbook','mobile_preview')};d['qa']['mobile_preview'].update(platform='synthetic',account='synthetic');d['qa']['comprehension']={'status':'editor_reviewed','note':'synthetic only'};d['qa']['reviewed_sha256']={k:gates.file_digest(c.root/'v.mp4') for k in d['deliverables']};c.base=upgrade(d,c.root,schema='coverage')
  @classmethod
@@ -724,3 +724,22 @@ class OptionalFeedbackTruthTests(unittest.TestCase):
   s.prepare_cold();r=s.d['qa']['comprehension'];r['status']='editor_reviewed';r['optional_audience_feedback'].update(status='not_run',actual_viewer_count=0);s.rejects('unperformed feedback cannot claim actual viewer records')
  def test_legacy_error_uses_same_actual_recheck(s):
   s.d=upgrade(s.d,s.root,schema='coverage');CoverageStageTests.prepare_cold(s);r=s.d['qa']['comprehension']['cold_view'];r['viewers'][0]['core_misconceptions']=['specific-error'];r['misconception_review']={'status':'resolved','evidence':'synthetic specific recheck','media_sha256':s.d['qa']['reviewed_sha256']['video'],'context_sha256':gates.context_sha256(s.d,'G5'),'viewing':copy.deepcopy(s.d['qa']['comprehension']['internal_review']['viewing'])};s.assertEqual(s.errors(),[]);r['misconception_review']['viewing']['heard']=False;s.rejects('actual viewing and listening')
+
+
+class FormalOutputDimensionsTests(unittest.TestCase):
+ """A small internal proxy must remain ineligible for formal video evidence."""
+ @classmethod
+ def setUpClass(c):
+  c.tmp=tempfile.TemporaryDirectory();c.root=Path(c.tmp.name)
+  assert c.root.resolve().is_relative_to(Path(tempfile.gettempdir()).resolve())
+  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi','-i','color=c=blue:s=48x64:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(c.root/'internal-proxy.mp4')],check=True)
+ @classmethod
+ def tearDownClass(c):c.tmp.cleanup()
+ def test_actual_low_resolution_proxy_cannot_qualify_as_formal_output(s):
+  checks=gates.Checks({},s.root);path=s.root/'internal-proxy.mp4'
+  s.assertIsNotNone(checks.duration(path,formal_output=False))
+  s.assertEqual(checks.errors,[])
+  # Use the same checker to ensure the internal-proxy probe cache does not
+  # suppress the stricter formal-output dimension check.
+  checks.duration(path,formal_output=True)
+  s.assertTrue(any('actual 48x64' in error and '1080' in error for error in checks.errors),checks.errors)

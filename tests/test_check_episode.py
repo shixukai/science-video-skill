@@ -63,7 +63,7 @@ class EpisodePacketRegressionTests(unittest.TestCase):
    test('pending plan cannot pass delivery',plan,root,'delivery','rights not cleared')
    def ff(args):
     subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-y',*args],check=True)
-   ff(['-f','lavfi','-i','color=c=blue:s=48x64:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(root/'v.mp4')])
+   ff(['-f','lavfi','-i','color=c=blue:s=1080x1440:r=2','-f','lavfi','-i','anullsrc=r=48000:cl=mono','-t','1','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',str(root/'v.mp4')])
    for name,size in [('p.png','48x64'),('l.png','64x48')]:
     ff(['-f','lavfi','-i',f'color=c=blue:s={size}','-frames:v','1','-threads','1',str(root/name)])
    x=copy.deepcopy(plan)

@@ -191,6 +191,8 @@ def context_sha256(data, gate):
   result['assets']=[a for a in seq(data.get('assets')) if obj(a).get('id') in used]
   result['representative_step_ids']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('step_ids')
   result['representative_shot_intervals']=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation')).get('shot_intervals')
+  selection=obj(obj(obj(data.get('qa')).get('visual_frames')).get('animation'))
+  if 'selection_mode' in selection:result['representative_selection']={k:selection.get(k) for k in ('selection_mode','expression_card_ids','scope_note')}
  if gate not in ('G1','G2'):
   applications=[row for row in seq(data.get('tool_applications')) if gate!='G3' or set(i for i in seq(obj(row).get('shot_ids')) if text(i)) & shot_ids]
   if applications:result['tool_applications']=applications
@@ -207,6 +209,11 @@ def context_sha256(data, gate):
   if isinstance(result.get('design'),dict):
    result['design']={k:v for k,v in result['design'].items() if k not in ('approval','actual_deviations')}
  return digest(result)
+
+def legacy_failure_sha256(item):
+ """Bind the retained original failure, excluding its later closure fields."""
+ return digest({k:obj(item).get(k) for k in ('id','scope','note')})
+
 
 def output_target(data,need,label='formal video'):
  """Optional episode canvas, already bound by the existing design context."""
@@ -418,7 +425,7 @@ class Checks:
   self.need(critical<=covered,'key difficulty lacks a concrete expression card')
   if canonical and not critical:self.need(substantive(alignment.get('no_key_difficulty_reason')),'no key difficulty needs a reviewed applicability reason')
   return result
- def animation(self,steps):
+ def animation(self,steps,cards=None):
   r=self.record('visual_frames.animation');v=self.viewing(r.get('viewing'),'G3 motion','representative')
   self.need(r.get('status')=='pass','G3 actual motion review required')
   self.evidence(r.get('captions'),'G3 representative captions')
@@ -429,7 +436,28 @@ class Checks:
   self.need(valid and len(set(selected))==len(selected),'representative step selection invalid')
   mains={x for x in seq(obj(self.data.get('topic_alignment')).get('main_scope_ids')) if text(x)}
   chains=[{obj(s).get('id') for s in relation_steps(c) if text(obj(s).get('id'))} for c in seq(obj(self.data.get('topic_alignment')).get('coverage')) if obj(c).get('scope_id') in mains]
-  self.need(valid and any(chain and chain<=set(selected) for chain in chains),'representative sample must cover a complete primary explanation chain (legacy complete primary causal chain)')
+  mode=r.get('selection_mode','full_chain')
+  self.need(mode in ('full_chain','risk_relation'),'unknown representative selection_mode')
+  if mode=='risk_relation':
+   # Select entire already-reviewed expression relationships, not arbitrary
+   # interior steps from the episode's much longer primary scope.
+   card_ids=r.get('expression_card_ids');cards=obj(cards)
+   valid_cards=isinstance(card_ids,list) and bool(card_ids) and all(text(i) and i in cards for i in card_ids)
+   self.need(valid_cards and len(set(card_ids))==len(card_ids),'risk relation requires unique existing expression_card_ids')
+   relation=set();primary=set().union(*chains) if chains else set()
+   for ident in seq(card_ids):
+    card=obj(cards.get(ident)) if text(ident) else {}
+    ids=seq(card.get('step_ids'));known=bool(ids) and all(text(i) and i in steps for i in ids)
+    self.need(known and set(ids)<=primary,'risk relation card must belong completely to primary explanation scope')
+    if known:relation.update(ids)
+    pre=card.get('prerequisites')
+    self.need(isinstance(pre,list) and all(substantive(x) for x in pre),'risk relation card requires actual prerequisites/entry conditions')
+    for key in ('difficulty','visual_action','inferable_outcome','misconception','boundary'):
+     self.need(substantive(card.get(key)),'risk relation card actual '+key+' required')
+   self.need(valid and valid_cards and set(selected)==relation,'risk relation selected steps must exactly cover complete selected expression cards')
+   self.need(substantive(r.get('scope_note')) and r['scope_note'].strip().casefold() not in ('pass','ok','true','approved','reviewed','通过','完成'),'risk relation scope_note must explain complete relation, prerequisites and entry/exit joins')
+  elif mode=='full_chain':
+   self.need(valid and any(chain and chain<=set(selected) for chain in chains),'representative sample must cover a complete primary explanation chain (legacy complete primary causal chain)')
   found=set()
   for e in seq(r.get('steps')):
    e=obj(e);ident=e.get('step_id')
@@ -456,7 +484,13 @@ class Checks:
      affected=self.record('audio' if item['scope']=='audio' else 'captions')
      self.need(affected.get('status')!='pass','unresolved failure cannot be overwritten in its affected dimension')
    if state=='resolved':
-    r=obj(item.get('resolution'));self.need(text(r.get('evidence')),'failure resolution evidence required')
+    r=obj(item.get('resolution'))
+    if r.get('binding_version')==2 and not final:
+     self.repair_failure_binding(item,r)
+     continue
+    self.need(r.get('binding_version') in (None,1,2),'unknown failure resolution binding version')
+    if r.get('binding_version')==2:self.repair_failure_binding(item,r,final=True)
+    self.need(text(r.get('evidence')),'failure resolution evidence required')
     self.need(r.get('context_sha256')==context_sha256(self.data,'G5') and r.get('sha256')==obj(self.qa.get('reviewed_sha256')).get('video'),'failure resolution stale media/context')
     if item.get('scope') in ('whole_episode','series_style','audio'):
      self.need(r.get('scope')=='full_episode','local approval cannot resolve whole-episode failure')
@@ -465,6 +499,36 @@ class Checks:
        self.viewing(obj(self.record('audio.listening')).get(env),'audio failure resolution '+env,'full_episode',final=True,listening_only=True)
       validate_voice_continuity(self,'G5',obj(obj(self.record('audio.listening')).get('headphones')))
      else:self.viewing(visual.get('viewing'),'failure resolution','full_episode',final=True)
+ def repair_failure_binding(self,item,resolution,final=False):
+  """Explicitly bridge legacy visual history to the validated current repair.
+
+  A representative repair can release expansion only. Final acceptance still
+  requires the final-film binding/viewing below and validate_feedback's retest.
+  """
+  self.need(resolution.get('legacy_failure_sha256')==legacy_failure_sha256(item),'failure migration must bind retained original failure')
+  ident=item.get('feedback_id');rows=[obj(row) for row in seq(self.qa.get('feedback')) if text(ident) and obj(row).get('feedback_id')==ident]
+  self.need(len(rows)==1 and resolution.get('feedback_id')==ident,'failure migration requires one explicit linked feedback record')
+  row=rows[0] if len(rows)==1 else {}
+  self.need(getattr(self,'_feedback_validated',False),'failure migration requires validated current feedback/retest evidence')
+  self.need(row.get('status')=='resolved' and row.get('contract_version')==1,'failure migration requires resolved current feedback')
+  self.need(any(obj(result).get('status')=='fail' for result in obj(row.get('dimensions')).values()),'failure migration requires original failed dimensions in linked feedback')
+  self.need(item.get('scope') in ('whole_episode','series_style','segment') and row.get('scope_kind')==item.get('scope'),'failure migration must preserve original visual failure scope')
+  gates=seq(row.get('applies_to_gates'))
+  self.need(any(g in GATES and GATES.index(g)<=2 for g in gates if isinstance(g,str)),'failure migration feedback must cover representative gate')
+  gate='G5' if final else 'G3'
+  current=obj(self.qa.get('reviewed_sha256')).get('video') if final else obj(self.record('visual_frames.animation').get('viewing')).get('sha256')
+  self.need(text(resolution.get('evidence')),'failure resolution evidence required')
+  self.need(resolution.get('context_sha256')==context_sha256(self.data,gate) and text(current) and resolution.get('sha256')==current,'failure resolution stale media/context')
+  self.need(resolution.get('scope')==('full_episode' if final else 'representative_repair'),'failure resolution must declare stage-aware repair scope')
+  retests=[]
+  for evidence in seq(row.get('retest_evidence')):
+   path=self.evidence(evidence,'failure current retest')
+   if path:
+    try:retests.append(obj(json.loads(path.read_text(encoding='utf-8'))))
+    except (OSError,ValueError,TypeError):self.need(False,'failure current retest must be readable JSON')
+  self.need(bool(retests) and all(review.get('media_sha256')==current and review.get('normal_speed_continuous_av') is True for review in retests),'failure resolution requires actual continuous retest of current repair media')
+  if final:
+   self.need(bool(retests) and all(review.get('scope')=='full_episode' for review in retests),'failure resolution requires current full-film retest, not a sample-only review')
  def asset_catalog(self,steps,representative):
   schema=json.loads((Path(__file__).resolve().parents[1]/'assets/production-asset.schema.json').read_text())
   owners=json.loads((Path(__file__).resolve().parents[1]/'indexes/rule-owners.json').read_text())
@@ -529,27 +593,30 @@ class Checks:
    approval=obj(record.get('approval'));self.need(approval.get('status')=='pass' and approval.get('asset_sha256')==record.get('sha256'),label+' approval stale/missing')
    for key in ('evidence_ref','scope','reviewer','reviewed_at'):self.need(text(approval.get(key)),label+' approval '+key+' required')
  def scores(self,policy):
-  r=self.record('scorecard');benchmark=obj(self.data.get('brief')).get('production_class')=='B';q=dict(policy['quality'])
+  """Optional submitted diagnostic; numbers never grant a quality verdict."""
+  if 'scorecard' not in self.qa:return
+  raw=self.qa.get('scorecard');self.need(isinstance(raw,dict),'scorecard must be an object')
+  if not isinstance(raw,dict):return
+  r=raw;scores=r.get('scores',{})
+  self.need(isinstance(scores,dict),'scorecard scores must be an object')
+  if not isinstance(scores,dict):return
+  # Empty/null template fields are an unperformed diagnostic, not a claim.
+  scaffold=all(isinstance(e,dict) and e.get('score') is None and not text(e.get('evidence')) for e in scores.values())
+  if scaffold and r.get('total') is None and not text(r.get('media_sha256')):return
+  weights=policy['quality']['weights'];total=0
+  self.need(set(scores)==set(weights),'scorecard diagnostic dimensions missing/unknown')
+  for key,weight in weights.items():
+   e=obj(scores.get(key));v=e.get('score')
+   ok=number(v) and 0<=v<=5 and v*2==int(v*2)
+   self.need(ok,'score '+key+' must be 0..5 in half points')
+   if ok:total+=v/5*weight
+   self.need(text(e.get('evidence')),'score '+key+' actual evidence required')
+  self.need(number(r.get('total')) and abs(r['total']-total)<1e-6,'weighted score total inconsistent')
+  current=obj(self.qa.get('reviewed_sha256')).get('video')
+  self.need(text(current) and r.get('media_sha256')==current,'scorecard stale media')
   if 'calibration' in r:
    calibration=obj(r.get('calibration'));self.evidence(calibration,'score calibration')
    for key in ('reviewer','rationale','scope'):self.need(text(calibration.get(key)),'score calibration '+key+' required')
-   total_key='benchmark_total_min' if benchmark else 'routine_total_min';mins_key='benchmark_min_scores' if benchmark else 'routine_min_scores'
-   value=calibration.get(total_key);valid=number(value) and 0<value<=100
-   self.need(valid,'score calibration total invalid')
-   if valid:q[total_key]=value
-   minima=calibration.get(mins_key);valid=isinstance(minima,dict) and set(minima)==set(q['weights']) and all(number(v) and 0<v<=5 for v in minima.values())
-   self.need(valid,'score calibration dimension minima invalid')
-   if valid:q[mins_key]=minima
-  mins=q['benchmark_min_scores' if benchmark else 'routine_min_scores'];total=0
-  for key,weight in q['weights'].items():
-   e=obj(obj(r.get('scores')).get(key));v=e.get('score')
-   ok=number(v) and 0<=v<=5 and v*2==int(v*2)
-   self.need(ok,'score '+key+' must be 0..5 in half points')
-   if ok:total+=v/5*weight;self.need(v>=mins[key],'score '+key+' below adopted starting threshold')
-   self.need(text(e.get('evidence')),'score '+key+' actual evidence required')
-  self.need(total>=q['benchmark_total_min' if benchmark else 'routine_total_min'],'weighted score below adopted starting threshold')
-  self.need(number(r.get('total')) and abs(r['total']-total)<1e-6,'weighted score total inconsistent')
-  self.need(r.get('media_sha256')==obj(self.qa.get('reviewed_sha256')).get('video'),'scorecard stale media')
  def presented_steps(self,r,steps,viewing):
   records=r.get('steps');seen=set()
   for entry in seq(records):
@@ -861,7 +928,9 @@ class Checks:
   if n>=2:self.need(action in ('expand','repair_sample'),'G3 next_action must explicitly be expand or repair_sample')
   expanding=n>=3 or (n>=2 and action=='expand')
   self.tool_applications(expanding,dependencies(self.data,True)[1] if n==2 else None);self.expansion_failures(expanding)
+  feedback_start=len(self.errors)
   validate_feedback(self,target,expanding)
+  self._feedback_validated=len(self.errors)==feedback_start
   text_items=validate_text_plan(self)
   cards=self.expression_cards(steps) if n>=1 else {}
   self.internal_review('explanation_logic','G1',steps,cards)
@@ -902,7 +971,7 @@ class Checks:
    audio_path=self.evidence({'file':audio.get('file'),'sha256':narration.get('audio_sha256')},'source narration')
    if audio_path:self.whole_shot_coverage(self.duration(audio_path,require_video=False,label='source narration'))
   if n>=2:
-   self.animation(steps);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
+   self.animation(steps,cards);self.failures(final=n>=4);self.asset_catalog(steps,representative=True)
    validate_connection_review(self,'G3',dependencies(self.data,True)[1])
    animation=self.record('visual_frames.animation')
    validate_subject_motion(self,animation.get('subject_motion'),obj(animation.get('viewing')),'G3',policy['subject_motion'],set(x for x in seq(animation.get('step_ids')) if text(x)))
