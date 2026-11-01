@@ -336,7 +336,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "5ec393e4174c8bae8413639f5a496ac905663d8f2542876be05a4a552359d6f2",
+      "sha256": "f47dec6a0447401b960016444b339421a5e9d83c0f2c5a6bf810c02274904ca6",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -345,6 +345,7 @@
         "可选复用光照分组而非每次重渲",
         "explicit-color-settings-and-actual-readback",
         "complete-a-repair-cycle-before-expanding",
+        "task-bound-diagnostic-admission",
         "device-ownership-and-recovery",
         "integrity-validation-without-repeated-visual-review",
         "rendering-cost-and-scheduling"
@@ -397,7 +398,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "b0e1539cac4373acc85265bbed0ccf2db1c29e5d474cc206a79964725b9c518a",
+      "sha256": "056923f30ea441dd86f094f622a42b05b7efd01fa42e0332e5770640a7243a7f",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

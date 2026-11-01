@@ -161,6 +161,41 @@ def validate_spec(spec):
     return frames
 
 
+def repair_scope(spec):
+    """Optional task binding for raw video-repair diagnostics, not approval."""
+    if "repair_scope" not in spec:
+        return None
+    path = Path(spec["repair_scope"])
+    raw = path.read_bytes()
+    sha = hashlib.sha256(raw).hexdigest()
+    if isinstance(spec.get("inputs"), dict) and spec["inputs"].get(str(path)) != sha:
+        raise ValueError("Repair scope changed from the prepared input")
+    scope = json.loads(raw.decode("utf-8-sig"))
+    if (not isinstance(scope, dict) or scope.get("schema_version") != 1 or
+            not isinstance(scope.get("task_id"), str) or
+            not re.fullmatch(r"[A-Za-z0-9_.-]+", scope.get("task_id", "")) or
+            not isinstance(scope.get("issue"), str) or not scope["issue"].strip()):
+        raise ValueError("Repair scope needs schema_version=1, task_id and the defect/expected change in issue")
+    frames = parse_frames(scope.get("frames"))
+    if frames != list(range(frames[0], frames[-1] + 1)):
+        raise ValueError("Repair scope frames must be the complete native interval")
+    if type(scope.get("max_diagnostic_batches")) is not int or scope["max_diagnostic_batches"] < 0:
+        raise ValueError("Repair scope requires a task-specific max_diagnostic_batches >= 0")
+    render = spec["render"]
+    if (type(scope.get("fps")) is not int or scope["fps"] <= 0 or
+            type(scope.get("fps_base", 1)) not in (int, float) or
+            not math.isfinite(scope.get("fps_base", 1)) or scope.get("fps_base", 1) <= 0 or
+            scope["fps"] != render["fps"] or scope.get("fps_base", 1) != render.get("fps_base", 1)):
+        raise ValueError("Repair scope must declare the job's native fps/fps_base")
+    root = resolve(path.parent, scope.get("output_root"))
+    output = Path(spec["output_dir"])
+    if output == root or not output.is_relative_to(root):
+        raise ValueError("Repair job output must be below its fixed task output_root")
+    if not set(spec["frames"]) <= set(frames):
+        raise ValueError("Repair job frames are outside the task's native interval")
+    return {"path": str(path), "sha256": sha, "task_id": scope["task_id"]}, root, frames, scope
+
+
 def prepare(spec_path, job_path):
     spec_path = Path(spec_path).resolve(); root = spec_path.parent
     spec = read(spec_path); spec["frames"] = validate_spec(spec)
@@ -176,6 +211,10 @@ def prepare(spec_path, job_path):
         # An existing project check, not a new utilization/VRAM threshold.
         spec["resource_check"] = str(resolve(root, spec["resource_check"]))
         files.append(spec["resource_check"])
+    if "repair_scope" in spec:
+        spec["repair_scope"] = str(resolve(root, spec["repair_scope"]))
+        files.append(spec["repair_scope"])
+        repair_scope(spec)
     inputs = {}
     for item in files:
         path = resolve(root, item)
@@ -204,7 +243,7 @@ def verify(job):
 
 
 @contextmanager
-def job_lock(output):
+def job_lock(output, label="output job"):
     """OS lock is held by Blender itself, including if its launcher disappears."""
     output.mkdir(parents=True, exist_ok=True)
     path = output / ".render.lock"
@@ -221,7 +260,7 @@ def job_lock(output):
                 import fcntl
                 fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         except OSError as error:
-            raise RuntimeError("This output job is already running; inspect it, do not resubmit") from error
+            raise RuntimeError("This " + label + " is already running; inspect it, do not resubmit") from error
         try:
             yield
         finally:
@@ -230,6 +269,48 @@ def job_lock(output):
                 msvcrt.locking(stream.fileno(), msvcrt.LK_UNLCK, 1)
             else:
                 fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
+
+
+def admit_repair(job, frames, todo, resume, attempt, attempt_path, state_path):
+    bound = repair_scope(job["spec"])
+    if bound is None:
+        return
+    identity, root, interval, scope = bound
+    # Hold only admission, not the render. A charged attempt reserves its place
+    # before another output can count history and begin building.
+    with job_lock(root, "repair task admission"):
+        binding = root / ".repair-scope.json"
+        if binding.exists():
+            if read(binding) != identity:
+                raise ValueError("Repair task scope is already frozen; preserve its decision and history")
+        else:
+            write(binding, identity)
+        admission = {"scope": identity, "charged": False}
+        attempt["repair_admission"] = admission
+        if not todo:
+            admission["reason"] = "no_render_work"
+        elif frames == interval:
+            admission["reason"] = "complete_native_interval"
+        else:
+            prior = []
+            for path in root.rglob("attempts/*.json"):
+                record = read(path)
+                if (record.get("kind") == "blender_sequence_attempt" and
+                        record.get("repair_admission", {}).get("scope") == identity and
+                        record["repair_admission"].get("charged") is True):
+                    prior.append(record)
+            admission["used_batches"] = len(prior)
+            admission["max_diagnostic_batches"] = scope["max_diagnostic_batches"]
+            reused = resume and any(record.get("signature") == job["signature"] and
+                                    set(frames) <= set(record["selected_frames"]) for record in prior)
+            if reused:
+                admission["reason"] = "frozen_selection_resume"
+            elif len(prior) >= scope["max_diagnostic_batches"]:
+                admission["reason"] = "diagnostic_budget_exhausted"
+                raise ValueError("Repair diagnostic budget exhausted; request the complete native interval or a parent decision")
+            else:
+                admission.update(charged=True, reason="new_diagnostic_batch")
+        write(attempt_path, attempt); write(state_path, attempt)
 
 
 def frame_paths(output, frame, spec):
@@ -671,6 +752,8 @@ def execute(job, renderer, resume=False, selected=None):
             attempt["initial_scan_seconds"] = time.monotonic() - tic
             attempt["reused_frames"] = len(frames) - len(todo)
             write(attempt_path, attempt); write(state_path, attempt)
+            if not todo:
+                admit_repair(job, frames, todo, resume, attempt, attempt_path, state_path)
             if todo:
                 if spec.get("resource_check"):
                     tic = time.monotonic()
@@ -680,6 +763,7 @@ def execute(job, renderer, resume=False, selected=None):
                     if not isinstance(result, dict) or result.get("ok") is not True:
                         raise RuntimeError("Existing project resource check did not pass; see attempt record")
                     attempt["resource_check_seconds"] = time.monotonic() - tic
+                admit_repair(job, frames, todo, resume, attempt, attempt_path, state_path)
                 tic = time.monotonic()
                 renderer.build(spec)
                 attempt["build_seconds"] = time.monotonic() - tic

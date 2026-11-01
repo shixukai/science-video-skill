@@ -61,6 +61,155 @@ class BatchTests(unittest.TestCase):
         (self.root / "spec.json").write_text(json.dumps(self.spec), encoding="utf-8")
         return batch.prepare(self.root / "spec.json", self.root / name)
 
+    def prepare_repair(self, budget=1):
+        self.scope = {"schema_version": 1, "task_id": "fixture-repair",
+                      "issue": "Cutaway closes too early; keep the opening visible throughout the sweep",
+                      "output_root": "repair-outputs", "frames": "1:4", "fps": 25,
+                      "max_diagnostic_batches": budget}
+        (self.root / "repair-scope.json").write_text(json.dumps(self.scope), encoding="utf-8")
+        self.spec.update(repair_scope="repair-scope.json", output_dir="repair-outputs/v1")
+        return self.prepare("repair-job.json")
+
+    def repair_attempts(self):
+        return [batch.read(path) for path in (self.root / "repair-outputs").rglob("attempts/*.json")]
+
+    def test_repair_renamed_job_and_changed_source_do_not_reset_budget(self):
+        job = self.prepare_repair()
+        batch.execute(job, FakeRenderer(), selected="1,4")
+        (self.root / "scene.py").write_text("# changed scene version\n", encoding="utf-8")
+        self.spec.update(job_id="fixture-v2", output_dir="repair-outputs/v2")
+        changed = self.prepare("repair-job-v2.json"); renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "budget exhausted"):
+            batch.execute(changed, renderer, selected="2,3")
+        self.assertEqual(renderer.builds, 0)
+        records = self.repair_attempts()
+        self.assertEqual(sum(item.get("repair_admission", {}).get("charged") is True for item in records), 1)
+        declined = [item for item in records if item.get("status") == "failed"]
+        self.assertEqual(declined[0]["repair_admission"]["reason"], "diagnostic_budget_exhausted")
+
+    def test_repair_selection_expansion_costs_another_batch_but_frozen_resume_does_not(self):
+        job = self.prepare_repair()
+        with self.assertRaises(RuntimeError):
+            batch.execute(job, FakeRenderer(fail=4), selected="1,4")
+        renderer = FakeRenderer(); batch.execute(job, renderer, resume=True, selected="4")
+        self.assertEqual(renderer.frames, [4])
+        renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "budget exhausted"):
+            batch.execute(job, renderer, resume=True, selected="1,2")
+        self.assertEqual(renderer.builds, 0)
+        self.assertEqual(sum(item["repair_admission"]["charged"] is True for item in self.repair_attempts()), 1)
+        # The original complete frozen request remains available to finish it.
+        renderer = FakeRenderer(); result = batch.execute(job, renderer, resume=True)
+        self.assertEqual(renderer.frames, [2, 3]); self.assertEqual(result["status"], "complete_unreviewed")
+
+    def test_repair_cache_hit_consumes_no_batch(self):
+        job = self.prepare_repair(budget=0)
+        batch.execute(job, FakeRenderer())
+        renderer = FakeRenderer(); result = batch.execute(job, renderer, resume=True, selected="1,4")
+        self.assertEqual(renderer.builds, 0)
+        self.assertEqual(result["repair_admission"]["reason"], "no_render_work")
+        self.assertFalse(result["repair_admission"]["charged"])
+
+    def test_repair_zero_budget_allows_full_interval_and_never_replenishes(self):
+        job = self.prepare_repair(budget=0)
+        renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "budget exhausted"):
+            batch.execute(job, renderer, selected="1,4")
+        self.assertEqual(renderer.builds, 0)
+        full = batch.execute(job, FakeRenderer(), resume=True)
+        self.assertEqual(full["repair_admission"]["reason"], "complete_native_interval")
+        self.spec.update(job_id="fixture-v2", output_dir="repair-outputs/v2")
+        next_job = self.prepare("repair-job-v2.json"); renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "budget exhausted"):
+            batch.execute(next_job, renderer, selected="2,3")
+        self.assertEqual(renderer.builds, 0)
+
+    def test_repair_full_preview_cannot_replenish_consumed_positive_budget(self):
+        job = self.prepare_repair()
+        batch.execute(job, FakeRenderer(), selected="1,4")
+        batch.execute(job, FakeRenderer(), resume=True)
+        self.spec.update(job_id="fixture-v2", output_dir="repair-outputs/v2")
+        next_job = self.prepare("repair-job-v2.json"); renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "budget exhausted"):
+            batch.execute(next_job, renderer, selected="2,3")
+        self.assertEqual(renderer.builds, 0)
+
+    def test_repair_task_lock_serializes_admission_for_different_output(self):
+        job = self.prepare_repair()
+        renderer = FakeRenderer()
+        with batch.job_lock(self.root / "repair-outputs", "repair task admission"):
+            with self.assertRaisesRegex(RuntimeError, "repair task admission"):
+                batch.execute(job, renderer, selected="1,4")
+        self.assertEqual(renderer.builds, 0)
+        self.assertFalse(any(item.get("repair_admission", {}).get("charged") is True for item in self.repair_attempts()))
+        batch.execute(job, FakeRenderer(), resume=True, selected="1,4")
+
+    def test_repair_reservation_is_visible_before_build_and_prevents_concurrent_overrun(self):
+        job = self.prepare_repair()
+        self.spec.update(job_id="fixture-v2", output_dir="repair-outputs/v2")
+        next_job = self.prepare("repair-job-v2.json"); second = FakeRenderer()
+        case = self
+        class ConcurrentAttempt(FakeRenderer):
+            def build(self, spec):
+                with case.assertRaisesRegex(ValueError, "budget exhausted"):
+                    batch.execute(next_job, second, selected="2,3")
+                super().build(spec)
+        batch.execute(job, ConcurrentAttempt(), selected="1,4")
+        self.assertEqual(second.builds, 0)
+
+    def test_repair_resource_refusal_does_not_consume_diagnostic_allowance(self):
+        self.prepare_repair()
+        check = self.root / "resource.py"
+        check.write_text("def check(spec):\n return {'ok': False}\n", encoding="utf-8")
+        self.spec["resource_check"] = "resource.py"; job = self.prepare("refused-job.json")
+        with self.assertRaises(RuntimeError):
+            batch.execute(job, FakeRenderer(), selected="1,4")
+        self.assertFalse(any(item.get("repair_admission", {}).get("charged") is True for item in self.repair_attempts()))
+        del self.spec["resource_check"]
+        self.spec.update(job_id="fixture-v2", output_dir="repair-outputs/v2")
+        job = self.prepare("repair-job-v2.json")
+        batch.execute(job, FakeRenderer(), selected="1,4")
+
+    def test_repair_scope_modified_input_fails_before_build(self):
+        job = self.prepare_repair()
+        path = self.root / "repair-scope.json"
+        self.assertIn(str(path), job["spec"]["inputs"])
+        self.assertEqual(job["spec"]["repair_scope"], str(path))
+        self.scope["max_diagnostic_batches"] = 10
+        path.write_text(json.dumps(self.scope), encoding="utf-8")
+        renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "Input changed"):
+            batch.execute(job, renderer, selected="1,4")
+        self.assertEqual(renderer.builds, 0)
+
+    def test_repair_scope_content_or_path_cannot_be_rebound_in_same_root(self):
+        job = self.prepare_repair()
+        batch.execute(job, FakeRenderer(), selected="1,4")
+        self.scope.update(task_id="new-label", max_diagnostic_batches=10)
+        (self.root / "repair-scope-v2.json").write_text(json.dumps(self.scope), encoding="utf-8")
+        self.spec.update(repair_scope="repair-scope-v2.json", job_id="fixture-v2", output_dir="repair-outputs/v2")
+        changed = self.prepare("repair-job-v2.json"); renderer = FakeRenderer()
+        with self.assertRaisesRegex(ValueError, "scope is already frozen"):
+            batch.execute(changed, renderer, selected="2,3")
+        self.assertEqual(renderer.builds, 0)
+
+    def test_repair_scope_requires_explicit_budget_native_interval_fps_and_child_output(self):
+        self.prepare_repair()
+        original = copy.deepcopy(self.scope)
+        for patch in ({"max_diagnostic_batches": None}, {"max_diagnostic_batches": True},
+                      {"max_diagnostic_batches": -1}, {"max_diagnostic_batches": 1.5},
+                      {"frames": "1,4"}, {"frames": "2:5"}, {"fps": 12}, {"fps_base": 0.5},
+                      {"output_root": "elsewhere"}, {"output_root": "repair-outputs/v1"}, {"issue": ""}):
+            with self.subTest(patch=patch):
+                (self.root / "repair-scope.json").write_text(json.dumps({**original, **patch}), encoding="utf-8")
+                with self.assertRaises(ValueError): self.prepare("invalid-repair.json")
+
+    def test_repair_generic_legacy_jobs_do_not_gain_scope_or_budget(self):
+        result = batch.execute(self.job, FakeRenderer(), selected="1,4")
+        self.assertNotIn("repair_scope", self.job["spec"])
+        self.assertNotIn("repair_admission", result)
+        self.assertFalse((self.root / ".repair-scope.json").exists())
+
     def test_build_once_and_every_native_frame(self):
         renderer = FakeRenderer(); result = batch.execute(self.job, renderer)
         self.assertEqual(renderer.builds, 1); self.assertEqual(renderer.frames, [1, 2, 3, 4])
