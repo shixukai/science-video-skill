@@ -219,6 +219,8 @@ def _synthesize(profile, text_file, output, record, *, revision=None, cache_dir=
         raise SynthesisError("The narration text is empty.")
     audio, runtime, requested, requested_revision, profile_hash = read_settings(
         profile, revision, device, dtype)
+    if seed is None:
+        seed = audio.get("seed")
     if seed is not None and (isinstance(seed, bool) or not isinstance(seed, int) or not 0 <= seed < 2**32):
         raise SynthesisError("Seed must be an integer from 0 to 2^32-1.")
     np, torch, sf, snapshot_download, model_class = load_runtime()
@@ -384,7 +386,7 @@ def main(argv=None):
     parser.add_argument("--allow-model-download", action="store_true", help="Allow official public weights download; text stays local")
     parser.add_argument("--device", help="Explicit profile override: cpu, mps or cuda:N")
     parser.add_argument("--dtype", choices=("float32", "float16", "bfloat16"))
-    parser.add_argument("--seed", type=int)
+    parser.add_argument("--seed", type=int, help="Override audio.seed; otherwise use the profile seed.")
     args = parser.parse_args(argv)
     try:
         result = synthesize(args.profile, args.text_file, args.output, args.record,

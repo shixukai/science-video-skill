@@ -20,7 +20,29 @@ Full narration synthesis uses the current complete script integrated by the pare
 Approval of a timbre/speaking-rate sample supports only the corresponding voice direction, not the complete script or film. Independent listening samples and technical feasibility tests need not wait for the full script. Existing scripts/evidence may be referenced, and narrative approval adds no user approval stage. A paper review cannot masquerade as listening; actual voice and full audiovisual media still receive actual review at subsequent stages. After script revisions, update only affected audio, captions and action timing, without recreating unrelated assets.
 
 <a id="本期语速先试听"></a>
-## Listen to this episode's speaking rate first
+<a id="listen-to-this-episodes-speaking-rate-first"></a>
+## Reuse the accepted voice before making new auditions
+
+The [series profile](../config/series-profile.json) owns the executable default `mandarin-calm-serena-v1`. Reuse an applicable accepted voice recipe and comparison anchor from current/prior project records or the private cross-project baseline `CODEX_HOME/data/science-video-production/voice-baseline.json` (default `~/.codex/data/science-video-production/voice-baseline.json`). This data file is not another Skill installation. Keep actual audio, feedback, hashes, locations and approval scope private; configuration alone is not evidence of user acceptance. A more recent explicit voice choice or rejection takes priority.
+
+**Changing wording, a storyboard cut, an episode, an agent or a maintenance version does not reopen voice selection.** Carry forward the accepted model/version, speaker, language, delivery instruction, supported generation settings, seed strategy and validated runtime. Reuse matching accepted audio; generate only changed text when necessary, with the contextual units below. Do not ask the user to choose or approve the same voice again, or send successive samples because one sentence changed. Keep manuscript review and new-track quality review separate from voice-direction acceptance.
+
+| Setting | Series default |
+| --- | --- |
+| Model and revision | Official `Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice`; `audio.model_revision` pins the actual weight revision |
+| Speaker and language | `Serena`, `Chinese` |
+| Delivery | The exact Mandarin `audio.instruct` payload: calm, conversational, restrained; natural onsets and endings without an argumentative or promotional delivery. Preserve lexical tones and meaningful emphasis |
+| Main sampling | `do_sample=true`, `temperature=0.9`, `top_k=50`, `top_p=1.0`, `repetition_penalty=1.05` |
+| Subtalker sampling | `subtalker_dosample=true`, `subtalker_temperature=0.9`, `subtalker_top_k=50`, `subtalker_top_p=1.0`; preserve the wrapper's actual parameter spelling |
+| Seed and mode | `seed=42`, `non_streaming_mode=true`. The bundled adapter uses `audio.seed` when no explicit seed is supplied |
+| Output capacity | `max_new_tokens=4096` is a starting capacity, not a voice characteristic or a duration limit. Increase it for a verified length/truncation need or use justified contextual sections; this alone requires no new user voice audition |
+| Runtime and source | Keep the confirmed project's validated device, dtype, attention implementation and package/model evidence. Preserve the model-native mono FLOAT WAV; mix/export settings are separate |
+
+These values preserve a reusable recipe, not guaranteed identical speech across different text, hardware or software. Inspect actual effective settings before synthesis; do not silently fall back to wrapper defaults, change voice or vary sampling per shot. The confirmed project's accepted recipe takes priority over an unreviewed generic example. A service may use only its supported fields; record unexposed settings honestly rather than inventing equivalent controls. Do not impose a numeric speech-rate control that the selected interface does not support, a universal words-per-minute target or automatic speedup. Optional measured postprocessing remains separate below.
+
+User audition is reserved for an explicit request, a genuinely unresolved preference for a new/changed voice direction, or an audible problem that specifically needs the user's judgment. Name that decision and provide only the relevant verified local material link. A model/runtime update first receives production-side comparison with the accepted anchor; it does not automatically trigger another user approval round. If no accepted baseline exists, start from the configured default and production-side evaluation; do not manufacture a mandatory per-episode voice-selection gate.
+
+**Production owns routine audio QA.** Check the current source for coverage, pronunciation, naturalness and continuity, then check the final mix and synchronization. Existing valid observations may cover unchanged reused audio, but an accepted tone sample does not pass unheard new text or a whole track. Automated duration, silence, clipping or transcript checks can locate defects; they cannot establish actual listening. Missing auditory perception stays unreviewed: continue independent work and use a genuinely capable review path within the existing transfer rules, rather than repeatedly asking the user to perform routine QA. Do not describe an unheard output as natural or mark a listening requirement passed.
 
 Treat `audio.instruct` in the [series profile](../config/series-profile.json) as the default delivery direction. Apply it through the confirmed project's supported instruction field and verify the actual request/record, retaining its validated model and runtime. Before expanding, compare a continuous sample covering the opening, difficult wording and adjacent semantic sections against an applicable accepted reference when available; otherwise use the first actually reviewed continuous sample as this episode's comparison anchor. Compare speaker timbre, natural register, vocal effort, pace and phrase endings. Aim for clear onsets, concise endings and compact phrasing without rushed words or empty waits. Preserve Mandarin lexical tones and meaningful emphasis; consistency does not mean a fixed pitch. Reuse valid evidence without adding another user-approval step.
 
@@ -69,6 +91,8 @@ The variables below all come from the actual project confirmed for this task and
   --output "${QWEN_OUTPUT_WAV}" \
   --record "${QWEN_GENERATION_RECORD}"
 ```
+
+An explicit `--seed` overrides `audio.seed`; omitting it uses the profile seed. A profile with neither retains unset-seed behavior. The actual selected seed is recorded, and is not a perceptual-consistency guarantee.
 
 The local adapter defaults to offline access to an explicitly specified existing model cache and fails explicitly if the model is missing. Use --allow-model-download only when the current instructions cover weight downloads; it downloads the selected revision from the official repository into the confirmed cache. --execution-reference, --project-dir and --cache-dir are all required. Missing confirmation references or paths fail before loading the runtime or creating the output directory. Dependency installation, model downloads and actual invocation each follow current instructions. The script does not overwrite an existing WAV or record, or switch project, cache, device or service to retry.
 

@@ -150,6 +150,38 @@ class SynthesisTests(unittest.TestCase):
         self.assertEqual(struct.unpack("<3f", self.output.read_bytes()[44:]), (0.25, -0.5, 2.0))
         self.torch.manual_seed.assert_called_once_with(42)
 
+    def test_profile_seed_is_applied_and_recorded_when_no_override_is_given(self):
+        self.settings["audio"]["seed"] = 42
+        self.save_settings()
+        result = self.run_synthesis()
+        self.assertEqual(result["seed"], 42)
+        self.torch.manual_seed.assert_called_once_with(42)
+        self.np.random.seed.assert_called_once_with(42)
+
+    def test_explicit_seed_overrides_profile_including_zero(self):
+        self.settings["audio"]["seed"] = 42
+        self.save_settings()
+        result = self.run_synthesis(seed=0)
+        self.assertEqual(result["seed"], 0)
+        self.torch.manual_seed.assert_called_once_with(0)
+
+    def test_legacy_profile_without_seed_leaves_rng_unset(self):
+        result = self.run_synthesis()
+        self.assertIsNone(result["seed"])
+        self.torch.manual_seed.assert_not_called()
+        self.np.random.seed.assert_not_called()
+
+    def test_invalid_profile_seed_fails_before_runtime_import(self):
+        for invalid in (True, -1, 2**32, 1.5, "42"):
+            with self.subTest(seed=invalid):
+                self.settings["audio"]["seed"] = invalid
+                self.save_settings()
+                with self.assertRaisesRegex(voice.SynthesisError, "Seed must be an integer"):
+                    self.run_synthesis()
+                voice.load_runtime.assert_not_called()
+                self.download.assert_not_called()
+                self.assert_no_outputs()
+
     def test_model_download_is_only_explicit_and_contains_no_text_argument(self):
         self.run_synthesis(allow_model_download=True, revision="reviewed-branch")
         self.assertFalse(self.download.call_args.kwargs["local_files_only"])

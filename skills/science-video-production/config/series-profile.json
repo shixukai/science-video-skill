@@ -75,7 +75,7 @@
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
     "speaker": "Serena",
     "language": "Chinese",
-    "instruct": "用同一位讲解者稳定、自然的音色和音区连续讲述。表达清楚、干脆利落，节奏紧凑但不抢字；起句直接，句尾自然收住，不拖长尾音、不逐字顿读。停顿服务完整意思和必要观察，重音跟随语义；跨段承接前文，不重新起调或切换播报腔。",
+    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。以自然陈述为主，不争辩、不鼓动，也不逐字念；保持同一个人的自然音色和音区，语速从容清楚，起音自然，句尾自然收住。提问像邀请对方观察，停顿顺着意思走，不做夸张表演。",
     "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
     "reuse_matching_audio": true,
     "postprocess_example": {
@@ -108,6 +108,22 @@
         "attn_implementation": "eager"
       },
       "generation_params": {}
+    },
+    "voice_preset_id": "mandarin-calm-serena-v1",
+    "model_revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
+    "seed": 42,
+    "generation_params": {
+      "do_sample": true,
+      "max_new_tokens": 4096,
+      "non_streaming_mode": true,
+      "repetition_penalty": 1.05,
+      "subtalker_dosample": true,
+      "subtalker_temperature": 0.9,
+      "subtalker_top_k": 50,
+      "subtalker_top_p": 1.0,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 1.0
     }
   },
   "captions": {

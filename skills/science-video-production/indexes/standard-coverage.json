@@ -260,12 +260,12 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "4fe8e561ba7dd30e3122a6ef6c85743254323164f13ecc1c578195d2c6cbc8f5",
+      "sha256": "6f0cd09bc5e6a13c8e97b8da98f8e4af23838cd05fc9c87e714afd55aec37559",
       "anchors": [
         "mandarin-narration-confirm-the-qwen-invocation-location-and-actually-listen",
         "invocation-location-and-confirmation",
         "check-the-script-before-full-episode-synthesis",
-        "listen-to-this-episodes-speaking-rate-first",
+        "reuse-the-accepted-voice-before-making-new-auditions",
         "continuous-narration-and-synthesis-units",
         "optional-local-adapter",
         "run-records-and-audio-binding",
