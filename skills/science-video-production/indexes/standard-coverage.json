@@ -245,7 +245,7 @@
     {
       "owner_id": "visual",
       "file": "references/material-rendering.md",
-      "sha256": "8cf2d7b1c25024acec84a05f2512c177fdcadb45109bbdda040906d284aa4cca",
+      "sha256": "d2f62356e99e9373b2bcd1890b1544807f6ed9eec519913446db621c531afd19",
       "anchors": [
         "general-material-rendering-standard-for-3d-video",
         "1-define-each-material-and-its-finish",
@@ -298,7 +298,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "0614433d266db4784302b841bf42354d3b5a9e5057295ed635a4131e959b9a1e",
+      "sha256": "c8b2766692bb44e22c6460a7ead76434903117ad624c5632685bfcc7c0651f32",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -361,7 +361,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "672f5f48bbbc7d1b893c311f103654516c688270152cf8468bd5a5a55c40b0e7",
+      "sha256": "35768b6a16a6b7c7c3c5d82f988c93da2ddd53530f0ae0cc3d5dcb51e20c2c61",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -423,7 +423,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "85d1536cbe2810b9b58f92dcef7729bce7237638b01c345b802dbb5e7a291e7d",
+      "sha256": "027b4a629162572e49a9c7a5ac830480ce583902544bd8d2b4fd834c303b54f0",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

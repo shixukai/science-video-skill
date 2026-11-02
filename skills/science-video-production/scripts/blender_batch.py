@@ -5,6 +5,7 @@ The job contains scene inputs, not approvals. Use the existing episode gate when
 assembling audiovisual samples or final media. No installation or device fallback.
 """
 import argparse
+from array import array
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
@@ -126,7 +127,7 @@ def validate_render_settings(render):
 def validate_spec(spec):
     if spec.get("schema_version") != 1 or not re.fullmatch(r"[A-Za-z0-9_.-]+", spec.get("job_id", "")):
         raise ValueError("schema_version=1 and a simple job_id are required")
-    if spec.get("purpose") not in ("motion_preview", "lookdev", "shot_frames", "patch"):
+    if spec.get("purpose") not in ("motion_preview", "lookdev", "appearance", "shot_frames", "patch"):
         raise ValueError("Unknown intermediate-asset purpose")
     if bool(spec.get("blend")) == bool(spec.get("driver")):
         raise ValueError("Choose exactly one baked blend or Python driver")
@@ -144,6 +145,8 @@ def validate_spec(spec):
         raise ValueError("fps_base must be finite and positive")
     if render.get("engine") not in ("CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"):
         raise ValueError("Unsupported engine; validate a new engine before extending this executor")
+    if spec["purpose"] == "appearance" and render["engine"] == "BLENDER_WORKBENCH":
+        raise ValueError("Appearance jobs require Cycles or EEVEE; Workbench is an internal geometry/motion diagnostic")
     if render.get("format", "PNG") not in ("PNG", "OPEN_EXR"):
         raise ValueError("Use PNG or OPEN_EXR image sequences")
     if render["engine"] == "CYCLES":
@@ -629,6 +632,174 @@ def audit_blender_inputs(spec, bpy, evaluated=False):
 
 
 
+APPEARANCE_OBJECT_TYPES = frozenset(("MESH", "CURVE", "SURFACE", "META", "FONT",
+                                     "CURVES", "POINTCLOUD", "VOLUME"))
+
+
+def _appearance_layer_objects(layer):
+    """Render-enabled collection paths; viewport hiding is not render hiding."""
+    found = {}
+
+    holdouts = set()
+
+    def visit(branch, holdout=False):
+        if getattr(branch, "exclude", False) or branch.collection.hide_render:
+            return
+        holdout = holdout or getattr(branch, "holdout", False)
+        for obj in branch.collection.objects:
+            if not obj.hide_render:
+                found[obj.as_pointer()] = obj
+                if holdout:
+                    holdouts.add(obj.as_pointer())
+        for child in branch.children:
+            visit(child, holdout)
+
+    visit(layer.layer_collection)
+    return found, holdouts
+
+
+def _appearance_material_output(material, engine):
+    """Only the selected renderer's active output, not an unused PBR node."""
+    if material is None or not material.use_nodes or material.node_tree is None:
+        return (), "missing node material"
+    target = "CYCLES" if engine == "CYCLES" else "EEVEE"
+    output = material.node_tree.get_output_node(target)
+    if output is None or getattr(output, "mute", False):
+        return (), "missing active material output"
+    channels = tuple(name for name in ("Surface", "Volume")
+                     if output.inputs.get(name) is not None and output.inputs[name].is_linked)
+    return (channels, None) if channels else ((), "active output has no connected Surface or Volume")
+
+
+def audit_appearance_bindings(spec, scene, bpy):
+    """Fail obvious appearance binding gaps; this is not rendered-quality QA.
+
+    Use evaluated objects/instances in enabled render view layers. Collection
+    exclusion and render hiding are respected; viewport-only visibility and
+    modifiers do not prove the final raster visibility or appearance. Connected
+    group outputs are accepted without claiming every internal shader path is
+    correct. Re-evaluate each frame so later driver changes cannot inherit a pass.
+    """
+    if spec.get("purpose") != "appearance":
+        return None
+    engine = scene.render.engine
+    if engine not in ("CYCLES", "BLENDER_EEVEE_NEXT"):
+        raise ValueError("Actual appearance renderer is not Cycles or EEVEE")
+    context = bpy.context
+    active = context.view_layer
+    layers = ([active] if getattr(scene.render, "use_single_layer", False)
+              else [layer for layer in scene.view_layers if layer.use])
+    bindings, materials, objects, failures = set(), set(), set(), set()
+    instance_count, holdout_count, unsupported = 0, 0, set()
+    for layer in layers:
+        eligible, holdouts = _appearance_layer_objects(layer)
+        # The active graph was updated by audit_blender_inputs immediately before
+        # this call. Other enabled layers need their own evaluated graph, once.
+        with context.temp_override(scene=scene, view_layer=layer):
+            graph = context.evaluated_depsgraph_get()
+            if layer != active:
+                graph.update()
+            material_cache, data_indices = {}, {}
+            evaluated = {}
+            for original in eligible.values():
+                if (getattr(original, "is_instancer", False) and
+                        not getattr(original, "show_instancer_for_render", True)):
+                    continue
+                if original.type in APPEARANCE_OBJECT_TYPES:
+                    obj = original.evaluated_get(graph)
+                    evaluated[obj.as_pointer()] = (obj, original.as_pointer() in holdouts)
+                elif original.type == "GREASEPENCIL":
+                    unsupported.add(original.type)
+            for instance in graph.object_instances:
+                if not instance.is_instance or not instance.show_self:
+                    continue
+                parent = instance.parent
+                parent_original = getattr(parent, "original", parent)
+                if parent_original is None or parent_original.as_pointer() not in eligible:
+                    continue
+                obj = instance.object
+                if obj.hide_render:
+                    continue
+                if obj.type in APPEARANCE_OBJECT_TYPES:
+                    instance_count += 1
+                    previous = evaluated.get(obj.as_pointer())
+                    instance_holdout = parent_original.as_pointer() in holdouts
+                    # A shared evaluated source needs a shader if any of its
+                    # participating paths is not a holdout.
+                    evaluated[obj.as_pointer()] = (obj, instance_holdout and
+                                                   (previous[1] if previous else True))
+                elif obj.type == "GREASEPENCIL":
+                    unsupported.add(obj.type)
+            for obj, collection_holdout in evaluated.values():
+                data = obj.data
+                slots = list(obj.material_slots)
+                original = getattr(obj, "original", obj)
+                if (collection_holdout or getattr(original, "is_holdout", False) or
+                        (hasattr(original, "holdout_get") and original.holdout_get(view_layer=layer))):
+                    holdout_count += 1
+                    continue
+                indexed = (data.polygons if obj.type == "MESH" else
+                           data.splines if obj.type in ("CURVE", "SURFACE") else
+                           data.body_format if obj.type == "FONT" else None)
+                if indexed is not None:
+                    if not len(indexed) or (obj.type == "FONT" and not data.body.strip()):
+                        continue
+                    key = data.as_pointer()
+                    if key not in data_indices:
+                        # Read native RNA in bulk: dense industrial meshes should
+                        # not require one Python object/property access per face.
+                        values = array("i", [0]) * len(indexed)
+                        indexed.foreach_get("material_index", values)
+                        data_indices[key] = ({value for char, value in zip(data.body, values) if not char.isspace()}
+                                             if obj.type == "FONT" else set(values))
+                    indices = data_indices[key]
+                elif obj.type == "CURVES" and not len(data.curves):
+                    continue
+                elif obj.type == "POINTCLOUD" and not len(data.points):
+                    continue
+                else:
+                    indices = set(range(len(slots)))
+                override = getattr(layer, "material_override", None)
+                if override is not None:
+                    slots, indices = [override], {0}
+                name = getattr(original, "name_full", obj.name)
+                objects.add((layer.name, name))
+                if not slots:
+                    failures.add((layer.name, name, "no assigned material"))
+                for index in indices:
+                    material = (override if override is not None else
+                                slots[index].material if index < len(slots) else None)
+                    key = material.as_pointer() if material is not None else None
+                    if key not in material_cache:
+                        material_cache[key] = _appearance_material_output(material, engine)
+                    channels, error = material_cache[key]
+                    if error:
+                        failures.add((layer.name, name, f"slot {index}: {error}"))
+                    else:
+                        materials.add(material.name_full)
+                        bindings.add((layer.name, name, index, material.name_full, channels))
+    if failures:
+        details = sorted(failures)
+        text = "; ".join(f"{layer}/{obj}: {error}" for layer, obj, error in details[:12])
+        if len(details) > 12:
+            text += f"; {len(details) - 12} more binding gaps"
+        raise ValueError("Appearance binding check failed before frame render: " + text)
+    # Keep receipts compact; stream the digest instead of serializing a large
+    # per-frame binding inventory into a second JSON document.
+    checksum = hashlib.sha256()
+    for binding in sorted(bindings):
+        checksum.update(json.dumps(binding, ensure_ascii=False, separators=(",", ":")).encode())
+        checksum.update(b"\n")
+    return {"status": "bindings_checked", "quality": "unreviewed",
+            "scope": "evaluated enabled-view-layer assignments and connected active outputs; not pixel or material-quality approval",
+            "view_layers": [layer.name for layer in layers], "surface_objects": len(objects),
+            "materials": len(materials), "bindings": len(bindings),
+            "evaluated_instances": instance_count, "holdout_objects": holdout_count,
+            "unassessed_object_types": sorted(unsupported),
+            "limits": "viewport depsgraph; render-only evaluation changes and nonmesh procedural components are unassessed",
+            "binding_sha256": checksum.hexdigest()}
+
+
 def apply_color_management(scene, color):
     # Display changes can affect transforms, and transforms can affect looks.
     # Omitted properties are inherited from the authored scene, with no style preset.
@@ -847,6 +1018,9 @@ class BlenderRenderer:
         self.bpy.context.view_layer.update()
         actual = configure(self.scene, spec["render"], self.bpy)
         audit_blender_inputs(spec, self.bpy, evaluated=True)
+        appearance = audit_appearance_bindings(spec, self.scene, self.bpy)
+        if appearance is not None:
+            actual['appearance_binding_check'] = appearance
         actual['blender_version'] = self.bpy.app.version_string
         actual['blender_build_hash'] = self.bpy.app.build_hash.decode('ascii')
         return metadata, actual
