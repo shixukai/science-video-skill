@@ -117,10 +117,11 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "68884e3a709e967a4e0c4ca8553df88dad04dc5f376fc093020d1f9b04b9567e",
+      "sha256": "bfdf917a8f8a54056515791522812d3fde556ae6bd3a6a786702cf995e05dc3a",
       "anchors": [
         "视觉设计系统",
         "明亮风格与高级材质",
+        "工业产品棚拍材质标准",
         "当前基准与引用",
         "已确认画风的视觉锚点",
         "从视觉锚点到实际资产",
@@ -281,7 +282,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "f139d32b951d677449073b53a3af16f79c3112218e7e18d739966aed769fc4d7",
+      "sha256": "1072bf56f7a930b6bfea805241668e4980918fd63c2c4ec62b651aa1a4e19f6f",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -319,7 +320,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "699531f6f0c1cfb1133289e3a87e54969948263f5ad22ca330f172eb4b8b411b",
+      "sha256": "26d681b6d0cfe88ef67179b16004b13d111ed6e89e701e3b5919388bc66f2685",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
