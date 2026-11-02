@@ -228,10 +228,11 @@
     {
       "owner_id": "visual",
       "file": "references/spatial-typography.md",
-      "sha256": "3eec4e0cc54f3d93631d08703b8d672b8dccc544cf84cd59e9715ccb2ca01807",
+      "sha256": "8d5880a042ebba48c79bf12de50e6468acd031de32b3f017ddb127e428ecacfc",
       "anchors": [
         "letter-markers-only-in-3d-picture",
         "scope-and-prohibition",
+        "apply-current-corrections-before-showing-previews",
         "build-permitted-letters-in-space",
         "reuse-the-existing-inventory-and-actual-review",
         "reject-and-repair",
@@ -401,7 +402,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "056923f30ea441dd86f094f622a42b05b7efd01fa42e0332e5770640a7243a7f",
+      "sha256": "65b7946fae835ccb84526e29fae88872749c1fb69592525e24d82f02613a3b32",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

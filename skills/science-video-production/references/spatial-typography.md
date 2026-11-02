@@ -10,6 +10,14 @@ Each permitted marker identifies one actual referent. Do not split a word or sen
 
 Show the relationship with action, before/change/after states, close-ups, scale transitions, meaningful comparison and motivated shot relationships. Explain names, quantities and necessary scientific conditions through the narration and its genuine synchronized subtitles. Preserve scientific accuracy; lettering is not a substitute for the promised visible process. Existing rights/disclosure obligations use their appropriate established placement; incompatible asset requirements must be resolved without hiding an obligation or inventing on-frame permission.
 
+## Apply current corrections before showing previews
+
+When the user explicitly removes or prohibits picture annotations, apply that correction to the current plan, reused brief and output generator before the next preview. Preserve the old directions as history, with the current user-message/evidence reference and affected scope in the existing migration/work log. A request to continue, keep a model or retain a story does not renew a withdrawn text/layout direction. A later explicit user request for specific text is assessed as a new instruction; the Skill never overrides the user by inventing priority.
+
+The restriction also applies to 3D picture candidates shown in composition boards, comparison boards and presentation canvases. Do not add production/disclaimer headings, case descriptions, explanation strips or unverified subtitle placeholders outside the raw render and call the result compliant because the render itself is clean. Keep process/version/diagnostic notes in the separate work log or link description. A static board has no established synchronized soundtrack; proposed speech belongs in the script, with ordinary subtitles added when the actual audio/timeline exists. Independently commissioned cover/title artwork keeps its own scope.
+
+If review has already identified forbidden text, the parent returns the generator/plan for removal and rechecks the changed output before offering it as the next visual candidate. Do not leave the finding as an unresolved role conflict while continuing to display the same violation. Reuse unaffected renders and audio; this correction does not require a fresh 3D render or full-film review for a clean static layout. Do not erase necessary scientific meaning: retain it in the actual narration/synchronized subtitles or appropriate companion material, with unfinished work still pending.
+
 ## Build permitted letters in space
 
 Use actual editable letter geometry or a genuine single-letter marking on the relevant object. Bind it to the referent and observation interval, with coherent perspective, depth, occlusion and lighting. A fixed 2D card, fake bevel or perspective filter is insufficient. A camera-facing letter is allowed when its real scene position and depth remain coherent.
