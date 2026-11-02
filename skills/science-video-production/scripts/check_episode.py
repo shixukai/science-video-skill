@@ -21,7 +21,7 @@ from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha
 
 
 REVIEW_KEYS = ("science", "rights", "visual_frames", "mobile_preview", "audio", "narration", "covers")
-KINDS = {"real_capture", "real_observation", "screen_recording", "simulation", "ai_generated", "graphic", "audio", "font"}
+KINDS = {"real_capture", "real_observation", "screen_recording", "simulation", "ai_generated", "graphic", "audio", "font", "model_3d"}
 OUTPUTS = ("video", "cover_3_4", "cover_4_3")
 
 
