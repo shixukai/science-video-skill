@@ -53,6 +53,18 @@ During a camera orbit, wood grain, a scratch or a permitted spatial marker shoul
 
 Review fine mesh, parallel lines, narrow bevels, and dense surface patterns at final output resolution and normal playback speed. As details become too small to resolve, they should gradually merge into the overall appearance of the surface. They should remain free of visible flicker, crawling patterns, intermittent bright pixels, and moiré.
 
+## Carry the material setup into the actual animation
+
+Develop the intended material/light appearance alongside inexpensive motion blocking; do not postpone all look development until the complete animation is built. A static imported model with PBR materials does not establish the appearance of a later scene that rebuilds its shaders, discards its lights or uses a different rendering path.
+
+Blender Workbench, studio/matcap shading and viewport `diffuse_color` are suitable for explicitly internal pose, contact and timing diagnostics. They do not exercise the node-based material/light setup required here and cannot be the evidence for metal response, coatings, transmission or final material quality. A motion-only proxy may be shared when explicitly requested for that limited purpose; it must not be offered as the material/style candidate. A request for 3D animation rather than realistic footage does not by itself replace the established material direction with clay or flat colors. Preserve any explicit alternative art direction within its actual scope.
+
+Before the first appearance-review candidate or expansion of beauty rendering, complete or validly reuse the grouped still/motion evidence below in the intended material-capable renderer. Use EEVEE or Cycles according to the actual finish, reflection/transmission and temporal requirements; engine choice and sample count alone cannot pass the look. Reuse an existing qualifying scene/sequence instead of commissioning another experiment or user approval round.
+
+The visual artist hands off the actual editable shader assignments, required textures with scale/orientation, scene lights/reflection environment and color-management settings in the existing scene/library and dependency records. The animator reuses this setup for the animated geometry; a convenience color helper must not silently replace it. New visible parts receive compatible real surface finishes. Scientific state colors drive the actual active shader/parameter under the selected renderer, retaining their meaning during promotion from a viewport proxy.
+
+The producer checks the effective engine after driver construction and job overrides, active material slots and connected shader outputs, declared external dependencies, lighting and color state for the rendered sequence. An unused PBR material in the file or an earlier still does not prove that the animated subject uses it. Return a missing setup to its owner. Then inspect actual representative output at the intended view/delivery size for this standard's visual behavior; metadata and plausible parameter values remain technical evidence only. Keep known material failures open until the corresponding appearance output is reviewed. Perform these checks in the existing lookdev/G3/G5 workflow, without a new pass flag, extra gate, per-object render quota or automatic full-episode rerender.
+
 ## 6. Acceptance criteria
 
 Before batch rendering a 3D video, provide **one close-up still and one 3–5 second turntable or camera-orbit shot** for each major material or representative group of materials. Group suitable surfaces intelligently; this is not a test per duplicate part or shader instance. Keep the lighting fixed during this motion test and include a bright region, a tonal transition, and a shadowed region on the subject.

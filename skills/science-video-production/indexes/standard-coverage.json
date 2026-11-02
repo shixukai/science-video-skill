@@ -245,7 +245,7 @@
     {
       "owner_id": "visual",
       "file": "references/material-rendering.md",
-      "sha256": "11475bb50b736f2ebe302f4c9988ed8668614fb6ce5dfc7a6ea85b70e9e69b5a",
+      "sha256": "8cf2d7b1c25024acec84a05f2512c177fdcadb45109bbdda040906d284aa4cca",
       "anchors": [
         "general-material-rendering-standard-for-3d-video",
         "1-define-each-material-and-its-finish",
@@ -253,6 +253,7 @@
         "3-match-surface-detail-to-scale-and-viewing-distance",
         "4-preserve-the-spatial-relationship-between-materials",
         "5-keep-textures-and-reflections-consistent-in-motion",
+        "carry-the-material-setup-into-the-actual-animation",
         "6-acceptance-criteria",
         "copy-ready-production-brief"
       ]
@@ -297,7 +298,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "726e50abeab3c7ce455a94001cbe87b541fa3d76a09f24f7fe4932cab4a895a7",
+      "sha256": "0614433d266db4784302b841bf42354d3b5a9e5057295ed635a4131e959b9a1e",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -336,7 +337,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "f5b90586d3b50a9afac20523ad7822f541ff1d95e58f96785c4aabd7ef09d4bc",
+      "sha256": "525eb7a67c3bf886c3d2f5f04f135434877ff0c40abf1789f935629fb7638faa",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -360,7 +361,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "5ec6f3efe8f0bbb189cc2bd8ebbd10e786b395a7a61fda2cb6f6ff3699b8ef39",
+      "sha256": "672f5f48bbbc7d1b893c311f103654516c688270152cf8468bd5a5a55c40b0e7",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
