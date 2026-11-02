@@ -22,7 +22,7 @@ description: 策划、制作、审查或修改自然、生活与工程科普视�
 | 局部修复 | 读取当前媒体、原请求、最新反馈；保留稳定ID及仍有效资产/声音，按[受影响依赖](references/quality-acceptance.md#失败后的处理)复查。纯布局修复不重做选题；新整片仍需完整看听 |
 | 只交视频，不做封面 | 记录 `delivery_scope=video_only` 及 `delivery_scope_note`，止于G5；旁白、字幕、科学与整片审查照常，不造封面或平台授权 |
 | 封面或完整发布包 | 读[封面设计](references/visual-system.md#两种封面各自设计)。系列发布包默认 `delivery_scope=release_package`，含独立排版的3:4和4:3封面；封面单独用 `--stage covers` |
-| 平台预览或发布 | 仅在请求覆盖相应动作时执行G6发布准备、G7发布读回。交付不等于授权上传或公开发布 |
+| 平台预览或发布 | 仅在请求覆盖相应动作时执行G6/G7；受托发布抖音视频时[同步今日头条视频并设置两端不可下载](references/production-checkpoints.md#抖音同步头条与不可下载)，实际核对选项和两端结果。交付不等于授权上传或公开发布 |
 
 ## 唯一全局入口
 

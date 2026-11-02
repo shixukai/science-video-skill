@@ -1162,10 +1162,10 @@
         "not_applicable_reason": ""
       },
       "sync": {
-        "preserve_existing_setting": true,
+        "preserve_existing_setting": false,
         "observed_setting": null,
-        "independently_verify_result": false,
-        "result": "not_independently_verified"
+        "independently_verify_result": true,
+        "result": "pending"
       },
       "note": "",
       "post_copy_version": "",
