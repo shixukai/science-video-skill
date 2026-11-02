@@ -533,7 +533,11 @@ class Checks:
   schema=json.loads((Path(__file__).resolve().parents[1]/'assets/production-asset.schema.json').read_text())
   owners=json.loads((Path(__file__).resolve().parents[1]/'indexes/rule-owners.json').read_text())
   known={rule for owner in owners['owners'] for rule in owner['owns']}
-  used,_,dependency_errors=dependencies(self.data,representative)
+  used,selected_shots,dependency_errors=dependencies(self.data,representative)
+  if any(obj(obj(a).get('origin')).get('category')=='licensed_3d_model' for a in seq(self.data.get('assets'))):
+   from origin_guard import selected_assets
+   used.update(a.get('id') for a in selected_assets(self.data,selected_shots,final=not representative,representative=representative)
+               if obj(a.get('origin')).get('category')=='licensed_3d_model')
   for error in dependency_errors:self.need(False,error)
   seen=set()
   for asset in seq(self.data.get('assets')):
@@ -571,6 +575,11 @@ class Checks:
     self.need(text(observation.get('viewing_reference')),label+' actual source footage viewing required')
     span=observation.get('source_interval')
     self.need(isinstance(span,list) and len(span)==2 and all(number(t) for t in span) and number(duration) and 0<=span[0]<span[1]<=duration+.05,label+' actual footage interval required')
+    continue
+   if not record and obj(asset.get('origin')).get('category')=='licensed_3d_model':
+    self.need(asset.get('usage')=='licensed_model_reuse',label+' licensed model reuse scope required')
+    science=obj(asset.get('scientific_review'))
+    self.need(science.get('status')=='pass' or (science.get('status')=='not_applicable' and text(science.get('reason'))),label+' science review or justified applicability required')
     continue
    if not record:
     self.need(asset.get('usage')=='episode_original',label+' specify original production or reusable catalog')

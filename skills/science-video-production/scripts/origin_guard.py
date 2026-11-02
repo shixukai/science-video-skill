@@ -1,5 +1,74 @@
 """Original-visual provenance structure only, never an authorship detector."""
+from datetime import date
+from pathlib import Path
 from realism_guard import obj, meaningful
+
+LICENSED_3D = 'licensed_3d_model'
+PRODUCTION_CATEGORIES = ('self_generated', 'self_rendered', 'self_designed', 'user_capture', LICENSED_3D)
+MODEL_SUFFIXES = {'.blend', '.glb', '.gltf', '.fbx', '.obj', '.stl', '.ply', '.dae',
+                  '.usd', '.usda', '.usdc', '.usdz', '.abc'}
+MODEL_DEPENDENCY_SUFFIXES = MODEL_SUFFIXES | {'.bin', '.mtl', '.png', '.jpg', '.jpeg', '.webp',
+                                             '.tif', '.tiff', '.exr', '.hdr', '.ktx', '.ktx2'}
+
+
+def model_file(asset):
+    return isinstance(asset.get('file'), str) and Path(asset['file']).suffix.lower() in MODEL_SUFFIXES
+
+
+def reference_conflicts(asset, assets):
+    """Retain research history while admitting an explicitly licensed native model."""
+    return [a for a in assets if meaningful(asset.get('sha256'))
+            and a.get('sha256') == asset.get('sha256')
+            and obj(a.get('origin')).get('category') == 'third_party_reference'
+            and not (obj(asset.get('origin')).get('category') == LICENSED_3D
+                     and asset.get('kind') == a.get('kind') == 'model_3d'
+                     and model_file(asset) and model_file(a))]
+
+
+def validate_licensed_model(checks, asset, actual=False):
+    """Bind a licensed model input; does not determine license or geometry truth."""
+    origin = obj(asset.get('origin')); rights = obj(asset.get('rights'))
+    label = 'origin licensed 3D ' + str(asset.get('id'))
+    checks.need(asset.get('kind') == 'model_3d' and model_file(asset),
+                label + ' must be native model_3d source, not finished footage/stills')
+    checks.need(meaningful(asset.get('source')) and meaningful(asset.get('creator')),
+                label + ' original model page and creator required')
+    checks.need(rights.get('status') == 'cleared' and meaningful(rights.get('license_name'))
+                and meaningful(rights.get('scope')),
+                label + ' applicable model/bundled-dependency license and use scope must be cleared')
+    catalog = obj(asset.get('catalog'))
+    blocked = {'fail', 'failed', 'blocked', 'needs_changes', 'denied', 'revoked', 'expired', 'deprecated'}
+    checks.need(asset.get('catalog_state') not in blocked and catalog.get('stage') not in blocked,
+                label + ' blocked/deprecated model cannot be adopted')
+    for record in (obj(asset.get('science')), obj(asset.get('approval')), obj(asset.get('scientific_review')),
+                   obj(catalog.get('scientific_review')), obj(catalog.get('approval')), obj(catalog.get('rights'))):
+        checks.need(record.get('status') not in blocked,
+                    label + ' explicit science/approval/rights failure blocks model use')
+    for record in (rights, obj(catalog.get('rights'))):
+        if record.get('expires_on'):
+            try:
+                checks.need(date.fromisoformat(record['expires_on']) >= date.today(), label + ' rights expired')
+            except (TypeError, ValueError):
+                checks.need(False, label + ' rights expiry invalid')
+    checks.evidence(origin.get('license_evidence'), label + ' actual license evidence')
+    dependencies = origin.get('dependencies')
+    checks.need(isinstance(dependencies, list), label + ' explicit bundled dependency inventory required')
+    for raw in seq(dependencies):
+        dependency = obj(raw)
+        checks.need(isinstance(dependency.get('file'), str)
+                    and Path(dependency['file']).suffix.lower() in MODEL_DEPENDENCY_SUFFIXES,
+                    label + ' dependency must be model data/material/texture, not finished media')
+        native = isinstance(dependency.get('file'), str) and Path(dependency['file']).suffix.lower() in MODEL_SUFFIXES
+        declared = {**dependency, 'kind': 'model_3d' if native else 'model_dependency',
+                    'origin': {'category': LICENSED_3D}}
+        checks.need(not reference_conflicts(declared, [obj(a) for a in seq(checks.data.get('assets'))]),
+                    label + ' bundled dependency is known third-party reference media; cannot launder it as a texture')
+    if actual:
+        science = obj(asset.get('scientific_review'))
+        checks.need(science.get('status') == 'pass' or
+                    (science.get('status') == 'not_applicable' and meaningful(science.get('reason'))),
+                    label + ' actual geometry/use-fit review or justified applicability required')
+
 
 
 def seq(value):
@@ -43,7 +112,7 @@ def validate_origin_plan(checks, shot_ids, final=False, representative=True):
     Scientific literature URLs and unselected research assets are not visual inputs.
     """
     data = checks.data
-    allowed = ('self_generated', 'self_rendered', 'self_designed', 'user_capture')
+    allowed = PRODUCTION_CATEGORIES
     methods = {'ai_realistic': 'self_generated', 'three_d': 'self_rendered',
                'authentic_recording': 'user_capture', 'pure_2d': 'self_rendered',
                'static_pan': 'self_rendered', 'infographic': 'self_rendered'}
@@ -78,6 +147,8 @@ def validate_origin_plan(checks, shot_ids, final=False, representative=True):
             if asset.get('kind') in ('audio', 'font'):
                 continue
             origin = obj(asset.get('origin')); category = origin.get('category')
+            if category == LICENSED_3D:
+                validate_licensed_model(checks, asset)
             label = 'origin asset ' + str(ident)
             checks.need(isinstance(category, str) and category in allowed,
                         label + ' third-party/CC/reference media is not self-created production visual')
@@ -85,9 +156,7 @@ def validate_origin_plan(checks, shot_ids, final=False, representative=True):
                         label + ' creation method and entry version required')
             checks.need(isinstance(origin.get('inputs'), list),
                         label + ' explicit input inventory required (empty only for no external inputs)')
-            conflicts = [a for a in assets if meaningful(asset.get('sha256'))
-                         and a.get('sha256') == asset.get('sha256')
-                         and obj(a.get('origin')).get('category') == 'third_party_reference']
+            conflicts = reference_conflicts(asset, assets)
             checks.need(not conflicts,
                         label + ' bytes also declared third-party reference; cannot relabel as original')
             expected = {'ai_generated': 'self_generated', 'simulation': 'self_rendered',
@@ -139,7 +208,10 @@ def validate_origin_plan(checks, shot_ids, final=False, representative=True):
 
 def context_assets(data, shot_ids, final=False, representative=False):
     """Freeze provenance, not later catalog/rights review conclusions."""
-    return [{k: a.get(k) for k in ('id', 'kind', 'file', 'sha256', 'origin', 'disclosure')}
+    return [{k: a.get(k) for k in (('id', 'kind', 'file', 'sha256', 'origin', 'disclosure',
+                                     'source', 'creator', 'rights', 'scientific_review')
+                                    if obj(a.get('origin')).get('category') == LICENSED_3D else
+                                    ('id', 'kind', 'file', 'sha256', 'origin', 'disclosure'))}
             for a in selected_assets(data, shot_ids, final, representative)]
 
 
@@ -153,6 +225,15 @@ def references(data, shot_ids, final=False, representative=False):
         if asset.get('kind') in ('audio', 'font'):
             continue
         origin = obj(asset.get('origin'))
+        if origin.get('category') == LICENSED_3D:
+            yield {k: asset.get(k) for k in ('file', 'sha256')}, 'origin licensed model source'
+            for key in ('license_evidence', 'review'):
+                yield origin.get(key), 'origin licensed model ' + key
+            for dependency in seq(origin.get('dependencies')):
+                yield dependency, 'origin licensed model dependency'
+            for dependency in seq(origin.get('inputs')):
+                yield dependency, 'origin licensed model input'
+            continue
         for key in ('entrypoint', 'design', 'output', 'review'):
             yield origin.get(key), 'origin asset ' + str(asset.get('id')) + ' ' + key
         for key in ('inputs', 'frames'):
@@ -187,11 +268,9 @@ def validate_origin(checks, shot_ids, final=False, representative=False):
             continue
         origin = obj(asset.get('origin')); label = 'origin asset ' + str(asset.get('id'))
         category = origin.get('category')
-        conflicts = [a for a in seq(data.get('assets')) if obj(a).get('sha256') == asset.get('sha256')
-                     and meaningful(asset.get('sha256'))
-                     and obj(obj(a).get('origin')).get('category') == 'third_party_reference']
+        conflicts = reference_conflicts(asset, [obj(a) for a in seq(data.get('assets'))])
         checks.need(not conflicts, label + ' bytes also declared third-party reference; cannot relabel as original')
-        checks.need(isinstance(category, str) and category in ('self_generated', 'self_rendered', 'self_designed', 'user_capture'),
+        checks.need(isinstance(category, str) and category in PRODUCTION_CATEGORIES,
                     label + ' third-party/CC/reference media is not self-created production visual')
         checks.need(meaningful(origin.get('method')) and meaningful(origin.get('entry_version')),
                     label + ' creation method and entry version required')
@@ -205,8 +284,11 @@ def validate_origin(checks, shot_ids, final=False, representative=False):
             checks.need(all(item.get(k) == parent.get(k) for k in ('file', 'sha256'))
                         and item.get('origin_category') == obj(parent.get('origin')).get('category'),
                         label + ' visual input contradicts upstream asset provenance')
-            checks.need(obj(item).get('origin_category') in ('self_generated', 'self_rendered', 'self_designed', 'user_capture'),
+            checks.need(obj(item).get('origin_category') in PRODUCTION_CATEGORIES,
                         label + ' third-party or unclassified visual input cannot become original by rendering')
+        if category == LICENSED_3D:
+            validate_licensed_model(checks, asset, actual=True)
+            continue
         checks.need(bool(seq(origin.get('frames'))), label + ' actual frame evidence required')
         checks.need(obj(origin.get('output')) == {k: asset.get(k) for k in ('file', 'sha256')},
                     label + ' original output must bind exact used asset bytes')

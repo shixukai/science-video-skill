@@ -25,10 +25,11 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "3f47b1da4137e131b23248e8c516009b34aa6a9bbb3e046fb483dcab5fd2ab37",
+      "sha256": "da7d1f3d0e78279e7bfa11efd6aafb032d5c931e812ed3d8890886781599d1b7",
       "anchors": [
         "事实素材权利与制作声明",
         "原创视觉来源契约",
+        "许可3d模型输入",
         "逐镜来源证据",
         "原创不降低交付质量",
         "科学依据",
@@ -314,7 +315,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "029ca1271ecf982a787256c0e80b16c9b4ce8ffb3f6134f2377759f89d3fe488",
+      "sha256": "699531f6f0c1cfb1133289e3a87e54969948263f5ad22ca330f172eb4b8b411b",
       "anchors": [
         "3d动画制作blender-与-3d-素材复用",
         "仅做资产时的任务范围",
@@ -331,7 +332,8 @@
         "3d-正片与系列封面分别设计",
         "使用过的-3d-素材统一归档",
         "素材库归档的持续授权",
-        "查找与选择已有素材"
+        "查找与选择已有素材",
+        "开放许可模型可以直接采用"
       ]
     },
     {

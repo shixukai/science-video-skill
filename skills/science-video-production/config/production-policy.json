@@ -315,7 +315,8 @@
       "self_generated",
       "self_rendered",
       "self_designed",
-      "user_capture"
+      "user_capture",
+      "licensed_3d_model"
     ],
     "reference_only_categories": [
       "third_party_reference"
@@ -323,6 +324,7 @@
     "user_capture_requires_verified_authorship_and_authorization": true,
     "no_relabeling_or_voiceover_conversion": true,
     "no_retroactive_source_or_approval_rewriting": true,
-    "structural_checks_do_not_prove_authorship": true
+    "structural_checks_do_not_prove_authorship": true,
+    "licensed_3d_scope": "Native model inputs and necessary licensed bundled dependencies; retain external creator/license, actual local use and file hashes. Finished third-party footage/stills stay research-only."
   }
 }
