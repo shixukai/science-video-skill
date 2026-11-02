@@ -61,7 +61,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b550efe887282ac1166525777200015a7d805c6c1e782cce1ef2306327bd86b0",
+      "sha256": "d926b54af50dffde81a420e5e30edccb573fdca0762d9a10f11f4e984dde304c",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -297,7 +297,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "7632934cac4619cc8be149556b078acd4faba70ab499259018fc80639580e652",
+      "sha256": "726e50abeab3c7ce455a94001cbe87b541fa3d76a09f24f7fe4932cab4a895a7",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -305,6 +305,7 @@
         "hd-video-output",
         "inspectable-items",
         "subject-motion-and-long-static-holds",
+        "moving-animatics-and-user-review",
         "orientation-mapping-and-graphic-reuse",
         "reviewers-and-viewing-safety",
         "risk-based-rechecks-and-evidence-reuse",
@@ -421,7 +422,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "3829042a6e03b01d6f9a4f73901fb0b8330e805b2744522721a2ecc8aa3b98d0",
+      "sha256": "85d1536cbe2810b9b58f92dcef7729bce7237638b01c345b802dbb5e7a291e7d",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

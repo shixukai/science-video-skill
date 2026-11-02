@@ -1,6 +1,6 @@
 # Video subagents
 
-For complex production or repairs with independent work or required independent review, actually invoke the applicable specialized roles; naming roles in a plan or installing their files is not delegation. The parent remains the director and integrator: it owns the user's scope, scientific explanation, shot order, current approvals, shared episode/shot records, final decisions and delivery. Small edits can stay with the parent. Six role definitions do not mean six agents must run on every task.
+For complex production or repairs with independent work or required independent review, actually invoke the applicable specialized roles; naming roles in a plan or installing their files is not delegation. The parent remains the director and integrator: it owns the user's scope, scientific explanation, shot order, current approvals, shared episode/shot records, final decisions and delivery. Small edits can stay with the parent. Six role definitions do not mean six agents must run on every task. Before user-facing animation review, the parent/editor applies [moving animatics and user review](quality-acceptance.md#moving-animatics-and-user-review) to actual timeline/source coverage. An inherited brief, accepted model or internal storyboard does not approve prolonged still-board substitution; return known missing action to the motion/edit owner without another user repair test. Preserve intentional observation/comparison holds and scientific invariants.
 
 ## Roles and ownership
 
