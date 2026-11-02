@@ -117,7 +117,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "dd3436a9e63dbb9aae18d1ef6a39ae77b09bdc374752e78d35258222aac30e3d",
+      "sha256": "a0b8a8d0adb4640fc36ac1ea571101aaf2db3ccfaf519a0f5069a979dd2fcaad",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -209,7 +209,7 @@
     {
       "owner_id": "visual",
       "file": "references/art-direction.md",
-      "sha256": "6372f75027ddf5d63bd90af8c3a94d461d07f230e7cbe996455d68d3f0e800ab",
+      "sha256": "6cd28d557a032e108c32b4f60a0ae3322704f8c850da75fe21ebf1580dca32cf",
       "anchors": [
         "professional-art-direction-and-clean-rendering",
         "bright-style-and-premium-materials",
@@ -240,6 +240,21 @@
         "reuse-the-existing-inventory-and-actual-review",
         "reject-and-repair",
         "implementation-sources"
+      ]
+    },
+    {
+      "owner_id": "visual",
+      "file": "references/material-rendering.md",
+      "sha256": "11475bb50b736f2ebe302f4c9988ed8668614fb6ce5dfc7a6ea85b70e9e69b5a",
+      "anchors": [
+        "general-material-rendering-standard-for-3d-video",
+        "1-define-each-material-and-its-finish",
+        "2-use-reflections-to-reveal-shape",
+        "3-match-surface-detail-to-scale-and-viewing-distance",
+        "4-preserve-the-spatial-relationship-between-materials",
+        "5-keep-textures-and-reflections-consistent-in-motion",
+        "6-acceptance-criteria",
+        "copy-ready-production-brief"
       ]
     },
     {
@@ -282,7 +297,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "203c43da7a7aa837415b839718edf0cf221a2c72c1b5da3dfd6dc986c0562d95",
+      "sha256": "7632934cac4619cc8be149556b078acd4faba70ab499259018fc80639580e652",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -320,7 +335,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "70930c8a7b3b4c37baaf90ba2814e279559bb0b9f0d726ccafcc5ecdf6b3191e",
+      "sha256": "f5b90586d3b50a9afac20523ad7822f541ff1d95e58f96785c4aabd7ef09d4bc",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",

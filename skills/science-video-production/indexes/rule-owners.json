@@ -83,7 +83,8 @@
         "shared-state-interaction-animation",
         "bright-style-and-material-finish",
         "color-depth-and-clean-render-art-direction",
-        "necessary-spatial-3d-body-typography"
+        "necessary-spatial-3d-body-typography",
+        "general-3d-material-rendering"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",
@@ -91,7 +92,8 @@
         "references/annotation-style.md",
         "references/art-direction.md",
         "assets/style/bright-premium-palettes.json",
-        "references/spatial-typography.md"
+        "references/spatial-typography.md",
+        "references/material-rendering.md"
       ]
     },
     {
