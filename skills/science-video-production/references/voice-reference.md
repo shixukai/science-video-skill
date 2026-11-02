@@ -10,6 +10,12 @@
 
 当明确选择本地适配器时，系列配置的 audio.local_adapter_example 提供可调整的加载起点；已有工程沿用自己的已验证参数。该示例固定官方模型提交 `0c0e3051f131929182e2c023b9537f8b1c68adfe`，来源为 [官方模型 API](https://huggingface.co/api/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice)，不同修订必须按实际记录；本地适配器核完整提交和文件清单哈希。服务或既有工程未暴露完整权重修订时，在 model_version_reference 写真实模型标识、版本证据及未提供的范围，不发明提交或清单，也不因此另下权重。
 
+## 整期合成前先核稿件
+
+完整旁白合成采用主代理已整合的当前全稿，按[整片编导](viewer-retention-design.md#direct-the-whole-film-before-polishing-its-parts)完成既有G1纸面内审。声音作者先通读相关简报和全稿，核观众能否知道本期在问什么、局部案例为何出现、开场承诺是否与结论一致；明显失联先退回稿件并给出具体修订，不能先合成长音轨再让用户发现。获准可起草修稿，由主代理负责全片整合；不把声音岗位变成默认编导。
+
+音色/语速样本认可只支持对应声音方向，不等于认可全稿或全片；独立的试听与技术可行性测试不必等待全稿完成。已有稿件/证据可引用，叙事通过不增加用户审批；纸面内审不能冒充听验，真实声音及完整声画仍按后续阶段实审。稿件修订后只更新受影响音轨、字幕和动作时序，不重做无关资产。
+
 ## 本期语速先试听
 
 Treat `audio.instruct` in the [series profile](../config/series-profile.json) as the default delivery direction. Apply it through the confirmed project's supported instruction field and verify the actual request/record, retaining its validated model and runtime. Before expanding, compare a continuous sample covering the opening, difficult wording and adjacent semantic sections against an applicable accepted reference when available; otherwise use the first actually reviewed continuous sample as this episode's comparison anchor. Compare speaker timbre, natural register, vocal effort, pace and phrase endings. Aim for clear onsets, concise endings and compact phrasing without rushed words or empty waits. Preserve Mandarin lexical tones and meaningful emphasis; consistency does not mean a fixed pitch. Reuse valid evidence without adding another user-approval step.

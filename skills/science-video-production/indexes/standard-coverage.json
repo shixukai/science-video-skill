@@ -61,7 +61,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "ff71cb9315bde0b100a26673daf37bb5ca1353ac88c5b42a07bd6627a1276de4",
+      "sha256": "990f3980a8289687a5f42bf4376857d0d0b4450a1c98b1f8cd637a9d21ab7fb2",
       "anchors": [
         "从研究到可执行的制作检查点",
         "1-先确定观众要看懂的一件事",
@@ -95,9 +95,10 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "da5c1957cd04191574bf3d25c123ddcb7fbbaac799a123e2e9e2a30582eaa39f",
+      "sha256": "06b63aef85bd3a8a906e337f894ccbad6abacc73741ba9faf05a0fb18e940fea",
       "anchors": [
         "持续观看把解释组织成有回报的发现过程",
+        "direct-the-whole-film-before-polishing-its-parts",
         "先建立情境和看点再进入解释",
         "让开场画面兑现应用情境",
         "从本题选择开场看点",
@@ -242,10 +243,11 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "3b9a26aa931eaeeb3d19f0f3f2a677fbfc9326cf1539022e80e22bc3337b4489",
+      "sha256": "27d9850a795b58ab86a953b9a26b16b518d1dea28a11dce8cbbe0d57daa2dafe",
       "anchors": [
         "中文解说确认千问调用位置与实际听验",
         "调用位置与确认",
+        "整期合成前先核稿件",
         "本期语速先试听",
         "连续讲述与合成单元",
         "可选本地适配器",
@@ -278,7 +280,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "3f16e859eae04aae3a64e0b71a3e6df0cb96d8989339468f3971bcd9bbbe8420",
+      "sha256": "f139d32b951d677449073b53a3af16f79c3112218e7e18d739966aed769fc4d7",
       "anchors": [
         "质量验收参照行为证据与退回条件",
         "先确定可追溯的参照",
@@ -402,7 +404,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "65b7946fae835ccb84526e29fae88872749c1fb69592525e24d82f02613a3b32",
+      "sha256": "78c565444ab7e2780bad2421865fedc86260e88166684a4f38ff528bc7cbe3b5",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

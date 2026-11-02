@@ -2,6 +2,26 @@
 
 用于开场、段落接续和有声草排；记录复用 `opening`、`payoff_steps`、动作卡及阶段QA。原题范围见[主题契约](topic-contract.md)，实际验收见[质量正文](quality-acceptance.md)。
 
+## Direct the whole film before polishing its parts
+
+The parent owns one coherent explanation, including when other agents draft the script. Use the existing brief, current topic, `payoff_steps` and ending to connect these levels; do not create another form:
+
+| Level | Decision the director must make |
+| --- | --- |
+| Overall context | What recognizable activity, system or human need makes this worth watching? A series name or broad topic word alone does not establish that context. |
+| This episode | Which concrete question will this film answer, and what will viewers understand or judge afterward? Keep this promise within the actual evidence and requested scope. |
+| Case or demonstration | Why does this particular object, event or operation help answer that question? Establish its role before asking viewers to inspect a local detail. |
+| Development | What does each section establish, what remains unresolved, and why does the next section follow? A new angle or asset is not necessarily new understanding. |
+| Resolution | What answer has the film earned, and how does it change the viewer's understanding of the opening situation? Do not leave the ending at an isolated detail or replace it with an unrelated reminder. |
+
+Write and read the complete script as a connected argument before splitting production work. In the existing outline, express the progression as **recognizable situation → specific question → useful observations/explanation → supported answer → meaning for the original situation**. This describes relationships, not five compulsory sections: a clear cold open, direct answer or short commissioned excerpt may organize them differently. A local episode needs enough system context to orient viewers, not an encyclopedic introduction or an unsolicited expansion into the whole series.
+
+Compare what the opening promises with what the body actually explains and the ending concludes. Mentioning a large field does not repair a story whose case still has no purpose. Conversely, do not promise to explain an entire mechanism when the film only establishes what one observation can support. Rephrase the promise or complete the missing explanation within the authorized scope. Hypothetical alternatives must be introduced as hypothetical, and the conclusion must not exceed them.
+
+At G1, the parent reads the current whole draft without relying on its title, task chat or shot annotations to supply missing meaning. Check whether the audience can identify the subject and episode question, follow why each section is needed, and connect the final answer to the opening. Mark the first missing connection in the existing script/QA and repair that structure before full narration synthesis or batch refinement. An accepted voice sample, attractive model or technically successful run does not approve the manuscript. Voice auditions and scoped feasibility work can continue independently; known narrative defects must not be sent to the user as a routine listening test.
+
+G2 checks this same progression in the complete sound-and-picture rough cut, using the existing normal-speed viewing; G5 checks the final film. Judge what the work conveys, not what its author intended. If only the first sentence has changed while the promise, case and conclusion still disagree, return the whole affected script for revision. Reuse valid assets and evidence; this is part of the existing gates, not an added approval stage or fixed timing quota.
+
 ## 先建立情境和看点，再进入解释
 
 完整新片先让观众认识对象与真实看点，再进入术语、原理或工序。下列职责可合并，不按表格固定镜数或秒数；用户明确要直接答案或局部片段时按委托范围处理。
