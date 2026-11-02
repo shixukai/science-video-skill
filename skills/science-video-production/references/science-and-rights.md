@@ -1,115 +1,126 @@
-# 事实、素材权利与制作声明
+<a id="事实素材权利与制作声明"></a>
+# Facts, asset rights and production statements
 
-开始找来源、写主张、选素材时读本页。
+Read this page when beginning source research, drafting claims or choosing assets.
 
-## 原创视觉来源契约
+<a id="原创视觉来源契约"></a>
+## Original visual provenance contract
 
-当前系列默认 `origin_contract.mode=self_created_visuals`。最终视频、代表段与封面由本项目自行AI生成、建模/布景/动画渲染、设计，或使用确已核实由用户自拍且获本次使用授权的原始素材；制作时允许复用下述许可3D模型及必要随附依赖。外部模型如实保留作者，不声称其网格为本项目原创。不得假定用户已有自拍、已有授权或已完成生成。原创来源与写实模态是不同维度：自行设计2D也不能绕过写实主镜要求。
+This series defaults to `origin_contract.mode=self_created_visuals`. The final video, representative segments and covers must be AI-generated, modeled/staged/animated/rendered or designed by this project, or use original user-shot material whose authorship and authorization for this use have actually been verified. Production may reuse the licensed 3D models and necessary accompanying dependencies described below. Preserve the actual authors of external models; do not claim that their meshes originated in this project. Do not assume that the user already has footage, has granted rights or has completed generation. Original provenance and realistic modality are separate dimensions: self-designed 2D cannot bypass realistic main-shot requirements.
 
-第三方成片视频/照片、预渲染影像，无论公共领域、CC、Commons、机构或论文来源，只作研究、科学依据或风格/动作参考；下述许可3D模型作为原生生产输入单独核验。上述成片影像不进入主镜、填充镜、背景、封面或其他交付视觉依赖。许可允许复用也不等于符合本系列原创范围；工具条款和权利检查仍不可省略。裁切水印、重新命名、改标签、调色、配中文旁白或套字幕不改变第三方来源。不能把第三方片段经过转码、合成或生成式改写后登记成自行原创，也不将参考图暗作成片背景或输入素材洗来源；实际输入及用途必须如实可追溯。
+Third-party finished videos/photos and prerendered imagery, whether public-domain, CC, Commons, institutional or from papers, serve only as research, scientific evidence or style/motion references. The licensed 3D models below are verified separately as native production inputs. The finished imagery above must not enter main shots, filler shots, backgrounds, covers or any other delivered visual dependency. A license permitting reuse does not establish compliance with this series' original-production scope; tool-term and rights checks remain required. Cropping watermarks, renaming, relabeling, grading, adding Mandarin narration or subtitles does not change third-party provenance. Do not register transcoded, composited or generatively rewritten third-party clips as original production, or silently use reference images as final backgrounds or input assets to launder provenance. Actual inputs and uses must remain truthfully traceable.
 
-研究参考保留真实作者/机构、原网址、许可和观察范围，并与生产资产隔离。必要解释标注由本项目自行设计，不将原片时标、注释、箭头或署名画面当作自己的视觉内容；科学文献可引用，但不搬运其媒体。历史候选、旧成片、失败记录和旧授权按原事实保存；当前变更只约束后续适用工作，不追溯改写历史来源或补签批准。旧工程迁移先盘点并替换不合要求的视觉依赖，再重验受影响范围，不只刷新哈希或改分类。
+Research references preserve actual authors/institutions, original URLs, licenses and observation scope, and remain separate from production assets. Design necessary explanatory annotations within this project. Do not treat the original footage's time marks, notes, arrows or credits as this project's visual work. Scientific literature may be cited without copying its media. Preserve historical candidates, old finished films, failure records and old authorizations as they actually were. Current changes govern subsequent applicable work without rewriting historical provenance or retroactively signing approvals. Before migrating an old project, inventory and replace noncompliant visual dependencies, then recheck affected scope; refreshing hashes or changing classifications is insufficient.
 
-草排、试制样段和内部候选同样执行，不存在“先借外片占位再扩片”的例外。发现第三方画面或来源不明的生产依赖，停止受影响范围的生成/合成、扩制和交付，保留原始来源及失败记录，换成符合本契约的画面后重验。制作汇报如实区分自行生成/渲染/拍摄与剪辑加工；不得把裁切、重排、配音、翻译或字幕包装称为原创镜头，也不能靠遮盖外语、水印或署名解决来源问题。
+The contract also applies to rough cuts, prototype segments and internal candidates; there is no exception for borrowing third-party footage as a placeholder before expansion. On finding third-party imagery or production dependencies with unknown provenance, stop generation/compositing, expansion and delivery of the affected scope. Preserve original provenance and failure records, replace it with compliant imagery, then recheck. Production reports must truthfully distinguish self-generation/rendering/shooting from editing and processing. Cropping, rearranging, dubbing, translation or subtitle packaging cannot be called original shots, and hiding foreign-language text, watermarks or credits does not solve provenance problems.
 
-G1核明确的自产来源计划和已选参考依赖，不要求未来输出；G2核实际草排素材，G3核代表段及关键帧依赖，G4/G5核完整已用集合，视频执行入口与独立封面入口亦拦截。上游视觉输入须一并追溯，不能只给最终文件贴原创标签。对应[来源守卫](../scripts/origin_guard.py)只能核声明、依赖和文件一致性；作者身份和真实创作过程仍须核原始证据。
+G1 checks an explicit self-production provenance plan and selected reference dependencies without requiring future output. G2 checks actual rough-cut assets; G3 checks the representative segment and keyframe dependencies; G4/G5 check the complete used set. Both the video execution entry and independent cover entry enforce this contract. Trace upstream visual inputs as well as labeling the final file. The [provenance guard](../scripts/origin_guard.py) can check only declarations, dependencies and file consistency; actual authorship and creation still require original evidence.
 
-### 许可3D模型输入
+<a id="许可3d模型输入"></a>
+### Licensed 3D model inputs
 
-符合本次用途的开源/开放许可3D模型可直接作为生产输入，包括模型随附且许可适用的材质、贴图、骨骼和动画。优先复用适配资产，不要求重新建模或反复征求采用许可；选择与检查按[模型复用](engineering-blender.md#开放许可模型可以直接采用)执行。此例外限实际可编辑/可导入模型及其必要依赖，不扩展为第三方成片、预渲染视频、宣传图或背景画面复用。
+Open-source/open-license 3D models suitable for the current use may be direct production inputs, including their accompanying materials, textures, rigs and animation when covered by the applicable license. Prefer suitable reusable assets, without requiring remodeling or repeated permission to adopt a licensed model. Select and check them under [model reuse](engineering-blender.md#open-licensed-models-may-be-adopted-directly). This exception covers actual editable/importable models and necessary dependencies only; it does not extend to third-party finished footage, prerendered videos, promotional images or background imagery.
 
-每个采用的模型资产用 `kind=model_3d`、`origin.category=licensed_3d_model`，保留真实 `source` 模型页、`creator`、本地原始模型 `file/sha256`、`origin.method/entry_version` 和显式 `origin.inputs`。`rights.status=cleared`、`license_name/scope` 记录具体许可与本次使用范围，`origin.license_evidence={file,sha256}` 绑定实际许可；不能用一个“开源”标签代替。`origin.dependencies` 明列模型文件之外实际读取的随附模型数据/材质/贴图 `{file,sha256}`（内嵌或无外部依赖时为空），许可范围覆盖它们，不以“贴图”名义导入第三方整幅成片画面。各依赖也列入实际 Blender job inputs。
+For every adopted model asset, use `kind=model_3d` and `origin.category=licensed_3d_model`. Preserve the actual `source` model page, `creator`, local original model `file/sha256`, `origin.method/entry_version` and explicit `origin.inputs`. `rights.status=cleared` and `license_name/scope` record the specific license and current use scope; `origin.license_evidence={file,sha256}` binds the actual license. An open-source label alone is insufficient. `origin.dependencies` explicitly lists accompanying model data/materials/textures actually read beyond the model file as `{file,sha256}` (empty for embedded or no external dependencies). License coverage must include them. Do not import a third-party complete finished image under the name of a texture. Also include every dependency in the actual Blender job inputs.
 
-模型本身不填虚假的自行生成调用、建模入口、输出帧或原创声明。G1核已选模型的来源/许可与依赖计划，不要求未来渲染；实际使用时 `origin.review={file,sha256}` 保存模型导入、结构/用途与权利核查，`scientific_review` 记实际通过或有依据的不适用，所需文件均核当前摘要。一次引用可用 `usage=licensed_model_reuse`，不强迫先做正式素材库入库；已有正式 `catalog` 仍沿原规则。外部模型原文件、许可及依赖都进入现有输入冻结和版本上下文。
+Do not give the model fictitious self-generation calls, modeling entrypoints, output frames or originality declarations. G1 checks selected models' provenance/license and dependency plans without requiring future renders. At actual use, `origin.review={file,sha256}` preserves model-import, structure/use and rights checks, while `scientific_review` records an actual pass or justified nonapplicability. Check current digests for all required files. One-time reuse may use `usage=licensed_model_reuse`, without forced formal library intake first; an existing formal `catalog` still follows its existing rules. External original model files, licenses and dependencies all enter the existing input freeze and version context.
 
-自行改造、布景、动画和渲染的输出沿真实的 `self_designed/self_rendered` 等分类，在 `origin.inputs` 引用该模型资产ID/文件/摘要及 `origin_category=licensed_3d_model`，继续记录自己的实际设计、入口、输出与审查。兼容模式名 `self_created_visuals` 保留，但不表示输入网格全部为本项目原创。先作为研究参考记录的同一原生模型，可在新迁移包中单列许可核实后的生产记录，保留原研究历史；已知第三方视频/照片不能换后缀或改分类洗来源。旧锁、回执和许可缺口不自动补签。
+Outputs from this project's adaptation, staging, animation and rendering use truthful categories such as `self_designed/self_rendered`. In `origin.inputs`, reference that model's asset ID/file/digest and `origin_category=licensed_3d_model`, and continue recording this project's actual design, entrypoint, output and review. Retain the compatibility mode name `self_created_visuals`, but it does not mean every input mesh originated in this project. The same native model initially recorded as a research reference may receive a separate production record after license verification in a new migration package, preserving its research history. Known third-party videos/photos cannot be laundered by changing extensions or classifications. Old locks, receipts and license gaps do not receive automatic retroactive approval.
 
-### 逐镜来源证据
+<a id="逐镜来源证据"></a>
+### Per-shot provenance evidence
 
-在现有单集台账记录，不另造平行批准：
+Use the existing episode ledger without creating parallel approval:
 
-- 顶层 `origin_contract.mode` 为 `self_created_visuals`。
-- 每镜 `shots[].shotbook.origin` 写 `planned_method`（`self_generated`、`self_rendered` 或 `user_capture`）、制作前 `design: {file, sha256}`、实际 `entrypoint: {file, sha256}` 和非空 `entry_version`。自行设计的解释图层按实际渲染入口记 `self_rendered`，不因使用代码改称视频模型。
-- 自行生产的视觉资产 `assets[].origin` 写真实 `category`（`self_generated/self_rendered/self_designed/user_capture`）、`method/entry_version`、`entrypoint/design/output/review: {file,sha256}`、`inputs: [{asset_id,file,sha256,origin_category}]` 和 `frames: [{file,sha256}]`。输出绑定实际所用文件与摘要；输入ID解析到唯一上游资产，文件/摘要/类别一致，不能漏掉条件图、模型或其他实际输入。输入类别除上述自产类别外，可为按上节核实的 `licensed_3d_model`。外部模型本身只沿上节原生来源路径，不套自产入口/输出帧字段。研究文献放 `sources`，仅参考的 `third_party_reference` 不混入生产输入。
-- AI设计证据保留实际提示词、模型/工具版本、条件输入及调用记录；自建模/渲染保留可编辑工程/入口源码、设计和版本。方法与调用事实须可追溯，不以空文件、占位、哈希格式或自称“原创”代替证据。
-- `user_capture` 另需 `user_authorization: {file, sha256}`，指向可读的用户自摄事实及本次用途授权，原始文件、实际拍摄信息、选用区间与帧证据相互对应；只上传、持有、下载或在自己屏幕播放不证明自拍。非自摄资产不填此字段借用授权。
-- `third_party_reference` 可以留在研究候选中，但不能被镜头、封面、设计/渲染依赖选中作为交付视觉；适用许可的原生3D模型另按 `licensed_3d_model` 记录和引用，科学文献链接仍可在来源台账作事实依据，不等于把文献画面加入成片。
+- The top-level `origin_contract.mode` is `self_created_visuals`.
+- Each `shots[].shotbook.origin` records `planned_method` (`self_generated`, `self_rendered` or `user_capture`), preproduction `design: {file, sha256}`, actual `entrypoint: {file, sha256}` and a nonempty `entry_version`. Record self-designed explanatory layers as `self_rendered` according to their actual rendering entrypoint; using code does not make them video-model generation.
+- For self-produced visual assets, `assets[].origin` records the actual `category` (`self_generated/self_rendered/self_designed/user_capture`), `method/entry_version`, `entrypoint/design/output/review: {file,sha256}`, `inputs: [{asset_id,file,sha256,origin_category}]` and `frames: [{file,sha256}]`. Bind output to the actual used file and digest. Each input ID resolves to one unique upstream asset with matching file/digest/category; do not omit conditioning images, models or any other actual input. Beyond the self-produced categories above, inputs may use `licensed_3d_model` verified under the preceding section. An external model itself follows that native-provenance path rather than self-production entry/output-frame fields. Put research literature in `sources`; reference-only `third_party_reference` must not enter production inputs.
+- AI design evidence preserves actual prompts, model/tool versions, conditioning inputs and invocation records. Self-modeling/rendering preserves editable projects/entrypoint source, designs and versions. Methods and invocation facts must be traceable; empty files, placeholders, hash formatting or a self-declared original label cannot replace evidence.
+- `user_capture` additionally needs `user_authorization: {file, sha256}` pointing to readable evidence of user capture and authorization for the current purpose. Original files, actual capture information, selected intervals and frame evidence must correspond. Merely uploading, possessing, downloading or playing material on one's own screen does not prove self-capture. Do not use this field to borrow authorization for assets that were not self-shot.
+- `third_party_reference` may remain among research candidates, but shots, covers and design/render dependencies cannot select it as delivered visuals. Native 3D models with applicable licenses are separately recorded/referenced as `licensed_3d_model`. Scientific literature links may remain factual evidence in the source ledger without adding the literature's imagery to the film.
 
-计划模板的空路径、空哈希、空方法和待验状态是诚实占位，不是制作准入。实际生成前须有本阶段适用的设计与入口记录，生成后及时绑定真实输出和抽帧/审查证据。视频入口冻结所选镜头及其上游素材；封面不冒充视频渲染输入，使用既有封面审查与G5–G7整包上下文绑定，最终来源检查覆盖封面/设计交付依赖。检查器只检字段、文件/哈希、引用闭包和一致性，不证明作者身份、原创事实、授权真实性或审查发生；执行者与独立审查者必须核原始证据及实际媒体。
+Empty paths, hashes, methods and pending statuses in plan templates are honest placeholders, not production admission. Before actual generation, have the design and entrypoint records applicable to the current stage; afterward, promptly bind real outputs and extracted-frame/review evidence. The video entry freezes selected shots and their upstream assets. Covers do not masquerade as video-render inputs: use the existing cover review and G5–G7 package-context binding, with final provenance checks covering cover/design delivery dependencies. Checkers verify only fields, files/hashes, reference closure and consistency. They do not prove authorship, originality, authorization authenticity or that a review occurred. Executors and independent reviewers must verify original evidence and actual media.
 
-### 原创不降低交付质量
+<a id="原创不降低交付质量"></a>
+### Original provenance does not lower delivery quality
 
-AI写实须说明“AI生成，非实拍/观测”，3D说明模拟而非实拍；依现有披露及画内标识同意规则落实，不伪造真实科学观测。扩整片前使用本项目按已定风格制作的连续有声代表段：写实按[写实制作契约](realistic-production.md)，3D按[Blender制作](engineering-blender.md)，均依G3完成正常速看听与独立审查。第三方优秀片段、技术检测、静态帧或原创字段通过均不能代替本项目代表段；已知失败或缺验证先修复，不降低科学、美术、声音、质量及权限门槛。
+AI realism must disclose “AI生成，非实拍/观测”; 3D must disclose simulation rather than live photography. Apply existing disclosure and in-frame-label consent rules without fabricating real scientific observations. Before full-film expansion, use a continuous voiced representative segment produced by this project in the selected style: realistic work follows the [realistic production contract](realistic-production.md), and 3D follows [Blender production](engineering-blender.md). Both complete normal-speed viewing/listening and independent review under G3. An excellent third-party clip, technical check, static frame or provenance-field pass cannot replace this project's representative segment. Correct known failures or missing verification first; do not lower scientific, art, audio, quality or permission requirements.
 
-## 科学依据
+<a id="科学依据"></a>
+## Scientific evidence
 
-每条会影响理解的主张记录：ID、准确说法、适用条件、依据 URL/文献位置、核验日期。机制、数值、新发现或有争议内容优先追到原始论文、数据、实验或科学机构原始说明；普通科普可使用可信科学机构的解释，但标明是解释页而非原始实验。机构来源也不能自动覆盖页内的外部素材权利。
+Record each claim affecting understanding with its ID, precise wording, applicable conditions, evidence URL/literature location and verification date. For mechanisms, numerical values, new findings or disputed content, prioritize original papers, data, experiments or scientific institutions' original explanations. Ordinary science communication may use explanations from credible scientific institutions, identified as explanation pages rather than original experiments. An institutional source does not automatically cover rights for external assets on its page.
 
-证据与口播一一对照：样本与人群、相关与因果、统计概率与个体结局、理论与证实、模拟与观测分清。对证据有分歧时保留不确定性；不能用“可能”偷偷包装没有依据的吸睛断言。涉及健康、安全、法律或财务后果的题材另作适当专业核验，避免把科普变为未经支持的个体指导。
+Match evidence to narration item by item. Distinguish sample from population, correlation from causation, statistical probability from individual outcome, theory from confirmation, and simulation from observation. Preserve uncertainty where evidence differs; do not use possibly to conceal an unsupported attention-grabbing assertion. Topics with health, safety, legal or financial consequences need appropriate additional professional verification to avoid turning science communication into unsupported individualized guidance.
 
-来源不足：删去/收窄主张，或报告阻塞。不要用生成式回答、聚合文章或搜索摘要本身作为最终证据。权威网页用于依据不等于获准截屏、配图或转载整段。
+If evidence is insufficient, remove/narrow the claim or report the blocker. Do not use a generative answer, aggregate article or search summary itself as final evidence. Using an authoritative webpage as evidence does not grant permission to screenshot it, reuse its illustrations or reproduce whole passages.
 
-按本期受众解释必要术语与关系。工程/制造内容可使用公式、统计和专业量，但须交代量的含义、适用条件及其对产品或过程的影响，画面给出对应观察或比较；用户明确看不懂时改讲法和声画配合。
+Explain necessary terms and relationships for this episode's audience. Engineering/manufacturing material may use formulas, statistics and specialist quantities, but must state what the quantities mean, applicable conditions and their effect on the product or process, with corresponding visible observations or comparisons. If the user explicitly cannot understand, revise the explanation and audiovisual coordination.
 
-## 素材台账
+<a id="素材台账"></a>
+## Asset ledger
 
-每个会进入成片/封面的镜头、照片、录屏、图表、旁白、音乐、音效、字体记一条即可。视觉资产先符合本页原创视觉来源契约，音频、字体和工具许可仍按实际权利单独核验。台账允许记录静态科学参考、解释图或封面，不代表它们能替代真实视频锚点：
+One record is sufficient for each shot, photo, screen recording, chart, narration track, music track, sound effect or font entering the film/cover. Visual assets must first meet this page's original visual provenance contract; verify audio, font and tool licenses separately according to actual rights. The ledger may record static scientific references, explanatory diagrams or covers without implying that they can replace a real-video anchor:
 
-- ID、素材类型、具体原始来源、作者/权利人、文件相对路径
-- 权利依据与可核验位置：自行创作事实、具体许可条款、授权记录或公共领域依据
-- 允许的用途和限制：本账号/平台、剪辑/改编、商业性、署名、期限、地域；不以“免费”代替许可
-- 实际处理：裁切、变速、调色/伪彩、合成、AI或模拟；署名/披露的必需内容、适用依据、要求的呈现位置与实际落实位置
+- ID, asset type, specific original source, author/rightsholder and relative file path.
+- Rights basis and verifiable location: actual self-creation, specific license terms, authorization record or public-domain basis.
+- Permitted uses and restrictions: current account/platform, editing/adaptation, commercial use, attribution, duration and territory. Free is not a substitute for a license.
+- Actual processing: crop, speed change, grading/false color, compositing, AI or simulation. Record required attribution/disclosure content, its applicable basis, required presentation location and actual implementation location.
 
-自摄仅在真的拍了之后写“自拍已取得”，并确认画中第三方作品、人员、地点和音乐等必要权利。录自己屏幕不能自动获得屏幕中作品的转载权。无权或条件不清的素材保留为候选，不下载进入制作目录；第三方视觉即使权利核清也仅作参考，生产画面按原创契约自行制作。
+Record self-shot footage acquired only after footage was actually shot, and confirm necessary rights for third-party works, people, locations and music in the image. Recording one's own screen does not automatically grant redistribution rights to works on it. Keep assets without rights or clear conditions as candidates, without downloading them into the production directory. Even rights-cleared third-party visuals are reference-only; produce delivered imagery under the original provenance contract.
 
-机构素材逐项核 credit 与许可版本；商业、改编、署名、保留标识及呈现位置按具体条款执行，不以机构名称或“免费”代替权利依据。CC BY 4.0 的署名方式按[第3(a)条](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2)与实际分享语境落实；NC、ND等限制分别核适用用途。
+For institutional assets, check credit and license version item by item. Commercial use, adaptation, attribution, retained labels and placement follow the specific terms; an institution's name or free cannot replace rights evidence. Implement CC BY 4.0 attribution under [Section 3(a)](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2) and the actual sharing context. Check NC, ND and other restrictions against each intended use.
 
-购买素材、接受新条款、分享个人数据或向外部账号传素材均按当前权限处理。未取得的权利可以阻塞交付，不能靠制作声明免责。
+Purchases, acceptance of new terms, sharing personal data and transferring assets to external accounts follow current permissions. Missing rights may block delivery and cannot be waived through a production statement.
 
-## 两类索引与私有存储
+<a id="两类索引与私有存储"></a>
+## Two indexes and private storage
 
-[审美参考索引](../indexes/aesthetic-references.json) 只回答“借哪种造型/色/动作方法”：原站URL、实际看过的文件/时段、适用/禁用、事实与媒介边界。未看或未取得保持候选，不把参考来源自动导入可用素材库。
+The [aesthetic reference index](../indexes/aesthetic-references.json) answers only which form/color/motion method to borrow: original-site URL, actually inspected file/interval, applicable/prohibited uses, and factual/media boundaries. Unseen or unobtained references remain candidates; reference provenance does not automatically enter the usable asset library.
 
-[可用素材与动作组件索引](../indexes/reusable-assets.json) 记录可评估的通用资产：ID/版本、文件/哈希、用途/禁用、科学边界、创作/许可依据、实际认可范围和待验项。候选、已取得、权利核清、某用例审过、整片用过分别记录；无库存不填伪资产，组件批准不自动转移到新组合。
+The [reusable asset and motion component index](../indexes/reusable-assets.json) records general assets available for assessment: ID/version, file/hash, uses/prohibitions, scientific boundaries, creation/license basis, actual approval scope and pending items. Record candidate, acquired, rights-cleared, reviewed for one use case and used in a full film separately. Do not fabricate assets when there is no inventory. Component approval does not automatically transfer to a new combination.
 
-索引状态须可撤回：过期、权利撤回、科学纠错或不再适合的素材标 `deprecated`（停止新增使用）或 `blocked`（禁止使用），保留版本和原因，不靠改名/换哈希解除。查所引用ID/版本定位受影响单集，停止尚未交付/发布的相关使用并复核替代项；已发布内容按当前授权报告并处理，不自动删除或重发。恢复使用须有真实的新依据、明确状态和新的版本审查，历史权利通过不永久有效。
+Index states must be revocable. Mark expired, rights-withdrawn, scientifically corrected or no-longer-suitable assets `deprecated` (stop new use) or `blocked` (use prohibited), preserving versions and reasons. Renaming/changing hashes cannot clear these states. Locate affected episodes through referenced IDs/versions, stop related uses not yet delivered/published and review replacements. Report and handle published content within current authorization, without automatic deletion or republication. Restoring use requires actual new evidence, an explicit state and a new version review; a historical rights pass is not permanent.
 
-私有视频/原图/音轨/聊天、账号、授权凭据与真实反馈留获授权私有存储；公开Git只放范围允许的规则、通用参数、代码/组件及非敏感索引，不公布私有路径、Library身份或下载链接。项目私有台账记录所用设计板、素材与许可定位，单集以稳定ID/版本和SHA-256引用；换文件/用途/许可后重核。外部参考图即使可观看也不自动可下载或复制。没有许可不上传大媒体或原画。
+Keep private videos/original images/audio/chats, accounts, authorization credentials and actual feedback in authorized private storage. Public Git contains only in-scope rules, general parameters, code/components and nonsensitive indexes, without private paths, Library identities or download links. Private project ledgers locate used design boards, assets and licenses; episodes reference stable IDs/versions and SHA-256. Recheck after changes to files, uses or licenses. Being able to view an external reference image does not automatically permit downloading or copying it. Do not upload large media or original artwork without permission.
 
-## 制作声明的最小内容
+<a id="制作声明的最小内容"></a>
+## Minimum production statement
 
-制作声明及科学依据、素材署名/许可摘要默认放配套资料，署名和披露仍按具体许可、授权及平台规则核定的位置落实；具体素材对应关系留在单集台账。用观众看得懂的话写本片事实：哪些镜头真实拍摄/观测，哪些是解释图解或模拟，是否使用 AI，哪些处理会改变理解。台账和声明中的文字不自动成为画面文案。
+Production statements, scientific evidence and asset attribution/license summaries default to accompanying materials. Implement attribution and disclosure at locations required by specific licenses, authorizations and platform rules; retain specific asset mappings in the episode ledger. State the film's actual facts in language viewers understand: which shots are real capture/observation, which are explanatory diagrams or simulations, whether AI was used, and which processing changes understanding. Text in ledgers and statements does not automatically become on-screen copy.
 
-当前系列采用真实素材锚点时，必须是主题相关、核实用户自拍及用途授权的动态实拍/观测原片。保存真实拍摄者与授权、发布与拍摄/观测日期（未知分别注明）、事件/地点/对象和实际选用原片入出点；核视频中现象是否真的可见、是否支持当前口播，不能用同名标题或机构名代替。开场按已锁定风格及原创来源契约配主题口播，后续合适时点回接；不为实拍开场引入第三方素材，镜头选择不固定时长或比例。 已锁定AI/3D路径不因本段另加实拍片头；科学主张所需的真实证据仍须核来源，生成或模拟画面不能充当观测证据。
+When this series uses a real-material anchor, it must be topic-relevant dynamic original live footage/observation whose user capture and use authorization have been verified. Preserve the actual cinematographer and authorization, publication and capture/observation dates (mark each separately when unknown), event/location/object and actual original-footage in/out points. Verify that the phenomenon is actually visible and supports current narration; a matching title or institution name is insufficient. Pair the opening's topic narration with the locked style and original provenance contract, and return to it later where appropriate. Do not introduce third-party assets for a live-action opening, or impose fixed shot durations/proportions. This section does not add a live-action opening to a locked AI/3D route. Verify original sources for real evidence needed by scientific claims; generated or simulated imagery is not observational evidence.
 
-核许可、改编/商业/平台用途及署名后，实际看原片所用连续区间与最终导出。记录裁切、变速、循环、调色或拼接；不把慢放说实时、旧事件说当前、他处说本地，或裁去影响结论的上下文。
+After verifying license, adaptation/commercial/platform use and attribution, actually watch the selected continuous source interval and final export. Record crop, speed changes, loops, grading or splicing. Do not describe slow motion as real time, an old event as current, another location as local, or crop out context that affects the conclusion.
 
-缺已核实用户自拍及授权的实拍/观测原片或不能核实所用片段时，`real_footage` 项保持缺口，继续可独立推进的且已获授权的研究、分镜、资产或声音准备并报告。若用户已锁 `ai_generated`（见 [AI生成视频](ai-generated-video.md)）或明确允许混剪，按该正文生成连续视频并披露，**不得把生成片写入实拍台账或标成已取得真实锚点**。若模态仍是 `real_footage`，不得用 AI、静图/照片推拉或无关图库硬顶；也不把2D风格试样标成已取得实拍。参考照片只供研究；成片示意图、分镜关键帧与封面静图须符合原创来源契约再按实际用途使用；所需权利及披露照常核对。
+If original live footage/observation with verified user capture and authorization is absent, or the selected interval cannot be verified, leave the `real_footage` item as a gap. Continue independently actionable, authorized research, storyboarding, assets or voice preparation and report it. If the user has locked `ai_generated` (see [AI-generated video](ai-generated-video.md)) or explicitly allows mixed editing, generate continuous video and disclose it under that reference. **Do not enter generated footage in the real-footage ledger or mark it as an acquired real anchor.** If modality remains `real_footage`, do not substitute AI, panning/zooming stills/photos or unrelated stock footage, or mark a 2D style sample as acquired live footage. Reference photos serve research only. Film diagrams, storyboard keyframes and cover stills must meet the original provenance contract before use for their actual purpose; check required rights and disclosure as usual.
 
-示例句式只有在事实成立时才能用：“天空镜头为作者实拍；分子与光路为机制示意，非真实摄影、非按比例；画面仅做裁切和轻度曝光调整。”“云内放电过程为 AI 生成连续画面，非实地拍摄或观测记录；电荷分离路径为教学简化示意，非按比例；电路连接为纯2D机制图解。”
+Use example statements only when their facts are true: “天空镜头为作者实拍；分子与光路为机制示意，非真实摄影、非按比例；画面仅做裁切和轻度曝光调整。”“云内放电过程为 AI 生成连续画面，非实地拍摄或观测记录；电荷分离路径为教学简化示意，非按比例；电路连接为纯2D机制图解。”
 
-不在未拍摄时使用此声明当事实。素材缺项、制作取舍和限制说明默认留配套记录；只将当前理解确需的条件/边界，或已核实必须在画面呈现的标识，按适用时段写入成片。保留必要防误认提示与要求保留的来源标识；义务内容和呈现位置分别核实，不能用笼统“必要披露”代替依据，也不能靠制作限制说明补救错误的声画结论。画面文字按 [删除测试](visual-system.md#观众画面与交付记录) 审查。
+Do not use such a statement as fact before shooting. Asset gaps, production tradeoffs and limitations default to accompanying records. Add only conditions/boundaries actually needed for current understanding, or labels verified as mandatory on screen, to the appropriate intervals in the film. Preserve necessary anti-misidentification notices and required provenance labels. Verify required content and placement separately; a generic necessary-disclosure claim cannot replace evidence, and production-limitation statements cannot repair an incorrect audiovisual conclusion. Review visible text using the [deletion test](visual-system.md#audience-picture-and-delivery-records).
 
-## 事实卡与正式资产准入
+<a id="事实卡与正式资产准入"></a>
+## Fact cards and formal asset admission
 
-事实卡按每条核心主张记原始/官方依据、原文定位、条件与单位，并区分事实、教学简化、拟人/类比、仅视觉表现。稳定事实一个直接权威来源可足够，不机械两链接；争议、精确数字或安全/医学等高风险结论补独立来源；其中高风险结论另需相应领域实际审查。无法核实删去或待研究。科学编辑同时审画面颜色/比例/方向/受力/时序，列禁画清单，不能只审旁白。
+For each core claim, a fact card records original/official evidence, original-text location, conditions and units, distinguishing fact, teaching simplification, personification/analogy and purely visual expression. One direct authoritative source may suffice for a stable fact; do not mechanically require two links. Add independent sources for disputed claims, precise numbers and high-risk safety/medical conclusions; high-risk conclusions also require actual review in the relevant field. Remove unverifiable claims or keep them pending research. The science editor also reviews image color/scale/direction/forces/timing and lists prohibited depictions, rather than reviewing narration alone.
 
-每个生产资产登记ID/版本、分类、可编辑源及预览、尺寸/视角/锚点、颜色字阶引用、用途/禁用条件、规则关系、科学来源/简化、权利、批准范围/证据与SHA。署名、商业使用、改编、平台范围、生成工具条款、声线及可辨识人物许可逐项核，网页可看不等可转载。新题材科学含义改变须建变体，不能只改显示名。
+Every production asset records ID/version, classification, editable source and preview, dimensions/viewpoint/anchor, color/type-scale references, uses/prohibited conditions, rule relationships, scientific source/simplification, rights, approval scope/evidence and SHA. Check attribution, commercial use, adaptation, platform scope, generation-tool terms, voice and identifiable-person permissions individually. A viewable webpage does not grant republication rights. If a new topic changes scientific meaning, create a variant rather than only changing its display name.
 
-状态为candidate、in_review、approved、needs_changes、deprecated、blocked；最后两种不用于新片，blocked不自动恢复。改源hash生成新版本并让受影响批准失效，改色/文字/图层分别重核语义/事实/锚点。记录谁改、原因、影响单集及复验范围。准入技术核可解析、依赖封闭、ID唯一、尺寸/台账/规则引用/hash一致、无外链媒体和字体；实际另核目标尺度识别、三尺度一致、关键态、指向、科学、手机与权利。数量不是质量指标。
+States are candidate, in_review, approved, needs_changes, deprecated and blocked. The final two are not used in new films; blocked does not automatically recover. A changed source hash creates a new version and invalidates affected approvals. Recheck semantics/facts/anchors for color/text/layer changes respectively. Record who changed it, why, affected episodes and recheck scope. Technical admission checks parseability, closed dependencies, unique IDs, consistent dimensions/ledger/rule references/hashes, and no externally linked media or fonts. Separately inspect recognition at target scale, consistency at three scales, key states, pointing, science, mobile viewing and rights. Quantity is not a quality metric.
 
-G3只核代表段所选解释步骤→镜头→实际素材及三尺度图所用资产；未选中的未来候选不被迫提前通过。G4/G5核整片实际使用集合。实拍/屏录按真实媒体、实际选段、观看与权利记录核验，不套SVG坐标模板。一次性原创建模/图形记episode_original与可编辑源、来源及科学审查；许可模型一次引用可记licensed_model_reuse并保留原生模型/许可/依赖，不强迫先正式入库；需要复用为正式库资产时才采用 [正式资产结构](../assets/production-asset.schema.json)，使用 `assets[].catalog` 唯一记录。旧A1镜头引用与catalog稳定小写ID分开，源/渲染hash和设计坐标各有依据。无科学断言的通用组件可记not_applicable并说明原因，不能逼填虚假的科学pass，也不能借不适用躲开本片机制审查。
+G3 checks only selected explanation steps → shots → actual assets and the assets used in the three-scale images for the representative segment. Future unselected candidates need not pass early. G4/G5 check the set actually used in the whole film. Verify live footage/screen recordings through actual media, selected intervals, viewing and rights records rather than imposing SVG-coordinate templates. One-off original models/graphics record episode_original, editable source, provenance and scientific review. One-time licensed model references may record licensed_model_reuse with original models/licenses/dependencies and do not require formal library intake first. Adopt the [formal asset structure](../assets/production-asset.schema.json) only when reuse as a formal library asset is needed, using `assets[].catalog` as the sole record. Separate old A1 shot references from stable lowercase catalog IDs, with independent bases for source/render hashes and design coordinates. General components without scientific assertions may use not_applicable with reasons; do not force a fictitious scientific pass or use nonapplicability to evade review of this film's mechanism.
 
-正式库资产需approved且相应科学/权利/实际批准证据齐备；candidate、needs_changes、deprecated、blocked不作为已批准生产基准。旧catalog_state/science/approval等平行字段应迁移到catalog，兼容记录若矛盾或显式fail/blocked必须阻断，不自动改成功。权利到期/撤回停新用并复核受影响单集，旧已发内容仅依实际授权处理。
+Formal library assets require approved status and complete corresponding science/rights/actual approval evidence. candidate, needs_changes, deprecated and blocked are not approved production baselines. Migrate old parallel fields such as catalog_state/science/approval to catalog. Conflicting compatibility records or explicit fail/blocked must block use, without automatic success conversion. Rights expiry/withdrawal stops new use and triggers affected-episode review. Handle already published content only within actual authorization.
 
-## 生成内容声明的实际发布步骤
+<a id="生成内容声明的实际发布步骤"></a>
+## Actual publication steps for generated-content declarations
 
-按届时有效[官方生成合成内容标识规定](https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm)与当前平台界面，逐包核生成画面/声音的适用性；适用时主动声明并使用平台提供的标识功能，保留规定的来源/标识，不恶意删除、篡改、伪造或隐匿。发布前核当前有效要求。
+Under the then-effective [official rules for labeling generated and synthetic content](https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm) and current platform interface, check applicability to generated imagery/audio for each package. Where applicable, proactively declare it and use the platform's labeling features. Preserve required provenance/labels without malicious deletion, alteration, fabrication or concealment. Check current effective requirements before publication.
 
-在 `qa.release.ai_disclosure` 记录contains_generated_content、平台控件是否实际核查、是否已采用所需声明、必要标识是否保留、当次官方依据与实际声明证据。不适用须有具体原因；平台能力缺失保留未验。片内“示意”或片尾“仅供参考”不替代平台主动声明。该记录由发布包引用，不在多处重复维护批准。
+In `qa.release.ai_disclosure`, record contains_generated_content, whether the platform control was actually inspected, whether the required declaration was used, whether necessary labels were preserved, the official basis current at that time and actual declaration evidence. Nonapplicability requires a specific reason; missing platform capability remains unreviewed. An in-film “示意” or closing “仅供参考” does not replace proactive platform declaration. The release package references this record instead of maintaining duplicate approvals.
 
-逐资产的ai_disclosure_required及ai_disclosure_basis记录适用义务和依据；这与全片contains_generated_content、平台已实际声明是不同事实。发布包按镜头/封面/设计/声音实际使用闭包汇总，未用的未来AI候选不自动让本片变成已含AI；不明归属应标未判定，不捏造存在或缺失。
+Each asset's ai_disclosure_required and ai_disclosure_basis record applicable obligations and their basis. These are separate facts from whole-film contains_generated_content and whether the platform declaration was actually made. The release package aggregates the actually used closure of shots/covers/designs/audio. Unused future AI candidates do not automatically mean this film contains AI. Mark unclear attribution as undetermined rather than fabricating presence or absence.
 
-必要科学条件、署名、许可证与简洁AI/模拟标识的可见通道选择执行 [文字用途责任正文](visual-system.md#可见文字用途与制作辩解)，不以制作辩解替代权利或科学缺口。
+Choose visible channels for necessary scientific conditions, attribution, licenses and concise AI/simulation labels under the [text-purpose responsibility reference](visual-system.md#visible-text-purposes-and-production-excuses). Production excuses cannot replace rights or scientific evidence.
 
-画内标识的用户同意边界见 [具体同意与输出门禁](visual-system.md#画内标识须有具体同意)：具体义务不自动授权烧录，冲突先说明并取得用户具体同意，不能擅加或去标后违约发布。
+User-consent boundaries for in-frame labels are defined by [specific consent and output gates](visual-system.md#in-picture-markings-require-specific-consent). A specific obligation does not automatically authorize burning it in. Explain conflicts first and obtain the user's specific consent; do not add labels unilaterally or remove them and publish in breach of terms.

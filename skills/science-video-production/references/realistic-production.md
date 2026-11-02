@@ -1,60 +1,66 @@
-# 写实制作契约
+<a id="写实制作契约"></a>
+# Realistic production contract
 
-写实风格视频及其修复按本页确定主画面与连续样段；3D动画按[Blender制作](engineering-blender.md)。科学与权利见[科学与素材](science-and-rights.md)，看听验收见[质量验收](quality-acceptance.md)。
+Use this page to determine main imagery and continuous samples for realistic-style videos/repairs; 3D animation follows [Blender production](engineering-blender.md). Science/rights follow [science and assets](science-and-rights.md); viewing/listening follows [quality acceptance](quality-acceptance.md).
 
-## 主画面与工具边界
+<a id="主画面与工具边界"></a>
+## Main imagery and tool boundaries
 
-写实风格指具有实拍观感的画面目标，不等于真实拍摄：对象身份、比例、材质、光向、空间、接触和动作在正常速度下可信，并与科学来源及适用条件相符。此类视频必须通过MoneyPrinterTurbo制作；素材需要生成时复用已确认的本地视频模型，用户自拍另核来源权利。工程题材也执行此路线，不能以结构精度为由自动改用Blender。3D动画即使采用拟真材质，仍归[Blender路线](tool-routing.md#按成片风格锁定主制作工具)。
+Realistic style describes a live-action-looking visual target, not proof of real photography: identity, proportions, materials, light direction, space, contact and action must be credible at normal speed and consistent with scientific sources/conditions. These videos must be produced through MoneyPrinterTurbo; generated assets reuse the confirmed local video model, and user-captured footage requires separate provenance/rights checks. Engineering topics follow this route too; structural precision does not automatically permit switching to Blender. 3D animation with photorealistic materials still belongs to the [Blender route](tool-routing.md#lock-the-primary-tool-by-final-film-style).
 
-- MoneyPrinterTurbo是本路线必需的制作工程，不能只在文案中提及或仅运行文案功能；实际编排/合成须有输入、调用与输出记录。模型生成、FFmpeg编码等辅助步骤不能替代它，写实素材不足时不静默换成3D动画或纯2D。 交付视觉仍遵循[原创视觉来源契约](science-and-rights.md#原创视觉来源契约)：自行生成、自建模/渲染、自设计或已核实授权的用户自拍；第三方影像仅作研究参考。
-- 按[明亮风格与材质标准](visual-system.md#明亮风格与高级材质)设计和筛选写实镜头：在具体场景中明确充分且有层次的光、真实材料表层、可见结构和运动反射；生成提示词、静态好看或后期提亮都不代表成片通过。关键材质塑料化、暗部不可辨或反射不连续时先修素材，MoneyPrinterTurbo最终编码再核明暗与细节。按最后实际进入样段的像素判断写实完成度：VAE往返、低噪重绘、超分或写实提示词均不证明卡片边、白线状工具及粗糙表层已消失；主工具正确不抵扣可见缺陷。
-- AI/3D如实披露生成/模拟，不能充当观测证据；位置按[生成内容声明](science-and-rights.md#生成内容声明的实际发布步骤)及画内标识同意要求执行。
-- 逐项核输出中的结构、因果、接触次序与来源；提示词声明不能代替实际状态。
-- 代码动画、图片与静图推拉按实际渲染器登记，不写成视频模型生成；它们及文字/粒子/背景运动不能替代写实主体动作。
-- 机制可视化、剖面和辅助标注仅服务解释，不得悄悄占据主体画面或整段替换写实主体。需要非写实全幅机制镜头时，先说明具体镜头、时段、目的与偏离，取得用户具体批准；“机制需要”“技术更稳”或旧系列配置不构成批准。批准不降低科学、权利和实际视听要求。
+- MoneyPrinterTurbo is mandatory production software on this route, not a name in the script or a script-writing-only call. Actual arrangement/compositing needs input, invocation and output records. Model generation and supporting FFmpeg encoding cannot replace it; asset shortages do not permit silent substitution by 3D animation or pure 2D. Delivery visuals still follow the [original-visual contract](science-and-rights.md#original-visual-provenance-contract): self-generation, own modeling/rendering/design or verified authorized user captures; third-party imagery is research only.
+- Design/select realistic shots under the [bright-style/material standard](visual-system.md#bright-style-and-premium-materials): specify ample layered light, actual surfaces, visible structure and moving reflections in the scene. Prompts, attractive stills or post-brightening do not pass final media. Repair source plasticization, unreadable shadows or discontinuous reflections first; recheck value/detail in MoneyPrinterTurbo's final encode. Judge completion by pixels actually entering the sample: VAE round trips, low-noise redraws, upscaling or realistic prompts do not prove card edges, white-line tools or rough surfaces are gone. Correct tools cannot offset visible defects.
+- Disclose AI generation/3D simulation truthfully; neither is observation evidence. Place disclosures under [generated-content publication](science-and-rights.md#actual-publication-steps-for-generated-content-declarations) and on-frame-consent requirements.
+- Check output structure, causality, contact order and provenance item by item; prompt declarations cannot replace actual states.
+- Register coded animation, images and still-image pans under their actual renderer, not video-model generation. These, text, particles and background motion cannot replace realistic subject action.
+- Mechanism visualization, sections and annotations serve explanation; they must not silently dominate the subject image or replace a realistic subject for an entire segment. For nonrealistic full-frame mechanism shots, explain specific shot, interval, purpose and deviation and obtain specific user approval. “The mechanism needs it,” “more technically stable” or old configuration is not approval. Approval does not lower science, rights or actual audiovisual requirements.
 
-## 写实画面的可观察标准
+<a id="写实画面的可观察标准"></a>
+## Observable standards for realistic imagery
 
-将下列适用项落实到已有逐镜设计和 `qa.visual_frames`，由实际输出核验；不新增关卡或自评分。先在目标观看尺寸正常速看完整画面及主动作，再用原尺寸、暂停或局部放大定位原因。静帧只支持该状态，关键态正确不能代替连续动作通过；放大后才看出的细节不能证明原构图已讲清。
+Apply relevant items in existing shot designs and `qa.visual_frames`, checking actual output without new gates/self-scores. First inspect full composition/main action at target size and normal speed; use native size, pauses or local enlargement to diagnose causes. Stills support only their state; correct key states cannot pass continuous action, and enlargement-only detail cannot establish clarity in the original composition.
 
-| 检查对象 | 实际应看见什么 | 失败时先修什么 |
+| Item | What must actually be visible | First repair on failure |
 | --- | --- | --- |
-| 主体身份与结构 | 同一对象的轮廓、比例、部件数量和关键特征在动作、遮挡及跨镜中可追踪；生长、形变等变化符合本题依据 | 无依据的变形、增减部件或遮挡后换物，先修对象/条件输入与动作，不靠快速切镜掩盖 |
-| 接触、支承与遮挡 | 接触位置、固定点、承载表面和前后遮挡随动作成立；分离或滑动有可辨的前后状态 | 穿透、脚滑、悬浮、连接断开或粘连，退回相关几何、约束或生成片段；另核已有连接拓扑规则 |
-| 光影、材质与环境 | 材质贴附对象，光向、投影、反射/透射及空间尺度与当前场景相称；随视角或条件改变的变化有依据 | 纹理游移、边缘溶解、光影无故跳动或精细主体像贴片，先修同场景合成与连续状态 |
-| 科学过程与时序 | 按科学依据呈现必要状态、条件、方向和结果；不可见量与示意边界明确，示意不冒充直接观测 | 画面过程与主张冲突或关键关系由标签代替，退回事实核对、分镜及对应片段；不为流畅编造中间过程 |
-| 主体变化与注意中心 | 本镜承诺的变化在实际尺寸和正常速度下可辨，必要参照与观察停顿支持理解；静止背景可以保留 | 只有相机、粒子、字或光效在动，或主体结果小到不可察，先修动作、景别与注意力布局 |
-| 时间连续与跨镜接续 | 从起态到结果持续可追踪，首中末及运动极值无非预期闪烁、鬼影或状态重置；相邻镜能认回对象与关系 | 只选最好一帧、删除出错中段或叠化掩盖跳变，返回受影响片段及接缝重做和复查 |
+| Identity/structure | Same silhouette, proportions, part counts and identifying features remain trackable through action, occlusion and shots; growth/deformation follows evidence | Unsupported deformation, added/removed parts or replacement after occlusion requires object/condition-input/action repair, not fast-cut concealment |
+| Contact/support/occlusion | Contact, fixed points, bearing surfaces and depth order remain valid during action; separation/sliding has clear before/after states | Return penetration, sliding feet, floating, broken/stuck connections to geometry, constraints or generated clips; also check existing connection-topology rules |
+| Light/material/environment | Surface-attached material, light, shadows, reflection/transmission and scale fit the scene; viewpoint/condition changes are justified | Sliding texture, dissolving edges, jumping light or pasted-on detailed subjects require same-scene composite/continuous-state repair |
+| Scientific process/order | Necessary states, conditions, direction and result follow evidence; invisible quantities/illustrative limits are clear, not claimed as direct observation | Conflicting process/claim or labels replacing key relations requires fact/shot/clip repair; do not invent intermediate process for smoothness |
+| Subject change/focus | Promised change reads at actual size/normal speed with necessary references/holds; static backgrounds may remain | If only camera, particles, text or effects move, or subject results are imperceptible, repair action, shot scale and attention layout |
+| Temporal/shot continuity | Track start-to-result with no unintended flicker, ghosts or resets at start/middle/end/extremes; adjacent shots preserve identity/relationships | Best-frame selection, deletion of faulty middles or dissolves hiding jumps require affected clips/joins to be redone/rechecked |
 
-审查结果写明当前媒体/哈希、镜号/时段、所见状态、与参照的具体差距及修复范围。G3用覆盖本期主要风险的连续代表段检查，G5在实际最终编码上核整片及接缝；沿 [质量验收](quality-acceptance.md#从小样到整片的证据) 处理失败与未验。真实实拍也须核实际选段、处理和解释是否成立；本表不要求自然对象恒定、不要求每秒运动，也不要求肉眼看见科学上不可见的量。
+Record current media/hash, shot/interval, observed states, concrete reference gaps and repair scope. G3 uses a continuous representative segment covering the episode's main risks; G5 checks the actual final encode and joins under [sample-to-film evidence](quality-acceptance.md#evidence-from-samples-to-the-whole-film). Actual photography still requires selected-range, processing and explanation checks. This table does not require invariant natural objects, motion every second or naked-eye visibility of scientifically invisible quantities.
 
-## 制作前引用与连续短样
+<a id="制作前引用与连续短样"></a>
+## References and continuous samples before production
 
-1. 在实际调用前锁定当前Skill版本/哈希、用户本期视觉目标、适用的风格引用与逐镜设计。实际打开引用，核来源、适用范围和认可记录；历史插画或旧局部通过不得冒充本期写实成片认可。没有认可成片时按[首样路径](production-checkpoints.md#开工锁定与真实渲染入口)实际查看适用参考并做候选；完全没有可用引用时先准备参考，不从色号或文件名推断认可。
-2. 逐镜确定主主体、可见变化、起态/终态、科学禁画项、真实证据与示意边界、实现路线、辅助层职责和需要的具体例外。前置设计先于渲染，禁止事后补记录冒充执行。
-3. 先用本项目自行创作、实际导出的可播放有声短样验证最难的可见关系及前后接缝，再扩做同类素材、重绘、超分和整片编排。连续样段指正常速能追踪的完整声画时间线，不强制一镜到底；科学合理的时间省略须保留可辨的条件变化、对象响应和结果，不能用“稍后/翻面后”、叠化或漂亮终态隐藏已承诺或已被用户指出缺失的变化。技术小测试、首尾帧、静图推拉或循环装饰仍不能代替扩片样段。先验证完整关系和动作，再精修表面。
-4. 制作端与独立审查者实际正常速完整看听对应样段，核身份/材质/光影、可见变化、动作连续性、科学偏差、声音及引用差距。开工时明确实际静态/连续视频/听音能力及相应审查路径；缺连续能力保持未验。静帧已显示的明显粗糙、错误形态或伪工具仍足以退回，不必等用户再次否定。已有静态“无阻断”、文件完整或保护区像素一致均不能证明变化成立；原用户失败只由修后相应范围的实际复查关闭。独审不由同一制作者换名自签。
-5. 扩整片前，连续样片应满足现行G3及适用认可范围；已知失败先修复。修改主体、素材、模型、动作或构图后重验受影响证据。
+1. Before actual calls, lock current Skill version/hash, this episode's user visual target, applicable style references and shot design. Open references and check provenance, scope and approvals; historical illustration/local passes cannot impersonate current realistic-film approval. Without an approved film, actually inspect applicable references and produce candidates under the [first-sample route](production-checkpoints.md#start-lock-and-actual-rendering-entry); without usable references, prepare them first rather than inferring approval from colors/filenames.
+2. Define each shot's main subject, visible change, start/end, scientific prohibited imagery, empirical/illustrative boundaries, implementation route, supporting-layer roles and specific exceptions. Design precedes render; do not backfill records as if they directed execution.
+3. Use this project's own actually exported playable sample with sound to validate the hardest visible relationship and neighboring joins before expanding similar assets, redraws, upscales and whole-film arrangement. A continuous sample is a complete normal-speed-trackable audiovisual timeline, not necessarily one take. Scientifically valid time omissions retain identifiable conditions, responses and results; “稍后/翻面后”, dissolves or attractive end states cannot hide promised/user-reported missing changes. Technical tests, endpoints, still pans and decorative loops cannot replace expansion samples. Validate whole relationships/action before surface polish.
+4. Producer and independent reviewer actually watch/listen to the complete sample at normal speed, checking identity, materials/light, visible change, action continuity, science, audio and reference gaps. At startup state real still/continuous-video/audio capabilities and review route; absent continuous capability remains unreviewed. Obvious still-visible roughness, wrong shape or fake tools suffice to return work without another user rejection. A static “no blocker,” complete files or identical protected-region pixels cannot prove change. Close original user failures only with actual corresponding repaired-scope review; the maker cannot rename themselves as independent reviewer.
+5. Before full expansion, continuous samples meet current G3 and applicable approval scope; repair known failures first. Subject, assets, model, action or composition changes invalidate affected evidence.
 
-缺能力时说明具体缺口及已尝试路径，继续可独立完成的工作；新例外需用户对具体范围批准。续做按[全局迁移](global-skill-installation.md)核差异，旧锁与历史记录只供追溯，不恢复冻结Skill副本。
+For missing capabilities, state exact gaps/attempted routes and continue independent work. New exceptions require specific user scope approval. Continuations compare [global migration](global-skill-installation.md); old locks/history provide traceability, not restored frozen Skill copies.
 
-## 运行记录
+<a id="运行记录"></a>
+## Run records
 
-设计、输入、真实运行与审查记录存私有单集，缺失或与当前媒体不符时先补齐、修正。
+Keep design, inputs, actual runs and review in the private episode. Complete/correct missing records or mismatches with current media first.
 
-### 声明结构与验证范围
+<a id="声明结构与验证范围"></a>
+### Declaration structure and validation scope
 
-兼容字段 `target: scientific_realism` 表示科学结构与视觉可信要求，3D动画也可使用；实际风格及主工具仍由[工具路由](tool-routing.md#按成片风格锁定主制作工具)确定。
+Compatibility field `target: scientific_realism` specifies scientific structure/visual credibility, and can also be used for 3D animation. Actual style/main tool remain governed by [tool routing](tool-routing.md#lock-the-primary-tool-by-final-film-style).
 
-`design.visual_intent` 必须包含 `target: scientific_realism`、实际 `style_reference: {file, sha256}` 和非空 `scientific_constraints`。逐镜设计及运行冻结证据继续必需；已有认可成片或诚实的initial_style_reference首样基准按制作检查点二选一，引用文件存在不等于实际看过或获认可。
+`design.visual_intent` requires `target: scientific_realism`, actual `style_reference: {file, sha256}` and nonempty `scientific_constraints`. Shot designs and frozen-run evidence remain mandatory. Production checkpoints allow either an approved film or an honest initial_style_reference first-sample baseline; file existence does not prove viewing/approval.
 
-每个所选镜头的 `shotbook.realism` 记录：
+Each selected shot records `shotbook.realism`:
 
-- `role`: `main` 或 `explanation`。字幕与辅助标注是镜内图层，不登记成独立镜头。
-- `medium` 与实际 `renderer` 配对：`authentic_recording/camera`、`ai_realistic/video_model`、`three_d/three_d_engine`、`pure_2d/vector_renderer|raster_animation`、`static_pan/still_pan`、`infographic/vector_renderer|raster_animation`。
-- 已核实授权的用户自拍须以 `source_asset_id` 关联本镜 `asset_ids` 中的真实视频素材；素材种类为 `real_capture` 或 `real_observation`，保留来源、创作者、已核权利状态及依据/范围、实际视频文件与哈希。若另填 `shot.modality`，须与上述实际媒体一致：实拍 `real_footage`、AI `ai_generated`、3D `controlled_3d`、其余图形 `pure_2d`。
-- `scientific_basis`、`visible_motion`；`authentic_recording`、`ai_realistic`、`three_d` 另需 `motion_kind: subject_motion`，AI/3D另需明确非实拍的 `disclosure`。文字声明只供一致性核对，不能自动证明输出或真实权利。
-- `medium` 为 `pure_2d`、`static_pan` 或 `infographic` 的全幅 `main`/`explanation` 须有 `exception: {shot_id, scope: nonrealistic_full_frame_shot, reason, user_evidence: {file, sha256}}`。证据必须是用户对该镜头实际范围的明确批准；泛化允许、制作者自述、其他镜头或旧偏好无效，执行者须读原证据；已明确选定的Blender 3D镜头不填此例外。
-- 不接受独立镜头改名为 `auxiliary` 规避全幅替代检查：现有镜头时间轴互不重叠，另一个写实镜头的存在不能证明本镜保留主画面。普通字幕/标注沿现有镜内字幕与图层记录即可，不因本条被误拒。
+- `role`: `main` or `explanation`. Captions/annotations are layers within shots, not independent shots.
+- Pair `medium` with actual `renderer`: `authentic_recording/camera`, `ai_realistic/video_model`, `three_d/three_d_engine`, `pure_2d/vector_renderer|raster_animation`, `static_pan/still_pan`, `infographic/vector_renderer|raster_animation`.
+- Verified authorized user capture uses `source_asset_id` to reference actual video among this shot's `asset_ids`. Asset kind is `real_capture` or `real_observation`; retain provenance, creator, verified rights/status/basis/scope, actual file/hash. Optional `shot.modality` must match actual medium: `real_footage` for capture, `ai_generated` for AI, `controlled_3d` for 3D, `pure_2d` for other graphics.
+- `scientific_basis`, `visible_motion`; `authentic_recording`, `ai_realistic`, `three_d` also require `motion_kind: subject_motion`, and AI/3D an explicitly non-capture `disclosure`. Declarations support consistency checks, not automatic output/rights proof.
+- For `medium` of `pure_2d`, `static_pan` or `infographic`, full-frame `main`/`explanation` requires `exception: {shot_id, scope: nonrealistic_full_frame_shot, reason, user_evidence: {file, sha256}}`. Evidence is explicit user approval of this shot's actual scope; generic allowance, maker assertions, other shots or old preferences do not qualify. Read original evidence; explicitly selected Blender 3D shots do not need this exception.
+- Do not rename an independent shot `auxiliary` to bypass full-frame replacement checks. Existing shot intervals do not overlap; another realistic shot does not establish main imagery in this one. Ordinary captions/annotations use existing in-shot/layer records and must not be falsely rejected here.
 
-扩片时，`qa.visual_frames.animation.viewing` 须绑定实际连续有声代表段，范围为 `representative`，保留既有媒体、SHA-256、观看/听验及时间证据，审查者须独立于 `brief.roles.producer`；同一动画记录附 `independent_review_evidence: {file, sha256}`。已有G3和输入冻结检查不变。缺少适用证据时先补齐，再扩片。
+Before expansion, `qa.visual_frames.animation.viewing` binds the actual continuous representative segment with sound, uses scope `representative`, retains existing media/SHA-256/viewing/listening/time evidence, and has a reviewer independent of `brief.roles.producer`. Attach `independent_review_evidence: {file, sha256}` to that animation record. Existing G3/input-freeze checks remain; complete missing applicable evidence before expansion.

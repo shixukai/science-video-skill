@@ -1,92 +1,106 @@
-# 单集制作简报
+<a id="单集制作简报"></a>
+# Episode Production Brief
 
-状态：选实际G1–G7阶段；版本、当前任务范围、是否暂停/取消及理由：
-制作类R/N/B、关键难点与解释类型、实际责任人（发布岗仅发布阶段）、允许制作/发布范围：
-交付范围delivery_scope=release_package/video_only及请求依据；需要的封面比例；平台动作是否在本次委托内：
-选题六项按 [制作检查点第1节](../references/production-checkpoints.md#1-先确定观众要看懂的一件事) 填写：主问题及必要从属问题、主从关系和必要性（不设固定数量）；目标观众与知识起点；一句话答案与理解目标；必须看清的关系或必要变化；必答范围及范围外内容；禁画/误解清单：
+Status: actual G1–G7 stage; version, current task scope, pause/cancellation and reason:
+Production class R/N/B; key difficulty and explanation type; actual owners (publication owner only at publication stages); authorized production/publication scope:
+Delivery scope `delivery_scope=release_package/video_only` and request reference; requested cover ratios; whether platform actions are commissioned:
+Complete the six [topic groups](../references/production-checkpoints.md#1-decide-the-one-thing-viewers-should-understand): main question and necessary subquestions, hierarchy and necessity (no fixed count); audience/starting knowledge; one-sentence answer and understanding target; relations/changes that must be visible; required/excluded scope; prohibited depictions and likely misconceptions:
 
-## 选题卡（制作前）
-按 [成人受众选题筛选](../references/topic-contract.md#成人受众的选题筛选) 写入 episode.brief.topic_selection；沿用已有受众知识起点、原题/答案和观看回报，不复制一套表。
-- 受众已知什么；为何值得继续追问；现实/现象关联；新增机制、条件、权衡或发现：
-- 已查事实主源及适用条件；关键关系如何可视化；看完能多解释或判断什么：
-- 素材/权利计划、方法、约束与阻断缺项（没有现成资产不等于不可行）：
-- 选题来源editorial/user_requested及原请求；明确淘汰理由（编辑口味不否决用户指定基础题目）；编辑 selected/revise/rejected/pending、审题人/理由及当前 selection_context_sha256：
-- 兴趣依据默认是编辑假设；只有真实证据才记实际受众观察，不能填造调研或热度：
-- 有权平台证据按 [数据复核](../references/production-checkpoints.md#平台选题与数据复核) 引用私有台账，记更新/窗口/样本/分母及缺口；AI与热点建议需说明核验和采用范围：
+<a id="选题卡制作前"></a>
+## Topic card before production
+Record `episode.brief.topic_selection` under [adult-audience topic selection](../references/topic-contract.md#topic-selection-for-adult-audiences). Reuse the existing audience starting point, original question/answer and viewing payoff; do not duplicate the form.
+- What the audience knows; why to investigate further; relevance to an actual situation/phenomenon; new mechanism, condition, trade-off or discovery:
+- Verified primary factual sources and applicable conditions; visualization of the key relation; what viewers can additionally explain or judge:
+- Asset/rights plan, method, constraints and blocking gaps (lack of an existing asset alone does not establish infeasibility):
+- Topic origin `editorial/user_requested` and original request; explicit rejection reasons (editorial taste cannot veto a user-requested foundational topic); editorial `selected/revise/rejected/pending`, reviewer/reason and current `selection_context_sha256`:
+- Interest rationale defaults to an editorial hypothesis; claim observed audience interest only with actual evidence, never fabricated research/popularity:
+- Cite authorized platform evidence in private ledgers under [data verification](../references/production-checkpoints.md#platform-topic-selection-and-data-review), recording updates/window/sample/denominator and gaps; identify verification/adoption scope for AI or trend suggestions:
 
-## 原题与科学
-工程科学/工业生产/高端制造的[全链路范围](../references/topic-contract.md#工程与制造题材的全链路和片长)与章节顺序；各环节输入、原理/操作、输出及衔接；关键难点/质量验证和待研究缺口；按解释需要暂估片长，实际配音/演示后更新：
-按 [主题契约](../references/topic-contract.md) 记录原题、问题类型、必答范围、首屏/口播/结尾映射及局部所属范围；复制topic-anchor-template并固定来源/哈希。
-按 [科学与素材](../references/science-and-rights.md) 记录主张、依据、自产画面及已核实用户自拍/权利、实际选段与缺项：
+<a id="原题与科学"></a>
+## Original topic and science
+For engineering/industrial/advanced manufacturing, record [full-chain scope](../references/topic-contract.md#complete-chains-and-duration-for-engineering-and-manufacturing-topics), chapter order, each stage's input/principle/operation/output/handoff, key difficulties/quality verification and research gaps. Estimate duration from explanation needs, then update after actual narration/demonstration:
+Use the [topic contract](../references/topic-contract.md) for original topic, question type, required scope, first-picture/narration/ending mapping and each local section's scope. Copy the topic-anchor template and bind source/hash.
+Use [science and assets](../references/science-and-rights.md) for claims, evidence, self-produced visuals and verified authorized user capture/rights, actual selected ranges and gaps:
 
-## 视觉原创来源（待填写，非批准）
-按 [原创视觉来源契约](../references/science-and-rights.md#原创视觉来源契约) 记录 `origin_contract.mode=self_created_visuals`，逐镜计划方法、制作前设计、实际入口版本和哈希；实际资产保留输入/输出、抽帧及审查证据。用户自拍事实与本次授权必须可核，未取得保持缺项。第三方公开视频/CC/Commons/论文影像仅研究参考，不作填充或成片背景；不改写历史来源和验收。
+<a id="视觉原创来源待填写非批准"></a>
+## Original visual provenance (blank, not approval)
+Under the [original-visual contract](../references/science-and-rights.md#original-visual-provenance-contract), record `origin_contract.mode=self_created_visuals`, each shot's planned method, pre-production design, actual entrypoint version/hash, and actual asset inputs/outputs, extracted frames and review evidence. User-capture facts and current authorization must be verifiable; missing evidence stays missing. Third-party public, CC/Commons and paper imagery remain research references, not filler or finished backgrounds. Do not rewrite historical provenance or acceptance.
 
-## 成片风格与主制作工程
-按[固定分流](../references/tool-routing.md#按成片风格锁定主制作工具)记录：写实风格→MoneyPrinterTurbo，3D动画→Blender；不按题材换路。
-- 本期风格及请求/设计依据、对应主制作工具与已有工程版本；混合项目仅填已明确范围及镜号：
-- 素材来源与辅助工具的具体职责；MoneyPrinterTurbo实际编排/合成或Blender实际渲染的输入、输出及现有execution证据引用，未执行保持待验：
+<a id="成片风格与主制作工程"></a>
+## Finished style and main production project
+Record the [fixed style routing](../references/tool-routing.md#lock-the-primary-tool-by-final-film-style): realistic → MoneyPrinterTurbo, 3D animation → Blender; do not route by subject matter.
+- Current style/request/design basis, main tool and existing project version; for mixed projects, only the explicitly authorized scopes/shots:
+- Asset provenance and auxiliary-tool responsibilities; actual MoneyPrinterTurbo assembly/composition or Blender rendering inputs/outputs, with existing execution evidence. Unexecuted work remains unreviewed:
 
-## 全局入口与先行短样
-- 全局Skill实际路径、版本及规则锁；已有项目与当前全局的差异、迁移记录和需重新实审项（不复制Skill）：
-- 本期声音样段、问题时码/修复、实际听验范围；开场设计见下节：
-- 可观看连续短样的目标/实际帧率、主体细节与运动观察；已知失败修复及复查：
+<a id="全局入口与先行短样"></a>
+## Global entry and early sample
+- Actual global Skill path/version/rule lock; differences from the current global installation, migration record and required renewed actual reviews (no Skill copy):
+- Current voice sample, problem times/repair and actual listening scope; opening design follows below:
+- Target/actual frame rate of a playable continuous sample; subject detail/motion observations; known failure repair/recheck:
 
-## 固定引用
-- Skill提交/版本：
-- 系列配置ID/版本与文件SHA-256：
-- 视觉tokens ID/版本与SHA-256；实际使用偏差及理由：
-- 本次图内[指示标准](../references/annotation-style.md)与独立参数版本；标签/定位/方向/范围的用途，已有风格确认范围；具体设计与实际观看沿美术记录引用，不预填通过：
-- 项目提供私有设计板ID/版本/哈希；批准人/范围/日期留私有记录：
-- 美术参考索引版本与本片实际观看时段；不是素材使用授权：
-- 可用素材/组件索引版本及所用ID/版本/哈希/权利；未取得项：
-- 本片字幕布局基准、画幅及实际位置；迁移或修订既有布局时另记修订ID、旧/新基线、已应用状态、累计偏移、换分辨率舍入及额外局部避让：
-- 当前声音方案与已有认可范围/实际音轨哈希；当前或前文上下文明确指定的千问工程/服务位置、运行入口和指示引用；实际运行环境及传输目的地/授权覆盖（纸面阶段无须另问位置，实际调用前仅补上下文缺失的信息）：
+<a id="固定引用"></a>
+## Fixed references
+- Skill commit/version:
+- Series configuration ID/version and file SHA-256:
+- Visual token ID/version/SHA-256; actual deviations and reasons:
+- Current [annotation standard](../references/annotation-style.md) and separate parameter revision; purpose of labels/locators/direction/ranges and existing style-approval scope. Cite actual design/viewing in art records; no prefilled pass:
+- Private project design-board ID/version/hash; reviewer, approved scope and date remain private:
+- Art-reference index version and actually viewed intervals for this film; not asset-use authorization:
+- Available asset/component index version and used IDs/versions/hashes/rights; missing items:
+- Caption layout baseline, canvas and actual positions. For an existing layout migration/revision, retain revision ID, old/new baselines, applied state, cumulative offset, resolution-rounding and extra local avoidance:
+- Current voice setup and existing acceptance scope/actual audio hash; Qwen project/service location explicitly designated in current/prior context, entrypoint and instruction reference; actual environment, transfer destination/authorization (paper planning needs no extra location question; at invocation ask only for information missing from available context):
 
-## 开场情境与观看理由
-按[开场编排](../references/viewer-retention-design.md#先建立情境和看点再进入解释)填写；完整新片适用，章节/局部修样沿实际范围。复用 opening 与动作卡，不新增批准。
-- 首屏对象/场景与用途；对应主画面和口播：
-- 真实看点、科学依据及可制作的画面；原题/观看收益与首项有效信息，引用 curiosity_gap / viewer_payoff：
-- 开场末句与正文首句连写；第一观察/解释为何必要，前镜留下的对象/状态、后镜的观察落点与识别锚点，换尺度/时间/对象如何交代；所选切镜/声音衔接及实际工具可行性，引用 opening.visual_handoff 与动作卡，不另建表；实际口播及 shot_ids，未配音不编秒数：
-- 正常速度从首帧看听至正文第一观察的时段、卡点/修复与复看记录，引用G2现有QA：
+<a id="开场情境与观看理由"></a>
+## Opening context and viewing reason
+Apply [opening design](../references/viewer-retention-design.md#establish-context-and-a-reason-to-watch-before-explaining) to full new films; chapter/local repairs follow actual scope. Reuse `opening` and action cards, without another approval.
+- First-picture subject/situation and purpose; corresponding main picture and narration:
+- Real point of interest, scientific basis and producible visuals; original question/viewing payoff and first useful information, citing `curiosity_gap / viewer_payoff`:
+- Write opening's last sentence and body's first sentence together; why the first observation/explanation is necessary; preceding object/state, next observation target and recognition anchor; explanation of scale/time/object changes; selected picture/sound handoff and actual tool feasibility. Cite `opening.visual_handoff` and action cards without another table; actual narration and `shot_ids`, no fabricated timestamps before audio:
+- Normal-speed viewing/listening range from first frame through the first body observation, first break/repair and recheck, citing existing G2 QA:
 
-## 整期草排与逐镜
-按 [制作顺序](../references/production-checkpoints.md) 写原题简短答案、必要前提、每个新增概念用途/可见对应、首遍编辑复述断点；记录逻辑内审、表达方案内审与实际作品内审。
-按 [逐镜记录](../references/shotbook.md) 记镜号、时段/语义拍、主角/状态变化、前后承接、空间锚点/视角尺度桥、候选实看/源入出点及关键图：
-表达卡：难点、必要前提、固定/改变/比较/放大等具体动作、可推出的结论、误解与边界；不确定关键方案先做低成本对照。动作卡按实际类型记锚点、初态、必要触发/过程、终态、轨迹/速度/停顿、理解目的、科学边界、版本；仅关键态不算连续动画。
-代表段：覆盖镜号/问题、实际有声文件/哈希、连续审看结果、退回/复查；局部认可的版本/时段/维度：
-文字清单：按 [删除测试](../references/visual-system.md#观众画面与交付记录) 逐条记文字/时段、观众当前理解任务、删去损失、保留或删改及配套落点；署名/披露另记义务依据、要求的呈现位置与实际落实位置：
+<a id="整期草排与逐镜"></a>
+## Complete rough cut and shotbook
+Under [production order](../references/production-checkpoints.md), write the short answer, prerequisites, each new concept's purpose/visible counterpart and first break in the initial editorial retelling; record logic, expression-plan and actual-work review.
+Use the [shotbook](../references/shotbook.md) for shot IDs, time ranges/semantic beats, subject/state change, adjacent handoffs, spatial anchors/viewpoint/scale bridges, actual candidate viewing/source in/out points and key frames:
+Expression cards: difficulty, prerequisites, concrete hold/change/compare/enlarge actions, inferable conclusion, misconception and limits. Compare low-cost alternatives for uncertain key approaches. Action cards follow the actual type: anchors, initial state, necessary trigger/process, final state, trajectory/speed/pauses, comprehension purpose, scientific limits and version. Key states alone do not establish continuous animation.
+Representative sequence: covered shots/question, actual sound-picture file/hash, continuous observations, return/recheck and local approval version/range/dimension:
+Text inventory: use the [deletion test](../references/visual-system.md#audience-picture-and-delivery-records) for each item/text/range, current viewer task, meaning lost if removed, keep/remove/revise decision and companion placement. Credits/disclosures separately record obligation basis, required presentation location and actual implementation:
 
-按[持续观看编排](../references/viewer-retention-design.md)在 payoff_steps / handoff 引用各段新增所得与下一观察任务、关键观察窗口和结尾认回的结果：
+Use [retention design](../references/viewer-retention-design.md) through `payoff_steps / handoff` to cite each section's new understanding, next observation, key observation window and result recognized again at the ending:
 
-## 封面制作（仅本次包含封面时）
-按[封面成品标准](../references/visual-system.md#封面成品标准与工程制造题材)填写；本段是设计记录，实际审看沿 `qa.covers` 绑定，不预填通过。
-- 当前正片版本、主问题与实际覆盖；封面主题名/短问题及其在正文的兑现位置：
-- 主体身份、结构/材质依据、关键特征、允许的剖切/示意与禁画项；系列参考及实际查看范围：
-- 本次比例；各版标题区、主体、辅体和留白；无字画面来源与中文字体/字层：
-- 各成品、手机预览、并排对照与可编辑源文件；实际观察、发现的问题及修订版本（未看保持待验）：
+<a id="封面制作仅本次包含封面时"></a>
+## Cover production only when commissioned
+Apply the [finished-cover standard](../references/visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics). This is design information; actual review binds through `qa.covers`, without prefilled approval.
+- Current film version, main question and actual coverage; short topic/question on the cover and its fulfillment in the body:
+- Subject identity, structural/material basis, defining features, permitted cutaway/illustration and prohibited depictions; series reference and actual inspection scope:
+- Requested ratios; title region, primary/secondary objects and negative space per version; text-free image provenance and Chinese font/type layer:
+- Finished files, phone thumbnails, side-by-side comparisons and editable sources; actual observations, defects and revised versions (unviewed stays unreviewed):
 
-## 实际验收与反馈
-美术推敲可按需使用 [单集美术与画质记录](art-direction-template.md)，将代表样、同镜对照、整片缩略带和编码对照引用到以下既有记录；不重复建批准状态。
+<a id="实际验收与反馈"></a>
+## Actual acceptance and feedback
+Use the [episode art/quality record](art-direction-template.md) when useful, citing representative samples, same-shot comparisons, the full-film thumbnail strip and encoded comparisons in the existing records below; do not create duplicate approval states.
 
-按 [质量验收](../references/quality-acceptance.md) 逐项写对象版本、证据文件/时点、结果与缺项；模板不重复规则正文：
-- 科学/权利：
-- 主题/解释与表达：开场至正文、各段推进、结尾兑现的实际位置、首次卡点与修复，引用G1/G2/G3/G5现有记录：
-- 静态美术/完整画幅/文字/方向结构及L3参照差距：
-- 连续动作、全片整合及各自L3证据：
-- 完整音轨/混音/字幕与实际试听范围：
-- 技术/本次实际交付媒体哈希：
-- 当前账号/完整文案/实际平台UI及设备范围：
-- 被撤销的旧结论、具体差距、修复及复查：
-- 后续适用片对本次反馈的实际验证（未产出/未看听保持待验）：
+For each [quality requirement](../references/quality-acceptance.md), record artifact/version, evidence file/time, result and gaps. This template does not duplicate the responsibility body:
+- Science/rights:
+- Topic/explanation/expression: actual opening-to-body, section progression and ending payoff; first break and repair, citing existing G1/G2/G3/G5 records:
+- Static art/full canvas/text/orientation/structure and gap against L3 reference:
+- Continuous action/full-film integration and their respective L3 evidence:
+- Complete voice/mix/captions and actual listening coverage:
+- Technical checks/current delivered-media hash:
+- Current account/full copy/actual platform UI and device scope:
+- Withdrawn older conclusions, concrete gap, repair and recheck:
+- Actual application of this feedback to later applicable films (unproduced/unperceived stays pending):
 
-## 交付与发布
-按[交付范围](../references/production-checkpoints.md#交付包与发布回执)提供本次所需视频/封面/文案、来源/制作声明、验收及待办；本地delivery至G5，publish_ready另验G6：
-实际发送对象/渠道/版本；发布批准覆盖；当前状态（未上传/草稿/已提交未知/审核中/已发布/失败）；成功链接/ID与核验时间；未知查重与下一步：
+<a id="交付与发布"></a>
+## Delivery and publication
+Under [delivery scope](../references/production-checkpoints.md#delivery-package-and-publication-receipts), supply the requested video/covers/copy, source/production statement, acceptance and pending work. Local `delivery` ends at G5; `publish_ready` additionally checks G6:
+Actual recipient/channel/version; publication-approval coverage; current state (not uploaded/draft/submitted-unknown/in review/published/failed); verified success URL/ID and time; deduplication for unknown outcomes and next action:
 
-## 全标准执行与运营记录
-适用标准、实际审查和命令回执引用 `episode.qa`；工时、成本、库存、发布及复盘引用项目台账。平台数据缺失时记未知。
+<a id="全标准执行与运营记录"></a>
+## Standards execution and operational records
+Cite applicable standards, actual reviews and command receipts through `episode.qa`; cite hours, costs, inventory, publication and retrospectives through the project ledger. Missing platform data remains unknown.
 
-## 解释设计引用
+<a id="解释设计引用"></a>
+## Explanation-design references
 
-引用已有主题锚点、`required_scope`、`brief.audience_start`、`brief.understanding_targets`、`topic_alignment.coverage[].explanation_steps` 和 `topic_alignment.expression_cards`；审查引用 `qa.explanation_logic / expression_plan / explanation_review / expression_review`。G2起按实际音轨更新时点。
+Reference the existing topic anchor, `required_scope`, `brief.audience_start`, `brief.understanding_targets`, `topic_alignment.coverage[].explanation_steps` and `topic_alignment.expression_cards`; reviews cite `qa.explanation_logic / expression_plan / explanation_review / expression_review`. From G2, update timing against actual audio.

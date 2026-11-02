@@ -1,51 +1,56 @@
-# 候选学习记录：秋叶显色不等于所有色素新生
+<a id="候选学习记录秋叶显色不等于所有色素新生"></a>
+# Candidate Learning Record: Visible Autumn Colors Do Not Mean Every Pigment Is Newly Produced
 
-状态：2026-10-27 UTC 的有限暂停画面观察、全文转写阅读和来源核对。未连续看完、未实听、未应用到影片；不是正式规范或已验证改进。
+Status: limited paused-frame observation, complete transcript reading, and source checks on 2026-10-27 UTC. Not continuously watched in full, not actually listened to, and not applied to a film. This is neither a formal standard nor a validated improvement.
 
-## 来源与实际观察
+<a id="来源与实际观察"></a>
+## Sources and Actual Observations
 
-PBS North / The Slice，《The Science of Fall Colors》，页面标示 2026-10-19、1分31秒：
+PBS North / The Slice, “The Science of Fall Colors”; the page lists 2026-10-19 and 1 minute 31 seconds:
 https://www.pbs.org/video/the-science-of-fall-colors-zg1iuq/
 
-助手云端播放器显示 1x，实际检查下列暂停位置。首张页面内画面裁切，随后全屏复核；这里只用全屏结果。整秒是播放器显示值，不是逐帧索引或精确切点。进度条缩略图和中央播放按钮是播放器界面，不属于节目构图。
+The assistant's cloud player displayed 1x. The paused positions below were actually inspected. The first in-page image was cropped and was subsequently rechecked fullscreen; only fullscreen results are used here. Whole seconds are the player's displayed values, not frame indices or precise cut points. Seek-bar thumbnails and the central play button are player UI, not program composition.
 
-| 显示时点 | 实际画面观察 |
+| Displayed time | Actual picture observation |
 | --- | --- |
-| 00:05 | 户外人物中景，后方有草地、步道和树木。 |
-| 00:20 | 林中广景，树冠同时有黄、绿及少量红色。 |
-| 00:34 | 回到人物场景，左下有人名和职务标注。 |
-| 00:49 | 前景蕨叶与落叶坡面，后景树干及彩色树冠。 |
-| 01:09 | 人物在同类户外环境中抬手示意。 |
+| 00:05 | An outdoor medium shot of a person, with grass, a path, and trees behind. |
+| 00:20 | A wide woodland view with yellow, green, and a little red in the canopy. |
+| 00:34 | Return to the person scene, with a name and role caption at lower left. |
+| 00:49 | Fern fronds in the foreground and a leaf-covered slope, with trunks and colored canopy behind. |
+| 01:09 | The person gestures with a raised hand in a similar outdoor setting. |
 
-这些是离散视觉观察，不证明中间镜头顺序、运动连续性或声画同步。另读完整页面转写：其文字从营养回收解释，扩到气候影响，再落到本地观看地点。不能把转写当听验；未评价声音、节奏、开场留存或封面效果，也未将整片认证为“优秀案例”。
+These are discrete visual observations. They do not establish intervening shot order, motion continuity, or audiovisual synchronization. The complete page transcript was also read: its text moves from nutrient recovery to climate effects and then local viewing locations. A transcript cannot count as listening review. Voice, rhythm, opening retention, and cover performance were not evaluated, nor was the full film certified as an “excellent example.”
 
-## 科学核对与窄新增价值
+<a id="科学核对与窄新增价值"></a>
+## Scientific Checks and Narrow Added Value
 
-美国林务局《Why Leaves Change Color》，政府存档原文第 1–3 页：
+U.S. Forest Service, “Why Leaves Change Color,” pages 1–3 of the original government archive:
 https://www.govinfo.gov/content/pkg/GOVPUB-A13-PURL-LPS96108/pdf/GOVPUB-A13-PURL-LPS96108.pdf
 
-实际读到的区分：叶绿素与类胡萝卜素在生长季已存在；大多数花青素在秋季生成。叶绿素减少、其他色素更显眼，与某类色素新生成，是不同变化。原文同时列出夜长、物种及天气的作用，不支持把所有秋色归结为气温单因素。
+The distinction actually read was that chlorophyll and carotenoids are already present during the growing season, while most anthocyanins are produced in autumn. Declining chlorophyll making other pigments more apparent and new production of a pigment class are different changes. The original also lists the roles of night length, species, and weather; it does not support reducing every autumn color to temperature alone.
 
-另核 Harvard Forest 教学正文 [The Process of Leaf Color Change](https://harvardforest.fas.harvard.edu/education-opportunities/classic-outreach-resources/autumn-foliage-color/leaf-science/leaf-process/)：类胡萝卜素也会随衰老损失，部分在叶绿素消失后仍保留。因此“显露”不表示黄色色素总量恒定；不同物种、个体和叶片的表现可以不同。本记录只读了文字，未把页面图示当作本次已审图片。
+The Harvard Forest teaching text [The Process of Leaf Color Change](https://harvardforest.fas.harvard.edu/education-opportunities/classic-outreach-resources/autumn-foliage-color/leaf-science/leaf-process/) was also checked: carotenoids are lost during senescence too, with some remaining after chlorophyll disappears. Thus “unmasking” does not mean the total amount of yellow pigment stays constant. Species, individuals, and leaves may differ. Only the text was read for this record; the page's illustrations were not treated as images reviewed in this session.
 
-本次不从森林画面的颜色反推色素浓度、物种、营养转运路径或具体反应。景观能呈现现象，不能仅凭几幅秋色图证明细胞内机制。也不将所有红叶都等同于同一色素路径。
+This record does not infer pigment concentrations, species, nutrient transport pathways, or specific reactions from woodland colors. Landscapes can show the phenomenon, but a few autumn-color images cannot establish intracellular mechanisms. Nor are all red leaves equated with one pigment pathway.
 
-基线：science-video-skill main 5755421f134a835d9fdec7376372ebf768d92566。现行 SKILL 已要求科学依据、画面所证范围和实际视听验收；既有候选覆盖雨滴影像、雨味界面、洋葱与光路。本候选不重写通用规则，新增的是秋叶案例中“已有成分显露”和“新成分生成”不可合并成一条颜色渐变的具体待测问题。
+Baseline: science-video-skill main 5755421f134a835d9fdec7376372ebf768d92566. The current SKILL already requires scientific grounds, limits on what picture establishes, and actual audiovisual acceptance. Existing candidates cover raindrop imagery, rain-smell interfaces, onions, and optical paths. This candidate does not rewrite general rules. Its addition is a specific untested question in the autumn-leaf case: “unmasking existing constituents” and “producing new constituents” must not be collapsed into one color gradient.
 
-## 尚未实施的原创代表段设计
+<a id="尚未实施的原创代表段设计"></a>
+## Unimplemented Original Representative-Segment Design
 
-只在另有明确制作任务且科学来源适用时考虑，不据本记录恢复暂停或已交接影片，不挪用第三方镜头。
+Consider only under a separate explicit production task with applicable scientific sources. This record does not resume paused or handed-off films or appropriate third-party shots.
 
-- 待比较 A：现有、可核的相应代表段，保留原稿和原声画。当前没有取得这样的实际 A，不虚构一个失败片或故意制作低质基线。
-- 候选 B：在同一解释任务中把两种状态分开。先指出已有黄色成分随绿色减弱更显眼，再以另一清楚标明的示意说明部分秋季红紫色涉及新生成的花青素。选择具体植物时另核其物种及条件，不把不同样本剪成同一叶片连续变化。
-- 口播草案（未生成声音）：“黄橙色的成分，很多在叶子还是绿色时就已经存在。绿色减弱后，它们更显眼。红紫色还可能涉及另一件事：秋季新生成的色素。”词句、图示和物种依据需一起核，不把“很多”“可能”当免于查证的理由。
-- 图形用已存在/新增的明确状态标签，不用没有物理依据的发光粒子或把绿色块直接变成红色块来伪造化学转化。不画通用的绿→黄→红必经顺序，不用固定数量图标暗示类胡萝卜素不变。微观层明确为非定量解释示意；写实外观本身不等于细胞内观测。
-- 真实时长及旁白落点依实际音轨和可见动作确定；不编造尚未生成的秒数，不将暂定口播称为已通过声音样稿。
+- A to be compared: an existing, verifiable corresponding representative segment, retaining its original script, picture, and sound. No actual A of this kind has been obtained. Do not invent a failed film or deliberately produce a poor baseline.
+- Candidate B: distinguish the two states within the same explanatory task. First identify existing yellow constituents becoming more apparent as green fades; then use another clearly identified diagram to explain that some autumn red/purple colors involve newly produced anthocyanins. Verify species and conditions separately when choosing a specific plant. Do not edit different specimens into one leaf's continuous change.
+- Narration draft (no voice generated): “黄橙色的成分，很多在叶子还是绿色时就已经存在。绿色减弱后，它们更显眼。红紫色还可能涉及另一件事：秋季新生成的色素。” Wording, diagrams, and species evidence require joint checking; “很多” and “可能” do not excuse verification.
+- Graphics use explicit existing/new-state labels, without unsupported glowing particles or green blocks turning directly into red blocks to fabricate a chemical transformation. Do not depict a universal, obligatory green → yellow → red sequence, or use a fixed number of icons to imply unchanged carotenoids. Clearly identify the microscopic layer as a nonquantitative explanatory diagram; realistic appearance itself is not intracellular observation.
+- Actual duration and narration timing depend on the real track and visible action. Do not invent seconds before they exist or describe tentative narration as an approved voice sample.
 
-## 验证边界
+<a id="验证边界"></a>
+## Validation Boundaries
 
-未来内部独立审查者正常速连续看听真实 A/B，判断能否区分显露与新生成，是否误以为所有红黄叶具有同一机制，是否把景观当成微观证据。按当前项目的原有质量流程处理，不增设观众实时反馈或新的固定门槛。
+A future independent internal reviewer would continuously watch and listen to actual A/B versions at normal speed, judging whether unmasking and new production are distinguishable, whether all red/yellow leaves seem to share one mechanism, and whether landscape is mistaken for microscopic evidence. Use the current project's existing quality process, without adding real-time audience feedback or new fixed thresholds.
 
-若构图、文案、音轨和机制说明同时修改，只能报告联合修订，不能声称单变量实验。未完成实际视听对照前，不宣称理解改善、点击率或留存提升。当前未产出影片、未验证效果、未改正式规则。
+If composition, copy, track, and mechanism explanation change together, report only a combined revision, not a single-variable experiment. Before actual audiovisual comparison is complete, do not claim improved understanding, click-through rate, or retention. No film has currently been produced, no effect validated, and no formal rule changed.
 
-本文件只有原创观察概括、来源和未验证方案，不附第三方媒体、截图或转写全文，不含私人项目或审片记录。
+This file contains only original observation summaries, sources, and an unvalidated proposal. It includes no third-party media, screenshots, full transcripts, private projects, or review records.

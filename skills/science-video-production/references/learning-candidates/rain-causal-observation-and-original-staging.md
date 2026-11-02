@@ -1,34 +1,40 @@
-# 候选学习记录：比较镜头的对象身份与时间尺度
+<a id="候选学习记录比较镜头的对象身份与时间尺度"></a>
+# Candidate Learning Record: Object Identity and Time Scale in Comparison Shots
 
-状态：公开参考的局部画面观察及未验证迁移假设，不是完整观看记录、声音验收或改善结论。
+Status: local picture observation of a public reference and an unvalidated transfer hypothesis, not a complete viewing record, sound acceptance, or improvement conclusion.
 
-## 来源与实际观看范围
+<a id="来源与实际观看范围"></a>
+## Sources and Actual Viewing Scope
 
-- ACS/PBS Reactions《What's That After-Rain Smell Made Of?》，PBS 页面列为 Season 5 Episode 11、3分58秒，页面日期为2018-09-10（不据此推定原始发布日期）：https://www.pbs.org/video/whats-that-after-rain-smell-made-of-trvyo8/
-- 制作方介绍与参考文献入口（ACS页面日期2018-04-03，与PBS页面日期分别记录，不据此推定原始发布日期）：https://www.acs.org/pressroom/reactions/library/whats-that-after-rain-smell-made-of.html （本轮通过网页搜索读到，不声称观看该入口播放器。）
-- 观察于2026-10-19 UTC，在助手云端浏览器实际播放、暂停及定位，观察离散截图。不是正常速度连续看完；未实际听到音频，不能评价配音、音乐、音效或声画同步。网页文字/字幕不替代听验。
-- 播放器显示1x，是播放器倍速；原片画面标注的“1/250 actual speed”是源影像的慢动作时间比例，两者不能混写。
+- ACS/PBS Reactions, “What's That After-Rain Smell Made Of?” The PBS page lists Season 5 Episode 11, 3 minutes 58 seconds, and 2018-09-10 (not used to infer the original release date): https://www.pbs.org/video/whats-that-after-rain-smell-made-of-trvyo8/
+- Producer introduction and references entry (ACS page date 2018-04-03, recorded separately from the PBS page date without inferring the original release date): https://www.acs.org/pressroom/reactions/library/whats-that-after-rain-smell-made-of.html (Read through web search this round; no claim of watching this entry's player.)
+- Observed on 2026-10-19 UTC through actual playback, pausing, and seeking in the assistant's cloud browser, inspecting discrete screenshots. This was not complete normal-speed continuous viewing. No audio was actually heard, so voiceover, music, effects, and audiovisual synchronization cannot be evaluated. Web text/captions do not replace listening review.
+- The player's 1x is its playback-speed setting. The original image's “1/250 actual speed” is the source footage's slow-motion time ratio. Do not conflate them.
 
-## 可复核的有限观察
+<a id="可复核的有限观察"></a>
+## Recheckable Limited Observations
 
-- 00:11：实际暂停画面，白色圆形ACS标志叠在黑白液滴影像上，外围蓝色雨景。该画面只能支持开头存在机构片头，不足以断言整个开场节奏、钩子成功或品牌停留时长。
-- 02:57：实际暂停并待画面更新后复核，左右并列灰度液滴近景。左栏写“Porous alumina surface”，右栏写“Sandy clay soil”；两栏各保留1 mm标尺与慢动作比例。两栏中间有明确分隔，不能解释成同一水滴的双机位连续事件。
-- 网页初始播放器区域是灰色背景与播放按钮，未取得可独立确认的正式封面，因此不作封面优劣/点击率评价。
+- 00:11: an actual paused image shows a white circular ACS logo over grayscale droplet imagery, surrounded by a blue rainy scene. It supports only the presence of an institutional intro near the start, not claims about the entire opening's rhythm, hook success, or brand hold duration.
+- 02:57: actually paused and rechecked after the picture updated. Grayscale droplet close-ups appear side by side. The left column reads “Porous alumina surface,” the right “Sandy clay soil”; each retains a 1 mm scale bar and slow-motion ratio. A clear divider separates them; they cannot be interpreted as two camera angles of one droplet's continuous event.
+- The initial webpage player area was a gray background and play button. No independently confirmable formal cover was obtained, so cover merit/click-through rate is not evaluated.
 
-## 新增候选价值
+<a id="新增候选价值"></a>
+## Added Candidate Value
 
-该例在同一比较画面中同时保留材料身份、空间尺度和源时间比例。它不同于仅依靠颜色/外形相似衔接镜头：比较关系通过分栏与材料标签显式呈现。迁移假设是，这种呈现或有助于观众区分两个材料条件，而不误认成同一事件；本轮未测试观众理解，不能认定该效果成立。这里只提出可迁移候选，不认为节目已证明某种留存提升，也不把标尺和标签本身视为科学准确的充分条件。
+This example retains material identity, spatial scale, and source time ratio together within one comparison image. Unlike joining shots by similar color/shape alone, columns and material labels explicitly express the comparison. The transfer hypothesis is that this may help viewers distinguish two material conditions without mistaking them for one event. Audience understanding was not tested this round, so the effect cannot be considered established. This proposes a transferable candidate only; it does not regard the program as proof of a retention improvement or treat scale bars and labels themselves as sufficient for scientific accuracy.
 
-迁移到原创3D解释的假设：对于需要跨尺度观察的自然机制，在主体发生关键变化前建立同一实体和局部位置；材料条件比较则保持明确分栏或重新建立场景，避免两个不同条件被误认作单一事件。保持环境与主角识别连续，不要求复制本片素材、片头或版式。
+Hypothesis for transfer to original 3D explanation: for natural mechanisms requiring observation across scales, establish the same entity and local position before the subject's key change. For material-condition comparisons, keep explicit columns or reestablish the scene so two conditions are not mistaken for one event. Preserve recognizable environment and subject continuity without requiring copies of this program's assets, intro, or layout.
 
-检验办法：同一原创代表段固定核心科学陈述与整体时长，比较有/无明确局部定位的候选；实际正常速看听后，检查是否能分清原雨滴、其中气泡和新生成微滴，并检查主体变化是否先于或对应解释句。未执行此检验前，状态只为候选；不能写“已改善”。
+Test method: fix the core scientific statements and overall duration in the same original representative segment, comparing candidates with/without explicit local orientation. After actual normal-speed viewing/listening, check whether the original raindrop, bubbles within it, and newly formed microdroplets can be distinguished, and whether subject change precedes or corresponds to the explanatory sentence. Before this test is performed, the status remains candidate only; do not write “improved.”
 
-## 科学支持与范围
+<a id="科学支持与范围"></a>
+## Scientific Support and Scope
 
-MIT研究机构介绍：https://news.mit.edu/2015/rainfall-can-release-aerosols-0114
-对应研究论文：https://www.nature.com/articles/ncomms7083.pdf
-本轮实际读到MIT正文及论文检索摘要，未声称阅读全文。MIT报道：多孔表面上的撞击液滴可困住气泡；气泡破裂可产生气溶胶。产生情况依赖表面及撞击条件。报道将这一机制与雨味的联系写成研究者提出的解释假设，不是每次降雨都必然如此的证明。不能以气泡/飞滴影像直接证明气味物质的组成或人闻到的强度。
+MIT institutional account: https://news.mit.edu/2015/rainfall-can-release-aerosols-0114
+Corresponding research paper: https://www.nature.com/articles/ncomms7083.pdf
+The MIT body text and paper search abstract were actually read this round; no claim of full-paper reading is made. MIT reports that impacting droplets on porous surfaces can trap bubbles and that bursting bubbles can generate aerosols. Occurrence depends on surface and impact conditions. The account presents this mechanism's connection with rain smell as an explanatory hypothesis proposed by researchers, not proof that it necessarily occurs in every rainfall. Bubble/flying-droplet imagery cannot directly establish odor-substance composition or perceived intensity.
 
-## 权利与状态
+<a id="权利与状态"></a>
+## Rights and Status
 
-只学习表达方法；本候选不附截图、媒体、整段字幕或第三方资产，也不授予任何素材复用许可。无影片修改、无新渲染、无正常速度视听验收、无改善验证、无发布批准。
+Only expression methods are being studied. This candidate includes no screenshots, media, complete caption passages, or third-party assets and grants no asset-reuse license. No film modification, new render, normal-speed audiovisual acceptance, improvement validation, or publication approval has occurred.

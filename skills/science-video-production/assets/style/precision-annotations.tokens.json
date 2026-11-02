@@ -44,7 +44,7 @@
   "motion": {
     "enter_ms_range": [180, 280],
     "exit_ms_range": [120, 200],
-    "hold": "Use config/production-policy.json audience_text.auxiliary_reading and references/visual-system.md#正文辅助文字的使用与停留; transitions do not count toward stable reading time. Extend for the observation task.",
+    "hold": "Use config/production-policy.json audience_text.auxiliary_reading and references/visual-system.md#body-auxiliary-text-use-and-hold; transitions do not count toward stable reading time. Extend for the observation task.",
     "target_endpoint": "Exact tracked/projected feature; do not smooth away from the object.",
     "label_layout": "Stable screen-space region with hysteresis when repositioning."
   },

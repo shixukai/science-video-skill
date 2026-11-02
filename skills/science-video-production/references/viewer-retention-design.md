@@ -1,6 +1,7 @@
-# 持续观看：把解释组织成有回报的发现过程
+<a id="持续观看把解释组织成有回报的发现过程"></a>
+# Sustained viewing: organize explanation as rewarding discovery
 
-用于开场、段落接续和有声草排；记录复用 `opening`、`payoff_steps`、动作卡及阶段QA。原题范围见[主题契约](topic-contract.md)，实际验收见[质量正文](quality-acceptance.md)。
+Use this for openings, section handoffs and sound-and-picture roughcuts; reuse `opening`, `payoff_steps`, action cards and stage QA. Original-topic scope is governed by the [topic contract](topic-contract.md); actual acceptance by [quality standards](quality-acceptance.md).
 
 ## Direct the whole film before polishing its parts
 
@@ -22,170 +23,182 @@ At G1, the parent reads the current whole draft without relying on its title, ta
 
 G2 checks this same progression in the complete sound-and-picture rough cut, using the existing normal-speed viewing; G5 checks the final film. Judge what the work conveys, not what its author intended. If only the first sentence has changed while the promise, case and conclusion still disagree, return the whole affected script for revision. Reuse valid assets and evidence; this is part of the existing gates, not an added approval stage or fixed timing quota.
 
-## 先建立情境和看点，再进入解释
+<a id="先建立情境和看点再进入解释"></a>
+## Establish context and a reason to watch before explaining
 
-完整新片先让观众认识对象与真实看点，再进入术语、原理或工序。下列职责可合并，不按表格固定镜数或秒数；用户明确要直接答案或局部片段时按委托范围处理。
+A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. The responsibilities below may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
 
-| 开场职责 | 观众应得到什么 | 对应声画设计 |
+| Opening responsibility | What viewers should gain | Corresponding sound/picture design |
 | --- | --- | --- |
-| 认识情境 | 眼前是什么，它在什么场景中发生或有什么用途 | 从具体对象、成品应用、完整现象或有依据的结果进入，给足识别的画面与必要口播；不先抛一串专业名词 |
-| 看见值得追问的地方 | 哪个真实难点、差异、约束或现象值得弄明白 | 用看得见的目标、对照、操作困难或结果与过程之间的疑问形成看点；真实问题即可，不强造反常识、危机或猎奇 |
-| 明确观看承诺 | 本片究竟解释什么，看完能理解或判断什么 | 把整体情境收束到原题的具体问题和范围，给清楚的观看收益；路线只保留帮助定位的部分，不先念完整目录 |
-| 自然进入第一步 | 为什么现在要看这个局部或过程 | 从开场对象/目标进入第一个必要观察或解释，保留身份、尺度和状态联系；不在热闹预告后突然切到无来由的教学模型 |
+| Recognize context | What is present, where does it happen, or what is it for? | Enter through a concrete object, product application, complete phenomenon or supported result; provide recognition time and necessary narration rather than a list of technical terms |
+| See a worthwhile question | What real difficulty, difference, constraint or phenomenon needs understanding? | Use visible goals, comparisons, operational difficulty or a result/process question. A real problem is enough; do not manufacture counterintuitive claims, crises or spectacle |
+| Understand the viewing promise | What does the film explain, and what can viewers understand/judge afterward? | Narrow overall context to the original concrete question/scope and a clear benefit; retain only orienting route information rather than reciting a full contents list |
+| Enter the first step naturally | Why inspect this detail/process now? | Move from the opening object/goal into the first necessary observation/explanation with identity, scale and state continuity; do not jump from a lively teaser to an unexplained teaching model |
 
-背景只保留认识对象、理解用途/约束和形成问题所需的内容。删去后不损失理解或期待的栏目介绍、赞叹、风景和重复预告应删减；历史、定义和参数移到实际使用处。开场长度由真实草排决定。
+Retain only background needed to recognize the object, understand use/constraints and form the question. Cut series introductions, praise, scenery and repeated previews whose removal loses no understanding or expectation; move history, definitions and parameters to their use. Determine opening length from an actual roughcut.
 
-工程与制造优先从产品任务、性能要求或具体制造难点进入。只讲一道工序时，交代它在整体中的位置即可；跨章节不重复完整片头。结果预览用于建立目标，不能代替后续过程解释。
+Engineering/manufacturing openings prioritize product tasks, performance requirements or concrete manufacturing difficulties. For one process alone, establish its place in the whole; do not repeat full openings between chapters. A result preview establishes a goal but cannot replace process explanation.
 
-`opening.voiceover` 保存完整开场，`curiosity_gap` 记真实看点，`viewer_payoff` 记观看所得，`visual_handoff` 记通向正文第一观察的衔接，`shot_ids` 覆盖实际开场及承接镜头。无音轨先记语义顺序，有音轨再填真实时点。
+`opening.voiceover` stores the full opening, `curiosity_gap` its real point of interest, `viewer_payoff` the benefit, `visual_handoff` the bridge to the first body observation, and `shot_ids` the actual opening/handoff shots. Without audio record semantic order first; add real times after audio exists.
 
-### 让开场画面兑现应用情境
+<a id="让开场画面兑现应用情境"></a>
+### Make opening pictures deliver the application context
 
-口播讲用途，画面就展示可识别的应用对象和动作，再进入材料或微观关系。设备屏幕、仪表和操作界面也是情境资产：显示与当句用途一致、可辨的任务状态与反馈，不能用本片后续镜头或同一张主体截图填满所有屏幕。暗色材料块、纹理特写和标题不能代替整机情境；按本题科学条件与已定风格取材或制作，不能用任意设备镜头冒充具体应用证据。
+When narration describes use, show recognizable application objects/actions before materials or microscopic relationships. Device screens, instruments and interfaces are contextual assets too: show identifiable task states/feedback consistent with that spoken use, not later film shots or the same subject screenshot in every display. Dark material blocks, texture close-ups and titles cannot replace whole-machine context. Obtain/create imagery under current scientific conditions/style; arbitrary equipment footage is not evidence of a specific application.
 
-扩片前以正常播放速度连续看听开场，直到正文第一项观察兑现；核首屏识别、观看理由、语速、细节与衔接。具体失败按下表修复，复看同一区间后再扩制；字幕或封面修订不能关闭声音、主体或运动缺陷。
+Before expansion, continuously watch/listen to the opening at normal speed through delivery of the first body observation; check first-screen recognition, reason to watch, speech rate, detail and handoff. Repair specific failures using the table below and recheck the same interval before expansion. Subtitle/cover revisions cannot close voice, subject or motion defects.
 
-## 从本题选择开场看点
+<a id="从本题选择开场看点"></a>
+## Select an opening point of interest from this topic
 
-先确定正文第一项必须让人看懂的观察，再倒推一个能自然引向它的开场。把“观众先看见什么、哪里值得追问、正文用什么回答”连写；看点须有对应画面与科学依据，不能只存在于解说修辞里。以下是可选方向，不要求每期逐项尝试或混用：
+First establish the body's first observation viewers must understand, then work backward to a natural opening. Connect what viewers first see, what deserves a question and what the body answers. Interest requires corresponding imagery and scientific basis, not narration rhetoric alone. The following are options, not mandatory trials/combinations for every episode:
 
-| 本题的优势 | 可采用的开场 | 接入正文的依据 |
+| Topic advantage | Possible opening | Basis for entering the body |
 | --- | --- | --- |
-| 应用任务或工程约束明确 | 让产品完成一次可识别任务，显出所需性能或实际困难 | 追到负责该性能的结构、材料或工序；不要只串接几段设备宣传镜头 |
-| 成品变化值得看，制造来路不明显 | 展示可辨的成品特征，与本期实际起始材料/状态建立对应 | 明确回到制造前，跟踪它怎样形成；预览和正在发生的过程分清 |
-| 有条件清楚、差异可见的真实对照 | 让观众先认出同处与不同，再提出需要解释的关系 | 正文检查产生差异的条件；不能用不同拍法、夸张音效或未控制条件伪造反差 |
-| 自然现象或操作本身有发展 | 从一次能认得的事件进入，让真实变化引出观察任务 | 沿同一对象/事件继续追踪；不为悬念补造事故、失误或时间延迟 |
+| Clear application task/engineering constraint | Let a product perform one recognizable task, revealing required performance or actual difficulty | Trace the responsible structure, material or process; do not merely join promotional equipment clips |
+| Interesting finished change with an unclear manufacturing origin | Show a recognizable product feature corresponding to this episode's actual starting material/state | Clearly return to the premanufacturing state and follow its formation; distinguish preview from current process |
+| Real comparison with clear conditions/visible differences | Establish similarity/difference before posing the relationship to explain | Check difference-producing conditions in the body; do not fake contrast through different filming, exaggerated effects or uncontrolled conditions |
+| A developing phenomenon/operation | Enter a recognizable event and let its real change establish the observation | Continue the same object/event; do not invent accidents, mistakes or delays for suspense |
 
-首屏保留明确主对象和可读动作/状态。无关航拍、通用工厂蒙太奇和“改变世界”式形容词不能承担看点；必要环境声和观赏停留可保留。
+Keep a clear main object and readable action/state on the first screen. Unrelated aerials, generic factory montages and “world-changing” adjectives cannot supply interest; retain necessary ambience and purposeful viewing holds.
 
-选定后核素材能否合法取得或可信制作，缺口写具体对象与动作。关键方案拿不准时做低成本对照；不强制每期多版提案。
+Check legal availability/credible production after selection, specifying missing objects/actions. Compare uncertain key approaches cheaply; multiple proposals are not mandatory each episode.
 
-## 把开场接成正文的第一项观察
+<a id="把开场接成正文的第一项观察"></a>
+## Connect the opening to the first body observation
 
-连写 **开场末句 → 正文首句**，并注明 **刚看到的结果/约束 → 必须观察的部位/关系 → 正文首镜实际显示的证据**。后句推进当前问题，不重新报题或插入无关定义。
+Write **the last opening sentence → the first body sentence** together and state **the just-seen result/constraint → the necessary part/relationship → the evidence actually visible in the first body shot**. The next sentence advances the question rather than restating the title or adding unrelated definitions.
 
-在 `visual_handoff` / `handoff` 或动作卡成对写开场末态与正文初态：前镜留下什么、后镜看哪里、沿用哪个形状/位置/动作锚点；换对象、时间或尺度时怎样说明对应。先定位再剖切/放大；结果倒回制造须明确回溯，不能把漂亮变形当真实连续过程。
+Pair opening end/body start in `visual_handoff` / `handoff` or the action card: what remains, where to look, which shape/location/action anchor continues, and how changed object/time/scale correspond. Locate before cutting/enlarging. Clearly mark a return from product to manufacturing; attractive morphing is not real process continuity.
 
-| 衔接方法 | 具体怎样做 | 需防止的误读 |
+| Handoff method | Execution | Misreading to prevent |
 | --- | --- | --- |
-| 同一对象由整体到局部 | 先在整体定位目标，再切近景/剖面；保留方向、特征或可认回的位置 | 镜头推近本身不是新知识；局部必须承担下一观察任务，不假装相机能真实穿入不可见结构 |
-| 图形或动作匹配 | 开场末态与正文初态在主体位置、轮廓或动作阶段上有可认对应，再接后续变化 | 相似不证明同一对象、材料或因果关系；换对象时交代映射，动作方向不无故反转 |
-| 成品回到制造起点 | 先让观众看清要解释的成品特征，再明确转入材料/毛坯与第一道相关工序 | 预览结束须让人知道时间已回溯；不能把成品变毛坯的转场当作实际工艺 |
-| 声音跨越切点 | 可让下一场声音先入（J-cut），或前场声音延续到下一画面（L-cut）；按语义与真实声源选用 | 不在声音中途机械重启讲述；环境声和音效须有来源，不改动雷声延迟、机械响应等解释证据 |
+| Whole-to-local view of one object | Locate the target in the whole, then cut close/sectional while preserving orientation, features or recognizable location | A push-in alone is not knowledge; the detail must perform the next observation, without pretending the camera physically enters invisible structures |
+| Graphic/action match | Make subject position, silhouette or action phase correspond between opening end/body start, then continue change | Similarity does not prove identical object, material or causation; explain changed-object mapping and avoid unjustified action reversal |
+| Product back to manufacturing start | Show the product feature clearly, then explicitly enter material/blank and the first relevant operation | Signal the time reversal after the preview; product-to-blank transition is not an actual process |
+| Sound across a cut | Use next-scene sound early (J-cut) or previous sound into the next picture (L-cut), based on semantics and real sources | Do not mechanically restart narration mid-sound. Ambience/effects need provenance and must not alter explanatory thunder delays, mechanical responses or other evidence |
 
-直接切镜已能说明关系时就用直切。叠化、遮挡、缩放或图形转场须帮助辨认空间、时间或对应关系；切点避免同时更换对象、尺度、术语、音乐与观察任务。连续旁白可跨切点，音乐在首次解释处收敛，不默认加冲击音效、黑屏或片头标志。
+Use straight cuts when they already explain the relationship. Dissolves, occlusion, zooms or graphic transitions must aid space/time/mapping recognition. Avoid changing object, scale, terms, music and observation task at once. Continuous narration may cross cuts; reduce music at the first explanation. Do not default to impacts, black screens or opening logos.
 
-转场服从主制作路线：写实在MoneyPrinterTurbo编排，3D动画在Blender制作。先核当前时间线或适配器能力；某种特效不可实现时用清楚的直切承接，不另换主工具。
+Transitions follow the primary route: arrange realistic work in MoneyPrinterTurbo, 3D animation in Blender. Check actual timeline/adapter capabilities first. If an effect is unavailable, use a clear straight-cut handoff rather than changing the main tool.
 
-### 工程示例：从应用走进芯片刻蚀
+<a id="工程示例从应用走进芯片刻蚀"></a>
+### Engineering example: from application to chip etching
 
-按本期真实设备、材料与工艺改写下例；语义段可合并或展开，不按表格固定镜数或秒数。
+Adapt the example to actual equipment, material and process. Combine/expand semantic sections as needed without fixed shots/seconds.
 
-| 叙事任务 | 计划主画面 | 示例口播及衔接 |
+| Narrative task | Planned main image | Example narration and handoff |
 | --- | --- | --- |
-| 认出整体与用途 | 按下手机快门、照片出现在屏幕，再定位到设备中的芯片；只表现本题能支持的关联 | “按下快门，照片出现在屏幕上。支持这些功能的芯片，制造时需要在一层层材料中做出结构。” |
-| 让难点可见 | 明确转入制造阶段，定位待加工薄层，把目标开口与必须保留区域做可辨对照 | “在这一步，有些地方要去掉，有些地方必须留下。难的不是一股脑去除，而是只改变指定位置。” |
-| 收束原题并接入首项观察 | 目标区域继续保留在同一方向与位置，准备转到对应剖面 | “刻蚀怎样把图形转移进这一层？先看哪些区域被保护、哪些区域露出来。” |
-| 正文立刻兑现观察任务 | 从刚定位的区域接到对应剖面，先看清保护层、开口和待加工层，再展示有据的去除过程 | “这里是保护区域，这里是开口；先认清它们与下方材料的关系，再看刻蚀如何改变露出的部分。” |
+| Recognize whole/use | Press a phone shutter, show its photo on-screen, then locate the device's chip; imply only topic-supported relationships | “按下快门，照片出现在屏幕上。支持这些功能的芯片，制造时需要在一层层材料中做出结构。” |
+| Reveal the difficulty | Explicitly enter manufacturing, locate the thin layer, and distinguish target openings from areas that must remain | “在这一步，有些地方要去掉，有些地方必须留下。难的不是一股脑去除，而是只改变指定位置。” |
+| Narrow the question and enter observation | Retain target orientation/location before entering its matching section | “刻蚀怎样把图形转移进这一层？先看哪些区域被保护、哪些区域露出来。” |
+| Deliver the observation immediately | Match the located area to its section, establish mask/opening/layer relationships, then show evidenced removal | “这里是保护区域，这里是开口；先认清它们与下方材料的关系，再看刻蚀如何改变露出的部分。” |
 
-开场末句已经提出“看保护与开口”，正文便让对应对象可见；不插一段“欢迎来到本期”、长目录或重新定义刻蚀。具体保护结构与去除机制以实际工艺为准，不能把所有刻蚀都画成相同选择性、垂直侧壁或下层完全无影响。
+When the opening ends by asking viewers to inspect protection/openings, show those objects in the body; do not insert a welcome, long contents list or another etching definition. Actual processes determine masking/removal mechanisms; not every etch has identical selectivity, vertical sidewalls or an entirely unaffected underlying layer.
 
-自然题材可按“可识别的结霜现场 → 有据的晶体特征 → 保留同一区域定位进入生长观察”衔接；跨章节则从上一段结果进入下一观察。
+For nature, a handoff may follow recognizable frost location → evidenced crystal features → same-region location retained into growth. Between chapters, use the previous result to enter the next observation.
 
-## 先定位继续观看的阻力
+<a id="先定位继续观看的阻力"></a>
+## Locate resistance to continued viewing first
 
-在正常速度短样标出具体卡点，按下表改动并复看同一区间：
+Mark concrete sticking points in a normal-speed short sample, revise under this table and recheck the same interval:
 
-| 所见问题 | 要核查的阻力 | 可先尝试的修订 |
+| Observed problem | Resistance to check | First possible revision |
 | --- | --- | --- |
-| 第一秒就报定义、结论或工序，观众还不知道整体对象与用途 | 缺少认识情境、问题动机和继续看的理由 | 先建立具体对象/任务与真实难点，再收束原题；让开场有可辨的声画看点，不只是加一句“你知道吗” |
-| 开场问题明确，随后长时间介绍背景或名词 | 不知道这些内容为何与原问题有关 | 把必要前提放在使用处，尽早让一处证据或关系成立；不是把不懂的结果直接前移 |
-| 总答案已说出，后面不断重复同一结论 | 看不出继续观看会多得到什么 | 从“答案是什么”推进到“凭什么、怎样发生、在哪些条件下成立”；选本题需要的一条路径 |
-| 每段单独能懂，换段后却要重新认识对象 | 追踪成本过高 | 用上一段留下的状态或问题进入下一观察任务，保留对象和参照 |
-| 已有动画或对照，差异细小或被文字抢先讲完 | 付出辨认成本，却没有清楚的发现 | 调整变化区域与时序，让所讲结果在目标尺寸可辨；具体方法见 [动画场景设计](animation-scene-design.md#把已有变化变成可读的证据) |
-| 切镜、术语、图例、旁白都在推进 | 来不及定位和消化 | 减少同时竞争的任务，安排结果的观察窗口；不先用加速、音效或再加标签解决 |
-| 原问题已回答，片尾仍在长总结或开启新支题 | 内容已经闭合却继续占用时间 | 回到原现象完成一次识别/判断与审美收束，随后结束；必要限定在相关结论处给出 |
+| Definitions, conclusions or operations start immediately before object/use is known | Missing context, motivation and reason to continue | Establish object/task and real difficulty, then narrow the question; create identifiable audiovisual interest, not just “did you know?” |
+| A clear opening question is followed by prolonged background/terminology | Unclear relevance to the question | Place prerequisites at use and establish one useful piece of evidence/relationship early; do not merely move an unintelligible result forward |
+| The overall answer is stated, then endlessly repeated | No visible benefit from continuing | Advance from answer to evidence, process or conditions, selecting a needed route for this topic |
+| Sections are individually clear but require object re-recognition | Excess tracking cost | Carry the previous state/question into the next observation with object/reference continuity |
+| Animation/comparison exists, but differences are tiny or text explains them prematurely | Recognition effort without clear discovery | Adjust change region/timing until the stated result reads at target size; see [animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence) |
+| Cuts, terms, legends and narration all advance simultaneously | Too little time to locate/digest | Reduce competing tasks and give the result an observation window; do not begin with acceleration, effects or more labels |
+| The question is answered but ending prolongs summary or opens another topic | Closed content still consumes time | Return to the phenomenon for recognition/judgment and aesthetic closure, then end; put necessary qualifications beside the relevant conclusion |
 
-## 一段结束后，为什么值得看下一段
+<a id="一段结束后为什么值得看下一段"></a>
+## Why watch the next section after this one?
 
-在 `payoff_steps[].contribution` 与 `handoff` 串清：**已经看懂什么 → 还需看清什么 → 下一段给什么证据**。相同内容只引用一次，短镜不另建表。
+Connect **what is understood → what still needs inspection → the next evidence** through `payoff_steps[].contribution` and `handoff`. Reference identical content once; short shots need no separate table.
 
-可采用以下推进方式，按本题选择：
+Choose among these forms of progression as the topic requires:
 
 - **Follow the process**: Keep the evolving object or result recognizable. For a transfer chain, track the relevant material, signal or energy through connected subsystems: show each stage's input, action and output, then carry that output into the next stage using a recognizable location, interface or direction. Make a change of carrier or energy form explicit instead of implying that the same substance simply continues unchanged.
 - **Parallel inputs converge**: When distinct preparation paths contribute to one operation, establish each path's input/output, use a split view or route diagram only as needed, and carry both outputs into their actual junction. Guide attention between branches before showing the convergence. Diagram simultaneity must not imply synchronized real production when only a dependency relationship is known.
-- **检查解释**：先建立关系，再看改变一个有据条件时，结果是否符合该关系；不编造“大家都会猜错”。
-- **从局部回到整体**：已看懂一个作用点，接下来找它怎样组成整体或如何出现在其他对应部位。
-- **说明边界**：主解释已成立，再用确有必要的对照说明何时不同；不把可有可无的支线包装成新谜题。
-- **重新观看原现象**：结尾让观众看见起初只能觉得漂亮、此刻已能指出其意义的特征。
+- **Test the explanation:** Establish a relationship, then inspect whether an evidenced condition change produces the predicted result; do not invent claims that everyone guesses wrong.
+- **Return from local to whole:** After one action point is understood, locate how it forms the whole or appears in corresponding parts.
+- **Explain limits:** Once the main explanation holds, use genuinely necessary comparison to show when it differs; optional side branches are not new mysteries.
+- **Revisit the phenomenon:** End on features initially appreciated as beauty whose meaning viewers can now identify.
 
-先兑现当前观察再引入必要下一项；“接下来更惊人”“看到最后就知道”不能代替具体任务。 Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
+Deliver the current observation before introducing the next necessary one; “more amazing next” or “watch to the end” cannot replace a concrete task. Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
 
-## 用镜头关系表达，按需使用蒙太奇
+<a id="用镜头关系表达按需使用蒙太奇"></a>
+## Express relationships through shots; use montage as needed
 
-先设计观众要观察的对象、变化及前后关系，再决定是否需要文字。整体定位 → 保留同一对象/参照进入局部 → 连续看关键变化 → 回到整体结果，通常用有动机的连续性剪辑即可；一次连续推近本身不等于蒙太奇。删去“这里在展示什么”这类句子后若无法定位，先修镜头与动作，不换成另一种标题框。
+Design objects, changes and before/after relationships before deciding on text. Whole location → same-object/reference local entry → continuous key change → whole result usually needs motivated continuity editing; one continuous push-in is not itself montage. If removing “what is being shown” sentences destroys orientation, repair shots/actions rather than adding another title box.
 
-蒙太奇通过有目的的镜头组合组织信息，常用于压缩时间或概括一段过程；参见[美国电影学会的剪辑说明](https://www.afi.com/news/what-is-film-editing-and-what-does-a-film-editor-do/)。在科普中按任务选择：
+Montage organizes information through purposeful shot combinations, often compressing time or summarizing a process; see [AFI's editing explanation](https://www.afi.com/news/what-is-film-editing-and-what-does-a-film-editor-do/). Select by science-communication purpose:
 
-- **压缩重复**：先完整展示并解释一轮关键动作，再选能显示阶段进展的镜头概括后续重复；保留工件身份、方向和阶段差异，让旁白/已有进度信息说明时间被压缩。不能用不相关机器快切代替过程。
-- **建立对照或并行关系**：让观众知道比较了什么、条件如何对应，或两条准备路线在哪里汇合。剪接相邻不证明因果，同时出现不证明真实同步；结论仍须科学依据和实际可见证据。
-- **承接尺度与动作**：用稳定位置、形状、运动方向或动作阶段连接视图；先让必要变化发生并被看懂，再切向结果或下一任务。切速由理解需要决定，不为“电影感”强制快切、闪白或音效。
+- **Compress repetition:** Explain/show one complete key cycle, then use progress-bearing shots to summarize repetition. Preserve workpiece identity, direction and stage differences; narration/existing progress information explains time compression. Unrelated fast machine cuts cannot replace process.
+- **Establish comparison/parallel paths:** Clarify compared items/conditions or the junction of two preparation paths. Adjacency does not prove cause and co-display does not prove synchronization; conclusions require scientific basis and visible evidence.
+- **Bridge scale/action:** Connect views through stable location, shape, direction or action phase. Let necessary change happen and be understood before results/next tasks. Cutting rate follows understanding, not compulsory “cinematic” fast cuts, white flashes or effects.
 
-必要的“可能”、适用条件和示意/实证区别应在相关旁白、字幕或既有披露位置准确保留，不能因删图内文字把不确定性说成确定事实。沿现有动作卡、`handoff` 和编辑时间线记录对应关系；G2/G3/G5实看定位、状态变化和声画对应，不增加文字清单或新审批阶段。
+Preserve necessary uncertainty, applicability and illustration/empirical distinctions accurately in relevant narration, subtitles or existing disclosure channels; deleting picture text must not turn uncertainty into fact. Use existing action cards, `handoff` and edit timelines for mapping. G2/G3/G5 inspect orientation, state change and audiovisual correspondence without another text inventory/approval stage.
 
-## 把关键发现编排到声画里
+<a id="把关键发现编排到声画里"></a>
+## Stage key discoveries in sound and picture
 
-对真正承担解释的生长、对照、结构揭示或预测检验，先设计其可见兑现，再装饰镜头：
+For explanatory growth, comparison, structural reveals or prediction tests, design visible delivery before decorating shots:
 
-1. **建立看点**：让观众认出对象和参照，知道接下来比较什么。可用取景、旧结构或简短引导；不强制加箭头和字幕之外的文字。
-2. **让证据成立**：主体变化或差异在实际画面中可辨，必要条件同时可追踪。镜头、音乐和旁白不能将注意力提前带到另一任务。
-3. **接成意义**：把刚看到的结果与结论对应，留下足以认回的状态，再进入下一任务。观察停留可与解说重合，以实际看听能否跟上决定。
+1. **Establish the observation:** Make object/reference and upcoming comparison recognizable through framing, prior structures or brief guidance; do not require arrows or text beyond subtitles.
+2. **Establish evidence:** Subject changes/differences read in the actual image while conditions remain trackable. Camera, music and narration must not move attention to another task prematurely.
+3. **Connect meaning:** Match the observed result to the conclusion, retaining a recognizable state before the next task. Observation may overlap narration; actual viewing/listening determines whether viewers can follow.
 
-三步可在一个连续动作内完成；按真实音轨与可读性安排时点，不固定三拍或三次切镜。
+All three may fit one continuous action; schedule against actual audio/readability, not fixed three beats/cuts.
 
-**第一块有效信息**可以是用途、约束、难点、关系或证据，但须推进原题。标题、推镜和漂亮资产不自动算解释；结果预览与真正解释分清。
+**The first effective information** may be use, constraint, difficulty, relationship or evidence, but must advance the original topic. Titles, push-ins and attractive assets are not automatic explanations; distinguish previews from actual explanation.
 
-**预测式观察**只在知识、条件与参照已足够时选用，例如固定旧分叉后观察新结构如何形成。备选结果须有科学意义；不强制观众回答、暂停或互动。
+**Predictive observation** is optional only when knowledge, conditions and references suffice, e.g. watching new growth against fixed older branches. Alternatives need scientific meaning; no compulsory answers, pauses or interaction.
 
-**审美停留**明确让人欣赏什么，如晶面层次或完整结构；难点处收敛装饰，结果成立后留出观察空间。
+**Aesthetic holds** specify what to appreciate, such as crystal planes or complete structure. Restrain decoration at difficult points and provide observation space after a result holds.
 
-## 用草排决定顺序和片长
+<a id="用草排决定顺序和片长"></a>
+## Let the roughcut determine order and duration
 
-用当前素材和音轨修订确有重复、拖延或难跟随的段落，先验证顺序再精制美术。无音轨时只判断纸面依赖，声音节奏待验。
+Use current assets/audio to revise actual repetition, delay or difficult progression; verify order before art refinement. Without audio, judge only paper dependencies and leave voice rhythm unreviewed.
 
-| 操作 | 比较什么 | 如何作决定 |
+| Operation | Comparison | Decision |
 | --- | --- | --- |
-| 删除或缩并 | 去掉后是否丢失承诺、必要前提、可见证据、空间定位或有用途的观赏/整合 | 没有明确损失可删；有损失就保留必要部分，修它的呈现方式，不以更短自动判优 |
-| 移到使用处 | 背景知识紧邻所解释变化后，能否更容易理解，是否失去必需的提前认识 | 依据前提链选择；不能让后文知识成为前段的隐含前提 |
-| 提前关键证据 | 第一项能推进原题的观察是否更早成立，后续是否仍有真实推进 | 保留解释所需定位与条件；不靠剧透式闪帧后退回冗长铺垫 |
-| 延长观察窗口 | 差异出现后能否完成定位、比较和推断；是否已经读清仍在空等 | 先改善构图/指代，再调停留；必要时减少同期旁白负荷，不能硬塞进固定片长 |
-| 合并相近全景 | 两次返回各自增加什么观察所得 | 第二次若只是换标题可合并；若认回新的对应结构或完成整体整合，应保留其任务 |
+| Delete/combine | Does removal lose promise, prerequisites, visible evidence, spatial location or useful appreciation/integration? | Remove only without concrete loss; otherwise retain the necessary part and improve its presentation. Shorter is not automatically better |
+| Move to use | Does nearby background make the explained change clearer, and is advance recognition lost? | Follow prerequisite dependencies; later knowledge must not become an earlier implicit prerequisite |
+| Bring evidence forward | Does a topic-advancing observation hold earlier, with genuine progress afterward? | Preserve location/conditions; do not flash spoilers then return to lengthy setup |
+| Extend observation | Can viewers locate, compare and infer after a difference appears, or are they waiting after reading it? | Improve composition/referents first, then hold; reduce concurrent narration if needed rather than forcing a fixed duration |
+| Combine similar whole views | What does each return add? | Combine title-only changes; retain identification of new corresponding structures or whole integration |
 | Compress a learned cycle | Has one necessary cycle already been understood, and what accumulates or differs on later passes? | Use a short montage, time compression or layered overview to show the accumulating result with a stable reference. Keep new operations/constraints readable; do not merely replay old shots faster or prescribe one duration/count for all processes |
 
-对照修订保留前后版本与主要变量，便于判断哪项改动解决了卡点。
+Keep before/after versions and principal variables for revisions so the cause of improvement can be judged.
 
-## 结尾让开头的画面变得能看懂
+<a id="结尾让开头的画面变得能看懂"></a>
+## Make the opening image understandable by the ending
 
-`ending.answer` 回答原问题，让观众重新识别或判断开场对象及关键关系；不复述全片，也不另起支题延长收尾。 Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
+`ending.answer` answers the original question through renewed recognition/judgment of the opening object/relationships; do not repeat the whole film or prolong closure with a new topic. Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
 
-例如雪晶案例可从“一眼看到精美六枝”走到“认出对应阶段的相似结构，也看见局部差别”。审美停留服务于这个最终观察。片尾的满足感不能仅靠音乐收束、品牌片尾或再说一遍标题代替。
+For example, a snow-crystal case may progress from appreciating six ornate branches to recognizing similar structures from corresponding stages and local differences. Aesthetic holds serve that final observation. Music resolution, branding or repeating the title cannot alone supply satisfaction.
 
-## 交给制作 Agent 与内部审查
+<a id="交给制作-agent-与内部审查"></a>
+## Handoff to production agents and internal review
 
-交给下一制作或审查者：当前版本、具体待解决问题、镜号/区间、保留条件、预期可见变化和现有证据。新方案只列待验证点，不虚构已有失败。
+Give the next author/reviewer the current version, specific problem, shots/interval, preserved conditions, intended visible change and existing evidence. List new ideas as unvalidated rather than inventing prior failures.
 
-记录复用关系：
+Reuse these records:
 
-| 内容 | 既有记录 |
+| Content | Existing record |
 | --- | --- |
-| 开场情境、看点与进入正文的桥接 | `opening.voiceover / curiosity_gap / viewer_payoff / visual_handoff / shot_ids`，引用已有简报与动作卡，不新增必填JSON |
-| 继续观看的任务与每段贡献 | `topic_alignment.opening.payoff_steps[].contribution`，引用对应 `scope_id`、`shot_ids` |
-| 前段结果怎样成为后段前提 | `coverage[].explanation_steps` 的 `prerequisites`、`handoff` 与既有逐镜承接 |
-| 关键发现与可推结论 | `expression_cards.visual_action / inferable_outcome`，动作卡和真实语义拍 |
-| 存疑方案的修订对照 | 既有方案选择或缺陷修复记录；仅不确定关键难点沿用 `variants/selection` |
-| 整片实际看听结论 | G2 `qa.expression_plan`、G3既有代表段记录、G5 `qa.explanation_review / expression_review` |
-| 真实受众结果 | 现有发布台账及平台原始回执，按 [复盘口径](production-checkpoints.md#产能成本与复盘) |
+| Opening context, interest and body bridge | `opening.voiceover / curiosity_gap / viewer_payoff / visual_handoff / shot_ids`, referencing existing brief/action cards without new required JSON |
+| Continued-viewing task and section contribution | `topic_alignment.opening.payoff_steps[].contribution`, referencing `scope_id`, `shot_ids` |
+| Previous result as next prerequisite | `coverage[].explanation_steps` fields `prerequisites`, `handoff` and existing shot handoffs |
+| Key discovery and inferable conclusion | `expression_cards.visual_action / inferable_outcome`, action cards and real semantic beats |
+| Uncertain-approach revision comparison | Existing selection/repair records; use `variants/selection` only for uncertain key difficulties |
+| Actual whole-film viewing/listening result | G2 `qa.expression_plan`, G3 existing representative records, G5 `qa.explanation_review / expression_review` |
+| Real audience results | Existing publication ledger and original platform receipts under [review conventions](production-checkpoints.md#capacity-cost-and-retrospectives) |
 
-独立审查者先正常速度连续看听当前作品，记录第一次认不出对象、跟丢关系或听不清的位置，再对照设计定位原因。静音和抽帧用于定位问题，不代替带声审查。
+Independent reviewers first continuously watch/listen at normal speed and record the first unidentified object, lost relationship or unclear sound, then diagnose against design. Muting/extracting frames diagnoses problems but cannot replace sound-and-picture review.
 
-有真实留存曲线时，再核低谷是否对应预期不符、理解困难、重复或任务已完成；峰值可能来自反复观看。结合受众和流量条件判断，不据曲线自动删必要步骤。
+With real retention curves, inspect whether dips correspond to unmet expectation, difficulty, repetition or task completion; peaks may reflect rewatching. Consider audience/traffic conditions rather than automatically cutting necessary steps.

@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "_instructions": [
-    "这是待填写模板，不是通过记录。绑定当前媒体及用途清单；所有文件路径相对单集根目录。",
-    "必须实际检查最终输出和所有文字/图形overlay来源，含底图内置水印；未知或覆盖不完整不能填pass。",
-    "sources列id/kind/file/sha256；observed逐项列item_id/source_ids/text/surface/position/time_range及有图形时graphic_sha256。",
-    "普通科学文字和字幕不需user_approval；标识同意存presentation_text.items，不在这里自签。",
-    "G5的cover_sha256绑定实际请求的当前封面；video_only为[]；静态封面时段[0,1]。本证据不证明机器OCR或人类审看已发生。",
-    "正文辅助文字按visual-system.md的用途与停留标准实看：在observation逐项注明item_id、连续完整稳定可读起止及正常速小屏读后定位结果；time_range含淡入淡出时不能直接充当阅读时间。检查左右上角无场景/工序抬头；未观察不填pass，不新增自签审批。"
+    "This is a blank template, not approval. Bind the current media and purpose inventory; all paths are episode-root relative.",
+    "Actually inspect the final output and every text/graphic overlay source, including watermarks baked into backgrounds. Unknown or incomplete coverage cannot pass.",
+    "sources lists id/kind/file/sha256; observed lists each item_id/source_ids/text/surface/position/time_range and graphic_sha256 when graphics exist.",
+    "Ordinary permitted science text and captions do not need user_approval; identity consent belongs in presentation_text.items, not a self-signed approval here.",
+    "At G5, cover_sha256 binds current actually requested covers; use [] for video_only and [0,1] for static-cover intervals. This evidence does not prove OCR or human viewing occurred.",
+    "Actually inspect body auxiliary text under visual-system.md purpose/hold rules: in observation identify each item_id, full stable readable start/end and normal-speed small-screen reading then target-location result. A time_range including fades is not automatically reading time. Confirm no upper-left/right scene/process headings; unobserved items cannot pass. No extra self-approval."
   ],
   "status": "pending",
   "stage": "",

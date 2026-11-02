@@ -1,111 +1,119 @@
-# 雪花生长：场景与动作设计示例
+<a id="雪花生长场景与动作设计示例"></a>
+# Snow-crystal growth: scene and action design example
 
-状态：**待制作和实际视听验证的纸面示例**。仅用于已明确获准的2D范围；新视频仍按[风格路由](tool-routing.md#按成片风格锁定主制作工具)选择MoneyPrinterTurbo或Blender，不据本例默认选2D。
+Status: **paper example awaiting production and actual audiovisual validation**. Use only within explicitly approved 2D scope. New videos still select MoneyPrinterTurbo/Blender through [style routing](tool-routing.md#lock-the-primary-tool-by-final-film-style), not 2D by this example.
 
-## 题目与科学范围
+<a id="题目与科学范围"></a>
+## Question and scientific scope
 
-示例问题：**同一片星状雪晶的六条枝，为什么常常那么像？** 解释重点是同一晶体的各枝经历相近条件，并在后续生长中留下相似结构；“不同雪晶为何不同”和“六枝并非完全一样”用于限定与收束。枝尖增长、晶体结构和水汽沉积按理解需要提供前提，不能挤掉主问题。
+Example question: **同一片星状雪晶的六条枝，为什么常常那么像？** Focus on branches sharing similar conditions and leaving similar structures in later growth. Different crystals and imperfect branch identity supply limits/closure. Establish tip growth, crystal structure and vapor deposition only as needed, without displacing the main question.
 
-限定为已经形成晶种之后的水汽沉积生长。冰核形成、冰晶聚合、凇附和融化只在题目要求时另建解释，不把所有降雪都画成同一种六角星。若原题是“为什么六角”或一般的“如何形成”，重新分配篇幅和解释步骤，不能直接套用本例。
+Limit this to vapor-deposition growth after a seed exists. Explain nucleation, aggregation, riming and melting separately only when required; not all snow is a six-point star. Reallocate duration/steps for questions about hexagonal symmetry or general formation rather than copying this example.
 
-| 已核实的事实 | 对设计的约束 | 一级来源 |
+| Verified fact | Design constraint | Primary source |
 | --- | --- | --- |
-| 水汽是不可见气体；云的可见部分由微小液滴或冰粒构成。雪晶后续可通过水汽沉积生长，晶种也可能来自小云滴冻结 | 可见云雾承担环境，不能当作肉眼可见水汽。微观分子另建明确示意；不要让一滴大雨水直接冻成复杂枝晶，也不要断言所有雪晶都没有液滴阶段 | [NWS 云形成](https://www.weather.gov/source/zhu/ZHU_Training_Page/clouds/cloud_development/clouds.htm)、[Libbrecht FAQ](https://www.its.caltech.edu/~atomic/snowcrystals/faqs/faqs.htm) |
-| 晶体的六重结构与冰晶结构有关；突出区域获取水汽的差异与分枝生长有关 | 主体应有晶面和实体区域，生长落在边界/枝尖，不能只把六根线画长 | [Faceting](https://www.snowcrystals.com/faceting/faceting.html)、[Branching](https://www.snowcrystals.com/branching/branching.html) |
-| 温度与水汽条件影响晶形与分枝复杂度；不同晶形不是统一生长路线 | 若需要比较，选有依据的条件；不把板、针、柱、星片串成必经阶段。过饱和度须注明相对于冰面或液态水面 | [Morphology Diagram](https://www.snowcrystals.com/morphology/morphology.html) |
-| 同一晶体各枝经历相近环境，可以相似但不必完全相同；不同晶体经历的条件历史可以不同；自然雪晶也常不规则 | 分开表达同一晶体内部的相似与不同晶体之间的差异；保持六重秩序，允许局部差别，不把六个完全复制分支当作典型自然实貌 | [Snowflake Science](https://www.snowcrystals.com/science/science.html) |
-| 单晶可透明；实际生长时长随条件而变 | 用晶面边缘、内部明暗和环境映色表现冰；加速示意须交代必要时间边界，不把播放秒数当自然用时 | [FAQ](https://www.its.caltech.edu/~atomic/snowcrystals/faqs/faqs.htm)、[实验视频说明](https://www.snowcrystals.com/videos/videos.html) |
+| Vapor is invisible gas; visible cloud consists of droplets/ice. Later snow-crystal growth can use vapor deposition, and seeds may originate from frozen small droplets | Visible cloud is environment, not visible vapor. Build explicit molecular diagrams separately; do not freeze a large raindrop directly into an ornate dendrite or claim all snow lacks a droplet stage | [NWS cloud formation](https://www.weather.gov/source/zhu/ZHU_Training_Page/clouds/cloud_development/clouds.htm), [Libbrecht FAQ](https://www.its.caltech.edu/~atomic/snowcrystals/faqs/faqs.htm) |
+| Sixfold form relates to ice structure; differential vapor access at protrusions relates to branching | Subject needs crystal faces/solid regions and boundary/tip growth, not six lengthening lines | [Faceting](https://www.snowcrystals.com/faceting/faceting.html), [Branching](https://www.snowcrystals.com/branching/branching.html) |
+| Temperature/vapor conditions influence habit/branch complexity; habits do not share one universal growth sequence | Choose evidenced comparison conditions; plates, needles, columns and stars are not compulsory stages. Specify supersaturation relative to ice or liquid water | [Morphology Diagram](https://www.snowcrystals.com/morphology/morphology.html) |
+| Branches of one crystal experience similar environments and may resemble without matching perfectly; different crystals have different histories; irregular natural crystals are common | Separate within-crystal similarity from between-crystal differences. Preserve sixfold order/local variation rather than six exact copies as typical natural appearance | [Snowflake Science](https://www.snowcrystals.com/science/science.html) |
+| Single crystals may be transparent; growth duration varies by conditions | Use face edges, internal value and environmental color for ice. Explain needed accelerated-time boundaries, not playback seconds as natural duration | [FAQ](https://www.its.caltech.edu/~atomic/snowcrystals/faqs/faqs.htm), [experimental video notes](https://www.snowcrystals.com/videos/videos.html) |
 
-科学资料提供结构与机制依据，不自动授予其中照片/视频的入片许可。SnowCrystals 当前 [版权说明](https://www.snowcrystals.com/copyright/copyright.html) 将互联网发布排除在免许可个人使用之外；本例仅按当前原创视觉来源契约采用已核实的用户自拍及授权，不把外部参考许可等同于本片素材许可。
+Scientific references establish structure/mechanism, not automatic photo/video production rights. SnowCrystals' current [copyright statement](https://www.snowcrystals.com/copyright/copyright.html) excludes internet publication from license-free personal use. Under the current original-visual contract, this example uses only verified authorized user capture; external reference licenses are not this film's asset permission.
 
-## 先选择观察情境
+<a id="先选择观察情境"></a>
+## Choose the observation context first
 
-本例在获准的混合范围内采用“真实观测锚点 → 纯2D单晶生长示意”；原片来源仍按当前[科学与素材](science-and-rights.md)要求核查。2D部分以晶体为参照，保持清楚的晶面、方向和正在生长的区域；背景是克制的空气空间，可有低对比的远处云滴/冰粒线索，但只有建立尺度关系且不妨碍观察时才加入。
+Within approved mixed scope, this example uses actual observation anchor → pure-2D single-crystal growth illustration; source footage still follows current [science/assets](science-and-rights.md) requirements. Crystal-referenced 2D retains clear faces, directions and active growth. Restrained air-space backgrounds may include quiet distant droplets/ice cues only with established scale and unobstructed observation.
 
-真实素材来自云中观测、人工生长室还是降落后采集，必须按其来源表述，不能相互冒充。转入2D前交代当前展示的是生长关系示意，不能把实验室连续片段说成跟拍了一片自然雪花的一生。
+Accurately identify cloud observation, controlled chamber or post-fall collection rather than substituting one for another. Explain the growth-relationship diagram before entering 2D; laboratory footage is not a natural snowflake followed throughout life.
 
-另一种可选情境是受控生长观察窗：便于固定对象、比较条件和观察边界。选此方案就沿用实验条件及支承方式，不能保留自然云中漂浮的说法。针叶、手套或窗台适合承接、观察或霜的其他问题，不为了填空就放进本例生长过程；它们会改变暗示的机制与场景。
+A controlled growth observation window is another option for fixed objects, condition comparison and boundaries. Retain its experimental/support conditions rather than natural-cloud floating claims. Needles, gloves or windowsills suit collection, observation or other frost questions, not filler in this growth process; they alter implied mechanism/context.
 
-不把云雾浓淡、背景冷暖或装饰粒子多少当作温度/过饱和度的直接测量。确需条件比较时，用必要短标签或有依据的编码，观众能看出它是条件说明，主体上的结构差异承担结果。
+Cloud density, background temperature colors or decorative particle counts are not direct temperature/supersaturation measurements. Necessary comparisons use short labels/evidenced coding clearly identified as conditions; subject structures show results.
 
-## 一段可以制作的镜头组织
+<a id="一段可以制作的镜头组织"></a>
+## Producible shot organization
 
-下列是按理解任务组织的候选段落，可合并、拆分或删去不属原题的比较段；没有规定镜头数和秒数。正式时点依实际完整口播确定。
+These candidate sections follow comprehension tasks and may combine, split or omit out-of-topic comparisons. No fixed shot count/seconds; formal timing follows actual complete narration.
 
-| 段落/观察任务 | 画面内容与层次 | 主体怎样变化 | 这一段的新信息 | 接续与风险 |
+| Section/observation | Picture/layers | Subject change | New information | Handoff/risk |
 | --- | --- | --- | --- | --- |
-| 认识相似与差别 | 仅在已核实用户自拍及授权时采用真实连续雪晶观测原片，否则保持候选缺项，不引入第三方参考片；让人能比较同一晶体几条枝的总体结构与细节 | 展示素材实际发生的变化；观察停顿服务于比较 | 提出“同一片的六条枝为何常常相似”，也看见它们并非复制品 | 实拍与2D按相近形态建立对应，不声称是同一个个体 |
-| 建立同一晶体与共同条件 | 精绘2D中央晶片和六条主枝，确定可追踪的方位；必要时在主体旁附简洁的条件阶段示意 | 在同一阶段的持续条件下，六枝继续生长，已形成区域保留 | 六枝处在同一片晶体上，共同经历相近的周围条件 | 条件条为教学示意，不是实测曲线；不以云变蓝证明降温，也不暗示六枝互相通信 |
-| 看一处枝尖怎样留下变化 | 由同一枝条的旧分叉进入近景；同时保留旧结构和新增区域，稳定观察窗口 | 在有依据的条件下，枝尖与侧枝继续增长，后生结构出现可辨特征 | 条件变化影响后续形成的部分，旧枝提供观察参照 | 先明确本镜特征，如一个侧枝形成的位置；不能只显示微小高光变化 |
-| 回到六枝比较同一阶段 | 回到同一晶体，保持方向与分叉身份；让对应阶段的新增区域可定位，必要时短暂教学标记 | 六枝的相关新增结构在相近条件下呈现相似特征，同时保留局部差别 | 从一枝的机制回到开场的“为什么六枝像” | 标记顺序不是生长顺序；不能逐根点亮冒充共同响应；返回全景须有新的可见结果 |
-| 比较不同条件历史（必要时） | 两个明确为示意的独立案例，共同初态、尺度、视角和光照；条件条显示改变发生的先后 | 同一观察时刻比较新增部分的侧枝位置或发展程度，结构差异与各自经历对应 | 不同晶体可因经历不同而留下不同花纹 | 说明被改变的变量是条件历史；不把两个自然个体当受控实验，不伪造精确温度、速率或形状规律 |
-| 收束到相似而非完全相同 | 返回完整晶体，认回前述阶段结构，再给必要近景观察局部差别 | 用稳定结果与有目的的观察停顿完成比较 | 共同结构与相近经历解释总体相似，局部细节仍有差别 | 不换成无关的漂亮晶体；若跳时须交代时间关系 |
+| Recognize similarity/difference | Use actual continuous original snow-crystal observation only with verified user authorship/authorization; otherwise retain a candidate gap, not third-party reference clips. Allow comparison of overall/detail in several branches of one crystal | Show actual recorded changes; comparison-purpose holds | Ask why one crystal's branches resemble yet are not copies | Match real/2D by similar form, not claims of identical individual |
+| Establish one crystal/shared conditions | Detailed 2D center/six arms with trackable orientation; concise condition-stage diagram if needed | Six branches grow under one stage's sustained conditions; existing regions persist | One crystal shares nearby conditions | Condition strip is teaching, not measurement; blue clouds do not prove cooling or interbranch communication |
+| Inspect change retained at one tip | Enter from an old fork, keeping old/new regions and a stable window | Evidenced tip/side growth adds recognizable later features | Changed conditions affect newly formed portions; old branches are references | Define a feature, e.g. one side-branch position, not tiny highlight changes |
+| Compare six branches at one stage | Return to same orientation/branch identities, locate matching new regions with optional brief teaching markers | Similar new structures under similar conditions, with local differences | Return from one tip to why six arms resemble | Marker order is not growth order; no sequential illumination as shared response; return requires visible new result |
+| Compare condition histories if needed | Two explicitly illustrative independent cases, same start/scale/view/light; condition strips show timing | Compare new side-branch positions/development at one common time, corresponding to each history | Different histories can leave different patterns | Change history explicitly; natural individuals are not controlled experiments. Do not invent precise temperature/rate/shape laws |
+| Close on resemblance, not identity | Return to whole, recognize earlier-stage structure, then inspect necessary local differences | Stable results/purposeful holds finish comparison | Shared structure/similar experience explain overall resemblance despite local variation | No unrelated pretty crystal; explain time jumps |
 
-水汽来源、晶格与扩散只在建立当前关系确有需要时插入；背景雪点、漂浮和高光不替代主体解释。
+Insert vapor source, lattice or diffusion only as required for this relationship; snow dots, drifting and highlights cannot replace subject explanation.
 
-如果只需解释稳定条件下的相似生长，可直接比较六枝对应区域；无需额外制造条件改变。只有解释后续形态怎样记录不同阶段时，才加入变化节点与相应结果。
+For similar growth under stable conditions, directly compare corresponding arms without inventing condition changes. Add change nodes/results only when explaining how subsequent form records different stages.
 
-## 持续观看的纸面编排
+<a id="持续观看的纸面编排"></a>
+## Paper planning for sustained viewing
 
-按[开场与桥接](viewer-retention-design.md)先建立可观察的相似和差别，再提出问题，带观众进入同一枝尖。初次答案只交代足以继续观察的关系，不在片头堆完整机制。
+Under [opening/bridging](viewer-retention-design.md), establish visible similarity/difference, pose the question and enter the same tip. The first answer supplies enough relationship to continue, not the whole mechanism upfront.
 
-可选开场口播：“看这片雪晶：六条枝伸向不同方向，细看却有相似的分叉。它们不是互相照着长，为什么还能这么像？先认住这条枝上的旧分叉，再看枝尖新长出的部分。”末画面沿该旧分叉进入枝尖；正文首句“旧分叉还在，新的冰继续加在边界上”，同步展示新增实体。随后再用同一晶体各枝经历相近条件解释对应结构。正式事实、语义和时点以本期来源、完整稿及音轨为准。
+Optional opening narration: “看这片雪晶：六条枝伸向不同方向，细看却有相似的分叉。它们不是互相照着长，为什么还能这么像？先认住这条枝上的旧分叉，再看枝尖新长出的部分。” Follow that old fork into the tip at the end; first body sentence “旧分叉还在，新的冰继续加在边界上” accompanies new solid matter. Then explain corresponding structures through shared conditions. Formal facts, meaning and timing follow episode sources, full script and audio.
 
-| 已经得到的认识 | 接下来值得看的任务 | 画面怎样兑现 |
+| Understanding gained | Next worthwhile task | Visible delivery |
 | --- | --- | --- |
-| 同一晶体的六枝有相似分叉，但并非复制品 | 这些结构怎样在增长中留下 | 沿同一枝的旧分叉进入近景，展示边界新增实体，再建立条件对应 |
-| 一处枝尖留下了阶段结构 | 另外几枝能否找到对应特征 | 从同一对象的局部回到全景，定位同阶段区域；短暂提示退去后结构仍可比较 |
-| 共同经历对应总体相似 | 不同经历会留下什么差别 | 必要时加入两种明确条件历史的教学对照，放大同类新增区域，统一观察时刻 |
-| 总体规律已经成立 | “相似”是否意味着每处都一样 | 用有依据的局部差异限定，再回到整体完成解释与观赏收束 |
+| Six arms share forks without being copies | How growth retains them | Follow old fork into close-up, show boundary additions, then condition correspondence |
+| One tip retains stage structure | Find corresponding features elsewhere | Return same object to whole, locate stage-matched areas; structures compare after cues disappear |
+| Shared history explains resemblance | What different histories leave | If needed, illustrative histories with enlarged comparable new regions/common observation time |
+| Main pattern established | Does resemblance mean identical everywhere? | Evidence-based local differences, then whole explanation/aesthetic closure |
 
-晶格、凝华和扩散内容按它们对当前理解任务的必要性安排；需要提前建立的前提必须保留，其他细节可移到使用处或删去，不为尽早出效果破坏科学关系。若现有边界增长已是清楚的首次证据，可以直接沿用，不强制换成枝尖。
+Schedule lattice, deposition and diffusion by current-task necessity; retain advance prerequisites, move optional details to use or remove them, without damaging science for early effects. Existing clear boundary growth may remain first evidence; tip views are not mandatory.
 
-结尾回到开场对应的完整雪晶，让人认出六枝的大体对应及局部差别，留够观察时间后结束。代表段和整片正常速带声检查从开场定位、枝尖增长到六枝比较是否连得上。
+Return to the opening's corresponding whole crystal to recognize overall arm mapping/local differences, allow enough observation, then end. Check normal-speed sample/full sound-and-picture continuity from opening location through tip growth to six-arm comparison.
 
-## 枝尖近景的设计卡示范
+<a id="枝尖近景的设计卡示范"></a>
+## Example tip-close-up design card
 
-**观察任务**：在同一枝条上看到实体从已有边界继续增长，能够区别已有结构与新增部分。
+**Observation task:** See solid matter grow beyond an existing boundary on one branch and distinguish old/new structure.
 
-**主体与构图**：沿用全景中某个有独特侧枝间距的主枝，从分叉处带入枝尖；增长方向前方留出空间。必要旧分叉和新生区域同时可见。按目标播放尺寸试排，让新增轮廓与枝间空隙能辨认；不预设主体必须占画面某个百分比。
+**Subject/composition:** Reuse a whole-view arm with distinctive side-branch spacing, entering the tip from a fork and leaving growth-direction space. Show required old fork/new area together. Test target-size contours/gaps without a fixed subject screen percentage.
 
-**具体判别特征**：本卡选择“旧分叉之外，一处新的侧枝从无到有并继续延长”。让这处变化决定取景尺度，不因整条冰枝很大就判可读。若需要标记，仅帮助定位新增区域；标记退去后，实体差异仍存在。回到全景时须能指出其余主枝对应阶段的结构，不能只加“六枝相似”的标题。
+**Discriminating feature:** This card chooses a new side branch beyond the old fork appearing then lengthening. Let that change determine scale; a large overall arm does not prove readability. Optional markers locate additions only; solid differences persist after removal. Whole-view return must locate corresponding-stage structures on other arms, not add a similarity title.
 
-**状态序列**：
+**State sequence:**
 
-- 起点：已有中央方向、主枝轮廓与侧枝连接稳定，观众先定位枝尖。
-- 过程：按选定生长示意更新边界，保留旧连接；新生侧枝在与晶形相容的区域出现并延续。用足够中间态避免硬切或弹出，不能仅用最终图的中心向外擦除。
-- 结果：旧分叉仍可认，新轮廓和新增侧枝形成可见差异；观察后回到整体，仍能找到该局部。若为了教学改变速度或尺度，保留必要说明。
+- Start: Stable existing central orientation, arm outline/side connections; viewers locate the tip.
+- Process: Update boundaries under the chosen growth illustration, preserving old connections. New side branches arise/continue in habit-compatible regions. Enough intermediates prevent popping/cuts; no center-out wipe of final art.
+- Result: Recognizable old fork and visible new outline/branch differences; return to whole after observation and retain location. Preserve necessary explanation of teaching speed/scale changes.
 
-**美术任务**：先画带面积的晶片与枝条，再组织半透明明暗、薄边与局部晶面反光；枝尖、侧枝根部及必要间隙取得清晰边缘，远离解释区域的表面细节收敛。自然侧枝差异建立在身份和结构一致性上，不是逐帧随机抖动。
+**Art task:** Draw area-bearing plates/arms before translucent values, thin edges/local facets. Give tip, side-branch roots and required gaps clear edges while quieting distant details. Natural differences maintain identity/structure, not random frame jitter.
 
-**动静分工**：主要动作是晶体边界增长；旧结构提供稳定参照。背景可静止；若所选观察情境确需轻微漂移，它不能大于关键增长的视觉优先级。高光由表面和视角决定，不用流光扫过暗示材料在生长。
+**Motion/static duties:** Main action is boundary growth; old structures remain references. Background may stay still. Necessary slight drift must not outrank growth. Surface/view-dependent highlights must not sweep as a false signal of growing matter.
 
-## 资产与程序应怎样组织
+<a id="资产与程序应怎样组织"></a>
+## Organize assets and code
 
-按本镜实际动作拆层，不按数量凑资产：
+Separate by actual action, not asset quotas:
 
-| 资产/控制项 | 制作职责 | 应检查的实际结果 |
+| Asset/control | Production role | Actual result to check |
 | --- | --- | --- |
-| 同一晶体的几何与身份 | 中央晶片、主枝和侧枝连接；全景/近景共用对象坐标和局部识别点 | 近景返回后位置、方向、分叉关系相同 |
-| 随时间变化的实体区域 | 用经审查的状态序列生成/插值当前轮廓；保留已有结构，新增来自合理位置 | 看见局部面积及轮廓推进，非六条描边或整图放大 |
-| 材质与透光层 | 在实体区域内组织晶面明暗、薄边和透明叠层；随形态更新，纹理贴附对象 | 不出现边界增长而高光停在空中、矩形接缝或贴图滑动 |
-| 背景/遮挡 | 提供选择好的观察情境、光色和必要空间，不暗示错误的生长条件 | 关键晶枝/间隙清楚，不靠大量雪点遮住主体不足 |
-| 机制示意 | 独立的可编辑分子/条件/定位层；科学映射、尺度边界与主体状态关联 | 示意不冒充观测；诊断时仅隐藏额外叠图，保留必要机制符号并核科学对应；返回晶体尺度仍能认回所讲的结构/结果 |
-| 文字与相机 | 正式字幕、必要科学短标签、视角定位及有目的的取景 | 字不压生长区域，切换不丢身份，推近带来新信息 |
+| One crystal's geometry/identity | Center/arm/side connections, shared whole/local coordinates and identifying points | Same location, orientation and forks on return |
+| Time-varying solid regions | Reviewed states generate/interpolate contours; retain existing structure and plausible addition sites | Local area/outline progress, not six strokes or whole-image scaling |
+| Material/transmission layers | Values, thin edges/transparency inside solids, updated with form and surface-attached | No growth with highlights suspended in space, rectangular seams or sliding maps |
+| Background/occlusion | Chosen context, light and necessary depth without wrong implied conditions | Clear branches/gaps; snow dots do not conceal subject gaps |
+| Mechanism diagram | Independent editable molecular/condition/location layers tied to scientific mapping, scale limits and subject states | No diagram posing as observation. Diagnostics hide only extra overlays while retaining necessary mechanism symbols/science mapping; return to crystal scale recognizes structure/result |
+| Text/camera | Formal captions, necessary science labels, viewpoint location and purposeful framing | No text over growth; cuts retain identity, close-ups add information |
 
-2D生成图适合提供已审的关键态或材质资产；不要每帧无约束重新生成晶体。程序负责稳定坐标、状态推进、遮挡与事件对应。固定种子只解决可重复性，不能代替自然结构与时间连续性。没有经模型和实验核验的程序，称“生长示意”，不称精确物理仿真。
+2D-generated images can supply reviewed key states/materials, not unconstrained per-frame crystal regeneration. Code maintains coordinates, states, occlusion/events. Fixed seeds give reproducibility, not natural structure/temporal continuity. Without model/experimental validation call it “生长示意”, not precise physical simulation.
 
-## 对照验收：从空洞到有内容
+<a id="对照验收从空洞到有内容"></a>
+## Comparative acceptance: from empty display to substance
 
-| 待修方案 | 可以尝试的修复 | 验证成立的证据 |
+| Faulty approach | Possible repair | Validation evidence |
 | --- | --- | --- |
-| 精细雪花居中旋转，旁白说正在长大 | 保留可识别旧枝，在可读构图里展示边界新增 | 正常速实际导出能指出增长区域和累积结果，固定相机后变化仍在 |
-| 六根线匀速画出，表面再贴冰纹理 | 先建立实体晶面与枝条状态，局部主枝/侧枝按依据增长 | 中间态有实体形态与正确连接；无全局擦除替代；解释所需差异可见 |
-| 背景加满雾、雪点和发光就叫丰富 | 保留有用途的情境，补局部结构、关系或对照，降低竞争事件 | 去掉新增装饰仍能得到观察回报；主动作更容易定位，科学条件未被氛围误写 |
-| 温度计下降，成品雪花瞬间换形 | 按原题选有据条件变化或独立比较，结果落在新增区域或明确的另一案例上 | 条件、时间与对象身份清楚，旧结构不无故重写，没有捏造必经晶形路线 |
-| 每次近景只是放大同一张图 | 为近景选一个需要看清的结构/过程并补必要资产 | 近景能指出全景看不到但解释需要的信息，回到整体仍能认回 |
-| 枝尖确有生长，但大量旧枝与云景压过变化区域 | 保留一处旧分叉作锚点，按新增区域调整构图；关键时段减少相机位移和背景竞争 | 正式完整画面里能区分旧结构与新增结构；已有生长应记录为“不显著”而非“缺失” |
-| 两枝已有小差别，但要读完小字才找得到 | 对齐同类局部，选择有依据的可辨特征，明确同一观察时刻与不同条件历史 | 两侧新增结构承担差异；标签说明条件，不能代替结果；不夸大成无依据的极端形态 |
-| 全景反复出现，只由文字宣布六枝共同变化 | 回接前镜已定位的阶段结构，让多个枝尖的对应结果可读 | 能指出本次返回全景新增了什么证据；相似来自主体特征，不来自六个相同高亮 |
+| Detailed rotating crystal while narration says growth | Retain old arms and show readable boundary additions | Normal-speed export locates growth/accumulation, also visible with camera fixed |
+| Six uniform drawn lines with ice texture | Area-bearing facets/arm states with evidenced local growth | Solid intermediates/correct connections, no global wipe; required differences visible |
+| Fog/snow/glow filling as richness | Purposeful setting, local structure/relationships/comparison, reduced competition | Without new decoration payoff remains and main action is clearer; ambience does not rewrite science |
+| Falling thermometer then instant finished-shape swap | Evidenced change or independent comparison, results in additions/explicit other case | Clear conditions/time/identity, preserved old structure, no invented compulsory habit sequence |
+| Every close-up enlarges the same image | Select needed structure/process and complete assets | Needed information absent in whole is readable, with recognizable return |
+| Real growth overwhelmed by old arms/clouds | Old-fork anchor, framing by additions, reduced camera/background competition at key times | Full formal frame distinguishes old/new; existing growth is inconspicuous, not absent |
+| Two arms differ only after reading tiny text | Align like regions/evidenced distinct features, common time/different histories | New structures carry difference, labels conditions only; no unsupported extreme shapes |
+| Repeated whole views with text alone announcing shared change | Return to located stage structures and readable corresponding tip results | New evidence identifiable on each return; similarity comes from form, not identical highlights |
 
-在当前美术记录填写实际时点、观察、缺口及修复：静态检查造型，正常速连续段检查增长可辨、状态保留和接续。
+In current art records enter real times, observations, gaps and repairs: stills inspect form; normal-speed continuous segments inspect readable growth, retained states and handoffs.

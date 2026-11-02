@@ -1,93 +1,99 @@
 ---
 name: science-video-production
-description: 策划、制作、审查或修改自然、生活与工程科普视频、封面及3D资产。写实风格视频使用 MoneyPrinterTurbo，3D动画风格视频使用 Blender；制作与发布按委托范围分别执行。
+description: Plan, produce, review or repair science videos, covers and 3D assets about nature, daily life and engineering. Use MoneyPrinterTurbo for realistic videos and Blender for 3D animation; production and publication follow the commissioned scope.
 ---
 
-# 科普视频制作
+<a id="科普视频制作"></a>
+# Science Video Production
 
-从一个具体问题出发，用有依据的画面、连续中文讲解和同步字幕逐步给出答案。严格按[成片风格选择主制作工具](references/tool-routing.md#按成片风格锁定主制作工具)：写实风格使用 MoneyPrinterTurbo，3D动画风格使用 Blender；不再按工程/自然题材分流。AI模型可为写实路线生成素材，不能代替MoneyPrinterTurbo制作环节。
+Start from a concrete question and develop its answer through evidence-based visuals, continuous Chinese narration and synchronized captions. Lock the main tool by [finished visual style](references/tool-routing.md#lock-the-primary-tool-by-final-film-style): realistic videos use MoneyPrinterTurbo; 3D animation uses Blender. Do not route by engineering versus nature topics. AI models may supply realistic assets but do not replace MoneyPrinterTurbo's production role.
 
-## 范围与规则优先级
+<a id="范围与规则优先级"></a>
+## Scope and instruction priority
 
-先遵循宿主指令、工具和权限约束，再落实用户当前明确请求及仍有效的授权。新要求覆盖与它冲突的旧偏好，已有授权不重复询问。正文负责规则，配置负责默认参数，单集记录负责本次范围和证据；模板、示例和索引不产生额外门槛。
+Follow host instructions, tools and permissions, then the user's current explicit request and still-valid authorization. New requests supersede conflicting older preferences; do not ask again for existing authorization. Responsibility bodies own rules, configuration owns defaults, and episode records own current scope and evidence. Templates, examples and indexes create no additional gates.
 
-未指定风格沿系列写实默认值；已选3D动画直接用Blender。混合风格按明确范围执行，历史2D仅在明确获准的2D范围或独立封面使用。用户指定题目时保留原题，按其受众设计解释。
+Maintain production instructions, normative references, template guidance and subagent definitions in English. Keep audience-facing Chinese narration, captions and copy examples in Chinese, and preserve actual approved model-input payloads, source quotations, proper names and language-sensitive test fixtures. Documentation language does not change the audience language or authorize resynthesis, rendering or publication.
 
-| 本次委托 | 执行范围与入口 |
+If style is unspecified, use the series' realistic default; an explicit 3D-animation choice goes directly to Blender. Mixed styles follow their explicit scope. Historical 2D applies only to specifically authorized 2D work or independent covers. Preserve a user-selected topic and design its explanation for the intended audience.
+
+| Commission | Scope and entry |
 | --- | --- |
-| 整理 Skill | 删除重复和无制作用途的说明，核正文、配置、模板、脚本及适当回归；不调用模型、恢复制作或发布 |
-| 只策划 | 读[主题契约](references/topic-contract.md)、[科学与素材](references/science-and-rights.md)、[解释设计](references/production-checkpoints.md)；可交明确待研究的草案，不编来源、音轨或秒数。`plan`是已有主源的结构检查，不是所有草案的必需验收 |
-| 仅3D模型、静态预览、检索或入库 | 读[资产任务](references/engineering-blender.md#仅做资产时的任务范围)；核模型、科学关系、依赖和归档，不造音轨、整期episode或G3。完整视频中的中间建模仍保留后续视频义务 |
-| 新片或续做视频 | 原包优先；G1解释设计 → G2有声草排 → G3代表段 → G4完整候选 → G5成片质量。先验适用范围的样片，再扩制 |
-| 局部修复 | 读取当前媒体、原请求、最新反馈；保留稳定ID及仍有效资产/声音，按[受影响依赖](references/quality-acceptance.md#失败后的处理)复查。纯布局修复不重做选题；新整片仍需完整看听 |
-| 只交视频，不做封面 | 记录 `delivery_scope=video_only` 及 `delivery_scope_note`，止于G5；旁白、字幕、科学与整片审查照常，不造封面或平台授权 |
-| 封面或完整发布包 | 读[封面设计](references/visual-system.md#两种封面各自设计)。系列发布包默认 `delivery_scope=release_package`，含独立排版的3:4和4:3封面；封面单独用 `--stage covers` |
-| 平台预览或发布 | 仅在请求覆盖相应动作时执行G6/G7；受托发布抖音视频时[同步今日头条视频并设置两端不可下载](references/production-checkpoints.md#抖音同步头条与不可下载)，实际核对选项和两端结果。交付不等于授权上传或公开发布 |
+| Maintain this Skill | Remove repetition and instructions with no production use; reconcile bodies, configuration, templates and scripts, and run appropriate checks. Do not invoke models, resume production or publish. |
+| Planning only | Read the [topic contract](references/topic-contract.md), [science and rights](references/science-and-rights.md) and [explanation design](references/production-checkpoints.md). Deliver clearly identified research-pending drafts without invented sources, audio or timestamps. `plan` checks an existing sourced structure; it is not mandatory approval for every draft. |
+| 3D model, static preview, search or catalog only | Read [asset-task scope](references/engineering-blender.md#scope-of-asset-only-tasks); check the model, scientific relations, dependencies and archival state. Do not manufacture a soundtrack, full episode or G3. Intermediate modeling within a full-video commission retains its later video obligations. |
+| New or continued video | Prefer the existing package. G1 explanation design → G2 complete sound rough cut → G3 representative sequence → G4 complete candidate → G5 final quality. Validate an applicable sample before expansion. |
+| Local repair | Read the current media, original request and latest feedback. Preserve stable IDs and still-valid assets/audio; recheck [affected dependencies](references/quality-acceptance.md#handling-failures). A layout-only repair does not restart topic selection; a new full film still needs complete viewing/listening. |
+| Video only, no cover | Record `delivery_scope=video_only` and `delivery_scope_note`; stop at G5. Narration, captions, science and full-film review still apply. Do not invent covers or platform authorization. |
+| Cover or complete release package | Read [cover design](references/visual-system.md#design-the-two-cover-ratios-independently). The series default `delivery_scope=release_package` includes separately composed 3:4 and 4:3 covers. Use `--stage covers` for cover-only checking. |
+| Platform preview or publication | Perform G6/G7 only within the requested actions. Authorized Douyin video publication [also targets Toutiao video with downloads disabled on both](references/production-checkpoints.md#sync-douyin-to-toutiao-and-disable-downloads); check actual settings and separate outcomes. Delivery alone is not permission to upload or publish. |
 
-## 唯一全局入口
+<a id="唯一全局入口"></a>
+## One global production installation
 
-只使用[一个全局安装](references/global-skill-installation.md)，项目不复制整套Skill，也不从项目冻结副本或维护源码运行生产任务。开始及续做先读取全局规则与用户最新要求；项目只保存制作数据、实际运行证据及规则哈希锁。全局变化后显式迁移，旧锁不能覆盖新要求或自动延续审查。
+Use [one global installation](references/global-skill-installation.md). Do not copy the Skill into projects or run production from a project snapshot or maintenance source. At startup and continuation, read current global rules and the latest user request. Projects retain production data, actual execution evidence and rule-hash locks. Explicitly migrate when global rules change; an old lock cannot override new instructions or silently carry forward review approval.
 
-## 制作关键约束
+<a id="制作关键约束"></a>
+## Critical production requirements
 
-| 制作项 | 必须落实的动作 | 实审与失败处理 |
+| Area | Required action | Actual review and return conditions |
 | --- | --- | --- |
-| 自主选题 | 按[观众入口与候选比较](references/topic-contract.md#先比较观众会选什么再决定制作什么)先定具体疑问、观看理由和可见回报，再比较可行备选；不以专业度、资料量或现成资产代替吸引力 | 没有普通观众能进入的问题、只剩术语或画面不能兑现，先改选题/切口；用户明确题目保留原范围，不宣称结构检查证明受欢迎 |
-| 整片叙事、开场与转场 | 主代理先按[整片编导](references/viewer-retention-design.md#direct-the-whole-film-before-polishing-its-parts)连通整体情境、本期问题、案例作用、逐段推进和结尾所得，再拆分镜与委派；开场承诺须由正文证据和结尾兑现，前后镜成对设计 | G1通读全稿，已知叙事缺口先修结构再合成完整旁白或批量精制；G2/G5用完整声画核实际理解。只加背景句、润色局部或认可音色不算修复；直接答案或局部片段按委托处理 |
-| 解释与片长 | 工程/工业/高端制造讲清本题从输入、原理、关键过程到结果及验证的[完整链路](references/topic-contract.md#工程与制造题材的全链路和片长)；先完整稿后拆镜，实际讲解和观察需要决定片长 | 删支线与重复，不为固定时长加速或省略必要过程 |
-| 画面 | 先按当前媒介检索可复用工程/素材；3D先查[共享素材库](references/engineering-blender.md#查找与选择已有素材)，有适配的[开放许可模型](references/engineering-blender.md#开放许可模型可以直接采用)可直接导入复用，按实际需要改造，不为原创从零重建。逐镜写主体、关系、驱动/交互、起态/变化/终态及观众所得；按[写实](references/realistic-production.md)或[Blender](references/engineering-blender.md)制作 | 在实际景别和小屏核结构、背景、关键状态；连续看动作与接缝。静图推拉、字幕变化不代替承诺过程；有目的观察按[主体动态](references/quality-acceptance.md#主体动态与长静帧)审 |
-| 明亮风格与材质 | 写实与3D均按[明亮精细标准](references/visual-system.md#明亮风格与高级材质)制作：以主光、补光、控光与反射组织主体的受光和体积，关键暗部可读、高光有层次；背景可浅可深，明亮不等于浅底或全局提亮，各材料按真实表层区分；工业产品与零件落实[柔光棚拍材质标准](references/visual-system.md#工业产品棚拍材质标准)，核曲面渐变、深暗部、薄边高光、近景厚度和运动反射；按[专业美术编排](references/art-direction.md)确定颜色角色、前后景及视觉亮点，分类排除颗粒/闪烁/压缩脏影；Blender落实[灯光与PBR步骤](references/engineering-blender.md#明亮灯光与材质的实际执行) | G3代表段与G5最终编码实查；主体欠照明、关键动作失读、塑料化、材质无差别、过曝丢结构或运动闪烁，修后重审，不靠技术通过或平均亮度放行 |
-| 高清输出 | 按[高清渲染与交付](references/quality-acceptance.md#高清视频输出)锁定 `design.output`；新作默认1920×1080，正式渲染、合成和编码保持目标尺寸，用户指定更高尺寸时按其执行 | 本地核实际尺寸与目标，正常速核最终清晰度；低清放大不自动算高清，内部低清代理不代正式样段/成片 |
-| 正文文字 | 禁止正文角落场景/工序说明，先用动作、构图和镜头关系表达。**仅3D视频**执行[单字母规则](references/spatial-typography.md)：画面辅助文字只允许必要的单字母定位/变量标记，禁止中文、英文单词/缩写、数字/单位、解释牌和任何说明句，做成3D也不例外；允许的字母仍须真实空间3D。构图板、对比板及画面候选同样禁止额外制作说明和未同步字幕占位；普通同步口播/无障碍字幕保留清晰2D；其他媒介沿[原文字规范](references/visual-system.md#正文辅助文字的使用与停留) | 发现禁用文字、拆字拼词或伪装字幕/物体铭牌必须退回删除，G3不扩制、G5不交付；同时核允许字母的目标、空间关系和实际可读性 |
-| 标注 | 复用已确认[精密技术标注](references/annotation-style.md)及横版参数；区分定位引线、方向箭头和范围强调 | 尖端清楚、头杆连续且杆不穿尖；在实际缩放/遮挡/运动极值和小屏核目标绑定 |
-| 声音 | 按[中文声音](references/voice-reference.md)优先复用仍有效的认可主轨；新增合成按连续讲述，稳定音色与自然音区，起音清楚、句尾利落，先连听基准段、难句与接缝再扩合成 | 源轨与最终混音分别实听；语速认可不代音调连续通过。漂移或拖沓先修稿件、合成单元及处理链，不以统一响度或反复倍速掩盖 |
-| 封面 | 仅按委托制作，按[封面标准](references/visual-system.md#封面成品标准与工程制造题材)独立排版本次所需比例；发布时必须按[系列封面一致性](references/visual-system.md#发布时的系列封面一致性)复用当前认可基准，保持字体、标题层级、色彩角色、画风和版式语言，同一作品跨平台沿用同一期设计 | 原图、手机缩略及系列对照核主体、结构、标题和真实观看承诺；G6核实际选图/平台预览，风格不一致或误选先修正再提交，G7读回实际展示 |
-| 先样后片 | 先以正常帧率的低成本连续预演核开场/转场，再做最终引擎细节样段；G2检查整期解释，G3核完整高风险关系单元的正式代表段后扩制，不把样段等同整条主范围；写实试制先按[完整可见关系](references/realistic-production.md#制作前引用与连续短样)验证最难变化，尚未兑现时先修实现方案，不扩堆重绘、超分或重复用户复验。[Blender执行与复用](references/blender-execution.md)，局部动态修复按[完整周期](references/blender-execution.md#complete-a-repair-cycle-before-expanding)绑定同一修复任务的试渲额度，额度耗尽、预估失守或同类缺陷反复时停止孤立试帧，由主代理解决根因并交连续可播放版本；不以改任务名续试或以静帧充进展 | 先修已知粗糙、卡顿、失焦和慢旁白；低帧率布局代理不作为用户判断观感的唯一样段；新整片仍完整看听 |
+| Editorial topic selection | Establish the concrete question, viewing reason and visible payoff through [audience entry and candidate comparison](references/topic-contract.md#compare-what-viewers-would-choose-before-deciding-what-to-produce), then compare feasible alternatives. Expertise, abundant sources or available assets do not establish interest. | Revise the topic/angle if ordinary viewers have no entry question, only terminology remains, or visuals cannot deliver. Preserve a user-selected topic; structural checks do not establish popularity. |
+| Whole-film narrative, opening and transitions | The parent applies [whole-film direction](references/viewer-retention-design.md#direct-the-whole-film-before-polishing-its-parts): connect overall context, episode question, case purpose, section progression and resolution before splitting shots or delegating. Body evidence and ending must fulfill the opening promise; design adjacent views together. | Read the whole draft at G1. Repair known story gaps before full narration synthesis or batch refinement; G2/G5 check understanding in complete sound and picture. A background sentence, local polish or accepted timbre does not close a structural failure. Direct answers and local excerpts follow their commission. |
+| Explanation and duration | Explain the [complete requested chain](references/topic-contract.md#complete-chains-and-duration-for-engineering-and-manufacturing-topics) for engineering, industrial production and advanced manufacturing: input, principle, key process, result and verification. Write the full script before splitting shots; actual explanation and observation determine duration. | Remove tangents and repetition, without speeding narration or omitting necessary steps to fit a preset duration. |
+| Picture | Search reusable projects/assets within the selected medium. For 3D, search the [shared library](references/engineering-blender.md#find-and-select-existing-assets) first; directly import suitable [open-licensed models](references/engineering-blender.md#open-licensed-models-may-be-adopted-directly), adapting actual gaps rather than rebuilding to claim originality. Each shot specifies subject, relationship, driver/interaction, initial/change/final states and viewer understanding. Follow [realistic](references/realistic-production.md) or [Blender](references/engineering-blender.md) production. | Check structure, background and key states at the actual shot scale and on a small screen; view motion and joins continuously. Panning a still or changing captions does not deliver a promised process. Purposeful observation follows [subject-motion review](references/quality-acceptance.md#subject-motion-and-long-static-holds). |
+| Bright style and materials | Across realistic and 3D work, apply the [bright, refined standard](references/visual-system.md#bright-style-and-premium-materials): key/fill, controlled spill and reflection reveal illuminated form, readable necessary shadows and layered highlights. Backgrounds may be light or dark; brightness does not mean a pale backdrop or global exposure lift. Match actual exposed finishes. Industrial products follow the [soft-light studio material standard](references/visual-system.md#industrial-product-studio-material-standard), including curved gradients, deep shadows, fine edge highlights, close-up thickness and moving reflections. Use [art direction](references/art-direction.md) for color roles, depth and focal reveals; diagnose noise, flicker and compression separately. Blender follows [lighting/PBR implementation](references/engineering-blender.md#actual-execution-of-bright-lighting-and-materials). | Inspect the actual G3 sequence and G5 final encode. Return underlit subjects, unreadable action, plastic-looking/identical materials, clipped structure or temporal shimmer. Technical success and average brightness cannot approve the look. |
+| HD output | Lock `design.output` under [HD rendering and delivery](references/quality-acceptance.md#hd-video-output). New work defaults to 1920×1080; rendering, compositing and encoding retain the target canvas. Honor an explicitly higher target. | Verify actual stream dimensions locally and final clarity at normal speed. Enlargement does not automatically restore HD detail; an internal low-resolution proxy is not the formal sample/final. |
+| In-picture text | No corner scene/process explanations in the main picture; use action, composition and shot relations first. **3D videos only** apply the [single-letter rule](references/spatial-typography.md): auxiliary picture text is limited to necessary single-letter referent/variable markers. No Chinese, English words/abbreviations, numbers/units, explanation plaques or sentences, even as 3D geometry. Permitted letters remain actual spatial 3D. Composition/comparison boards and visual candidates likewise cannot add production notes or unsynchronized subtitle placeholders. Genuine synchronized narration/accessibility captions remain clear 2D; other media retain [their text rules](references/visual-system.md#body-auxiliary-text-use-and-hold). | Return forbidden text, words assembled from letter items and labels disguised as captions/object inscriptions. No G3 expansion or G5 delivery until repaired. Check permitted letters' targets, spatial relations and actual readability. |
+| Annotation geometry | Reuse the approved [precision annotation style](references/annotation-style.md) and landscape parameters. Distinguish locating leaders, directional arrows and range emphasis. | Arrow tips remain sharp, heads/shafts continuous and shafts do not cross the tip. Check target binding at actual scale, occlusion and motion extremes, including small-screen viewing. |
+| Sound | Follow [Chinese narration](references/voice-reference.md). Reuse a still-valid accepted master; synthesize new work as continuous delivery with stable timbre/natural register, clear onsets and concise endings. Listen to the comparison section, difficult phrases and joins before expansion. | Listen separately to source and final mix. Accepted pace does not approve pitch continuity. Repair drift/sluggishness through the manuscript, contextual synthesis units and processing chain; uniform loudness or repeated speed changes cannot hide them. |
+| Covers | Produce only the commissioned covers, independently composing the requested ratios under the [cover standard](references/visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics). At publication, reuse the current approved [series identity](references/visual-system.md#series-cover-consistency-at-publication): font, title hierarchy, color roles, rendering style and layout language. Cross-platform versions retain one episode identity. | Inspect full-size art, phone thumbnails and the series comparison for subject, structure, title and a true viewing promise. G6 checks actual selection/platform preview; repair mismatched style or selection before submission. G7 reads back the displayed cover. |
+| Sample before expansion | First use a low-cost continuous previs at normal frame rate for opening/transitions, then a detailed final-engine sequence. G2 checks the complete explanation; G3 checks a complete high-risk relation unit before expansion, not automatically the entire primary chain. Realistic trials first validate the hardest change as a [complete visible relationship](references/realistic-production.md#references-and-continuous-samples-before-production); repair failed implementation before piling on redraw/upscale or repeated user tests. Follow [Blender execution/reuse](references/blender-execution.md). For local dynamic repairs, bind diagnostic allowance to one [complete repair cycle](references/blender-execution.md#complete-a-repair-cycle-before-expanding). On exhausted allowance, missed forecasts or recurring defects, stop isolated tests; the parent resolves the cause and delivers a playable continuous result. Renaming the task or producing stills does not renew progress. | Repair known roughness, stutter, lost focus and slow narration first. Low-frame-rate layout proxies cannot be the user's sole basis for judging experience. A new full film still needs complete viewing/listening. |
 
+- **Production reference:** reuse an applicable accepted film; for a first trial, use an applicable actually inspected reference with `design.approved_film_reference.kind=initial_style_reference`. Design evidence-based environment, depth and variation under [scene completeness](references/engineering-blender.md#blender-backgrounds-and-spatial-completion); local simplification must serve explanation.
+- **Provenance and markings:** record each shot as `controlled_3d/ai_generated/real_footage/pure_2d`, inventorying mixed layers separately. Separate scientific evidence, style reference and usage rights. This series' [original-visual contract](references/science-and-rights.md#original-visual-provenance-contract) permits self-generation, scene/model/animation rendering, self-design or verified authorized user footage; also permit [licensed 3D model inputs](references/science-and-rights.md#licensed-3d-model-inputs), recording external authorship/license and actual adaptations. Third-party finished footage/stills remain research only. Paper, institutional or stock footage cannot enter rough cuts, samples or finals after cropping/reordering/Chinese dubbing, even with a license. Stop affected expansion/delivery, replace and recheck. Preserve genuine captions; scientific labels follow the medium's rules, with only necessary single letters in 3D picture. Added credit, watermark or in-picture AI identity follows [specific-scope consent](references/visual-system.md#in-picture-markings-require-specific-consent).
+- **Mandatory bandwidth conservation and local performance:** this binds parent and every child. Perform capable production, processing and detection locally. Each outbound media submission must satisfy [necessity, minimum sufficient payload and deduplication](references/tool-routing.md#review-media-without-repeated-uploads); otherwise do not send. Convenience or urgency does not expand transfer. Preserve quality while actively using CPU/GPU/caches under [local throughput](references/tool-routing.md#local-execution-minimal-transfer-and-throughput); keep the system responsive/stable and adjust this task's contention, without arbitrary utilization ceilings.
+- **Execution and reuse:** reuse installed environments. Before Qwen invocation, inspect current/prior context and existing projects; ask only for a genuinely missing location, without automatic downloads/new environments. Sound rough cuts, samples and finals use the [execution entry](references/production-checkpoints.md#start-lock-and-actual-rendering-entry); silent shots/static tests retain actual intermediate versions. Tool gaps follow [routing](references/tool-routing.md) and existing authorization; repeated identical failure without new evidence stops that dependency. Bounded candidates use the [Blender](scripts/bounded_blender/README.md) or [I2V](scripts/bounded_i2v/README.md) core, preserving identity, unique-job and recovery guards. Resource refusals/device fallback follow the [current-evidence rule](references/production-checkpoints.md#conditional-reuse-of-static-evidence-and-fresh-dynamic-checks); launchers cannot invent admission thresholds.
+- **Review and versions:** apply [risk-based review/evidence reuse](references/quality-acceptance.md#risk-based-rechecks-and-evidence-reuse), separating automated completeness, continuous viewing and targeted frame diagnosis. No fixed per-shot human frame quota; reuse covered observations within the same responsibility/version instead of replaying to fill forms. Technical, static, continuous audiovisual and platform results remain distinct. Independent review needs an independent process and actual perception, under the same transfer limits. Give the user [verified material links](references/tool-routing.md#review-media-without-repeated-uploads): clickable absolute local files with clear material/version and review scope, without bare paths, uploads, embeds or automatic previews. Retain [feedback](references/quality-acceptance.md#register-user-feedback-item-by-item-and-keep-dimensions-separate) by media/scope/dimension; missing capability stays unreviewed and known failure needs repair/recheck. Rule updates do not hot-switch running jobs or resume published, cancelled or prohibited versions. Explicitly migrate continuation without rewriting old locks/receipts.
 
+<a id="按需读取责任正文"></a>
+## Read responsibility bodies on demand
 
-- **制作基准**：有适用认可成片就复用；首次试制用实际查看的适用参考，记 `design.approved_film_reference.kind=initial_style_reference`。按[场景背景](references/engineering-blender.md#blender-场景背景与空间完成度)设计有依据的环境、层次和跨镜变化；局部简化须服务解释。
-- **来源与标识**：逐镜记录 `controlled_3d/ai_generated/real_footage/pure_2d`，混合层分别登记；科学依据、风格参考和使用权分开；当前系列执行[原创视觉来源契约](references/science-and-rights.md#原创视觉来源契约)，自行生成、布景/建模/动画渲染、设计或已核实授权的用户自拍；另允许[许可3D模型输入](references/science-and-rights.md#许可3d模型输入)，如实记录外部作者/许可及实际改造，第三方成片影像仍仅供研究参考。论文、机构或图库视频即使获许可，裁切、重排、配中文音轨后仍不得进入草排、样段和成片；发现违规来源先停受影响镜头的扩制与交付，再替换并复查。普通同步字幕保留；科学标注按媒介规范，3D画面只允许必要单字母；新增署名、水印或片内AI标识按[具体范围同意](references/visual-system.md#画内标识须有具体同意)处理。
-- **节省流量硬约束与本地性能**：节省流量是硬性要求，约束主代理及所有子代理。具备本地能力的制作、素材处理与检测必须在本机执行；每次媒体出站须满足[必要性、最小充分材料与去重检查](references/tool-routing.md#review-media-without-repeated-uploads)，不满足不得发送。不得因方便或赶工扩大传输。保持成片画质，按[本地吞吐](references/tool-routing.md#本地执行最少传输与吞吐)积极利用CPU、GPU与缓存；系统保持响应和稳定，资源争用时调整本任务并发，不设任意利用率上限。
-- **执行与复用**：复用现有环境；调用Qwen前查上下文和已有工程，确缺位置才问，不自动下载或另建环境。有声草排、样段与整片走[执行入口](references/production-checkpoints.md#开工锁定与真实渲染入口)；无声镜头/静态测试按中间资产保存实际版本。工具补缺按[路由](references/tool-routing.md)及已有授权，连续相同失败无新依据时停止该依赖。有界候选按[Blender](scripts/bounded_blender/README.md)或[I2V](scripts/bounded_i2v/README.md)核心执行，保留身份、唯一任务与恢复保护。 Resource refusals and device fallback follow the [current-evidence rule](references/production-checkpoints.md#静态证据条件复用与动态新鲜检查); generated launchers cannot invent admission thresholds.
-- **审查与版本**：按[风险复查与证据复用](references/quality-acceptance.md#按风险复查与证据复用)区分自动完整性、连续审片和局部逐帧定位；取消逐镜固定抽帧人工配额，同职责同版本的已覆盖观察复用，不为填表重复看整片。技术检测、静帧、连续声画和平台结果分别记录；独立审查须有独立过程及实际感知能力，并遵守上述流量硬约束。交用户审阅的视频、音频、图片或文档，按[材料链接交付](references/tool-routing.md#review-media-without-repeated-uploads)提供已核实存在且版本正确的可点击本地文件链接，标明材料名/版本及待看内容；不只发纯文本路径，不上传、内嵌或自动预览。[反馈](references/quality-acceptance.md#用户意见逐项登记与维度隔离)按媒体/范围/维度保留，缺能力未验、已知失败修后重审。规则更新不热切运行任务，也不恢复已发布、取消或禁止版本；续做显式迁移，不改写旧锁和旧回执。
-
-## 按需读取责任正文
-
-| 问题 | 正文 |
+| Need | Body |
 | --- | --- |
-| 原题、受众、开场、范围和答案 | [主题契约](references/topic-contract.md) |
-| 科学、来源、权利和披露 | [科学与素材](references/science-and-rights.md) |
-| 写实主镜和首样 | [写实制作契约](references/realistic-production.md) |
-| 写实视频的MoneyPrinterTurbo制作与模型素材 | [写实制作流程](references/ai-generated-video.md) |
-| 3D动画、精确结构、连续定位与3D库 | [Blender制作](references/engineering-blender.md)、[爆炸图与剖切](references/engineering-blender.md#爆炸图与剖切的选择)；[只读素材检索](scripts/find_3d_assets.py) |
-| 人物绑定、动捕、操作与口型 | [人物表演](references/engineering-blender.md#人物绑定动捕与口型)；按需启用可编辑3D或视频后处理，先核实际难点 |
-| 阶段、解释顺序、实际调用、平台动作 | [制作检查点](references/production-checkpoints.md) |
-| 画风、构图、文字、封面、接口连接 | [视觉系统](references/visual-system.md)；主要动画再读[场景设计](references/animation-scene-design.md) |
-| 旁白生成、连续性和审听 | [中文声音](references/voice-reference.md) |
-| 分镜、素材、版本和动作记录 | [逐镜记录](references/shotbook.md) |
-| 验收、未验、失败和修复 | [质量验收](references/quality-acceptance.md) |
-| 工具与可选方法 | [工具路由](references/tool-routing.md) |
-| 复杂任务分工、调用与独立审查 | [子代理协作](references/subagent-orchestration.md)：主代理统筹，复杂制作/返工按独立任务实际委派适用角色，分别核角色载入、原生/备用调用与产物；小修改直接完成 |
-| 留存编排或透明度/画幅故障 | 按需读[持续观看](references/viewer-retention-design.md)或[渲染取证](references/render-evidence.md) |
+| Original topic, audience, opening, scope and answer | [Topic contract](references/topic-contract.md) |
+| Science, provenance, rights and disclosure | [Science and rights](references/science-and-rights.md) |
+| Realistic main footage and first sample | [Realistic production contract](references/realistic-production.md) |
+| MoneyPrinterTurbo and model-generated realistic assets | [Realistic production workflow](references/ai-generated-video.md) |
+| 3D animation, precise structure, continuous location and asset library | [Blender production](references/engineering-blender.md), [exploded views/cutaways](references/engineering-blender.md#choose-exploded-views-or-cutaways); [read-only asset search](scripts/find_3d_assets.py) |
+| Character rigging, mocap, operation and lip sync | [Character performance](references/engineering-blender.md#character-rigging-motion-capture-and-lip-sync); choose editable 3D or video postprocessing as needed and verify the actual difficulty first |
+| Stages, explanation order, actual invocation and platform actions | [Production checkpoints](references/production-checkpoints.md) |
+| Style, composition, text, covers and interfaces | [Visual system](references/visual-system.md); for substantial animation also read [scene design](references/animation-scene-design.md) |
+| Narration generation, continuity and listening | [Chinese narration](references/voice-reference.md) |
+| Shots, assets, versions and action records | [Shotbook](references/shotbook.md) |
+| Acceptance, unreviewed work, failure and repairs | [Quality acceptance](references/quality-acceptance.md) |
+| Tools and optional methods | [Tool routing](references/tool-routing.md) |
+| Complex coordination, invocation and independent review | [Subagent orchestration](references/subagent-orchestration.md): parent directs; actually delegate applicable roles for complex production/repairs, distinguishing loaded definition, native/fallback invocation and artifact. Perform small changes directly. |
+| Retention or alpha/canvas faults | Read [viewer retention](references/viewer-retention-design.md) or [render evidence](references/render-evidence.md) as needed |
 
-[责任索引](indexes/rule-owners.json)和[章节覆盖索引](indexes/standard-coverage.json)只用于导航和维护，不复制规则或充当逐集检查单。历史案例与 `references/learning-candidates/` 中的未验证经验候选不是所有题材的固定镜头、阈值或通过证据。
+The [responsibility index](indexes/rule-owners.json) and [section coverage index](indexes/standard-coverage.json) support navigation/maintenance only. They do not copy rules or become episode checklists. Historical examples and unverified candidates in `references/learning-candidates/` do not impose universal shots, thresholds or passing evidence.
 
-## 配置、记录与校验
+<a id="配置记录与校验"></a>
+## Configuration, records and validation
 
-新作采用[系列配置](config/series-profile.json)的1920×1080横版默认值；旧竖版字幕修订只作用于指定旧项目。写实项目绑定适用参考；随包[历史插画](assets/style/accepted-style-reference.png)、[美术规格](assets/style/bright-nature.art-direction.json)和[色彩参数](assets/style/bright-nature.tokens.json)只在适用2D/封面范围使用。科学本色优先。质量和可校准起点见[制作策略](config/production-policy.json)，配置状态不代表实审通过或行动授权。
+New work uses the [series profile](config/series-profile.json) default 1920×1080 landscape canvas. Legacy portrait-caption revisions apply only to specified older projects. Realistic projects bind an applicable reference; the bundled [historical illustration](assets/style/accepted-style-reference.png), [art specification](assets/style/bright-nature.art-direction.json) and [color tokens](assets/style/bright-nature.tokens.json) apply only to relevant authorized 2D/cover work. Scientific colors take priority. [Production policy](config/production-policy.json) supplies quality requirements and calibratable starting points; configuration does not establish actual approval or authorization.
 
-按交付深度使用[简报](assets/brief-template.md)、[单集记录](assets/episode-template.json)、[原题锚点](assets/topic-anchor-template.json)。模板是空记录结构，不是预先认可；删除不适用示例，缺证据保持未验。单集文件放用户工作目录；相对媒体/证据路径以 `episode.json` 所在目录为根。
+Use the [brief](assets/brief-template.md), [episode record](assets/episode-template.json) and [original-topic anchor](assets/topic-anchor-template.json) to the commissioned depth. Templates are empty record structures, not prior approval; remove inapplicable examples and keep missing evidence unreviewed. Put episode files in the user's workspace. Media/evidence paths are relative to the `episode.json` directory.
 
-从使用中的Skill目录运行；`python`替换为已有可用解释器，Windows不使用应用商店占位：
+Run scripts from the active global installation, substituting an existing working interpreter for `python`; do not use a Windows Store placeholder:
 
     python -X utf8 scripts/check_reference_system.py .
-    python -X utf8 scripts/render_gate.py lock <单集绝对路径>/skill-lock.json
+    python -X utf8 scripts/render_gate.py lock <absolute-episode-directory>/skill-lock.json
     python -X utf8 scripts/render_gate.py run <episode.json> --phase roughcut --shot-ids SH1,SH2 --output roughcut-001.mp4 --receipt roughcut-run-001.json
     python -X utf8 scripts/render_gate.py run <episode.json> --phase sample --shot-ids SH1 --output sample-001.mp4 --receipt sample-run-001.json
-    python -X utf8 scripts/check_episode.py <episode.json> --stage G3 --report <新回执.json>
-    python -X utf8 scripts/check_episode.py <episode.json> --stage delivery --report <新交付回执.json>
+    python -X utf8 scripts/check_episode.py <episode.json> --stage G3 --report <new-receipt.json>
+    python -X utf8 scripts/check_episode.py <episode.json> --stage delivery --report <new-delivery-receipt.json>
 
-按实际阶段选命令，不照抄镜号。`roughcut`用于G2整期有声草排，`sample`用于待审代表段；两者不要求已有G3，`full`才要求当前G3后扩片。已有匹配规则锁可复用，不每次制造新锁。`plan`不晋级；G1–G7按适用阶段核证据；`delivery`检查本地成片至G5，`publish_ready`检查至G6，`covers`只验封面。发布仍需实际动作和G7读回。
+Select the actual stage and shot IDs. `roughcut` serves G2, `sample` creates the review-pending representative sequence, and neither requires a prior G3; `full` requires current G3 before expansion. Reuse a matching existing lock instead of generating one for every operation. `plan` does not advance a gate; G1–G7 check the applicable evidence. `delivery` checks local completion through G5, `publish_ready` through G6, and `covers` only covers. Publication still requires actual action and G7 readback.
 
-回执用新文件名；退出码0为本地检查通过、1为记录阻塞、2为输入/执行错误。结构检查后，按对应阶段完成实际审查并记录缺项。
+Use new receipt filenames. Exit codes: 0 = local checks passed, 1 = blocking records, 2 = input/execution error. After structural checks, perform the actual stage review and record missing coverage.

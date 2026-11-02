@@ -1,52 +1,58 @@
-# 候选学习记录：光路可见性与实验操作点
+<a id="候选学习记录光路可见性与实验操作点"></a>
+# Candidate Learning Record: Optical-Path Visibility and the Experimental Operation Point
 
-状态：2026-10-23 UTC 的有限画面观察与待验证迁移假设。不是完整观看、听验、科学测量或已验证制作规范。未应用到实际影片；不新增门槛。
+Status: limited picture observation on 2026-10-23 UTC and a transfer hypothesis awaiting validation. This is not complete viewing, listening review, scientific measurement, or a validated production standard. It has not been applied to an actual film and adds no gate.
 
-## 参考身份与观察边界
+<a id="参考身份与观察边界"></a>
+## Reference Identity and Observation Boundaries
 
-Physics Girl / PBS，《Unique At-Home Science Experiments!》，Season 4 Episode 24，页面标示 9分52秒及日期2020-05-21：
+Physics Girl / PBS, “Unique At-Home Science Experiments!”, Season 4 Episode 24; the page lists 9 minutes 52 seconds and 2020-05-21:
 https://www.pbs.org/video/unique-at-home-science-experiments-nx9e1n/
 
-本次在助手云端浏览器启动播放器，暂停后定位并实际查看全屏画面。播放器显示1x，但本记录只覆盖下列离散暂停帧，不是正常速连续观看，也未实际听到音频。页面全文转写仅作研究定位，未拿它填补视听观察；不评价配音、音效、节奏或声画同步，不把该片整体判为已验证优秀案例。播放器中心三角及底部控制条属于播放界面，不是原片图形。
+In this session, the player was started in the assistant's cloud browser, then paused and positioned for actual fullscreen inspection. The player displayed 1x, but this record covers only the discrete paused frames below, not normal-speed continuous viewing. No audio was actually heard. The complete page transcript was used only for research navigation, not to fill audiovisual-observation gaps. Voiceover, effects, rhythm, and audiovisual synchronization are not evaluated; the film as a whole is not declared a validated excellent example. The central triangle and bottom control bar are player UI, not original-film graphics.
 
-| 播放器时点 | 实际看见 | 不足以证明 |
+| Player time | Actually seen | Insufficient to establish |
 | --- | --- | --- |
-| 00:03 | 厨房环境，人物上半身近景 | 开场完整结构、钩子效果 |
-| 00:16 | 较宽厨房场景，人物与砧板上的浅色凝胶目标同场 | 切镜是否连续、动作过程 |
-| 00:20 | 俯视斜角；手持银色激光器、凝胶整块、左侧入射位置及内部绿色亮路径同框 | 激光器此前怎样移动、路径随角度变化的连续因果 |
-| 00:24 | 更近的凝胶画面，左侧器具端部、边界与内部折转的绿色亮路径可见 | 精确入射角、折射率、各段光强或能量分配 |
-| 00:34 | 凝胶近景，左侧器具和多个相接的绿色线段可见；透明主体边缘与表面不规则细节仍能辨认 | 整段是否保持相同样本、角度变化的完整过程、全反射的定量证明 |
+| 00:03 | Kitchen environment, a close view of a person's upper body | Complete opening structure or hook effectiveness |
+| 00:16 | A wider kitchen scene with the person and a pale gel target on the cutting board in the same shot | Cut continuity or the action process |
+| 00:20 | An oblique overhead view: a handheld silver laser, the whole gel block, the entry location on the left, and an internal bright green path appear together | Earlier laser movement or continuous causality between angle changes and the path |
+| 00:24 | A closer gel view with the left-hand instrument end, boundary, and internally bent bright green path visible | Precise incidence angle, refractive index, segment intensities, or energy distribution |
+| 00:34 | A close gel view with the left-hand instrument and multiple joined green segments; edges and irregular surface details of the transparent subject remain distinguishable | Whether the same specimen persists throughout, the complete angle-change process, or quantitative proof of total internal reflection |
 
-00:03先在页面内查看时画面上部有裁切，后切全屏复核；布局结论只依据全屏观察。所有时点是播放器显示的整秒值，不虚构帧号或毫秒。未下载或附加第三方媒体、截图、字幕全文；网页可访问不提供素材复用许可。
+At 00:03, the upper image was cropped on the first in-page inspection, then rechecked fullscreen. Layout conclusions use only fullscreen observation. All times are whole seconds displayed by the player; no frame numbers or milliseconds are invented. No third-party media, screenshots, or full captions were downloaded or attached. Webpage accessibility grants no asset-reuse license.
 
-## 科学来源：可见路径不是发光材质的同义词
+<a id="科学来源可见路径不是发光材质的同义词"></a>
+## Scientific Sources: A Visible Path Is Not Synonymous with an Emissive Material
 
-已实际读取 Exploratorium Teacher Institute 的两篇活动正文，而不是只看搜索摘要：
+The full activity texts of two Exploratorium Teacher Institute pages were actually read, beyond search snippets:
 
-1. [Laser Jello](https://www.exploratorium.edu/snacks/laser-jello)：说明凝胶的散射使激光束路可见；不同染料和光色影响透射/吸收；改变入射位置或角度可观察折射及内部反射。本文不据视频帧推断凝胶配方、颜色光谱、折射率或临界角。
-2. [Critical Angle](https://www.exploratorium.edu/snacks/critical-angle)：分开描述水中少量散射介质和调暗环境帮助看清光束，以及改变界面入射角时反射/透射的变化。其水槽条件不等于视频凝胶条件；不直接搬用其数值或材料参数。
+1. [Laser Jello](https://www.exploratorium.edu/snacks/laser-jello): explains that scattering in the gel makes the laser-beam path visible, that different dyes and light colors affect transmission/absorption, and that changing entry position or angle allows observation of refraction and internal reflection. This record does not infer gel formulation, color spectra, refractive index, or critical angle from video frames.
+2. [Critical Angle](https://www.exploratorium.edu/snacks/critical-angle): separately describes a little scattering medium in water and a darkened environment helping reveal the beam, and reflection/transmission changing with the incidence angle at the interface. Its water-tank conditions are not equivalent to the video's gel conditions; do not transfer its numbers or material parameters directly.
 
-这两篇是机构编制的实验教学资料，不是对本参考视频进行的测量或论文级验证。角度须说明相对于法线还是表面；本候选不赋予具体角度数值。下述叙事设计来自对资料与有限画面的推断，不是节目已证明的传播效果。
+These are institution-produced experimental teaching materials, not measurements or paper-level validation of this reference video. State whether an angle is relative to the normal or the surface; this candidate assigns no specific angles. The narrative design below is inferred from these materials and limited frames, not a communication effect demonstrated by the program.
 
-## 与既有规则和候选的差别
+<a id="与既有规则和候选的差别"></a>
+## Difference from Existing Rules and Candidates
 
-基线为 `shixukai/science-video-skill` main 的 `03c8e8eafb8be12dda6a0afa080c81f5c02779a5`。已核现行 SKILL、学习责任正文、写实制作契约、视觉系统及全部三份既有学习候选。
+The baseline is `shixukai/science-video-skill` main at `03c8e8eafb8be12dda6a0afa080c81f5c02779a5`. The current SKILL, learning responsibilities, realistic-production contract, visual system, and all three existing learning candidates were checked.
 
-现行视觉系统已经要求保留接触位置、变化变量和整体/局部关系，且规定亮面不能冒充数值升高。因此“不遮挡操作点”“不要乱加发光”不是今天发明的新规则。已有候选涉及雨滴影像来源、雨味材料/尺度比较、洋葱解释层级；本记录的窄新增价值是一个具体待测问题：**成像条件与介质/光学模型条件的变化，能否在镜头解释中被分清？** 后者即使让路径更易看见，也可能改变传播本身，不能默认只是展示手段。
+The current visual system already requires preserving contact locations, changed variables, and whole/detail relationships, and states that bright surfaces cannot stand for higher values. Thus “do not obscure the operation point” and “do not add arbitrary glow” are not new rules invented today. Existing candidates concern raindrop-imagery sources, rain-smell material/scale comparisons, and onion explanatory levels. This record's narrow addition is a concrete untested question: **can a shot's explanation distinguish changes in imaging conditions from changes in medium/optical-model conditions?** The latter may change propagation itself even when they make a path easier to see; they cannot default to mere presentation techniques.
 
-## 待测的原创写实代表段方案
+<a id="待测的原创写实代表段方案"></a>
+## Untested Original Realistic Representative-Segment Proposal
 
-适用范围：未来另有授权的原创光学解释，且材料和机制已有来源；不据此恢复任何暂停、取消或已发布项目。第三方镜头只供研究，不作主镜或填充。
+Scope: a separately authorized future original optical explanation with sourced materials and mechanisms. This record does not revive paused, canceled, or published projects. Third-party shots are research-only, not main picture or filler.
 
-- 解释目标：观众分清“改变入射角影响路径”“相机/曝光影响记录的可见程度”及“介质散射既影响可见性也可能改变光传播/衰减”。不要求观众背术语，不把散射描绘成对光学过程无影响的观察工具。
-- 控制项：固定凝胶身份和几何、器具身份、背景、观看尺度、核心口播与总时长。相机位置、拍摄方向和曝光单列为成像条件；散射参数、材料透明度及其实现参数单列为介质或光学模型条件，可能改变传播、衰减和能量分布。不能把后者归为纯展示变化；任何一类发生改变都须如实记录，不能冒称同条件科学对照。渲染参数若无可核物理对应，还须明确模型局限。
-- A为待制作基线：选定工程中可核的现有表达；没有原工程时不虚构A，也不制造一个故意很差的对照。
-- B的候选改动：在关键路径变化前，让器具端部、入射边界与足够的主体范围同时可见；观察窗口内保留操作点，不由手部或切镜遮掉；保持环境/曝光稳定，只展示有依据的受控变量变化。近景以表面反光、透射和内部散射各自承担形体/路径信息，不让整块凝胶统一自发光来替代光路。
-- 如果需要说明为何看得见，区分两种比较：固定物理状态仅调整相机/曝光的成像比较；改变散射或透明度的介质/模型比较。后者须另核物理后果和适用范围，不能宣称只改变可见性，也不能把画面变亮直接说成输入功率变大。不同实验条件或图示层要重新建立身份，不用粒子飞行伪造实时观测。
-- 旁白对应具体观察任务和可见变化；正式秒数在真实音轨产生后确定。本记录没有声音样稿、渲染结果或听验。
+- Explanatory goal: viewers distinguish “incidence-angle changes affect the path,” “camera/exposure affects recorded visibility,” and “medium scattering affects visibility and may also change light propagation/attenuation.” Do not require memorizing terminology or depict scattering as an observation tool without effects on the optical process.
+- Controls: fix gel identity/geometry, instrument identity, background, viewing scale, core narration, and total duration. List camera position, viewing direction, and exposure separately as imaging conditions. List scattering parameters, material transparency, and their implementation parameters separately as medium or optical-model conditions that may change propagation, attenuation, and energy distribution. Do not classify the latter as pure presentation changes. Record changes in either category honestly rather than claiming a scientific comparison under identical conditions. If rendering parameters lack verifiable physical correspondence, also state the model's limits.
+- A is a baseline yet to be made: a verifiable existing expression in the selected project. Without the original project, do not fabricate A or deliberately make a very poor comparison.
+- Candidate changes for B: before a key path change, show the instrument end, entry boundary, and enough of the subject together. Retain the operation point throughout the observation window without hands or cuts hiding it. Keep environment/exposure stable, showing only supported controlled-variable changes. In close view, surface reflections, transmission, and internal scattering separately convey form/path information. Do not make the whole gel block uniformly emissive as a substitute for the optical path.
+- If explaining why the path is visible, distinguish two comparisons: an imaging comparison that fixes physical state and changes only camera/exposure; and a medium/model comparison that changes scattering or transparency. The latter requires separate checks of physical consequences and applicable scope. Do not claim it changes visibility alone or equate a brighter picture with greater input power. Reestablish identity for different experimental conditions or diagram layers. Particle flight must not fabricate real-time observation.
+- Narration corresponds to specific observation tasks and visible changes. Formal seconds are determined after a real track exists. This record has no voice sample, render result, or listening review.
 
-## 尚未执行的验证与取舍
+<a id="尚未执行的验证与取舍"></a>
+## Unexecuted Validation and Selection
 
-未来在已有阶段QA中保留A/B的真实输出、哈希和修改变量。独立审查者须正常速度连续看听相同解释任务，并在目标手机尺寸检查：能否指出操作点；分清入射操作、成像条件与介质/光学模型条件的变化；辨认主体仍为透明实体而不是发光块；是否误认为散射增强不改变光传播，或因强化路径产生其他错误物理暗示。若口播、材质和构图一起改，报告为联合修改，不称单变量实验。
+In future existing stage QA, retain real A/B outputs, hashes, and changed variables. An independent reviewer must continuously watch/listen to the same explanatory task at normal speed and inspect target phone size: can the operation point be identified; can changes in incidence operation, imaging conditions, and medium/optical-model conditions be distinguished; does the subject remain recognizable as a transparent entity rather than a glowing block; could viewers wrongly think stronger scattering leaves propagation unchanged, or could enhanced paths imply other false physics? If narration, materials, and composition change together, report a combined modification rather than a single-variable experiment.
 
-只有实际检验后才判断保留、修订或弃用。单帧和参数测试不证明动作、理解改善或留存提升。当前结果仅是可审阅候选，不修改正式规范，不代表真实影片已改进。
+Decide whether to retain, revise, or discard only after actual testing. Single frames and parameter tests do not establish action quality, improved understanding, or higher retention. The current result is a reviewable candidate only, not a formal-standard change or an improved actual film.

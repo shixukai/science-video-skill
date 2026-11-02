@@ -1,56 +1,63 @@
-# 候选学习准备：把切洋葱的物理喷出与致泪化学分开
+<a id="候选学习准备把切洋葱的物理喷出与致泪化学分开"></a>
+# Candidate Learning Preparation: Separate Physical Ejection in Onion Cutting from Tear-Inducing Chemistry
 
-状态：有限参考画面观察、第一方科学来源核对及未执行的表达假设。不是完整视频观看记录，不是正式新增规范、已验证方法或影片改善结论。核验日期：2026-10-20 UTC。
+Status: limited reference-picture observation, first-party scientific source checks, and an unexecuted expression hypothesis. This is not a complete video-viewing record, a formal new standard, a validated method, or a conclusion that a film improved. Verification date: 2026-10-20 UTC.
 
-## 参考身份与真实观察边界
+<a id="参考身份与真实观察边界"></a>
+## Reference Identity and Boundaries of Actual Observation
 
-ACS/PBS Reactions《Why Do Onions Make You Cry?》：
+ACS/PBS Reactions, “Why Do Onions Make You Cry?”:
 https://www.pbs.org/video/why-do-onions-make-you-cry-opjvi1/
 
-PBS 页面显示 Season 3 Episode 24、2分18秒、日期2016-06-07。本次在助手云端浏览器启动并暂停播放器，实际只查看播放器显示00:05的单帧：人物脸部近景占据画面主体，背景为厨房物件。该观察不能证明开场完整结构、叙事节奏、连续动作或方法优劣。
+The PBS page lists Season 3 Episode 24, 2 minutes 18 seconds, and 2016-06-07. In this session, the player was started and paused in the assistant's cloud browser. Only the single frame at the player's displayed 00:05 was actually viewed: a facial close-up occupies most of the picture, with kitchen objects behind. This observation cannot establish the full opening structure, narrative rhythm, continuous action, or comparative merit of the method.
 
-未正常速度连续看完，未实际听到音频。不能评价配音、音乐、音效和声画配合；也未取得可独立确认的正式封面，因此封面不评。播放器能播放不等于审查者已经看听；播放经过时间、网页简介、字幕或摘要均未用来填补这些缺项。本例仅是待完整观看的候选，不因出自机构就预先判为优秀成片。
+The full video was not continuously watched at normal speed, and no audio was actually heard. Voiceover, music, effects, and audiovisual coordination cannot be evaluated. No independently confirmable formal cover was obtained, so the cover is not evaluated. A functioning player does not mean the reviewer watched and listened. Elapsed playback time, webpage descriptions, captions, and summaries were not used to fill these gaps. This is only a candidate awaiting complete viewing, not a film prejudged excellent because of its institutional origin.
 
-## 科学证据与范围
+<a id="科学证据与范围"></a>
+## Scientific Evidence and Scope
 
-1. 研究团队所在机构的第一方介绍，已实际读取正文：
-   Cornell Chronicle，2025-10-07，https://news.cornell.edu/stories/2025/10/mist-opportunity-reveals-how-onions-make-cooks-cry
-   介绍将刀刃下压、洋葱层内压力与表层破裂后的微滴喷出联系起来，研究使用高速摄影和简化模型。这支持把“切下去”拆成可观察的受压与破裂事件，不支持凭普通镜头看见全部过程。
-2. 原论文身份：Wu 等，《Droplet outbursts from onion cutting》，PNAS 122(42)，e2512779122，DOI 10.1073/pnas.2512779122；在线发表日期2025-10-07，期次日期2025-10-21。论文入口：
+1. A first-party account from the research team's institution, whose body text was actually read:
+   Cornell Chronicle, 2025-10-07, https://news.cornell.edu/stories/2025/10/mist-opportunity-reveals-how-onions-make-cooks-cry
+   The account connects blade pressure, pressure within onion layers, and microdroplet ejection after surface rupture. The research uses high-speed photography and simplified models. This supports breaking “cutting down” into observable compression and rupture events; it does not support seeing the entire process in ordinary shots.
+2. Original paper identity: Wu et al., “Droplet outbursts from onion cutting,” PNAS 122(42), e2512779122, DOI 10.1073/pnas.2512779122; online publication 2025-10-07, issue date 2025-10-21. Paper entry:
    https://www.pnas.org/doi/10.1073/pnas.2512779122
-   检索元数据入口：https://pubmed.ncbi.nlm.nih.gov/41056001/
-   本轮没有取得完整论文正文。PNAS打开后转至cookie页面；PMC全文入口出现浏览器检查，未绕过；PubMed直接打开未返回摘要正文。检索结果显示的“两阶段：内部压力驱动初次喷出、随后液丝破碎”仅作为待全文复核线索，不能写成已完成论文审读。具体量值、实验刀具、切速及适用条件尚不纳入制作参数。
-3. Cornell 同文将 propanethial S-oxide 列为已知致泪刺激物。这与液滴运动不是同一个解释层级。液滴形态或喷速证据不直接证明化合物怎样生成、每滴含量、到眼剂量或刺激强度，也不能推出所有刺激都必须由可见液滴运输。化学反应及感官机制若成为本片必答内容，必须另取得相应原始研究支持。
+   Search-metadata entry: https://pubmed.ncbi.nlm.nih.gov/41056001/
+   The full paper body was not obtained this round. Opening PNAS redirected to a cookie page; the PMC full-text entry showed a browser check, which was not bypassed; opening PubMed directly did not return abstract body text. The search result's quoted “两阶段：内部压力驱动初次喷出、随后液丝破碎” is only a lead for full-text rechecking, not a completed paper review. Specific values, experimental blades, cutting speeds, and applicable conditions are not yet production parameters.
+3. The same Cornell account identifies propanethial S-oxide as a known lachrymatory irritant. This is a different explanatory level from droplet motion. Evidence of droplet shape or ejection speed does not directly establish how the compound forms, its amount in each drop, the dose reaching the eye, or irritation strength. Nor does it imply all irritation must be transported by visible droplets. If chemical reactions and sensory mechanisms become mandatory answers in a film, obtain corresponding original research support separately.
 
-这里不把2016年视频当作2025年论文的传播案例，不声称视频展示了该新研究。两个来源分别承担候选参考身份与科学研究准备。
+The 2016 video is not treated here as a communication example for the 2025 paper, nor is it claimed to show that new research. The sources serve separate roles: candidate-reference identity and scientific research preparation.
 
-## 与已有候选的区别
+<a id="与已有候选的区别"></a>
+## Difference from Existing Candidates
 
-已有雨滴候选处理不同来源影像边界，雨味候选处理材料对照及空间/时间标尺。本候选新增的是“同一日常动作内，不同解释层级各自需要什么证据”：物理喷出、化学生成和感官响应不能被一条漂亮粒子轨迹合并成已证实因果。不是新增统一门槛，不重复升级既有科学核验或实际看听规则。
+The existing raindrop candidate concerns boundaries between imagery sources; the rain-smell candidate concerns material comparisons and spatial/time scales. This candidate adds the question of “what evidence each explanatory level needs within one everyday action”: physical ejection, chemical production, and sensory response cannot be merged into established causality by one attractive particle trajectory. It does not add a universal gate or repeatedly elevate existing scientific-verification or actual-viewing/listening rules.
 
-## 低多边形3D代表段的待测方案
+<a id="低多边形3d代表段的待测方案"></a>
+## Untested Low-Poly 3D Representative-Segment Proposal
 
-以下是纸面A/B方案，不是某部现有影片的真实修改前后；未定位或诊断当前作品，未生成任何媒体，没有音轨、实际秒数或审片结果。未来仅在具体影片仍获授权且原工程可核时使用；不据本记录恢复取消的影片。
+The following is a paper A/B proposal, not a genuine before/after modification of an existing film. No current work has been located or diagnosed, no media generated, and no track, actual seconds, or review results exist. Use it in the future only while the specific film remains authorized and its original project is verifiable. This record does not resume canceled films.
 
-拟定解释任务：让观众分清“刀刃怎样引出液体喷出”与“为什么会刺眼”并非同一层证据。
+Proposed explanatory task: help viewers distinguish the evidence for “how the blade causes liquid ejection” from that for “why it stings the eyes.”
 
-- A，待制作的基线候选：低多边形洋葱、刀刃和眼睛同场，刀落后让发光粒子直接飞向眼睛；旁白同时跨越喷出和刺激。其风险是假定所有粒子同一成分、尺寸与输运路径，并把观察到的液体误读为完整刺激机制。不是已发现的原片失败，不作为推荐制作。
-- B，待制作的修订候选：保持同一解释任务及洋葱与刀刃的外观、取景、光照和整体时长，明确撤去A中从液滴直达眼睛的未经核验机制暗示，这是科学主张范围的修正，不是严格同范围对照；先建立完整洋葱层与接触位置，再在同一位置显露局部受压、表层破裂和微滴喷出。尚待全文复核的后续液丝破碎暂不进入正式动作。物理段旁白只说明所展示的受压与喷出关系，结束时明确该段解释的是液体离开切口，而非已证明全部致泪过程。
-- 若要继续化学/眼部段，先补独立来源、完整解释路径和对应授权，再为反应与刺激另设可辨对象；不用同一串可见粒子无缝变成分子或眼部信号。必要标签用于定位，不以堆字或箭头替代实体可见变化。
-- 声画安排假设：受压的解释句对应可见形变，破裂解释句对应实际破口，不靠快切掩盖中间关系；句间停留由真实工作音轨与观察任务决定，不编造秒数。该同步方案尚未制作或实际听验。
+- A, a baseline candidate yet to be made: a low-poly onion, blade, and eye share the scene; glowing particles fly directly to the eye after the cut, while narration jumps from ejection to irritation. Its risk is assuming every particle has the same composition, size, and transport path, and mistaking observed liquid for the complete irritation mechanism. This is not a discovered failure in an original film or a recommended production.
+- B, a revision candidate yet to be made: keep the same explanatory task and onion/blade appearance, framing, lighting, and overall duration. Explicitly remove A's unverified implication of a mechanism directly from droplets to the eye. This corrects the scope of scientific claims rather than providing a strictly same-scope comparison. First establish complete onion layers and the contact location, then reveal local compression, surface rupture, and microdroplet ejection at that same location. Later filament breakup awaiting full-text rechecking does not yet enter formal action. Physical-segment narration explains only the compression/ejection relationship shown, explicitly ending by stating that this segment explains liquid leaving the cut, not a proven account of the entire tear-inducing process.
+- To continue into chemistry/the eye, first add independent sources, a complete explanation path, and corresponding authorization, then create separately distinguishable objects for reaction and irritation. Do not let one visible particle stream seamlessly become molecules or eye signals. Necessary labels locate; piling up text or arrows cannot replace visible changes in entities.
+- Audiovisual arrangement hypothesis: compression sentences correspond to visible deformation and rupture sentences to an actual opening; rapid cuts must not hide intermediate relationships. Holds between sentences depend on the real working track and observation task rather than invented seconds. This synchronization plan has not been produced or actually listened to.
 
-检验时保留同一解释任务、总时长和可比展示尺寸，并逐项记录科学主张范围的修正。若旁白或镜头同时修改，明确这是联合修改，不能称严格单变量实验。由独立审查者正常速度连续看听真实导出，检查能否定位受压层、辨认破口、区分液滴与分子，以及是否误以为画面证明了全部眼刺激机制。还需检查低多边形结构是否清晰、标签是否遮挡、是否产生新的科学误读。技术字段、单帧及音轨转写不代替此检验。
+For testing, retain the same explanatory task, total duration, and comparable display size, recording corrections to scientific-claim scope item by item. If narration or shots also change, state that this is a combined modification rather than a strict single-variable experiment. An independent reviewer continuously watches/listens to actual exports at normal speed, checking whether the compressed layer and rupture can be located, droplets distinguished from molecules, and whether the picture seems to prove the whole eye-irritation mechanism. Also check low-poly structural clarity, label obstruction, and new scientific misunderstandings. Technical fields, a single frame, or a track transcript do not replace this test.
 
-只有实际完成上述制作与声画对照，才可在限定范围判断保留、修订或弃用；即便理解更清楚，也不能据此宣称留存提升。
+Only after this production and audiovisual comparison are actually complete may a limited-scope decision be made to keep, revise, or discard the proposal. Clearer understanding still cannot justify a claim of improved retention.
 
-## 权利与当前结果
+<a id="权利与当前结果"></a>
+## Rights and Current Results
 
-本记录只有原创概括、公共链接与未验证方案；无第三方媒体、截图、整段字幕、私人项目或用户审片记录。来源可读不等于媒体可复用。没有改动实际影片，没有渲染、安装同步或发布，没有新增正式制作规则。
+This record contains only original summaries, public links, and an unvalidated proposal, with no third-party media, screenshots, complete caption passages, private projects, or user-review records. Readable sources do not imply reusable media. No actual film has changed; no rendering, installation/synchronization, or publication occurred; no formal production rule was added.
 
-## 2026-10-21 补核：反应参与者不等于离开组织的产物
+<a id="2026-10-21-补核反应参与者不等于离开组织的产物"></a>
+## 2026-10-21 Follow-Up Check: Reaction Participants Are Not the Products Leaving the Tissue
 
-本次在同一 PBS 云端播放器实际检查离散暂停画面：00:07 为部分可见的标题画面，00:12 为蓝色球棍造型，00:42 为刀刃、洋葱断面及砧板近景。前两帧播放器上部未完整显示，因此不用于布局评价；00:42 已全屏检查，可见层状断面与切割位置，但单帧不证明受压、破裂或微滴运动。随后定位操作超时，未取得下一帧，不编造后续时点。新增观察仍不是连续观看，未实听，不能评价本片的化学讲解或剪辑是否正确。
+In this session, discrete paused frames were actually checked in the same PBS cloud player: 00:07 showed a partially visible title image, 00:12 a blue ball-and-stick form, and 00:42 a close-up of blade, onion cut face, and cutting board. The upper player area was incomplete in the first two frames, so they are not used for layout evaluation. 00:42 was inspected fullscreen and shows layered cross-section and cutting location, but one frame does not establish compression, rupture, or microdroplet motion. A subsequent seek operation timed out; no next frame was obtained, and no later time is invented. These added observations still are not continuous viewing. No actual listening occurred, so this film's chemical explanation or editing cannot be judged correct.
 
-补读原研究的 PubMed 摘要和 Figure 1 图注，而非仅搜索摘要：Silvaroli 等，2017，ACS Chemical Biology 12(9):2296–2304，DOI 10.1021/acschembio.7b00336，https://pubmed.ncbi.nlm.nih.gov/28708375/ 。正文入口出现浏览器检查，未绕过，也未声称已阅读全文。摘要明确区分催化酶 LFS 和挥发性致泪产物 LF；图注给出次磺酸（sulfenic acid）中间物的不同后续路径，其中一条由 LFS 催化形成 LF。摘要中的精细催化路径是作者依据结构提出的机制，不是直接拍到质子移动。该研究晚于2016年参考视频，不作为该视频使用此研究的证据。
+The original study's PubMed abstract and Figure 1 caption were additionally read, beyond a search snippet: Silvaroli et al., 2017, ACS Chemical Biology 12(9):2296–2304, DOI 10.1021/acschembio.7b00336, https://pubmed.ncbi.nlm.nih.gov/28708375/ . The full-text entry showed a browser check, which was not bypassed, and no claim of full-paper reading is made. The abstract explicitly distinguishes catalytic enzyme LFS from volatile lachrymatory product LF. The figure caption gives different subsequent pathways for a sulfenic acid intermediate, including one catalyzed by LFS to form LF. The detailed catalytic pathway in the abstract is a mechanism proposed by the authors from structure, not direct footage of proton motion. This study postdates the 2016 reference video and is not evidence that the video used it.
 
-对上述待测方案的有限补充：若未来获准制作化学层，可先将酶、底物和产物作为不同身份的对象设计，保持催化酶的身份，不让同一颗代表酶的模型变成飞向眼睛的产物。画面只在另核空间定位及输运证据后才连接组织与眼部；上述摘要不足以设定分子真实颜色、大小比例、运动速度或眼部剂量。检验问题是审查者能否区分“参与反应的对象”与“生成的产物”，不是检查是否记住缩写。此对象设计尚未建模、渲染或视听对照，仍为候选，不增加正式规则，也不替代上文所列的物理喷出与感官机制核验。
+A limited addition to the untested proposal above: if future production of the chemical layer is authorized, first design enzyme, substrate, and product as objects with distinct identities. Preserve the catalytic enzyme's identity rather than turning its representative model into a product flying toward the eye. Connect tissue and eye in picture only after separately verifying spatial-location and transport evidence. The abstract above is insufficient to set real molecular colors, size ratios, motion speeds, or eye doses. The test asks whether a reviewer can distinguish “participants in the reaction” from “the products formed,” not remember abbreviations. This object design has not been modeled, rendered, or audiovisually compared. It remains a candidate, adds no formal rule, and does not replace the physical-ejection and sensory-mechanism checks listed above.

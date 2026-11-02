@@ -1,56 +1,62 @@
-# 外部视频 Skills：采用点与许可
+<a id="外部视频-skills采用点与许可"></a>
+# External video Skills: adopted methods and licenses
 
-按[工具路由](tool-routing.md)选本次所需能力，按[准备与安装](tool-routing.md#调用前准备与安装)运行。固定提交、阅读文件、许可证据和候选状态保存在[外部来源索引](../indexes/external-skills.json)；本页只列可直接采用的方法及限制。
+Select needed capabilities through [tool routing](tool-routing.md) and execute under [preparation/installation](tool-routing.md#preparation-and-installation-before-calls). Frozen commits, read files, license evidence and candidate state live in the [external-source index](../indexes/external-skills.json); this page lists directly usable methods/limits only.
 
-## 已纳入的少量参考与生产路由
+<a id="已纳入的少量参考与生产路由"></a>
+## Small included reference set and production routes
 
-包内保留三份Apache-2.0技术参考，原文、SHA-256与完整许可证见[来源说明](../third-party/videozero-motion-canvas/README.md)。仅在已有Motion Canvas工程或获准2D范围需要相应能力时读取；不因引用迁移主工具。
+Three Apache-2.0 technical references are retained; originals, SHA-256 and full license are in [source notes](../third-party/videozero-motion-canvas/README.md). Read only for needed capability in existing Motion Canvas projects or approved 2D scope; citation does not migrate primary tools.
 
-| 进入条件与生产阶段 | 读取的文件 | 本项目具体采用点 | 输出及限制 |
+| Entry condition/stage | File | Specific adoption | Output/limits |
 | --- | --- | --- | --- |
-| 当前项目已经使用或经任务确定采用Motion Canvas；G2草排/G3代表段需要多个对象协同 | [FLOW_CONTROL.md](../third-party/videozero-motion-canvas/FLOW_CONTROL.md) | 用chain保持必须顺序的步骤，用all同步具有同一解释关系的变化，用sequence表达有依据的先后；观察停顿由理解任务与实际音轨决定 | 生成可复核的对象时间线和连续代表段；并发API不授权每个对象都动，不把顺序/延迟当作科学事实。官方依据：[Animation flow](https://motion-canvas.io/docs/flow/)、[Time Events](https://motion-canvas.io/docs/time-events/) |
-| 同上；G3需要美术资产内的独立部件、路径或姿态变化 | [SVG.md](../third-party/videozero-motion-canvas/SVG.md) | 保留真正可编辑的SVG对象/分组，以对象ID关联动作；需要对子层独立改变时使用SVG而非把整张图栅格化为Img | 在当前尺度及拟用动作范围核子层、底板、连接与遮挡；导入SVG不会自动补绘、获得关节或形成精美造型。官方依据：[SVG组件](https://motion-canvas.io/api/2d/components/SVG/) |
-| 同上；G2/G3已确定状态、路径、约束与真实语义事件 | [TWEENING.md](../third-party/videozero-motion-canvas/TWEENING.md) | 用属性插值和自定义tween实现已设计的对象状态变化，统一共享变量；仅当表达目的适合时选择缓动 | 记录关键态、固定/滑动边界与连续路径；物理传播、碰撞、概率与数量关系不自动套弹跳、弹簧或ease-in-out。官方依据：[Tweening](https://motion-canvas.io/docs/tweening/) |
+| Existing/selected Motion Canvas; G2/G3 multi-object coordination | [FLOW_CONTROL.md](../third-party/videozero-motion-canvas/FLOW_CONTROL.md) | chain for required order, all for one explanatory relationship, sequence for evidenced ordering; understanding/audio determine holds | Reviewable timelines/continuous sample. Concurrency APIs do not require every object to move or establish scientific delay/order. Official: [Animation flow](https://motion-canvas.io/docs/flow/), [Time Events](https://motion-canvas.io/docs/time-events/) |
+| Same; G3 independent art parts, paths or poses | [SVG.md](../third-party/videozero-motion-canvas/SVG.md) | Preserve editable SVG objects/groups and ID-linked action; use SVG for independent child changes instead of rasterizing the whole to Img | Check children, backplates, connections and occlusion at actual scale/action. SVG import does not draw missing art, rig joints or refine shape. Official: [SVG component](https://motion-canvas.io/api/2d/components/SVG/) |
+| Same; G2/G3 defined states, paths, constraints and real semantic events | [TWEENING.md](../third-party/videozero-motion-canvas/TWEENING.md) | Property interpolation/custom tween implement designed states with shared variables; easing only when purposeful | Record key states, fixed/sliding boundaries and paths; do not automatically impose bounce, spring or ease-in-out on physical propagation, collision, probability or quantities. Official: [Tweening](https://motion-canvas.io/docs/tweening/) |
 
-Motion Canvas引擎另按[MIT许可证](https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/LICENSE)核验；参考文本的Apache-2.0不覆盖引擎、素材或服务。
+Verify the Motion Canvas engine separately under its [MIT license](https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/LICENSE); reference Apache-2.0 does not cover engine/assets/services.
 
-## 优先参考的来源
+<a id="优先参考的来源"></a>
+## Preferred reference sources
 
-仅为本镜缺少的具体方法读取下表；固定文件与许可证据查来源索引。
+Read the table only for methods actually missing in this shot; source index holds fixed files/license evidence.
 
-| 来源 | 实际采用点与许可限制 |
+| Source | Adoption/license limits |
 | --- | --- |
-| [Remotion官方Skills](https://github.com/remotion-dev/skills) | 已有React工程的帧驱动动画、字幕与导出。所核提交未见独立LICENSE，不复制原文；引擎运行许可另核。 |
-| [Motion Canvas](https://github.com/motion-canvas/motion-canvas) / [VideoZero](https://github.com/VideoZero/skills) | 采用上表三份对象时间线、SVG子层与插值参考；不引入固定秒数、背景脉动或编辑器远程接口。 |
-| [Manim Community](https://github.com/ManimCommunity/manim) | 已有或获准2D工程需要几何、数量与动态图表时查官方API；引擎MIT，默认样式按本期美术重做。 |
-| [manim-video-lab](https://github.com/ApliroAI/manim-video-lab) / [manim-storytelling-skills](https://github.com/dbillion/manim-storytelling-skills) | 参考解释任务到对象/状态/共享关系的映射；所核文本MIT，不采用固定停留秒数、黑底色板或替代实际审看的方法。 |
-| [video-talkcraft](https://github.com/Vincentwei1021/video-talkcraft) | 参考成品音轨驱动语义时间线；所核文本PolyForm Noncommercial，商业使用另需许可，不复制工具包或切换为其Fish Audio默认声音。 |
-| [vox-director](https://github.com/Alisa0808/vox-director) | 参考素材分层、独立元素与关键态；文本MIT不覆盖其默认云模型和媒体权利，不迁入Atlas Cloud全流程。 |
-| [OpenMontage](https://github.com/calesthio/OpenMontage) | 参考逐镜需求、素材覆盖、来源与剪辑时间线的关联；所核框架AGPL-3.0，本包未复制/安装。 |
-| [jianying-editor-skill](https://github.com/luoluoluo22/jianying-editor-skill) | 仅需剪映分轨工程交付时核实际兼容性；主体MIT、内置pyJianYingDraft Apache-2.0，应用/云素材另核。不替换本期声音。 |
-| [seedance2-skill](https://github.com/dexhunter/seedance2-skill) | 参考身份/结构/风格/动作/构图分角色提示；MIT指南不是可执行模型或渲染器。 |
+| [Official Remotion Skills](https://github.com/remotion-dev/skills) | Frame-driven animation, captions/export in existing React. No standalone LICENSE found at inspected commit: do not copy text; verify engine runtime rights separately. |
+| [Motion Canvas](https://github.com/motion-canvas/motion-canvas) / [VideoZero](https://github.com/VideoZero/skills) | The three timeline/SVG/interpolation references above; no fixed seconds, background pulsing or remote-editor interface. |
+| [Manim Community](https://github.com/ManimCommunity/manim) | Official API for geometry, quantities and animated charts in existing/approved 2D. Engine MIT; redesign defaults for this episode. |
+| [manim-video-lab](https://github.com/ApliroAI/manim-video-lab) / [manim-storytelling-skills](https://github.com/dbillion/manim-storytelling-skills) | Map explanatory tasks to objects/states/shared relationships. Inspected text MIT; no fixed holds, black palettes or substitutes for viewing. |
+| [video-talkcraft](https://github.com/Vincentwei1021/video-talkcraft) | Finished-audio-driven semantic timeline. Inspected text PolyForm Noncommercial; commercial use needs permission. Do not copy toolkit or switch to its Fish Audio default voice. |
+| [vox-director](https://github.com/Alisa0808/vox-director) | Asset layers, independent elements/key states. MIT text does not cover default cloud models/media rights; do not migrate to Atlas Cloud pipeline. |
+| [OpenMontage](https://github.com/calesthio/OpenMontage) | Link shot needs, coverage, provenance and editing timelines. Inspected AGPL-3.0 framework is neither copied nor installed here. |
+| [jianying-editor-skill](https://github.com/luoluoluo22/jianying-editor-skill) | Check compatibility only for requested Jianying multitrack delivery. Main MIT, bundled pyJianYingDraft Apache-2.0; app/cloud assets separate. Preserve this voice. |
+| [seedance2-skill](https://github.com/dexhunter/seedance2-skill) | Role-separated prompts for identity, structure, style, action and framing. MIT guide is not a model/renderer. |
 
-## Scenario：只接入有增量的方法
+<a id="scenario只接入有增量的方法"></a>
+## Scenario: adopt only methods with added value
 
-按固定提交研究[Scenario Skills](https://github.com/scenario-labs/skills/tree/7f4b801c7248d51b093ec365aceb114bd06139e6)的选定文本，许可证据和所读文件哈希见[来源索引](../indexes/external-skills.json)。这是方法采用；不安装整个技能族，不复制其脚本或运行/媒体资产，也不导入Scenario云端制作链。
+Study selected [Scenario Skills](https://github.com/scenario-labs/skills/tree/7f4b801c7248d51b093ec365aceb114bd06139e6) texts at the fixed commit; [source index](../indexes/external-skills.json) holds license evidence/read hashes. Adopt methods, not the whole Skill family, scripts, runtime/media assets or Scenario cloud production chain.
 
-| 所读方法来源 | 接入现有制作的位置 |
+| Read method | Integration into existing production |
 | --- | --- |
-| [多参考分工](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-multi-reference/SKILL.md)、[一致性](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-consistency/SKILL.md)、[故事板](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-storyboards/SKILL.md) | [视觉锚点到资产](visual-system.md#从视觉锚点到实际资产)：每份参考限贡献/禁继承，共同有效基准加本镜变化，保留科学状态记忆，防止失败输出逐镜扩散。 |
-| [材质](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-texturing-shading/SKILL.md) | [Blender材质步骤](engineering-blender.md#明亮灯光与材质的实际执行)：用可编辑遮罩/单通道诊断作用范围与坐标，再恢复真实材质复查。 |
-| [动画](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-animation/SKILL.md) | [停驻与接触](animation-scene-design.md#手调曲线先分清停驻与持续接触)：按真实动作处理hold、持续接触及局部曲线，避免全局平滑造成漂移。 |
-| [灯光/渲染](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-lighting-rendering/SKILL.md) | [可选光照分组复用](blender-execution.md#可选复用光照分组而非每次重渲)：限已有且经本机核实的通道；不把主帧导出等同多层通道能力。 |
+| [Multiple-reference roles](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-multi-reference/SKILL.md), [consistency](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-consistency/SKILL.md), [storyboards](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/scenario-storyboards/SKILL.md) | [Visual anchors to assets](visual-system.md#from-visual-anchors-to-actual-assets): contributions/exclusions per reference, valid shared baseline plus shot changes, scientific state memory, preventing failed-output propagation. |
+| [Materials](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-texturing-shading/SKILL.md) | [Blender material steps](engineering-blender.md#actual-execution-of-bright-lighting-and-materials): editable masks/single-channel scope/coordinate diagnosis, then restore/recheck real materials. |
+| [Animation](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-animation/SKILL.md) | [Holds/contact](animation-scene-design.md#distinguish-holds-from-sustained-contact-before-hand-editing-curves): real-action holds, sustained contact/local curves rather than global smoothing/drift. |
+| [Lighting/rendering](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-lighting-rendering/SKILL.md) | [Optional light-group reuse](blender-execution.md#optionally-reuse-light-groups-instead-of-rerendering-every-adjustment): actual locally verified passes only; main-frame export is not multilayer capability. |
 
-所读精修、同条件比较、实测输入时长、保留干净母版等已被本Skill覆盖，不重复增加流程。源文的云模型/帐号、在线显示或上传、固定候选/重试次数、逐秒抽帧与评分门槛不采用。仍按既定MoneyPrinterTurbo/Blender路线、本地优先、流量硬约束、可点击本地审阅链接和按风险复查执行；外部作者的应用测试不证明本机或本片已通过。
+Refinement, same-condition comparisons, measured input duration and clean masters already exist here; do not duplicate workflows. Do not adopt source cloud models/accounts, online display/upload, fixed candidate/retry counts, per-second extraction or scoring gates. Retain MoneyPrinterTurbo/Blender routes, local-first bandwidth requirements, clickable local review links and risk-based rechecks. External authors' tests do not validate this machine/film.
 
-## 扩展检索中保留或排除的候选
+<a id="扩展检索中保留或排除的候选"></a>
+## Candidates retained or excluded in extended research
 
-完整候选及排除理由查[来源索引](../indexes/external-skills.json)的 `classification`、`limitations` 和 `license`。许可缺失/不完整不复制；明确禁止生产使用的来源不采用。需要新能力时再核当前版本与适用文件，不把检索目录当安装清单。
+See the [source index](../indexes/external-skills.json) fields `classification`, `limitations`, `license` for full candidates/exclusions. Do not copy missing/incomplete-license sources or adopt explicitly nonproduction sources. Check current versions/relevant files when new needs arise; discovery is not an installation list.
 
-## 引擎、服务、文本传输与成本
+<a id="引擎服务文本传输与成本"></a>
+## Engine, service, text transfer and costs
 
-分开核所引用文本、实际引擎/依赖、素材/字体/音轨和云服务条款。现有声音及本期主工具不因参考指南的默认项而改变。
+Check referenced text, actual engines/dependencies, assets/fonts/audio and cloud terms separately. Guide defaults do not change existing voice/current primary tools.
 
-- Remotion采用前核[当前运行许可](https://www.remotion.dev/docs/license/faq)，按组织及实际用途判断，不沿用旧价格或社区Skill许可。
-- 在线ASR/TTS、图像/视频及素材服务先核目的地、实际上传内容、已有授权和当前计费；只读文档不上传项目稿件，安装Skill不自动授权传输或购买。
-- 复制可分发文件时保留其许可；来源核验不代替本期运行及实际声画审查。
+- Before Remotion adoption check [current runtime rights](https://www.remotion.dev/docs/license/faq) against organization/use, not old prices/community Skill licenses.
+- For online ASR/TTS, images/video and asset services, verify destination, actual uploads, existing authorization and pricing. Reading docs uploads no project scripts; installing Skills authorizes neither transfer nor purchases.
+- Retain licenses when copying redistributable files; source verification is not current execution/audiovisual review.

@@ -246,9 +246,9 @@ class ReferenceSystemTests(unittest.TestCase):
         registry = json.loads((self.root / "indexes/standard-coverage.json").read_text())
         sections = {row["file"]: row for row in registry["sections"]}
         for file, owner, anchors in (
-            ("references/production-checkpoints.md", "production", ("3-阶段推进与代表样", "逐段声画与图内文字对应")),
-            ("references/visual-system.md", "visual", ("纯2d解释与真实素材",)),
-            ("references/quality-acceptance.md", "quality", ("失败后的处理", "主体动态与长静帧")),
+            ("references/production-checkpoints.md", "production", ("3-stage-progression-and-representative-samples", "match-each-sections-picture-sound-and-in-picture-text")),
+            ("references/visual-system.md", "visual", ("pure-2d-explanation-and-real-assets",)),
+            ("references/quality-acceptance.md", "quality", ("handling-failures", "subject-motion-and-long-static-holds")),
         ):
             with self.subTest(file=file):
                 self.assertEqual(sections[file]["owner_id"], owner)
@@ -257,10 +257,10 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_navigation_rebuild_cannot_hide_broken_cross_references(self):
         from rebuild_standard_index import build
         routes = (
-            ("references/production-checkpoints.md", "quality-acceptance.md#失败后的处理"),
-            ("references/quality-acceptance.md", "production-checkpoints.md#逐段声画与图内文字对应"),
-            ("references/quality-acceptance.md", "production-checkpoints.md#3-阶段推进与代表样"),
-            ("references/quality-acceptance.md", "#自主解释与表达审查"),
+            ("references/production-checkpoints.md", "quality-acceptance.md#handling-failures"),
+            ("references/quality-acceptance.md", "production-checkpoints.md#match-each-sections-picture-sound-and-in-picture-text"),
+            ("references/quality-acceptance.md", "production-checkpoints.md#3-stage-progression-and-representative-samples"),
+            ("references/quality-acceptance.md", "#autonomous-explanation-and-expression-review"),
         )
         registry_path = self.root / "indexes/standard-coverage.json"
         original_registry = registry_path.read_bytes()
@@ -286,7 +286,7 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_deleted_subject_motion_section_requires_reviewed_index_update(self):
         p = self.root / "references/quality-acceptance.md"
         original = p.read_bytes()
-        p.write_bytes(original.replace("## 主体动态与长静帧".encode(), b"## Deleted section"))
+        p.write_bytes(original.replace("## Subject Motion and Long Static Holds".encode(), b"## Deleted section"))
         self.errors("stale/incomplete chapter navigation")
 
 

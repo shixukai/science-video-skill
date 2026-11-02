@@ -35,8 +35,8 @@
         "G3",
         "G4"
       ],
-      "adopt": "已有React/Remotion模板及组件复用、参数化批量渲染",
-      "limitations": "Skill文件可安装，实际渲染需Remotion工程；Skill仓无独立LICENSE，运行许可另核，不向本仓复制其原文。",
+      "adopt": "Existing React/Remotion templates/components and parameterized batch rendering",
+      "limitations": "The Skill files can be installed; actual rendering needs a Remotion project. No standalone LICENSE was found for the Skill repository; check runtime licensing separately and do not copy its text here.",
       "license": {
         "classification": "not_found_at_commit",
         "evidence": [],
@@ -100,7 +100,7 @@
         "primary_reference": "https://www.remotion.dev/docs/license/faq",
         "validation_status": "skill_source_verified_runtime_not_executed"
       },
-      "data_transfer_and_cost": "仅技术文档查询；本地渲染本身不需要向模型传稿，云渲染/ASR另核",
+      "data_transfer_and_cost": "Technical-documentation queries only; local rendering itself does not send scripts to a model. Check cloud rendering/ASR separately.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project",
       "checked_at": "2026-10-10",
       "execution": {
@@ -121,8 +121,8 @@
         "G3",
         "G4"
       ],
-      "adopt": "对象、信号、generator与音轨事件同步",
-      "limitations": "框架不自动生成精美资产；保留现有主引擎",
+      "adopt": "Synchronize objects, signals, generators and audio events",
+      "limitations": "The framework does not automatically create refined assets; retain the existing main engine.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -159,7 +159,7 @@
         "primary_reference": "https://motion-canvas.io/docs/time-events/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本地引擎无强制云模型；远程资源读取及发布另核",
+      "data_transfer_and_cost": "Local engine with no mandatory cloud model; check remote asset access and publication separately.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -172,8 +172,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "精确几何、坐标、图表与动态关联对象",
-      "limitations": "默认数学课件样式不等于本项目画风；只选择纯2D能力",
+      "adopt": "Precise geometry, coordinates, charts and dynamically related objects",
+      "limitations": "The default mathematics-lesson appearance is not this project's style; select only its pure-2D capabilities.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -210,7 +210,7 @@
         "primary_reference": "https://docs.manim.community/en/stable/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本地引擎无强制TTS；可选voiceover服务另核",
+      "data_transfer_and_cost": "Local engine with no mandatory TTS; check optional voiceover services separately.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -223,8 +223,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "FLOW_CONTROL/SVG/TWEENING三个自包含技术正文",
-      "limitations": "未安装上游SKILL、脚本或编辑器API；不导入animation-basics硬秒数与普遍拉伸规则",
+      "adopt": "Three self-contained technical references: FLOW_CONTROL, SVG and TWEENING",
+      "limitations": "Upstream SKILL, scripts and editor API were not installed; do not import animation-basics fixed-second rules or universal stretch rules.",
       "license": {
         "classification": "Apache-2.0",
         "evidence": [
@@ -310,7 +310,7 @@
         "primary_reference": "https://motion-canvas.io/docs/flow/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本次仅本地参考；没有发送项目稿件或安装/运行引擎",
+      "data_transfer_and_cost": "Local reference only in this review; no project manuscript was sent and no engine was installed/run.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -323,8 +323,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "成品音轨、语义拍、注意中心和本地字级对齐的方法",
-      "limitations": "工具包商业使用需作者许可；未复制/安装；相机运动不代机制",
+      "adopt": "Methods for finished voice tracks, semantic beats, attention and local word-level alignment",
+      "limitations": "Commercial toolkit use needs author permission; it was not copied/installed. Camera movement does not replace a mechanism.",
       "license": {
         "classification": "PolyForm-Noncommercial-1.0.0",
         "evidence": [
@@ -368,7 +368,7 @@
         "primary_reference": "https://www.remotion.dev/docs/license/faq",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本地ASR与可选Fish Audio分开；云TTS发送脚本并产生独立费用",
+      "data_transfer_and_cost": "Separate local ASR from optional Fish Audio; cloud TTS sends the script and has separate charges.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -381,8 +381,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "资产角色、关键帧与元素分层的方法",
-      "limitations": "主流程纸拼贴/云模型/烘焙标题/固定切镜不直接采纳；抽帧不代连续视听",
+      "adopt": "Asset roles, keyframes and element layering",
+      "limitations": "Do not directly adopt the paper-collage/cloud-model/baked-title/fixed-cut main workflow. Extracted frames do not replace continuous audiovisual review.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -440,7 +440,7 @@
         "primary_reference": "https://www.atlascloud.ai/docs/en/billing",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "默认在线图像、视频、声音、音乐各自发送输入并计费；本项目未调用",
+      "data_transfer_and_cost": "Online image, video, sound and music services each send inputs and incur separate charges; none was invoked for this project.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -454,8 +454,8 @@
         "G2",
         "G4"
       ],
-      "adopt": "逐镜素材需求、候选片段、来源权利与编辑时间线的方法",
-      "limitations": "未复制或安装AGPL框架；不导入整套代理/平台批准流程",
+      "adopt": "Per-shot asset needs, candidate segments, provenance/rights and edit timelines",
+      "limitations": "The AGPL framework was not copied or installed; do not import its whole agent/platform approval workflow.",
       "license": {
         "classification": "AGPL-3.0-only",
         "evidence": [
@@ -520,7 +520,7 @@
         "primary_reference": "https://github.com/calesthio/OpenMontage",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "不同provider服务费用/数据流不同；示例素材存在不等于权利已取得",
+      "data_transfer_and_cost": "Provider costs and data flows differ; the existence of sample assets does not establish usage rights.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -532,8 +532,8 @@
       "production_stages": [
         "G4"
       ],
-      "adopt": "分轨草稿、同步字幕与可编辑工程组织",
-      "limitations": "需实际剪映兼容验证；自身不是机制动画设计器；不替换本项目声音和固定BGM0.6",
+      "adopt": "Organize draft stems, synchronized captions and editable projects",
+      "limitations": "Actual Jianying compatibility needs verification. This is not a mechanism-animation designer; retain this project's voice and fixed BGM 0.6.",
       "license": {
         "classification": "MIT-with-Apache-2.0-vendored-component",
         "evidence": [
@@ -598,7 +598,7 @@
         "primary_reference": "https://github.com/luoluoluo22/jianying-editor-skill/blob/32c56928ded4f9e2c2b80e099dc7abb793d2c30b/LICENSE",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "可选云TTS/素材接口发送脚本或请求并适用独立权利与费用",
+      "data_transfer_and_cost": "Optional cloud TTS/asset interfaces send scripts or requests, with separate rights and costs.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -611,8 +611,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "多模态参考角色、分时对象动作与不变量约束",
-      "limitations": "提示词指南，不是已运行生成器；不把模型能力/价格写死",
+      "adopt": "Multimodal reference roles, time-specific object actions and invariants",
+      "limitations": "A prompt guide, not an executed generator; do not hard-code model capabilities/prices.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -656,7 +656,7 @@
         "primary_reference": "https://github.com/dexhunter/seedance2-skill",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "实际生成时发送文本/参考媒体，服务许可与费用另核；本次仅读取指南",
+      "data_transfer_and_cost": "Actual generation sends text/reference media; check service licenses/costs separately. Only the guide was read here.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -669,8 +669,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "解释任务选技术、布局及渲染检查思路",
-      "limitations": "自己的LICENSE全文未找到；sources/3b1b MIT仅限对应文件",
+      "adopt": "Choose techniques by explanation task, with layout/render-check methods",
+      "limitations": "Its own complete LICENSE was not found; sources/3b1b MIT covers only the corresponding files.",
       "license": {
         "classification": "not_found_at_commit",
         "evidence": [],
@@ -699,7 +699,7 @@
         "primary_reference": "https://docs.manim.community/en/stable/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "仅链接及方法观察；没有复制或执行",
+      "data_transfer_and_cost": "Links and method observations only; nothing was copied or executed.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -712,8 +712,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "研究/分镜schema及条件式voiceover技术资料",
-      "limitations": "未导入四岗位框架；README把引擎误标Apache，实际Manim Community MIT",
+      "adopt": "Research/storyboard schemas and conditional voiceover technical references",
+      "limitations": "The four-role framework was not imported. README mislabels the engine Apache; actual Manim Community licensing is MIT.",
       "license": {
         "classification": "Apache-2.0",
         "evidence": [
@@ -771,7 +771,7 @@
         "primary_reference": "https://docs.manim.community/en/stable/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "可选gTTS/OpenAI/ElevenLabs服务需要实际目的地/数据及费用记录",
+      "data_transfer_and_cost": "Optional gTTS/OpenAI/ElevenLabs services need actual destination/data/cost records.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -784,8 +784,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "Manim语法和技术镜头示例",
-      "limitations": "README MIT声明与LICENSE全文缺失分开；暂不复制",
+      "adopt": "Manim syntax and technical shot examples",
+      "limitations": "Distinguish the README MIT statement from the missing full LICENSE; do not copy for now.",
       "license": {
         "classification": "README_MIT_claim_no_license_text",
         "evidence": [],
@@ -814,7 +814,7 @@
         "primary_reference": "https://docs.manim.community/en/stable/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "技术候选；本项目未安装或运行",
+      "data_transfer_and_cost": "Technical candidate; not installed or executed for this project.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -827,8 +827,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "研究素材/实际画面对照与品牌SVG完成度思路",
-      "limitations": "不导入build/delivery批准脚本、产品/品牌硬标准及自评分阈值",
+      "adopt": "Compare research assets with actual picture and study finished brand SVGs",
+      "limitations": "Do not import build/delivery approval scripts, product/brand hard standards or self-scoring thresholds.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -893,7 +893,7 @@
         "primary_reference": "https://www.remotion.dev/docs/license/faq",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "营销素材/品牌权利与引擎许可另核；本项目未执行",
+      "data_transfer_and_cost": "Check marketing/brand rights and engine licensing separately; not executed for this project.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -906,8 +906,8 @@
         "G2",
         "G4"
       ],
-      "adopt": "音轨分层、scene组织、ffmpeg导出资料",
-      "limitations": "SaaS/UI/CTA叙事不作为通用科普解释框架",
+      "adopt": "Audio layers, scene organization and FFmpeg export references",
+      "limitations": "SaaS/UI/CTA storytelling is not a universal science-explanation framework.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -951,7 +951,7 @@
         "primary_reference": "https://www.remotion.dev/docs/license/faq",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "可选AI接口传输与费用独立；本项目未执行",
+      "data_transfer_and_cost": "Optional AI-interface transfer/costs are separate; not executed for this project.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -963,8 +963,8 @@
       "production_stages": [
         "G3"
       ],
-      "adopt": "可编辑2D对象、状态机与runtime的候选",
-      "limitations": "未见skill LICENSE全文；未核Rive编辑器/资产导出条件或本项目能力",
+      "adopt": "Candidate for editable 2D objects, state machines and runtime",
+      "limitations": "No complete Skill LICENSE was seen; Rive editor/export terms and project capability are unverified.",
       "license": {
         "classification": "not_found_at_commit",
         "evidence": [],
@@ -993,7 +993,7 @@
         "primary_reference": "https://github.com/BowTiedSwan/rive-skills",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "只留候选，不推定编辑器、runtime、素材或云服务许可",
+      "data_transfer_and_cost": "Candidate only; do not presume editor, runtime, asset or cloud-service licenses.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1006,8 +1006,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "原ManimGL引擎与可明确许可的代码技术方法",
-      "limitations": "不与Manim Community API混用；引擎许可不扩展到独立3b1b/videos作品仓",
+      "adopt": "Original ManimGL engine and clearly licensed technical code methods",
+      "limitations": "Do not mix with Manim Community APIs; engine licensing does not extend to the separate 3b1b/videos creative repository.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -1044,7 +1044,7 @@
         "primary_reference": "https://github.com/3b1b/manim",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本地引擎；没有迁移或复制作品仓",
+      "data_transfer_and_cost": "Local engine; no migration or copying of the creative repository.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1057,8 +1057,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "SVG分件、形状接力与分scene组织的候选",
-      "limitations": "copiedremotionrules保留独立来源，不能被自有MIT覆盖；未复制任何文件",
+      "adopt": "Candidate SVG decomposition, shape handoffs and multi-scene organization",
+      "limitations": "copiedremotionrules retains separate provenance and cannot be covered by the repository's own MIT declaration; no files were copied.",
       "license": {
         "classification": "MIT_own_files_separate_upstream_rules",
         "evidence": [
@@ -1102,7 +1102,7 @@
         "primary_reference": "https://www.remotion.dev/docs/license/faq",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "仅方法参考；素材下载/外部模型/引擎许可另核",
+      "data_transfer_and_cost": "Method reference only; check asset downloads, external models and engine licensing separately.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1115,8 +1115,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "motion grammar、beat graph与复用组件记录的方法",
-      "limitations": "不纳入80%必须运动、从运动隐喻出发或暗色营销视觉；未复制",
+      "adopt": "Motion grammar, beat graphs and reusable-component records",
+      "limitations": "Do not adopt mandatory 80% motion, starting from motion metaphors or dark marketing visuals; nothing was copied.",
       "license": {
         "classification": "not_found_at_commit",
         "evidence": [],
@@ -1166,7 +1166,7 @@
         "primary_reference": "https://github.com/Pluviobyte/video-production-skills",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "只看方法；渲染、素材或模型依赖未运行",
+      "data_transfer_and_cost": "Methods only; rendering/assets/model dependencies were not run.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1179,8 +1179,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "是否需要运动、解释任务到对象状态、连续共享结构的方法",
-      "limitations": "固定停留秒数、黑底风格、先亮结果及抽帧验收替代不纳入",
+      "adopt": "Whether motion is needed, explanation-to-state mapping and continuous shared structures",
+      "limitations": "Do not adopt fixed hold durations, black-background style, showing the answer first or extracted-frame substitutes for review.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -1259,7 +1259,7 @@
         "primary_reference": "https://docs.manim.community/en/stable/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本地实现参考；可选配音插件或服务另核",
+      "data_transfer_and_cost": "Local implementation reference; check optional voice plugins/services separately.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1272,8 +1272,8 @@
         "G2",
         "G3"
       ],
-      "adopt": "同对象变换、两种表示关联、轨迹、附着标签和图表的技术选择",
-      "limitations": "不纳入黑底蓝黄、每镜aha、三运动上限或静音讲完整的万能规则",
+      "adopt": "Same-object transforms, linked representations, trajectories, attached labels and charts",
+      "limitations": "Do not adopt universal black/blue/yellow styling, an aha per shot, a three-motion ceiling or silent complete-explanation rules.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -1345,7 +1345,7 @@
         "primary_reference": "https://docs.manim.community/en/stable/",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "本地技术参考；没有运行脚本/生成样片",
+      "data_transfer_and_cost": "Local technical reference; no scripts or samples were executed/generated.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1357,8 +1357,8 @@
       "production_stages": [
         "research"
       ],
-      "adopt": "仅核许可证及仓库介绍",
-      "limitations": "明确限制复制/改写/生产；不引用其skill原文、提示词或代码，不作为采用来源",
+      "adopt": "License and repository introduction only",
+      "limitations": "Copying/adaptation/production are explicitly restricted; do not quote its Skill text, prompts or code, and do not use it as an adoption source.",
       "license": {
         "classification": "proprietary_all_rights_reserved",
         "evidence": [
@@ -1388,7 +1388,7 @@
         "primary_reference": "https://github.com/imMamdouhaboammar/motion-graphics-skills/blob/29919c1ff91d0e0a242ffc0d085b838fa9575584/LICENSE",
         "validation_status": "not_run"
       },
-      "data_transfer_and_cost": "已排除，未用于生产/训练/执行",
+      "data_transfer_and_cost": "Excluded; not used for production, training or execution.",
       "media_quality_validation": "not_continuously_viewed_or_validated_for_this_project"
     },
     {
@@ -1404,8 +1404,8 @@
         "G4",
         "G5"
       ],
-      "adopt": "科普动画默认执行能力：场景代码、对象动作、精绘资产合成、参数化片段与QA",
-      "limitations": "保留既有画风和整条声音；不以镜头快推代替机制；作者角色仅示范。短片验证不证明整片感知质量。",
+      "adopt": "Default science-animation execution capabilities: scene code, object action, refined-asset composition, parameterized segments and QA",
+      "limitations": "Preserve existing style and the complete voice track; camera rushes do not replace mechanisms, and author roles are examples only. Short-sequence validation does not prove full-film perceptual quality.",
       "license": {
         "classification": "MIT_with_separate_font_stroke_and_demo_character_terms",
         "evidence": [
@@ -1506,7 +1506,7 @@
         "G4",
         "G5"
       ],
-      "adopt": "产品宣传、HTML动效与参数化模板",
+      "adopt": "Product promotion, HTML motion and parameterized templates",
       "limitations": "All creation workflows structurally depend on 10 core sibling skill directories; installing only router+workflow breaks referenced paths.; Local rendering has no per-render framework fee; media generation/HeyGen managed cloud are separate providers with credentials and metered allowance/credits.; Do not let media-use replace the existing whole-episode voice configuration per shot.; Upstream init/router skills update reads latest main; retain reviewed ref receipt and reconcile before auto-updating.; Brand or website capture must follow host browser control rules; isolated Chrome render on this macOS requires sandbox escalation from first launch.",
       "license": {
         "classification": "Apache-2.0",
@@ -1680,7 +1680,7 @@
         "G4",
         "G5"
       ],
-      "adopt": "已有访谈/口播素材的逐词编辑决策与EDL渲染",
+      "adopt": "Word-level editing decisions and EDL rendering for existing interview/narration footage",
       "limitations": "Unmodified default workflow uploads source audio to ElevenLabs. Existing authoritative word-level transcripts can avoid new ASR only via explicit integration, not a built-in offline provider claim.; Caption default two-word uppercase is an example; scientific audience-text rules must prevail.; Transcript cache helper checks output file existence rather than source-content hash; caller should bind hashes and invalidate changed sources.; 30ms fades and waveform sampling cannot prove same-speaker prosody or listen quality; retain parent continuity review.; Do not ask users to paste credentials into chat; use supported local secret configuration.; The default Python on PATH lacked declared libraries; isolated venv install is needed.",
       "license": {
         "classification": "MIT",
@@ -2390,8 +2390,8 @@
         "G4",
         "G5"
       ],
-      "adopt": "本地剪切、拼接、混音、转码与媒体核验",
-      "limitations": "原帖误链后的独立同名候选。滤镜/编码器逐项预检；当前验证不含烧字或HDR。",
+      "adopt": "Local cutting, joining, mixing, transcoding and media checks",
+      "limitations": "Independent same-name candidate after the original post linked incorrectly. Preflight each filter/encoder; current validation excludes burned text and HDR.",
       "license": {
         "classification": "MIT",
         "evidence": [
@@ -2499,8 +2499,8 @@
         "G4",
         "G5"
       ],
-      "adopt": "浏览器截图状态、显式游标轨迹与缩放的演示合成",
-      "limitations": "不是连续实录；浏览器采集使用实际允许工具；显式PNG游标避免默认桌面干预；沿用本片音轨。",
+      "adopt": "Demonstration composition from browser screenshot states, explicit cursor paths and zoom",
+      "limitations": "Not continuous screen recording. Browser capture uses actually permitted tools; explicit PNG cursors avoid default desktop interference. Retain this film's audio.",
       "license": {
         "classification": "MIT",
         "evidence": [

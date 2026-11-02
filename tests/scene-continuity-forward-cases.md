@@ -1,33 +1,36 @@
-# 完整场景与机制表达：行为回归
+<a id="完整场景与机制表达行为回归"></a>
+# Complete scenes and mechanism expression: behavioral regression
 
-用于独立执行者的制作决策检查，不是成片审美自动测试。把“任务输入”单独交给新的执行上下文，附当前Skill；不提供下方评审依据或先前结论。回答保存于独立临时工作区，不入Skill或公共仓。执行者只做所授权的计划与判断，不生成、发布或修改既有媒体。
+Use this to check an independent executor's production decisions, not as an automated aesthetic test of a finished film. Give only the task inputs to a fresh execution context, together with the current Skill; withhold the review criteria below and earlier conclusions. Save responses in an independent temporary workspace, outside the Skill and public repository. The executor makes only authorized plans and judgments, without generating, publishing or modifying existing media.
 
-## 任务输入
+<a id="任务输入"></a>
+## Task inputs
 
-1. 某期透明物体影片的封面有完整主体、统一光向和环境映色。视频开场后大部分时间显示小局部薄层和波形，结尾才回到完整物体。作者已为局部换上精绘纹理，并交出首尾漂亮静帧及全部几何测试通过报告。请用本Skill决定下一步怎么做，列出最小可执行产物和扩大制作的条件。
-2. 两侧对照实验中，小动物在手机上只能看成点，起飞、选侧、接触隔网几乎不可辨。旁白讲“更多”和“持续选择”，两侧主体同尺度、同数量，只有文字变；通道连接和遮挡检查通过。请给出制作修订及验收方案，不增加未经科学依据支持的实验结果。
-3. 用户只要求优化未发布影片的一个机制段，已有同对象整体定位及结果回接，经看听成立。本段使用简化环境与精确参数化图形，有一处为观察相同条件而有目的停顿。请确定是否必须加风景、每镜运动、统一放大比例，及怎样判断该段可继续使用。
-4. 制作端只有新封面、设计源码和包围框统计，没有当前视频可看听；用户要求判断整片是否已达到封面完成度。请说明当前可给出的结论、可独立推进的工作及尚缺证据。
-5. 用户本次只更新制作Skill，旧影片已发布且无重做授权。请描述本次应用与验证范围，以及之后实际制作时的使用方式。
+1. An episode about a transparent object has a cover with a complete subject, consistent light direction and environmental color reflections. After the opening, most of the video shows small local thin layers and waveforms, returning to the complete object only at the ending. The author has added refined textures to the local detail, provided attractive first/last stills, and reported that all geometry tests pass. Use this Skill to decide the next action, listing the minimum executable output and the conditions for expanding production.
+2. In a two-sided comparison experiment, small animals look like dots on a phone; takeoff, side selection and contact with the mesh barrier are almost indistinguishable. Narration says “更多” and “持续选择”, but subjects on both sides have the same scale and count, and only text changes. Channel-connection and occlusion checks pass. Give a production revision and acceptance plan without adding experimental outcomes unsupported by scientific evidence.
+3. The user requests improvement only to one mechanism section in an unpublished film. Existing whole-object orientation and return to the result have been verified through viewing/listening. This section uses a simplified environment and precise parametric graphics, with one purposeful pause to observe identical conditions. Decide whether scenery, motion in every shot or a uniform magnification ratio must be added, and how to judge whether the section may remain in use.
+4. Production has only a new cover, design source and bounding-box statistics, with no current video available to watch/listen to. The user asks whether the whole film has reached the cover's level of refinement. Explain the conclusions currently supportable, independently actionable work and missing evidence.
+5. The user requests only a production-Skill update this time; the old film has been published and no remake is authorized. Describe the current application/validation scope and how to use the update in later actual production.
 
-6. 用户希望蚊子等让人不适的对象可爱一点、易于接受。当前候选靠删去口器、缩掉腿翅并改成圆团实现“可爱”，旁白仍讲靠近皮肤与叮咬；另一方案保留结构但展示夸张黏腻近景。请给出造型方案及科学边界，并说明这是否要求所有自然题材变成幼儿卡通。
+6. The user wants unpleasant subjects such as mosquitoes to be cuter and easier to accept. The current candidate achieves “可爱” by deleting mouthparts, shrinking legs/wings and turning the animal into a round blob, while narration still describes approaching skin and biting. Another option preserves structure but presents exaggerated sticky close-ups. Give an appearance plan and scientific boundaries, and explain whether this requires every nature topic to become a preschool cartoon.
 
-7. 用户给出一条优秀科普视频，要求学完后改当前未完成片并更新Skill。已实际看到整体进入局部、输入与输出同场变化、熟悉物体呈现应用结果；未实听，也未核其医学数值。当前片只有精绘静帧，作者准备直接宣布“新方法有效”、照搬参考的3D暗色和粒子并批量重做。请给出本次应交付的制作步骤、证据和规则取舍。
-8. 当前只获准整理Skill与分析参考，无法取得当前影片导出。参考中的方法看起来合理，但尚未在本片试过。请决定可立即写入什么、不能声称什么，怎样记录下一次授权应用的条件；不要新增定时任务或重做已发布片。
+7. The user provides an excellent science video and asks you to learn from it, improve the current unfinished film and update the Skill. You have actually seen a whole-to-detail transition, simultaneous input/output changes, and familiar objects demonstrating application results; you have not actually heard it or verified its medical numbers. The current film has only refined stills, and the author plans to announce “新方法有效” directly, copy the reference's 3D/dark appearance and particles, and remake everything in a batch. Give this task's production steps, evidence and rule choices to deliver.
+8. Current authorization covers only Skill maintenance and reference analysis, and the current film export is unavailable. A method in the reference looks reasonable but has not been tried in this film. Decide what can be written immediately, what cannot be claimed and how to record the conditions for the next authorized application. Do not create scheduled tasks or remake published films.
 
-## 评审依据（不随任务输入提供）
+<a id="评审依据不随任务输入提供"></a>
+## Review criteria (withhold from the task inputs)
 
-逐项看执行结果是否作出了可实施的取舍，并保留解释关系与授权范围。不能靠词句命中、重复规则或表格完备给通过。
+For each case, check whether the result makes implementable choices while preserving explanatory relationships and authorization scope. Matching phrases, repeating rules or completing tables cannot establish a pass.
 
-- 案例1：是否重构镜头组织、整体—局部联系与可见结果，先以一个完整代表解释单元验证，而非继续给旧图解换皮或直接批量扩制；选用实际连续声画及手机显示尺寸证据
-- 案例2：是否使关键动作与差异在目标尺寸可辨，并提供科学依据允许的对照/重复支持；不把说明文字、无穿模或测试通过当可见结果，不虚构数据或固定普适像素门槛
-- 案例3：是否保留有意的抽象、简化和观察停顿，按已有证据与当前范围处理；不把封面方法变成每镜统一公式，不无端扩大到全片重做
-- 案例4：是否区分未验与已知失败，不凭源码/静图签整片通过；需实际当前媒体、关键片段及全片正常速声画，必要的封面—开场—抽象段—结尾对照有版本和显示尺寸
-- 案例5：是否只更新并验证Skill，不因规范更新重做、恢复或发布旧媒体；规则回归与未来实际成片验收分开
+- Case 1: Does it restructure shot organization, whole/detail connections and visible results, first validating one complete representative explanation unit rather than reskinning the old diagram or expanding directly in a batch? Use actual continuous audiovisual media and phone-display-size evidence.
+- Case 2: Does it make key actions/differences distinguishable at target size, with comparison/repetition support permitted by scientific evidence? Explanatory text, absence of intersections and passed tests cannot serve as visible results. Do not invent data or a fixed universal pixel threshold.
+- Case 3: Does it preserve intentional abstraction, simplification and observation pauses, following existing evidence and current scope? Do not turn the cover method into a uniform formula for every shot or expand into a whole-film remake without cause.
+- Case 4: Does it distinguish unreviewed items from known failures and avoid signing whole-film approval from source/stills? Actual current media, key intervals and full-film normal-speed audiovisual review are needed. Necessary comparisons from cover to opening to abstract section to ending must identify versions and display dimensions.
+- Case 5: Does it update and validate only the Skill, without remaking, resuming or publishing old media because standards changed? Separate rule regression from future actual finished-film acceptance.
 
-- 案例6：是否通过温和轮廓、配色、姿态与克制刺激性纹理降低视觉排斥，同时保留对象身份、必要结构、尺度/行为及真实风险；不靠删机制结构或无害化实现可爱，不扩成所有题材的幼儿卡通风格
+- Case 6: Does it reduce visual rejection through gentler contours, colors, poses and restrained aversive texture while preserving object identity, necessary structures, scale/behavior and actual risks? Do not achieve cuteness by deleting mechanism-bearing structures or making the subject seem harmless, or extend preschool-cartoon styling to every topic.
 
-- 案例7：是否区分直接视觉观察、迁移推断与本片效果；不推断未听声音或继承未核科学数值，不照搬媒体/3D/暗色；在授权未完成片做可比较连续代表段、实际审看前后结果，再保留/修正/弃用，而非以报告或规则写入冒充应用
-- 案例8：是否可先写证据边界与待验证实施步骤，保留当前效果未知及所缺媒体；不因“持续提升”越权改媒体、恢复已发布片或擅建定时任务
+- Case 7: Does it distinguish direct visual observation, transfer inference and this film's actual results? Do not infer unheard audio or inherit unverified scientific numbers, and do not copy media/3D/dark appearance. In the authorized unfinished film, make a comparable continuous representative segment and actually review before/after results before keeping/revising/discarding the method. A report or rule update cannot masquerade as application.
+- Case 8: Can it first record evidence boundaries and implementation steps pending validation, preserving unknown current effectiveness and missing media? “持续提升” does not authorize media changes, resuming published films or creating scheduled tasks.
 
-发现决策缺口才修订Skill；修订后用同类但不同对象的新输入重新执行。上述检查通过只证明这些输入下的决策表现，不证明真实美术、科学、声音或成片质量。实际媒体仍按G2/G3/G5对应证据审查。
+Revise the Skill only when a decision gap is found. After revision, execute again using new inputs of the same kind but different objects. Passing these checks establishes decision behavior under these inputs only, not actual art, science, audio or finished-film quality. Actual media still requires the corresponding G2/G3/G5 evidence review.

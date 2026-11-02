@@ -1,62 +1,68 @@
-# 3D动画制作：Blender 与 3D 素材复用
+<a id="3d动画制作blender-与-3d-素材复用"></a>
+# 3D animation production: Blender and 3D asset reuse
 
-3D动画风格视频必须使用Blender，覆盖自然、生活、工程、工业与制造题材；主体资产、动画、材质灯光、相机与实际渲染在Blender完成。复用已有工程与3D素材，登记`controlled_3d`，不必先试视频模型。拟真3D也属于本路线，不能由AI生成的3D外观或MoneyPrinterTurbo混剪替代；写实风格则按[风格分流](tool-routing.md#按成片风格锁定主制作工具)使用MoneyPrinterTurbo，工程题材不自动触发Blender。
+3D-animation-style videos must use Blender for nature, everyday-life, engineering, industrial and manufacturing topics: main assets, animation, materials/lighting, cameras and actual renders are completed in Blender. Reuse existing projects and 3D assets, register `controlled_3d`, and do not require a video-model trial first. Photorealistic 3D also belongs to this route; AI-generated 3D-looking footage or MoneyPrinterTurbo montage cannot replace it. Realistic-style work uses MoneyPrinterTurbo under [style-based routing](tool-routing.md#lock-the-primary-tool-by-final-film-style); engineering topics do not automatically select Blender.
 
-工程示例仅检查本题适用部件；配音、字幕、混音和编码复用辅助工具，不改变Blender主制作路线。
+Engineering examples check only components applicable to this topic; reuse supporting narration, subtitle, mixing and encoding tools without changing the main Blender route.
 
-工程视频先按[全链路与片长](topic-contract.md#工程与制造题材的全链路和片长)组织完整解释，再安排3D整体、局部与工序镜头；局部建模精细度不能代替上下游、制造过程或系统结果的交代。
+Organize the complete engineering explanation under [full chain and duration](topic-contract.md#complete-chains-and-duration-for-engineering-and-manufacturing-topics) before planning whole-object, local and process shots in 3D. Local modeling detail cannot replace explaining upstream/downstream stages, manufacturing or system results.
 
-## 仅做资产时的任务范围
+<a id="仅做资产时的任务范围"></a>
+## Scope of asset-only tasks
 
-仅委托模型、静态预览、检索或入库时，交对应可编辑资产和检查/归档结果：核源模型、科学结构、连接方位、所需视图及依赖，仅在涉及运动时查动作。无音轨用途不造旁白、整期分镜或G3。完整视频中的建模仍是中间步骤，后续声画制作与验收继续执行。
+For model, static-preview, retrieval or cataloging commissions alone, deliver the relevant editable asset and inspection/archive results: check source models, scientific structure, connections/orientation, required views and dependencies; check action only when motion is involved. With no audio-track purpose, do not invent narration, a full-episode shot plan or G3. Modeling within a complete video remains intermediate work with subsequent audiovisual production and acceptance obligations.
 
-## 先认得出真实对象，再解释内部
+<a id="先认得出真实对象再解释内部"></a>
+## Recognize the actual object before explaining its interior
 
-- 研究公开实物照片、剖视图和可信技术资料，先核轮廓、关键部件、相对尺度与空间关系。现代客机发动机的识别不能只靠一个圆筒和重复叶片；按本题需要保留风扇、短舱、旁通与核心流道等关系，再做局部精细化。不为所有题材强制同一机型、级数或部件清单。
-- 公开产品资料可指导外形，不能由此声称自建模型是厂商官方 CAD、精确维修图或已验证的流场。外观接近、教学几何和工程仿真分别说明，来源、权利与适用限制留在 [科学与素材记录](science-and-rights.md)。
+- Research public real-object photographs, sectional views and reliable technical information; first check silhouette, key components, relative scale and spatial relationships. A modern airliner engine cannot be identified by a cylinder and repeated blades alone: retain fan, nacelle, bypass/core-flow relationships as the topic requires before local refinement. Do not mandate the same model, stage count or parts list for every subject.
+- Public product information can guide exterior form; it does not make a self-built model manufacturer-official CAD, a precise maintenance drawing or a validated flow field. Distinguish resemblance, teaching geometry and engineering simulation, keeping sources, rights and applicability limits in [science and asset records](science-and-rights.md).
 - Check necessary structures in whole-object, medium and mechanism close-ups before surface polish. Give pipes, cables and passages real endpoints and interfaces. Distinguish materials through appropriate roughness and reflection response. For metallic mechanisms, controlled broad reflections can reveal curvature, edges and separations; adjust light size and direction so glare does not erase the interfaces being explained. Check these relationships at the target viewing size. Surface detail cannot conceal missing structural connections.
 
-## 明亮灯光与材质的实际执行
+<a id="明亮灯光与材质的实际执行"></a>
+## Actual execution of bright lighting and materials
 
-沿[专业配色与空间编排](art-direction.md#配色构图与空间先设计观看次序)先明确颜色角色和前后景职责，再按[明亮风格标准](visual-system.md#明亮风格与高级材质)及适用的[工业棚拍目标](visual-system.md#工业产品棚拍材质标准)在本次实际相机、最近景别及最终引擎下完成，记录到现有场景参数、可编辑工程和美术审查，不另设一轮全项目试验。
+First define color roles and foreground/background duties under [professional color and spatial direction](art-direction.md#color-composition-and-space-design-the-viewing-order-first). Achieve the [bright-style standard](visual-system.md#bright-style-and-premium-materials) and applicable [industrial studio target](visual-system.md#industrial-product-studio-material-standard) in the actual camera, closest view and final engine. Use existing scene parameters, editable project and art review; do not add another project-wide experiment round.
 
-1. **先核形体与表层。** 核真实尺度、应用缩放、法线、接缝、必要厚度及与工艺相符的边缘过渡。对解释重要的轮廓和接口用真实几何；贴图不能补穿插、面片感或悬空。逐材质确定实际可见的是裸基材、氧化/涂层、抛光面还是粗糙表面，再设PBR响应。近景中会贡献轮廓、遮挡或视差的网孔、板层和接缝须有真实、尺度正确的壁厚、层间距及切边，不能只贴孔点或画缝；最近景别核其是否可辨。不存在的结构不为增加细节而补造，重复件可用实例复用。
-2. **让物体有光可反射。** 工业产品以大面积柔光为主，按实际相机调整光源/反射面的尺寸、方向与位置，让金属曲面形成连续的亮带、中间调到深暗部转折；补光只读清必要接口。配合真实倒角及受控的反射形状，让薄边出现细而清晰的高光，不把所有边缘照成粗白条或用发光材质描边。必要时以克制的边缘光分离背景。背景底色按构图选择，深色背景不等于主体必须欠照明；先调整主体主光/补光、光源反射位置与必要遮光，保留背景和黑材质的深度，不把背景、World或全局曝光一起抬亮求“明亮”。补光只恢复所需结构，必要时用遮光/负补光收掉杂反射，避免照平；只勾亮边而看不清正面也不合格。调整光的方向、形状和尺寸，不统一套固定灯数/功率；单一World环境过平或大片黑色反射使本镜必要形体、表层差异或接口失读时，针对缺口改光与反射场；有用途且不损观察的暗反射保留。只用符合来源规则的环境输入，不借第三方画面当背景。面积光形状与柔和阴影的依据见[Blender灯光手册](https://docs.blender.org/UATEST/manual/en/4.5/render/lights/light_object.html)。
-3. **分别制作材料。** 以下是按事实选择的起点，不是每镜必须凑齐的材质配额；节点与层次依当前引擎版本核查。
+1. **Check form and surface first.** Check real scale, applied scaling, normals, seams, necessary thickness and process-appropriate edge transitions. Explanatory silhouettes/interfaces require real geometry; maps cannot repair intersections, faceting or floating. Identify bare substrate, oxide/coating, polished or rough visible surfaces before setting each PBR response. Close-up perforations, sheets/layers and seams contributing silhouette, occlusion or parallax require real, correctly scaled wall thickness, layer spacing and cut edges, not hole dots or drawn seams; check closest-view readability. Do not invent nonexistent structure for detail; repeated parts may be instanced.
+2. **Give objects light to reflect.** For industrial products, prioritize broad soft sources; tune source/reflector size, direction and position for the actual camera so metal curves show continuous bright bands and transitions through midtones into deep shadows. Fill only enough to read necessary interfaces. Real bevels and controlled reflection shapes produce fine clear thin-edge highlights, not thick white strips on every edge or emissive outlines. Use restrained edge light when separation needs it. Choose background value for composition: darkness does not require underlighting the subject. Adjust subject key/fill, reflected-source placement and flags first, preserving background/black-material depth rather than raising background, World and exposure together for “brightness.” Fill restores necessary structure; flags/negative fill may remove stray reflection without flattening. A rim with an unreadable front fails too. Adjust light direction, shape and size, not a fixed light count/power. If a single World is too flat or broad black reflections erase required form, surface distinctions or interfaces, repair that lighting/reflection gap; retain useful dark reflections that preserve observation. Only use source-compliant environmental inputs, not third-party background images. See the [Blender light manual](https://docs.blender.org/UATEST/manual/en/4.5/render/lights/light_object.html) for area shapes and soft shadows.
+3. **Author materials separately.** These are fact-dependent starting points, not a per-shot material quota; check nodes/layers against the current engine version.
 
-| 实际可见表层 | 要呈现的差异 |
+| Actual visible surface | Differences to show |
 | --- | --- |
-| 裸金属、加工金属 | 使用实际金属响应，让受控反射清楚说明曲率，粗糙度与加工方向服从表面处理；反射清楚不等于所有金属都抛成镜面。拉丝方向与尺度正确，不靠随机噪声 |
-| 漆面、粉末涂层 | 由可见涂层呈现柔和、受控的光泽，按实际漆面校准反射宽度；不能因基体是金属就把不透明漆层设成裸金属。透明保护层仅在实际存在时加入 |
-| 工程塑料、橡胶 | 按实际表层呈现比裸露金属更弱、更宽、更分散的反光，保留真实的掠射角响应、边缘和接缝；不统一涂亮油、镀铬或完全关闭反射做成粉笔 |
-| 阳极/氧化表层、陶瓷等其他材料 | 各自按实际表层和加工状态制作，不把氧化金属统一当漆层，也不把哑光陶瓷与釉面陶瓷设成同一光泽 |
-| 玻璃、液体 | 核厚度、透射/折射及适用的折射率、表面粗糙度和吸收；避免透明件变成不明原因的灰白实体，真实气泡或波纹才添加 |
-| 碳纤维等复合材料 | 纤维方向、编织/纹理尺度与真实结构相符，表面树脂层按实际完成状态处理；黑色保留深度，用反射和背景分离显示形体 |
+| Bare/machined metal | Use actual metallic response and controlled reflections to reveal curvature. Roughness and machining direction follow finish; clear reflections do not mean every metal is a mirror. Brushing needs correct direction/scale, not random noise |
+| Paint, powder coating | The visible coating has soft controlled sheen; calibrate reflection width to the actual paint. A metal substrate does not make opaque paint bare metal. Add clear protective coat only when it exists |
+| Engineering plastic, rubber | According to real finish, show weaker, broader, more dispersed reflection than bare metal, retaining genuine grazing response, edges and seams. Do not uniformly oil/chrome surfaces or disable reflection into chalk |
+| Anodized/oxidized surfaces, ceramics and other materials | Follow each actual surface/process state; do not treat all oxidized metal as paint or give matte and glazed ceramics identical sheen |
+| Glass, liquid | Check thickness, transmission/refraction, applicable refractive index, roughness and absorption. Avoid unexplained gray-white opaque transparent parts; add bubbles/ripples only when real |
+| Carbon-fiber and other composites | Match fiber direction, weave/texture scale and actual structure; surface resin follows actual finish state. Preserve black depth, revealing form through reflection and background separation |
 
-PBR分层、粗糙度、金属与透射等含义见[Blender Principled BSDF手册](https://docs.blender.org/manual/sr/4.5/render/shader_nodes/shader/principled.html)。不要以相同参数覆盖性质不同的材料，也不把增加采样等同于完成材质设计。
+For PBR layers, roughness, metal and transmission, see the [Blender Principled BSDF manual](https://docs.blender.org/manual/sr/4.5/render/shader_nodes/shader/principled.html). Do not apply the same parameters to unlike materials or equate more samples with material design.
 
-材质出现越界、脏点、接缝或尺度错误时，先检查可编辑节点中的作用范围和遮罩；可在本地临时将遮罩/单通道接到无受光干扰的发射输出，辨认UV/对象坐标、频率、数值与混合区域的问题，避免盲加噪声或采样。诊断输出只作内部定位，保留原节点并在修后恢复真实表层响应；它不替代正常灯光、运动与最终编码的材质审查。
+For material spill, dirty spots, seams or wrong scale, first inspect editable node scope and masks. Temporarily connect masks/single channels locally to emission unaffected by lighting to diagnose UV/object coordinates, frequency, values and blending instead of blindly adding noise/samples. Keep original nodes, restore real surface response after repair, and use diagnostic output only internally; it cannot replace material inspection under real light, motion and final encoding.
 
-4. **校准颜色到最终输出。** 记录实际OCIO配置、工作/纹理色彩空间、View Transform、Look、Exposure及编码转换。颜色贴图与粗糙度/法线等数据贴图区分；线性EXR不是已显示映射的PNG，避免遗漏或重复显示变换。可在已核支持的环境中以AgX等适用变换保护亮部，再按目标校准明暗；不靠换一个Look或统一加曝光修整片。保持科学色义，检查SDR/Rec.709转换和像素范围，不能只补色彩标签。线性/显示工作流参见[Blender色彩管理](https://docs.blender.org/manual/en/4.4/render/color_management.html)。
-5. **在运动中交付细节。** 复用已有代表镜头，在相机/主体转动、最暗朝向、强反射角和透明重叠处检查。既定光源/反射场下，高光须随视点与表面朝向沿曲面平滑移动，持续说明形状及材料差异；纹理保持贴附表面，反射不能粘在物体纹理或屏幕坐标上，也不能闪跳。不要为追亮而逐帧重置材质、反射场或曝光；连续片段核真实性，静帧不签运动通过。按本镜需求选支持所需反射、透射和间接光的最终引擎与参数。去噪不能抹掉细纹和接缝，采样、纹理过滤与编码不能把网孔、板层厚度和薄边高光糊掉，或产生闪烁、断裂与塑料化。对照工作母版和最终编码定位差异，再修对应环节；使用本地GPU、缓存和批处理提高吞吐，不预先牺牲材质和灯光质量。
+4. **Calibrate color through final output.** Record actual OCIO configuration, working/texture spaces, View Transform, Look, Exposure and encoding conversion. Distinguish color textures from roughness/normal/data maps. Linear EXR is not display-mapped PNG: avoid omitted/duplicate display transforms. In verified supported environments, applicable transforms such as AgX may protect highlights before target value calibration. Changing Look or globally raising exposure does not repair a film. Preserve scientific color meaning; check SDR/Rec.709 conversion and pixel ranges rather than just tagging color. See [Blender color management](https://docs.blender.org/manual/en/4.4/render/color_management.html) for linear/display workflows.
+5. **Deliver detail in motion.** Reuse existing representative shots at camera/subject rotation, darkest facing directions, strong reflection angles and transparent overlap. Under established light/reflection fields, highlights move smoothly along curves with viewpoint and surface orientation, continually explaining shape/material differences. Texture remains surface-attached; reflections must not stick to texture/screen coordinates or flicker/jump. Do not reset material, reflection field or exposure each frame to chase highlights. Review continuous footage for realism; stills cannot pass motion. Choose final engine/settings supporting required reflection, transmission and indirect light. Denoising must not erase fine lines/seams; sampling, filtering and encoding must not smear perforations, sheet/layer thickness and thin-edge highlights or create shimmer, breaks or plastic appearance. Compare masters/final encode to locate damage, then repair the relevant stage. Use local GPU, caches and batching for throughput without preemptively sacrificing materials/light.
 
 
-## Blender 场景背景与空间完成度
+<a id="blender-场景背景与空间完成度"></a>
+## Blender backgrounds and spatial completion
 
-背景是本镜的空间、用途和观察条件的一部分，按与主体一致的成品标准设计。完整视频不能默认让所有对象悬浮在同一纯色/渐变底、无边地台或通用暗棚里，再只换相机、底色和字幕。先在既有场景设计卡中选定本段所需环境、参考依据、可复用资产和由整体进入局部的方式，不以“高级感”代替可制作的场景方案。
+The background is part of the shot's space, purpose and observation conditions and needs the subject's finished standard. Do not default an entire video to objects floating over the same solid/gradient, infinite platform or generic dark studio while only camera, background color and subtitles change. In existing scene cards choose required environment, reference basis, reusable assets and whole-to-local entry; “premium” is not a producible scene plan.
 
-- **建立具体情境**：应用、整体或工序镜头呈现与本题相符的空间、承载/支承、配套对象与尺度参照，使观众看得出东西在哪里、怎样使用。工程场景可按事实采用工位、厂房、试验台或安装环境，自然/生活场景选择其实际载体与观察条件；不能把通用厂房或任意管道当成所有设备的工作环境。没有依据的设备连接、人员操作、洁净条件和工艺状态不为装饰添加。
-- **组织可读的空间层次**：按取景安排主体、邻近参照与远处环境的距离、遮挡、透视和明暗层次，必要时加入有用途的前景。镜头移动时核真实视差与空间连续性；不强制每帧凑满前中后三层，也不靠一张背景图冒充需绕行或交互的3D空间。接触、支承、阴影和反射随对象与环境成立，避免漂浮、无限重复地砖和空旷舞台感。
-- **环境本身有完成度**：按实际可见尺度补必要的建筑/设施结构、接缝、边缘、材质差异与适当使用痕迹；复用模块时调整布置、比例和用途。主光、环境光与反射共同说明空间，保持主体清楚、背景层级安静；HDRI、雾、景深、噪声或彩色灯不能替代场景内容，也不能遮掩主体和背景的粗糙。
-- **简化有明确范围**：机制近景、剖切、微观示意和必要对照可使用克制背景，保留其解释需要的材料边界、载体或位置线索；进入与离开时能认回所属整体。单独资产检视、隔离展示和用户明确要求的极简片段按其用途处理。局部允许简洁不等于整片可省略环境设计，丰富也不等于堆满物件或添加无关运动。
-- **变化服从内容**：按应用→装配/工位→局部机制→结果的实际叙事需要设计背景与景别变化；同一场景可复用，不设固定场景数量。换工序/尺度时改变真正相关的空间或观察关系，保持同一环境的方向、光照与设备身份；不能用随意换背景掩盖空间断裂。
-- **沿现有关卡实审**：代表段在目标画幅看完整合成、必要局部和正常速连续画面；整片缩略带检查是否长期同底同构图、场景重复而无叙事用途，再回到实际镜头核细节、遮挡、流畅度和字幕/标注。G3正式样段缺乏必要情境、背景明显占位或已知粗糙时先修复，不扩制；G5复核当前最终编码。纯色面积、物件数量或环境资产已入库不能自动签通过，背景完成也不抵扣主体或科学问题。
+- **Establish specific context:** Application, whole-object and process views show topic-appropriate space, support/carrier, related objects and scale so viewers see location/use. Engineering settings may use evidenced workstations, factories, benches or installations; nature/life settings use actual carriers/observation conditions. Generic factories/arbitrary pipes cannot serve every machine. Do not decorate with unsupported connections, operations, cleanliness conditions or process states.
+- **Organize readable depth:** Arrange subject, nearby referent and distant setting through distance, overlap, perspective and value, with purposeful foreground as needed. Check true parallax/continuity in movement. Do not force three layers into each frame or fake interactive/orbitable 3D space with one backdrop. Contact, support, shadows and reflections follow objects/environment; avoid floating, infinitely repeated tiles and empty stages.
+- **Complete the environment:** At visible scale add necessary facility/architecture structure, seams, edges, material distinctions and suitable wear; adapt reused modules' placement, proportions and use. Key/environment light and reflections explain space while keeping subject clear and background quiet. HDRI, fog, depth of field, noise or colored light cannot replace content or conceal rough subject/background.
+- **Bound simplification:** Mechanism close-ups, cutaways, microscopic diagrams and necessary comparisons may use restrained backgrounds but retain explanatory material boundaries, carriers or location cues and recognizable entry/return to the whole. Asset inspection, isolation and explicitly requested minimalism follow their use. Local simplicity does not permit an entire film to omit setting design; richness is not clutter or unrelated movement.
+- **Follow content:** Design backgrounds/view scales for actual application → assembly/workstation → local mechanism → result needs. Reuse scenes without fixed counts. Process/scale changes alter genuinely relevant space/observation relationships, maintaining direction, lighting and machine identity within a setting. Arbitrary backgrounds cannot hide spatial breaks.
+- **Review at existing gates:** Inspect full composite, necessary details and continuous normal-speed representative footage at target aspect. Whole-film thumbnails locate persistent same-background/composition and purposeless repeated settings, then inspect actual detail, occlusion, motion and captions/annotations. Missing context, placeholder backgrounds or known roughness in formal G3 require repair before expansion; G5 rechecks the current final encode. Flat-color area, object count or library inclusion cannot pass a background; background completion cannot offset subject/science failures.
 
-示例：讲设备整体用途，可先在有依据的安装/试验环境建立尺度，再进入仍有定位线索的结构近景；讲制造过程，可用适配的工位及真实输入/输出衔接工序，再在局部剖切中减弱外围；讲微观材料，可先交代宏观应用与载体，再用有边界的材料空间解释。示例是选择方法，不是固定片头或必须添加的设施清单。
+Examples: Establish machine scale in an evidenced installation/test setting before a location-preserving structural close-up. Connect manufacturing stages through appropriate workstations and real input/output, then reduce periphery in local cuts. For microscopic material, establish macroscopic application/carrier, then explain in bounded material space. These are methods, not mandatory openings/facility lists.
 
-## 人物绑定、动捕与口型
+<a id="人物绑定动捕与口型"></a>
+## Character rigging, motion capture and lip sync
 
-Enable this branch when a character's performance helps demonstrate an operation, interaction or explanation. Reuse a suitable local character, rig, actions and facial controls before building new ones. Choose the required output first: editable 3D performance belongs in Blender; generated face-video postprocessing produces a video layer. Follow the selected [production route](tool-routing.md#按成片风格锁定主制作工具) and the actual [source/usage requirements](science-and-rights.md); an available tool or animation library does not expand the allowed asset origins or external uploads.
+Enable this branch when a character's performance helps demonstrate an operation, interaction or explanation. Reuse a suitable local character, rig, actions and facial controls before building new ones. Choose the required output first: editable 3D performance belongs in Blender; generated face-video postprocessing produces a video layer. Follow the selected [production route](tool-routing.md#lock-the-primary-tool-by-final-film-style) and the actual [source/usage requirements](science-and-rights.md); an available tool or animation library does not expand the allowed asset origins or external uploads.
 
 1. **Define the performance.** In the existing action card, name the character, target, gaze, action, contact/release events and resulting object response. Plan only the body, hands and facial detail visible at the closest shot. Reuse the same character identity and performance across camera cuts; a presenter need not speak or gesture continuously.
 2. **Rig and skin separately.** Check mesh topology, scale, axes, transforms and rest pose. Fit joint positions, create or correct the skeleton, bind deformation weights, and test the actual bending/turning/grasping poses. Skeleton generation alone is not skinning. Correct collapsing shoulders/hips, elbow/knee twisting, disconnected clothing and hand/object penetration before rendering; preserve the editable source rig and mesh.
@@ -64,7 +70,8 @@ Enable this branch when a character's performance helps demonstrate an operation
 4. **Animate speech from the approved audio.** Reuse the current [voice track](voice-reference.md), then map audio-relative mouth cues to facial bones/visemes or relative shape keys at the project fps and offset. Use a language-compatible aligner or manually corrected cues; Chinese characters/subtitle timings are not one-to-one mouth shapes. Keep curves editable, blend neighboring mouth shapes, preserve pauses/closed lips, and combine jaw, lips, expression and gaze without double deformation. Audio or edit changes invalidate the affected alignment, not automatically the entire rig.
 5. **Test the real difficulty.** Use the existing G2/G3 sample to cover the planned close-up and difficult turn, occlusion, grasp/release or speech transition. Check deformation/contact in motion, watch normal-speed with the actual audio for synchronization, and inspect mouth/teeth/tongue clipping, identity, edge stability and silent sections. An idle pose, a walk cycle or one frontal talking still cannot validate these harder uses. Record actual observations and unreviewed ranges in the existing QA; tool completion is not performance approval.
 
-### 按需选择人物工具
+<a id="按需选择人物工具"></a>
+### Select character tools as needed
 
 These are capability candidates, not preinstalled or production-validated claims. Select only what the shot needs, verify the current release and loaded dependencies, and run its representative use before expansion.
 
@@ -77,24 +84,27 @@ These are capability candidates, not preinstalled or production-validated claims
 | Face-video animation or lip redraw | [LivePortrait](https://github.com/KlingAIResearch/LivePortrait#3-inference-) for image/video + driving performance; [LatentSync](https://github.com/bytedance/LatentSync) for video + audio | Outputs generated video, not an editable Blender facial rig or viseme curves. Record the generated layer and inspect identity, mouth, occlusions and temporal continuity. Check the exact weights/detector terms, not only the code license: bundled InsightFace model restrictions and version-specific capacity can affect use. |
 
 
-## 同一几何与方位基准
+<a id="同一几何与方位基准"></a>
+## Shared geometry and orientation baseline
 
-- 为需跨镜复用的实件保留一份几何来源，装配镜、抽离镜、剖切镜和结尾镜引用同一资产或同一组构建函数；不要分别重建“看起来差不多”的替身。
-- 在建模与动作前说明本对象适用的局部轴、接口、运动轴和观察视点。叶片等气动部件另核上下游、前缘/后缘、叶根/叶尖与凹凸面，需要时用剖面和弦线检查弯度、安装姿态及气流关系，再从最终相机复核；不向其他机构强加叶片术语。
-- **安装转角不能修复叶型弯度的镜像。** 收到“反了”反馈时，区分几何手性、迎流关系、装配姿态、旋向和相机视角；先定位是哪一项，再改共同几何与受影响镜头，不能仅旋转特写或反向箭头。
-- 同级同类重复件可共享几何；邻近的转子、导向叶片和不同级应按各自作用、旋向与速度关系检查，不能把一片叶型或一个倾角复制到全机。凹面朝向、转向和弯度参数都不是跨机型通则。
-- 同轴旋转叶排可沿实际旋转轴投影已求值网格，利用保守轴向包络检查相邻排在整个旋转相位的分离；要包含叶根锁件、盘缘、端壁和倒角等真实最外沿，不只看名义弦长或某一角度。正间隙仅支持该教学模型的几何关系，不能换算为厂商运行、热膨胀或制造公差。
-- 橙/蓝等示意色只表示本片已说明的变量；流线朝向仍须由实际坐标关系支持。区分静止坐标系的绝对流与叶片坐标系的相对流，不能把二者无变换地连成一条“已验证”路径。示意曲线、粒子和颜色不是 CFD 或实测证据。
+- Preserve one geometry source for physical parts reused across assembly, extraction, cutaway and ending views; reference the same asset/build functions rather than independently rebuilding lookalike substitutes.
+- State applicable local axes, interfaces, motion axes and viewpoints before modeling/animation. For aerodynamic blades also check upstream/downstream, leading/trailing edges, root/tip and concave/convex faces; use sections/chords as needed for camber, installation and airflow, then verify from final camera. Do not impose blade terms on other mechanisms.
+- **Installation rotation cannot repair mirrored airfoil camber.** On reversed-orientation feedback distinguish handedness, incoming flow, assembly pose, rotation direction and camera; identify the cause, change shared geometry/affected shots, and do not merely rotate a close-up or reverse arrows.
+- Same-kind/stage repeats may share geometry. Adjacent rotors, guide vanes and different stages require their own function, rotation and speed checks; do not copy one airfoil/angle across the engine. Concave orientation, rotation and camber are not universal across models.
+- For coaxial rotating blade rows, project evaluated meshes along the actual axis and use conservative axial envelopes to check adjacent separation throughout rotation. Include real root locks, disk rims, endwalls and bevel extremes, not just nominal chords or one angle. Positive gap supports only teaching geometry, not manufacturer operating, thermal or manufacturing tolerance.
+- Illustrative orange/blue denotes only explained variables; streamlines still require real coordinate support. Distinguish stationary-frame absolute flow and blade-frame relative flow; do not join them without transformation as one “validated” path. Curves, particles and colors are not CFD/measurement evidence.
 
-## 从整体连续进入局部
+<a id="从整体连续进入局部"></a>
+## Move continuously from the whole into the local view
 
 - Locate the target within the whole before moving closer. When exposing internals, choose a local cutaway, shell removal or selective transparency that reveals the needed region while retaining enough silhouette, adjacent structure and interfaces to recognize its original position. Keep relevant wall thickness and cut edges readable. Preserve recognizable features across shots; a matching name, hard cut or dissolve alone does not establish component identity.
-- 过桥动作从装配场景在实际起始帧求得的世界变换出发，并对齐目标近景的结束姿态、相机与光照。注意父级变换、动画求值、单位及缩放，避免抽离时对象突然翻面、跳位或替换。
-- 按实际场景先解除遮挡、让对象离开相邻几何，再旋转至便于观察的姿态；检查起点、障碍最近处、旋转极值和跨镜边界，也实看中间运动。教学性的分离、剖开或抽出不冒称真实维护拆装流程。
-- 局部检视先核遮挡件的角色；随移去外壳才成立的支撑、紧固件应在适用的检查显示组中一起处理，避免留下遮住主体、无接合关系的粗杆。用命名视图或显示层保存检视状态，同时保留默认完整资产；不为画面清爽一概删除仍需解释的支承。
-- 壳体、内部结构和孔口共用同一形状定义。移开壳体后，原壳上的孔列、后缘出口及主体轮廓应仍能对应；不能用薄片遮住错误连接，或以镜头切换隐藏几何不连续。
+- Start bridge actions from assembled-scene world transforms evaluated at the actual start frame; align the target close-up ending pose, camera and light. Account for parents, evaluation, units and scale to prevent flipping, jumping or replacement during extraction.
+- First clear occlusion and adjacent geometry in the actual scene, then rotate for inspection. Check start, closest obstacle, rotation extremes, joins and intervening movement. Teaching separation/cutting/extraction is not a real maintenance/disassembly procedure.
+- Check obstruction roles for local inspection. Handle supports/fasteners dependent on the removed shell together in applicable display groups; do not leave thick unattached rods obscuring the subject. Save inspection states in named views/layers, preserving default complete assets; do not remove necessary supports indiscriminately for cleanliness.
+- Shell, internals and holes share a shape definition. After shell removal its hole rows, trailing exits and silhouette still correspond; do not hide wrong connections with plates or geometric breaks with cuts.
 
-### 爆炸图与剖切的选择
+<a id="爆炸图与剖切的选择"></a>
+### Choose exploded views or cutaways
 
 Use an exploded view to explain component order, interfaces and assembly relationships; use a cutaway to reveal a path or mechanism that must remain connected. Select the view for the observation task, rather than cutting and rejoining an object repeatedly to create motion.
 
@@ -105,13 +115,15 @@ For a moving cutaway, design the complete opening/hold/closing cycle with the fi
 - Stage **assembled recognition → separation → interface observation → reassembly or matched handoff**. Reassembly is useful only when the next explanation needs it. Space parts enough to expose their connections at phone size; preserve necessary fasteners, supports and connector identity. Keep camera movement quiet while the layers become distinguishable.
 - Check start, intermediate, fully separated and handoff states, then normal-speed playback: the same parts remain recognizable, paths do not intersect accidentally, and the exposed interfaces answer the question. Explain the transition from a structural tour to a manufacturing sequence through the narration/edit; display order does not establish real production or servicing order.
 
-## 冷却与管道机制的可见连接
+<a id="冷却与管道机制的可见连接"></a>
+## Visible connections in cooling and piping mechanisms
 
-- 流道、分隔壁、进出口、孔道与表面气膜应从共同几何/表面函数取位置和方向，修改叶型后联动更新；不能只搬外壳而把内部通路或风线留在旧坐标。
-- 分别核入口是否真正连入空腔、转弯处是否通、隔壁是否意外贯穿、出口是否实际开孔。贴在金属上的线、相碰的圆柱或发光点不能代替流体通路。
-- 气膜从已存在的孔口出发，贴着相应叶面向该坐标系下的下游展开；不要因画面漂亮让冷却流穿过实体或迎着解释方向倒流。网格与可见帧检查各有范围，不能用无明显穿模替代隐藏拓扑或流场验证。
+- Derive channel, partition, inlet/outlet, passage and surface-film positions/directions from shared geometry/surface functions, updating together after airfoil changes. Do not move shells while leaving internal paths/flow lines in old coordinates.
+- Check that inlets enter cavities, bends remain open, partitions do not inadvertently penetrate and exits are actual holes. Lines on metal, touching cylinders or glowing points cannot replace fluid passages.
+- Film flow starts at existing holes, following the corresponding blade surface downstream in its coordinate frame; do not pass coolant through solids or reverse explanation direction for beauty. Mesh/visible-frame checks have distinct scopes; lack of obvious penetration cannot establish hidden topology or flow validation.
 
-## 有界试制与可靠复用
+<a id="有界试制与可靠复用"></a>
+## Bounded trials and reliable reuse
 
 Use the existing G2/G3 workflow in three production passes; these are work products, not extra approvals:
 
@@ -125,54 +137,59 @@ Keep one reusable asset source and a stable shot driver; store shot-specific cam
 
 Use the [global sequence executor](blender-execution.md) for suitable local intermediate frames: immutable input jobs, native frame ranges, exact-device selection, per-frame hashes, resumable output and separate build/render timing. Reuse an existing compatible executor where it already implements these behaviors. Existing task-specific safeguards remain applicable. A saved procedural scene must be baked or supplied with its actual state driver before background/farm rendering.
 
-Determine rerender scope from changed dependencies: common geometry/material changes affect referencing shots; camera changes affect the shot and its junctions. A 2D subtitle/audio correction can usually reuse verified picture when timing matches. Only necessary single-letter markers are allowed in 3D picture, editable in scene geometry or a matching 3D letter pass under the [single-letter rule](spatial-typography.md); explanatory words, values/units and plaques must be removed, not restyled; a change rerenders that pass and affected shadows/reflections/occluders, not automatically the whole scene and not merely a replacement 2D overlay. Validate reused raw frames against original scene/input/settings and frame hashes. Export actual anchor projections/visibility where useful for [dynamic annotations](annotation-style.md#动态与对象绑定); metadata alone does not prove visibility, spatial depth or readability.
+Determine rerender scope from changed dependencies: common geometry/material changes affect referencing shots; camera changes affect the shot and its junctions. A 2D subtitle/audio correction can usually reuse verified picture when timing matches. Only necessary single-letter markers are allowed in 3D picture, editable in scene geometry or a matching 3D letter pass under the [single-letter rule](spatial-typography.md); explanatory words, values/units and plaques must be removed, not restyled; a change rerenders that pass and affected shadows/reflections/occluders, not automatically the whole scene and not merely a replacement 2D overlay. Validate reused raw frames against original scene/input/settings and frame hashes. Export actual anchor projections/visibility where useful for [dynamic annotations](annotation-style.md#motion-and-object-binding); metadata alone does not prove visibility, spatial depth or readability.
 
-Freeze code, assets, engine/settings and frame mapping before a batch. A changed source creates a new version; a retry with identical inputs verifies and resumes the original job. Keep historical outputs and failed attempts. Review unchanged evidence within its original scope instead of redoing it for bookkeeping; use the [context comparison](production-checkpoints.md#记录整理与增量复查) for triage. Newly exposed geometry, changed meaning, known failures and changed audiovisual joins still need the affected checks.
+Freeze code, assets, engine/settings and frame mapping before a batch. A changed source creates a new version; a retry with identical inputs verifies and resumes the original job. Keep historical outputs and failed attempts. Review unchanged evidence within its original scope instead of redoing it for bookkeeping; use the [context comparison](production-checkpoints.md#record-normalization-and-incremental-review) for triage. Newly exposed geometry, changed meaning, known failures and changed audiovisual joins still need the affected checks.
 
 Reuse the accepted continuous narration; place necessary observation pauses at semantic breaks and update picture, captions and annotations together. Measure preparation, scene build, render/write, edit and review separately. Technical frame/geometry checks do not certify actual appearance, science or hearing, and an optimization is not a measured speedup until comparable work has been timed.
 
-## 3D 正片与系列封面分别设计
+<a id="3d-正片与系列封面分别设计"></a>
+## Design 3D-film and series covers separately
 
-3D正片的封面仍按[系列封面标准](visual-system.md#封面成品标准与工程制造题材)独立设计。可用本题模型作造型/光影依据，不直接交工程预览或带字幕截图；多个比例分别构图，实际看原图与手机缩略。
+Design 3D-film covers independently under [series cover standards](visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics). Models may inform form/light, but engineering previews or subtitled screenshots are not covers. Compose each ratio separately and inspect original/phone thumbnails.
 
-## 使用过的 3D 素材统一归档
+<a id="使用过的-3d-素材统一归档"></a>
+## Archive used 3D assets in one library
 
-共享库根目录读取[系列配置](../config/series-profile.json)的 `shared_3d_library`，按下节检索并核新用途。
+Read the shared root from `shared_3d_library` in [series configuration](../config/series-profile.json), search under the next section and verify new uses.
 
-### 素材库归档的持续授权
+<a id="素材库归档的持续授权"></a>
+### Standing authorization for library archiving
 
-读取本地 `shared_3d_library.standing_authorization`。已有授权且 `target_root` 与实际库根一致时，直接执行授权内的复制、版本目录、索引和回读校验，不因换集、跨会话或重试重复询问。同步维护代码须保留本机有效授权；公共默认配置不代表其他用户授权。
+Read local `shared_3d_library.standing_authorization`. With authorization and matching actual `target_root`, directly perform authorized copying, version folders, index/readback checks without asking again across episodes, sessions or retries. Preserve effective local authorization when syncing maintenance code; public defaults do not authorize other users.
 
-保留源文件和已有版本，新增版本归档；清单核对后复制并从目标读回摘要。目标暂不可达时记待同步及原因，在原授权内恢复。改目标、删源、覆盖旧版或外传按实际新授权处理；授权撤销或范围变化以最新要求为准。
+Preserve source/existing versions; archive additions as new versions. Reconcile inventory, copy and read back target hashes. Record temporarily unavailable targets as pending sync with reasons and recover under original authorization. Changed destination, source deletion, overwrites or external transfer require actual new authorization; latest scope/revocation controls.
 
-### 查找与选择已有素材
+<a id="查找与选择已有素材"></a>
+### Find and select existing assets
 
-开工先查共享总目录，按题材、对象、用途、场景及同义词检索模型和素材，分别查看 `reusable`、`pending` 和适用的历史条目。有适配且可用于本次目的的对象或场景时，优先链接、附加或修改已有资产，不重新建同一个模型；确实找不到、依赖缺失或新用途不适配时，在既有记录写明具体缺口后再补建。普通搜索未命中时继续按别名及 `--include-supporting` 查看历史候选；待审候选先核范围、依赖及本片画面，不因未完成旧审查就默认重新建模。失败/诊断反例只作修复或取证参考，不当作默认可用版本。
+Search the shared master catalog before starting by subject, object, use, scene and synonyms, inspecting `reusable`, `pending` and applicable history separately. Prefer linking/appending/adapting suitable usable existing objects/settings to rebuilding. Only after recording real absence, dependency gaps or unsuitable new use in existing records, build missing parts. If ordinary search misses, use aliases and `--include-supporting` history. Pending candidates need scope, dependency and current-picture checks; incomplete historical review does not automatically require rebuilding. Failed/diagnostic counterexamples serve repair/evidence only, not default reuse.
 
-### 开放许可模型可以直接采用
+<a id="开放许可模型可以直接采用"></a>
+### Open-licensed models may be adopted directly
 
-先查本地/共享资产；缺少适配素材时，对当前明确对象做有目标的开放模型库检索。找到匹配需求且许可适用的3D模型，可直接下载必要文件并链接、附加或导入制作，无需逐项再请用户批准，也不为“原创”从零重建。按实际镜头需要修改材质、尺度、结构、绑定或动画；能直接采用的部分保留。只取当前所需模型与依赖，优先复用本地缓存，不整库下载或重复传输。
+Search local/shared assets first, then target open-model libraries for the specific missing object. Matching use-compatible licensed models may be downloaded with necessary files and linked/appended/imported directly, without per-model reapproval or rebuilding for “originality.” Modify only needed materials, scale, structure, rig or animation; retain usable parts. Download only current models/dependencies; prefer caches to whole-library or repeat transfers.
 
-采用前核具体模型页、作者和实际许可，确认本次发布/商业性、改编、署名及模型随附贴图/材质的用途均适用；“免费”“可下载”或仓库代码开源不等于模型许可明确。保留模型版本/文件哈希、许可证据和实际修改记录。署名沿实际条款在简介/配套等适用位置履行；若要求与当前交付或画内文字规则不兼容，选适用模型，不擅自添加画内说明牌。
+Check specific model page, creator and actual license for current publication/commercial use, modification, attribution and bundled textures/materials. “Free,” downloadable or open-source repository code does not establish model rights. Keep versions/hashes, license evidence and real modifications. Fulfill actual attribution in appropriate descriptions/companions; incompatible delivery/picture-text terms require another model, not an unauthorized plaque.
 
-打开实际模型检查对象身份、单位/轴、比例、拓扑、内部结构、近景细节、材质依赖及所需运动/剖切。库里有模型不代表结构科学正确或适合本镜；修实际缺口，不重做已适配部分。以数据方式导入，模型包脚本不自动执行。外部模型如实记录作者，项目自行布景、动画和渲染的输出仍记录本项目制作过程；不声称模型为自行原创。模型预渲染视频/宣传图不随此许可进入生产画面。具体登记见[许可模型来源路径](science-and-rights.md#许可3d模型输入)。
+Open the model and inspect identity, units/axes, proportion, topology, internals, close-up detail, materials and required motion/cutaway. Availability does not establish science or suitability: fix actual gaps, retain suitable parts. Import data without auto-running package scripts. Record external authorship and actual project staging/animation/rendering separately, not self-created model claims. Model prerenders/promotional stills are not permitted production imagery by this route. See [licensed-model provenance](science-and-rights.md#licensed-3d-model-inputs).
 
-总目录按SHA-256合并相同文件，保留所有来源、原版本和审查范围；`reusable` 仅表示目录所列范围可作为复用起点，不是对新片整体声画、科学或发布的批准。`pending` 是缺少足够审查或依赖证据；`failed` 是有记录的失败版本/诊断反例，具体原因与范围随条目保存。若同一文件在不同上下文有冲突结果，保留各项记录并列为待审。目标库真实文件及依赖仍须在采用前核查，不以索引存在代替可用性。
+Deduplicate identical catalog files by SHA-256, preserving sources, original versions and review scopes. `reusable` is a starting point only within listed scope, not new-film audiovisual/scientific/publication approval. `pending` lacks sufficient review/dependency evidence; `failed` records a failed version/diagnostic counterexample with cause/scope. Preserve conflicting context results as pending. Verify target files/dependencies before use; index presence is not availability.
 
 
-用只读 [find_3d_assets.py](../scripts/find_3d_assets.py) 查询结构化 `asset-index.json`，而不是从 `INDEX.md` 第一条或文件名挑模型：
+Query structured `asset-index.json` with read-only [find_3d_assets.py](../scripts/find_3d_assets.py), not the first `INDEX.md` entry or a filename:
 
     python -X utf8 scripts/find_3d_assets.py --kind engine
     python -X utf8 scripts/find_3d_assets.py --kind cooled-blade
     python -X utf8 scripts/find_3d_assets.py --root /absolute/authorized/library --kind bridge
 
-支持旧整机/叶片/桥接角色，以及通用 `current_asset`、`assets` 列表；用 `--kind environment`、`--kind material`、`--kind lighting` 或实际类别检索，也可用 `--query` 检索名称与关键词。先记录本片所需资产、实际查询、选用/改造/不采用原因及缺口，再补建；不因检索只覆盖旧类别就认定没有素材。明确非默认的历史、失败资产及重建中间件、基础源、封面机位仅在显式 `--include-supporting` 时列出；普通待审候选可检索但不能当作已通过。按 `--status reusable`、`--status pending`、`--status failed` 筛选，后两者会显示非默认历史项；均保留各自角色和限制。`current_engine` 仅表示所在版本索引的当前入口；有多个版本时返回候选，不按修改时间或版本名自动宣称全库最新/通过。旧桥接与新整机分别核身份、变换及依赖，不能由同库归档推断已适配。
+Supports legacy whole-engine/blade/bridge roles and generic `current_asset`/`assets` lists. Search `--kind environment`, `--kind material`, `--kind lighting` or actual category, or names/keywords through `--query`. Record required assets, real queries, selection/adaptation/rejection and gaps before building. Old-category-only retrieval does not establish absence. Explicitly non-default history, failures, reconstruction intermediates, base sources and cover cameras appear only via `--include-supporting`; ordinary pending candidates remain searchable but not passed. `--status reusable`, `--status pending`, `--status failed` filter states; the latter two show non-default history while preserving roles/limits. `current_engine` means the current entry of its version index only; multiple versions yield candidates, not automatic newest/passed library-wide status by mtime/name. Verify old bridge/new whole-engine identities, transforms and dependencies separately; common archiving does not imply compatibility.
 
-脚本只检索小型元数据，不打开、执行或哈希模型；返回的预期摘要、审查引用与文件存在状态不是当前完整性或质量通过。选中少量候选后，再核实际文件摘要、预览、单位/轴、所用相机、权利与新用途。源索引坏损、未知格式和不安全路径需显式报出；NAS不可达或当前不可见与“已读取且零匹配”分开，前者在既有授权内核路径和访问权限，不误判为空库或另造一套素材。
+The script queries small metadata only, without opening/executing/hashing models. Expected hashes, review references and existence are not current integrity/quality passes. For a few selected candidates check real hashes, previews, units/axes, cameras, rights and new use. Explicitly report corrupt indices, unknown formats and unsafe paths. Distinguish unreachable/invisible NAS from successfully read zero matches; check authorized paths/access for the former instead of declaring an empty library or creating another.
 
-- 归档范围含主体/部件、可复用场景与环境模块、程序材质/贴图、灯光/相机方案、动画/节点及实际构建依赖。用通用索引登记类别、名字、关键词、预览、来源版本、依赖与状态；历史保存、目标完整性已核和可用于新片是三个不同结论。核“是否全部收齐”要给出已扫描项目、实际文件清单、去重方法、缺失/待同步/依赖未核项及时间，不能只看NAS目录存在或某一包成功。
-- 按类别、资产名与版本建立可查目录，例如 `<类别>/<资产名>/<版本>/`，保留可编辑 `.blend` 与实际使用的构建脚本、贴图、链接库等必要依赖。归档用复制，保留单集源文件；已有版本不静默覆盖，修订另存版本并标清替代关系。
-- 说明用途、单位/尺度、局部轴和原点、关键对象/集合名、装配接口、支持的剖切或动作、Blender/渲染器版本及外部依赖。给出能辨认实件的缩略预览；视频抽帧只能标为预览，不能冒充独立资产源。
-- 随素材保留来源/作者、原创或第三方事实、许可证及必要署名、使用限制、实际修改和科学示意边界。公开参考图、厂商 CAD 与自建教学模型分开；不因可下载就认为可再分发，也不替原创资产擅自指定开放许可。
-- 以文件清单与 SHA-256 绑定实际归档内容，标明正式采用、失败、未审及已知限制；失败旧版本不要混成默认可用项。系统字体、权重、凭据、缓存帧及与复用无关的发布/配音文件不混入3D素材库；单独 ZIP 可辅助携带，不能替代可编辑源与依赖说明。
-- 复制后从目标目录回读文件、核数量/摘要和必要依赖，再记已归档。目标暂不可达时，先完成可迁移的本地暂存与清单，记录待同步目标和失败原因；不能把“本地已准备”写成“NAS 已保存”。复用时仍按新片实际用途核科学关系、权利与输出，不把存档状态当作质量或发布批准。
+- Archive main parts, reusable environments/scenes, procedural materials/textures, light/camera setups, animation/nodes and actual build dependencies. Generic index records category, name, keywords, previews, source version, dependencies and state. Historical retention, verified target integrity and new-film usability are distinct. Completeness claims require scanned projects, actual inventory, deduplication, missing/pending-sync/unverified dependencies and time, not directory presence or one successful package.
+- Organize searchable category/name/version folders, e.g. `<category>/<asset-name>/<version>/`; keep editable `.blend`, actual build scripts, textures, linked libraries and dependencies. Copy for archiving and preserve episode sources; never silently overwrite old versions. Save revisions separately with replacement relationships.
+- State use, units/scale, local axes/origin, key object/collection names, assembly interfaces, supported cutaways/actions, Blender/renderer versions and external dependencies. Provide recognizable thumbnails; video extracts are previews, not independent source assets.
+- Retain sources/authors, original/third-party facts, licenses/required attribution, restrictions, actual modifications and science limits. Separate public reference imagery, manufacturer CAD and self-built teaching models. Downloadability does not establish redistribution; do not assign open licenses to originals without authorization.
+- Bind archive contents by inventory and SHA-256 with adopted, failed, unreviewed and known limits. Do not make failed history default usable. Exclude system fonts, weights, credentials, cached frames and unrelated publication/narration files. ZIP transport does not replace editable sources/dependency notes.
+- Read files back after copying, checking counts/hashes and dependencies before recording completion. For unavailable targets first prepare portable local staging/inventory and record pending destination/failure; “local prepared” is not “NAS saved.” Reuse still requires actual new-use science, rights and output checks; archiving is not quality/publication approval.

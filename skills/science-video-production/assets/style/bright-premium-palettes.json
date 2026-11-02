@@ -7,27 +7,27 @@
   "looks": [
     {
       "id": "LOOK_A",
-      "name": "明朗精密工位",
-      "use_when": "有真实依据的设备、制造工序、精密机构或装配环境。可对应写实或Blender路线，不自动切换工具。",
+      "name": "Bright precision workstation",
+      "use_when": "Evidence-based equipment, manufacturing operations, precision mechanisms or assembly environments. Applicable to either realism or Blender without automatically switching tools.",
       "palette": [
         {
           "hex": "#E7E2D7",
-          "role": "明亮暖灰墙面/邻近承载面；保持可见接缝与体积"
+          "role": "Bright warm-gray wall/adjacent support surface; preserve visible seams and volume"
         },
         {
           "hex": "#C7D6CD",
-          "role": "安静的低饱和灰绿环境面，与白壳/金属形成局部区分"
+          "role": "Quiet low-saturation gray-green environment surface, locally distinct from white housings/metal"
         },
         {
           "hex": "#42675A",
-          "role": "有用途的中等明度结构面或设备外环境；可与深色布景配合，用照明和反射读出结构与接触"
+          "role": "Purposeful medium-value structural surface or equipment surroundings; may accompany dark staging, with lighting/reflections revealing structure and contact"
         },
         {
           "hex": "#BD8A38",
-          "role": "仅在真实对象已有对应漆色，或确需的自设计强调层使用；不抢科学功能色"
+          "role": "Use only when the real object already has this paint color or in a necessary self-designed emphasis layer; do not compete with scientific functional colors"
         }
       ],
-      "palette_note": "以下为自制环境/设计层的sRGB视觉起点；不是科学对象强制色，也不是Blender场景线性数值或全片固定调色。",
+      "palette_note": "These are sRGB visual starting points for self-produced environments/design layers, not mandatory scientific-object colors, Blender scene-linear values or a fixed whole-film grade.",
       "optional_accent": {
         "hex": "#2D6CDF",
         "role": "Small clean cobalt accent on a legitimately designed environment/graphic area; avoid competing with the observation target or existing semantic colors."
@@ -35,27 +35,27 @@
     },
     {
       "id": "LOOK_B",
-      "name": "日光自然本色",
-      "use_when": "本题确属日间自然/生活场景，环境与现象允许明亮自然光。夜间、深海、发光或光谱现象按自身观察条件处理。",
+      "name": "Natural daylight colors",
+      "use_when": "The topic actually involves daytime nature/everyday scenes whose environment and phenomena permit bright natural light. Handle nighttime, deep-sea, luminous or spectral phenomena under their own observation conditions.",
       "palette": [
         {
           "hex": "#D9E8ED",
-          "role": "有依据的天空/远处明亮空气或自制中性观察背景"
+          "role": "Evidence-based sky/distant bright air or a self-produced neutral observation background"
         },
         {
           "hex": "#D0B58B",
-          "role": "有依据的土/木/承载面的温暖中性参照"
+          "role": "Evidence-based warm neutral reference for soil/wood/support surfaces"
         },
         {
           "hex": "#7D916B",
-          "role": "真实低饱和环境植被的参考色；以实际物种/光照为准"
+          "role": "Reference color for actual low-saturation environmental vegetation; actual species/lighting take precedence"
         },
         {
           "hex": "#4B6752",
-          "role": "真实叶片/地形暗部的参考；保留本题所需结构和环境深度，不强制把自然阴影提亮"
+          "role": "Reference for actual leaf/terrain shadows; preserve the topic's required structure and environmental depth without forcing natural shadows brighter"
         }
       ],
-      "palette_note": "是可选择的日光/载体色关系；真实生态、肤色、物种、液体与科学伪彩必须按依据保持，不把所有自然题材强套此色板。",
+      "palette_note": "An optional daylight/support-surface color relationship. Preserve actual ecology, skin, species, liquids and scientific false color according to evidence rather than forcing every nature topic into this palette.",
       "optional_accent": {
         "hex": "#DFA12F",
         "role": "Small warm sunlit/carrier accent only when the actual scene supports it; retain natural subject colors."
@@ -63,27 +63,27 @@
     },
     {
       "id": "LOOK_C",
-      "name": "清透材料观察台",
-      "use_when": "有依据的实验/材料/透明流体观察、陶瓷或局部剖切；适于机制近景与有实体承载的对照，不作为整片唯一空背景。",
+      "name": "Clear material observation bench",
+      "use_when": "Evidence-based experiments/materials/transparent-fluid observation, ceramics or local cutaways. Suitable for mechanism close-ups and comparisons with physical supports, without becoming the whole film's only empty background.",
       "palette": [
         {
           "hex": "#DCE5ED",
-          "role": "明亮低饱和蓝灰环境面"
+          "role": "Bright low-saturation blue-gray environment surface"
         },
         {
           "hex": "#E5DDEA",
-          "role": "与蓝灰有区分的浅紫灰远侧面；用于真实空间转折"
+          "role": "Pale violet-gray far-side surface distinct from blue-gray, used for actual spatial turns"
         },
         {
           "hex": "#EEE7D9",
-          "role": "温暖浅中性承载面，衬出透明边缘与颜色"
+          "role": "Warm pale neutral support surface revealing transparent edges and color"
         },
         {
           "hex": "#6D657D",
-          "role": "中间明度结构/反射控制面；与浅色或深色背景按实际布光配合，不能据此限制布景明度"
+          "role": "Mid-value structure/reflection-control surface; combine with light or dark backgrounds according to actual lighting without restricting staging value"
         }
       ],
-      "palette_note": "浅蓝紫只组织自制的背景/载体；灯光尽量保持材料本色，避免彩色背景反射改变待比较样品的色义。",
+      "palette_note": "Pale blue-violet organizes only self-produced backgrounds/supports. Lighting should preserve material colors as far as possible; prevent colored-background reflections from altering the color meaning of compared samples.",
       "optional_accent": {
         "hex": "#4C72D8",
         "role": "Restrained cooler design accent outside color-critical sample regions; do not tint the specimen or its illumination."
@@ -91,28 +91,28 @@
     },
     {
       "id": "LOOK_D",
-      "name": "深色布景·主体塑光",
-      "use_when": "深色工位、材料展示或局部机制需要安静背景和受控反射；背景深色不要求科学暗环境，也不改变既定制作工具。",
+      "name": "Dark staging with sculpted subject light",
+      "use_when": "Dark workstations, material presentations or local mechanisms needing a quiet background and controlled reflections. A dark background does not require scientifically dark surroundings or change the established production tool.",
       "palette": [
         {
           "hex": "#17212A",
-          "role": "可选深石墨背景/远侧面，保留适用空间层次而不抬灰"
+          "role": "Optional deep graphite background/far-side surface, preserving applicable spatial depth without raising blacks to gray"
         },
         {
           "hex": "#2F3F49",
-          "role": "可选暗中间调承载/邻接面，按实际支承和构图安排"
+          "role": "Optional dark-midtone support/adjacent surface, arranged for actual support and composition"
         },
         {
           "hex": "#CBD6DD",
-          "role": "中性反射控制面/亮带的显示参考；不改主体真实底色，也不要求亮面进入画幅"
+          "role": "Display reference for neutral reflection-control surfaces/bright bands; preserve actual subject base color without requiring the bright surface to enter frame"
         },
         {
           "hex": "#E4A348",
-          "role": "仅有依据的对象色或自设计强调层，避开既有科学色义"
+          "role": "Evidence-based object color or self-designed emphasis layer only, avoiding existing scientific color meanings"
         }
       ],
-      "lighting_note": "宽面积主光塑形、按需局部补光读接口、控光与反射面组织曲率；主体不能只剩亮轮廓，背景和黑材质保持深度。没有固定灯数、灯比或曝光通过值。",
-      "palette_note": "自制环境的可选sRGB显示参考，不是全片固定暗底、科学材料强制色或未转换的场景线性着色值。"
+      "lighting_note": "A broad key light shapes form, local fill reveals interfaces as needed, and light control/reflection surfaces organize curvature. The subject must not become only a bright outline; preserve depth in backgrounds and black materials. No fixed light count, lighting ratio or passing exposure value.",
+      "palette_note": "Optional sRGB display reference for self-produced environments, not a fixed dark background for the whole film, mandatory scientific-material colors or unconverted scene-linear shader values."
     }
   ]
 }

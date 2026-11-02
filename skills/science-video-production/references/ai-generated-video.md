@@ -1,81 +1,92 @@
-# 写实风格：MoneyPrinterTurbo 制作与本地模型素材
+<a id="写实风格moneyprinterturbo-制作与本地模型素材"></a>
+# Realistic style: MoneyPrinterTurbo production and local-model assets
 
-本页负责写实路线的实际执行：已有MoneyPrinterTurbo编排/合成本地视频素材；需要AI镜头时由当前本地视频模型提供，有适用且有权的用户自拍则直接使用。3D动画按[Blender路线](engineering-blender.md)，主工具选择见[工具路由](tool-routing.md#按成片风格锁定主制作工具)。
+This page governs actual realistic-route execution: use existing MoneyPrinterTurbo to arrange/composite local video assets. Use the current local video model for needed AI shots, or directly use applicable authorized user captures. 3D animation follows the [Blender route](engineering-blender.md); main-tool choice follows [tool routing](tool-routing.md#lock-the-primary-tool-by-final-film-style).
 
-## 开工模态锁定
+<a id="开工模态锁定"></a>
+## Lock modality at startup
 
-写实路线先执行[写实制作契约](realistic-production.md)；`pure_2d`仅代表辅助层或用户具体批准的范围，不是写实主镜的自由替代。画面模态和是否写实是不同维度，AI/3D不得标成实拍。
+Apply the [realistic contract](realistic-production.md) first. `pure_2d` denotes supporting layers or specifically approved scope, not a free replacement for realistic main imagery. Modality and realism are distinct dimensions; never label AI/3D as real photography.
 
-下表只区分真实素材来源，不授权在主制作工具之间自由替换；风格与工具按[固定对应关系](tool-routing.md#按成片风格锁定主制作工具)执行。整期仅可混剪符合 [原创视觉来源契约](science-and-rights.md#原创视觉来源契约) 的自产画面和已核实授权用户自拍，第三方影像仅作研究参考；但**每镜按主画面登记一种** `modality`，混合辅助层分别在资产台账记真实来源：
+The table distinguishes actual asset provenance, not freedom to substitute primary tools; follow the [fixed style/tool pairing](tool-routing.md#lock-the-primary-tool-by-final-film-style). Entire episodes may mix only self-produced visuals and verified authorized user captures under the [original-visual contract](science-and-rights.md#original-visual-provenance-contract); third-party imagery is research only. **Register one** `modality` **per shot's main picture**, recording supporting mixed-layer sources separately in the asset ledger:
 
-| modality | 含义 | 何时选用 |
+| modality | Meaning | When to choose |
 | --- | --- | --- |
-| `real_footage` | 已核实用户自拍及用途授权的连续原片 | 需要真实现象锚点、观测证据或用户明确要求实拍 |
-| `pure_2d` | 纯2D机制/示意（如 huashu 等可控动画） | 辅助层或具体获准的非写实范围 |
-| `controlled_3d` | Blender可控3D动画/渲染 | 对应3D动画风格或明确混合项目中的3D段；拟真材质不改变路线，不得冒充实拍 |
-| `ai_generated` | 本地视频大模型生成的连续视频（非静图推拉冒充） | 写实路线需要AI素材时使用；完成生成后仍须通过MoneyPrinterTurbo制作，不能替代Blender的3D动画 |
+| `real_footage` | Continuous original footage with verified user authorship/use authorization | Real phenomenon anchors, observation evidence or explicit capture requests |
+| `pure_2d` | Pure-2D mechanisms/diagrams (e.g. controlled huashu animation) | Supporting layers or specifically approved nonrealistic scope |
+| `controlled_3d` | Controlled Blender 3D animation/rendering | 3D-animation style or explicit 3D mixed-project sections; realistic materials do not change route or permit capture claims |
+| `ai_generated` | Continuous local video-model output, not still pans posing as video | Needed AI assets for the realistic route; actual MoneyPrinterTurbo production remains required and cannot replace Blender 3D animation |
 
-实拍要求按现行系列配置的 `medium.real_anchor` 与逐镜已选模态判断：选用 `real_footage` 时须有实际使用的真实连续视频源；已获准的AI/3D路径不为满足默认检查另加实拍。缺失或未知的 `modality` 须补清，不能用空值跳过锚点检查。原项目明确采用 `authentic_continuous_video` 时仍保留整期真实锚点要求，不因本版默认值改变撤销；具体2D例外、科学依据、来源与披露要求照常适用。
+Judge capture requirements from current `medium.real_anchor` and chosen shot modalities. `real_footage` requires actual used continuous real-video sources; approved AI/3D routes need no extra capture merely to satisfy default checks. Clarify missing/unknown `modality`; null cannot bypass anchors. An original project's explicit `authentic_continuous_video` still requires its whole-episode real anchor despite changed defaults. Specific 2D exceptions, science, provenance and disclosure still apply.
 
-## 写实路线步骤
+<a id="写实路线步骤"></a>
+## Realistic-route steps
 
-1. **绑定已有本地工程**：定位MoneyPrinterTurbo检出目录，核真实来源、版本及合成入口；需要生成素材时再从上下文、工程清单和运行记录定位本地视频模型，核模型/工作流与环境；已有明确位置直接使用，不重建同名工程或下载另一套权重。
-2. **主题、科学与整期讲解**：完成原题、主张、条件、来源、连续讲解稿和解释分镜；按已有声音流程取得工作音轨，再用实际时点安排生成镜头。MoneyPrinterTurbo的文案功能可辅助整理，不能替代科学核验或把逐镜短文当整期讲解。
-3. **逐镜素材设计**：有权用户自拍先核实际选段；需要AI素材时才执行本步与第4步。登记 `modality=ai_generated`、主体身份/结构、景别、起态/过程/终态、风格与科学禁项；根据本地模型实际原生尺寸、帧数/时长与当前音轨规划。支持条件图时可复用本地图片模型准备起始图，静图输出不登记为视频生成。
-4. **真实调用与短样**：按现有冻结入口调用已确认的本地视频模型，保留实际工作流、提示词/参数、任务ID和输出文件；先制风险代表段，不批量生成未验证方案。缺节点、权重、服务或显存时记录具体缺项并修复本地链路，不静默转云端或替换成图库混剪。
-5. **实看实际素材**：正常速连续看主体身份、动作、科学状态、材质和跨镜接续，按 [写实制作契约](realistic-production.md) 修失败；任务返回、首尾漂亮或历史样片成功不等于当前镜头通过。
-6. **通过 MoneyPrinterTurbo 制作（必需）**：使用实际生成或已核用户自拍的本地视频文件，显式保留解释顺序、必要动作和足够时长；按下节选择本地素材任务或已有完整画面轨的局部合成函数，禁止默认随机剪切、循环补长或重复换声。
-7. **旁白、字幕与声音复查**：复用已确认的完整音轨和定时字幕；没有定时字幕时使用已准备的本地识别/对齐能力，核实际时间线。MoneyPrinterTurbo不得因音轨字段为空退回另一套TTS。
-8. **最终输出与披露**：按成片画幅重排字幕、混音和导出，实际复查最终编码；按 [生成内容声明](science-and-rights.md#生成内容声明的实际发布步骤) 处理平台及配套披露。
-9. **样段与整片**：按[质量验收](quality-acceptance.md)完成独立正常速看听，修复已知缺陷后再扩片或交付。
+1. **Bind existing local projects:** Locate the MoneyPrinterTurbo checkout, verify actual provenance/version/composition entrypoint. Only when generation is needed, locate the local video model from context, inventories and run records and verify model/workflow/environment. Use known locations rather than rebuilding same-name projects or downloading another weights set.
+2. **Topic, science and full explanation:** Complete original topic, claims, conditions, sources, continuous script and explanatory shots. Obtain a working track through the existing voice workflow, then schedule generated shots from actual times. MoneyPrinterTurbo writing tools may organize content, not replace scientific verification or turn shot fragments into a full explanation.
+3. **Shot asset design:** Verify actual ranges of authorized user capture first; execute this and step 4 only for needed AI assets. Register `modality=ai_generated`, identity/structure, scale, start/process/end, style and scientific prohibitions, planning against actual native model size, frames/duration and current audio. When conditioning images are supported, reuse the local image model for starts; still outputs are not video generation.
+4. **Actual calls and samples:** Invoke the confirmed local video model through the existing frozen entrypoint; retain actual workflow, prompts/parameters, task ID and outputs. Produce a risk-representative sample before batching unvalidated approaches. Record/fix missing nodes, weights, services or VRAM locally; no silent cloud or stock-montage substitution.
+5. **Inspect actual assets:** Continuously view identity, action, science states, materials and joins at normal speed; repair under the [realistic contract](realistic-production.md). Task return, pretty endpoints or historical samples do not pass current shots.
+6. **Produce through MoneyPrinterTurbo (required):** Use actual generated/verified user-capture local videos, explicitly preserving explanation order, necessary actions and sufficient duration. Choose local-asset tasks or the existing complete-picture-track composition function below. No default random cutting, looping to extend length or repeated voice replacement.
+7. **Recheck narration, captions and sound:** Reuse accepted complete audio/timed subtitles. Without timed captions use prepared local recognition/alignment and verify the actual timeline. Empty audio fields must not make MoneyPrinterTurbo switch to another TTS.
+8. **Output/disclosure:** Re-layout captions for final aspect, mix/export and actually recheck final encoding; handle platform/companion disclosure under [generated-content publication](science-and-rights.md#actual-publication-steps-for-generated-content-declarations).
+9. **Sample/full film:** Perform independent normal-speed viewing/listening under [quality acceptance](quality-acceptance.md), repairing known defects before expansion/delivery.
 
-## 本地视频模型与 MoneyPrinterTurbo 交接
+<a id="本地视频模型与-moneyprinterturbo-交接"></a>
+## Handoff between local video model and MoneyPrinterTurbo
 
-### 定位、预检与运行记录
+<a id="定位预检与运行记录"></a>
+### Location, preflight and run records
 
-- 先读当前项目的实际清单、工作流与已核运行记录，核解释器、引擎/节点、视频权重和编码器、输入/输出目录及当前服务地址。端口和历史样例是定位线索，不是当前在线证明；目录存在、静图模型可用或项目曾成功均不证明本次可生成视频。复用当前可用环境，不因Skill更新自动启动服务、下载模型或修改原工程。
-- 按实际输出链区分静图、文生视频、条件视频和控制渲染。Blender引导、VAE编码/回解、重采样或超分都不自动把3D底稿变成AI写实视频；移除承担写实转换的步骤后，重新判断实际留下的画面与模态，不能沿用被移除步骤的标签/认可。控制渲染可作中间输入，进入写实正文须满足当前路线及实审；素材达不到要求时修素材/实现，改变成片风格仍需用户已有或新增的具体授权。历史文生视频成功不能充当图生视频实测，具体本机路径、端口与媒体记录留私有项目。
-- ComfyUI入口以当前实际API工作流为准：预检节点/模型后提交 `/prompt`，保存返回的 `prompt_id`，再查 `/history/{prompt_id}` 及实际输出。SaveVideo在已核历史实现中也会把媒体条目放入 `outputs[节点ID].images`；按实际 `filename/subfolder/type` 定位视频，不猜 `videos` 字段或把文件名前缀当完整路径。连接中断或等待超时后先查同一任务，不盲目重复提交。
-- 运行记录绑定实际工作流/代码版本、模型标识及可得权重版本、提示词/参数/随机种子、条件输入及哈希、任务ID与真实输出的路径/哈希、尺寸、fps、帧数和时长。记录实际取得的证据，不补造权重哈希或把提交成功写成生成完成。历史测试脚本若会启动/停止服务、覆写样例或提交硬编码任务，先拆清职责，不直接当本期通用执行器。
+- Read actual current inventories/workflows/verified runs first; check interpreter, engine/nodes, video weights/encoders, input/output paths and service address. Ports/history are location clues, not proof of current availability. Directory existence, working image models or previous success do not establish video-generation readiness. Reuse current environments; Skill updates do not automatically launch services, download models or alter original projects.
+- Distinguish images, text-to-video, conditioned video and control renders by actual output chain. Blender guidance, VAE encode/decode, resampling or upscaling do not automatically convert a 3D scaffold to realistic AI video. If the conversion step is removed, reassess remaining imagery/modality rather than retaining the removed step's labels/approval. Control renders may be intermediate inputs; realistic body footage must meet current route/actual review. Repair assets/implementation on failure; style changes still require specific existing/new user authorization. Historical text-to-video success does not test image-to-video; local paths, ports and media records stay private.
+- Use the current actual ComfyUI API workflow: preflight nodes/models, submit `/prompt`, save `prompt_id`, query `/history/{prompt_id}` and actual outputs. Verified historical SaveVideo also puts media under `outputs[node_id].images`; locate video by actual `filename/subfolder/type`, not an assumed `videos` field or prefix as a full path. After connection loss/timeout inspect that same task before resubmitting.
+- Bind actual workflow/code, model identity/available weight version, prompts/parameters/seeds, condition inputs/hashes, task ID, actual output paths/hashes, dimensions, fps, frame count and duration. Record acquired evidence, not invented weight hashes or submission as completion. Separate historical scripts' service start/stop, sample overwrites and hardcoded submissions before treating them as episode executors.
 
-### MoneyPrinterTurbo 的实际制作范围
+<a id="moneyprinterturbo-的实际制作范围"></a>
+### Actual MoneyPrinterTurbo production scope
 
-以下接口按实际检出源码核对后使用；仓库身份绑定用户指定地址或当前checkout的真实来源与提交。来源未核实时如实记录，不凭README中的上游链接推断当前remote，也不自行改拉同名公开仓库或因Skill整理更新上游代码。
+Verify these interfaces against actual checkout source before use. Bind repository identity to the user's URL or checkout's real source/commit. Record unknown provenance honestly; upstream README links do not establish current remote. Do not fetch a same-name public repository or update upstream code merely for Skill maintenance.
 
-- **本地素材编排**：当前已核实现可用 `video_source=local` 和 `video_materials` 接收实际本地视频素材；这些字段是本地素材入口，不负责调用视频大模型。按单集实际科学分镜显式选择顺序与裁切。已核版本中多成片模式可能改变顺序，`sequential`也会只取各片首段，素材不足还会循环；不能只设顺序模式就认定精确执行了分镜。准备足够长、已按解释任务裁好的素材，并实看合成后的动作完整性、顺序、重复和声画接缝。
-- **已有画面轨的合成**：已有按分镜完成的连续画面轨时，可复用已核 `app.services.video.generate_video(video_path, audio_path, subtitle_path, output_file, params)` 做局部合成，避免不必要的自动素材编排。仍由本期冻结适配器调用，不能绕 `render_gate.py`；升级后先核函数签名、音轨替换、BGM及字体等真实行为。
-- **复用声音**：任务路径显式传入有效的 `custom_audio_file`；缺失或不可用时保留失败，不能将字段留空触发默认TTS。已核合成会替换原视频音轨；科学观察若需要保留同期原声，先明确混音与保留方案，不误丢证据。沿用声音正文的中文连续讲述与实际听验要求。
-- **字幕**：有已对齐SRT优先复用；自定义音轨不自带TTS时间轴，使用任务字幕路径时须核当前 `subtitle_provider` 及实际本地Whisper/对齐权重。缺权重可能触发下载，其他provider也可能跳过字幕，不能把配置名称当作字幕已产出或全离线可用。字幕对齐本次最终剪辑，不沿用已改变时间线的旧时码。
-- **发布副作用**：读取所用入口及非凭据配置，确认只做本地制作；已核CLI的video阶段可能调用cross-posting，不能默认整个CLI无发布副作用。使用局部合成或确认自动上传/跨平台发布关闭；不读取或输出凭据值。发布仍另按本次具体授权执行。
-- 模型任务与生成文件由现有 `execution`、素材台账和真实运行记录绑定，MoneyPrinterTurbo的合成回执另记其实际输入与输出；只有额外选用的外部Skill才进入相应 `tool_applications`。不为接入已有仓库安装整套外部视频框架。
+- **Local-asset arrangement:** Verified implementations accept actual local videos through `video_source=local` and `video_materials`; these inputs do not invoke a video model. Explicitly choose order/crops from scientific shots. Verified multi-output mode may reorder; `sequential` can take only each clip's first portion and loop shortages. A sequential flag alone does not prove exact shot execution. Prepare sufficiently long, purpose-trimmed clips and inspect complete action, order, repetition and audiovisual joins after composition.
+- **Complete-picture-track composition:** When a continuous picture track already follows the shots, reuse verified `app.services.video.generate_video(video_path, audio_path, subtitle_path, output_file, params)` for local composition, avoiding unnecessary automatic arrangement. Call through this episode's frozen adapter without bypassing `render_gate.py`; after upgrades verify signature, audio replacement, BGM and font behavior.
+- **Voice reuse:** Explicitly supply valid `custom_audio_file` on the task path. Preserve failure if missing/unusable; never leave it empty to trigger default TTS. Verified composition replaces original video audio. If scientific observation needs synchronous original sound, define retention/mixing first to avoid losing evidence. Retain voice-standard continuous Mandarin narration and actual listening.
+- **Subtitles:** Prefer existing aligned SRT. Custom audio has no automatic TTS timeline; task subtitles require checking current `subtitle_provider` and actual local Whisper/alignment weights. Missing weights may download; other providers may skip captions. Configuration names prove neither output nor fully offline operation. Align to final editing, not stale times from changed timelines.
+- **Publication side effects:** Read the used entrypoint/noncredential configuration to confirm local-only production. Verified CLI video stages may cross-post; do not assume no publication effects. Use local composition or confirm auto-upload/cross-posting disabled; never read/output credential values. Publication follows separate specific current authorization.
+- Bind model tasks/generated files through existing `execution`, asset ledger and actual runs; record MoneyPrinterTurbo's actual composition inputs/outputs separately. Only additionally chosen external Skills enter `tool_applications`. Do not install an entire external video framework to connect an existing repository.
 
-### 主体或起态偏离时的条件输入修复
+<a id="主体或起态偏离时的条件输入修复"></a>
+### Repair condition inputs when identity/start states deviate
 
-1. 正常速查看失败片段，定位对象身份、必要参照或初始关系哪项错误。记录具体时点，不只增加提示词形容词。
-2. 当前已授权入口支持条件图时，准备同镜首帧：全图核身份/构图，局部核动作前提。例如接触后离开，初态必须确实接触；已有空隙不能冒充离开过程。不支持条件图则记录缺口，采用当前路线内可行方案。
-3. 仅局部关系失败时保留有效主体、参照与相机，修复该区域并复看全图；固定实际输入文件/哈希。像素差仅辅助定位改动，不代替科学关系检查。
-4. 调用记录绑定真实条件输入；另看生成视频的起态、完整动作及接缝。首帧通过不代替视频通过；仍失败则回到相应设计/素材重做，不用快切隐藏中段。
+1. Inspect the failed clip at normal speed; identify wrong object identity, necessary referent or initial relationship at specific times, not merely more prompt adjectives.
+2. If the authorized entrypoint supports conditioning images, prepare this shot's first frame, checking whole-frame identity/composition and local action prerequisites. A separation-after-contact action must actually begin in contact; an existing gap is not separation. If unsupported, record the gap and choose an available same-route approach.
+3. Preserve valid subject, referent and camera for local failures, repair the region, recheck the whole and freeze actual input/hash. Pixel differences aid diagnosis, not scientific validation.
+4. Bind actual conditioning input to the call and inspect generated start, complete action and joins. First-frame approval does not pass video; persistent failure returns to relevant design/source, not fast-cut concealment.
 
-条件输入是修复选项，不要求每镜采用；精确时序和机制按[连续验收](quality-acceptance.md#可检查项目)核对。重复失败先用原始输出定位首次失真的环节：输入/控制、生成、局部复合、超分或编码。源几何、动作或材质已坏时修源，不用提高超分倍率补救；同一关系仍不可见时重审控制/分镜方案，不以继续叠遮罩、重绘和来源绑定脚本代替进展。
+Condition inputs are optional repairs, not mandatory per shot. Verify timing/mechanism under [continuous acceptance](quality-acceptance.md#inspectable-items). For repeated failure trace original output to first distortion: input/control, generation, local composition, upscale or encode. Repair bad source geometry/action/material, not upscale factor. If the relation stays invisible, reassess control/shot design instead of stacking masks, redraws and source-binding scripts as progress.
 
-先在内部正常帧率、足以辨认关系和接缝的预览上淘汰坏源，再对可用方案做正式高清与最终实审；代理不等于G3/G5或高清认可。复用未变的解码、素材、已认可主轨与字幕，变更只处理受影响依赖。时间按实际准备、模型/渲染、解码/写盘、超分、合成和审查记录，区分相互包含或重叠区间；未经记录的空档不称GPU等待。已有逐帧像素检查可以自动覆盖必要范围，无需逐帧人工转交。仅当实测表明写盘/反复解码是瓶颈且现有接口支持时验证流式/缓存复用，不为一个未成立的小样另建通用执行框架或新环境。
+Reject bad sources in internal normal-fps previews sufficient to read relationships/joins before formal HD/final review of usable approaches. Proxies do not equal G3/G5 or HD approval. Reuse unchanged decodes/assets/accepted voice/captions; process affected dependencies only. Record actual preparation, model/render, decode/write, upscale, composite and review times, distinguishing nested/overlapping intervals; unrecorded gaps are not GPU wait. Existing automatic pixel checks may cover necessary frames without manual frame-by-frame handoff. Verify streaming/cache reuse only when measured repeated decoding/writes are bottlenecks and supported; do not build new generic frameworks/environments for an unproven sample.
 
-## 硬禁
+<a id="硬禁"></a>
+## Hard prohibitions
 
-- 不得把 AI 片标成实拍、观测或「真实素材锚点」；台账 `kind`/声明句不得写实拍已取得。
-- 不得用 AI 伪造不存在的观测证据、实验记录或具体历史事件画面并当作证据使用。
-- 机制镜头的科学简化须可核对：条件、方向、因果与比例边界写进主张/禁画项；不能因「是 AI」跳过科学审查。
-- 静图 + Ken Burns / 推拉 / 硬切幻灯**不算** `ai_generated` 视频模态；该类手法也不能顶替 `real_footage` 或合格连续解释。
-- 不得在用户已锁 `ai_generated` 后，为「系列默认纯2D」擅自改回纯2D样片并宣称已完成用户所选路径。
+- Never label AI footage as real capture, observation or a real-material anchor, or claim capture acquired in ledger `kind`/declarations.
+- Never fabricate nonexistent observation evidence, experimental records or specific historical scenes with AI and use them as evidence.
+- Scientific simplifications must be checkable: include conditions, direction, cause and scale boundaries in claims/prohibited imagery. AI does not exempt science review.
+- Stills plus Ken Burns/pan/zoom/hard-cut slides **are not** `ai_generated` video and cannot replace `real_footage` or qualified continuous explanation.
+- After user lock to `ai_generated`, do not revert to pure-2D samples under a series default and claim the selected route completed.
 
-## 权利与披露
+<a id="权利与披露"></a>
+## Rights and disclosure
 
-按[科学与素材](science-and-rights.md)记录生成工具条款、素材/声音来源、可辨识人物与实际用途；将AI生成、模拟和实拍如实区分。平台控件、`qa.release.ai_disclosure` 与逐资产 `ai_disclosure_required` 在该正文统一维护。
+Under [science and assets](science-and-rights.md), record generation-tool terms, visual/audio provenance, identifiable people and actual uses; accurately distinguish AI, simulation and photography. Platform controls, `qa.release.ai_disclosure` and asset-level `ai_disclosure_required` have their sole owner there.
 
-## 与纯2D / 实拍混剪
+<a id="与纯2d--实拍混剪"></a>
+## Mixing with pure 2D or real footage
 
-混剪仅使用原创来源契约内的画面，第三方公开视频及CC/Commons/论文影像不作成片素材。混剪按逐镜 `modality` 登记来源；披露执行[科学与素材](science-and-rights.md)，AI素材不得登记为实拍或用于关闭实拍锚点缺口。
+Use only contract-compliant visuals in mixed edits, not third-party public/CC/Commons/paper footage. Register sources per-shot `modality`; disclose under [science and assets](science-and-rights.md). Never label AI as capture or use it to close capture-anchor gaps.
 
-## 工具选择
+<a id="工具选择"></a>
+## Tool selection
 
-先复用当前已确认的本地模型及MoneyPrinterTurbo工程；缺必需能力按[准备与失败处理](tool-routing.md#调用前准备与安装)处理。逐镜状态、同目标试验及迭代记录按[精确可控与高效迭代](production-checkpoints.md#精确可控与高效迭代)执行。
+Reuse confirmed local models/MoneyPrinterTurbo first; handle missing required capability under [preparation/failure](tool-routing.md#preparation-and-installation-before-calls). Follow [precise control and efficient iteration](production-checkpoints.md#precise-control-and-efficient-iteration) for states, same-target trials and iteration.

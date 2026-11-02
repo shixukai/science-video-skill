@@ -1,30 +1,34 @@
-# 一个全局 Skill，项目只保存制作数据
+<a id="一个全局-skill项目只保存制作数据"></a>
+# One global Skill; projects retain production data only
 
-本系列只保留一个全局可执行的 `science-video-production` 安装，以本次实际调用位置为准。默认在 `${CODEX_HOME}/skills`，未设置时为用户主目录的 `.codex/skills`；按SKILL的`name`定位，不能根据旧目录名猜版本。项目内禁止另装、复制或修改本Skill，不创建`rules/<skill>`、`skill-snapshot-*`、项目`.agents/skills`或`.codex/skills`副本。
+Keep exactly one executable global `science-video-production` installation, identified by its actual invocation location. Default is `${CODEX_HOME}/skills`, or `.codex/skills` under the user home when unset; locate by SKILL `name`, not version guesses from legacy folders. Do not install, copy or modify this Skill inside projects, or create `rules/<skill>`, `skill-snapshot-*`, project `.agents/skills` or `.codex/skills` copies.
 
-开始及续做先读取全局入口与本次路线正文，按用户最新要求核旧工程；旧锁只证明历史执行，不决定当前规则。
+At startup/continuation read the global entrypoint and route references, checking old projects against latest user requirements; old locks prove historical execution, not current rules.
 
-[视频子代理](subagent-orchestration.md#installation-and-invocation)也统一引用本全局入口。Skill内维护的六个TOML定义仅同步至个人Codex的`agents`目录供宿主发现；它们不是独立Skill，不在项目复制安装。更新角色不自动重启任务或改变正在运行的上下文。
+[Video subagents](subagent-orchestration.md#installation-and-invocation) use this same global entrypoint. The six maintained TOML definitions sync only to personal Codex `agents` for host discovery; they are not separate Skills or project installs. Role updates do not automatically restart work/change running contexts.
 
-## 项目保存什么
+<a id="项目保存什么"></a>
+## What projects retain
 
-- 保留脚本、镜头/音轨/字幕、素材、适配器、来源、真实运行与审片记录，以及只写一次的规则文件哈希锁；从全局路径调用Skill的脚本。锁是摘要记录，不是一套可执行Skill。
-- 项目所需的参考图、模板实例或具体辅助资产可以保存并登记来源与哈希；不整包搬运规则、检查器及默认配置。临时维护/测试副本仅用于隔离验证，完成后撤除，不能留作项目生产入口。
-- 全局更新后，旧锁不自动有效。先在当前运行结束后检查差异，再以新文件记录迁移、受影响的设计/执行/审查及未验项，重新生成适用的当前锁；不改旧回执、不补签过去通过、不自动启动渲染或恢复取消项目。
-- 不为绕过新规则重新解压历史安装。确需追查历史时只读归档中的原文件及其哈希；历史文件不作为生产执行入口。
+- Keep scripts, shots/audio/subtitles, assets, adapters, provenance, actual run/review records and a write-once rule-file hash lock. Call Skill scripts globally; a lock is a digest record, not an executable Skill.
+- Project-specific reference images, instantiated templates and concrete supporting assets may be stored with provenance/hashes; do not copy complete rules, checkers/defaults. Temporary maintenance/test copies are isolated validation only and removed afterward, not project production entrypoints.
+- Global updates do not automatically validate old locks. After current jobs finish, compare changes, write a new migration record for affected design/execution/review and unreviewed scope, and generate applicable current locks. Never rewrite receipts, backdate passes, automatically render or revive canceled projects.
+- Never unpack historical installs to bypass new rules. Read archived originals/hashes only for historical tracing; they are not production entrypoints.
 
-## 清理已有副本
+<a id="清理已有副本"></a>
+## Remove existing copies
 
-先列出实际目录并区分完整安装、部分备份、历史证据中的入口文本和维护源码。只处理本Skill：不要误删别的工具Skill、用户媒体或同目录的其他证据。完整副本先逐文件哈希、压缩归档并读回校验，再移除；历史入口文本可归档或改为明确的非入口证据名，保留原内容和映射。
+List actual directories first and distinguish full installs, partial backups, historical entrypoint text and maintenance source. Handle this Skill only, preserving other Skills, user media and neighboring evidence. For complete copies first hash every file, archive/compress and verify readback, then remove. Historical entry text may be archived/renamed clearly as non-entrypoint evidence with original contents/mapping retained.
 
-项目旧路径必须兼容时可保留指向唯一全局目录的链接，但不保留独立文件；解析后的路径必须等于全局安装。旧哈希与当前全局不一致时仍须显式迁移，链接不使历史批准自动生效。GitHub维护源码放在项目之外的维护目录，只用于修改、校验与同步，不作为第二个生产安装；不得从维护源码直接运行生产任务。
+Legacy paths needing compatibility may link to the single global directory, without independent files; resolved paths must equal the global installation. Old hashes differing from global still require migration; links do not revive old approvals. GitHub maintenance sources live outside projects, only for edits/checks/sync, never as another production install or direct production entrypoint.
 
-清理后重新扫描已知项目根目录，报告扫描范围、未读目录、独立副本数量和兼容链接。扫描失败不等于没有副本；有新副本时查创建它的项目入口，不只反复删文件。归档仅用于恢复和取证，不在公共仓库保存私人项目目录、用户反馈或生产证据。
+Rescan known project roots after cleanup and report coverage, unread directories, independent copy count and compatibility links. Failed scans do not prove absence. Trace creators of new copies rather than repeatedly deleting files. Archives serve recovery/evidence only; public repositories exclude private project paths, feedback and production evidence.
 
-## 可执行检查
+<a id="可执行检查"></a>
+## Executable checks
 
-`scripts/global_skill.py`只读定位及扫描：
+`scripts/global_skill.py` performs read-only location/scanning:
 
-    python -X utf8 <全局Skill>/scripts/global_skill.py --scan <项目目录> <另一项目目录>
+    python -X utf8 <global-skill-root>/scripts/global_skill.py --scan <project-directory> <another-project-directory>
 
-`render_gate.py lock/run`的命令行入口在写锁或调用项目执行器之前核唯一全局安装，拒绝项目副本及仓库源码。离线结构测试和单元测试不因此变成生产运行；测试使用隔离临时目录并清理。
+The `render_gate.py lock/run` CLI checks unique-global installation before writing locks/invoking project executors, rejecting project copies/repository source. Offline structural/unit tests are not production runs; use isolated temporary directories and clean them.

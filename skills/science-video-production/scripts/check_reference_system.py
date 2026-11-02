@@ -204,18 +204,18 @@ def check(root):
 
         policy = read("config/production-policy.json")
         audience = policy["audience_text"]
-        need(audience["owner"] == "references/visual-system.md#可见文字用途与制作辩解"
+        need(audience["owner"] == "references/visual-system.md#visible-text-purposes-and-production-excuses"
              and audience["plan_stage"] == "G1" and audience["actual_review_stages"] == ["G2", "G3", "G5"], "audience text owner/stages required")
         need(set(audience["surfaces"]) == {"frame", "caption", "voiceover", "cover"}
              and set(audience["forbidden_purposes"]) == {"material_defect", "internal_qa", "production_excuse", "production_meta"}
              and set(audience["protected_purposes"]) == {"scientific_condition", "attribution", "license", "ai_simulation"}
              and audience["source_screening_is_not_actual_media_inspection"] is True, "audience purpose/protected notice boundaries required")
-        need(audience.get("label_permission_owner") == "references/visual-system.md#画内标识须有具体同意"
+        need(audience.get("label_permission_owner") == "references/visual-system.md#in-picture-markings-require-specific-consent"
              and audience.get("actual_overlay_evidence_required") is True
              and set(audience["allowed_purposes"]) == {"topic", "mechanism", "accessibility", "scientific_condition", "attribution", "license", "ai_simulation", "watermark"}
              and audience.get("default_companion_purposes") == ["ai_simulation"] and audience.get("on_frame_disclosure_requires_specific_consent") is True, "specific label permission and default off-frame AI disclosure required")
         continuity = policy["voice_continuity"]
-        need(continuity["owner"] == "references/voice-reference.md#整期旁白连续性"
+        need(continuity["owner"] == "references/voice-reference.md#whole-episode-narration-continuity"
              and continuity["required_stages"] == ["G2", "G3", "G5"]
              and continuity["continuous_narration_preferred"] is True
              and continuity["segmentation_requires_verified_capability_and_context_handoff"] is True
@@ -223,7 +223,7 @@ def check(root):
              and continuity["actual_continuous_listening_required"] is True
              and continuity["feedback_failure_owner"] == "qa.visual_frames.failures", "whole-episode continuous voice boundaries required")
         motion = policy["subject_motion"]
-        need(motion["owner"] == "references/quality-acceptance.md#主体动态与长静帧"
+        need(motion["owner"] == "references/quality-acceptance.md#subject-motion-and-long-static-holds"
              and motion["required_stages"] == ["G2", "G3", "G5"], "subject motion canonical owner/stages required")
         need(type(motion["max_no_progress_seconds"]) in (int, float) and 0 < motion["max_no_progress_seconds"] <= 3
              and type(motion["max_purposeful_read_seconds"]) in (int, float)

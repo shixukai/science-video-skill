@@ -1,144 +1,157 @@
-# 单集美术与画质记录
+<a id="单集美术与画质记录"></a>
+# Episode Art and Image-Quality Record
 
-复制到单集私有目录，只填本次适用部分；已有简报、动作卡或QA直接引用。未制作/未看记待验，实际结论归现有QA。
+Copy to the episode's private directory and fill only applicable sections. Cite existing briefs, action cards or QA directly. Unproduced/unviewed work remains pending; actual conclusions belong in existing QA.
 
-## 版本与范围
+<a id="版本与范围"></a>
+## Version and scope
 
-- 单集、阶段、记录版本、日期：
-- 本次镜号/实际时段、待覆盖范围：
-- 当前媒体相对路径/SHA-256；源图/工程版本：
-- 设计板/系列参数/字体的固定引用与实际认可范围：
-- 已确认风格参考图及美术规格的版本/哈希；本次实际看图、适用部分、主体/机制的差距与复查证据：
-- 对应 `qa` 记录位置：
-- 实际审查者、观看尺寸/设备、是否正常速带声、能力或范围限制：
-- 本条结论实际依据的观察方式与画面范围（连续播放/取样静帧、全画面/局部）；辅助放大、暂停、去叠图所见另列，不升级原观察范围：
+- Episode, stage, record version and date:
+- Current shots/actual intervals and coverage still needed:
+- Current media relative path/SHA-256; source image/project version:
+- Fixed design-board/series-parameter/font references and actual acceptance scope:
+- Accepted style image and art-specification versions/hashes; actual current viewing, applicable parts, subject/mechanism gaps and recheck evidence:
+- Corresponding `qa` record location:
+- Actual reviewer, viewing size/device, normal-speed sound-picture status and capability/scope limits:
+- Observation method and picture scope supporting this conclusion (continuous playback/sampled stills, full frame/crop). Record auxiliary zoom, pause or overlay-hidden diagnosis separately without expanding the original observation scope:
 
-按 [阶段证据](../references/quality-acceptance.md#美术方法的阶段证据) 保存阶段快照，例如 `art-direction-G3-v1.md`；后关继续工作时另存版本，保留前关实际所审文件。
+Save stage snapshots under [stage evidence](../references/quality-acceptance.md#stage-evidence-for-art-methods), such as `art-direction-G3-v1.md`. Save a new version for later stages; retain the actual file reviewed at the earlier stage.
 
-## 指示信息与动态绑定
+<a id="指示信息与动态绑定"></a>
+## Annotations and dynamic binding
 
-按[精密技术标注](../references/annotation-style.md)填写，仅记录本次实际标注；已有动作卡、图内文字清单或QA可直接引用。
+Apply [precision technical annotation](../references/annotation-style.md) only to actual current annotations; cite existing action cards, picture-text inventory or QA directly.
 
-- 镜号/时段、目标对象及实际锚点；删除后具体理解损失（无损失则删），必要标签内容；定位/方向/范围/尺寸的语义及科学依据：
-- 依[正文文字标准](../references/visual-system.md#正文辅助文字的使用与停留)按媒介区分：3D仅必要单字母，其他媒介才用短标签或解释/比较；进入、完整稳定可读起止、退出及与字幕/观察的顺序；实看确认无角落场景抬头、能读完并定位，计划与实际结果分记：
-- 标准、参数、可编辑源与字体的版本/哈希；浅暗/复杂底、文字层级、线端留白及本镜调整理由：
-- 箭头轮廓或头杆接合方式，实际尖端、杆穿出、接缝、方向和缩放/旋转/遮罩极值的观察：
-- 3D画面仅允许必要单字母标记，禁止说明句、单词/缩写、数字/单位和解释牌；按[单字母与空间规则](../references/spatial-typography.md)记实际锚点/几何/材质光照、透视/遮挡，不能拆字拼词，普通同步字幕2D。其他媒介沿原文字规范；实际可读区间、目标绑定及未验范围：
-- 原尺寸、小屏实际宽度、最终编码与连续段引用；已验/未验/失败、修复版本及对应既有QA：
+- Shot/interval, target and actual anchor; specific meaning lost if removed (remove if none); necessary label content; locating/direction/range/dimension semantics and scientific basis:
+- Follow the medium's [body-text rule](../references/visual-system.md#body-auxiliary-text-use-and-hold): 3D permits only necessary single letters; other media may use short labels/explanation/comparison. Record entry, complete stable-readable start/end, exit and order relative to captions/observation. Actually confirm no corner scene headings and enough time to read then locate; distinguish plan from observation:
+- Standard, parameters, editable source and font versions/hashes; light/dark/complex backgrounds, text hierarchy, line-end clearance and reasons for shot-specific adjustments:
+- Arrow silhouette or head/shaft construction; actual tip, shaft overshoot, joins, direction and scale/rotation/mask extremes:
+- In 3D picture, only necessary single-letter markers; no explanatory sentences, words/abbreviations, numbers/units or plaques. Under [single-letter spatial rules](../references/spatial-typography.md), record actual anchor/geometry/material/light/perspective/occlusion; no words assembled from letters. Genuine synchronized captions remain 2D; other media keep their own text rules. Actual readable interval, target binding and unreviewed scope:
+- Original size, actual small-screen width, final encoding and continuous-sequence references; reviewed/pending/failed, repair version and existing QA:
 
-## 代表样与同镜完成度对照
+<a id="代表样与同镜完成度对照"></a>
+## Representative samples and same-shot completion comparisons
 
-按 [代表样与校准](../references/visual-system.md#代表样与-l2l3-校准) 选择实际风险；不为表格凑样本或制作故意粗糙的差稿。
+Choose actual risks under [representative samples/calibration](../references/visual-system.md#representative-samples-and-l2l3-calibration). Do not manufacture sample counts or deliberately crude comparison art to fill a table.
 
-| 镜号/时段 | 本镜风险及选样理由 | 当前帧/连续段 | 同内容同景别参照/修订前后 | 相同条件与不可比之处 | 实际差距及修改 |
+| Shot/interval | Risk and selection reason | Current frame/sequence | Same-content/scale reference or before/after | Matched conditions and limitations | Actual gap and revision |
 | --- | --- | --- | --- | --- | --- |
-| 待填 | 待填 | 待制作/待查看 | 候选或已有认可的具体范围 | 待核 | 待验 |
+| Pending | Pending | Not produced/viewed | Candidate or precisely scoped prior acceptance | Unchecked | Unreviewed |
 
-已确认基准的复用范围、尚未覆盖的对象/尺度/动作：
+Accepted baseline's reuse scope and uncovered objects/scales/actions:
 
-## 封面完成度到连续场景
+<a id="封面完成度到连续场景"></a>
+## From cover-level finish to continuous scenes
 
-方法见[完整场景](../references/visual-system.md#从封面完成度到可控动态场景)，仅补现有动作卡和QA未覆盖的观察。
+Use [complete-scene methods](../references/visual-system.md#from-cover-finish-to-controllable-dynamic-scenes); add only observations not already covered by action cards/QA.
 
-- 代表段及未覆盖范围：整体定位→关键关系→可见结果→整体回接；对应动作卡：
-- 完整全景、近景与相机极值的文件/哈希；手机观看尺寸与封面/参照对照：
-- 主体尺度、视点、相对比例、光向、遮挡与材质接缝；实际差距及准确时点：
-- 正常速带声所见的对象变化、稳定参照、结果可辨性与口播对应；临时隐藏叠图的诊断另引 `object_result_review`：
-- 已验/失败/未验、修复版本及实际复查；扩制尚缺的对象、尺度或关系：
+- Representative and uncovered scope: whole-object location → key relation → visible result → return to whole; corresponding action cards:
+- Complete wide view, close-up and camera-extreme files/hashes; phone viewing size and cover/reference comparison:
+- Subject scale, viewpoint, relative proportions, light direction, occlusion and material joins; actual gaps and precise times:
+- Normal-speed sound-picture observations of object change, stable reference, readable result and narration correspondence; cite temporary overlay-hidden diagnosis separately through `object_result_review`:
+- Reviewed/failed/pending, repair version and actual recheck; objects/scales/relations still needed for expansion:
 
-## 参考学习与实际应用对照
+<a id="参考学习与实际应用对照"></a>
+## Reference learning versus actual application
 
-按 [学习闭环](../references/production-checkpoints.md#从参考学习到实际改进) 记录；只填实际开展的范围，已有对应记录直接引用。
+Record under the [learning loop](../references/production-checkpoints.md#from-learning-a-reference-to-actual-improvement); fill only actual work and directly cite existing records.
 
-- 本次反馈/当前失败点，允许的媒体修改与交付范围：
-- 参考身份/链接/版本、实际覆盖时段、是否实听；关键时点的画面事实与未验项：
-- 拟迁移方法、适用理由与限制；哪些是直接观察、哪些仍是迁移假设：
-- 当前代表段及前后媒体版本/哈希，改动的关键表达、保持不变的比较条件：
-- 手机尺寸和正常速连续声画的实际观察、改善点/新缺陷与证据时点：
-- 保留/修正/弃用/待验及理由；可复用范围、尚未覆盖部分，实际更新的规则位置：
+- Current feedback/failure; authorized media-change and delivery scope:
+- Reference identity/link/version, actual covered intervals and whether it was actually listened to; picture facts at key times and unreviewed items:
+- Proposed transferable method, fit and limits; direct observations versus transfer hypotheses:
+- Current representative sequence, before/after media versions/hashes, changed expression and controlled comparison conditions:
+- Actual phone-size/normal-speed audiovisual observations, improvements/new defects and evidence times:
+- Keep/revise/discard/pending decision and reason; reusable scope, uncovered work and actual updated rule location:
 
-## 当前反馈与分维度复查
+<a id="当前反馈与分维度复查"></a>
+## Current feedback and dimensional rechecks
 
-直接引用 `qa.feedback` 的原意见、媒体/哈希、时段与范围，不另写同一台账。核每条失败是否有修复产物及对应维度的实际复查；理解认可不能抵消美术、动画、布局或声音失败。
+Cite original feedback, media/hash, range and scope in `qa.feedback` without another ledger. Check each failure's repair artifact and actual recheck of its dimensions. Comprehension approval cannot offset art, animation, layout or sound failures.
 
-- 原反馈与受影响的动作卡/QA引用：
-- 改动、修复版本、准确复查时点与结果；未验和未解决项：
-- 若同时修Skill：责任条款、修改位置与回归记录；尚待媒体验证部分：
+- Original feedback and affected action-card/QA references:
+- Change, repair version, precise recheck time/results; unreviewed and unresolved items:
+- If maintaining the Skill too: responsible clause, changed location, regression records and media validation still pending:
 
-## 动画场景设计卡
+<a id="动画场景设计卡"></a>
+## Animation scene-design card
 
-用于主要动画设计、静图转动态或空洞修复；方法见 [详细设计标准](../references/animation-scene-design.md)，示例见 [雪花生长](../references/snow-crystal-scene-example.md)。引用现有解释步骤和动作卡，不重复建分镜；设计内容不填成实际观察。
+For substantial animation, still-to-motion conversion or empty-scene repairs, use the [detailed design standard](../references/animation-scene-design.md) and [snow-crystal example](../references/snow-crystal-scene-example.md). Cite existing explanation steps/action cards without a second storyboard. Design intentions are not observations.
 
-- 镜号/解释步骤/阶段、当前分镜与音轨引用（本阶段适用时）：
-- 观察任务、本镜新增信息及下一镜如何使用：
-- 按解释任务选用的手法及具体动作（仅适用项）：爆炸图/剖切、并行汇合、工艺闭环、累积蒙太奇或整体回接；固定参照、关键状态、预期可见结果及常见误导。沿上方既有动作卡落实，不另建必填表：
-- 主体、必要情境/参照及各自作用；留白用途：
-- Blender环境类型与依据、支承/配套/尺度参照、空间层次及材质灯光；局部简化范围、整体与局部的接续；实际合成和跨镜重复检查（仅适用3D场景）：
-- 共享库检索词/类别、选中资产ID/版本/摘要、依赖与改造范围；新建理由及待归档内容：
-- 驱动变量/触发事件、接触或约束成立时点、响应对象及共享状态；初态→关键中间态→结果，持续保留/新增/变形/移除部分及依据：
-- 主要变化发生区域、支持结论的具体特征、稳定参照与目标观看尺寸的辨认方式；旁白对应事件：
-- 对照变量、保持相同的条件及时间参照；条件变化节点与主体结果的对应（适用时）：
-- 逐拍注意中心、明度/边缘/细节主次；辅助运动的用途与退让：
-- 景别与进入/离开时保留的局部特征、方向、状态；近景新增什么必要信息：
-- 实际参考、所需资产/隐藏面/底板/锚点/遮挡、关联状态参数；有角色时注明rig/动作版本、重定向与接触、面部控制/音轨对齐及实际难点：
-- 科学依据、不可见量的示意方式、禁画关系与必要限定：
-- 连续运动预演/最终引擎细节段/镜头帧序列的现有引用；本次实际验证内容、未覆盖风险及下一步，沿用已有阶段记录：
-- 共享资产与稳定驱动引用、参数/帧范围、原始帧、仅允许的空间3D单字母与2D同步字幕/声音层的分工；本轮变化依赖及需重渲文字/受影响光影或只重合成的范围：
-- 实测准备/构建/渲染写盘/合成/审看时间及统计口径；未测不估作实绩：
-- 待检完整合成/关键态/连续段；预期差异、已实际观察结果与未验项分别记录：
-- 对应A/D/I、实际证据时点；已有且清楚/已有但不显著/缺失/未验；修复与复查范围：
+- Shot/explanation step/stage, current storyboard/audio references when applicable:
+- Observation task, new information and its use by the next shot:
+- Applicable method and concrete action: exploded view/cutaway, parallel convergence, process loop, accumulation montage or return to whole; fixed reference, key states, expected visible result and likely misreading. Implement through the existing action card above, not another mandatory form:
+- Subject, necessary situation/reference and each role; purpose of negative space:
+- Blender environment type/basis, support/ancillary structures/scale references, spatial depth, materials/light; local simplification, whole/local handoff, actual composition and cross-shot repetition check (3D only):
+- Shared-library search terms/categories, selected asset ID/version/digest, dependencies/adaptations; reason for new work and pending archival:
+- Driver/trigger, established contact/constraint, responding object and shared state; initial → necessary intermediate → result; retained/added/deformed/removed parts and basis:
+- Main change region, specific feature supporting the conclusion, stable reference and recognition at target viewing size; corresponding narration event:
+- Compared variable, fixed conditions/time reference; mapping condition changes to subject response when applicable:
+- Attention center by beat; value/edge/detail hierarchy; purpose and restraint of supporting motion:
+- Shot scale and recognizable features/direction/state retained at entry/exit; necessary new close-up information:
+- Actual references, required assets/hidden faces/underlays/anchors/occlusion and linked state parameters; for characters, rig/action versions, retargeting/contact, facial controls/audio alignment and actual difficulty:
+- Scientific basis, encoding of invisible quantities, forbidden relationships and necessary qualifications:
+- Existing continuous previs/final-engine detail segment/frame-sequence references; actual current validation, uncovered risks and next step within existing stage records:
+- Shared assets/stable drivers, parameters/frame range, raw frames, permitted spatial 3D single letters versus genuine 2D captions/audio; changed dependencies and affected text/light/shadow rerender or composition-only scope:
+- Measured preparation/build/render/write/composition/review time and measurement basis; unmeasured values are not results:
+- Pending complete composite/key states/continuous sequence; expected change, actually observed result and unreviewed items separately:
+- Corresponding A/D/I items and actual evidence times; present/readable, present/subtle, absent or unreviewed; repair/recheck scope:
 
-## 构图、主次与主体精修
+<a id="构图主次与主体精修"></a>
+## Composition, hierarchy and subject refinement
 
-制作方法见 [构图](../references/visual-system.md#竖屏画幅与构图) 和 [精修顺序](../references/visual-system.md#三尺度造型与制作细节)。只在方案不明确时比较构图缩略稿；灰度、缩小或模糊仅作诊断，不是另一次审美放行。
+Use [composition](../references/visual-system.md#portrait-aspect-ratio-and-composition) and [refinement order](../references/visual-system.md#three-scale-form-and-production-detail). Compare composition thumbnails only when the approach is uncertain. Grayscale, reduction or blur are diagnosis, not another aesthetic approval.
 
-| 镜号/帧 | 解释关系与注意中心 | 主体尺度/负空间的用途 | 明度、边缘、细节如何分主次 | 当前精修环节与可见问题 | 修改及实际复查 |
+| Shot/frame | Relation and attention center | Subject scale/negative-space purpose | Value/edge/detail hierarchy | Current refinement and visible defect | Revision and actual recheck |
 | --- | --- | --- | --- | --- | --- |
-| 待填 | 待填 | 待填 | 待填 | 轮廓比例→结构接触→明暗边缘→必要材质；按实际填 | 待验 |
+| Pending | Pending | Pending | Pending | Silhouette/proportion → structure/contact → value/edges → necessary materials; fill actual state | Unreviewed |
 
-需要对照的局部与完整合成帧、拟用尺寸；对应A01–A08条目：
+Local detail/full composites and intended comparison size; corresponding A01–A08 items:
 
-## 整片色彩与构图缩略带
+<a id="整片色彩与构图缩略带"></a>
+## Whole-film color and composition thumbnail strip
 
-按 [整片编排](../references/visual-system.md#整片色彩与构图缩略带) 引用当前分镜或抽帧页；抽帧是现状诊断，前期设计缩略稿另标为计划，不能混作实际成片。
+Under [whole-film design](../references/visual-system.md#whole-film-color-and-composition-thumbnail-strip), cite current storyboard/extracted-frame sheets. Extraction diagnoses existing work; early design thumbnails remain plans, never actual final-film observations.
 
-- 分镜/媒体版本；抽帧清单及时间基准：
-- 缩略带路径、SHA-256；相关 `timeline_sha256`（使用工具时）：
+- Storyboard/media version; extraction manifest and time reference:
+- Thumbnail-strip path/SHA-256; associated `timeline_sha256` when using the tool:
 
-| 镜号/相邻镜 | 实际模态/尺度 | 注意中心位置 | 背景明度/强调色角色 | 细节与动作密度 | 重复、过渡或收束的用途 | 连续带声复查时点与观察 |
+| Shot/neighbor | Actual medium/scale | Focal position | Background value/accent roles | Detail/action density | Purpose of repetition/transition/closure | Actual continuous sound-picture times/observations |
 | --- | --- | --- | --- | --- | --- | --- |
-| 待填 | 待填 | 待填 | 待填 | 待填 | 待填 | 待验 |
+| Pending | Pending | Pending | Pending | Pending | Pending | Unreviewed |
 
-未被固定抽样捕获的关键态、媒介接缝或运动极值，另补实际证据：
+Additional actual evidence for key states, medium joins or motion extremes missed by fixed sampling:
 
-## 科学色义与造型光影
+<a id="科学色义与造型光影"></a>
+## Scientific color semantics and form lighting
 
-仅当颜色承载科学对象身份、类别或数值时记录对应关系；无变量色编码时说明实际情况。按 [色义优先级](../references/visual-system.md#三尺度造型与制作细节) 核对，不为装饰渐变虚构物理变量。
+Record color mappings only when color encodes scientific identity, category or value; otherwise state the actual situation. Check [color priority](../references/visual-system.md#three-scale-form-and-production-detail), without inventing a physical variable to justify a decorative gradient.
 
-| 镜号/对象 | 色彩代表的量/类别、图例及依据 | 与光影/材质分别控制的方法 | 非颜色识别线索 | 调色前后及最终编码的观察 | 待修/复查 |
+| Shot/object | Encoded quantity/category, legend/basis | Separate control from shading/materials | Non-color recognition | Observations before/after grade and final encode | Repair/recheck |
 | --- | --- | --- | --- | --- | --- |
-| 待填 | 待核或有据不适用 | 待填 | 待填 | 待验 | 待验 |
+| Pending | Unchecked or justified inapplicability | Pending | Pending | Unreviewed | Unreviewed |
 
-检查是否产生不存在的边界、极值、发光或类别改变；观察证据与科学边界：
+Invented boundaries, extrema, glow or category changes; observation evidence and scientific limits:
 
-## 母版、交付编码与平台细节
+<a id="母版交付编码与平台细节"></a>
+## Master, delivery encode and platform detail
 
-按 [最终编码对照](../references/visual-system.md#最终编码的细节保留) 先看实际播放尺寸及正常速度，再用局部放大定位。平台尚不可访问时记待验，不为填记录自行上传。
+Under [final-encode comparison](../references/visual-system.md#detail-retention-in-the-final-encoding), view actual playback size/normal speed before zooming for diagnosis. If platform access is missing, mark pending; do not upload merely to fill a record.
 
-| 风险镜号/时点 | 母版文件/哈希 | 最终编码文件/哈希 | 同内容对应时点/尺度 | 实际观察与受损细节 | 定位环节、修复及重查证据 |
+| Risk shot/time | Master file/hash | Final encode file/hash | Matched content/time/scale | Actual observations/lost detail | Fault location, repair and recheck evidence |
 | --- | --- | --- | --- | --- | --- |
-| 待填 | 待取得 | 待取得 | 待核 | 待验 | 待验 |
+| Pending | Unavailable | Unavailable | Unchecked | Unreviewed | Unreviewed |
 
-- 本片适用风险：箭头尖端/间隙、相邻彩色路径、透明边缘、天空渐变、运动纹理或其他具体项：
-- 平台结果来源、账号/界面/设备/日期及文件或截图引用；与本地编码的区别：
-- 对应A04/A06/A07/A08/A10及D05/I04的实际结论位置：
+- Applicable risks: arrow tips/gaps, adjacent colored paths, transparent edges, sky gradients, moving textures or another concrete item:
+- Platform result source, account/interface/device/date and file/screenshot references; distinction from local encoding:
+- Actual conclusions for A04/A06/A07/A08/A10 and D05/I04:
 
-## 可核对的证据文件
+<a id="可核对的证据文件"></a>
+## Verifiable evidence files
 
-将实际用于阶段结论的本页快照、对照图/视频、缩略页、抽帧和清单分别列入对应 `qa.gates.G2/G3/G5/G6.evidence`，每项含相对单集目录的 `file` 与当前 `sha256`。检查器不递归冻结Markdown/HTML中的链接；只列本页或manifest不会自动绑定其图片。工具输出列表须按实际审查范围选择，生成不代表看过。
+List the actual page snapshot, comparisons, videos, thumbnail sheets, extracted frames and manifests used for conclusions separately in `qa.gates.G2/G3/G5/G6.evidence`, each with episode-relative `file` and current `sha256`. The checker does not recursively freeze Markdown/HTML links; listing only this page or a manifest does not automatically bind its images. Select tool outputs according to actual review scope; generation is not viewing.
 
-| 文件相对路径 | SHA-256 | 对应镜号/时间与条款 | 实际用途及审查范围 |
+| Relative file | SHA-256 | Shot/time and criterion | Actual purpose/review scope |
 | --- | --- | --- | --- |
-| 待填 | 待计算 | 待填 | 待验 |
+| Pending | Uncomputed | Pending | Unreviewed |
 
-当前缺项与责任、修复后需重新审查的范围：
+Current gaps, owner and required post-repair review scope:

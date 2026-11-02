@@ -1,10 +1,10 @@
 # Reusable Blender sequence execution
 
-Use this for local intermediate 3D frames after choosing the scene and frame range. It does not approve science, appearance, narration or delivery. Assemble audiovisual roughcuts/samples/finals through the existing [phase entry](production-checkpoints.md#开工锁定与真实渲染入口). Existing task-specific launch requirements still apply; the generic runner is not a replacement for a required bounded executor or an unresolved task.
+Use this for local intermediate 3D frames after choosing the scene and frame range. It does not approve science, appearance, narration or delivery. Assemble audiovisual roughcuts/samples/finals through the existing [phase entry](production-checkpoints.md#start-lock-and-actual-rendering-entry). Existing task-specific launch requirements still apply; the generic runner is not a replacement for a required bounded executor or an unresolved task.
 
 ## Prepare one job per shot or coherent scene
 
-Read the [production sequence](engineering-blender.md#有界试制与可靠复用) first. Reuse linked/appended assets and a stable scene driver. Keep shot parameters in JSON rather than generating a new launcher for each revision. Save project-specific files in the project; call [blender_batch.py](../scripts/blender_batch.py) from the unique global Skill.
+Read the [production sequence](engineering-blender.md#bounded-trials-and-reliable-reuse) first. Reuse linked/appended assets and a stable scene driver. Keep shot parameters in JSON rather than generating a new launcher for each revision. Save project-specific files in the project; call [blender_batch.py](../scripts/blender_batch.py) from the unique global Skill.
 
 Start with [blender-job-template.json](../assets/blender-job-template.json). Fill the actual device name, existing Blender executable and driver path; blank entries are deliberately not runnable. Paths resolve relative to the spec file. `inputs` lists all external assets, libraries, fonts, textures, imported project helpers and caches actually read. The runner hashes them, the Blender binary and its own executable script. It executes declared project Python source directly, including imports, so stale `.pyc` files cannot substitute an older driver, helper or resource policy. It checks loaded external images, fonts and libraries again after frame-state changes; native sequence textures in evaluated nodes use Blender's actual frame mapping, and UDIM images bind each tile. Declare every sequence frame the job uses, not just its first image. Custom file reads, simulation caches and external services still require explicit dependency declarations/checks; this is not a universal dependency crawler.
 
@@ -27,7 +27,7 @@ An adapter for an existing `build_once()` / `set_state(index)` project should ca
 
 Keep ordinary synchronized narration/accessibility captions as a separate editable 2D layer. Only necessary single-letter markers are allowed in 3D picture; words, abbreviations, numeric/unit labels and explanation plaques are prohibited even as 3D text. Use actual editable scene letter geometry under the [single-letter spatial rule](spatial-typography.md); a separate collection/view layer is allowed, with the same camera, depth/holdouts, occlusion and relevant lighting. `set_frame` can return anchor metadata for compositing or diagnostics: frame/time, stable object/anchor ID, pixel coordinates, depth and visibility. Derive coordinates from evaluated world transforms and the actual camera, e.g. `bpy_extras.object_utils.world_to_camera_view(scene, camera, world_point)`; test bounds, positive depth and occlusion separately. Projection alone does not establish visibility or turn a screen glyph into spatial text. Keep arrowhead/stem geometry editable and preserve its existing semantic/construction requirements.
 
-正式帧和画质样段按[高清输出](quality-acceptance.md#高清视频输出)使用本片 `design.output.width/height`，并在实际渲染中核100%尺寸；合成与编码保持该目标。`blender-job-template.json` 的960×540仅是内部 `motion_preview` 起点，不能原样作为正式画质样段/成片配置；正式任务须明确覆盖宽高与本片帧率，并按真实风险配置采样，不把技术预演参数当正式画质。
+Formal frames and quality samples use this film's `design.output.width/height` under [HD output](quality-acceptance.md#hd-video-output), verified at 100% in actual rendering and preserved in compositing/encoding. The `blender-job-template.json` 960×540 is only an internal `motion_preview` starting point, not a formal sample/final preset. Formal jobs explicitly override dimensions/fps and choose sampling by actual risk, not technical-preview parameters as final quality standards.
 
 ## Hand off raw frames to the edit
 
@@ -35,17 +35,18 @@ Keep the accepted narration and editable text/annotation source separate from th
 
 Use the existing editor or FFmpeg adapter to combine scene picture, matching 3D text passes, delivery-size 2D captions, narration and sound. Preserve linear/color-transform handling for EXR rather than treating it as display-ready PNG. A 2D caption correction can reuse verified picture; a 3D text correction rerenders the affected text geometry/material pass and any changed receiving shadows/reflections or occlusion dependencies, reusing unaffected beauty frames. A voice edit reuses picture when timing still matches. New timing, camera, geometry or visibility can change dependent ranges. Verify the recomposed result and applicable audiovisual scope through the existing phase entry; frame reuse is not automatic review reuse.
 
-### 可选复用光照分组，而非每次重渲
+<a id="可选复用光照分组而非每次重渲"></a>
+### Optionally reuse light groups instead of rerendering every adjustment
 
-确需反复平衡主/补光贡献且当前工程已有可用Light Groups或分离光照通道时，可在本地合成重平衡增益，保留线性母版、通道对应、实际输出文件/哈希和可编辑合成。这里只复用真实存在且已在当前环境核过的通道；通用runner的PNG/OPEN_EXR主帧支持不代表已提供多层EXR或Light Groups，不写入臆造的JSON渲染键。需要新设通道时由作者在支持的场景/合成流程中配置，沿已有代表段核实际输出与复用收益，不为每期另设通道试验关卡。
+When repeated key/fill balancing is genuinely needed and the project already has usable Light Groups/separate lighting passes, rebalance gains locally in compositing, preserving linear masters, channel mapping, actual output files/hashes and editable composition. Reuse only real passes verified in this environment. Generic PNG/OPEN_EXR frame support does not establish multilayer EXR/Light Groups; do not invent JSON render keys. Authors configure new passes in supported scene/compositing workflows when needed, checking actual output/reuse benefit in existing representative work rather than adding a per-episode pass-test gate.
 
-光源位置/尺寸、阴影、遮挡、几何、材质或所讲现象变化仍重渲受影响范围；普通调色或二维提亮不能制造缺失的真实反射/投影。缺所需通道时沿当前可用流程制作，不自动换引擎、装外部工具或调用云服务。通道文件属于作者声明的额外交付，仍核版本和实际范围；工具完成不代画质批准。
+Changed source position/size, shadows, occlusion, geometry, materials or explained phenomena still require affected rerenders. Ordinary grading/2D brightening cannot create missing real reflections/shadows. Without required passes, use the current available workflow without automatically changing engine, installing tools or calling cloud services. Author-declared extra pass deliveries still require version/scope checks; tool completion is not quality approval.
 
 ## Explicit color settings and actual readback
 
 The generic runner accepts only its documented `render` keys; an unsupported key is an error, not an applied setting. Optional `render.color_management` accepts `display_device`, `view_transform`, `look`, `exposure` and `gamma`; use enum names supported by the actual Blender/OCIO configuration. Absent keys inherit the authored scene. Explicit values are applied in order and read back; invalid/clamped/mismatched values fail before rendering. Do not put a flat `render.exposure` or invented material/light parameter in the spec and assume it works. Other scene, material, texture, light and output controls belong in the declared driver/baked scene. The receipt records actual color state plus available sampling, denoising and light-path diagnostic settings; it does not certify appearance.
 
-For [grain, shimmer and compression diagnosis](art-direction.md#画面洁净度先定位雪花感的来源), compare the local raw output and affected post-processing stages before changing quality. The `motion_preview` template is a technical preview, not a final-look preset. No universal sample/exposure/brightness pass line is implied. Existing frozen jobs keep their input/signature history; a changed executor or settings requires an explicit new job/migration rather than editing its old receipt.
+For [grain, shimmer and compression diagnosis](art-direction.md#image-cleanliness-locate-the-source-of-snow-like-noise-first), compare the local raw output and affected post-processing stages before changing quality. The `motion_preview` template is a technical preview, not a final-look preset. No universal sample/exposure/brightness pass line is implied. Existing frozen jobs keep their input/signature history; a changed executor or settings requires an explicit new job/migration rather than editing its old receipt.
 
 ## Complete a repair cycle before expanding
 
@@ -79,7 +80,7 @@ This guard limits new partial render attempts in the declared repair scope. It d
 
 ## Device, ownership and recovery
 
-Cycles jobs explicitly select `CPU` or `GPU`; GPU jobs select the actual backend and exact enumerated device name, with `device_id` when names are ambiguous. No implicit CPU fallback or utilization ceiling is implemented. Keep applicable host/user limits and existing project queue, ownership, capacity and budget checks. An optional `resource_check` Python file can expose `check(spec) -> {"ok": bool, ...raw observations/reason...}` to reuse an existing check immediately before building. Include that module and its dependencies in `inputs`. A false result is recorded and stops execution; the hook cannot invent its own policy threshold. Consult the [current-evidence rule](production-checkpoints.md#静态证据条件复用与动态新鲜检查).
+Cycles jobs explicitly select `CPU` or `GPU`; GPU jobs select the actual backend and exact enumerated device name, with `device_id` when names are ambiguous. No implicit CPU fallback or utilization ceiling is implemented. Keep applicable host/user limits and existing project queue, ownership, capacity and budget checks. An optional `resource_check` Python file can expose `check(spec) -> {"ok": bool, ...raw observations/reason...}` to reuse an existing check immediately before building. Include that module and its dependencies in `inputs`. A false result is recorded and stops execution; the hook cannot invent its own policy threshold. Consult the [current-evidence rule](production-checkpoints.md#conditional-reuse-of-static-evidence-and-fresh-dynamic-checks).
 
 The Blender process holds an OS lock for its output job. If its launcher disconnects, the worker still owns the lock. Do not delete the lock file to force a retry. Inspect the actual process and `state.json`; a failed or interrupted job can resume only once the lock is available and input hashes match. An existing output directory without the matching `job.json` is never adopted.
 
@@ -87,15 +88,15 @@ Each frame has a hash, source-job signature, actual settings, optional anchor me
 
 ## Integrity validation without repeated visual review
 
-自动文件完整性与视觉审片分开：新帧须实际校验内容与目标尺寸，损坏/改变帧不可复用；已有解码结果仅在内容SHA、任务/渲染与验证器身份匹配时复用，跨调用仍核内容哈希，不能只信存在、大小或mtime。不重复解压同一已验证内容，也不把缓存或 `complete_unreviewed` 当画质批准。完成统计仍覆盖整项job，不能只看本次选帧就宣称整项完成。
+Separate automatic file integrity from visual review: actually validate new-frame contents/target dimensions; corrupt/changed frames cannot be reused. Reuse decode results only when content SHA, job/render and validator identity match, rechecking content hashes across calls rather than trusting existence, size or mtime. Do not repeatedly decode the same validated content or call cache/`complete_unreviewed` a visual pass. Completion statistics still cover the entire job; a selected subset cannot establish whole-job completion.
 
-合并同一场景的连续帧与已知风险状态为一次有意义的执行请求，避免反复单帧启动；保留实际锁、输入变化检查及失败历史。全任务内容扫描仍可能产生I/O，不宣称缓存消除了所有扫描或已证明生产加速。校验/哈希/解码耗时与状态更新、渲染写盘分开记录，涵盖续跑的启动扫描，实际优化以同质量测量为准。
+Combine a scene's continuous frames/known risk states into one meaningful execution request rather than repeated single-frame launches, retaining real locks, input-change checks and failure history. Full-job content scans may still cause I/O; do not claim caching removes every scan or proves production speedup. Record validation/hash/decode separately from state-update/render-write times, including resume startup scans; demonstrate optimization at equal quality.
 
-正常速观看后按[风险复查](quality-acceptance.md#按风险复查与证据复用)定位疑点和完整修复周期；无需把整序列逐帧交给模型。最终编码的完整解码检查的是另一个产物，不能由原始帧通过代替；同一职责不为多项表格重复发起同样的终检。
+After normal-speed viewing, locate issues and complete repair cycles through [risk-based rechecks](quality-acceptance.md#risk-based-rechecks-and-evidence-reuse), without sending every sequence frame to a model. Full final-encode decoding checks a different output and cannot be replaced by raw-frame passes. Do not repeat the same terminal check for multiple table fields within one responsibility.
 
 ## Rendering cost and scheduling
 
-Apply the shared [local execution, minimal transfer and throughput policy](tool-routing.md#本地执行最少传输与吞吐) to working data, devices, concurrency and output review. Keep raw image sequences local; send only the evidence or changed assets actually needed by a remote step.
+Apply the shared [local execution, minimal transfer and throughput policy](tool-routing.md#local-execution-minimal-transfer-and-throughput) to working data, devices, concurrency and output review. Keep raw image sequences local; send only the evidence or changed assets actually needed by a remote step.
 
 Use target-fps motion previews with inexpensive viewport/Workbench, EEVEE or low-cost Cycles settings suited to the actual scene. Validate engine-specific transparency, reflections, cutaways and fine fibers in the final engine before expanding. Keep the approved look, geometry and temporal continuity; do not lower samples blindly or hide defects with denoising. Persistent Data is enabled by default for Cycles but can be disabled for a demonstrated memory constraint. GPU setup and scene building occur once per worker.
 

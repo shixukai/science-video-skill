@@ -1,25 +1,29 @@
-# 候选学习记录：雨滴形态的示意与不同来源影像
+<a id="候选学习记录雨滴形态的示意与不同来源影像"></a>
+# Candidate Learning Record: Raindrop-Shape Diagrams and Imagery from Different Sources
 
-状态：观察记录及待验证迁移假设，不是正式新增制作规范或效果结论。
+Status: an observation record and a transfer hypothesis awaiting validation, not a formal new production standard or a conclusion about effectiveness.
 
-## 来源与观察范围
-- 核验日期：2026-10-19（UTC+08:00）。NASA SVS《Anatomy of a Raindrop》，发布于2013-05-31：https://svs.gsfc.nasa.gov/11288/ 。不是新发布热点。
-- 使用官网链接的[低清视频](https://svs.gsfc.nasa.gov/vis/a010000/a011200/a011288/G2013-033_Raindrop_Final_ipod_sm.mp4)及[英文VTT](https://svs.gsfc.nasa.gov/vis/a010000/a011200/a011288/G2013-033_Raindrop_Final_ipod_sm.en_US.vtt)。视频 SHA-256：59d84bb9aabbc0ab3c0ca2a2e421372cd7d284bd875644758f8aa2d8225f4151。
-- 实际看了精确时点抽帧，以及01:44–02:03每秒一帧的有序采样。不是正常速度完整观看，不证明采样之间的运动连续性。未实听；下述讲解对应只来自官方VTT，不能评价语气、配乐、音效或实际听感。
-- 本记录不附媒体、截图或字幕全文。画内存在第三方署名，不能因为托管在NASA网站就推定所有素材可重用。
+<a id="来源与观察范围"></a>
+## Sources and Observation Scope
+- Verification date: 2026-10-19 (UTC+08:00). NASA SVS, “Anatomy of a Raindrop,” published 2013-05-31: https://svs.gsfc.nasa.gov/11288/ . This is not a newly released topical item.
+- Used the official site's linked [low-resolution video](https://svs.gsfc.nasa.gov/vis/a010000/a011200/a011288/G2013-033_Raindrop_Final_ipod_sm.mp4) and [English VTT](https://svs.gsfc.nasa.gov/vis/a010000/a011200/a011288/G2013-033_Raindrop_Final_ipod_sm.en_US.vtt). Video SHA-256: 59d84bb9aabbc0ab3c0ca2a2e421372cd7d284bd875644758f8aa2d8225f4151.
+- Actually viewed frames sampled at exact times, plus ordered one-frame-per-second sampling from 01:44–02:03. This was not complete normal-speed viewing and does not establish motion continuity between samples. No actual listening occurred. Narration correspondence below comes only from the official VTT and cannot evaluate tone, music, effects, or actual listening experience.
+- This record includes no media, screenshots, or full captions. Third-party credits appear in the picture; hosting on NASA's site does not imply that every asset may be reused.
 
-## 可复核观察
-- 00:04画面为湖岸环境与人物拼贴；00:48可见水循环标题。VTT到00:56后才聚焦雨滴形态。适用课堂铺垫，不据此推荐短视频复制长开场。
-- 01:24、01:32、01:40、01:44：蓝色示意物从扁形、受力箭头到分离小滴的状态依次出现。这是采样状态，不是本记录对物理精度的验证。
-- 01:46–01:47：画框中的历史序列，署名General Electric，1949。01:49–01:51及01:53–01:56：不同画框中的灰度影像，署名Michigan Technological University，2010。01:57–02:00及02:02–02:03：另一组水滴影像，署名Alistair McClymont，2012。外观、画框与署名保留来源切换，不能当作同一个水滴的连续记录。
-- 官方VTT于01:52.78–02:00.80介绍高速摄影；02:20抽帧可见雷达，02:30可见卫星示意。文字叙事由形态转到观察手段、再到测量用途；尚未验证音画切换的实际听觉效果。
-- 实际查看官网缩略图，其主题文字是蒸散，环境是湖岸，未直接突出雨滴形态。它是网页缩略图观察，不是平台封面效果或点击率证据，不建议照搬。
+<a id="可复核观察"></a>
+## Recheckable Observations
+- At 00:04, the picture is a lakeside setting/person collage; at 00:48, a water-cycle title is visible. The VTT focuses on raindrop shape only after 00:56. This may suit classroom setup; it does not justify recommending that short videos copy the long opening.
+- 01:24, 01:32, 01:40, 01:44: a blue schematic object successively appears flattened, with force arrows, and as separated small drops. These are sampled states, not this record's validation of physical accuracy.
+- 01:46–01:47: a framed historical sequence credited to General Electric, 1949. At 01:49–01:51 and 01:53–01:56, grayscale imagery in other frames is credited to Michigan Technological University, 2010. At 01:57–02:00 and 02:02–02:03, another set of droplet imagery is credited to Alistair McClymont, 2012. Appearance, framing, and credits preserve source changes; these cannot be treated as one droplet's continuous record.
+- The official VTT introduces high-speed photography at 01:52.78–02:00.80. A sampled frame at 02:20 shows radar, and 02:30 shows a satellite diagram. The textual narrative moves from shape to observation methods and then measurement uses. The actual auditory effect of audiovisual transitions has not been verified.
+- The official-site thumbnail was actually viewed: its topic text concerns evapotranspiration, in a lakeside setting, without directly emphasizing raindrop shape. This is an observation of a webpage thumbnail, not evidence of platform-cover performance or click-through rate. Copying it is not recommended.
 
-## 新增的案例价值与适用条件
-既有规范已要求按时点观察、区分观察/假设/验证及代表段对照，本记录不重复升级这些规则。新增的是一个具体、可复查的案例：解释示意之后仍分开展示不同来源、不同样态的观察材料，而不是把实拍当作模拟的无缝下一帧。案例涉及空气中雨滴形态，不能直接用于证明落土后气溶胶或气味传播机制。
+<a id="新增的案例价值与适用条件"></a>
+## Added Case Value and Applicable Conditions
+Existing standards already require time-specific observation, separation of observation/hypothesis/validation, and representative-segment comparisons; this record does not repeatedly elevate those rules. Its addition is a concrete, recheckable case: after an explanatory diagram, observation materials from different sources and of different appearances remain separately presented, rather than live action being treated as the simulation's seamless next frame. This case concerns airborne raindrop shape and cannot directly establish aerosol or odor-transport mechanisms after ground impact.
 
-迁移假设：当机制示意切到另一组独立观察或实验材料（具体类别需另核）时，保留来源边界，并在实际可见范围内给出一个明确观察任务，可能比仅靠相似外形接镜更容易让观众分清“解释模型”与“独立观察”。这是待测假设，不是案例已证明的因果。
+Transfer hypothesis: when a mechanism diagram cuts to another set of independent observations or experimental material (the specific category requires separate verification), preserving source boundaries and giving one explicit observation task within what is actually visible may help viewers distinguish an “explanatory model” from an “independent observation” more easily than a match based only on similar shapes. This is a hypothesis to test, not causality already demonstrated by the case.
 
-检验：在已授权代表段内固定媒体、旁白、时长和其余版式，仅测试观察提示的出现时点；实际正常速看、听，由独立内部视听审查者回答两段是否同次事件，以及观察材料究竟支持什么；不要求实时观众反馈或用户协调，不招募或对外发送，也不虚构反馈。只有理解边界变清楚且提示未遮挡主体、未增加误读，才考虑应用。若内部审查发现跨来源镜头易被理解为同一次事件、把轨迹当成完整机制或听读负担增加，则该候选失败。不能用单次主观偏好推断留存提升。
+Test: within an authorized representative segment, fix media, narration, duration, and the rest of the layout, testing only the observation cue's appearance time. Actually view and listen at normal speed; an independent internal audiovisual reviewer answers whether the two segments depict the same event and what the observation material really supports. Do not require real-time audience feedback or user coordination, recruit or send externally, or fabricate feedback. Consider application only if comprehension boundaries become clearer without the cue obstructing the subject or adding misunderstanding. If internal review finds that cross-source shots are readily mistaken for one event, trajectories for a complete mechanism, or that listening/reading load increases, the candidate fails. A single subjective preference cannot imply improved retention.
 
-应用状态：未修改影片，未完成声画对照，未验证改善或提效；不改变当前影片的模态、科学或质量门槛。
+Application status: no film modified, no audiovisual comparison completed, and no improvement or efficiency gain validated. This does not alter the current film's medium, science, or quality gates.

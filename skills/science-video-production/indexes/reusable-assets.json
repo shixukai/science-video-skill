@@ -26,7 +26,7 @@
       "version": "1.1.0",
       "kind": "configuration",
       "file": "assets/explanation-recipes.json",
-      "sha256": "ab3b641b6940836fe6f28a9f34decb5594a30ac6abd728d51e53a28c779022a6",
+      "sha256": "21b06b2d213b8f78af35aa49e78f0523f2c8641b2695161e6e87bf74f80c61f0",
       "status": "adaptable_implementation_example",
       "source": "Original relationship recipes authored for this repository",
       "rights": {
@@ -43,7 +43,7 @@
       "version": "1.0.1",
       "kind": "configuration",
       "file": "assets/style/precision-annotations.tokens.json",
-      "sha256": "1e7eb988cba5324147969d2c2edccfc2c035bd1f8c3f0a37da045f2f071b5892",
+      "sha256": "b4f62b44c391453d5c87a9dc34d97b0a5a92f33ed64abbbaaea3cba3207e6270",
       "status": "adjustable_series_baseline",
       "source": "Original project annotation settings",
       "rights": {

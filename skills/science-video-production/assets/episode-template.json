@@ -206,7 +206,7 @@
             "evidence": ""
           },
           "graphics": [],
-          "no_graphics_reason": "待逐镜清点，尚未验收"
+          "no_graphics_reason": "Per-shot inventory pending; not yet accepted"
         },
         "initial_state": "",
         "trigger": "",
@@ -1761,7 +1761,7 @@
   },
   "workflow_version": 3,
   "brief": {
-    "audience": "无相关专业训练的成年普通观众",
+    "audience": "Adult general audience without relevant professional training",
     "one_sentence_answer": "",
     "out_of_scope": [],
     "forbidden_misrepresentations": [],

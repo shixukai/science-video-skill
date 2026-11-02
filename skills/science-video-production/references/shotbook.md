@@ -1,125 +1,137 @@
-# 从成品音轨到可复核的逐镜记录
+<a id="从成品音轨到可复核的逐镜记录"></a>
+# From finished audio to verifiable per-shot records
 
-逐镜记录写入 `shots[].shotbook`；计划阶段允许实际缺项，申请成片交付前补齐当前版本。
+Write per-shot records in `shots[].shotbook`. Actual gaps are permitted during planning; complete the current version before requesting finished-film delivery.
 
-## 音频先行，但不牺牲画面
+<a id="音频先行但不牺牲画面"></a>
+## Audio first without sacrificing the picture
 
-以 `narration.script_file` 保存的连续完整讲解稿为口播正文，先按理解任务分成完整语义段，再排分镜和语义拍；每镜 `narration_exact_text` 对应该稿的原文片段，不能各写一篇再拼成解说。用当前真实音轨确定时点，不从估算字数或固定4–6秒切镜反推。每拍明确注意力任务及主次，不机械限制对象数量，写清口播触发词、实际音轨时点、相关对象的动作、状态或需观察的关系。对象需要先被认识；静止观察可以是合理动作，不为显得活泼而漂浮、抖动或硬推拉。
+Use the complete continuous explanation saved in `narration.script_file` as narration text. First divide it into complete semantic sections by understanding task, then arrange shots and semantic beats. Each shot's `narration_exact_text` matches an original passage from that script; do not write separate mini-scripts and stitch them into narration. Determine times from the current actual track, without inferring them from estimated character counts or fixed 4–6-second cuts. Each beat states its attention task and priority without a mechanical object-count limit, as well as the narration trigger, actual track time, relevant object action/state or relationship to observe. Introduce objects before referring to them. Stationary observation can be a legitimate action; do not add floating, shaking or forced pushes/zooms merely to look lively.
 
-G2 将各镜 `narration_exact_text` 按镜头顺序拼回完整稿，仅忽略排版空白；无口播镜写空字符串。这只核文本结构一致，不代表解释逻辑通过。
+At G2, concatenating `narration_exact_text` in shot order must reconstruct the full script, ignoring only formatting whitespace. Use an empty string for shots without narration. This checks text-structure consistency only, not explanation logic.
 
-`start`、`end`、`beats[].at` 均为成片时间轴上的秒数。镜头按序、互不重叠；叠化属于镜内合成。没有解说的纯观察镜填 `beats: []` 并用 `silence_reason` 说明停顿作用；语义拍只覆盖实际解说事件，不必伪造词句填满静默。每镜填 `subject`（对象）、`action`（动作）、`framing`（景别/取景）、`claim_support`（本镜如何支持所列主张；无主张则解释叙事作用）、`motion_purpose`（变化怎样帮助理解或为何保持静止）。
+`start`, `end` and `beats[].at` are seconds on the finished-film timeline. Shots are ordered and nonoverlapping; dissolves are composited within a shot. For a pure observation shot without narration, use `beats: []` and explain the pause's purpose with `silence_reason`. Semantic beats cover actual narration events; do not invent words to fill silence. Every shot records `subject` (object), `action`, `framing` (shot size/framing), `claim_support` (how it supports the listed claims, or its narrative role if no claim) and `motion_purpose` (how change aids understanding or why it remains still).
 
-将当前解说文件 SHA-256 写入 `narration.audio_sha256`。换录音、裁剪、变速或重排后，重新听并对齐全部受影响语义拍；更新校验值不能代替重听。
+Write the current narration file's SHA-256 to `narration.audio_sha256`. After recording changes, cropping, speed changes or reordering, listen again and realign all affected semantic beats. Updating a checksum cannot replace listening.
 
-## 先设计状态，再精绘关键态与分层动作
+<a id="先设计状态再精绘关键态与分层动作"></a>
+## Design states before refining key states and layered motion
 
-按[动画场景设计](animation-scene-design.md#开工顺序动作意图先于精绘)先定状态变化、持续/新增/分离结构与镜间关系，再做关键态和资产。关键态按本期媒介及[视觉基准](visual-system.md)审看，在 `keyframe_review` 记文件、SHA-256、结论与观察。写实由MoneyPrinterTurbo主制，3D动画由Blender主制；2D仅用于已明确范围，不能以终态图推拉或揭幕代替过程动画。
+Under [animation scene design](animation-scene-design.md#work-order-action-intent-before-detailed-art), determine state changes, persistent/new/separating structures and inter-shot relationships before key states and assets. Review key states for this episode's medium and [visual baseline](visual-system.md), recording file, SHA-256, conclusion and observations in `keyframe_review`. MoneyPrinterTurbo is the main production tool for realism; Blender is the main tool for 3D animation. 2D is restricted to explicitly authorized scope. Panning/zooming or revealing a final-state image cannot replace process animation.
 
-切镜时成对设计前镜 `final_state` 与后镜 `initial_state`，`transition_reason` 写前后镜号/时点、沿用结论与下一任务；用 `object_ids/spatial_anchor` 和视角保留可认对应。动作卡字段见下文，不重复建台账。实际声画审查记 `qa.shotbook`，`reviewed_sha256=shotbook_sha256(data)`；镜头、素材或音轨变更后重审受影响内容，素材 `assets[].sha256` 绑定当前文件。
+At a cut, design the preceding shot's `final_state` and following shot's `initial_state` as a pair. `transition_reason` states preceding/following shot IDs/times, the conclusion carried forward and next task. Preserve recognizable correspondence with `object_ids/spatial_anchor` and viewpoint. Motion-card fields are below; do not create a duplicate ledger. Record actual audiovisual review in `qa.shotbook`, with `reviewed_sha256=shotbook_sha256(data)`. Recheck affected content after shot, asset or track changes. `assets[].sha256` binds the current file.
 
-## 整片视觉抽帧工具
+<a id="整片视觉抽帧工具"></a>
+## Full-film frame extraction helper
 
-需要静态定位/诊断且已有与媒体对齐的 `shotbook.start/end` 时，可用[build_visual_review.py](../scripts/build_visual_review.py)生成本地辅助材料；已有适用抽帧则复用，不把工具运行当成每阶段必做工序。从Skill目录运行：
+When static location/diagnosis is needed and `shotbook.start/end` already align with media, [build_visual_review.py](../scripts/build_visual_review.py) can create local support material. Reuse suitable existing extracted frames; running the tool is not a mandatory operation at every stage. Run from the Skill directory:
 
 ```bash
 python3 scripts/build_visual_review.py /path/to/episode.json --media renders/candidate-v3.mp4 --output reviews/G5-v3
 ```
 
-需Python3.11+和本地ffmpeg/ffprobe。`--media` 与相对 `--output` 以episode目录为根，均须位于该目录；输出为新目录，不修改episode/QA。只收本地自包含视频，拒绝播放列表；非方形像素或特殊显示变换先在制作软件导出校正副本。`relative_plan`、空/非有限时点、重叠/乱序或越界镜头会失败。
+Python3.11+ and local ffmpeg/ffprobe are required. `--media` and relative `--output` are rooted at the episode directory and must both remain inside it. Output goes to a new directory without modifying episode/QA. Only local self-contained videos are accepted; playlists are rejected. For nonsquare pixels or special display transforms, first export a corrected copy in production software. `relative_plan`, empty/nonfinite times, overlapping/unordered shots or out-of-bounds shots fail.
 
-工具默认输出 `index.html`、每镜首/中/末PNG、`manifest.json` 和 `gate-evidence.json`；这是技术抽样数量，不是人工审看、模型调用或上传配额。按[风险复查](quality-acceptance.md#按风险复查与证据复用)选实际需看的时点，必要过程仍连续看。总览保留完整画幅并列出覆盖/未覆盖区间；末样取镜尾边界前实际帧。manifest记录请求时点和实际帧时间，短镜或低帧率可能重复帧；关键机制、接缝或极值未抽到时另补。
+By default, the tool outputs `index.html`, first/middle/last PNGs for each shot, `manifest.json` and `gate-evidence.json`. This is a technical sample count, not a manual-viewing, model-call or upload quota. Choose actually needed times under [risk-based review](quality-acceptance.md#risk-based-rechecks-and-evidence-reuse), and still watch necessary processes continuously. The overview preserves the full frame and lists covered/uncovered ranges; the final sample uses an actual frame before the shot's end boundary. The manifest records requested times and actual frame times. Short shots or low frame rates can yield duplicate frames; add missing key mechanisms, joins or extrema separately.
 
-manifest保存episode快照、源视频、HTML/PNG摘要与工具版本；帧路径相对抽帧目录，媒体/episode路径相对单集目录。`timeline_sha256`只绑定镜号及start/end；只改QA会改变快照哈希，媒体/时点/内容变化则需新目录重建并重审受影响范围。
+The manifest preserves the episode snapshot, source video, HTML/PNG digests and tool version. Frame paths are relative to the extraction directory, while media/episode paths are relative to the episode directory. `timeline_sha256` binds only shot IDs and start/end. QA-only changes alter the snapshot hash; media/time/content changes require rebuilding in a new directory and rechecking affected scope.
 
-`gate-evidence.json` 是可按实际审查范围复制到 `qa.gates.<stage>.evidence` 的文件列表，路径以单集目录为根，直接列出manifest、HTML和所有PNG及其SHA-256，不包含列表自身。只按实际采用的证据范围引用；生成全部PNG不要求逐张审看、复制进每份QA或出站。记录观察、对照母版或补充片段时须另列实际所用文件；只引用该列表或manifest不会让阶段检查递归绑定图片，详见 [阶段证据](quality-acceptance.md#美术方法的阶段证据)。
+`gate-evidence.json` is a file list that may be copied into `qa.gates.<stage>.evidence` according to actual review scope. Its paths are rooted at the episode directory and directly list the manifest, HTML and all PNGs with SHA-256, excluding the list itself. Reference only the evidence scope actually adopted. Generating all PNGs does not require viewing every one, copying them into every QA record or sending them outbound. Separately list files actually used for observations, master-reference comparisons or supplementary clips. Referencing only this list or the manifest does not recursively bind images in a stage check; see [stage evidence](quality-acceptance.md#stage-evidence-for-art-methods).
 
-该页用于[整片编排](visual-system.md#整片色彩与构图缩略带)及静态定位；色彩保真、小屏/平台显示、运动与完整声画另实际审查。
+The page supports [whole-film arrangement](visual-system.md#whole-film-color-and-composition-thumbnail-strip) and static diagnosis. Color fidelity, small-screen/platform display, motion and complete audiovisual media require separate actual review.
 
-## 设计和资产引用绑定
+<a id="设计和资产引用绑定"></a>
+## Bind design and asset references
 
-写实新作的模板包含design.visual_intent和逐镜shotbook.realism，按实际实现填写；默认空值不是获准。G1仅绑定文字意义与用途，坐标/时段变化在后续布局和媒体阶段复核；不能因局部移动标签重做未变的选题。首样基准、roughcut/sample/full回执见[制作入口](production-checkpoints.md#开工锁定与真实渲染入口)。
+Templates for new realistic work include design.visual_intent and per-shot shotbook.realism; fill them according to actual implementation. Default empty values are not authorization. G1 binds only textual meaning and purpose; later layout/media stages recheck coordinates/timing. A local label movement does not require redoing unchanged topic selection. First-sample baselines and roughcut/sample/full receipts are defined in the [production entry](production-checkpoints.md#start-lock-and-actual-rendering-entry).
 
-简报固定Skill提交、series-profile和tokens版本/哈希、私有设计板ID/哈希及批准范围。真实使用的设计图、组件、视频和音轨在现有 `assets` 中按实际kind、来源/权利、版本说明与 `sha256`登记，通过 `shots[].asset_ids` 关联；配置参数或索引本身不假报为实拍。复制到项目的配置/设计证据版本与位置留简报及 `qa.visual_frames.note`，不能写“使用最新版”或仅凭公开tokens认设计板通过。
+The brief fixes the Skill commit, series-profile and tokens versions/hashes, private design-board ID/hash and approval scope. Register actually used design images, components, videos and audio in the existing `assets` with actual kind, provenance/rights, version notes and `sha256`, then link through `shots[].asset_ids`. Do not misreport configuration parameters or indexes as live footage. Record versions and locations of configuration/design evidence copied into the project in the brief and `qa.visual_frames.note`. Do not write latest version or infer design-board approval merely from public tokens.
 
-设计板、配置与画面一致性按质量正文实看；公开索引校验不覆盖私有媒体。
+Actually inspect consistency among the design board, configuration and picture under the quality reference. Public-index validation does not cover private media.
 
-仅采用具体获准的历史2D画风时，将Skill内 [参考图](../assets/style/accepted-style-reference.png) 和 [美术规格](../assets/style/bright-nature.art-direction.json) 的固定版本/哈希登记到简报引用清单；实际看图与本镜采用点写在美术记录，不能用文案推定已看。以其生成项目设计板时，`design.board_reference/board_sha256` 仍指当前实际设计板；参考的外观认可与新设计板的实际审查范围分开，不能把系列参考哈希填成新板批准。需要阶段冻结时，把所用参考副本、规格及实际对照文件分别列入既有gate evidence，不从后续安装版本反推旧项目使用内容。
+Only when a specific historical 2D style is authorized, register fixed versions/hashes of the Skill's [reference image](../assets/style/accepted-style-reference.png) and [art specification](../assets/style/bright-nature.art-direction.json) in the brief's references. Record actual image viewing and this shot's adopted features in the art record; prose cannot establish that an image was viewed. If generating a project design board from those references, `design.board_reference/board_sha256` still points to the current actual board. Separate reference-appearance approval from the new board's actual review scope; do not fill in the series-reference hash as new-board approval. For stage freezes, separately list used reference copies, specifications and actual comparison files in existing gate evidence. Do not infer old project inputs from a later installed version.
 
-## 逐镜结构与方向图形记录
+<a id="逐镜结构与方向图形记录"></a>
+## Per-shot structure and directional-graphics records
 
-在 `shotbook.visual_logic` 保存本镜实际导出的检查，不另建脱离分镜的台账：
+Save checks of the actual export for this shot in `shotbook.visual_logic`, without another ledger detached from the storyboard:
 
-- `review_scope`：实际检查当前最终导出后才填 `final_export`；计划/短样不能代签
-- `orientation`：`applicable` 为布尔值。涉及对象结构或方向时填 true，记录 `status`、`reference`（事实参考定位）、`frame_mapping`（对象自身左右、画面左右与正/侧/背视角）、`structures`（关键结构观察）、`transforms`（镜像/翻转/换视角及跨镜一致性）、`evidence`（实际帧/连续片段与时间点）。明确无相关结构/方向时才填 false 并写 `reason`，不能用不适用绕过已知缺陷
-- `graphics`：逐个可见箭头或无向引线登记唯一 `id`、`kind=arrow/leader`、本镜 `asset_id`、`component_reference`（组件来源与版本）、`license_evidence`（与素材台账一致的许可/原创依据）。无此类图形填空列表并用 `no_graphics_reason` 说明
-- 每个图形的 `checks` 按项记录 `status`、具体 `note`、实际导出 `evidence`。箭头项为 `tip`（尖端）、`shaft_join`（杆头连接）、`visibility`（缩放/裁切/遮挡）、`direction`（含义）、`endpoints`（起终点）、`motion_extrema`（动画极值/连续性）；引线只需 `visibility`、`endpoints`、`motion_extrema`，在 endpoints 说明连接标签与对象、无方向含义。静态图形也记录最终尺寸/裁切状态且明确无动画
+- `review_scope`: use `final_export` only after actually inspecting the current final export. Plans/short samples cannot sign for it.
+- `orientation`: `applicable` is Boolean. Use true where object structure or direction is involved, and record `status`, `reference` (factual-reference location), `frame_mapping` (object-left/right, screen-left/right and front/side/back view), `structures` (key structural observations), `transforms` (mirroring/flipping/view changes and consistency across shots), and `evidence` (actual frames/continuous clips and times). Use false only for explicitly absent structural/directional relevance and give a `reason`; nonapplicability cannot bypass known defects.
+- `graphics`: for every visible arrow or nondirectional leader, register unique `id`, `kind=arrow/leader`, this shot's `asset_id`, `component_reference` (component source/version) and `license_evidence` (license/original-creation basis matching the asset ledger). If no such graphics exist, use an empty list and explain with `no_graphics_reason`.
+- Every graphic's `checks` records per-item `status`, specific `note` and actual-export `evidence`. Arrow items are `tip`, `shaft_join`, `visibility` (scale/crop/occlusion), `direction` (meaning), `endpoints`, and `motion_extrema` (animation extrema/continuity). Leaders require only `visibility`, `endpoints` and `motion_extrema`; endpoints explains the label/object connection and absence of directional meaning. Static graphics also record final dimensions/crop and explicitly state that there is no animation.
 
-逐镜清点实际导出的全部有关对象和图形，失败、漏记或未验先修；不能改“不适用”或将箭头改名为引线隐藏缺陷。组件、镜像、镜头或导出变更后重审，并绑定当前素材、shotbook及导出摘要。
+Inventory all relevant objects and graphics actually exported in each shot. Repair failures, omissions and unreviewed items first. Do not change applicability or rename an arrow as a leader to hide defects. Review component, mirroring, shot and export changes again, binding current asset, shotbook and export digests.
 
-逐镜来源在 `shotbook.origin`，资产来源在 `assets[].origin`，字段、证据与研究/交付闭包边界统一按 [原创视觉来源契约](science-and-rights.md#逐镜来源证据)。既有模态、权利和审看记录保留，不把新增来源字段当批准或追溯改写旧结果。
+Per-shot provenance belongs in `shotbook.origin`, and asset provenance in `assets[].origin`. Fields, evidence and the research/delivery closure boundary uniformly follow the [original visual provenance contract](science-and-rights.md#per-shot-provenance-evidence). Preserve existing modality, rights and viewing records. Added provenance fields are neither approval nor permission to rewrite historical results retroactively.
 
-## 素材选择要能复核
+<a id="素材选择要能复核"></a>
+## Make asset selection verifiable
 
-先写对象、动作、景别、时长及支持陈述，再实际查看候选对应片段，比较对象正确性、动作覆盖、清晰度、构图余量和权利；搜索缩略图不能代实看。
+First state the object, action, framing, duration and supporting claim. Then actually inspect corresponding candidate intervals and compare object correctness, action coverage, clarity, composition margins and rights. Search thumbnails cannot replace viewing.
 
-`candidates` 保存来源、`viewing_note` 与取舍；主要候选 `asset_id` 必须属于本镜，辅助层另记 `asset_ids`。`source_interval` 写原片入出点和时间基准；仅静态参考/原创图可填 `still/full`，照片推拉不算实拍。只有一个合法候选时用 `alternatives_note` 说明。来源、创作者、权利证据、范围和署名沿素材台账保留。
+`candidates` preserves provenance, `viewing_note` and selection decisions. A main candidate's `asset_id` must belong to this shot; auxiliary layers use separate `asset_ids`. `source_interval` records original-footage in/out points and time basis. Only static references/original images may use `still/full`; panning/zooming a photo is not live footage. If there is only one lawful candidate, explain with `alternatives_note`. Preserve source, creator, rights evidence, scope and attribution through the asset ledger.
 
-## 可选工作方式
+<a id="可选工作方式"></a>
+## Optional working methods
 
-可编辑剪辑工程可按解说、字幕、音乐/音效、画面、图内标注分别建轨，以便替换和复核。只有实际导出并在目标编辑器打开验证，才能称为可编辑工程已交付；当前规则不承诺特定剪辑器兼容。
+Editable editing projects may use separate narration, captions, music/effects, picture and in-picture annotation tracks for replacement and verification. Claim delivery of an editable project only after actual export and opening/verification in the target editor. Current rules do not promise compatibility with a particular editor.
 
-生成参考各注明对象身份、结构事实、风格、动作或构图职责；按时段写动作及须保持的关系，输出逐镜审查。
+For generated references, identify each reference's responsibility for object identity, structural facts, style, action or composition. Describe actions and relationships to preserve by interval, and review outputs per shot.
 
-外部方法的来源、许可、固定版本及实际采用点见[外部技能选型](video-skills-curation.md)。
+For external methods' provenance, licenses, fixed versions and actually adopted features, see [external skill selection](video-skills-curation.md).
 
-## 动作卡、镜头配方与事件复核
+<a id="动作卡镜头配方与事件复核"></a>
+## Motion cards, shot recipes and event review
 
-实际过程类的动作卡八项落实在现有shotbook：对象/锚点、初态、触发、关键变化、终态、轨迹、快慢/观察停顿、观众学到什么；补物理条件、教学简化、关键姿态、口播事件和实际音轨hash。不同机制不套万能弹性曲线；路径、方向、约束、遮挡或观察条件变化可以是实质机制，不强求形变。关键图另说明视角、注意中心、动作路径、字幕区和比例变化。
+For actual process shots, implement eight motion-card items in the existing shotbook: object/anchor, initial state, trigger, key change, final state, trajectory, speed/observation pauses and what viewers learn. Add physical conditions, teaching simplifications, key poses, narration events and actual audio hash. Do not impose a universal elastic curve on different mechanisms. Changes in path, direction, constraints, occlusion or observation conditions may be substantive mechanisms; deformation is not mandatory. Key images also state viewpoint, attention center, motion path, caption area and scale changes.
 
-复用配方记录问题类型、条件、镜头骨架、资产、动作卡、口播事件、科学风险与正反例：整体→局部→整体需同一对象回程；前态→触发→后态保留中间变化；同条件对照只改有关变量；传播→响应核起因/方向/延迟，波前不冒作物质飞出；剖面先建立外形和剖切关系再恢复整体。无声网页演示/相对时间只是候选，不能抵G3，也不能预填未生成音轨的绝对时码。
+Reusable recipes record question type, conditions, shot structure, assets, motion cards, narration events, scientific risks and positive/negative examples. Whole → detail → whole must return to the same object. Before → trigger → after preserves intermediate change. A same-condition comparison changes only relevant variables. Propagation → response checks cause/direction/delay, without treating a wavefront as matter flying out. A cutaway first establishes external shape and the cutting relationship, then restores the whole. Silent web demos/relative timing are only candidates; they cannot satisfy G3 or prefill absolute timecodes for ungenerated audio.
 
-定位/标签、尺度切换、观察停顿等D时序见制作策略，按任务校准，不机械统一。语义事件实际音频时点与画面时点差超过150ms先标复核警告；提前预备/反应镜头写理由并实际看，不自动判错或自动忽略。
+For D timing such as locating/labels, scale changes and observation pauses, see the production policy and calibrate to the task without mechanical uniformity. An actual semantic audio-versus-picture event difference above 150ms first triggers a review warning. Give reasons for anticipatory setup/reaction shots and actually watch them; do not automatically fail or ignore them.
 
-保存可恢复的简报、来源、稿件、分镜、设计/资产、原声/混音分轨、时码、字幕、各媒体版本、审查及授权/平台回执。文件名区分集/剪辑/音轨/画幅版本，字幕/封面/文案独立hash；变更后按[受影响依赖](quality-acceptance.md#失败后的处理)复查，不沿用旧签收。
+Preserve recoverable briefs, sources, scripts, storyboards, designs/assets, raw audio/mix stems, timecodes, captions, media versions, reviews and authorization/platform receipts. Filenames distinguish episode/edit/audio/aspect-ratio versions; captions/covers/copy have independent hashes. Recheck [affected dependencies](quality-acceptance.md#handling-failures) after changes without reusing old acceptance.
 
-### 按动作类别补充信息
+<a id="按动作类别补充信息"></a>
+### Add information by action class
 
-仅对本镜实际采用的类别填写 `shotbook.action_class`（去重列表）与 `action_class_details`（按类别键组织），复用已有对象、锚点、trigger/key_states/trajectory等字段，不要求每镜全填五类：
-- localization_and_label（定位与标签）：appearance_condition（出现条件）、follow_target（跟随目标）、hold_duration（停留）
-- scale_transition（尺度切换）：original_object、spatial_anchor、local_frame（局部取景框及坐标基准）、return_location；明确同一对象进出关系
-- deformation（对象形变）：topology_states（可对应的同拓扑关键态）、fixed_boundary、sliding_boundary、trajectory；逐机制设计，不把所有对象统一弹跳，也不为工具限制改变科学机制
-- propagation_and_change（传播与变化）：cause、origin、direction、delay、end_state；解释动画与实拍一样，若作教学慢放，从第一次使用就清楚提示时间缩放，不等结尾补说明
-- observation（观察停顿）：learning_task与duration，实际停留由理解任务决定
+Fill `shotbook.action_class` (deduplicated list) and `action_class_details` (organized by class key) only for classes actually used in this shot. Reuse existing object, anchor, trigger/key_states/trajectory and related fields. Do not require all five classes for every shot:
+- localization_and_label: appearance_condition, follow_target, hold_duration.
+- scale_transition: original_object, spatial_anchor, local_frame (local framing and coordinate basis), return_location; identify the same object's entry/return relationship.
+- deformation: topology_states (corresponding same-topology key states), fixed_boundary, sliding_boundary, trajectory; design by mechanism without making every object bounce or changing science to fit tool limitations.
+- propagation_and_change: cause, origin, direction, delay, end_state. Explanatory animation follows the same rule as live footage: if slowed for teaching, clearly disclose time scaling at first use rather than waiting until the end.
+- observation: learning_task and duration; actual dwell depends on the understanding task.
 
-`timing_basis.mode`单独说明real_audio（实际音轨ID/hash及语义时点）或relative_plan（无音轨时只记相对阶段）；正式动作方案还记录note说明其语义依据；它不等于speed_and_pause。路径、快慢停顿及音画事件分别记录，不能只用trajectory代替完整动作时序。正文定位/标签合类160–320ms与tokens细分attention160–280、label180–320是同一D的不同粒度，实际可读性和语义优先，不是硬物理时长。
+`timing_basis.mode` separately states real_audio (actual audio ID/hash and semantic times) or relative_plan (relative stages only when no audio exists). A formal motion plan also records note explaining its semantic basis; this is not the same as speed_and_pause. Record path, speed/pauses and audiovisual events separately; trajectory alone cannot replace full action timing. The main reference's combined locating/label range 160–320ms and tokens' finer attention160–280, label180–320 are different granularities of the same D. Actual readability and semantics take priority; these are not hard physical durations.
 
-库版本在 `design.library_reference` 固定ID/版本/hash，风格版本仍为design.style_version，不假定二者相等。`design.new_asset_ids`只列本期需新建的资产ID，其他资产按实际复用及变更记录处理；不能将整个资产列表都当新建。
+Fix library ID/version/hash in `design.library_reference`. Style version remains design.style_version; do not assume they match. `design.new_asset_ids` lists only assets needing new creation this episode. Record actual reuse and changes for other assets rather than treating the entire asset list as new creation.
 
-按[入口路由](../SKILL.md#按需读取责任正文)读取当前阶段所需正文与实际配置；`design.library_reference` 记录库的id/version/manifest hash及adoption（采用/仅参考），不混同风格版本。
+Read the responsibility references and actual configuration needed for the current stage through the [entry routing](../SKILL.md#read-responsibility-bodies-on-demand). `design.library_reference` records library id/version/manifest hash and adoption (adopted/reference-only), without conflating it with style version.
 
-如果采用雷声机制配方，另读 [条件式完整示例](../assets/examples/thunder-brief.md)，保留其具体禁画、首次慢放即披露和未制作状态；其他题材不因此强制讲雷声，也不恢复被取消题材。
+If adopting the thunder-mechanism recipe, also read the [conditional complete example](../assets/examples/thunder-brief.md), preserving its specific prohibited depictions, first-use slow-motion disclosure and unproduced state. This does not force other topics to explain thunder or revive canceled topics.
 
-实际依赖统一按资产ID解析：design.font_asset_id和design.render_asset_ids是代表段及成片共用依赖，逐镜asset_ids保留该镜范围，deliverable_asset_ids按产物记录列表。代表段连同其字幕与三尺度设计实际依赖参与权利检查及版本绑定；未使用的后续素材不使当前代表段过期。所有依赖必须类型正确且能解析，不能将非法字段当空列表略过。
-### 无音轨的 G1 纸面计划
+Resolve actual dependencies uniformly by asset ID. design.font_asset_id and design.render_asset_ids are shared representative-segment/full-film dependencies; per-shot asset_ids preserve each shot's scope; deliverable_asset_ids records lists by deliverable. The representative segment and actual dependencies of its captions and three-scale design enter rights checks and version binding. Unused later assets do not invalidate the current representative segment. All dependencies must have correct types and resolve; do not silently treat invalid fields as empty lists.
+<a id="无音轨的-g1-纸面计划"></a>
+### G1 paper plan without audio
 
-`plan` / G1 可用 `timing_basis.mode=relative_plan`，填写具体的 `relative_phases` 和 `note`，说明先后语义阶段、观察任务以及真实时点尚待音轨确定。`start`、`end` 留 null 或省略；若有计划语义拍，`beats[].at` 留 null，另写具体 `phase`、拟用触发词、注意对象和动作，也可暂用空 `beats`。不要把尚未合成的拟用口播标成无声镜。
+`plan` / G1 may use `timing_basis.mode=relative_plan`, with specific `relative_phases` and `note` describing semantic order, observation tasks and actual times awaiting audio. Leave `start` and `end` null or absent. If planned semantic beats exist, leave `beats[].at` null and add a specific `phase`, intended trigger wording, attention object and action; an empty `beats` is also allowed temporarily. Do not mark intended but unsynthesized narration as a silent shot.
 
-未取得媒体时 `candidates=[]`，`alternatives_note` 写待选对象与缺项，删除未实看的示例候选。G2前取得实际工作音轨，把相对阶段转为真实时点，对齐语义拍并补素材实看；`relative_plan` 不通过G2及后续。
+Before obtaining media, use `candidates=[]`, with `alternatives_note` stating objects to select and gaps. Remove example candidates not actually viewed. Obtain actual working audio before G2, convert relative stages to actual times, align semantic beats and add actual asset viewing. `relative_plan` cannot pass G2 or later.
 
-计划包的 `assets` 可登记明确需要、尚待制作/取得的素材需求，再由镜头 `asset_ids` 引用稳定ID：`source` 写计划取得方式及用途，`creator` 如实记待确定，`file` 留空，`rights.status=pending`。这类记录不代表已有素材；`candidates` 只记录真正查看过的候选，两者不混用。`kind` 按拟用媒介选，图解/模拟仍如实填所需 `disclosure`；取得后才补实际原源、作者、文件与权利证据。若连素材需求尚未确定，先交简报，不为结构检查编造素材或科学来源。
+The plan package's `assets` may register explicit asset needs still awaiting production/acquisition, referenced by stable IDs in shot `asset_ids`. `source` states planned acquisition method and use, `creator` truthfully remains undetermined, `file` is empty and `rights.status=pending`. These records do not establish asset possession. `candidates` contains only actually viewed candidates; keep the two distinct. Choose `kind` for the planned medium, and truthfully supply required `disclosure` for diagrams/simulations. Add actual original provenance, author, file and rights evidence only after acquisition. If asset needs themselves are still undetermined, deliver a brief first rather than inventing assets or scientific sources to satisfy structural checks.
 
-## 解释设计与实际镜头的绑定
+<a id="解释设计与实际镜头的绑定"></a>
+## Bind explanation design to actual shots
 
-沿用 `topic_alignment.coverage` 的范围和镜头引用，将 [解释类型与难点方案](production-checkpoints.md#e02e07精制作前的解释设计) 绑定实际镜头及语义拍。类型化关系路径使用 `explanation_steps` 的逐步 `relation_type`，旧范围级 `explanation_type` 兼容读取，历史因果记录可读取 `causal_steps`，同一范围不填写两套竞争结构。每步保留必要前提、关键关系、推导、边界、指代到表现对象的映射、镜头ID、承接及动态适用性；因果步骤另记前态/变化/后态。`prerequisites` 用 `knowledge` 和 `source=audience_prior/step` 绑定具体沿用结论，来源为步骤时填写 `step_id`；受众前提、呈现顺序及旧字符串迁移按 [前提来源规则](production-checkpoints.md#2-把解释关系变成可见表达) 执行。无动态需求须说明为什么静态关系足够，而不是用不适用掩盖缺失过程。
+Reuse scope and shot references in `topic_alignment.coverage` to bind [explanation types and difficulty solutions](production-checkpoints.md#e02e07-explanation-design-before-refinement) to actual shots and semantic beats. Typed relationship paths use each `explanation_steps` step's `relation_type`; old scope-level `explanation_type` is read for compatibility, and historical causal records may use `causal_steps`. Do not fill two competing structures for the same scope. Each step retains necessary prerequisites, key relationship, derivation, boundaries, mappings from references to depicted objects, shot IDs, handoff and dynamic applicability. Causal steps additionally record before/change/after. `prerequisites` binds specific reused conclusions with `knowledge` and `source=audience_prior/step`, adding `step_id` for step sources. Audience prerequisites, presentation order and old-string migration follow the [prerequisite-source rules](production-checkpoints.md#2-make-explanatory-relationships-visible). If dynamics are unnecessary, explain why the static relationship is sufficient rather than using nonapplicability to hide a missing process.
 
-计划路径与实际证据按同一步骤ID衔接。实际表达检查记录作品中看见/听见的关系和推导依据，而非复制设计意图。换镜、剖面、放大或教学扫描的时间/尺度定位及声画语义配合，执行 [E09–E10](quality-acceptance.md#自主解释与表达审查)；静音定位不是静音独立理解全部逻辑，逐字时间同步也不代替及时形成语义对应。
+Connect planned paths and actual evidence through the same step IDs. Actual expression checks record relationships seen/heard and the basis for derivation in the work, rather than copying design intent. Apply [E09–E10](quality-acceptance.md#autonomous-explanation-and-expression-review) to time/scale location and audiovisual semantic coordination during cuts, cutaways, magnification or teaching scans. Muted locating does not mean independently understanding all logic without sound; word-level timing also does not replace timely semantic correspondence.
 
-字段以[单集模板](../assets/episode-template.json)为准：`relation_type=causal/spatial/structure_function/comparison/propagation/quantitative/probability/evidence`；按实际类型补空间参照、结构连接、传播路径、共同尺度/分母、概率范围或证据限制。
+Fields follow the [episode template](../assets/episode-template.json): `relation_type=causal/spatial/structure_function/comparison/propagation/quantitative/probability/evidence`. Add spatial references, structural connections, propagation paths, common scale/denominator, probability scope or evidence limits according to actual type.
 
-当前 qa.explanation_review 与 qa.expression_review 可引用同一详细观察证据；旧 `qa.comprehension.internal_review` 兼容绑定当前上下文与最终声画范围，分别保存解释和表达职责、答案/关系/小变化或区分/边界四目标以及每步实际观察证据。能力、所审文件和范围须真实，不能用模板文本制造已看已听事实；当前关尚无实际作品时保留未验，按阶段范围继续草稿而不签成片通过。
-制作前纸稿逻辑审查使用 qa.explanation_logic，旧 `qa.comprehension.logic_review` 可兼容读取，明确 `basis=paper_logic` 并绑定G1上下文；它不复用最终声画签收。当前每步 key_difficulty 标识实际关键难点，topic_alignment.expression_cards 覆盖该集合；旧 `brief.difficult_step_ids` 与四项难点卡兼容读取而非强求每个铺垫步骤一张卡；确无专项难点时给具体理由。旧 `causal_steps` 兼容读取不代表旧包可以跳过当前G1解释设计或G5实际审查。
+Current qa.explanation_review and qa.expression_review may reference the same detailed observation evidence. Old `qa.comprehension.internal_review` compatibly binds current context and final audiovisual scope, separately preserving explanation/expression responsibilities, the four targets of answer/relationship/small change or distinction/boundary, and actual observation evidence for every step. Capabilities, reviewed files and ranges must be truthful; template text cannot manufacture viewing/listening facts. If the current gate has no actual work yet, keep it unreviewed and continue drafts within stage scope rather than signing a finished-film pass.
+Preproduction paper-logic review uses qa.explanation_logic; old `qa.comprehension.logic_review` may be read for compatibility, explicitly using `basis=paper_logic` and binding G1 context. It does not reuse final audiovisual acceptance. Current per-step key_difficulty identifies actual key difficulties, and topic_alignment.expression_cards covers that set. Old `brief.difficult_step_ids` and four-item difficulty cards are read for compatibility rather than requiring a card for every setup step. Give specific reasons if there is genuinely no specialized difficulty. Compatibility reading of old `causal_steps` does not let old packages skip current G1 explanation design or G5 actual review.
 
-主体动态的定义、长静帧上限、ROI筛查、语义段记录与G2/G3/G5失败门槛统一见 [质量责任正文](quality-acceptance.md#主体动态与长静帧)；逐镜静态方向认可不替代对应动态证据。
+For subject-motion definitions, long-still-frame limits, ROI screening, semantic-section records and G2/G3/G5 failure gates, use the [quality responsibility reference](quality-acceptance.md#subject-motion-and-long-static-holds). Per-shot static-direction approval cannot replace corresponding motion evidence.
 
-逐镜文字用途清单引用 [文字责任正文](visual-system.md#可见文字用途与制作辩解)，分镜语音承接证据引用 [声音责任正文](voice-reference.md#整期旁白连续性)；单镜听感不能代整期连续性。
+The per-shot text-purpose inventory references the [text responsibility reference](visual-system.md#visible-text-purposes-and-production-excuses), and storyboard voice-handoff evidence references the [voice responsibility reference](voice-reference.md#whole-episode-narration-continuity). One shot's voice impression cannot establish whole-episode continuity.

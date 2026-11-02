@@ -1,54 +1,59 @@
-# 纸上演练：天空为什么是蓝色
+<a id="纸上演练天空为什么是蓝色"></a>
+# Paper exercise: why the sky is blue
 
-状态：历史结构测试夹具；本目录JSON保留供兼容测试，不是当前可直接制作的方案。旧2D镜头、外部素材补缺、实拍封面和系列标记须按现行风格、原创来源、封面及标识规则重设计。
+Status: historical structural-test fixture. JSON in this directory remains for compatibility tests and is not a plan ready for current production. Old 2D shots, external-asset gap filling, live-footage covers and series marks require redesign under current style, original-provenance, cover and labeling rules.
 
-历史纸面示例，尚未获写实主镜2D例外批准，不是当前默认制作许可。本例计划用未来核实用户自拍及授权的真实天空原片作为现象依据，再用2D解释看不见的机制，最后回到同一现象。开头优先实景而不固定秒数；素材、小样和实际验收均尚未取得。
+This historical paper example has not received approval for a 2D exception to realistic main shots and is not current default production permission. It plans to use actual original sky footage whose user capture and authorization will be verified later as the phenomenon's basis, explain the invisible mechanism in 2D, and return to the same phenomenon. The opening prioritizes actual scenery without fixed seconds. Assets, samples and actual acceptance have not been obtained.
 
-好奇缺口：太阳光看起来接近白色，晴朗白天的天空却蓝；这是真实观察差异，不声称所有人都有错误认识。核心答案是空气分子散射阳光，蓝光比红光散射更显著。观看收益是能说明光如何从天空方向进入眼睛，区分光源方向与观察方向。SH2先给对象/散射依据，再用同条件的蓝红对照推进颜色解释，SH3回到观察及晴朗白天的边界；不把答案故意拖到结尾。若另题比较红日落，还须建立太阳方向的较长光路径；本题不擅加该支题。
+Curiosity gap: sunlight looks nearly white, while a clear daytime sky is blue. This is an actual observational difference, without claiming everyone holds a misconception. The core answer is that air molecules scatter sunlight, with blue light scattering more significantly than red. The viewing payoff is explaining how light enters the eye from the sky's direction and distinguishing source direction from viewing direction. SH2 first supplies objects/scattering evidence, then advances the color explanation through a same-condition blue/red comparison. SH3 returns to the observation and the clear-daytime boundary, without deliberately withholding the answer until the ending. A separate question comparing red sunsets would also need the longer light path in the sun's direction; this topic does not add that subsidiary question unilaterally.
 
-## 科学范围与系列设定
+<a id="科学范围与系列设定"></a>
+## Scientific scope and series settings
 
-本集只解释晴朗白天天空的主要蓝色来源。科学依据为 [NASA Space Place 原站解释](https://spaceplace.nasa.gov/blue-sky/en/)，2026-10-05 阅读核查。它是机构科普解释，不冒称原始实验论文，也不构成该站媒体授权。本集不引入比例、概率或未经核实的新发现。
+This episode explains only the principal source of blue in a clear daytime sky. Its scientific basis is the [NASA Space Place original-site explanation](https://spaceplace.nasa.gov/blue-sky/en/), read and checked on 2026-10-05. It is an institutional science explanation, not an original experimental paper or authorization to use that site's media. This episode introduces no ratios, probabilities or unverified new findings.
 
-暂定识别：自然纪录感；暖白字、深灰半透明字幕底、单一低饱和青色强调；标题与字幕统一字体层级；小系列标记位置一致。系列名、具体字体待决定，不假装已经批准或取得字体许可。
+Provisional identity: a nature-documentary feel; warm-white text, dark-gray translucent caption backing and one low-saturation cyan accent; a shared font hierarchy for titles/captions; a consistent small series-mark position. Series name and specific font remain undecided, without pretending approval or font-license acquisition.
 
-## 脚本与镜头
+<a id="脚本与镜头"></a>
+## Script and shots
 
-每条须配中文解说。本例以 Skill 中的 Qwen 自然口语技术参考作为待试起点；尚未生成解说或实际试听，只是待拍、待补录计划，需独立制作试听样例并核对本集稿件的对应外传权限。即使后续短样获认可，也不代表本集通过；字幕须逐句对齐口播，自然度、术语/数字发音、停顿和配乐遮挡须实听确认。
+Every video requires Mandarin narration. This example treats the Skill's Qwen natural-conversational technical reference as a starting point pending testing. No narration has been generated or actually heard; this is only a plan awaiting shooting/additional recording. Independently produce a listening sample and check the corresponding authorization to transmit this episode's script externally. Even later approval of a short sample does not approve this episode. Align captions sentence by sentence to narration and actually listen to verify naturalness, term/number pronunciation, pauses and music masking.
 
-长度等实际配音和解释小样后决定，先保全必要机制，再删重复与支线；不预设固定片长或等长镜头。
+Determine duration after actual narration and explanation samples. Preserve necessary mechanisms first, then remove repetition/branches, without a fixed duration or equal-length shots.
 
-本集单一问题：晴朗白天天空的蓝色从哪里来？先让观众认识阳光、空气中的微小分子与眼睛三个对象；图中红蓝两路只用于对比，不表示阳光只有两种颜色。核心因果：不同颜色的阳光进入空气 → 空气分子使部分光改变方向（这叫散射）且蓝光比红光散射更显著 → 散射光从天空不同方向进入眼睛。标签贴近对象，口播讲哪一步就显示哪一步。
+This episode's single question: 晴朗白天天空的蓝色从哪里来？ First introduce sunlight, tiny molecules in the air and the eye as three objects. The red/blue paths in the diagram are for comparison only and do not mean sunlight has only two colors. Core causal chain: sunlight containing different colors enters air → air molecules change some light's direction (scattering), with blue light scattered more significantly than red → scattered light enters the eye from different sky directions. Keep labels near objects and show each step as narration discusses it.
 
-1. SH1，观察与问题
-   - 画面：计划用手机拍一段晴朗天空，保留树梢作为尺度和自然纹理；避免拍摄可识别人脸、车牌或第三方作品
-   - 口播：“太阳光看起来接近白色，天空的蓝从哪里来？先看空气怎样把光散向我们的眼睛。”
-   - 声音：轻微真实环境声，先不用音乐；素材 A1/A3/A4
-2. SH2，机制
-   - 画面：精美简洁的原创 2D连续示意；先显示光进入空气，再显示传播方向改变，最后显示部分散射光到达同一只眼睛。蓝红两路都能散射，蓝路更显著；清楚显示“机制示意，非按比例”，对象身份和颜色关系保持连续
-   - 口播：“太阳光包含不同颜色。空气里有很小的分子，它们会让一部分光改变传播方向，这叫散射。其中，蓝光比红光散射得更明显。”
-   - 对应 C1/C2；不画成蓝色小球被永久留在空气中、不画成红光完全不散射；素材 A2/A3/A4
-3. SH3，回到现象
-   - 画面：回到同次拍摄的真实天空；必要时仅用小范围指认，不铺满运动图形
-   - 口播：“这些散射的光从天空不同方向进入眼睛，于是，晴朗白天的天空看起来是蓝色的。”
-   - 对应 C2；不附带“蓝光是散射最强的颜色”或“所有星球都是蓝天”等更宽断言
+1. SH1, observation and question
+   - Picture: plan to shoot a clear-sky clip on a phone, retaining treetops for scale and natural texture; avoid identifiable faces, license plates and third-party works.
+   - Narration: “太阳光看起来接近白色，天空的蓝从哪里来？先看空气怎样把光散向我们的眼睛。”
+   - Sound: light actual ambience, initially without music; assets A1/A3/A4.
+2. SH2, mechanism
+   - Picture: a refined, simple original continuous 2D diagram. First show light entering air, then a change in propagation direction, then some scattered light reaching the same eye. Both blue and red paths scatter, with blue more pronounced. Clearly display “机制示意，非按比例”, preserving continuous object identities and color relationships.
+   - Narration: “太阳光包含不同颜色。空气里有很小的分子，它们会让一部分光改变传播方向，这叫散射。其中，蓝光比红光散射得更明显。”
+   - Corresponds to C1/C2. Do not depict blue balls remaining permanently in the air or red light never scattering; assets A2/A3/A4.
+3. SH3, return to the phenomenon
+   - Picture: return to actual sky footage from the same shoot; if necessary, use only local pointing rather than filling the frame with motion graphics.
+   - Narration: “这些散射的光从天空不同方向进入眼睛，于是，晴朗白天的天空看起来是蓝色的。”
+   - Corresponds to C2. Do not append broader assertions such as “蓝光是散射最强的颜色” or “所有星球都是蓝天”.
 
-如没有晴天，可寻找有权且条件相符的真实视频（不能用天空照片推拉替代），或等待拍摄，并如实保留素材/授权缺项。可先准备机制示意，但不能因此声称真实素材已取得，不能把生成画面称为“今日实拍”。拍天空时不直视太阳，也不把设备直接对着太阳长时间拍摄。
+If clear weather is unavailable, seek actual video with usable rights and matching conditions (panning/zooming a sky photo is not a substitute), or wait to shoot, truthfully retaining asset/authorization gaps. Mechanism diagrams may be prepared first, but that does not establish acquisition of real material. Generated imagery must not be described as “今日实拍”. When filming the sky, do not look directly at the sun or point equipment at it for extended recording.
 
-## 封面各自排版
+<a id="封面各自排版"></a>
+## Lay out each cover separately
 
-- 3:4：选真实天空中留白清楚的一帧，标题“天空为什么 / 是蓝色？”两行置于中上可读区，树梢压在下侧，标记保持克制
-- 4:3：另一横向留白较足的实拍帧，标题放左侧两行，右侧保留天空和云的纹理；重排主体与字，不由竖版直接硬裁
-- 两版都先看手机缩略图；具体位置以实际图像视觉重心和平台预览为准。源素材未拍，故尚无封面文件
+- 3:4: choose a real-sky frame with clear negative space. Place the two-line title “天空为什么 / 是蓝色？” in a readable upper-middle area, keep treetops low and use a restrained mark.
+- 4:3: use another actual-footage frame with more horizontal negative space. Put the title in two lines at left, retaining sky/cloud texture at right. Rearrange subject and text rather than forcing a crop of the portrait version.
+- Inspect both as phone thumbnails first. Exact positions follow the actual image's visual balance and platform preview. Source material has not been shot, so no cover files exist yet.
 
-## 本次验证结果
+<a id="本次验证结果"></a>
+## Validation results for this exercise
 
-- 代表性小样应选 SH2，实际渲染完整因果变化并配对应解说/字幕；先检查解释与主体居中，再精修运动和层级。此小样尚未制作，不能写美术或听觉通过
-- 编辑预期复述：阳光被空气分子散射，蓝光比红光更显著，散射光从天空各方向进入眼睛。本例没有真实观众试看或条件变化问题的回答，理解效果仍待验证
-- episode.json 的计划检查应通过，并列明 A1–A4 权利/素材均待取得
-- 成片检查必须阻止交付：视频、双封面、音轨/解码、实际帧、手机及声音验收尚未完成
-- 不把“不下载外部媒体”当作“全部权利已清”，后续仍要确认自摄、字体、旁白和图解权利
-- 未做视觉验收，不声明天空取景好看或主体已居中；示例没有用技术测试素材冒充真实成片
-- 未做目标账号、最终完整简介和实际平台 UI 预览；裸播放器或代理缩图不能补签此项
+- The representative sample should select SH2, actually rendering the complete causal change with corresponding narration/captions. Check explanation and subject centering first, then refine motion/hierarchy. This sample has not been produced; do not record an art or listening pass.
+- The editor's expected restatement: air molecules scatter sunlight, blue more significantly than red, and scattered light enters the eye from different sky directions. This example has no actual audience test or responses to condition-change questions; comprehension remains unverified.
+- The episode.json plan check should pass and explicitly list A1–A4 as pending rights/assets acquisition.
+- Finished-film checks must block delivery: video, both covers, audio/decoding, actual frames, mobile and audio acceptance are incomplete.
+- Not downloading external media does not mean all rights are cleared. Later checks must still confirm self-capture, fonts, narration and diagram rights.
+- No visual acceptance occurred; do not claim attractive sky framing or an already centered subject. The example does not substitute technical-test media for an actual finished film.
+- No target-account, final complete-description or actual platform-UI preview occurred. A bare player or proxy thumbnail cannot retroactively sign this item.
 
-正式制作前仍需：实际拍摄、字体许可、原创图解及旁白、剪辑导出、双封面、实际帧与手机实听实看。拍摄和导出完成后再填写真实制作声明与当前文件校验值。
+Formal production still needs actual shooting, font licensing, original diagrams/narration, editing/export, both covers, actual frames and phone-based viewing/listening. Fill actual production statements and current file checksums only after shooting and export are complete.

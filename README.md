@@ -1,41 +1,45 @@
 # science-video-skill
 
-面向自然、生活、工程科学与工业制造的科普视频制作 Skill。当前版本1.6.9；具体修订以Git提交为准。
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.9; the Git commit identifies the exact revision.
 
-- **写实 → MoneyPrinterTurbo，3D动画 → Blender**。主体风格决定主工具；模型生成、字幕和编码作为辅助环节。
-- **只有一个全局生产安装**。项目只保存数据和规则哈希锁，不复制Skill；维护源码不作生产入口。续做先读全局差异并显式迁移，保留旧执行记录。
-- **开场先有情境和观看理由**。从正文第一观察倒推开场，成对设计末句/末画面与正文首句/首画面，连续审看到第一观察兑现。主题与路线可自然合句，不为时间字段硬拆。
-- **工程制造讲完整链路**。输入、原理、关键过程、结果和验证按题目范围分章，真实讲解及观察需要决定片长。
-- **先样后片**。实际播放节奏验证主体、动作、声音和接缝；低帧率布局代理限内部使用。整片仍完整看听。
-- **精密标注与独立封面**。标注区分定位、方向和范围，尖箭头头杆连续且杆不穿尖；封面按本次所需比例独立构图并看手机缩略。
-- **声音可修可验**。复用认可声音，先试听开场与难句；错读、拖慢、断句及接缝按原因修复，源音轨与最终混音分别听验。
-- **当前系列原创视觉来源**。自行生成、布景/动画渲染、设计或已核实授权的用户自拍；适配的开放许可3D模型可直接引用，保留外部作者与许可及实际改造记录；第三方成片视频/照片及论文影像仅供研究参考。
+- **Realistic → MoneyPrinterTurbo; 3D animation → Blender.** Finished visual style selects the main tool; model generation, captions and encoding remain supporting stages.
+- **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. Maintenance source is not a production entry. On continuation, read global changes, migrate explicitly and retain old execution records.
+- **Open with context and a reason to watch.** Work backward from the first body observation; design the opening's final sentence/frame together with the body's first sentence/frame and continuously review through that observation. Topic and route may flow naturally in one sentence; do not split them merely for time fields.
+- **Explain the full requested engineering/manufacturing chain.** Organize input, principle, key processes, result and verification by topic scope. Actual explanation and observation determine duration.
+- **Sample before expanding.** Verify subject, action, voice and joins at actual playback rhythm. Low-frame-rate layout proxies remain internal; the complete film still needs full viewing/listening.
+- **Precision annotation and independent covers.** Distinguish location, direction and range. Arrow heads/shafts are continuous, tips sharp, with no shaft overshoot. Compose each commissioned cover ratio independently and inspect phone thumbnails.
+- **Repairable, verifiable sound.** Reuse accepted voice, audition opening/difficult phrases, and repair misreads, sluggishness, phrasing and joins by cause. Listen separately to source and final mix.
+- **Current-series original visual provenance.** Use self-generation, scene/animation rendering, self-design or verified authorized user capture. Suitable open-licensed 3D models may be used directly, retaining external authorship/license and actual adaptation records. Third-party finished footage/stills and paper imagery remain research only.
+- **English maintenance language.** Skill instructions, normative references, templates and role definitions use English. Actual Chinese narration/captions/copy examples, language-sensitive fixtures and approved model-input payloads retain their intended language.
 
-本轮统一开场、转场、画面、声音的制作动作和退回条件，删去重复解释、工具百科和无操作用途文字；修正旧2D、旧冻结版本及题材偏置。正文和脚本契约保持对应，实际媒体结果仍由对应看听记录确认。
+The production bodies unify executable opening, transition, picture and sound actions and return conditions, removing repetition, tool encyclopedias and unusable prose. They correct legacy 2D/frozen-version/topic biases. Written and executable contracts remain aligned; actual media outcomes still require corresponding viewing/listening records.
 
-## 使用入口
+<a id="使用入口"></a>
+## Entry
 
-从[SKILL.md](skills/science-video-production/SKILL.md)按本次委托读取所需正文。新作默认1920×1080；历史2D与竖版参数仅用于明确适用的范围。视频交付止于G5；平台准备和发布仅在任务覆盖时进入G6/G7。
+Start at [SKILL.md](skills/science-video-production/SKILL.md) and read responsibility bodies for the actual commission. New work defaults to 1920×1080; historical 2D/portrait parameters apply only within their explicit scope. Local video delivery ends at G5; platform preparation/publication enters G6/G7 only when commissioned.
 
-| 要解决的问题 | 正文 |
+| Need | Body |
 | --- | --- |
-| 原题、全链路与开场 | [主题契约](skills/science-video-production/references/topic-contract.md)、[开场与转场](skills/science-video-production/references/viewer-retention-design.md) |
-| 实际工具与执行阶段 | [工具路由](skills/science-video-production/references/tool-routing.md)、[制作检查点](skills/science-video-production/references/production-checkpoints.md) |
-| 画面、标注与封面 | [视觉系统](skills/science-video-production/references/visual-system.md)、[精密标注](skills/science-video-production/references/annotation-style.md) |
-| 声音 | [语音与听验](skills/science-video-production/references/voice-reference.md) |
-| 失败和验收 | [质量验收](skills/science-video-production/references/quality-acceptance.md) |
-| 3D资产复用 | [Blender与素材库](skills/science-video-production/references/engineering-blender.md) |
-| 子代理分工、安装与调用 | [六个专业角色与主代理统筹](skills/science-video-production/references/subagent-orchestration.md)、[可安装TOML定义](skills/science-video-production/agents) |
+| Original topic, complete chain and opening | [Topic contract](skills/science-video-production/references/topic-contract.md), [opening/transitions](skills/science-video-production/references/viewer-retention-design.md) |
+| Actual tools and execution stages | [Tool routing](skills/science-video-production/references/tool-routing.md), [production checkpoints](skills/science-video-production/references/production-checkpoints.md) |
+| Picture, annotations and covers | [Visual system](skills/science-video-production/references/visual-system.md), [precision annotation](skills/science-video-production/references/annotation-style.md) |
+| Sound | [Voice and actual listening](skills/science-video-production/references/voice-reference.md) |
+| Failures and acceptance | [Quality acceptance](skills/science-video-production/references/quality-acceptance.md) |
+| 3D asset reuse | [Blender and asset library](skills/science-video-production/references/engineering-blender.md) |
+| Subagent ownership, installation and invocation | [Six roles and parent direction](skills/science-video-production/references/subagent-orchestration.md), [installable TOML definitions](skills/science-video-production/agents) |
 
-脚本从全局安装调用。`render_gate.py lock/run` 拒绝非全局生产入口；`roughcut`用于G2，`sample`生成待审代表段，`full`才要求G3通过。新回执不用旧文件名，不刷新旧哈希冒充新版通过。私有媒体、账号和审查记录不提交本仓。
+Run scripts from the global installation. `render_gate.py lock/run` rejects non-global production entry; `roughcut` serves G2, `sample` produces the review-pending representative sequence, and `full` requires G3. Use new receipt filenames; do not refresh old hashes to pretend an earlier approval covers a new version. Keep private media, accounts and review records out of this repository.
 
-## 子代理
+<a id="子代理"></a>
+## Subagents
 
-主代理保留导演与整合职责，按需调用研究、视觉、动画、声音剪辑、本地执行、独立审片六个角色；定义数量不等于同时运行数量。角色从唯一全局Skill读取制作标准，模型与权限沿宿主设置。安装与自然语言调用示例见[协作说明](skills/science-video-production/references/subagent-orchestration.md#installation-and-invocation)。
+The parent retains direction/integration and invokes research, visual art, animation, audio/editing, local execution and independent review roles as needed. Six definitions do not require six concurrent workers. Roles read standards from the unique global Skill and inherit the host's model/permissions. See [orchestration](skills/science-video-production/references/subagent-orchestration.md#installation-and-invocation) for installation and natural-language invocation examples.
 
-## 维护检查
+<a id="维护检查"></a>
+## Maintenance checks
 
-从维护仓库根目录运行，Python3.11+；涉及媒体的测试需要ffmpeg/ffprobe。按改动范围选择回归。
+From the maintenance repository root, use Python 3.11+. Media-related tests require FFmpeg/ffprobe. Select regressions appropriate to the change.
 
 ```bash
 python -X utf8 skills/science-video-production/scripts/rebuild_standard_index.py
@@ -44,4 +48,4 @@ python -X utf8 -m unittest discover -s tests -t .
 python -X utf8 -m unittest discover -s skills/science-video-production/scripts/tests
 ```
 
-章节索引只维护正文链接、摘要和锚点。`scripts/bounded_blender`、`scripts/bounded_i2v`的README维护各自有限执行范围和恢复方法；`third-party`保留原许可和固定版本来源。历史纸面例子与`references/learning-candidates`是待核研究记录，不作为当前制作许可或通过证据；历次变更见Git历史。
+The section index maintains body links, hashes and anchors only. READMEs for `scripts/bounded_blender` and `scripts/bounded_i2v` define their bounded execution/recovery scope. `third-party` retains original licenses and pinned provenance. Historical paper examples and `references/learning-candidates` are unverified research records, not current production permission or passing evidence. Git history retains prior revisions.

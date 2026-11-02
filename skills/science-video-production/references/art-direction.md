@@ -1,73 +1,82 @@
-# 专业美术编排与洁净渲染
+<a id="专业美术编排与洁净渲染"></a>
+# Professional Art Direction and Clean Rendering
 
-用于配色、前后景、明亮材质及雪花感故障。复用现有设计板、场景卡、色彩缩略带与G3/G5审查；方法自包含，不要求另装导演Skill或改变主制作路线。
+Use for color design, foreground/background organization, bright materials, and snow-like noise defects. Reuse existing design boards, scene cards, color thumbnail strips, and G3/G5 reviews. The methods are self-contained; they do not require installing another directing Skill or changing the primary production route.
 
-## 明亮风格与高级材质
+<a id="明亮风格与高级材质"></a>
+## Bright Style and Premium Materials
 
-默认采用明亮、清晰、精细的视觉方向，适用于写实、Blender动画及相应封面/预览。这里的“明亮”指灯光运用得当：主体受光、体积转折、关键暗部和材质反射清楚，高光保留层次；不规定背景必须浅色，也不要求高调、低反差或整帧变亮。浅、中、深色乃至黑色背景均可按内容、材料与构图选择，深色布景也应能呈现明亮鲜活的主体。退回的是主体欠照明、关键关系看不清、发灰或高光丢失，不是背景暗。已有参考按适用的布光、材质和动作范围复用；背景深色本身不使已有认可失效，历史2D参考仍只证明其原范围，旧否定或取消版本不自动恢复。
+The default visual direction is bright, clear, and finely finished, applying to realistic footage, Blender animation, and their covers/previews. Here, “bright” means effective use of lighting: the subject's illumination, form transitions, key dark areas, and material reflections are clear, with detail retained in highlights. It does not require a light background, high-key lighting, low contrast, or a brighter entire frame. Choose light, midtone, dark, or even black backgrounds according to content, material, and composition; a dark set should still present a bright, lively subject. Reject an underlit subject, unreadable key relationships, a gray cast, or lost highlights. A dark background alone is not a failure. Reuse references within their applicable lighting, material, and action scope. A dark background does not by itself invalidate prior approval. Historical 2D references still establish only their original scope; previously rejected or canceled versions are not automatically revived.
 
-“高级材质”指材料身份可信、几何边缘完整、表层响应细腻、反射有组织，且在运动和最终编码中稳定。裸金属、涂层、工程塑料、玻璃/液体、陶瓷与复合材料按实际表层分别制作；不要所有物体都套同一灰色、金属度、镜面高光或噪声纹理。黑色材料保持本色，通过环境、补光和反射带显形；主体与背景可辨，不靠把黑材质改成浅灰提亮。倒角、纹理、磨损及粗糙度服从尺度和工艺，不能以全身发亮、满屏划痕或粗糙颗粒冒充细节。
+“Premium materials” means credible material identity, complete geometric edges, nuanced surface response, organized reflections, and stability in motion and final encoding. Produce bare metal, coatings, engineering plastics, glass/liquids, ceramics, and composites according to their actual surfaces. Do not give every object the same gray color, metallic value, specular highlight, or noise texture. Black materials retain their real color, revealing their form through the environment, fill lighting, and reflection bands. Keep subject and background distinguishable without turning black materials light gray. Bevels, texture, wear, and roughness must suit scale and manufacturing processes; all-over shine, scratches everywhere, or coarse grain cannot substitute for detail.
 
-制作时先核对象与表层，再布置主光、补光和可辨的反射形状，最后校准曝光与输出。背景色与主体照明分别设计：主光塑形，按需补光读出接口和暗部，控光及反射面组织材质亮带，背景明度服务主体与空间。保持必要阴影和黑位，不把所有面照平。科学/教学颜色和材料本色保留；不靠全局增亮救局部无光，也不抬黑到发灰、压高光到失真或加雾/辉光掩盖缺陷。Blender的具体动作见[灯光与材质执行](engineering-blender.md#明亮灯光与材质的实际执行)。写实素材的生成设计、筛选和MoneyPrinterTurbo最终编码都执行本标准，不能只在提示词写“高级感”。
+First verify the object and its surface, then arrange key light, fill, and distinguishable reflection shapes, and finally calibrate exposure and output. Design background color and subject lighting separately: the key shapes form; fill reveals interfaces and dark areas as needed; light control and reflecting surfaces organize material highlight bands; background value serves the subject and space. Preserve necessary shadows and black levels rather than lighting every surface flat. Retain scientific/teaching colors and actual material colors. Do not use global brightening to rescue a locally unlit area, lift blacks into gray, compress highlights into distortion, or add fog/glow to hide defects. See [lighting and material execution](engineering-blender.md#actual-execution-of-bright-lighting-and-materials) for concrete Blender actions. The same standard applies to realistic asset generation design, selection, and MoneyPrinterTurbo's final encoding; writing “premium” in a prompt is insufficient.
 
-在已有G3代表段与G5实际编码审查中，逐项核主体暗部、亮面细节、材质差异、反射随运动的连续性和跨镜曝光一致性。以本镜观察对象/区域为准；直方图、波形和亮度统计只定位风险，整帧平均亮度不是通过线。沿现有 `qa.visual_frames.art` 和失败记录记具体镜号/时点与差距：主体受光不足、关键部位黑成一块、材质像同种塑料、高光擦掉结构、反射/纹理闪烁或编码后明显变灰变暗，G3修后再扩制，G5不得签通过。低精细度技术草排仍按其内部用途标识，不当成满足本风格的正式样段。
+In the existing G3 representative-segment and G5 actual-encoding reviews, check the subject's dark areas, bright-surface detail, material differences, continuity of reflections with motion, and exposure consistency across shots. Judge the actual observation object/region in each shot. Histograms, waveforms, and luminance statistics locate risks only; whole-frame average brightness is not a pass threshold. Use existing `qa.visual_frames.art` and failure records to identify specific shot IDs/times and gaps. An underlit subject, key parts crushed to a black mass, materials that all look like the same plastic, highlights erasing structure, flickering reflections/textures, or conspicuous graying/darkening after encoding require repair before G3 expansion and cannot receive G5 approval. Low-detail technical rough cuts remain labeled for their internal purpose; they are not formal samples that meet this style.
 
-深色背景是正常的美术选择，不需要以科学现象为理由。与之分开处理的是确需低照度的真实观测条件：仍让必要参照可辨，但不能补入会改变所讲现象的虚构照明。不能以“电影感”替主体欠照明或整片发灰辩护，也不能为“明亮”破坏暗环境中的科学现象。样段交用户判断时按[材料链接交付](tool-routing.md#review-media-without-repeated-uploads)给可点击的本地文件链接，审片传输约束照常执行。
+A dark background is a normal art-direction choice and needs no justification in terms of a scientific phenomenon. Handle genuine observation conditions that require low illumination separately: necessary references must remain distinguishable, but do not add fictional illumination that would alter the phenomenon being explained. “Cinematic” cannot excuse an underlit subject or an entirely gray film, and “bright” cannot justify damaging a scientific phenomenon in a dark environment. When a sample is submitted for the user's judgment, provide a clickable local file link under [delivery through material links](tool-routing.md#review-media-without-repeated-uploads); review-transfer constraints still apply.
 
-## 配色、构图与空间：先设计观看次序
+<a id="配色构图与空间先设计观看次序"></a>
+## Color, Composition, and Space: Design the Viewing Order First
 
-在既有设计板/场景卡里，用可执行的描述确定：当前观察对象和视觉亮点、主次明暗、颜色角色、主体与前后景关系、光源/反射形状，以及跨镜保留什么。写“深石墨背景前，宽面积侧主光塑造金属曲面，局部柔和补光读清黑色接口，背景暗部保留空间层次”，比“高级、电影感、8K”更可执行。视觉亮点应来自本题的形体、材料差异、尺度转换或有据的动作兑现，不能以一圈发光、粒子、转场或移动灯光代替机制本身。
+In existing design boards/scene cards, use actionable descriptions to establish the current observation subject and visual highlight, light/dark hierarchy, color roles, subject–foreground/background relationships, light-source/reflection shapes, and what persists across shots. “Against a deep graphite background, a broad side key light shapes the metal curve; soft local fill reveals the black interface, while the background's dark areas retain spatial layers” is more actionable than “premium, cinematic, 8K.” Visual highlights should arise from this topic's forms, material differences, changes of scale, or supported action payoffs. A luminous ring, particles, transitions, or moving lights cannot replace the mechanism itself.
 
-### 色彩角色与可见主次
+<a id="色彩角色与可见主次"></a>
+### Color Roles and Visible Hierarchy
 
-- **先看明度，再看颜色。** 在本镜实际构图中核轮廓与邻接面是否分开；必要时用灰度缩略作诊断，再回彩色与完整声画。浅色配浅色、深色配深色都可采用，须靠受光转折、受控反射、邻接明暗或空间关系读出轮廓和动作；不能因同色系就强制换背景，也不能让必要部位粘连消失。主要动作区取得清晰的局部反差，背景避免同时拥有最强高光、饱和色和细节。
-- **给颜色分工。** 区分对象真实材料/科学变量色、环境主色、次要支承色与强调色；强调色引向正在解释的位置或变化，其他位置主动收敛。饱和度、明度和面积共同形成重点，不强制60/30/10、统一青橙或每镜凑固定色数。自然本色、肤色、安全/科学色义优先，不能为和谐色板改写对象或变量含义。
-- **保持丰富但有秩序。** 允许明快且有辨识度的色彩、自然暖冷关系与材料对比；压低的是无关背景竞争，而非把所有颜色调灰。主体本身已复杂时，让邻近背景安静；白色/透明对象用适当中间调、反射边缘和邻接面差异显形，不整体压暗或漂白。
-- **跨镜按解释编排。** 复用[整片色彩与构图缩略带](visual-system.md#整片色彩与构图缩略带)检查应用、过程、局部与结果的整体关系。相同对象/变量保留识别色与材质身份；场景转变可有有据的色调变化，不能每镜随机换滤镜或整片同一灰蓝底。
+- **Read value before color.** In the actual shot composition, check that contours separate from adjacent surfaces. Use a grayscale thumbnail for diagnosis when needed, then return to color and complete audiovisual playback. Light-on-light and dark-on-dark combinations are both valid, provided lighting transitions, controlled reflections, adjacent values, or spatial relationships reveal contours and motion. Do not force a background change merely because colors are similar, or let necessary parts merge and disappear. Give the main action region clear local contrast. Avoid a background that simultaneously contains the strongest highlights, saturation, and detail.
+- **Assign colors distinct jobs.** Distinguish actual material/scientific-variable colors, the environment's main color, secondary support colors, and accent colors. Direct accents to the location or change currently being explained and deliberately restrain them elsewhere. Saturation, value, and area work together to establish emphasis. Do not require 60/30/10, a uniform teal–orange scheme, or a fixed number of colors per shot. Natural colors, skin tones, and safety/scientific color semantics take priority; a harmonious palette cannot justify changing object or variable meaning.
+- **Keep richness organized.** Allow bright, distinctive colors, natural warm/cool relationships, and material contrasts. Restrain irrelevant background competition rather than graying every color. When the subject is already complex, keep its adjacent background quiet. Reveal white/transparent objects through suitable midtones, reflection edges, and differences in neighboring surfaces, rather than darkening or bleaching the whole image.
+- **Arrange color across shots to serve the explanation.** Reuse the [whole-film color and composition thumbnail strip](visual-system.md#whole-film-color-and-composition-thumbnail-strip) to check the overall relationships among application, process, detail, and result. Preserve identifying colors and material identity for the same object/variable. Supported tone changes may accompany a scene change; do not randomly change filters every shot or put the entire film on one gray-blue background.
 
-方法参考[Adobe色彩对比](https://www.adobe.com/uk/creativecloud/design/discover/color-contrast.html)对明度、饱和度和面积对比的说明；[Pixar色彩脚本](https://www.pixar.com/toy-story-2)用于理解整部作品的光色编排方法，不作为复制其画面或已验证本片外观的证据。
+For method, see [Adobe's color contrast guidance](https://www.adobe.com/uk/creativecloud/design/discover/color-contrast.html) on value, saturation, and area contrast. [Pixar's color script](https://www.pixar.com/toy-story-2) helps explain whole-film light/color planning; it is not permission to copy its imagery or evidence that this film's appearance has been verified.
 
-### 前景、中景和背景各自有工作
+<a id="前景中景和背景各自有工作"></a>
+### Foreground, Midground, and Background Each Have a Job
 
-| 层次 | 制作职责 | 需要修复的表现 |
+| Layer | Production responsibility | Symptoms requiring repair |
 | --- | --- | --- |
-| 前景（按需） | 提供实际承载、空间边界、尺度或有用的遮挡/视差；留出进入主体的路径 | 装饰零件/枝叶遮住动作，亮线穿过轮廓，刻意虚化物抢注意力 |
-| 主体/动作所在平面 | 清楚呈现本题对象、接触与变化；用形体、明暗、颜色、清晰度和材质组织焦点 | 只能先看见背景灯条；同明度邻接使必要轮廓/接触失读；关键关系落在不可读焦外 |
-| 背景 | 建立用途、环境与纵深，控制邻接色块、边线、光斑和细节频率，使主体轮廓完整 | 无边地台套所有题、重复纹理像雪花、设备线条与轮廓相切、光斑比主体更突出 |
+| Foreground, as needed | Provide actual support, spatial boundaries, scale, or useful occlusion/parallax; leave a path into the subject | Decorative parts/foliage obscure the action, bright lines cross contours, or deliberately blurred objects steal attention |
+| Subject/action plane | Clearly present the topic's objects, contacts, and changes; organize focus through form, value, color, sharpness, and material | Background light strips register first; adjacent equal values make necessary contours/contacts unreadable; key relationships fall into unreadable defocus |
+| Background | Establish purpose, environment, and depth; control neighboring color masses, edges, light spots, and detail frequency so the subject's contour remains complete | An edgeless platform is reused for every topic, repeating textures look like snow, equipment lines become tangent to contours, or light spots dominate the subject |
 
-层次按本镜需要选择，不强制三层同屏。用真实距离、重叠、尺度、方向、光照及运动视差建立空间；景深、雾和后期模糊只能服务关系，不能遮掉模型缺口。讲两个物体的相互作用时，关键接触与比较对象均需在可读范围。参考[Adobe视觉重点](https://www.adobe.com/creativecloud/photography/discover/emphasis-in-photography.html)的构图、距离与背景组织方法，再按科学对象实际调整。
+Choose layers according to the shot's needs; all three need not appear at once. Build space through real distance, overlap, scale, direction, lighting, and motion parallax. Depth of field, fog, and postproduction blur must serve relationships and cannot hide model gaps. When explaining interaction between two objects, keep both key contact and comparison objects within a readable range. Refer to [Adobe's visual emphasis guidance](https://www.adobe.com/creativecloud/photography/discover/emphasis-in-photography.html) for composition, distance, and background organization, then adapt to the actual scientific subject.
 
-### 材质反射与配色一起设计
+<a id="材质反射与配色一起设计"></a>
+### Design Material Reflections Together with the Palette
 
-沿[Blender材质步骤](engineering-blender.md#明亮灯光与材质的实际执行)区分实际表层。对金属和光泽面，设计它反射到的明暗形状，保留能说明曲率的宽亮带和中间调；灯光照到物体不等于相机方向一定看到需要的反射。透明件需要可辨的边缘、厚度和背景关系，粗糙/哑面依靠受光体积与真实表面。主光、补光、局部分离和背景照明按用途控制，不规定所有镜头同一灯数/灯比，不用强轮廓光勾满每条边。反射场组织可参考[RenderMan灯光案例](https://prod.renderman.pixar.com/robot-walker)，只学习方法，不取用其素材。
+Differentiate actual surfaces under the [Blender material steps](engineering-blender.md#actual-execution-of-bright-lighting-and-materials). For metal and glossy surfaces, design the light/dark shapes they reflect, retaining broad highlight bands and midtones that explain curvature. A light striking an object does not mean the camera necessarily sees the needed reflection. Transparent parts need distinguishable edges, thickness, and a relationship to the background. Rough/matte surfaces rely on lit volume and credible surface properties. Control key, fill, local separation, and background lighting by purpose; do not impose the same light count/ratio on every shot or trace every edge with strong rim light. The [RenderMan lighting example](https://prod.renderman.pixar.com/robot-walker) may inform reflection-field organization; learn its method without taking its assets.
 
-### 可选方向，不是已认可画风
+<a id="可选方向不是已认可画风"></a>
+### Optional Directions, Not Approved Styles
 
-需要新方案时，从[配色起点](../assets/style/bright-premium-palettes.json)选一个适用方向并按本片对象调整，记录到现有设计板；不默认渲染全部方案，也不覆盖已明确的科学颜色。十六进制值表示显示参考色，不是可不经转换直接写入所有Blender着色输入的线性数值。
+When a new approach is needed, choose an applicable direction from the [palette starting points](../assets/style/bright-premium-palettes.json), adapt it to this film's objects, and record it on the existing design board. Do not render all approaches by default or override established scientific colors. Hexadecimal values are display reference colors, not linear values that can be written without conversion into every Blender shading input.
 
-- **明朗精密工位**：浅暖环境承载金属、涂层和黑色软管；保留石墨深度，少量明快强调色仅用于有依据的对象或自设计环境；这是一种浅色布景候选，深色工位同样可用。观察重点是接口、形变与加工状态。
-- **日光自然本色**：真实日光、生态/生活载体和鲜活本色；以安静的邻近背景衬托对象，避免叶纹、地表碎屑与主体同样锐利、饱和。
-- **清透材料观察台**：明亮环境配适度中间调反射/承载面，让玻璃、液体、陶瓷等的边缘、厚度和表层差异可见。不是把整片放在相同空台上，也不让有色灯污染比较。
+- **Bright precision workstation**: a pale, warm environment supports metal, coatings, and black hoses; retain graphite depth, with a small amount of lively accent color only on supported objects or a self-designed environment. This is one light-set candidate; a dark workstation is equally valid. Observation focuses on interfaces, deformation, and processing state.
+- **Natural daylight colors**: real daylight, ecological/everyday settings, and lively natural colors; a quiet neighboring background supports the object. Avoid leaf patterns and ground debris that are as sharp and saturated as the subject.
+- **Clear-material observation bench**: a bright environment with suitable midtone reflecting/supporting surfaces reveals the edges, thickness, and surface differences of glass, liquids, ceramics, and similar materials. Do not place the entire film on the same empty bench or let colored lighting contaminate a comparison.
 
-- **深色布景、主体塑光**：石墨、深蓝或深绿背景承托受光充分的主体；以主光渐变、适用补光及克制的反射带呈现金属/黑色材料的体积、接口和接触。保持背景与黑材质的深度，不把整套布景提成浅灰，也不只勾一圈亮边而让正面失读。
+- **Dark set, shaped subject lighting**: graphite, deep blue, or deep green backgrounds support a sufficiently lit subject. Key-light gradients, appropriate fill, and restrained reflection bands reveal the volume, interfaces, and contacts of metal/black materials. Preserve depth in the background and black materials. Do not raise the entire set to pale gray or leave the front unreadable while tracing only a bright rim.
 
-## 画面洁净度：先定位雪花感的来源
+<a id="画面洁净度先定位雪花感的来源"></a>
+## Image Cleanliness: Locate the Source of Snow-Like Noise First
 
-不默认添加胶片颗粒、复古噪声、扫描线、重度脏污或随机凹凸以制造质感。真实材料的微结构应按实际景别、尺度和编码能力呈现；对象表面的随机细节需附着稳定，不逐帧任意换图。采样器自身的动画随机模式按引擎机制另行处理，不与材质种子混为一谈。
+Do not add film grain, retro noise, scanlines, heavy dirt, or random bump by default to create texture. Present real material microstructure at a scale and shot size the encoding can support. Random surface details must remain stably attached to objects rather than changing arbitrarily every frame. Handle the sampler's own animated random pattern separately according to the engine; do not conflate it with material seeds.
 
-| 可疑症状 | 本地优先核对 | 对应处理 |
+| Suspected symptom | Check locally first | Corresponding treatment |
 | --- | --- | --- |
-| 随机细颗粒、低光区不收敛 | 原始输出、实际采样/自适应阈值、主光与间接光、去噪输入/质量 | 改善照明/采样与适用去噪，保留细边和表面差别；不靠加曝光放大噪声 |
-| 孤立闪亮点 | 光源/反射尺寸、光路与焦散、实际高光 | 针对困难光路改设置；clamp会影响亮部，不能一刀切掉真实高光或本题光学现象 |
-| 表面像砂纸、脏灰、所有对象同颗粒 | 逐项关闭装饰性粗糙度/凹凸/污渍作诊断，检查尺度/坐标 | 降低无依据纹理与凹凸，恢复正确表层；不能用采样增加解释为“高级材质” |
-| 静帧尚可、运动中细纹/边缘闪烁 | 原生连续帧、纹理映射/过滤、重复线纹、尺度与去噪稳定性 | 调整可见纹理频率和适用过滤，检查相机/物体运动及实际目标尺寸；保留必须解释的结构 |
-| 去噪后蜡化、细节忽隐忽现 | 去噪前后同帧和短连续段，实际算法/引导pass/预滤 | 调整采样与去噪组合，不以抹平纹理冒充干净 |
-| 原始帧清楚，合成/编码后变脏或断层 | 对齐原生帧与缩放、显示变换、编码各阶段，检查范围/位深/压缩 | 定位首次受损步骤再修，避免反复压制；解码成功不代表画质通过 |
+| Random fine grain; low-light regions fail to converge | Raw output, actual sample/adaptive thresholds, key and indirect light, denoising inputs/quality | Improve lighting/sampling and appropriate denoising while preserving fine edges and surface differences; do not amplify noise by adding exposure |
+| Isolated bright specks | Light-source/reflection size, light paths and caustics, actual highlights | Adjust settings for the difficult light paths. Clamping affects bright regions; do not indiscriminately remove real highlights or the topic's optical phenomenon |
+| Sandpaper-like surfaces, dirty gray appearance, identical grain on every object | Disable decorative roughness/bump/dirt one at a time for diagnosis; check scale/coordinates | Reduce unsupported texture and bump and restore the correct surface. Do not equate more samples with “premium materials” |
+| Acceptable stills, but flickering fine textures/edges in motion | Native continuous frames, texture mapping/filtering, repeated line patterns, scale, and denoising stability | Adjust visible texture frequency and appropriate filtering; check camera/object motion and the actual target size, retaining structures that must be explained |
+| Waxy appearance after denoising; details appear and disappear | Matching frames and short continuous segments before/after denoising; actual algorithm/guiding passes/prefiltering | Adjust sampling and denoising together; smoothed-away texture is not cleanliness |
+| Clear raw frames become dirty or banded after compositing/encoding | Align native frames with each scaling, display-transform, and encoding stage; check range/bit depth/compression | Locate and repair the first damaging step, avoiding repeated compression. Successful decoding does not establish picture quality |
 
-采样/去噪的可控项参考[Blender采样手册](https://docs.blender.org/manual/it/4.5/render/cycles/render_settings/sampling.html)；高光限制的取舍参考[Blender光路手册](https://docs.blender.org/manual/th/4.5/render/cycles/render_settings/light_paths.html)。样本数、曝光、噪声阈值没有适用于所有镜头的通过数字；少量技术预演参数不当作正式画质标准。所需状态须由已支持的执行参数或场景驱动实际设置，并读回真实值，不把JSON里出现的键名当作已生效。
+See the [Blender sampling manual](https://docs.blender.org/manual/it/4.5/render/cycles/render_settings/sampling.html) for controllable sampling/denoising settings, and the [Blender light-path manual](https://docs.blender.org/manual/th/4.5/render/cycles/render_settings/light_paths.html) for highlight-limiting tradeoffs. No sample count, exposure, or noise threshold is a universal pass number for every shot. Minimal technical-previs parameters are not a formal picture-quality standard. Required states must actually be set through supported execution parameters or scene drivers, with their real values read back; the presence of a JSON key does not establish that it took effect.
 
-## 把学习落实到角色与既有审查
+<a id="把学习落实到角色与既有审查"></a>
+## Apply the Methods Through Existing Roles and Reviews
 
-视觉角色交付实际颜色角色、前后景/焦点布置、光与反射来源、材质差异及当前差距；动画角色验证运动中遮挡、视差、接触、反射与材质稳定；剪辑角色保持跨镜光色与观察节奏；执行角色核实际参数、原始帧与编码链；审片角色说明当前媒体里实际认出了什么、缺陷何时出现。都沿已有设计板、动作卡、执行回执和 `qa.visual_frames.art` 记录，不新增逐集美术考试或批准链。
+The visual role delivers actual color roles, foreground/background and focus placement, light/reflection sources, material differences, and current gaps. The animation role verifies occlusion, parallax, contact, reflections, and material stability in motion. The editing role maintains cross-shot light/color consistency and observation rhythm. The execution role checks actual parameters, raw frames, and the encoding chain. The review role states what it actually recognized in the current media and when defects appeared. Record these through existing design boards, action cards, execution receipts, and `qa.visual_frames.art`; do not add a per-episode art exam or approval chain.
 
-G3使用本题实际风险场景，先看完整构图与正常速片段，再定位细节；G5检查当前完整编码的跨镜一致性。灰度稿、色板、元数据和代码测试只支持各自诊断，不证明自然观看或“惊艳”。关键对象难辨、背景抢戏、全片同底同调、雪花/闪亮点/材质游移、蜡化或压缩脏影，按原失败记录修复后重审。用户审片用可点击的本地文件链接交付，减少传输的硬要求照常执行。
+G3 uses the topic's actual risky scene: view the complete composition and normal-speed segment before locating details. G5 checks cross-shot consistency in the current full encoding. Grayscale drafts, swatches, metadata, and code tests support only their respective diagnostics; they do not demonstrate natural viewing or an “astonishing” result. If key objects are hard to distinguish, backgrounds compete, the whole film repeats one background/tone, or snow-like noise/bright specks/material drift, waxiness, or compression dirt occurs, repair under the original failure record and review again. Deliver user-review materials through clickable local file links; the hard requirement to minimize transfers remains in force.

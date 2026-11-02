@@ -7,29 +7,29 @@
     {
       "id": "causal",
       "relation_type": "causal",
-      "name": "单变量前后变化",
+      "name": "Single-variable before/after change",
       "prerequisites": [
-        "先认识对象及相关条件",
-        "说明本次唯一改变的因素"
+        "Establish the object and relevant conditions first",
+        "Identify the only factor changed in this demonstration"
       ],
       "fixed": [
-        "对象身份、取景及其它相关条件"
+        "Object identity, framing and other relevant conditions"
       ],
       "changed_or_revealed": [
-        "有科学依据的作用过程及结果"
+        "Scientifically supported operation/process and result"
       ],
       "sequence": [
-        "呈现前态",
-        "改变因素进入",
-        "展示必要中间过程",
-        "结果出现后保留观察",
-        "把过程接回原现象"
+        "Show the initial state",
+        "Introduce the changed factor",
+        "Show necessary intermediate processes",
+        "Leave observation time after the result appears",
+        "Connect the process back to the original phenomenon"
       ],
       "method": "fixed_anchor_then_state_change",
       "scientific_risks": [
-        "变化不是先于原因出现",
-        "时间压缩/慢放不代表真实速度",
-        "不捏造可见中间阶段"
+        "The change must not precede its cause",
+        "Time compression/slow motion does not represent actual speed",
+        "Do not invent visible intermediate stages"
       ],
       "shotbook_binding": [
         "subject",
@@ -52,28 +52,28 @@
     {
       "id": "spatial",
       "relation_type": "spatial",
-      "name": "参照与视点",
+      "name": "Reference frame and viewpoint",
       "prerequisites": [
-        "对象身份、参照方向及有关视点"
+        "Object identity, reference directions and relevant viewpoints"
       ],
       "fixed": [
-        "对象的世界位置或所研究空间关系"
+        "The object's world position or the spatial relationship under study"
       ],
       "changed_or_revealed": [
-        "观察位置、视角或局部取景"
+        "Observer position, angle or local framing"
       ],
       "sequence": [
-        "整体定位参照与视点",
-        "明确方向对应",
-        "只改变有关观察条件",
-        "同时保留对应线索",
-        "回到整体说明相对关系"
+        "Establish reference frame/viewpoint in the whole view",
+        "Make direction mappings explicit",
+        "Change only relevant observation conditions",
+        "Retain correspondence cues",
+        "Return to the whole to explain relative relations"
       ],
       "method": "mapped_viewpoint_change",
       "scientific_risks": [
-        "画面左右不等于对象左右",
-        "相机变化不代表对象移动",
-        "辅助线须先映射到真实实体"
+        "Screen left/right is not object left/right",
+        "Camera change does not establish object motion",
+        "Map auxiliary lines to actual entities first"
       ],
       "shotbook_binding": [
         "subject",
@@ -96,28 +96,28 @@
     {
       "id": "structure_function",
       "relation_type": "structure_function",
-      "name": "结构怎样产生功能",
+      "name": "How structure produces function",
       "prerequisites": [
-        "部件名称、连接方式与功能任务"
+        "Part names, connections and functional task"
       ],
       "fixed": [
-        "对象身份、连接点和科学拓扑"
+        "Object identity, connection points and scientific topology"
       ],
       "changed_or_revealed": [
-        "承担功能的部件状态、流路或配合"
+        "Functional part states, flow paths or interactions"
       ],
       "sequence": [
-        "从整体定位部件",
-        "放大并交代剖切/外形关系",
-        "展示连接与约束",
-        "沿连接追踪功能作用",
-        "返回整体回答作用"
+        "Locate parts in the whole",
+        "Move closer and explain cutaway/exterior correspondence",
+        "Show connections and constraints",
+        "Trace functional action through those connections",
+        "Return to the whole to answer what it does"
       ],
       "method": "connected_parts_and_constraint",
       "scientific_risks": [
-        "部件命名不等于解释功能",
-        "装饰色不代表真实材质",
-        "所省内部细节须不影响核心功能"
+        "Naming a part does not explain function",
+        "Decorative color does not establish real material",
+        "Omitted internal details must not change the core function"
       ],
       "shotbook_binding": [
         "subject",
@@ -140,28 +140,28 @@
     {
       "id": "propagation",
       "relation_type": "propagation",
-      "name": "传播载体、路径与传递",
+      "name": "Propagation carrier, path and transfer",
       "prerequisites": [
-        "传播载体、起点、路径和要传递的量或影响"
+        "Carrier, origin, path and the quantity or influence being transferred"
       ],
       "fixed": [
-        "对象身份、路径参照、有关介质与条件"
+        "Object identity, path reference, relevant medium and conditions"
       ],
       "changed_or_revealed": [
-        "沿路径传播的状态及不同位置的先后响应"
+        "Propagating states along the path and sequential responses at different positions"
       ],
       "sequence": [
-        "先定位起点、载体与路径",
-        "展示有依据的起始扰动或传递",
-        "沿路径追踪中间状态并保持同一参照",
-        "显示有关方向、延迟及接收端响应",
-        "区分载体运动与能量、信息或扰动的传播"
+        "Locate origin, carrier and path first",
+        "Show the supported initial disturbance or transfer",
+        "Trace intermediate states with the same reference",
+        "Show relevant direction, delay and receiver response",
+        "Distinguish carrier motion from energy, information or disturbance propagation"
       ],
       "method": "anchored_path_and_successive_response",
       "scientific_risks": [
-        "波前不自动代表物质沿路径飞出",
-        "画面先后、方向和延迟须有科学依据",
-        "时间压缩和示意颜色须说明其含义"
+        "A wavefront does not automatically imply matter flying along the path",
+        "Order, direction and delay require scientific support",
+        "Explain time compression and schematic colors"
       ],
       "shotbook_binding": [
         "subject",
@@ -184,28 +184,28 @@
     {
       "id": "comparison",
       "relation_type": "comparison",
-      "name": "控制条件比较",
+      "name": "Comparison under controlled conditions",
       "prerequisites": [
-        "比较对象、共同条件及要判断的差异"
+        "Compared objects, common conditions and the difference to judge"
       ],
       "fixed": [
-        "取景、尺度、测量口径及其他相关条件"
+        "Framing, scale, measurement basis and other relevant conditions"
       ],
       "changed_or_revealed": [
-        "要比较的一项或有解释依据的一组变量"
+        "One compared variable or an explainable group of variables"
       ],
       "sequence": [
-        "建立同条件的两个案例",
-        "明确哪个量不同",
-        "同时或顺序显示可对应的状态",
-        "指出差异与推断条件",
-        "回到原问题限定结论"
+        "Establish two cases under the same conditions",
+        "Identify the different quantity",
+        "Show corresponding states simultaneously or sequentially",
+        "Identify the difference and inference conditions",
+        "Return to the original question with a qualified conclusion"
       ],
       "method": "paired_controlled_cases",
       "scientific_risks": [
-        "不能同时改变多个隐含条件后归因单变量",
-        "局部差异不能推成普遍结论",
-        "同屏位置与大小不能暗示未成立比例"
+        "Do not change multiple hidden conditions and attribute the result to one variable",
+        "A local difference does not establish a universal conclusion",
+        "Same-screen positions/sizes must not imply an unsupported ratio"
       ],
       "shotbook_binding": [
         "subject",
@@ -228,28 +228,28 @@
     {
       "id": "quantitative",
       "relation_type": "quantitative",
-      "name": "量与关系",
+      "name": "Quantities and relationships",
       "prerequisites": [
-        "量的意义、单位、基准及成立条件"
+        "Meaning, units, reference and conditions of the quantities"
       ],
       "fixed": [
-        "单位、坐标基准及比较口径"
+        "Units, coordinate reference and comparison basis"
       ],
       "changed_or_revealed": [
-        "自变量及由关系确定的因变量"
+        "Independent variable and dependent variable determined by the relationship"
       ],
       "sequence": [
-        "先用可识别对象建立量",
-        "固定基准与单位",
-        "选择少量有依据的状态",
-        "把数值变化映射到实际关系",
-        "说明适用范围与非线性/比例边界"
+        "Establish quantities with recognizable objects",
+        "Fix reference and units",
+        "Select a few supported states",
+        "Map numerical change to the actual relationship",
+        "Explain applicability and nonlinear/proportional limits"
       ],
       "method": "quantity_to_visible_extent",
       "scientific_risks": [
-        "装饰大小不能冒充数量比例",
-        "无依据的精确数字不得填图",
-        "动画插值不能替代真实函数"
+        "Decorative size cannot stand in for quantitative proportion",
+        "Do not fill graphics with unsupported precise values",
+        "Animation interpolation cannot replace the actual function"
       ],
       "shotbook_binding": [
         "subject",
@@ -272,28 +272,28 @@
     {
       "id": "probability",
       "relation_type": "probability",
-      "name": "结果分布与不确定性",
+      "name": "Outcome distribution and uncertainty",
       "prerequisites": [
-        "可能结果、一次试验定义和统计口径"
+        "Possible outcomes, definition of one trial and statistical basis"
       ],
       "fixed": [
-        "试验条件、样本或模型身份"
+        "Trial conditions and sample/model identity"
       ],
       "changed_or_revealed": [
-        "结果或累计频次"
+        "Outcomes or accumulated frequencies"
       ],
       "sequence": [
-        "先建立一次可能结果",
-        "区分单次和重复",
-        "显示有来源或明确模拟的分布",
-        "区分频率与概率模型",
-        "说明样本波动与推断限度"
+        "Establish one possible outcome",
+        "Distinguish one trial from repeated trials",
+        "Show a sourced or explicitly simulated distribution",
+        "Distinguish observed frequency from the probability model",
+        "Explain sample variation and inference limits"
       ],
       "method": "outcomes_then_distribution",
       "scientific_risks": [
-        "少量样本不能保证理论比例",
-        "随机演示不是实证数据",
-        "不能只突出成功结果或把概率当确定预测"
+        "Small samples do not guarantee theoretical proportions",
+        "A random demonstration is not empirical data",
+        "Do not highlight only successes or turn probability into certainty"
       ],
       "shotbook_binding": [
         "subject",
@@ -316,28 +316,28 @@
     {
       "id": "evidence",
       "relation_type": "evidence",
-      "name": "观察支持何种结论",
+      "name": "What conclusion an observation supports",
       "prerequisites": [
-        "实际观察、待解释的问题和比较依据"
+        "Actual observation, question to explain and comparison basis"
       ],
       "fixed": [
-        "证据身份、原始范围及推断条件"
+        "Evidence identity, original scope and inference conditions"
       ],
       "changed_or_revealed": [
-        "证据层次或可支持的解释"
+        "Evidence layers or supported explanations"
       ],
       "sequence": [
-        "呈现可核查观察",
-        "标出直接看到的事实",
-        "建立事实与推论之间的依据",
-        "呈现竞争解释或限制（适用时）",
-        "给出与证据力度相符的结论"
+        "Present a verifiable observation",
+        "Identify directly observed facts",
+        "Establish the basis connecting facts to inference",
+        "Present competing explanations or limitations when applicable",
+        "Conclude in proportion to the evidence"
       ],
       "method": "observation_to_bounded_inference",
       "scientific_risks": [
-        "示意动画不能冒充观测证据",
-        "相关性不能自动证明因果",
-        "未排除的解释和不确定性不得省略"
+        "A schematic animation cannot masquerade as observational evidence",
+        "Correlation does not automatically prove causation",
+        "Retain unresolved alternatives and uncertainty"
       ],
       "shotbook_binding": [
         "subject",

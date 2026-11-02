@@ -1,52 +1,59 @@
-# 视频指示信息：精密技术标注
+<a id="视频指示信息精密技术标注"></a>
+# Video Guidance Graphics: Precision Technical Annotations
 
-## 适用范围与确认
+<a id="适用范围与确认"></a>
+## Scope and Approval
 
-本系列采用已确认的成熟、精密、克制的标注语言：观众先看见对象和变化，再读懂必要说明。适用于科普、工程科学、工业生产与高端制造视频中的对象标签、定位引线、方向箭头、范围强调和尺寸标示。它不改变主体媒介或科学本色；字幕、章节标题、封面分别沿各自规范设计。
+This series uses the approved mature, precise, restrained annotation language: viewers see the object and its change first, then understand the necessary explanation. It applies to object labels, locating leader lines, directional arrows, area emphasis, and dimension indications in science, engineering science, industrial production, and advanced manufacturing videos. It does not change the primary medium or scientific colors; captions, chapter headings, and covers follow their own design standards.
 
-已确认的风格可复用。改变整套风格或超出确认范围时先做具体样稿；续做旧项目先按[唯一全局入口](global-skill-installation.md)核差异并记录迁移，历史锁不覆盖当前规则，不自动重导已完成成片。
+The approved style may be reused. Make a concrete sample before changing the entire style or going beyond its approved scope. When resuming an older project, first check differences against the [unique global entry point](global-skill-installation.md) and record the migration. Historical locks do not override current rules, and completed films are not automatically exported again.
 
-3D画面只允许必要单字母定位/变量标记，按[单字母与空间规则](spatial-typography.md)制作；中文、英文单词/缩写、数字/单位及解释句全部禁止，3D化不豁免，普通同步字幕保持2D。下述中文短标签、量值文字和文字底衬只适用于其他媒介，不能作为3D例外。责任分工：本页负责标注设计及箭头构造；[视觉系统](visual-system.md#文字居中与运动)负责通用文字布局，[质量验收](quality-acceptance.md)负责实际观看与阶段结论。数值只维护在[横版标注参数](../assets/style/precision-annotations.tokens.json)，[矢量示例](../assets/style/leader-and-arrow.svg)供编辑和适配，不代替实际输出审查。历史 `bright-nature.tokens.json` 的竖版标签、圆角底板和箭头值不覆盖本标准，也不因此改动字幕或封面参数。
+3D picture permits only necessary single-letter locating/variable markers, made under the [single-letter and spatial rules](spatial-typography.md). Chinese text, English words/abbreviations, numbers/units, and explanatory sentences are all prohibited; making them 3D grants no exemption. Ordinary synchronized captions remain 2D. The short Chinese labels, value text, and text backings below apply only to other media and cannot serve as 3D exceptions. Responsibilities: this page owns annotation design and arrow construction; the [visual system](visual-system.md#text-centering-and-motion) owns general text layout, and [quality acceptance](quality-acceptance.md) owns actual viewing and stage conclusions. Numeric values are maintained only in the [landscape annotation parameters](../assets/style/precision-annotations.tokens.json). The [vector example](../assets/style/leader-and-arrow.svg) is for editing and adaptation and does not replace review of actual output. The historical portrait labels, rounded backplates, and arrow values in `bright-nature.tokens.json` do not override this standard, nor does this standard thereby change caption or cover parameters.
 
-## 图形与信息层级
+<a id="图形与信息层级"></a>
+## Graphic and Information Hierarchy
 
-| 对象 | 制作标准 |
+| Element | Production standard |
 | --- | --- |
-| 对象标签 | 统一无衬线中文字体，优先已有、合法可用的思源黑体/Noto Sans CJK SC；系统字体可作有记录的替代，不假称像素一致。常规或中等字重，避免极细字。文字用高对比中性色，短语直述必要对象/状态，保留科学术语；不逐条染色、堆段落或以缩小字号塞字。 |
-| 定位引线 | 单笔画、统一粗细，默认直线或一个简洁折点，标签侧的一段平稳。目标端准确落在被指认的部位，用小实心点或必要的小空心环；细薄结构可贴边，不以大点遮住它。无方向含义不加箭头。线不交叉、不穿字、不沿途碰到其他可能被误认的对象；仍含糊就重排、放大或分时展示。 |
-| 方向箭头 | 只表达已核实的运动、力、流动或因果方向，不混同定位、时间先后和物理流向。头杆连续、尖端明确，按下节构造；方向、曲率和路径符合所讲关系，不为构图方便反向。 |
-| 范围强调 | 沿真实目标边界作轻量色块、局部轮廓或短括号，保留材质和关键细节。薄层用边界或必要放大解释，不为标注把它画厚。矩形框仅在目标确为矩形区域且确有定位用途时考虑；避免无关大红框、闪烁和发光光晕。 |
-| 尺寸与量值 | 尺寸线/括号与定位引线分开。数字、单位、比例尺有依据，且与画面尺度处理一致；不添装饰刻度、虚构参数或貌似精密的数字。 |
-| 色彩与背景 | 浅景深字线、暗景近白字线；少量强调色服务当前焦点或明确变量，同一变量跨镜保持身份，不只靠颜色区别。颜色须在实际局部背景可辨，不能仅按全片明暗选色。先选留白、重排或用紧贴文字的克制中性底片；默认无文字/引线描边，不靠厚描边、重阴影、玻璃卡片或霓虹补救。深底、青色或金色均不是高级感的必要条件。 |
-| 层级与密度 | 主体结构与过程优先，当前观察重点其次，标签辅助。通常集中一个观察任务，必要比较可保留双方；复杂信息分时展开，不为固定数量删掉必要科学信息，也不靠多标签掩盖主体弱小。文字必要性仍做既有删除测试。 |
+| Object labels | Use a consistent sans-serif Chinese font, preferably an existing, legally available Source Han Sans/Noto Sans CJK SC. A system font may be a documented substitute; do not claim pixel equivalence. Use regular or medium weight, avoiding extremely thin lettering. Use high-contrast neutral text colors. State the necessary object/state directly in short phrases and retain scientific terminology. Do not color every label differently, stack paragraphs, or shrink type to fit excess text. |
+| Locating leader lines | Use a single stroke of consistent thickness, normally straight or with one simple bend, with a steady segment beside the label. Place the target end precisely on the identified part, using a small solid dot or, when necessary, a small open ring. A thin structure may be indicated at its edge; do not cover it with a large dot. Add no arrowhead when no direction is intended. Lines must not cross, pass through text, or touch other objects along their path that could be mistaken for the target. If ambiguity remains, rearrange, enlarge, or show the information at different times. |
+| Directional arrows | Express only verified motion, force, flow, or causal direction. Do not conflate locating, temporal order, and physical flow. Keep the head and shaft continuous and the tip distinct, using the construction in the next section. Direction, curvature, and path must match the relationship being explained; do not reverse them for compositional convenience. |
+| Area emphasis | Use a restrained color area, local outline, or short bracket following the actual target boundary, retaining material appearance and key detail. Explain thin layers through their boundaries or necessary magnification; do not thicken them for the annotation. Consider a rectangular box only when the target really is a rectangular region and locating it has a real purpose. Avoid unrelated large red boxes, flashing, and luminous halos. |
+| Dimensions and values | Keep dimension lines/brackets distinct from locating leader lines. Numbers, units, and scale bars require a basis and must agree with any treatment of image scale. Do not add decorative ticks, invented parameters, or apparently precise numbers. |
+| Color and background | Use dark text/lines on light scenes and near-white text/lines on dark scenes. A small amount of accent color serves the current focus or an explicit variable. Preserve the same variable's identity across shots and do not distinguish variables by color alone. Colors must be distinguishable against the actual local background; do not select them solely from the film's overall light/dark appearance. First choose open space, rearrange, or use a restrained neutral backing fitted closely to the text. Text/leader-line outlines are off by default. Do not compensate with thick strokes, heavy shadows, glass cards, or neon. A dark background, cyan, or gold is not required for a premium appearance. |
+| Hierarchy and density | Prioritize the subject's structure and process, then the current observation target; labels assist. Usually concentrate on one observation task, retaining both sides when comparison requires it. Unfold complex information over time. Do not remove necessary scientific information to meet a fixed count, or use numerous labels to conceal an undersized subject. Apply the existing deletion test to text necessity. |
 
-## 箭头尖端与头杆连接
+<a id="箭头尖端与头杆连接"></a>
+## Arrow Tips and Head–Shaft Joins
 
-最前端由唯一的头部尖点决定；不能靠绘制顺序遮盖穿出的杆端。
+The foremost end is defined by the head's single tip. Draw order must not be used to conceal a protruding shaft.
 
-- **默认直箭头用一个无描边的闭合填充轮廓**，将箭杆两侧、箭头两翼与尖点连成一体。[示例](../assets/style/leader-and-arrow.svg)中的 `direction-arrow-outline` 使用此法，没有一根另画到尖点的中心线，也没有圆角头部描边。
-- 必须分开绘制头杆时，将箭杆截短到头部底面，接合端使用平头；消除接缝需要的极小重叠只能留在头部实心内部。禁止把带圆头/方头线帽的杆画到尖点后再叠三角；那会使杆穿出或将尖端变平。不要给头部套会钝化尖点的粗描边。
-- 曲线箭头的头部沿末端真实切线定向，杆在头部底面接合；短路径容纳不下头部时，调整路径或头部尺寸，不能反折、穿出。定位引线的圆端与箭头接合端分别处理，不能共用一个全局 `round` 设置。
-- 使用 SVG marker 时明确 `refX/refY`、坐标单位、视口、裁切和杆终点位置，按真实变换检查；使用成熟组件同样不豁免。缩放、旋转、遮罩、透明合成、动画极值及编码后仍须尖端清楚、连接无缝、方向无歧义。
-- 太小导致尖端不可辨时，调整尺寸或构图后重新导出；不把局部放大、几何测试成功或原始 SVG 正确当作最终观看尺度已通过。
+- **The default straight arrow uses one closed, filled outline with no stroke**, joining the shaft's two sides, the head's two wings, and its tip into one shape. The example's [vector construction](../assets/style/leader-and-arrow.svg), `direction-arrow-outline`, uses this method: no separate centerline extends to the tip, and no rounded stroke outlines the head.
+- When the head and shaft must be drawn separately, shorten the shaft to the head's base plane and use a butt cap at the join. The tiny overlap needed to eliminate a seam may lie only within the solid interior of the head. Do not draw a round- or square-capped shaft to the tip and then overlay a triangle: the shaft can protrude or flatten the tip. Do not add a thick head outline that blunts the point.
+- Orient a curved arrow's head along the path's actual terminal tangent and join the shaft at the head's base plane. If a short path cannot accommodate the head, adjust the path or head size; do not fold it backward or let the shaft protrude. Handle the round end of a locating leader line and an arrow's join end separately; they cannot share one global `round` setting.
+- When using an SVG marker, specify `refX/refY`, coordinate units, viewport, clipping, and shaft endpoint, and inspect the actual transformation. Established components receive no exemption. After scaling, rotation, masking, alpha compositing, animation extremes, and encoding, the tip must remain distinct, the join seamless, and the direction unambiguous.
+- If the tip is too small to distinguish, adjust its size or the composition and export again. A magnified detail, successful geometry test, or correct original SVG does not establish acceptance at the final viewing scale.
 
-## 参数、尺度与可读性
+<a id="参数尺度与可读性"></a>
+## Parameters, Scale, and Readability
 
-读取[横版标注参数](../assets/style/precision-annotations.tokens.json)作为可校准起点，固定本次字重、线宽、间距与色彩角色。屏幕排版的字重、字号与线宽只读取参数文件，不在正文另设数值；3D空间字的世界尺寸、厚度和朝向以实际相机及最终投影可读性确定，不把像素值直接用作场景单位。相同比例4K按比例放大屏幕布局，其他画幅重新布局，不能按宽高互换旧坐标。
+Read the [landscape annotation parameters](../assets/style/precision-annotations.tokens.json) as a starting point for calibration, and fix the current weight, line width, spacing, and color roles. Read screen-layout weights, font sizes, and line widths only from the parameter file; do not introduce another set of numbers in this text. Determine the world size, thickness, and orientation of 3D spatial letters from the actual camera and final projected readability; do not use pixel values directly as scene units. Scale screen layouts proportionally for 4K at the same aspect ratio. Redesign other aspect ratios rather than swapping old width/height coordinates.
 
-保留实际字体和可编辑字层、线层；测量字形边界后布置线端间距，不按字数猜。次级文字仅在必要且可读时使用，不把关键说明降为小字。科学本色与实际局部对比优先于示例色号；适配不是逐镜任意换风格。
+Retain the actual font and editable text and line layers. Measure glyph bounds before placing line-end spacing; do not guess from character counts. Use secondary text only when necessary and readable; do not demote a key explanation to tiny type. Scientific colors and actual local contrast take precedence over example hex codes. Adaptation does not mean changing the style arbitrarily in every shot.
 
-除原尺寸外，从360px宽完整帧检查小屏，并按实际发布场景校准。读不清时先减字、重排、分时或放大关系，再调字号和线宽；不得换更大的预览代验。最终编码中核字、线、点和尖端仍可辨，实际动态底的文字对比按视觉系统检查。
+In addition to native size, inspect a complete frame at 360px width for small-screen readability, calibrated to the actual publication context. If it is unreadable, first reduce text, rearrange, separate information in time, or enlarge the relationship, then adjust font size and line width. A larger preview cannot substitute for this check. In the final encoding, verify that text, lines, dots, and tips remain distinguishable; check text contrast over the actual moving background under the visual system.
 
-## 动态与对象绑定
+<a id="动态与对象绑定"></a>
+## Motion and Object Binding
 
-1. 显示时段按[正文辅助文字的使用与停留](visual-system.md#正文辅助文字的使用与停留)安排：先让目标可认，再提供完整稳定的阅读与观察区间。显现/退出参数只管过渡，不计入可读停留，也不规定镜长。
-2. 定位线和文字以轻量同步显隐为主；绘线动画不能被误读为物理流动。避免装饰弹跳、反复呼吸、扫光、打字机、无缘由旋转和追逐粒子。标注动效不能替代应当展示的工艺过程。
-3. 目标端绑定真实对象/特征点。3D仅允许的必要单字母标记使用真实空间字形与合理世界/对象锚点，随相机保持正确透视、深度、遮挡和受光；可面向相机，但不能变成固定屏幕贴片。实拍/生成画面的2D标注使用已核跟踪，标签可保持稳定屏幕区域、让引线吸收变化并用迟滞避让。任何模式均不能把目标端缓动到偏离对象，不能以屏幕稳定牺牲实际绑定。
-4. 目标遮挡、出画、切镜或身份变化时及时隐藏、重布或重绑。若因此不足以读完，删减说明或重排镜头，不能延挂失去目标的标签，也不能以正确隐藏为由接受闪现。不让线穿过前景仍假称目标可见，不用延长引线掩盖丢失跟踪；明确的穿透示意按相应科学边界处理。箭头随方向变化时，头杆使用同一几何状态，不能分别插值后错位。
+1. Set display intervals under [body auxiliary text: use and hold](visual-system.md#body-auxiliary-text-use-and-hold): make the target recognizable first, then provide a complete, stable reading and observation interval. Reveal/exit parameters govern transitions only; they do not count as readable hold time or prescribe shot duration.
+2. Prefer restrained, synchronized appearance/disappearance of locating lines and text. A line-drawing animation must not be mistaken for physical flow. Avoid decorative bouncing, repeated breathing/pulsing, light sweeps, typewriter effects, unmotivated rotation, and chasing particles. Annotation effects cannot replace the process that must be shown.
+3. Bind the target end to the actual object/feature point. In 3D, the only permitted necessary single-letter markers use real spatial glyphs and reasonable world/object anchors, preserving correct perspective, depth, occlusion, and lighting as the camera moves. They may face the camera but cannot become fixed screen stickers. For 2D annotations over live-action/generated picture, use verified tracking. A label may stay in a stable screen region while its leader line absorbs changes and hysteresis handles avoidance. In every mode, do not ease the target end away from its object or sacrifice actual binding for screen stability.
+4. Promptly hide, rearrange, or rebind when a target becomes occluded, leaves frame, a cut occurs, or its identity changes. If this leaves too little time to read, shorten the explanation or rework the shot. Do not leave a targetless label hanging, or accept a flash merely because it hides correctly. Do not let a line pass through foreground while claiming the target is visible, or lengthen a leader line to conceal lost tracking. Explicit see-through diagrams follow the relevant scientific boundaries. When an arrow's direction changes, its head and shaft must use the same geometry state; separate interpolation must not misalign them.
 
-## 实审与记录
+<a id="实审与记录"></a>
+## Actual Review and Records
 
-查看实际编码成片中本次出现的浅景、暗景、复杂底、移动和遮挡等情况；原尺寸、小屏和正常速度连续播放分别看。没有出现的情况不造证据，不额外制造固定测试镜头。按现有[美术记录](../assets/art-direction-template.md#指示信息与动态绑定)与动作卡记录对象/锚点、必要性、文字与时段、符号语义、参数版本及实际观察，沿已有图内文字与视觉QA引用，不新增一套批准表。
+Inspect the light scenes, dark scenes, complex backgrounds, movement, occlusion, and other conditions that actually occur in the current encoded film. View at native size, at small-screen size, and in continuous normal-speed playback. Do not fabricate evidence for absent conditions or create extra fixed test shots. Use the existing [art-direction record](../assets/art-direction-template.md#annotations-and-dynamic-binding) and action cards to record objects/anchors, necessity, text and intervals, symbol semantics, parameter version, and actual observations. Reference the existing in-picture text and visual QA; do not add another approval form.
 
-仅3D视频执行单字母强制项：任何非字母说明、拆字拼词、辅助字退化成2D贴片或空间/材质关系失真，必须退回删除或修复；必要性、物体字和科学用途不豁免。各种媒介原有的误指、穿字、遮关键结构、钝尖/穿杆/断接、不可辨、阅读时长不足、抖闪或方向错误，仍修后重看受影响版本。没有连续观看能力则动态项保持未验；局部修复检查受影响范围，新整片完整看听。
+The single-letter requirement is mandatory only for 3D videos: any non-letter explanation, letters split out to spell words, auxiliary lettering reduced to a 2D sticker, or distorted spatial/material relationship must be returned for removal or repair. Necessity, lettering made as an object, and scientific use grant no exemption. Across all media, existing failures such as misidentification, lines through text, obstruction of key structures, blunt tips/protruding shafts/broken joins, unreadability, insufficient reading time, jitter/flicker, or wrong direction still require repair and review of the affected version. Without continuous-viewing capability, motion items remain unverified. Check the affected scope for local repairs; watch and listen to a new full film in its entirety.

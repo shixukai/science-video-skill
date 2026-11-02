@@ -1,58 +1,64 @@
-# 中文解说：确认千问调用位置与实际听验
+<a id="中文解说确认千问调用位置与实际听验"></a>
+# Mandarin narration: confirm the Qwen invocation location and actually listen
 
-声音方案沿[系列配置](../config/series-profile.json)：官方 Qwen CustomVoice、Serena、Chinese 与项目口语指令。Reuse a matching accepted full track only within its still-valid review scope. Acceptance of speaking rate does not approve timbre, pitch continuity or the whole mix; current negative feedback reopens the affected dimension and version.
+The voice setup follows the [series profile](../config/series-profile.json): official Qwen CustomVoice, Serena, Chinese and the project's conversational instructions. Reuse a matching accepted full track only within its still-valid review scope. Acceptance of speaking rate does not approve timbre, pitch continuity or the whole mix; current negative feedback reopens the affected dimension and version.
 
-## 调用位置与确认
+<a id="调用位置与确认"></a>
+## Invocation location and confirmation
 
-实际合成前从当前/前文请求及已确认工程确定千问调用位置，已有指定直接沿用并留引用；仅发现目录或缓存不算指定。确实缺位置才询问，等待时继续稿件/分镜，不先合成、建环境或下权重。整理Skill与纸面策划无需询问位置。
+Before actual synthesis, determine the Qwen invocation location from the current/prior requests and confirmed project. Reuse an existing designation directly and retain its reference; merely discovering a directory or cache does not count as designation. Ask only if the location is actually missing. Continue script/storyboard work while waiting, without synthesizing, creating an environment or downloading weights first. Skill maintenance and paper planning do not require asking for the location.
 
-优先使用已确认工程的现有入口、运行环境、权重和参数，或已确认服务的接口。通用Skill不写入固定工程路径、Python路径、缓存路径或服务地址；这些位置留在当期私有记录。自带 [本地适配器](../scripts/synthesize_voice.py) 仅在明确选择它时使用，并非所有千问调用的必经入口。[官方使用说明](https://github.com/QwenLM/Qwen3-TTS#custom-voice-generate) 提供本地 CustomVoice 接口及 Serena 音色；适配器用官方参数合并方法记录有效参数。
+Prefer the confirmed project's existing entrypoint, runtime, weights and parameters, or the confirmed service's interface. The general Skill does not hard-code project paths, Python paths, cache paths or service addresses; keep them in the current private records. Use the bundled [local adapter](../scripts/synthesize_voice.py) only when explicitly selected; it is not a required entry for every Qwen call. The [official usage guide](https://github.com/QwenLM/Qwen3-TTS#custom-voice-generate) provides the local CustomVoice interface and Serena voice. The adapter records effective parameters using the official parameter-merging method.
 
-当明确选择本地适配器时，系列配置的 audio.local_adapter_example 提供可调整的加载起点；已有工程沿用自己的已验证参数。该示例固定官方模型提交 `0c0e3051f131929182e2c023b9537f8b1c68adfe`，来源为 [官方模型 API](https://huggingface.co/api/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice)，不同修订必须按实际记录；本地适配器核完整提交和文件清单哈希。服务或既有工程未暴露完整权重修订时，在 model_version_reference 写真实模型标识、版本证据及未提供的范围，不发明提交或清单，也不因此另下权重。
+When the local adapter is explicitly selected, audio.local_adapter_example in the series profile provides an adjustable loading starting point; an existing project retains its own validated parameters. The example pins official model commit `0c0e3051f131929182e2c023b9537f8b1c68adfe`, sourced from the [official model API](https://huggingface.co/api/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice). Record different revisions as actually used. The local adapter checks the full commit and file-manifest hash. If a service or existing project does not expose a full weight revision, record the actual model identifier, version evidence and unavailable scope in model_version_reference. Do not invent a commit/manifest or download weights elsewhere because of the missing information.
 
-## 整期合成前先核稿件
+<a id="整期合成前先核稿件"></a>
+## Check the script before full-episode synthesis
 
-完整旁白合成采用主代理已整合的当前全稿，按[整片编导](viewer-retention-design.md#direct-the-whole-film-before-polishing-its-parts)完成既有G1纸面内审。声音作者先通读相关简报和全稿，核观众能否知道本期在问什么、局部案例为何出现、开场承诺是否与结论一致；明显失联先退回稿件并给出具体修订，不能先合成长音轨再让用户发现。获准可起草修稿，由主代理负责全片整合；不把声音岗位变成默认编导。
+Full narration synthesis uses the current complete script integrated by the parent, with the existing G1 paper review completed under [whole-film direction](viewer-retention-design.md#direct-the-whole-film-before-polishing-its-parts). The voice author first reads the relevant brief and complete script, checking whether viewers can identify this episode's question, why the local case appears, and whether the opening promise matches the conclusion. Return obvious disconnections to the script with concrete revisions before synthesizing a long track for the user to discover the problem. An authorized author may draft revisions; the parent owns whole-film integration. The voice role does not become the default director.
 
-音色/语速样本认可只支持对应声音方向，不等于认可全稿或全片；独立的试听与技术可行性测试不必等待全稿完成。已有稿件/证据可引用，叙事通过不增加用户审批；纸面内审不能冒充听验，真实声音及完整声画仍按后续阶段实审。稿件修订后只更新受影响音轨、字幕和动作时序，不重做无关资产。
+Approval of a timbre/speaking-rate sample supports only the corresponding voice direction, not the complete script or film. Independent listening samples and technical feasibility tests need not wait for the full script. Existing scripts/evidence may be referenced, and narrative approval adds no user approval stage. A paper review cannot masquerade as listening; actual voice and full audiovisual media still receive actual review at subsequent stages. After script revisions, update only affected audio, captions and action timing, without recreating unrelated assets.
 
-## 本期语速先试听
+<a id="本期语速先试听"></a>
+## Listen to this episode's speaking rate first
 
 Treat `audio.instruct` in the [series profile](../config/series-profile.json) as the default delivery direction. Apply it through the confirmed project's supported instruction field and verify the actual request/record, retaining its validated model and runtime. Before expanding, compare a continuous sample covering the opening, difficult wording and adjacent semantic sections against an applicable accepted reference when available; otherwise use the first actually reviewed continuous sample as this episode's comparison anchor. Compare speaker timbre, natural register, vocal effort, pace and phrase endings. Aim for clear onsets, concise endings and compact phrasing without rushed words or empty waits. Preserve Mandarin lexical tones and meaningful emphasis; consistency does not mean a fixed pitch. Reuse valid evidence without adding another user-approval step.
 
 Plan emphasis around a question, contrast, causal turn and result within the same continuous voice. Keep speaker identity and natural register stable while varying meaningful stress, phrase length and cadence; do not generate a different voice/style per shot or pitch-shift phrases for excitement. At a substantial topic handoff, let the completed sentence and current visual result settle before the next idea. A roughly one-second breath can be an initial edit trial, adjusted to the actual speech and observation task, never a fixed silence quota. Keep purposeful pauses and remove empty waits. A restrained transition sound may support that handoff when it has a clear role; it must not mask speech or become a cue on every cut. Record actual edits and realign picture/captions through the existing source chain and listening review.
 
-先标问题词句及实际时码，再按原因修复：
+First mark the problematic wording and actual timecodes, then repair by cause:
 
-| 实听问题 | 先改什么 | 修后怎么查 |
+| Problem actually heard | What to change first | How to check the repair |
 | --- | --- | --- |
-| 长句难跟、术语连续堆积 | 改写句式、拆成短句，保留科学含义 | 不看字幕听完整段，核意思和重音 |
+| Hard-to-follow long sentences or accumulated terminology | Rewrite sentence structure and split into shorter sentences while preserving scientific meaning | Listen to the complete section without reading captions; check meaning and emphasis |
 | Drawn-out endings, word-by-word delivery or empty waits | Locate delay in the raw voice or edit first. Remove unjustified edit-added gaps or correct processing; for sluggish source delivery, shorten overloaded clauses and revise instructions/semantic pauses before retaking the complete unit. Preserve necessary observation time; no universal speed multiplier or blanket silence removal | Listen at normal speed for decisive starts and endings, intelligible terms and unhurried comprehension |
-| 错词、漏词或断句改义 | 按下节补录包含必要上下文的语义段 | 对稿核词，连听替换段前后 |
+| Incorrect/missing words or phrasing that changes meaning | Rerecord a semantic section with necessary context under the next section's method | Check words against the script and listen continuously across both sides of the replacement |
 | Timbre/register changes, or every section restarts like an introduction | Compare with the same comparison anchor; inspect actual text, voice conditioning supported by the backend, effective instructions and processing. Retake a complete contextual unit; widespread drift calls for rebuilding the affected continuous chapter/track | Listen to the anchor, neighboring units and their join. Matching speaker names, seeds or parameters is not a listening pass |
 | Only level changes while voice character remains consistent | Adjust measured gain/loudness on the clean source, keeping dynamics and headroom | Recheck the join and full mix; loudness matching does not repair timbre, pitch or articulation |
 
-声音变化后重对齐字幕和关键动作。缺实际听验能力时保持未验，继续独立工作，不把未验长音轨标合格。
+Realign captions and key actions after voice changes. If actual listening capability is missing, keep the item unreviewed and continue independent work. Do not mark an unheard long track qualified.
 
-## 连续讲述与合成单元
+<a id="连续讲述与合成单元"></a>
+## Continuous narration and synthesis units
 
-以下方法适用于已确认工程、服务和可选适配器。同一期默认用整期连续讲述稿生成主音轨，再依据实际语义和停顿排镜头；切镜、字幕换行或分镜表中的一行不构成独立合成单元。稿件中的开场、因果推进与结尾属于一次完整讲述，全局风格指令不按每次调用重新要求“第一句”开场语气，重音随当前语义变化。
+The following method applies to the confirmed project, service and optional adapter. Within an episode, default to generating the master track from the full continuous narration script, then arrange shots by its actual meaning and pauses. A cut, caption line break or storyboard row is not an independent synthesis unit. The opening, causal progression and ending belong to one complete narration. Global style instructions must not restart a first-sentence opening delivery on every call; emphasis follows the current meaning.
 
-生成前核当前生效指令，删改会让每次调用重启开场或提前收尾的要求，记录实际变动；认可音轨仍匹配稿件时不因指令文本更新重生成。
+Check the instructions actually in effect before generation. Remove or revise requirements that restart the introduction or finish prematurely on every call, recording actual changes. Do not regenerate an accepted track that still matches the script merely because instruction text changed.
 
-初次生成仅在整稿遇到已核实的接口长度限制或实际生成稳定性问题时按完整语义段拆分，在当期记录原因、段落顺序和各段生成记录。边界落在完整意思及自然停顿处，不在因果连接、指代或一句话中间截断。同一期各段沿用已确认的模型版本证据、音色、语言、风格指令、运行配置和可取得的有效生成参数；未暴露的参数如实说明，不逐镜另拟风格或临时调参。已采用的 seed 策略一并记录，相同 seed 或参数不能保证听感一致。先生成并连听相邻语义段，确认接续方式可用后再扩展；不能根据单段样本推定整期连贯。
+On initial generation, split only when the full script encounters a verified interface-length limit or actual generation-stability problem. Split at complete semantic sections, recording the reason, section order and each generation record in the episode. Boundaries fall at complete meanings and natural pauses, never inside a causal connection, reference or sentence. Sections in the same episode retain confirmed model-version evidence, voice, language, style instructions, runtime configuration and obtainable effective generation parameters. Truthfully state unexposed parameters; do not invent a style for each shot or improvise parameter changes. Record the seed strategy actually adopted; identical seeds or parameters cannot guarantee perceptual consistency. First generate and continuously listen to adjacent semantic sections, then expand after confirming that their connection works. One isolated sample cannot establish whole-episode continuity.
 
-局部错词或语气问题先定位到实际音轨。需要补录时，以包含问题及必要前后文的完整语义段重新生成，优先替换完整语义段；实际需要裁接时，在自然停顿处选点并连听前后接缝，不把孤立词句直接贴回。Verify what text or supported voice conditioning actually reached the model. `context_before/context_after` notes alone are not synthesis context, and an interface must not be credited with cross-request voice memory it does not provide. If extra context is generated and then cropped, record the real inputs and edits through a supported source chain; do not label cropped output as an untouched full segment.沿用已有认可且仍匹配的部分，按 [运行记录与音轨绑定](#运行记录与音轨绑定) 保存新版本及实际处理步骤，再重对齐受影响的声画与字幕。
+Locate local word or delivery problems in the actual track first. For retakes, regenerate a complete semantic section containing the problem and necessary preceding/following context, preferably replacing the whole section. If cutting is actually necessary, choose natural pauses and continuously listen across both joins; do not paste isolated words/sentences back directly. Verify what text or supported voice conditioning actually reached the model. `context_before/context_after` notes alone are not synthesis context, and an interface must not be credited with cross-request voice memory it does not provide. If extra context is generated and then cropped, record the real inputs and edits through a supported source chain; do not label cropped output as an untouched full segment. Reuse already accepted portions that still match, preserve the new version and actual processing under [run records and audio binding](#run-records-and-audio-binding), then realign affected picture, audio and captions.
 
-## 可选本地适配器
+<a id="可选本地适配器"></a>
+## Optional local adapter
 
-仅在已确认本地工程且明确选用本适配器时调用；已有工程入口优先。核现有环境能否加载官方接口，新增环境、依赖或权重须有对应指示。适配器在可清理工作目录初始化/推理，结束恢复cwd。
+Invoke this adapter only for a confirmed local project when it was explicitly selected; prefer the existing project entrypoint. Check whether the existing environment can load the official interface. New environments, dependencies or weights require corresponding instructions. The adapter initializes/infers in a cleanable working directory and restores cwd afterward.
 
-适配器需要兼容的 `qwen-tts`、soundfile及huggingface_hub，版本按实际环境核实并记录；官方 [包定义](https://github.com/QwenLM/Qwen3-TTS/blob/main/pyproject.toml) 可作依赖依据。
+The adapter needs compatible `qwen-tts`, soundfile and huggingface_hub. Verify and record versions in the actual environment; the official [package definition](https://github.com/QwenLM/Qwen3-TTS/blob/main/pyproject.toml) may provide a dependency basis.
 
-按 [连续讲述与合成单元](#连续讲述与合成单元) 准备私有 UTF-8 稿件 `script-v1.txt`，用新的输出文件名运行。适配器将输入原文一次传给模型，不隐式删改、逐句或逐段拆分；确需分段时由制作端先确定语义边界并保留各次实际记录。
+Prepare a private UTF-8 script `script-v1.txt` under [continuous narration and synthesis units](#continuous-narration-and-synthesis-units), and run with new output filenames. The adapter passes the original input text to the model once, without implicit deletion, revision or sentence/paragraph splitting. If segmentation is genuinely required, production first determines semantic boundaries and preserves each actual run record.
 
-以下变量均由本次确认的实际工程提供，不是默认位置；命令从Skill目录运行。
+The variables below all come from the actual project confirmed for this task and are not default locations. Run the command from the Skill directory.
 
 ```sh
 "${QWEN_PYTHON}" scripts/synthesize_voice.py \
@@ -64,67 +70,72 @@ Plan emphasis around a question, contrast, causal turn and result within the sam
   --record "${QWEN_GENERATION_RECORD}"
 ```
 
-本地适配器默认离线读取显式指定且已存在的模型缓存；缺模型时明确失败。只有本次指示覆盖权重下载时，才使用 --allow-model-download，从官方仓库下载选定修订到已确认缓存。--execution-reference、--project-dir、--cache-dir 均必填，缺确认引用或路径时在加载运行库、创建输出目录前失败。依赖安装、模型下载与实际调用分别按当前指示执行；脚本不会覆盖已有WAV或记录，也不会切换工程、缓存、设备或服务来重试。
+The local adapter defaults to offline access to an explicitly specified existing model cache and fails explicitly if the model is missing. Use --allow-model-download only when the current instructions cover weight downloads; it downloads the selected revision from the official repository into the confirmed cache. --execution-reference, --project-dir and --cache-dir are all required. Missing confirmation references or paths fail before loading the runtime or creating the output directory. Dependency installation, model downloads and actual invocation each follow current instructions. The script does not overwrite an existing WAV or record, or switch project, cache, device or service to retry.
 
-输出是模型原生采样率的单声道 FLOAT WAV，保留源波形，不自动变速、变调、归一化或转 MP3。`peak_sample` 超出常规满幅时先测量和听验，再决定处理。返回空、全静默或含非有限样本的波形会失败；接口返回及文件写成只支持“已生成”，`listening` 始终保持待审。
+Output is a mono FLOAT WAV at the model's native sample rate. Preserve the source waveform without automatic speed/pitch changes, normalization or MP3 conversion. If `peak_sample` exceeds conventional full scale, measure and listen before deciding processing. Empty, fully silent or nonfinite-sample waveforms fail. An interface response and written file establish only generation; `listening` always remains pending review.
 
-## 运行记录与音轨绑定
+<a id="运行记录与音轨绑定"></a>
+## Run records and audio binding
 
-私有生成记录保存真实后端、供应方、模型标识、运行参数、稿件及输出哈希，并用 execution 记录 status=confirmed、mode=local_project/service、location 与 confirmation_reference。本地工程另记实际Python、模型位置和可得的修订/清单；服务另记接口与实际响应版本证据，不含凭据。完整权重修订无法取得时保存真实 model_version_reference 说明。成功状态为 generated，不是声音验收通过；失败不生成成功记录，也不擅自换调用位置。
+Private generation records preserve the actual backend, provider, model identifier, runtime parameters, script/output hashes, and execution fields status=confirmed, mode=local_project/service, location and confirmation_reference. A local project also records actual Python, model location and available revision/manifest. A service also records its interface and actual response-version evidence without credentials. If the full weight revision is unavailable, preserve a truthful model_version_reference explanation. Success status is generated, not voice acceptance. Failure must not produce a success record or trigger an unrequested invocation-location change.
 
-当期 narration.execution 保存已确认的调用方式、位置和确认来源；生成记录中的 execution 四个共同字段须逐字匹配。单次整稿生成以 narration.generation_record={file,sha256} 绑定实际记录，config_reference 定位同次运行；input.sha256 对应 narration.script_sha256，未后处理时 output.sha256 对应 narration.audio_sha256。必要分段使用下述有序多源清单，不伪造整稿单次生成记录。exact_model_revision_reference 只引用真正取得的版本证据。音轨仍由 narration.asset_id 解析对应 assets[].id，不取数组首项，不把配置当音频。
+The current narration.execution preserves the confirmed invocation method, location and confirmation source. Its four shared execution fields must match the generation record verbatim. For a single full-script generation, narration.generation_record={file,sha256} binds the actual record and config_reference locates that same run. input.sha256 matches narration.script_sha256; without postprocessing, output.sha256 matches narration.audio_sha256. Necessary segmentation uses the ordered multisource manifest below rather than a fabricated single full-script generation record. exact_model_revision_reference references only version evidence actually obtained. narration.asset_id still resolves the track to the corresponding assets[].id; do not take the first array item or treat configuration as audio.
 
-裁剪、重排、转码、响度处理、拼接或变速均另建音轨版本与 `narration.postprocess_record={file,sha256}`。单源后处理记录采用 `schema_version=1`、`status=processed`，`source={file,sha256}` 对应合成记录的输出，`output={file,sha256}` 对应当前音轨；`steps` 记录实际工具、版本与执行参数。多源采用下述 `sources` 路径。未形成连续来源链时不以旧生成记录证明当前文件。Prefer available original lossless sources for the narration master and revise processing from them instead of repeatedly speeding up or extracting speech from encoded videos. An otherwise valid accepted track available only as an encoded source may still be reused within its scope; record that source honestly and do not regenerate it merely because this rule changed. Use a coherent processing chain; any necessary local rate change must preserve natural pitch and pass the adjacent-unit listening check. Do not use pitch flattening, loudness matching or music to hide a different-sounding voice. Optional loudness/encoding starting points remain in `audio.postprocess_example`; measure and listen before adopting them.
+Cropping, reordering, transcoding, loudness processing, joining and speed changes each create a new track version and `narration.postprocess_record={file,sha256}`. A single-source postprocess record uses `schema_version=1`, `status=processed`, `source={file,sha256}` matching the synthesis record output, and `output={file,sha256}` matching the current track. `steps` records actual tools, versions and execution parameters. Multisource processing follows the `sources` path below. Without a continuous source chain, an old generation record cannot prove the current file. Prefer available original lossless sources for the narration master and revise processing from them instead of repeatedly speeding up or extracting speech from encoded videos. An otherwise valid accepted track available only as an encoded source may still be reused within its scope; record that source honestly and do not regenerate it merely because this rule changed. Use a coherent processing chain; any necessary local rate change must preserve natural pitch and pass the adjacent-unit listening check. Do not use pitch flattening, loudness matching or music to hide a different-sounding voice. Optional loudness/encoding starting points remain in `audio.postprocess_example`; measure and listen before adopting them.
 
-已有实际认可且仍匹配当前稿件的音轨，可用 `narration.reuse_record` 记录 `status=previously_accepted`、真实认可/来源记录 `reference` 和当前 `audio_sha256`，优先复用，不为补新模板重生成。旧音轨没有精确修订时如实写未定位，不发明版本；复用仍须核当前声画和字幕，并保留听验范围。
+For an actually accepted track still matching the current script, record `status=previously_accepted`, the actual acceptance/provenance `reference` and current `audio_sha256` in `narration.reuse_record`. Prefer reuse instead of regeneration to fill a new template. If an old track has no exact revision, truthfully state that it is unlocated without inventing a version. Reuse still checks current picture/audio/captions and preserves listening scope.
 
-### 必要分段的有序多源清单
+<a id="必要分段的有序多源清单"></a>
+### Ordered multisource manifest for necessary segmentation
 
-使用 `narration.generation_manifest={file,sha256}` 引用私有 JSON 清单，与单次 `generation_record`、已认可 `reuse_record` 三种来源路径择一。清单及它引用的文件均在单集目录内，使用相对于单集目录的路径。清单不代表一次模型调用，每段保留各自真实运行记录：
+Use `narration.generation_manifest={file,sha256}` to reference a private JSON manifest, choosing this, a single `generation_record` or accepted `reuse_record` as one of three mutually exclusive source paths. The manifest and referenced files all reside in the episode directory with paths relative to it. The manifest does not represent one model call; every segment preserves its actual run record:
 
-| 字段 | 实际内容 |
+| Field | Actual content |
 | --- | --- |
-| `schema_version`、`mode` | `1`、`ordered_full_segments` |
-| `reason` | `kind=interface_limit/generation_stability/contextual_retake`，`note` 写具体限制或补录问题，`evidence={file,sha256}` 绑定实际接口限制、失败记录或缺陷听验文件；不能只写“按分镜生成” |
-| `script` | `{file,sha256}` 与当前 `narration.script_file/script_sha256` 一致 |
-| `segments` | 至少两个、按最终讲述顺序列出；每项含唯一 `id`、`input={file,sha256}`、`generation_record={file,sha256}`、`output={file,sha256}` |
+| `schema_version`, `mode` | `1`, `ordered_full_segments` |
+| `reason` | `kind=interface_limit/generation_stability/contextual_retake`; `note` states the concrete limit or retake issue; `evidence={file,sha256}` binds actual interface-limit, failure-record or defect-listening evidence. Generating by storyboard is not a sufficient reason. |
+| `script` | `{file,sha256}` matching the current `narration.script_file/script_sha256` |
+| `segments` | At least two in final narration order; each has unique `id`, `input={file,sha256}`, `generation_record={file,sha256}` and `output={file,sha256}` |
 
-各段 UTF-8 输入文件的原始字节直接顺序拼接，必须精确还原整稿；空行和标点归入对应段，检查器不补分隔符、不清洗正文。每份真实生成记录的 `input.sha256`、`output.sha256` 分别绑定该段文件，`input.text_transformation=none`。模型版本证据、`voice`（含 `instruct`）、`effective_generation_params` 及实际运行参数跨段一致；本地使用适配器已有 `load_parameters`，服务记录实际 `runtime_parameters`，二者均为非空对象。已有 `actual_device/environment` 也参与比较；seed 可不同，不能据此声称锁定语气。服务未提供足以核对的实际有效参数时如实保留未验，不捏造参数或拿同音色名称代替。
+Directly concatenating the original bytes of the UTF-8 segment input files in order must reconstruct the full script exactly. Assign blank lines and punctuation to their respective segments; the checker adds no separators and does not clean text. Each actual generation record's `input.sha256` and `output.sha256` bind its segment files, with `input.text_transformation=none`. Model-version evidence, `voice` (including `instruct`), `effective_generation_params` and actual runtime parameters remain consistent across segments. Local use records the adapter's existing `load_parameters`; services record actual `runtime_parameters`; both must be nonempty objects. Existing `actual_device/environment` also enter comparison. Seeds may differ and cannot establish locked delivery. If a service lacks enough actual effective parameters for comparison, truthfully keep it unreviewed; do not invent parameters or substitute a matching voice name.
 
-这条可检查路径只覆盖完整段落音轨按序串接：各段与组合音轨均为相同 PCM 编码、采样率、声道的完整音轨，不裁剪、变速、重排、交叠或插入间隔。多源后处理记录仍为 `schema_version=1/status=processed`，另设 `mode=concatenate_full_segments`；`sources` 按清单顺序逐项写 `{segment_id,file,sha256}`，`output={file,sha256}` 绑定当前 `narration.audio_sha256`，`steps` 每项记录实际 `tool/version/parameters`。补录采用最终连续语义段的完整输入和完整输出替换对应项；需要从带额外前后文的输出中裁句、跨段混剪或再处理样本时，须另形成并支持核验对应真实来源链，不能把裁过的片段填写成完整段通过本路径，也不能改用假复用绕过。
+This checkable path covers only ordered concatenation of complete segment tracks. Each segment and the assembled track use the same PCM encoding, sample rate and channels, with complete audio and no cropping, speed changes, reordering, overlap or inserted gaps. The multisource postprocess record still uses `schema_version=1/status=processed`, adding `mode=concatenate_full_segments`. `sources` lists `{segment_id,file,sha256}` in manifest order, `output={file,sha256}` binds current `narration.audio_sha256`, and every `steps` item records actual `tool/version/parameters`. A retake replaces the corresponding item with the complete input and output of the final continuous semantic section. Cropping sentences from outputs generated with extra context, mixing across sections or further sample processing requires a separately formed, verifiable actual source chain. Do not mislabel cropped clips as full segments to pass this path or switch to fictitious reuse to bypass it.
 
-生成候选可以保持 `narration.status=pending`、审听未验。申请 `ready` 或进入 G2 及后续适用检查时，现有 `source_listen_review` 绑定当前组合音轨的 `file/sha256`，使用 `scope=assembled_voice_track`、`status=pass`、`method=continuous_playback`、`playback_speed=1`、`heard=true`，并如实填写 `reviewer/capability/environment/reviewed_at`。其 `boundaries` 按每对相邻段顺序列 `left_segment_id/right_segment_id`、`at_seconds`、跨接缝的 `range=[start,end]`、具体 `note` 与实际听验 `evidence={file,sha256}`。时点以各段实际时长累加，试听范围须同时含前后完整语义；未听、失败或记录不全时保持待审，不预签通过。
+Generated candidates may retain `narration.status=pending` and unreviewed listening. To request `ready` or enter G2 and later applicable checks, the existing `source_listen_review` binds the current assembled track's `file/sha256`, using `scope=assembled_voice_track`, `status=pass`, `method=continuous_playback`, `playback_speed=1` and `heard=true`, with truthful `reviewer/capability/environment/reviewed_at`. Its `boundaries` lists each adjacent pair in order with `left_segment_id/right_segment_id`, `at_seconds`, a seam-spanning `range=[start,end]`, a specific `note` and actual listening `evidence={file,sha256}`. Time points use cumulative actual segment durations. Listening ranges must include complete meaning on both sides. Unheard, failed or incomplete records stay pending; do not pre-sign a pass.
 
-检查器核摘要、原稿还原、配置差异、来源顺序、PCM规格/时长及听验记录绑定；仍须核真实处理步骤并实际听当前音轨，防止同长度替换、重排或等量裁补。
+The checker verifies digests, script reconstruction, configuration differences, source order, PCM specifications/duration and listening-record binding. Actual processing and the current track still need verification/listening to guard against same-length replacements, rearrangements or equal-length crop/insertion.
 
-## 源音轨与最终混音分别听验
+<a id="源音轨与最终混音分别听验"></a>
+## Listen separately to source audio and the final mix
 
-在 `narration.source_listen_review` 记录实际音轨的 file/hash、scope、听过的区间、方法/能力、设备与证据；短样认可只覆盖其版本和范围，声音实质变化后重听。私人样本与反馈留项目。
+In `narration.source_listen_review`, record the actual track's file/hash, scope, heard ranges, method/capability, equipment and evidence. A short-sample approval covers only its version and scope; listen again after material voice changes. Private samples and feedback stay with the project.
 
-分段或补录后，连续听相邻段的完整语义和自然停顿，核音色、语速、重音、句尾与句首是否无缘由突变。可先只听人声定位声音问题，再连画面判断承接；正常的强调和情绪变化保留。记录接缝时码、听到的缺陷与修复结果，失败回到对应合成/拼接步骤，修后重听相关连续段和完整混音。
+After segmentation or retakes, continuously listen to the complete meanings and natural pauses of adjacent sections, checking unjustified changes in timbre, rate, emphasis and sentence endings/onsets. Voice-only listening may locate audio problems first; then judge handoffs with picture. Preserve normal emphasis and emotional variation. Record seam timecodes, heard defects and repair results. Failures return to their synthesis/joining step, followed by listening again to affected continuous intervals and the complete mix.
 
-逐段对稿核漏词/重复/跑词、术语、数字、单位、多音字和断句。异常时长或疑似偏离先查，不直接装片；长句先改稿，观察停顿按画面安排。每条视频保留中文讲解，字幕与配乐不代配音。
+Check each section against the script for omissions/repetition/wrong words, terminology, numbers, units, polyphonic characters and phrasing. Investigate abnormal durations or suspected deviations before assembly. Rewrite long sentences first and arrange observation pauses around the picture. Every video retains Mandarin narration; captions and music do not replace it.
 
-最终混音在 `qa.audio.listening` 正常速度完整听当前导出，按 [制作策略](../config/production-policy.json) 完成耳机与手机外放检查，记录设备、区间和问题时码；缺哪项就哪项未验。平台另核关键段。核心术语错读、因果词吞漏、断句改义、拼接突变、持续底噪/失真和音乐遮解释均退回。配音、配乐、环境和音效分轨，人声优先，逐段/跨段核突刺、削波与突断；不用 whoosh 或警报掩盖问题，不每次切镜默认加音效，设计音效不冒充原声记录。
+For the final mix, listen to the entire current export at normal speed in `qa.audio.listening`. Complete headphone and phone-speaker checks under the [production policy](../config/production-policy.json), recording equipment, ranges and problem timecodes; each missing check remains unreviewed. Also check key sections on the platform. Mispronounced core terms, swallowed/missing causal words, phrasing that changes meaning, abrupt joins, persistent noise/distortion and music masking explanation require rework. Keep narration, music, ambience and sound effects on separate tracks with speech priority; check transients, clipping and abrupt cutoffs within/across sections. Do not hide problems with whooshes or alarms, add effects by default at every cut, or present designed sound as original recorded audio.
 
-剪接、补录、改词、停顿或语速变化后，重对齐时码、字幕和关键动作，再听当前完整混音。编码响度/峰值实测，参数起点见[制作策略](../config/production-policy.json)；已认可配置和匹配音轨优先，测量、ASR与短样认可不代整片听验。
+After edits, retakes, word changes, pauses or rate changes, realign timecodes, captions and key actions, then listen to the current full mix again. Measure encoded loudness/peaks; parameter starting points are in the [production policy](../config/production-policy.json). Prefer accepted configurations and matching tracks. Measurements, ASR and short-sample approval do not replace listening to the full film.
 
-## 整期旁白连续性
+<a id="整期旁白连续性"></a>
+## Whole-episode narration continuity
 
-合成与补录执行[连续讲述](#连续讲述与合成单元)，源音轨及混音执行[实际听验](#源音轨与最终混音分别听验)；以下字段绑定对应记录，不另做一套声音审批。
+Synthesis and retakes follow [continuous narration](#continuous-narration-and-synthesis-units), while source tracks and mixes follow [actual listening](#listen-separately-to-source-audio-and-the-final-mix). The following fields bind those records rather than creating another voice approval process.
 
-`narration.delivery_plan` 固定 mode（continuous_first 或 context_preserving_segments）和 target 的 tone/rhythm/speech_rate/loudness，以具体自然语言记录整期方向，不发明通用音质数值门槛。分段记录 verified_method/capability_evidence/context_handoff，逐段保留 context_before/context_after、handoff_evidence，相邻段承接对应同一论述。方法与能力证据写实际采用的完整语义输入、替换范围及相邻真实试听结果，不要求模型具备跨请求状态或原生参考音频接口，也不能为填写字段编造这些能力。
+`narration.delivery_plan` fixes mode (continuous_first or context_preserving_segments) and target tone/rhythm/speech_rate/loudness, recording the whole-episode direction in concrete natural language without invented universal audio-quality thresholds. For segmented work, record verified_method/capability_evidence/context_handoff and retain context_before/context_after and handoff_evidence per segment, with neighboring handoffs continuing the same argument. Method and capability evidence describes actual complete semantic inputs, replacement ranges and real adjacent listening results. It does not require cross-request model state or a native reference-audio interface, and such capabilities must not be invented to fill fields.
 
-已有 `narration.generation_manifest` 时，delivery_plan 的 `generation_manifest={file,sha256}` 必须引用同一份真实清单，mode 必须为 context_preserving_segments；拆分理由直接使用清单 `reason`，contextual_retake 无需另填 technical_limit。`delivery_plan.segments` 按清单相同 ID 和顺序记录各段上下文，稿件和音轨的 file/hash 由该清单对应项的 input/output 取得，不另造来源台账；若旧行仍保留 script/audio，其引用须与清单 input/output 完全相同。不能把已有多段来源写成 continuous_first，也不能让计划和实际来源分别通过却互相冲突。
+When `narration.generation_manifest` exists, delivery_plan's `generation_manifest={file,sha256}` must reference that same actual manifest, and mode must be context_preserving_segments. Reuse manifest `reason` directly; contextual_retake does not require another technical_limit. `delivery_plan.segments` records context with the same IDs and order as the manifest. Obtain script/audio file/hash from each manifest item's input/output rather than another source ledger. If old rows still retain script/audio, their references must exactly match manifest input/output. Do not describe existing multisource material as continuous_first or let the plan and actual provenance pass separately while contradicting one another.
 
-没有多源清单的既有合法分段计划，仍用 technical_limit/verified_method/capability_evidence/context_handoff 及各段 script/audio 的 file/hash 核验；单次整稿和已认可复用路径保持其真实来源记录。引用现有工程或生成记录，不因为补字段重装模型或改运行环境。
+Existing valid segmented plans without a multisource manifest still use technical_limit/verified_method/capability_evidence/context_handoff and each segment's script/audio file/hash for verification. Single full-script and accepted-reuse paths retain truthful source records. Reference existing projects or generation records without reinstalling models or changing runtimes merely to populate fields.
 
-G2完整有声草排、G3实际代表段和G5最终整期混音分别在 `qa.audio.continuity.<stage>` 绑定 status/context_sha256/media_sha256/audio_sha256/plan_sha256、method=normal_speed_continuous_listening、actually_heard、reviewer/capability/evidence 与完整 ranges。criteria 的 tone/rhythm/speech_rate/loudness/joins 各记实际观察与证据；完整连听仍核叙述跨画面的承接，但不要求每个画面切点另填一行声音记录。`transitions` 可为空；确有跨镜疑点时登记 from_shot/to_shot、当前媒体边界at、跨点listen_range与实际status/observation/evidence，主动提供的行继续严格校验。真正的合成分段、补录与音频编辑接缝仍按源轨/实际听验规则审查，不因取消画面切点配额而省略。G2/G5的实际有序shots时段、G3的shot_intervals仍须正确覆盖所审媒体及所选镜头；完整听验、当前哈希、能力及已知声音失败不变，G5仍核耳机与手机外放。
+The G2 full voiced rough cut, G3 actual representative segment and G5 final whole-episode mix each bind status/context_sha256/media_sha256/audio_sha256/plan_sha256, method=normal_speed_continuous_listening, actually_heard, reviewer/capability/evidence and complete ranges in `qa.audio.continuity.<stage>`. Each tone/rhythm/speech_rate/loudness/joins criterion records actual observations and evidence. Complete continuous listening still checks narration handoffs across picture, but does not require a separate audio-record row at every visual cut. `transitions` may be empty. If there is a concrete cross-shot concern, record from_shot/to_shot, the current media boundary at, a spanning listen_range and actual status/observation/evidence; voluntarily supplied rows remain strictly validated. Real synthesis segmentation, retake and audio-edit seams still receive source-track/actual-listening review despite removing the visual-cut quota. G2/G5 actual ordered shots ranges and G3 shot_intervals must still correctly cover reviewed media and selected shots. Complete listening, current hashes, capabilities and known audio failures remain required, and G5 still checks headphones and phone speakers.
 
-Known voice/register drift, abrupt joins, repeated announcer-style resets, drawn-out endings or mechanical pauses stay `fail/needs_changes` in `qa.audio` and the affected continuity criteria. Record `scope=audio`, the actual version/time range and feedback reference in `qa.visual_frames.failures`; prior approval of another dimension or an older version cannot close the defect.局部短样只解决对应范围；整期否定须当前完整混音连续复听及接缝证据才能关闭。
+Known voice/register drift, abrupt joins, repeated announcer-style resets, drawn-out endings or mechanical pauses stay `fail/needs_changes` in `qa.audio` and the affected continuity criteria. Record `scope=audio`, the actual version/time range and feedback reference in `qa.visual_frames.failures`; prior approval of another dimension or an older version cannot close the defect. A local short sample resolves only its corresponding scope. A whole-episode rejection closes only with continuous re-listening to the current complete mix and seam evidence.
 
-## 来源与传输范围
+<a id="来源与传输范围"></a>
+## Provenance and transmission scope
 
-按本次已确认位置记录传输范围。本地工程与本适配器不向远程合成服务发送稿件；服务方式按实际接收者、文本类别、用途和已有授权执行，当前或前文上下文中明确指定的工程或服务位置可直接作为调用依据。缺少所传内容的授权时补足，不把文字范围扩大到视频或参考声纹。声音方向不代传输授权；不擅自克隆真人，合成声音按实际声明与必要披露执行。
+Record transmission scope according to the invocation location confirmed for this task. Local projects and this adapter do not send scripts to remote synthesis services. Service use follows the actual recipient, text category, purpose and existing authorization. A project/service location explicitly specified in current or prior context may directly support invocation. Obtain any missing authorization for the transmitted content without expanding text scope to video or reference voiceprints. Voice direction does not grant transmission permission. Do not clone a real person without authorization; apply actual declarations and necessary disclosure to synthesized voice.
 
-服务、配额或资源失败报告具体阻塞，保留当前方案；不轮换账户、换镜像规避限制，不自动购买额度。模型许可、服务条款与具体用途分别核实，不在台账或仓库存入凭据、令牌或参考声纹。
+Report specific service, quota or resource blockers while retaining the current plan. Do not rotate accounts or switch mirrors to evade restrictions, or automatically buy capacity. Verify model licenses, service terms and specific uses separately. Do not store credentials, tokens or reference voiceprints in ledgers or repositories.

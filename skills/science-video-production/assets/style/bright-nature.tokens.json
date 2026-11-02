@@ -2,53 +2,53 @@
   "colors": {
     "sky": {
       "hex": "#A9D4F6",
-      "name": "晴空蓝",
-      "role": "天空与高明度空间"
+      "name": "Clear-sky blue",
+      "role": "Sky and high-value space"
     },
     "cloud": {
       "hex": "#FFF1D1",
-      "name": "日照云白",
-      "role": "受光面与暖高光"
+      "name": "Sunlit cloud white",
+      "role": "Lit surfaces and warm highlights"
     },
     "sunleaf": {
       "hex": "#C8D75C",
-      "name": "透光嫩绿",
-      "role": "透光叶与草地亮面"
+      "name": "Translucent fresh green",
+      "role": "Transmitted-light leaves and bright grass surfaces"
     },
     "meadow": {
       "hex": "#96AE44",
-      "name": "草甸绿",
-      "role": "大面积植物中间色"
+      "name": "Meadow green",
+      "role": "Broad vegetation midtones"
     },
     "leaf": {
       "hex": "#52733D",
-      "name": "叶面绿",
-      "role": "枝叶结构与层次"
+      "name": "Leaf green",
+      "role": "Branch/leaf structure and layering"
     },
     "distance": {
       "hex": "#7C9CBA",
-      "name": "远山蓝",
-      "role": "远景、空气透视"
+      "name": "Distant-mountain blue",
+      "role": "Distant views and atmospheric perspective"
     },
     "shadow": {
       "hex": "#30483E",
-      "name": "林间暗部",
-      "role": "局部深结构"
+      "name": "Forest shadow",
+      "role": "Local deep structural tones"
     },
     "bark": {
       "hex": "#6C5741",
-      "name": "枝干棕",
-      "role": "树干、岩土结构"
+      "name": "Branch/trunk brown",
+      "role": "Tree trunks and rock/soil structure"
     },
     "sun": {
       "hex": "#D8A532",
-      "name": "明黄强调",
-      "role": "人物衣物、少量焦点"
+      "name": "Bright yellow emphasis",
+      "role": "Character clothing and sparse focal accents"
     },
     "ink": {
       "hex": "#243840",
-      "name": "解释墨色",
-      "role": "文字、箭头与引线"
+      "name": "Explanatory ink",
+      "role": "Text, arrows and leaders"
     }
   },
   "surfaces": {
@@ -60,7 +60,7 @@
   "accent_exception": {
     "coral": "#D66B52",
     "violet": "#7C70B8",
-    "usage": "真实物种特征、花朵或本镜头明确图例；不得无理由大面积替换主色"
+    "usage": "Actual species features, flowers or this shot's explicit legend; do not replace large areas of the main colors without a reason"
   },
   "type": {
     "family": "Noto Sans CJK SC",
@@ -157,7 +157,7 @@
   "science_color_priority": true,
   "suggested_scene_ratio": {
     "status": "adjustable_starting_point",
-    "definition": "白昼自然场景的视觉面积起点，非基准图像素统计；每景按对象与事实调整",
+    "definition": "Visual-area starting point for daytime natural scenes, not pixel statistics of the reference image; adjust each scene to its objects and facts",
     "air_and_light": 45,
     "vegetation": 35,
     "structure": 15,
@@ -180,7 +180,7 @@
       0.04
     ],
     "stable_clipped_to_object": true,
-    "meaning": "材质按对象真实物性及解释条件塑造；布料、透明体、岩土等不共享同一种哑光/高光预设。"
+    "meaning": "Shape materials according to actual object properties and explanatory conditions; fabric, transparent bodies, rock/soil and other materials do not share one matte/highlight preset."
   },
   "motion": {
     "attention_ms": [

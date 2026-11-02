@@ -1,146 +1,157 @@
-# 原题、问题类型与交付范围不能在局部返工中丢失
+<a id="原题问题类型与交付范围不能在局部返工中丢失"></a>
+# Preserve the original topic, question type and delivery scope during local revisions
 
-开始、续做和返工先从原委托恢复主题、问题类型与必答范围。局部反馈只定位修复处；缺资料就记具体缺项，不把用途说明当制造过程、部件当整体或局部原因当完整比较。改变主题或必要范围按用户明确请求执行。
+At the start, on resumption and during revisions, recover the topic, question type and required answer scope from the original commission. Local feedback identifies the repair location only. Record specific missing information rather than substituting a description of use for a manufacturing process, a component for the whole, or a local cause for a complete comparison. Change the topic or necessary scope only in response to the user's explicit request.
 
-## 保存原始锚点
+<a id="保存原始锚点"></a>
+## Preserve the original anchor
 
-复制 `assets/topic-anchor-template.json` 到单集目录的 `topic-anchor.json`。从已有委托建立：
+Copy `assets/topic-anchor-template.json` to `topic-anchor.json` in the episode directory. Establish it from the existing commission:
 
-- `version`：主题版本标识
-- `title`、`question`：原始主题与核心问题
-- `intent`：任务意图类型，例如解释制造过程、解释机制、比较差异、演示操作；不要只记对象名
-- `required_scope`：必须回答的内容，每项有稳定 `id` 与 `answer_requirement`。制造类通常需要有依据的选材、成形/加工、组装与检验；具体范围由本题决定，不生硬套用清单
+- `version`: the topic version identifier.
+- `title`, `question`: the original topic and core question.
+- `intent`: the task's intent type, such as explaining a manufacturing process, explaining a mechanism, comparing differences or demonstrating an operation; do not record only the object's name.
+- `required_scope`: the content that must be answered, with a stable `id` and `answer_requirement` for each item. Manufacturing topics usually need evidence-based material selection, forming/machining, assembly and inspection; the specific topic determines the scope, rather than a rigid checklist.
 
-`topic.origin_reference` 引用原委托；`topic.anchor_file` 保存原锚点，`anchor_sha256=canonical_sha256(anchor)`。当前主题在 `topic.current/current_sha256`。保留原锚点及版本记录，不能从最新样片反推原题，标题润色也不覆盖原委托。
+`topic.origin_reference` references the original commission; `topic.anchor_file` preserves the original anchor, with `anchor_sha256=canonical_sha256(anchor)`. The current topic is in `topic.current/current_sha256`. Preserve the original anchor and version history. Do not infer the original topic from the latest sample or overwrite the original commission when polishing the title.
 
-用户明确改题、意图或必要范围时更新 current，`change_approval` 记录 `status=explicit_user_request`、请求引用、`from_sha256/to_sha256`，并核请求实际作者、内容和范围。保留旧锚点供溯源；无对应请求不自行填批准或重写锚点，已有新方向也不因旧锚点而被阻挡。
+When the user explicitly changes the topic, intent or necessary scope, update current and record `status=explicit_user_request`, the request reference and `from_sha256/to_sha256` in `change_approval`. Verify the request's actual author, content and scope. Preserve the old anchor for provenance. Without a corresponding request, do not invent approval or rewrite the anchor; an existing new direction must not be blocked by the old anchor either.
 
-## 工程与制造题材的全链路和片长
+<a id="工程与制造题材的全链路和片长"></a>
+## Complete chains and duration for engineering and manufacturing topics
 
-视频可以按内容需要做得更长，不预设统一的短片上限或最低片长。工程科学、工业生产和高端制造题材默认优先讲清本题的完整链路，再由完整讲解、必要演示与观察时间确定片长；不能为压缩时长跳过关键环节、加速旁白或把制造过程改成部件用途介绍。
+A video may be longer when its content needs it. Do not impose a uniform short-video ceiling or minimum duration. Engineering science, industrial production and advanced manufacturing topics default to explaining the topic's complete chain first; the full explanation, necessary demonstrations and observation time then determine duration. Do not skip key stages, speed up narration or turn a manufacturing process into an introduction to component uses to shorten the video.
 
-“全链路”围绕本题核心对象，从输入或起点讲到结果及验证，先划清系统边界、适用条件和上下游。用户明确只讲一个部件或工序时，在该范围内讲完整，并交代它与整体的关系；不擅自扩成整个产业链。把必要环节写入已有 `required_scope`，沿 `topic_alignment.coverage` 映射到章节与镜头，不另建重复台账。
+The complete chain follows the topic's core object from input or starting point through the result and its validation. First define the system boundary, applicable conditions and upstream/downstream relationships. If the user explicitly requests only one component or operation, explain that scope completely and state its relationship to the whole; do not expand it into the entire industry chain. Put necessary stages in the existing `required_scope` and map them to chapters and shots through `topic_alignment.coverage`, without creating another ledger.
 
-- **工程科学**：按本题串起需求与约束、科学原理、系统结构、物质/能量/信息如何输入和传递、关键机制怎样协同、输出性能及验证，讲清为什么有效和成立边界。
-- **工业生产与高端制造**：按真实流程覆盖与本题有关的设计要求、材料/原料准备、关键成形或加工、必要后处理、连接或装配、检测与质量控制，以及最终性能和用途。实际存在的分支、并行、返工和反馈要说明；环节按题材取舍，不强套每道工序或虚构缺失流程。
-- **环节之间的解释**：让观众知道进入这一步的对象/状态、设备或操作做了什么、依据什么原理、输出怎样进入下一步。关键处解释材料选择、参数或精度约束、工艺难点、缺陷与瓶颈、检测如何发现问题及反馈怎样影响后续质量；仅罗列工序名或展示漂亮设备不算讲清。
+- **Engineering science**: connect the topic's requirements and constraints, scientific principles, system structure, input and transfer of matter/energy/information, coordination of key mechanisms, output performance and validation. Explain why it works and the limits under which it holds.
+- **Industrial production and advanced manufacturing**: follow the real workflow through the topic's relevant design requirements, material/feedstock preparation, key forming or machining, necessary post-processing, joining or assembly, testing and quality control, and final performance and uses. Explain actual branches, parallel work, rework and feedback. Select stages for the topic rather than imposing every possible operation or inventing missing processes.
+- **Explanation between stages**: show the object/state entering the stage, what the equipment or operation does, the principle it uses, and how its output enters the next stage. At key points explain material selection, parameter or precision constraints, process difficulties, defects and bottlenecks, how inspection detects problems, and how feedback affects subsequent quality. Listing operation names or showing attractive equipment is insufficient.
 
-开场按[情境与看点](viewer-retention-design.md#先建立情境和看点再进入解释)建立整体目标；正文按依赖关系分章。每章从前一步输出进入下一步目的，结尾把关键环节连回最终结果。删重复与无关支线，保留必要前提、观察和工程取舍。
+Use [context and viewing interest](viewer-retention-design.md#establish-context-and-a-reason-to-watch-before-explaining) to establish the overall goal in the opening, and divide the main explanation into chapters according to dependencies. Each chapter moves from the previous stage's output to the next stage's purpose. The ending reconnects the key stages to the final result. Remove repetition and irrelevant branches while preserving necessary prerequisites, observations and engineering tradeoffs.
 
-先写全链路脚本与章节，再按正常语速音轨、演示和观察时间定片长；研究期仅记暂估及依据。单次工具时长限制可按章节/镜头执行，不是整片上限。分段保持对象、术语、声音和时间线连续，以G2草排、G3代表段和G5整片审查核覆盖与接缝；资料不足的工序保持待研究，不能靠生成画面补事实。
+Write the complete-chain script and chapters first, then determine duration from narration at a normal speaking rate, demonstrations and observation time. During research, record only a provisional estimate and its basis. A tool's single-call duration limit can be handled by chapters/shots and is not a ceiling for the film. Maintain continuity of objects, terminology, voice and timeline across segments, and check coverage and joins in the G2 rough cut, G3 representative segment and G5 full-film review. Keep operations with insufficient information pending research; generated imagery cannot supply missing facts.
 
-## 整期、章节与局部样片分开
+<a id="整期章节与局部样片分开"></a>
+## Separate episodes, chapters and local samples
 
-`scope.kind` 为 `episode`、`chapter` 或 `local_sample`。局部内容仍引用整期锚点；另填所属 `parent_episode_id`、`chapter_id`、此次 `purpose` 与 `delivery_context`。用 `placement=chapter_only`、`publication_ready=false` 明确它不是整期开场或可发布整期。若确需把局部内容发展为新整期，先取得明确改题请求，再建立相应版本，不能只改标签。
+`scope.kind` is `episode`, `chapter` or `local_sample`. Local content still references the episode anchor; also record its `parent_episode_id`, `chapter_id`, current `purpose` and `delivery_context`. Use `placement=chapter_only` and `publication_ready=false` to make clear that it is neither the episode opening nor an episode ready to publish. If local content must become a new episode, first obtain an explicit topic-change request and establish the corresponding version; changing a label is insufficient.
 
-局部交付消息说明原整期题目、所属位置、本次检验项和整期缺项；内部验收标记不烧入观众画面。局部片头不得冒充新整期。
+A local delivery message states the original episode topic, its position in the episode, the current checks and the episode's missing items. Do not burn internal acceptance markers into the audience image. A local opening must not masquerade as a new episode.
 
-`plan` 可检查局部计划；`delivery` 仅适用完整单集。局部认可只覆盖被审版本、片段与维度，恢复整片时另审完整范围。
+`plan` can check a local plan; `delivery` applies only to a complete episode. Local approval covers only the reviewed version, interval and dimensions. Review the full scope separately when resuming the full film.
 
-章节内的局部修复可用 `scope.kind=local_sample`、`placement=chapter_only`、`publication_ready=false` 及现有 `qa.visual_frames.animation.next_action=repair_sample` 进入对应修样检查；四个所属/目的字段须具体完整，原整期锚点、current及改题授权规则不变。此窄范围的 `opening/ending` 只需继承原题 `intent`、本次实际覆盖的 `scope_ids` 和真实首尾 `shot_ids` 定位，不要求为中段修复补造整期题卡、主题口播、`spoken_question/answer_route` 或整期结尾答案。`coverage` 必须非空且属于原必要范围，`main_scope_ids` 非空且位于本次覆盖内；`omitted_scope_ids` 完整、无重复地列出原必要范围减本次覆盖的补集。该局部声明不将 `chapter`、不完整元数据、`next_action=expand` 或整期包变成例外；即使本次覆盖恰含全部必要范围，也仍只是局部修样。G4及以后、quality/delivery继续要求整期，未闭环反馈/已知失败照常阻断扩制；局部通过不签整期或发布，不能删原题、改标题或补写历史pass来通关。
+A local repair within a chapter may enter the corresponding sample-repair check with `scope.kind=local_sample`, `placement=chapter_only`, `publication_ready=false` and the existing `qa.visual_frames.animation.next_action=repair_sample`. The four ownership/purpose fields must be specific and complete; the original episode anchor, current and topic-change authorization rules remain unchanged. For this narrow scope, `opening/ending` need only inherit the original topic's `intent`, the `scope_ids` actually covered in this task and the real first/last `shot_ids` for location. Do not invent episode title cards, topic narration, `spoken_question/answer_route` or a full-episode closing answer for a middle-section repair. `coverage` must be nonempty and belong to the original required scope; `main_scope_ids` must be nonempty and within this task's coverage; `omitted_scope_ids` must list the complete, duplicate-free complement of original required scope minus current coverage. This local declaration does not exempt `chapter`, incomplete metadata, `next_action=expand` or an episode package. Even if current coverage happens to include every required scope item, it remains a local repair sample. G4 and later, quality/delivery still require an episode, and unresolved feedback/known failures continue to block expansion. Local approval does not approve an episode or publication; do not delete the original topic, change the title or fabricate a historical pass to get through a check.
 
-## 成人受众的选题筛选
+<a id="成人受众的选题筛选"></a>
+## Topic selection for adult audiences
 
-本系列自主选题默认面向有日常常识、无专业训练的成年人，优先有具体解释价值的问题，避免只换标题。用户已明确指定基础问题或受众时保留该范围，用清楚的例子、成立条件或可见关系讲明白；不能因题目朴素而拒绝或擅改。科学错误、无权使用、缺失必要解释与确实不可行仍须修复；未研究完可先交明确待研究的策划草案，正式G1和渲染前再核主源及可行性。
+For editorial topic selection, this series defaults to adults with everyday knowledge and no professional training. Prioritize questions with concrete explanatory value and avoid title-only changes. If the user has explicitly specified a basic question or audience, preserve that scope and explain it with clear examples, applicable conditions or visible relationships; do not reject or change it merely because the topic is simple. Scientific errors, unavailable rights, missing necessary explanations and actual infeasibility still require correction. Before research is complete, a planning draft with explicitly pending research may be delivered; verify primary sources and feasibility before formal G1 and rendering.
 
-先写受众已知什么，再找值得解释的机制、约束、权衡或可迁移观察。自主选题避免只重复常识；用户指定基础教学目标时，准确建立概念本身可以是回报。不强求反直觉、热门话题或生活技巧。
+Write what the audience already knows first, then identify a mechanism, constraint, tradeoff or transferable observation worth explaining. Editorial topic selection should avoid merely repeating common knowledge; for a user-specified basic teaching objective, accurately establishing the concept itself may be the payoff. Do not require counterintuitive findings, popular topics or everyday tips.
 
-在现有 `brief.topic_selection` 写选题卡，不另建评分榜或审批链。复用 `brief.audience`、`audience_start.assumed_knowledge`、`one_sentence_answer`、`understanding_targets.transfer` 与 `topic.current`，分别说明具体受众的知识起点、核心问题/答案和看完可用于解释或判断什么。卡内写：
-- 默认 `audience_category=ordinary_adults`；明确指定其他受众时记录实际类别及原请求；`conflict_or_question` 写值得追问的真实问题，`adult_relevance` 写为何值得这个受众花时间，`knowledge_increment` 写比其已有常识多得到什么。
-- `source_ids` 引用已实际查核的事实主源；沿用 sources 的标题、机构、URL、核验日期与 `scope_note`，定位支撑哪个机制、条件和边界。优先原研究、机构技术资料及权威解释，不将二手转述冒充一手实验；来源真实性和结论支持度仍须研究判断。
-- `causal_visualization` 说明如何让对象、关系、条件变化与解释回报可见；非因果题写其实际需要的结构、比较或证据关系，不硬造因果链。
-- `feasibility` 写素材/权利计划、制作方法、实际约束与 `blocking_gaps`。先判断题目值不值得讲，再选择资产；已有管道、动画或配音不能成为保留弱题的理由。此时无需已制好素材或声音；有可信的制作/取材路径即可，不能因手里没有现成资产错杀好题，也不能承诺无法表达的关键过程。
+Write the topic-selection card in the existing `brief.topic_selection`, without creating a score ranking or approval chain. Reuse `brief.audience`, `audience_start.assumed_knowledge`, `one_sentence_answer`, `understanding_targets.transfer` and `topic.current` to state the particular audience's starting knowledge, the core question/answer and what viewers can explain or judge after watching. Record:
+- Default `audience_category=ordinary_adults`; if another audience is explicitly specified, record the actual category and original request. `conflict_or_question` states the real question worth pursuing, `adult_relevance` states why it deserves this audience's time, and `knowledge_increment` states what it adds to their existing common knowledge.
+- `source_ids` references factual primary sources actually checked. Reuse source titles, institutions, URLs, verification dates and `scope_note` to locate which mechanism, conditions and boundaries each supports. Prefer original research, institutional technical material and authoritative explanations; do not present secondhand reporting as a primary experiment. Source authenticity and support for the conclusion still require research judgment.
+- `causal_visualization` explains how the objects, relationships, condition changes and explanatory payoff will be visible. For a noncausal topic, describe the structure, comparison or evidence relationship it actually needs rather than inventing a causal chain.
+- `feasibility` states the asset/rights plan, production method, actual constraints and `blocking_gaps`. Decide whether the topic deserves explanation before choosing assets. Existing pipelines, animation or narration are not reasons to retain a weak topic. Finished assets or voice are unnecessary at this point; a credible production/acquisition route is sufficient. Do not reject a good topic merely because ready-made assets are absent, or promise a key process that cannot be expressed.
 
-编辑明确写 `review.status=selected/revise/rejected/pending`、真实审题者和理由，用 `selection_context_sha256(data)` 绑定实际题目、受众、增量、主源与可行性。`disqualifiers` 明列已发现的 `common_knowledge_only/definition_only/title_only_change/asset_led/unsupported_hook/no_explanatory_payoff/unvisualizable/unfeasible`，没有已知淘汰项时才留空。用户指定题目时记 `selection_origin=user_requested`、`user_request_reference/user_request_evidence={file,sha256}/scope_reason`，保留原始请求；common_knowledge_only、definition_only、title_only_change可作为编辑风险保留，不阻断明确委托，其他科学、素材和可行性失败仍阻断。默认selection_origin=editorial。`selected` 只是编辑决定，不等于用户批准、事实正确、作品合格或保证观众喜欢。题目、受众起点、解释回报、来源或制作约束变化时重新审题；不能只刷新哈希或删除淘汰项。
+The editor explicitly records `review.status=selected/revise/rejected/pending`, the actual topic reviewer and the reason, with `selection_context_sha256(data)` binding the actual topic, audience, increment, primary sources and feasibility. `disqualifiers` explicitly lists discovered `common_knowledge_only/definition_only/title_only_change/asset_led/unsupported_hook/no_explanatory_payoff/unvisualizable/unfeasible`; leave it empty only when there are no known disqualifiers. For a user-specified topic, record `selection_origin=user_requested`, `user_request_reference/user_request_evidence={file,sha256}/scope_reason` and preserve the original request. common_knowledge_only, definition_only and title_only_change may remain as editorial risks without blocking an explicit commission; other scientific, asset and feasibility failures still block it. Default selection_origin=editorial. `selected` is only an editorial decision, not user approval, factual correctness, work acceptance or a guarantee that viewers will like it. Reassess when the topic, audience starting point, explanatory payoff, sources or production constraints change; refreshing hashes or deleting disqualifiers is insufficient.
 
-默认 `interest_basis=editorial_hypothesis`、`audience_evidence=[]`。只有真实受众证据才用 `observed_audience_evidence`，绑定原始文件/哈希、来源、观察范围及局限；不编造参与者或效果数据，不额外要求招募、实时反馈或受欢迎分数。明确的用户教学目标按委托执行。
+Default to `interest_basis=editorial_hypothesis` and `audience_evidence=[]`. Use `observed_audience_evidence` only for actual audience evidence, binding the original file/hash, source, observation scope and limitations. Do not invent participants or outcome data, or add requirements to recruit viewers, obtain live feedback or reach a popularity score. Execute explicit user teaching objectives within the commission.
 
-可用平台数据按[平台选题与数据复核](production-checkpoints.md#平台选题与数据复核)引用；缺数据记缺口，热度不代事实主源和解释价值。
+Reference available platform data according to [platform topic selection and data review](production-checkpoints.md#platform-topic-selection-and-data-review). Record absent data as a gap; popularity does not replace factual primary sources and explanatory value.
 
-`plan`、G1及后续阶段检查复用同一张卡，实际 `render_gate` 的 sample/full 调用前也核卡。旧包在本版恢复制作前补真实审题记录，不能以缺卡为兼容放行；仅保存历史文件不补签过去执行。自主选题未选定时继续查源、比较和改题；用户指定题目则在原范围补研究和解释方案，不能先花时间制作再补选题理由。封面单独核验不要求为已完成作品重开选题。
+`plan`, G1 and subsequent stage checks reuse the same card; actual `render_gate` sample/full calls also check it before invocation. Before resuming production under this version, old packages need a truthful topic-review record; a missing card cannot receive a compatibility pass. Merely preserving historical files does not require retroactively signing past execution. If an editorial topic is not selected, continue source research, comparison and topic revision. For a user-specified topic, complete research and explanation design within the original scope; do not spend time producing first and add topic-selection reasons afterward. A cover-only check does not require reopening topic selection for completed work.
 
-### 先比较观众会选什么，再决定制作什么
+<a id="先比较观众会选什么再决定制作什么"></a>
+### Compare what viewers would choose before deciding what to produce
 
-自主选题先提出少量不同问题的文字提案，再选一个推进。每个提案用日常语言说清：观众认得的对象、用途或情境；他为什么会追问；片中将让他亲眼看到什么变化、结构或对照。陌生技术也可从熟悉的产品结果或有吸引力的可见过程进入，不把范围缩成生活技巧。禁止用“高端、硬核、前沿、涨知识”替代观看理由，也不因题材类别自动排除或宣称大众必然喜欢。
+For editorial topic selection, first propose a small number of different questions in text, then choose one to advance. Describe each proposal in everyday language: the object, use or situation viewers recognize; why they would ask further; and what change, structure or comparison the film will let them see. Unfamiliar technology can also start from a familiar product outcome or an appealing visible process; do not narrow the range to everyday tips. Do not substitute “高端、硬核、前沿、涨知识” for a reason to watch, or automatically exclude a topic category or claim that the public will certainly like it.
 
-在制作前做以下编辑判断，继续使用已有选题卡和 review，不增加审批阶段：
+Make these editorial judgments before production, using the existing topic card and review without adding an approval stage:
 
-- `adult_relevance` 写具体观看情境与利害/好奇，例如观众用过、见过、做过选择，或会被哪种可见变化吸引；“与每个人有关”“科技很重要”不够。
-- `conflict_or_question` 写不用专业前置知识也能听懂的具体疑问；专业名词放到需要解释时。熟悉对象不等于常识答案，罕见对象也不自动有吸引力。
-- `knowledge_increment` 写观众看完会重新理解、分辨或解释什么；只增加术语和工序名不算回报。`causal_visualization` 写能展示的关键变化/关系及其证据，不能只写“做精美3D动画”。
-- 在 `alternatives` 至少保留一个最有竞争力的真实可行备选问题，不用明显弱题陪衬，记录 `question` 和 `not_selected_reason`。可以是同一对象的另一种切口，但不能只是给同一个问题换标题。理由比较观众入口、具体疑问、可见解释回报与可行性；沿用 `review.reason` 说明为何选当前题，不保存长榜单或虚构分数。
-- 把“问题、观众入口、关键可见回报”组成短提案，审题者先以陌生观众的视角比较，再看专业解释与制作方案。说不清为什么会主动点开、关键画面无法兑现，或候选都只有专业人士才关心时，先改题/切口，再做昂贵研究、生成和渲染。资料丰富、已有模型或制作熟练只能帮助实施，不能单独决定选题。
+- `adult_relevance` states a specific viewing situation and stakes/curiosity: for example, something viewers have used, seen or chosen between, or the visible change that would attract them. Relevant to everyone and technology is important are insufficient.
+- `conflict_or_question` states a concrete question understandable without specialist prerequisites; introduce technical terms when they need explanation. A familiar object does not imply a common-knowledge answer, and an unusual object is not automatically appealing.
+- `knowledge_increment` states what viewers will understand differently, distinguish or explain after watching. Adding terms and operation names alone is not a payoff. `causal_visualization` states the key visible change/relationship and its evidence, rather than only make polished 3D animation.
+- Keep at least one genuinely feasible, strongest competing alternative question in `alternatives`, with `question` and `not_selected_reason`; do not use an obviously weak topic as a foil. It may take another angle on the same object but cannot merely retitle the same question. Compare audience entry, the specific question, visible explanatory payoff and feasibility. Reuse `review.reason` to state why the current topic was selected, without long rankings or invented scores.
+- Form a short proposal from the question, audience entry and key visible payoff. The reviewer compares proposals from an unfamiliar viewer's perspective before inspecting the technical explanation and production plan. If it is unclear why someone would voluntarily click, the key imagery cannot deliver the promise, or all candidates interest only specialists, revise the topic/angle before expensive research, generation and rendering. Rich documentation, existing models and production familiarity can help implementation but cannot decide the topic alone.
 
-发现 `specialist_only_hook` 或 `no_viewer_entry` 时，自主选题不得标为 selected 后继续制作；换标题、增加危险感或加“震撼揭秘”不能消除问题。用户明确指定题目/专业受众时在原范围改善入口与表达，不强制比较备选，也不凭大众趣味否决委托；科学、来源、可行性与真实观看要求照常执行。用户对选题提出负面反馈时，重评选题和切口，不先靠更贵的模型或更炫的画面补救。
+If `specialist_only_hook` or `no_viewer_entry` is found, an editorial topic cannot be marked selected and proceed to production. Changing the title, adding a sense of danger or “震撼揭秘” does not resolve the problem. If the user explicitly specifies the topic/specialist audience, improve the entry and expression within that scope. Do not require alternative comparisons or reject the commission based on general-public taste; scientific, source, feasibility and actual-viewing requirements still apply. When the user gives negative feedback on topic selection, reassess the topic and angle before resorting to more expensive models or more spectacular imagery.
 
-这一方法参考 [YouTube 官方关于扩大内容触达的说明](https://support.google.com/youtube/answer/16559650?hl=en)：专业主题可以通过更普遍的问题建立非专业观众的入口。这里的提案比较属于编辑假设；结构检查只能核比较记录、明显重复和版本，不能判定人气。实际点击、留存和满意反馈仍沿已有真实复盘记录，不把标题吸引力当作完整观看质量。
+This method draws on [YouTube's official guidance on expanding content reach](https://support.google.com/youtube/answer/16559650?hl=en): a specialist topic can give nonspecialists an entry through a more universal question. These proposal comparisons are editorial hypotheses. Structural checks can verify comparison records, obvious duplication and versions, but cannot determine popularity. Actual clicks, retention and satisfaction feedback continue in the existing truthful retrospective records; title appeal is not complete viewing quality.
 
-以下仅示范切口，均需研究事实、适用条件和可视化可行性后才能选用，不是默认题库或已验证热门题：
+The following examples demonstrate angles only. Each requires research into facts, applicable conditions and visualization feasibility before selection; they are neither a default topic library nor verified popular topics:
 
-| 对象名/专业目录式选题 | 面向观众的待研究问题 | 计划比较的画面回报 |
+| Object-name/professional-catalog topic | Audience-facing question pending research | Planned visible payoff for comparison |
 | --- | --- | --- |
-| 电磁感应原理概述 | 电磁炉隔着玻璃，怎样把锅加热？ | 追踪电能、磁场与锅中的发热位置，比较不同材料 |
-| 塑料吹塑工艺流程 | 瓶胚怎样变成你手里的饮料瓶？ | 从瓶胚到瓶身的连续形变、模具约束及质量检查 |
-| 光学防抖结构介绍 | 手在抖，手机镜头怎样把画面稳住？ | 并排比较相同抖动下的结构动作与成像结果 |
-| 轮胎材料与结构分类 | 轮胎为什么要做出不同的花纹？ | 在明确路面条件下观察接触、排水与设计取舍 |
-| 电梯曳引系统说明 | 电梯怎样把一厢人平稳送到楼上？ | 整体载荷与传动关系，再跟随启动、运行和停靠过程 |
+| 电磁感应原理概述 | 电磁炉隔着玻璃，怎样把锅加热？ | Trace electrical energy, magnetic fields and where heat is generated in the pan; compare materials. |
+| 塑料吹塑工艺流程 | 瓶胚怎样变成你手里的饮料瓶？ | Continuous deformation from preform to bottle, mold constraints and quality checks. |
+| 光学防抖结构介绍 | 手在抖，手机镜头怎样把画面稳住？ | Compare structural action and imaging results side by side under the same shake. |
+| 轮胎材料与结构分类 | 轮胎为什么要做出不同的花纹？ | Observe contact, drainage and design tradeoffs under explicit road conditions. |
+| 电梯曳引系统说明 | 电梯怎样把一厢人平稳送到楼上？ | Establish the overall load and transmission relationships, then follow starting, running and stopping. |
 
-### 好坏题成对比较
+<a id="好坏题成对比较"></a>
+### Compare stronger and weaker topics in pairs
 
-以下用于自主选题，不否决用户明确的基础教学题。制作前核主源、具体条件及权利。
+The following applies to editorial topic selection and does not reject an explicitly requested basic teaching topic. Verify primary sources, specific conditions and rights before production.
 
-“热会从热处传向冷处吗”若只复述方向，解释增量不足；“45℃冷却液怎样给AI芯片降温，为什么不用更冷的水？”可沿冷板吸热、循环输运、室外排热与制冷需求讲清系统约束和能耗取舍。45℃仅指[NVIDIA所述特定架构条件](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/)，免机械制冷取决于地域和设计，不能推广成所有数据中心都省水或永不制冷。
+“热会从热处传向冷处吗” offers insufficient explanatory increment if it only repeats the direction of transfer. “45℃冷却液怎样给AI芯片降温，为什么不用更冷的水？” can explain system constraints and energy tradeoffs through cold-plate heat absorption, circulating transport, outdoor heat rejection and refrigeration demand. 45℃ applies only to the [specific architectural conditions described by NVIDIA](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/). Avoiding mechanical refrigeration depends on location and design; do not generalize this into all data centers saving water or never using refrigeration.
 
-## 开场与观众范围
+<a id="开场与观众范围"></a>
+## Opening and audience scope
 
-默认受众为无相关专业训练的成年人，用户指定受众时沿其请求。先给可识别对象及必要情境，再收束原题并接入正文第一观察；具体声画方法统一见[开场编排](viewer-retention-design.md)。主题在开场段内说清并与封面一致，不要求首句报定义、先念答案或固定秒数。
+The default audience is adults without relevant professional training; follow the user's request when an audience is specified. First establish a recognizable object and necessary context, then narrow to the original question and connect to the first main-body observation. Specific audiovisual methods are owned by [opening direction](viewer-retention-design.md). Make the topic clear within the opening section and consistent with the cover. Do not require a first-sentence definition, a spoken answer first or fixed seconds.
 
-看点来自有据的难点、差异或待解释观察；观看收益写成能说明、排除或判断什么。核心答案可在必要情境后直接给，也可随观察逐步揭示；不得靠假反常识、夸大或“看到最后”拖延。封面、标题、口播与画面承诺同一问题和条件。
+Viewing interest comes from an evidenced difficulty, difference or observation requiring explanation. State the viewing benefit as something viewers can explain, rule out or judge. The core answer may be given directly after necessary context or gradually revealed through observation. Do not delay it with false counterintuition, exaggeration or “看到最后”. The cover, title, narration and imagery promise the same question and conditions.
 
-在 `topic_alignment.opening` 用 `curiosity_gap` 说明上述预期与真实差异/疑问及条件，用 `viewer_payoff` 说明具体观看收益；核心答案沿用 `brief.one_sentence_answer` 作为创作端目标，不要求第一句念出；`voiceover` 保存完整开场段，`spoken_question` 保存其中实际点明的问题/主题陈述，`answer_route` 保存简短总答或解释路线，可与主题导入合句。`shot_ids` 包含情境、主题导入与正文承接，不把整个开场压成一句问题；科学依据沿用主张/来源记录。`payoff_steps` 按正文实际推进顺序引用既有 `coverage` 的 `scope_id`、`shot_ids`，用 `contribution` 说明该段提供何证据、补何前提、排除何解释、展示何关系或验证何预测；结尾沿用 `ending.answer` 回答原问题，不另建批准。这些字段用于本轮新建或修订的吸引力方案，旧包未改此方案时可沿现有简报记录；一旦填写其中任一字段，结构检查要求三项完整、正文引用有效。
+In `topic_alignment.opening`, use `curiosity_gap` to state the expected-versus-actual difference/question and its conditions, and `viewer_payoff` for the concrete viewing benefit. Reuse `brief.one_sentence_answer` as the production-side core-answer target without requiring it in the first sentence. `voiceover` preserves the complete opening section; `spoken_question` preserves its actual statement of the question/topic; `answer_route` preserves a brief overall answer or explanation route and may share a sentence with the topic introduction. `shot_ids` includes context, topic introduction and the handoff into the main body rather than compressing the entire opening into one question. Reuse claim/source records for scientific evidence. `payoff_steps` references the existing `coverage` `scope_id` and `shot_ids` in the main body's actual progression, with `contribution` stating the evidence supplied, prerequisite established, explanation ruled out, relationship shown or prediction tested. Reuse `ending.answer` to answer the original question, without another approval. These fields apply to the attraction plan newly created or revised in this round. Old packages whose plan is unchanged may retain their existing brief records; once any of these fields is supplied, structural checks require all three and valid main-body references.
 
-以下例子只示范问题与证据关系；主制作工具按[成片风格](tool-routing.md#按成片风格锁定主制作工具)，2D只用于已明确的辅助层/委托范围。采用前按[科学与素材](science-and-rights.md)核主源及使用权。
+The examples below demonstrate only question-to-evidence relationships. Choose the main production tool by [finished-film style](tool-routing.md#lock-the-primary-tool-by-final-film-style); 2D is limited to explicitly authorized auxiliary layers/commission scope. Before use, verify primary sources and rights under [science and assets](science-and-rights.md).
 
-| 题材与可选开场 | 好奇缺口与观看收益 | 可视证据、兑现与边界 |
+| Topic and possible opening | Curiosity gap and viewing payoff | Visible evidence, delivery and boundaries |
 | --- | --- | --- |
-| 普通冰浮水：“杯里的冰浮在水面。同样是水，结冰后为什么会留在上面？我们从同样多的水开始，看结冰时内部排列怎样改变。” | 固体可能被想象得更紧实，但普通冰的排列更疏松；看完能用相同质量的体积比较解释密度差异 | 按本期来源契约制作或取用连续冰块浮水画面；按已定风格制作的结构示意保持分子数量/所代表质量不变，对比液态排列与普通冰的较疏松结构，再回浮水结果。分子本身不膨大，“密度小”不是质量消失；限常见压力下普通水结成的冰与液态水，不推广到所有固体、冰相或液体；[USGS说明](https://www.usgs.gov/water-science-school/science/water-density/) |
-| 晴朗白天：“晴天抬头，太阳之外，大片天空也显出颜色。阳光看起来接近白色，为什么我们看到的却是蓝天？先追踪一束光，看看它怎样从天空方向进入眼睛。” | 光源外观与天空颜色不同；看完能说明光怎样从天空方向进入眼睛 | 按本期来源契约制作或取用蓝天画面，定位观察方向；按已定风格制作的示意依次建立阳光、空气、散射和眼睛。蓝红对照不是阳光只有两色，蓝光比红光散射更强不等于蓝光在所有可见光中最强。若原题还包括红日落，先区分看天空的散射光与看太阳方向经历较长路径的光，不能把两条路径混为一谈；[NASA说明](https://spaceplace.nasa.gov/blue-sky/en/) |
-| 雷声迟到：“雷雨夜，远处天空先亮了一下，过一会儿雷声才传来。同一次放电，为什么看到和听到的时间不同？我们沿着光与声音各走一遍。” | 看见与听见的先后不等于声源生成的先后；看完能区分产生过程和传播过程 | 参考同次事件的原始同步声画核现象，本片按来源契约制作或取用相符素材，不重排音效制造延迟；按已定风格制作的示意先定位放电加热空气的声源，再比较传播到观察者的过程。不能暗示闪电过一会才制造雷声；时延并非声源机制的替代答案。只在本题范围含延迟时采用，不擅改雷声声源题；[NOAA说明](https://www.nesdis.noaa.gov/about/k-12-education/severe-weather/what-causes-lightning-and-thunder) |
+| Ordinary ice floating in water: “杯里的冰浮在水面。同样是水，结冰后为什么会留在上面？我们从同样多的水开始，看结冰时内部排列怎样改变。” | A solid may be imagined as more tightly packed, but ordinary ice has a more open arrangement. Viewers can explain the density difference by comparing volumes of equal mass. | Produce or acquire continuous ice-floating imagery under this episode's provenance contract. A structural illustration in the selected style holds molecule count/represented mass constant, compares the liquid arrangement with ordinary ice's more open structure, then returns to the floating result. Molecules themselves do not expand; lower density does not mean mass disappears. Limit the explanation to ordinary water ice and liquid water at common pressures; do not generalize to all solids, ice phases or liquids. [USGS explanation](https://www.usgs.gov/water-science-school/science/water-density/) |
+| Clear daytime sky: “晴天抬头，太阳之外，大片天空也显出颜色。阳光看起来接近白色，为什么我们看到的却是蓝天？先追踪一束光，看看它怎样从天空方向进入眼睛。” | The source's appearance differs from the sky's color. Viewers can explain how light enters the eye from the sky's direction. | Produce or acquire blue-sky imagery under this episode's provenance contract and establish the viewing direction. A diagram in the selected style sequentially establishes sunlight, air, scattering and the eye. A blue/red comparison does not mean sunlight has only two colors; blue scattering more strongly than red does not mean blue scatters most strongly among all visible light. If the original question also includes red sunsets, first distinguish scattered light seen when looking at the sky from light traveling a longer path in the sun's direction; do not conflate the two paths. [NASA explanation](https://spaceplace.nasa.gov/blue-sky/en/) |
+| Delayed thunder: “雷雨夜，远处天空先亮了一下，过一会儿雷声才传来。同一次放电，为什么看到和听到的时间不同？我们沿着光与声音各走一遍。” | The order of seeing and hearing is not the order in which the sources are generated. Viewers can distinguish generation from propagation. | Refer to original synchronized audiovisual material from the same event to verify the phenomenon; produce or acquire matching assets under this film's provenance contract, without rearranging sound effects to fabricate delay. A diagram in the selected style first locates the sound source in air heated by the discharge, then compares propagation to the observer. Do not imply that lightning waits before creating thunder. Delay does not replace an answer about the sound-source mechanism. Use this only if delay is in scope; do not change a question about thunder's source. [NOAA explanation](https://www.nesdis.noaa.gov/about/k-12-education/severe-weather/what-causes-lightning-and-thunder) |
 
-单期确定一个主问题，附带问题说明必要性及依赖的已建立关系。先完成主解释，再展开必要延伸；首屏、口播路线、主要镜头与结尾须共同回答主问题，附带内容按作用取舍，不固定比例。
+Set one main question per episode. Explain the necessity of subsidiary questions and the established relationships they depend on. Complete the main explanation before necessary extensions. The first screen, narration route, principal shots and ending must answer the main question together. Keep or remove subsidiary content according to its role, without a fixed proportion.
 
-## 四处回查原题，不靠关键词打勾
+<a id="四处回查原题不靠关键词打勾"></a>
+## Recheck the original question in four places without keyword box-ticking
 
-在 `topic_alignment` 中绑定当前主题摘要，并记录：
+Bind the current topic digest in `topic_alignment` and record:
 
-1. `opening`：实际首屏标题、主题口播（`voiceover`）、点明原问题的主题导入（兼容字段 `spoken_question`，可具体提问或准确、带条件的结论式主题陈述，不要求问号）、简短准确的总答或解释路线（`answer_route`，可与主题导入合句）、意图类型、覆盖的必要范围ID、对应镜头ID；吸引力方案沿本页记录具体缺口、观看收益与正文兑现引用。先问“这仍是原来的问题吗”，再问“为什么值得继续看、表达是否清楚”
-2. `coverage`：每个必要范围对应哪些实际镜头，以及它们提供怎样的回答证据。另核信息优先级：局部修复段应服务原题，不能因已做好或获局部认可而成为整片骨架，让观众花主要精力学局部流程、却看不到原问题的整体答案。段落长度按理解所需判断，不设统一秒数/比例；不能只列相同对象或关键词，也不为了补解释擅加新问题
-3. `ending`：实际结尾回答、意图类型、必要范围ID及镜头ID。应兑现开场承诺，而不是换一个容易总结的问题
-4. 局部内容的 `omitted_scope_ids`：明确哪些整期必答范围尚未包含，不伪造全覆盖
+1. `opening`: the actual first-screen title, topic narration (`voiceover`), topic introduction that identifies the original question (compatibility field `spoken_question`, which may be a specific question or an accurate, conditional declarative topic statement and need not contain a question mark), brief accurate overall answer or explanation route (`answer_route`, which may share a sentence with the topic introduction), intent type, covered required-scope IDs and corresponding shot IDs. The attraction plan records the specific gap, viewing payoff and main-body fulfillment references on this page. First ask whether this is still the original question, then why viewers should continue and whether the expression is clear.
+2. `coverage`: the actual shots corresponding to each required scope item and the answering evidence they provide. Also check information priority: a local repair section must serve the original question. Being finished or locally approved cannot make it the film's backbone, with viewers spending most of their effort learning a local process while missing the original question's overall answer. Judge section length by understanding needs rather than uniform seconds/proportions. Matching object names or keywords is insufficient, and adding explanations does not authorize new questions.
+3. `ending`: the actual closing answer, intent type, required-scope IDs and shot IDs. It must fulfill the opening promise rather than switch to a question that is easier to summarize.
+4. Local content's `omitted_scope_ids`: explicitly identify the episode's required answer scope not yet included, without fabricating complete coverage.
 
-结构检查核版本、改题记录、范围与镜头引用；实际语义仍须审看，例如同一 intent 或关键词不能证明“作用介绍”回答了“怎么制造”。
+Structural checks verify versions, topic-change records, scope and shot references. Actual semantics still require viewing: the same intent or keywords cannot prove that an introduction to uses answers how something is manufactured.
 
-导出后由编辑或独立审查者实际看首屏、听开场、检查必要段落并听看片尾。在 `qa.topic_alignment` 分别记录 `opening_title`、`opening_voiceover`、`coverage`、`ending` 的状态、具体观察及证据位置；任何失败或未验都阻断完整交付。`reviewer_role` 如实写 editor/independent/user，不能把自审或用户审看冒充独审。语义判断可用独立审查辅助，但不冒充真人观众反馈。
+After export, an editor or independent reviewer actually inspects the first screen, hears the opening, checks required sections and watches/listens to the ending. In `qa.topic_alignment`, separately record the status, concrete observations and evidence locations for `opening_title`, `opening_voiceover`, `coverage` and `ending`. Any failure or unreviewed item blocks complete delivery. Truthfully record `reviewer_role` as editor/independent/user; do not present self-review or user viewing as independent review. Independent review may support semantic judgment but must not masquerade as real audience feedback.
 
-开场表达沿本页 [开场与观众范围](#开场与观众范围) 实审。不能只有可见标题而没有主题口播，也不能把中间解释当主题导入；反直觉结论引入仍须自然点明锚定的核心问题，不能把制造过程改成作用介绍。`qa.topic_alignment.opening_voiceover` 增记 `review_scope=final_export`、实际听到的 `heard_question`、`heard_answer_route` 和 `evidence` 中的时间段/文件定位；只审脚本、ASR或旧音轨都保留 pending。总答不准确、缺明确主题或解释路线、题意漂移须退回开场与相关口播；内部吸引力判断与实际留存按 [质量审查](quality-acceptance.md#自主解释与表达审查) 和 [真实复盘](production-checkpoints.md#产能成本与复盘) 分别记录。
+Actually review opening expression under [Opening and audience scope](#opening-and-audience-scope) on this page. A visible title alone cannot replace topic narration, and an intermediate explanation cannot stand in for the topic introduction. An opening using a counterintuitive conclusion must still naturally identify the anchored core question; it must not turn a manufacturing process into an introduction to uses. Add `review_scope=final_export`, the actual `heard_question`, `heard_answer_route` and time ranges/file locations in `evidence` to `qa.topic_alignment.opening_voiceover`. Script-only, ASR-only or old-track reviews remain pending. An inaccurate overall answer, missing explicit topic or explanation route, or topic drift requires returning to the opening and related narration. Record internal attraction judgments and actual retention separately under [quality review](quality-acceptance.md#autonomous-explanation-and-expression-review) and [actual retrospectives](production-checkpoints.md#capacity-cost-and-retrospectives).
 
-以 `topic_review_sha256(data)` 绑定当前主题、范围、分镜、实际音轨、素材、交付文件及已审媒体哈希。换标题口播、镜头、素材或导出后重审，不能只重算摘要继续沿用旧结论。原题核对先于局部美术和节奏验收；发现跑题则先恢复范围与片头，再评美术质量。
+Use `topic_review_sha256(data)` to bind the current topic, scope, storyboard, actual audio, assets, delivery files and reviewed-media hashes. Recheck after title narration, shots, assets or exports change. Recalculating the digest alone cannot carry forward old conclusions. Original-topic verification precedes local art and rhythm acceptance; if the work has drifted, restore scope and the opening before judging art quality.
 
 
-## 封面题意到实际开场的连续核对
+<a id="封面题意到实际开场的连续核对"></a>
+## Continuously check the cover's question against the actual opening
 
-连续核对“封面承诺 → 相关情境/真实看点 → 具体主题导入 → 总答或路线 → 正文第一观察”。自然同义表达即可，但须明确对象、条件与关系；例如“看看天空，它怎么这样”不能代替“晴天天空的蓝色从哪里来”。不要求照念封面或加静态题卡。
+Continuously check the chain from cover promise to relevant context/actual interest, specific topic introduction, overall answer or route, and first main-body observation. Natural equivalent wording is sufficient, but objects, conditions and relationships must be explicit. For example, “看看天空，它怎么这样” cannot replace “晴天天空的蓝色从哪里来”. Do not require reading the cover aloud or adding a static topic card.
 
-在既有 `topic_alignment.opening` 增记 `cover_question`（封面承诺的具体问题）、`question_relation`、`question_comparison`（对照原题、封面与 spoken_question 的对象、条件及要解释的关系）和 `visual_handoff`（计划怎样承接封面主体/场景，或为什么切向另一观察）。计划自查具体题意成立记 `specific_equivalent`；`generic_only`、`different_question`、`pending` 不能通过 plan/G1 及后续对应检查。计划阶段只核问题和衔接方案，不要求尚不存在的媒体；这份声明也不代表最终口播或过渡已验。
+Add `cover_question` (the cover's promised concrete question), `question_relation`, `question_comparison` (comparison of the original topic, cover and spoken_question in terms of objects, conditions and relationship to explain), and `visual_handoff` (the planned handoff from the cover subject/scene or reason for cutting to another observation) to the existing `topic_alignment.opening`. Record `specific_equivalent` when plan self-review confirms the specific meaning. `generic_only`, `different_question` and `pending` cannot pass plan/G1 or later applicable checks. Planning checks only the question and handoff design, without requiring nonexistent media; the declaration does not establish final-narration or transition approval.
 
-G5/完整交付沿 `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` 绑定 [实际开场审查记录](../assets/opening-review-template.json)。记录须以 `opening_context_sha256(data)` 绑定当前主题、计划、分镜、音轨、交付版本及实际听到的主题导入/路线；`video`和本次要求的`covers`各绑定（video_only的covers为空对象，不核cover_question）当前交付路径、实际文件 SHA256 与 qa.reviewed_sha256。封面分别记实看到的标题、核心问题、主体及与开场的具体比较；实际口播沿用 opening_voiceover 的 heard_question/heard_answer_route，另记题意比较与答案/路线的准确、简短、顺序观察。`heard_question` 与 `question_range_s` 对应上述 `spoken_question` 的主题导入，可为结论式主题陈述；它已经给核心答案时，后续 `answer_route` 说明怎样解释或验证，不强迫重新提问或重复答案。`viewed_range_s` 从实际导出首帧开始，覆盖情境铺垫、主题导入及答案/路线，并持续到正文第一项观察实际兑现；`question_range_s` 可以晚于0，反映实际主题导入位置，不能为检查器虚填首秒；两项标真实时码，主题导入不得晚于路线开始；同一句承担两项职责时，区间可相同或交叠，不为填表另造一句或错填时码。新输出、标题、音轨或封面变更须重审；只刷新外层证据哈希或摘要不能延续旧审查。
+At G5/complete delivery, use `qa.topic_alignment.opening_alignment={status,evidence:{file,sha256}}` to bind the [actual opening review record](../assets/opening-review-template.json). The record must use `opening_context_sha256(data)` to bind the current topic, plan, storyboard, audio, delivery version and actually heard topic introduction/route. `video` and this task's required `covers` each bind the current delivery path, actual file SHA256 and qa.reviewed_sha256 (video_only has an empty covers object and does not check cover_question). For each cover, record the actually seen title, core question, subject and specific comparison to the opening. Actual narration reuses opening_voiceover's heard_question/heard_answer_route; also record the meaning comparison and observations of answer/route accuracy, brevity and order. `heard_question` and `question_range_s` correspond to the `spoken_question` topic introduction above and may be a declarative topic statement. If it already supplies the core answer, subsequent `answer_route` explains how it will be explained or tested; do not force another question or repeated answer. `viewed_range_s` starts at the actual export's first frame, includes context, topic introduction and answer/route, and continues until the first main-body observation actually fulfills the promise. `question_range_s` may start after 0 to reflect the real introduction position; do not fabricate a first-second timestamp for the checker. Both use actual timecodes, and the topic introduction cannot start after the route. When one sentence serves both roles, ranges may match or overlap; do not invent another sentence or false timecodes for the record. Review new outputs and title, audio or cover changes again. Refreshing only the outer evidence hash or digest cannot carry forward the old review.
 
-`visual_handoff` 分别记录实际 opening_subject、relationship、observation、从首帧开始且在已审范围内的 range_s 及 status：可为 `continuous_subject`（可识别的主体/场景关系延续），也可为 `motivated_transition`（能跟上的、有观察/解释动机的切换）。记录封面主体如何在首段被识别、切换处如何承接提问和路线，并由实际连续看听判断是否突兀；只有漂亮封面、首帧抽查、脚本、ASR或重排设想都不能填 pass。新转场方案在实际审看前保持 pending，已知突兀保持 fail；不能被总体 pass 隐藏。
+For `visual_handoff`, separately record actual opening_subject, relationship, observation, range_s starting at the first frame and lying within the reviewed range, and status. It may be `continuous_subject` (a recognizable subject/scene relationship continues) or `motivated_transition` (a followable switch motivated by observation/explanation). Record how the cover subject is recognized in the first section and how the switch connects to the question and route. Judge abruptness from actual continuous viewing/listening. An attractive cover, a first-frame spot check, script, ASR or imagined reorder cannot receive pass. A new transition plan remains pending before actual review, and known abruptness remains fail; an overall pass cannot hide it.
 
-实际审查来源可为 editor、independent 或 user。`sources` 可汇集合适的分项来源，不要求同一人核完四项；每项记 status、真实 reviewer、原始 reference、原文 statement、其原始文字证据 file/sha256，以及确实核过的 reviewed_items 子集（合并须覆盖 cover_question、spoken_question、answer_route、visual_handoff）。每个来源的 actually_watched/actually_heard、method 和 range_s 只描述它对绑定版本及所负责时段的真实覆盖；封面实查可不听声音，口播项须连续实听，visual_handoff 须正常速度连续看听。用户明确对该版本开场进行了听看并反馈具体项目，可记录为 user 来源并用于这些项目，不因助手没有听觉能力而一律拒绝，也不能改写成助手/editor 已听。助手自身未听仍如实未验。笼统“不错”、整片整体好评或局部美术认可，保留其真实范围，不能自动填满开场题意、路线或连续性；来源没有覆盖的项目保持 pending，需要补足实际记录。
+Actual review sources may be editor, independent or user. `sources` may combine suitable item-level sources without requiring one person to check all four items. Each item records status, the real reviewer, original reference, original statement, its original textual evidence file/sha256 and the reviewed_items subset actually checked (combined coverage must include cover_question, spoken_question, answer_route and visual_handoff). Each source's actually_watched/actually_heard, method and range_s describe only its actual coverage of the bound version and assigned interval. A cover inspection need not hear audio; narration items require actual continuous listening, and visual_handoff requires continuous viewing/listening at normal speed. If the user explicitly watched/listened to that version's opening and gave feedback on specific items, it may be recorded as a user source and used for those items. Do not reject all such evidence because the assistant lacks hearing capability, or rewrite it as assistant/editor listening. The assistant's own unheard material remains truthfully unreviewed. Generic praise such as good, overall praise of the film or local art approval retains its actual scope and cannot automatically fill in opening meaning, route or continuity. Items not covered by sources remain pending and need actual records.
 
-检查器核字段、时码、版本及引用存在；题意和转场结论由实际审查者完成。未覆盖项目保持 pending，不用局部好评或技术通过补签全部门检。
+The checker verifies fields, timecodes, versions and existence of references; actual reviewers supply the meaning and transition judgments. Uncovered items remain pending. Local praise and technical passes cannot retroactively sign every gate.
 
-## E01：解释承诺与问题范围
+<a id="e01解释承诺与问题范围"></a>
+## E01: Explanation promise and question scope
 
-开工前分别写主题、具体问题、完成观看后应能说明或判断的任务。主题名不能充当解释目标；每项承诺绑定明确答案与负责解释的段落。相关问题按主从组织，不设通用问题个数上限，也不据此擅自扩大用户范围。确需收窄时，按本页范围权限同步调整标题、开场与结尾，不悄悄删除难以解释的承诺。
+Before work, separately state the topic, concrete question and what viewers should be able to explain or judge after watching. A topic name cannot serve as an explanation objective. Bind every promise to an explicit answer and the section responsible for explaining it. Organize related questions as main and subsidiary questions, without a generic question-count ceiling or expansion beyond the user's scope. If narrowing is necessary, update the title, opening and ending together under this page's scope-authority rules; do not silently delete promises that are difficult to explain.
