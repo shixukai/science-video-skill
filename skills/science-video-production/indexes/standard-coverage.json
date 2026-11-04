@@ -298,7 +298,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "c8b2766692bb44e22c6460a7ead76434903117ad624c5632685bfcc7c0651f32",
+      "sha256": "1d5e178c47ac0eb2a995d3b18522b3d3e635d5623f3ee3c26836f472d764cba0",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -337,7 +337,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "525eb7a67c3bf886c3d2f5f04f135434877ff0c40abf1789f935629fb7638faa",
+      "sha256": "246acc8cce6ec556544a011e527288e7e2478c832df29d5c4b98e7ffe25f7886",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -361,7 +361,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "35768b6a16a6b7c7c3c5d82f988c93da2ddd53530f0ae0cc3d5dcb51e20c2c61",
+      "sha256": "b157b3aa4f18cb9ad67d431c0b61098604ee307809c043a6e12713396d2289ab",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -423,7 +423,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "027b4a629162572e49a9c7a5ac830480ce583902544bd8d2b4fd834c303b54f0",
+      "sha256": "193d4caebb9f3e0bb98aafc714e746c0d8b1a588be4e7ecd7c292ad23b1c32aa",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
