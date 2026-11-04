@@ -61,7 +61,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "d926b54af50dffde81a420e5e30edccb573fdca0762d9a10f11f4e984dde304c",
+      "sha256": "b6dc594fdc37c15970fa56f62ed22db1b66c1783f927c47123f2eb1d78272ee2",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -245,7 +245,7 @@
     {
       "owner_id": "visual",
       "file": "references/material-rendering.md",
-      "sha256": "d2f62356e99e9373b2bcd1890b1544807f6ed9eec519913446db621c531afd19",
+      "sha256": "d8c96346e1af6ae228ffa751d5369f39edc829f470c341a3f62c69847aa4b22a",
       "anchors": [
         "general-material-rendering-standard-for-3d-video",
         "1-define-each-material-and-its-finish",
@@ -298,7 +298,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "1d5e178c47ac0eb2a995d3b18522b3d3e635d5623f3ee3c26836f472d764cba0",
+      "sha256": "482ddc88ad49c5309fbde1a0b039c4db7190eebb80434993da9dd98a523feed1",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -361,7 +361,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "b157b3aa4f18cb9ad67d431c0b61098604ee307809c043a6e12713396d2289ab",
+      "sha256": "779cfe34c320a393a753c490b867e969a712f1752b4cd6e9ebc2567adeee6729",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -423,7 +423,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "193d4caebb9f3e0bb98aafc714e746c0d8b1a588be4e7ecd7c292ad23b1c32aa",
+      "sha256": "6bdbb4c47d567ef9f31f396d74a9986b7c3253aa281a765d158769ac98f3b084",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
