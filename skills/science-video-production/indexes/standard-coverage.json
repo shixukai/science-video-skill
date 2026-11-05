@@ -61,7 +61,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b6dc594fdc37c15970fa56f62ed22db1b66c1783f927c47123f2eb1d78272ee2",
+      "sha256": "a23aeff28bf2b87f736fd658af20e103d7b0de655579c571954443351b834365",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -74,7 +74,7 @@
         "5-sole-entry-for-quality-judgments",
         "6-check-from-export-through-actual-platform-completion",
         "delivery-package-and-publication-receipts",
-        "sync-douyin-to-toutiao-and-disable-downloads",
+        "cross-platform-association-monetization-and-download-controls",
         "actual-g1g7-progression-records",
         "capacity-cost-and-retrospectives",
         "platform-topic-selection-and-data-review",
@@ -424,7 +424,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "6c3e6127c63be958ca8b6d1f65d6087625943bb5afdf650b6dbc25b5455a71c3",
+      "sha256": "c1e04d842a37c45073d34c44c4200f4b9b8bd46fc3ee0bd07dac3c393b1c4338",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
