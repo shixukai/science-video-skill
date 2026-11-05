@@ -200,7 +200,7 @@ def validate(checks, record, viewing, gate, policy, step_ids):
     need(isinstance(evidence, list) and record["screen"] in evidence, "screen must be bound in gate evidence")
     media = checks.evidence({"file": viewing.get("file"), "sha256": viewing.get("sha256")}, prefix+"media")
     try:
-        report = json.loads(path.read_text())
+        report = json.loads(path.read_text(encoding="utf-8"))
         actual = screen(media, report["regions"], policy["screen"])
         need(report == actual, "screen stale/tampered; regenerate against current export/settings")
         duration = actual["duration"]
@@ -289,8 +289,8 @@ def main():
     p.add_argument("--report", type=Path, required=True, help="new immutable JSON file")
     args = p.parse_args()
     try:
-        policy = json.loads((Path(__file__).resolve().parents[1]/"config/production-policy.json").read_text())
-        result = screen(args.media, json.loads(args.regions.read_text()), policy["subject_motion"]["screen"])
+        policy = json.loads((Path(__file__).resolve().parents[1]/"config/production-policy.json").read_text(encoding="utf-8"))
+        result = screen(args.media, json.loads(args.regions.read_text(encoding="utf-8")), policy["subject_motion"]["screen"])
         with args.report.open("x", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False, indent=2)
             f.write("\n")

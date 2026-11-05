@@ -13,7 +13,16 @@
         "cover-opening-alignment",
         "curiosity-gap-and-viewer-payoff",
         "adult-topic-selection",
-        "audience-first-comparative-selection"
+        "audience-first-comparative-selection",
+        "viral-appeal-screening",
+        "package-first-title-cover-hook",
+        "first-seconds-hook",
+        "retention-payoff-cadence",
+        "scroll-viewer-appeal-check",
+        "hit-pattern-learning-loop"
+      ],
+      "supporting_files": [
+        "references/viral-appeal-and-packaging.md"
       ]
     },
     {

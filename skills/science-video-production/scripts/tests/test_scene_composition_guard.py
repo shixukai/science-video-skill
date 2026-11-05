@@ -201,7 +201,7 @@ class SceneCompositionTests(unittest.TestCase):
         registry = json.loads((root / "indexes/standard-coverage.json").read_text())
         self.assertEqual(registry, build(root))
         self.assertNotIn("rules", registry)
-        self.assertEqual({s["file"] for s in registry["sections"]},
+        self.assertEqual({s["file"] for s in registry["sections"] if s["file"].startswith("references/")},
                          {p.relative_to(root).as_posix() for p in (root / "references").glob("*.md")})
 
 

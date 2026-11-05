@@ -294,7 +294,7 @@ def check(root):
             need(all(a["rights"].get(k) for k in ("basis", "evidence", "scope")), "asset rights evidence missing")
             need(p.suffix in (".svg", ".json", ".css", ".py"), "public catalog contains production media")
             if p.suffix == ".svg":
-                for node in ET.fromstring(p.read_text()).iter():
+                for node in ET.fromstring(p.read_text(encoding="utf-8")).iter():
                     need(node.tag.split("}")[-1] not in ("image", "script", "foreignObject"), "SVG embeds media or executable content")
                     for key, value in node.attrib.items():
                         if key.split("}")[-1] in ("href", "src"):
@@ -336,7 +336,7 @@ def check(root):
                     target = local_path(root, p.parent, name) if name else p
                     need(target.exists(), "broken local link: " + link)
                     if anchor and target.is_file() and target.suffix == ".md":
-                        heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(), re.M)]
+                        heads = [slug(h) for h in re.findall(r"^#+ (.+)$", target.read_text(encoding="utf-8"), re.M)]
                         need(anchor in heads, "broken heading link: " + link)
     except (KeyError, IndexError, TypeError, ValueError, OSError, ET.ParseError) as exc:
         errors.append("malformed reference system: " + str(exc))

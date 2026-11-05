@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "531c8c794e5b9093cd7a4f5724f1caa9261e0a853d3adc65a8e9f49e95e06276",
+      "sha256": "9ee60cb5d985567759fc1103494256320a7a8f0779884d78adfffedc977f2b66",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -20,6 +20,22 @@
         "recheck-the-original-question-in-four-places-without-keyword-box-ticking",
         "continuously-check-the-covers-question-against-the-actual-opening",
         "e01-explanation-promise-and-question-scope"
+      ]
+    },
+    {
+      "owner_id": "topic",
+      "file": "references/viral-appeal-and-packaging.md",
+      "sha256": "d9764159c4f181f21b0bdac07f0beb3a0bb95f7ed5ae82e7b1635b45b0662292",
+      "anchors": [
+        "viral-appeal-honest-hooks-packaging-and-retention",
+        "screen-appeal-before-deep-research",
+        "design-the-package-before-the-script",
+        "win-the-first-three-seconds",
+        "keep-a-reason-to-stay",
+        "end-fast-and-invite-real-interaction",
+        "duration-format-and-series-identity",
+        "scroll-viewer-appeal-check",
+        "learn-from-what-actually-performs"
       ]
     },
     {
@@ -61,7 +77,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a23aeff28bf2b87f736fd658af20e103d7b0de655579c571954443351b834365",
+      "sha256": "d87f7c8966b37a3fbcc7a12a76a57c902ef0116232d88891ec487fac583aeba1",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -96,7 +112,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "a46fcdabb6b22edb8012036095aa67d402eeb0782a63e6a5e545b1c0ffccd57d",
+      "sha256": "72109e8c3923bf7b5b9f90076a5f2b38b8a6450c4f570cf9405e329934d27bb0",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -299,7 +315,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "482ddc88ad49c5309fbde1a0b039c4db7190eebb80434993da9dd98a523feed1",
+      "sha256": "fae6dc0a897b78dd25bb29cacb07f1130d79d4a19e7b68e831e8c6e2622d5ab8",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -424,7 +440,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "c1e04d842a37c45073d34c44c4200f4b9b8bd46fc3ee0bd07dac3c393b1c4338",
+      "sha256": "fad27427294d027a145668e170f38c5a3a617cfd2e5f2b4946c10d72405a70d4",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

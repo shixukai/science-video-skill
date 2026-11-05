@@ -60,7 +60,7 @@ def skill_snapshot(root=SKILL_ROOT):
             raise ValueError("Skill lock does not accept symlinks: " + str(rel))
         if p.is_file():
             files[rel.as_posix()] = file_hash(p)
-    return {"version": json.loads((root / "config/series-profile.json").read_text())["version"],
+    return {"version": json.loads((root / "config/series-profile.json").read_text(encoding="utf-8"))["version"],
             "files": files, "tree_sha256": digest(files)}
 
 

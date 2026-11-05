@@ -26,12 +26,12 @@ G2 checks this same progression in the complete sound-and-picture rough cut, usi
 <a id="先建立情境和看点再进入解释"></a>
 ## Establish context and a reason to watch before explaining
 
-A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. The responsibilities below may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
+A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show the topic's most striking real visual in motion and state the concrete question, as described in [win the first three seconds](viral-appeal-and-packaging.md#win-the-first-three-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it. The responsibilities below may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
 
 | Opening responsibility | What viewers should gain | Corresponding sound/picture design |
 | --- | --- | --- |
 | Recognize context | What is present, where does it happen, or what is it for? | Enter through a concrete object, product application, complete phenomenon or supported result; provide recognition time and necessary narration rather than a list of technical terms |
-| See a worthwhile question | What real difficulty, difference, constraint or phenomenon needs understanding? | Use visible goals, comparisons, operational difficulty or a result/process question. A real problem is enough; do not manufacture counterintuitive claims, crises or spectacle |
+| See a worthwhile question | What real difficulty, difference, constraint or phenomenon needs understanding? | Use visible goals, comparisons, operational difficulty or a result/process question. Lead with the topic's strongest real surprise, spectacle or stakes; do not manufacture counterintuitive claims, crises or spectacle |
 | Understand the viewing promise | What does the film explain, and what can viewers understand/judge afterward? | Narrow overall context to the original concrete question/scope and a clear benefit; retain only orienting route information rather than reciting a full contents list |
 | Enter the first step naturally | Why inspect this detail/process now? | Move from the opening object/goal into the first necessary observation/explanation with identity, scale and state continuity; do not jump from a lively teaser to an unexplained teaching model |
 
@@ -127,7 +127,7 @@ Choose among these forms of progression as the topic requires:
 - **Explain limits:** Once the main explanation holds, use genuinely necessary comparison to show when it differs; optional side branches are not new mysteries.
 - **Revisit the phenomenon:** End on features initially appreciated as beauty whose meaning viewers can now identify.
 
-Deliver the current observation before introducing the next necessary one; “more amazing next” or “watch to the end” cannot replace a concrete task. Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
+Deliver the current observation before introducing the next necessary one; “more amazing next” or “watch to the end” cannot replace a concrete task. A concrete re-hook that opens the next specific question is encouraged; see [keep a reason to stay](viral-appeal-and-packaging.md#keep-a-reason-to-stay) for payoff cadence and escalation. Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
 
 <a id="用镜头关系表达按需使用蒙太奇"></a>
 ## Express relationships through shots; use montage as needed

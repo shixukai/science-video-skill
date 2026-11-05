@@ -530,8 +530,8 @@ class Checks:
   if final:
    self.need(bool(retests) and all(review.get('scope')=='full_episode' for review in retests),'failure resolution requires current full-film retest, not a sample-only review')
  def asset_catalog(self,steps,representative):
-  schema=json.loads((Path(__file__).resolve().parents[1]/'assets/production-asset.schema.json').read_text())
-  owners=json.loads((Path(__file__).resolve().parents[1]/'indexes/rule-owners.json').read_text())
+  schema=json.loads((Path(__file__).resolve().parents[1]/'assets/production-asset.schema.json').read_text(encoding='utf-8'))
+  owners=json.loads((Path(__file__).resolve().parents[1]/'indexes/rule-owners.json').read_text(encoding='utf-8'))
   known={rule for owner in owners['owners'] for rule in owner['owns']}
   used,selected_shots,dependency_errors=dependencies(self.data,representative)
   if any(obj(obj(a).get('origin')).get('category')=='licensed_3d_model' for a in seq(self.data.get('assets'))):
@@ -1051,7 +1051,7 @@ class Checks:
 
 def check_stage(data,root,target):
  try:
-  policy=json.loads((Path(__file__).resolve().parents[1]/'config/production-policy.json').read_text())
+  policy=json.loads((Path(__file__).resolve().parents[1]/'config/production-policy.json').read_text(encoding='utf-8'))
   return Checks(data,root).run(target,policy)
  except (KeyError, TypeError, ValueError, OSError) as exc:
   return ['stage: malformed or missing required evidence/policy: '+str(exc)]

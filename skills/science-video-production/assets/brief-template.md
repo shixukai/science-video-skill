@@ -16,6 +16,15 @@ Record `episode.brief.topic_selection` under [adult-audience topic selection](..
 - Interest rationale defaults to an editorial hypothesis; claim observed audience interest only with actual evidence, never fabricated research/popularity:
 - Cite authorized platform evidence in private ledgers under [data verification](../references/production-checkpoints.md#platform-topic-selection-and-data-review), recording updates/window/sample/denominator and gaps; identify verification/adoption scope for AI or trend suggestions:
 
+<a id="吸引力与包装"></a>
+## Appeal and package before the script
+Apply [viral appeal and packaging](../references/viral-appeal-and-packaging.md) to complete new films; reuse the topic card fields above rather than a new form.
+- Angles considered and the appeal drivers each has (broad entry plus real surprise, visible spectacle, extreme scale, personal stakes, social currency or timeliness); which driver is visible in the picture; strongest losing angle:
+- Three to five title candidates and the selected title; cover concept (large subject in its most surprising real state plus short question); sources for every number or surprising claim:
+- First three seconds: first picture in motion and first spoken line; what the viewer learns next about why it matters:
+- Payoff map through the body (where each new visible payoff or concrete re-hook lands), the strongest reveal, the shareable moment and the ending interaction, if any:
+- Scroll-viewer check results with swipe-risk times, repairs and recheck (internal diagnostic only):
+
 <a id="原题与科学"></a>
 ## Original topic and science
 For engineering/industrial/advanced manufacturing, record [full-chain scope](../references/topic-contract.md#complete-chains-and-duration-for-engineering-and-manufacturing-topics), chapter order, each stage's input/principle/operation/output/handoff, key difficulties/quality verification and research gaps. Estimate duration from explanation needs, then update after actual narration/demonstration:
