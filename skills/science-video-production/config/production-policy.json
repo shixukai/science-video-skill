@@ -86,7 +86,7 @@
       "lufs": -16,
       "tolerance_lu": 1,
       "true_peak_dbtp": -1.5,
-      "priority": "calibration suggestion only; preserve accepted voice/config and measure final encode"
+      "priority": "Whole-final-mix defaults for new or revised exports, measured after music/effects; separate from audio.mix_preset narration-master targets. Preserve valid accepted mixes and record explicit commissioned exceptions; parameters do not establish listening approval."
     },
     "speech_cjk_per_minute": [
       220,

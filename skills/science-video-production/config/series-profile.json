@@ -79,10 +79,8 @@
     "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
     "reuse_matching_audio": true,
     "postprocess_example": {
-      "loudnorm": "I=-18:TP=-2:LRA=7",
-      "sample_rate_hz": 48000,
-      "mp3_bitrate_kbps": 192,
-      "status": "optional_example_after_measurement_and_listening"
+      "status": "deprecated_reference_only; active whole-narration defaults are in audio.mix_preset",
+      "replaced_by": "audio.mix_preset"
     },
     "backend": "confirm_at_invocation",
     "provider": "Qwen",
@@ -124,6 +122,27 @@
       "temperature": 0.9,
       "top_k": 50,
       "top_p": 1.0
+    },
+    "mix_preset": {
+      "id": "mandarin-continuous-master-v1",
+      "scope": "new_or_revised_whole_narration_master; not each visual shot; preserve valid accepted audio",
+      "narration_master": {
+        "target_i_lufs": -18.0,
+        "true_peak_ceiling_dbtp": -2.0,
+        "output_sample_rate_hz": 48000,
+        "processing_mode": "whole_track_linear_gain"
+      },
+      "pitch_shift_semitones": 0,
+      "speed_factor": 1,
+      "per_shot_normalization": false,
+      "optional_processors": {
+        "equalizer": "bypass",
+        "compressor": "bypass",
+        "denoiser": "bypass",
+        "limiter": "bypass"
+      },
+      "final_mix_policy": "config/production-policy.json defaults.mix; whole final encode after music/effects",
+      "acceptance": "Measured technical result only; timbre/register/joins and final mix require actual listening; no new voice audition for unchanged preferences"
     }
   },
   "captions": {

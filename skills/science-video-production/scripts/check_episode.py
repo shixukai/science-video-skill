@@ -264,29 +264,69 @@ def check_voice_segments(narration, root):
     need(script_bytes is not None and len(inputs) == len(segments) and b"".join(inputs) == script_bytes,
          "ordered segment inputs must exactly reconstruct whole script bytes")
 
-    post = read_record(narration.get("postprocess_record"), "multi-source postprocess record")
+    final_post = read_record(narration.get("postprocess_record"), "multi-source postprocess record")
+    mastered = final_post.get("mode") == "whole_track_linear_gain"
+    post = (read_record(final_post.get("upstream_record"), "upstream concatenation record")
+            if mastered else final_post)
     need(post.get("schema_version") == 1 and post.get("status") == "processed"
-         and post.get("mode") == "concatenate_full_segments" and not post.get("source"),
+         and post.get("mode") == "concatenate_full_segments" and not post.get("source")
+         and (not mastered or not post.get("upstream_record")),
          "multi-source postprocess must concatenate complete segments")
     need(post.get("sources") == sources, "postprocess sources must match all ordered segment outputs")
     steps = post.get("steps")
     need(isinstance(steps, list) and bool(steps)
          and all(isinstance(s, dict) and text(s.get("tool")) and text(s.get("version")) and bool(s.get("parameters"))
                  for s in steps), "postprocess actual tool/version/parameters required")
-    output_ref = obj(post.get("output"))
+    assembly_ref = obj(post.get("output"))
+    assembly_path = evidence(assembly_ref, "assembled output")
+    assembly_info = audio_info(assembly_path, "assembled output")
+    output_ref = obj(final_post.get("output"))
     need(output_ref.get("sha256") == narration.get("audio_sha256"), "postprocess output must bind current narration")
-    output_path = evidence(output_ref, "assembled output")
-    output_info = audio_info(output_path, "assembled output")
-    valid_infos = bool(infos) and all(info is not None for info in infos) and output_info is not None
+    output_info = assembly_info
+    if mastered:
+        need(final_post.get("schema_version") == 1 and final_post.get("status") == "processed"
+             and not final_post.get("sources"), "whole-track master record schema invalid")
+        source_ref = obj(final_post.get("source"))
+        need(all(source_ref.get(key) == assembly_ref.get(key) for key in ("file", "sha256")),
+             "whole-track master source must exactly bind upstream assembled output")
+        evidence(source_ref, "whole-track master source")
+        master_steps = final_post.get("steps")
+        valid_step = (isinstance(master_steps, list) and len(master_steps) == 1
+                      and isinstance(master_steps[0], dict)
+                      and text(master_steps[0].get("tool")) and text(master_steps[0].get("version")))
+        need(valid_step, "whole-track master requires one actual gain/resample step")
+        params = obj(master_steps[0].get("parameters")) if valid_step else {}
+        rate = params.get("output_sample_rate_hz")
+        need(params.get("processing_mode") == "whole_track_linear_gain" and number(params.get("gain_db"))
+             and params.get("speed_factor") == 1 and not isinstance(params.get("speed_factor"), bool)
+             and params.get("pitch_shift_semitones") == 0 and not isinstance(params.get("pitch_shift_semitones"), bool)
+             and params.get("channels") == "preserve" and params.get("codec") == "pcm_f32le"
+             and params.get("per_shot_normalization") is False and params.get("dynamic_compression") is False
+             and isinstance(rate, int) and not isinstance(rate, bool) and rate > 0,
+             "whole-track master permits only declared constant gain and resampling, without pitch/speed/dynamic processing")
+        output_path = evidence(output_ref, "whole-track master output")
+        output_info = audio_info(output_path, "whole-track master output")
+        if output_info is not None:
+            need(output_info["format"][:2] == ("pcm_f32le", rate),
+                 "whole-track master actual PCM codec/rate differs from declared transform")
+        if assembly_info is not None and output_info is not None:
+            need(assembly_info["format"][2] == output_info["format"][2],
+                 "whole-track master must preserve assembled channels")
+            # A rate conversion may round at the PCM sample boundary. This is
+            # timing/provenance validation, not a voice-quality or pitch test.
+            precision = 1 / assembly_info["format"][1] + 1 / output_info["format"][1] + 0.000001
+            need(abs(assembly_info["duration"] - output_info["duration"]) <= precision,
+                 "whole-track master must preserve complete assembled duration; cuts/gaps/speed changes unsupported")
+    valid_infos = bool(infos) and all(info is not None for info in infos) and assembly_info is not None
     boundaries = []
     if valid_infos:
-        need(all(info["format"] == output_info["format"] for info in infos),
+        need(all(info["format"] == assembly_info["format"] for info in infos),
              "complete segments and output must share PCM codec/sample rate/channels")
         elapsed = 0.0
         for info in infos[:-1]:
             elapsed += info["duration"]
             boundaries.append(elapsed)
-        need(abs(sum(info["duration"] for info in infos) - output_info["duration"]) < 0.05,
+        need(abs(sum(info["duration"] for info in infos) - assembly_info["duration"]) < 0.05,
              "assembled duration must equal complete ordered source durations; cuts/gaps unsupported")
 
     review = obj(narration.get("source_listen_review"))
