@@ -259,7 +259,7 @@ class AppearanceTests(unittest.TestCase):
         bpy.context.evaluated_depsgraph_get().object_instances = [instance(source, emitter) for _ in range(8)]
         result = batch.audit_appearance_bindings(self.spec, scene, bpy)
         self.assertEqual((result["surface_objects"], result["materials"], result["evaluated_instances"]), (1, 1, 8))
-        self.assertEqual(source.data.polygons.bulk_reads, 1)
+        self.assertEqual(source.data.polygons.bulk_reads, 8)  # ephemeral RNA must be read per instance
         self.assertEqual(material.node_tree.get_output_node.call_count, 1)
 
     def test_hidden_instancer_and_nonrendering_instance_are_skipped(self):
@@ -363,6 +363,55 @@ class AppearanceTests(unittest.TestCase):
             self.assertFalse((root / "frames" / "frame_000002.png").exists())
             self.assertFalse((root / "frames" / "frame_000002.json").exists())
             self.assertEqual(batch.read(root / "frames" / "state.json")["status"], "failed")
+
+
+class ExpiringObject:
+    def __init__(self, target, alive):
+        self._target, self._alive = target, alive
+    def __getattr__(self, key):
+        if not self._alive[0]:
+            raise RuntimeError('evaluated instance RNA expired')
+        return getattr(self._target, key)
+    def as_pointer(self):
+        if not self._alive[0]:
+            raise RuntimeError('evaluated instance RNA expired')
+        return self._target.as_pointer()
+
+class EphemeralInstanceTests(unittest.TestCase):
+    def check(self, missing):
+        emitter = Object('Emitter', kind='EMPTY')
+        material = [] if missing else [Material('Surface')]
+        source = Object('TransientMesh', materials=material)
+        scene, bpy = fixture([emitter])
+        alive = [False]
+        def instances():
+            alive[0] = True
+            yield instance(ExpiringObject(source, alive), emitter)
+            alive[0] = False
+        bpy.context.evaluated_depsgraph_get().object_instances = instances()
+        return batch.audit_appearance_bindings({'purpose': 'appearance'}, scene, bpy)
+
+    def test_transient_valid_instance_is_checked_before_expiry(self):
+        result = self.check(False)
+        self.assertEqual(result['evaluated_instances'], 1)
+        self.assertEqual(result['surface_objects'], 1)
+
+    def test_transient_missing_material_still_fails(self):
+        with self.assertRaisesRegex(ValueError, 'TransientMesh: no assigned material'):
+            self.check(True)
+
+    def test_reused_ephemeral_mesh_address_does_not_reuse_stale_indices(self):
+        emitter = Object('Emitter', kind='EMPTY')
+        a = Object('First', materials=[Material()], indices=(0,))
+        b = Object('Second', materials=[Material()], indices=(1,))
+        a.data.as_pointer = lambda: 123456
+        b.data.as_pointer = lambda: 123456
+        scene, bpy = fixture([emitter])
+        bpy.context.evaluated_depsgraph_get().object_instances = iter([
+            instance(a, emitter), instance(b, emitter)])
+        with self.assertRaisesRegex(ValueError, 'Second: slot 1: missing node material'):
+            batch.audit_appearance_bindings({'purpose': 'appearance'}, scene, bpy)
+
 
 
 if __name__ == "__main__":

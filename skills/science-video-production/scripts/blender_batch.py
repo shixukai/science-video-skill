@@ -700,52 +700,25 @@ def audit_appearance_bindings(spec, scene, bpy):
             if layer != active:
                 graph.update()
             material_cache, data_indices = {}, {}
-            evaluated = {}
-            for original in eligible.values():
-                if (getattr(original, "is_instancer", False) and
-                        not getattr(original, "show_instancer_for_render", True)):
-                    continue
-                if original.type in APPEARANCE_OBJECT_TYPES:
-                    obj = original.evaluated_get(graph)
-                    evaluated[obj.as_pointer()] = (obj, original.as_pointer() in holdouts)
-                elif original.type == "GREASEPENCIL":
-                    unsupported.add(original.type)
-            for instance in graph.object_instances:
-                if not instance.is_instance or not instance.show_self:
-                    continue
-                parent = instance.parent
-                parent_original = getattr(parent, "original", parent)
-                if parent_original is None or parent_original.as_pointer() not in eligible:
-                    continue
-                obj = instance.object
-                if obj.hide_render:
-                    continue
-                if obj.type in APPEARANCE_OBJECT_TYPES:
-                    instance_count += 1
-                    previous = evaluated.get(obj.as_pointer())
-                    instance_holdout = parent_original.as_pointer() in holdouts
-                    # A shared evaluated source needs a shader if any of its
-                    # participating paths is not a holdout.
-                    evaluated[obj.as_pointer()] = (obj, instance_holdout and
-                                                   (previous[1] if previous else True))
-                elif obj.type == "GREASEPENCIL":
-                    unsupported.add(obj.type)
-            for obj, collection_holdout in evaluated.values():
+            def inspect_evaluated(obj, collection_holdout, ephemeral=False):
+                # Instance-backed evaluated RNA may expire as soon as Blender
+                # advances depsgraph.object_instances. Inspect it right here.
+                nonlocal holdout_count
                 data = obj.data
                 slots = list(obj.material_slots)
                 original = getattr(obj, "original", obj)
                 if (collection_holdout or getattr(original, "is_holdout", False) or
                         (hasattr(original, "holdout_get") and original.holdout_get(view_layer=layer))):
                     holdout_count += 1
-                    continue
+                    return
                 indexed = (data.polygons if obj.type == "MESH" else
                            data.splines if obj.type in ("CURVE", "SURFACE") else
                            data.body_format if obj.type == "FONT" else None)
                 if indexed is not None:
                     if not len(indexed) or (obj.type == "FONT" and not data.body.strip()):
-                        continue
+                        return
                     key = data.as_pointer()
-                    if key not in data_indices:
+                    if ephemeral or key not in data_indices:
                         # Read native RNA in bulk: dense industrial meshes should
                         # not require one Python object/property access per face.
                         values = array("i", [0]) * len(indexed)
@@ -754,9 +727,9 @@ def audit_appearance_bindings(spec, scene, bpy):
                                              if obj.type == "FONT" else set(values))
                     indices = data_indices[key]
                 elif obj.type == "CURVES" and not len(data.curves):
-                    continue
+                    return
                 elif obj.type == "POINTCLOUD" and not len(data.points):
-                    continue
+                    return
                 else:
                     indices = set(range(len(slots)))
                 override = getattr(layer, "material_override", None)
@@ -778,6 +751,30 @@ def audit_appearance_bindings(spec, scene, bpy):
                     else:
                         materials.add(material.name_full)
                         bindings.add((layer.name, name, index, material.name_full, channels))
+            for original in eligible.values():
+                if (getattr(original, "is_instancer", False) and
+                        not getattr(original, "show_instancer_for_render", True)):
+                    continue
+                if original.type in APPEARANCE_OBJECT_TYPES:
+                    obj = original.evaluated_get(graph)
+                    inspect_evaluated(obj, original.as_pointer() in holdouts)
+                elif original.type == "GREASEPENCIL":
+                    unsupported.add(original.type)
+            for instance in graph.object_instances:
+                if not instance.is_instance or not instance.show_self:
+                    continue
+                parent = instance.parent
+                parent_original = getattr(parent, "original", parent)
+                if parent_original is None or parent_original.as_pointer() not in eligible:
+                    continue
+                obj = instance.object
+                if obj.hide_render:
+                    continue
+                if obj.type in APPEARANCE_OBJECT_TYPES:
+                    instance_count += 1
+                    inspect_evaluated(obj, parent_original.as_pointer() in holdouts, ephemeral=True)
+                elif obj.type == "GREASEPENCIL":
+                    unsupported.add(obj.type)
     if failures:
         details = sorted(failures)
         text = "; ".join(f"{layer}/{obj}: {error}" for layer, obj, error in details[:12])
