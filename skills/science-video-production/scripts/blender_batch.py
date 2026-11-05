@@ -245,6 +245,92 @@ def verify(job):
             raise ValueError("Input changed: " + path)
 
 
+def verify_completed_reuse(job, migration_path, migration_sha256, frames):
+    """Verify already completed historical frames only; never authorizes execution.
+
+    The caller must bind migration_sha256 to trusted episode evidence. This
+    separately verifies the original job, migration and its old/current lock,
+    signed output owner and completed attempt, source inputs, and every
+    requested image/receipt with the current decoder. No old signature,
+    frame, receipt, or lock is modified, and quality remains unreviewed.
+    """
+    migration_path = Path(migration_path).resolve(strict=True)
+    if file_hash(migration_path) != migration_sha256:
+        raise ValueError("Completed reuse migration evidence changed")
+    migration = read(migration_path)
+    if migration.get("kind") != "blender_completed_job_reuse_migration" or migration.get("schema_version") != 1:
+        raise ValueError("Invalid completed reuse migration")
+    spec = job["spec"]
+    validate_spec(spec)
+    if job.get("kind") != "blender_sequence_job" or digest(spec) != job.get("signature"):
+        raise ValueError("Job modified; prepare a new version")
+
+    def checked_lock(ref, expected_executor):
+        if not isinstance(ref, dict) or not isinstance(ref.get("file"), str):
+            raise ValueError("Missing migration Skill lock")
+        path = Path(ref["file"])
+        if not path.is_absolute():
+            path = migration_path.parent / path
+        if file_hash(path) != ref.get("sha256"):
+            raise ValueError("Migration Skill lock changed")
+        lock = read(path)
+        files = lock.get("files")
+        if (lock.get("kind") != "production_skill_lock" or lock.get("schema_version") != 1 or
+                not isinstance(files, dict) or digest(files) != lock.get("tree_sha256") or
+                files.get("scripts/blender_batch.py") != expected_executor):
+            raise ValueError("Migration Skill lock does not bind the executor")
+
+    checked_lock(migration.get("prior_lock"), spec["executor_sha256"])
+    checked_lock(migration.get("current_lock"), file_hash(__file__))
+    entries = migration.get("jobs")
+    matches = [item for item in entries if isinstance(item, dict) and item.get("signature") == job["signature"]] if isinstance(entries, list) else []
+    if len(matches) != 1:
+        raise ValueError("Job not uniquely bound by reuse migration")
+    output = Path(spec["output_dir"]).resolve(strict=True)
+    signed_job, state_path = output / "job.json", output / "state.json"
+    entry = matches[0]
+    if (file_hash(signed_job) != entry.get("signed_job_sha256") or read(signed_job) != job or
+            file_hash(state_path) != entry.get("state_sha256")):
+        raise ValueError("Historical output ownership or state changed")
+    state = read(state_path)
+    if (state.get("signature") != job["signature"] or state.get("status") != "complete_unreviewed" or
+            state.get("valid_frames") != len(spec["frames"])):
+        raise ValueError("Historical job is not complete")
+    selected = list(frames)
+    if (not selected or any(type(n) is not int for n in selected) or len(set(selected)) != len(selected) or
+            not set(selected).issubset(set(spec["frames"]))):
+        raise ValueError("Invalid completed reuse frame selection")
+    for path, expected in spec["inputs"].items():
+        if file_hash(path) != expected:
+            raise ValueError("Input changed: " + path)
+    verifier = FrameVerifier(job)
+    snapshots = []
+    for frame in selected:
+        if not verifier.valid_frame(frame):
+            raise ValueError("Invalid historical image or frame receipt: " + str(frame))
+        image, receipt = frame_paths(output, frame, spec)
+        frame_record = read(receipt)
+        if file_hash(image) != frame_record.get("sha256"):
+            raise ValueError("Historical image changed during verification: " + str(frame))
+        snapshots.append((frame, image, receipt, frame_record["sha256"], file_hash(receipt)))
+    # Recheck the input and migration identities in case they changed while
+    # decoding. This performs no write, no resume, and no execution.
+    for path, expected in spec["inputs"].items():
+        if file_hash(path) != expected:
+            raise ValueError("Input changed during completed reuse: " + path)
+    for frame, image, receipt, image_hash, receipt_hash in snapshots:
+        if file_hash(image) != image_hash or file_hash(receipt) != receipt_hash:
+            raise ValueError("Historical frame changed during verification: " + str(frame))
+    if file_hash(migration_path) != migration_sha256 or file_hash(signed_job) != entry["signed_job_sha256"] or file_hash(state_path) != entry["state_sha256"]:
+        raise ValueError("Completed reuse evidence changed during verification")
+    checked_lock(migration.get("prior_lock"), spec["executor_sha256"])
+    checked_lock(migration.get("current_lock"), file_hash(__file__))
+    return {"status": "completed_frames_verified_unreviewed", "job_signature": job["signature"],
+            "frames": len(selected), "historical_executor_sha256": spec["executor_sha256"],
+            "current_executor_sha256": file_hash(__file__), "migration_sha256": migration_sha256,
+            "note": "Read-only integrity verification, not rendering, approval or authorization to resume."}
+
+
 @contextmanager
 def job_lock(output, label="output job"):
     """OS lock is held by Blender itself, including if its launcher disappears."""
