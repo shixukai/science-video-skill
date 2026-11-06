@@ -19,6 +19,15 @@ Full narration synthesis uses the current complete script integrated by the pare
 
 Approval of a timbre/speaking-rate sample supports only the corresponding voice direction, not the complete script or film. Independent listening samples and technical feasibility tests need not wait for the full script. Existing scripts/evidence may be referenced, and narrative approval adds no user approval stage. A paper review cannot masquerade as listening; actual voice and full audiovisual media still receive actual review at subsequent stages. After script revisions, update only affected audio, captions and action timing, without recreating unrelated assets.
 
+### Edit Mandarin for the ear
+
+Edit the complete spoken draft against the intended shot order during the existing G1 read.
+
+1. **Find lines that do no work.** Use a local phrase search or a Chinese editing aid to mark possible title echoes, empty questions and directions (“想知道……？先看……”, “接下来我们来看看”), repeated sentence patterns and recap slogans. Treat each hit as a suggestion. Give the opening a specific event, observation or unresolved problem. Let the cut locate the next object; use the handoff to add an observation, cause or constraint. Keep questions, sequence words and comparisons that actually help the explanation.
+2. **Revise for speech and check meaning.** Read from the opening through the first body observation, then read the changed passages at the intended pace. Use concrete subjects and verbs, natural pauses and the accepted series voice. If a line could move unchanged to an unrelated episode and does no work here, cut or replace it. Preserve technical terms that matter, source attribution, order, conditions and certainty; never turn a planned demonstration into a verified result. Recheck the affected interval in the existing audiovisual review. A text scan or read-through is not actual listening, and no detector score, separate report or user audition is required.
+
+Editorial references: [Humanizer-zh](https://github.com/op7418/Humanizer-zh) for preserving meaning and register, and [lieflat-less-ai-tone](https://github.com/larashero3-dotcom/lieflat-less-ai-tone) for separating mechanical hints from contextual judgment. These are reading references, not required tools or bundled code.
+
 <a id="本期语速先试听"></a>
 <a id="listen-to-this-episodes-speaking-rate-first"></a>
 ## Reuse the accepted voice before making new auditions

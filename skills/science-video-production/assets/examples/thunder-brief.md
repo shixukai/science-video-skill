@@ -13,7 +13,7 @@ Do not expand into cloud charge separation, all lightning types, every cause of 
 <a id="口播与可见任务"></a>
 ## Narration and visible tasks
 
-First establish recognizable lightning/thunder context, with sound-picture timing supported by science. The opening's final sentence can be “声音从哪里来？先看闪电通道旁的空气”; its last frame locates that region. The body begins “这条通道迅速加热周围空气”, entering a close-up of the same local region with a spatial anchor. Explain rapid heating, local expansion, adjacent compression and outward transfer of compression, then return to the original scene to answer the sound-source question. Duration follows actual explanation needs; do not fix 60 seconds and invent timestamps afterward.
+First establish recognizable lightning/thunder context, with sound-picture timing supported by science. The opening's final sentence can be “闪电划过时，周围的空气会被迅速加热”; its last frame locates that region. The body begins “受热的空气猛烈膨胀，向外挤压周围的空气”, entering a close-up of the same local region with a spatial anchor. Explain rapid heating, local expansion, adjacent compression and outward transfer of compression, then return to the original scene to answer the sound-source question. Duration follows actual explanation needs; do not fix 60 seconds and invent timestamps afterward.
 
 Explain schematic encoding/time scaling from the first slowed instructional view or invisible-state color encoding, not halfway through narration. Use picture text only for necessary air/heated/compressed-region location under the applicable medium's rules; three successive words cannot replace the process, and do not copy the entire narration into the picture.
 

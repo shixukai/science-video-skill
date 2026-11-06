@@ -48,12 +48,12 @@ Use numbers only when sourced. Do not use “震惊”, “99%的人不知道”
 Feed viewers decide within one to three seconds. For a complete new film intended for feed platforms, this is the default design target, not a numeric gate:
 
 - **The first frame is already the hook**: the topic's most striking real visual, in motion. No logo, black frame, title card, slow establishing shot or greeting such as “大家好”.
-- **The first spoken line** (roughly one breath) states the concrete question or the surprising fact and matches the picture.
+- **The first spoken line** (roughly one breath) offers a specific observation, meaningful fact, real tension or genuine question matched to the picture; a question is not mandatory.
 - **Right after the hook**, establish why it matters and what the viewer will see answered. This is the recognizable context required by [viewer retention](viewer-retention-design.md#establish-context-and-a-reason-to-watch-before-explaining): the hook shows the object in its most interesting state, so context and hook are the same shot rather than competing sections.
 
 | Hook pattern | First picture | First line pattern |
 | --- | --- | --- |
-| Result first | The finished product or final state | “这是怎么做到的？” stated with the concrete object |
+| Result first | The finished product or final state | The concrete observable result and why it is interesting |
 | Strange phenomenon | The real phenomenon happening | The expectation it breaks |
 | Extreme contrast | Two states or objects side by side | The difference and the question it raises |
 | Direct question with evidence | The object performing its task | The question the film answers |
@@ -61,12 +61,18 @@ Feed viewers decide within one to three seconds. For a complete new film intende
 
 Hook footage must come from this film's legitimately produced material and must be explained later in the body; a result preview must clearly return to the start of the process, as viewer retention already requires.
 
+Reject opening and handoff lines that merely direct the viewer to look, or pair an empty question with an empty 'first look at...' command: they create no observation, tension or payoff. Do not swap them for another stock suspense phrase. In natural spoken language, connect a recognizable object or use with a specific visible change, relevant fact, real difficulty or genuine question; let the following picture and line add a concrete piece of information without dumping the whole explanation upfront. Match claims and visual causality to the actual evidence; a familiar application or comparison must also be accurate. Questions and audience directions are allowed when they serve the story, but neither is a required formula.
+
+In a cam demonstration, “想知道它怎么动？先看这个轮子。” just delays the observation. If the footage shows the lift, “凸起转到顶杆下面，顶杆就抬起来了。” gives viewers the action; cut closer on that lift so the next sentence can explain the contact. Use the visible event of this film to write the line.
+
+Apply the [spoken-script edit](voice-reference.md#edit-mandarin-for-the-ear) at G1. Check the opening through the first body observation against the planned cut; repair empty directions, title echoes and unsupported suspense before full narration synthesis. Recheck the affected interval in the existing G2/G5 review.
+
 ## Keep a reason to stay
 
 Map these onto the existing `payoff_steps` and section handoffs instead of creating another plan:
 
 - **Payoff cadence.** Viewers should receive a new visible payoff (an observation, a reveal, a satisfying motion) or a sharper question regularly. Find gaps in the actual rough cut; as a starting point, look hard at any stretch of roughly 20 seconds with no new payoff.
-- **Concrete re-hooks.** At section boundaries, open the next specific question before or as you close the current one, for example “但真正难的在下一步：怎样只去掉指定的位置？”. “更精彩的在后面” or “看到最后” are not re-hooks.
+- **Concrete re-hooks.** Let the result that just appeared reveal the next specific problem or observation. A visible consequence, a useful comparison or a real question can carry the handoff. “更精彩的在后面” and “看到最后” supply no reason to stay.
 - **Escalation.** Order sections so difficulty, stakes or spectacle rise when dependencies allow. Place the strongest reveal late, without withholding the core answer artificially.
 - **Purposeful pattern change.** Change scale, viewpoint, sound or rhythm where attention would sag, and make every change carry information.
 - **Remove dead air.** Cut greetings, channel introductions, repeated summaries and filler such as “接下来我们来看看”. Keep a natural, brisk narration pace under the accepted voice preset; do not slow down for completeness or speed up artificially.
@@ -80,14 +86,14 @@ Deliver the answer, return to the opening image with the new understanding, and 
 
 The topic contract still lets the complete explanation determine duration; never skip necessary steps to hit a length. When a complete chain is long, the honest way to fit feed platforms is to split it into a series of episodes, each with its own question and payoff, or to make a separately commissioned short cut-down that points to the full film. The series default canvas is 1920×1080 landscape; a vertical version requires an explicit request and its own layout review.
 
-Build series recognition: a consistent title pattern, cover template, recurring opening move, signature visual (for example the cutaway reveal) and the accepted voice. A one-sentence pointer to a next episode is allowed only when that episode actually exists or is committed.
+Build series recognition: a consistent title style, cover design and accepted voice; use recurring visual devices such as a cutaway only where the topic supports them. A one-sentence pointer to a next episode is allowed only when that episode actually exists or is committed.
 
 ## Scroll-viewer appeal check
 
 Before offering a G2 rough cut or G5 candidate, the reviewer watches from the first frame as a scrolling viewer with no context, then records in the existing `qa.expression_plan` or `qa.expression_review` notes:
 
 1. At about one second: what is on screen, and would I stop?
-2. At about three seconds: do I know the question, and do I want the answer?
+2. At about three seconds: what has happened or become clear, and what would I stay to find out?
 3. Through the body: the times where I would swipe away, and why (no new payoff, unclear object, repetition, slow narration).
 4. At the end: one thing I could tell a friend, and whether I would comment, share or save.
 

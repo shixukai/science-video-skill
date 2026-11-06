@@ -26,7 +26,7 @@ G2 checks this same progression in the complete sound-and-picture rough cut, usi
 <a id="先建立情境和看点再进入解释"></a>
 ## Establish context and a reason to watch before explaining
 
-A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show the topic's most striking real visual in motion and state the concrete question, as described in [win the first three seconds](viral-appeal-and-packaging.md#win-the-first-three-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it. The responsibilities below may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
+A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show a striking relevant visual in motion and offer a specific observation, meaningful fact, tension or genuine question in natural language, as described in [win the first three seconds](viral-appeal-and-packaging.md#win-the-first-three-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it. The responsibilities below may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
 
 | Opening responsibility | What viewers should gain | Corresponding sound/picture design |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ Check legal availability/credible production after selection, specifying missing
 <a id="把开场接成正文的第一项观察"></a>
 ## Connect the opening to the first body observation
 
-Write **the last opening sentence → the first body sentence** together and state **the just-seen result/constraint → the necessary part/relationship → the evidence actually visible in the first body shot**. The next sentence advances the question rather than restating the title or adding unrelated definitions.
+Write **the last opening sentence → the first body sentence** together and state **the just-seen result/constraint → the necessary part/relationship → the evidence actually visible in the first body shot**. If the cut already locates the subject, let it do that work. The next spoken sentence adds an observation, cause or constraint that advances the explanation. Apply the [spoken-script edit](voice-reference.md#edit-mandarin-for-the-ear) to both sides of the cut.
 
 Pair opening end/body start in `visual_handoff` / `handoff` or the action card: what remains, where to look, which shape/location/action anchor continues, and how changed object/time/scale correspond. Locate before cutting/enlarging. Clearly mark a return from product to manufacturing; attractive morphing is not real process continuity.
 
@@ -91,10 +91,10 @@ Adapt the example to actual equipment, material and process. Combine/expand sema
 | --- | --- | --- |
 | Recognize whole/use | Press a phone shutter, show its photo on-screen, then locate the device's chip; imply only topic-supported relationships | “按下快门，照片出现在屏幕上。支持这些功能的芯片，制造时需要在一层层材料中做出结构。” |
 | Reveal the difficulty | Explicitly enter manufacturing, locate the thin layer, and distinguish target openings from areas that must remain | “在这一步，有些地方要去掉，有些地方必须留下。难的不是一股脑去除，而是只改变指定位置。” |
-| Narrow the question and enter observation | Retain target orientation/location before entering its matching section | “刻蚀怎样把图形转移进这一层？先看哪些区域被保护、哪些区域露出来。” |
-| Deliver the observation immediately | Match the located area to its section, establish mask/opening/layer relationships, then show evidenced removal | “这里是保护区域，这里是开口；先认清它们与下方材料的关系，再看刻蚀如何改变露出的部分。” |
+| Narrow the question and enter observation | Retain target orientation/location before entering its matching section | “保护层遮住要保留的区域，开口把需要刻蚀的材料露出来。” |
+| Deliver the observation immediately | Match the located area to its section, establish mask/opening/layer relationships, then show evidenced removal | “刻蚀开始后，露出的位置逐渐下凹，原先平整的薄层出现了图形。” |
 
-When the opening ends by asking viewers to inspect protection/openings, show those objects in the body; do not insert a welcome, long contents list or another etching definition. Actual processes determine masking/removal mechanisms; not every etch has identical selectivity, vertical sidewalls or an entirely unaffected underlying layer.
+When the opening establishes protection/openings, show those objects and the relevant change in the body; do not insert a welcome, long contents list or another etching definition. Actual processes determine masking/removal mechanisms; not every etch has identical selectivity, vertical sidewalls or an entirely unaffected underlying layer.
 
 For nature, a handoff may follow recognizable frost location → evidenced crystal features → same-region location retained into growth. Between chapters, use the previous result to enter the next observation.
 

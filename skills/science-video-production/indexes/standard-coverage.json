@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "d9764159c4f181f21b0bdac07f0beb3a0bb95f7ed5ae82e7b1635b45b0662292",
+      "sha256": "472aaae9aceead64b3371c10136d02f9b16ffb09a78ba1b4c13c586601a72452",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -112,7 +112,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "72109e8c3923bf7b5b9f90076a5f2b38b8a6450c4f570cf9405e329934d27bb0",
+      "sha256": "9c8b79bb29b2edcc71a91c57ecc092ed1f5d1a60db2e907b1fc045a636c64ccd",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -133,7 +133,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "a0b8a8d0adb4640fc36ac1ea571101aaf2db3ccfaf519a0f5069a979dd2fcaad",
+      "sha256": "7550c202a552308a8d6c7a271835f7b15658b85445c0cda7dcec481f1b4c854e",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -277,11 +277,12 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "1e3af87b67faeb6ce658c3af17010cdea7b20c36b2002c7d251b2222a3873a66",
+      "sha256": "2eae5e4ab9bcd199bd5255b0b29651b8cc089ebb1f356ed227703a1eb143cfaa",
       "anchors": [
         "mandarin-narration-confirm-the-qwen-invocation-location-and-actually-listen",
         "invocation-location-and-confirmation",
         "check-the-script-before-full-episode-synthesis",
+        "edit-mandarin-for-the-ear",
         "reuse-the-accepted-voice-before-making-new-auditions",
         "continuous-narration-and-synthesis-units",
         "one-narration-master-and-one-shared-processing-chain",
