@@ -277,7 +277,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "d90697bcf2c4ac21da58e18088e6c5a79e99ace7a21200afad6093b3592be303",
+      "sha256": "1e3af87b67faeb6ce658c3af17010cdea7b20c36b2002c7d251b2222a3873a66",
       "anchors": [
         "mandarin-narration-confirm-the-qwen-invocation-location-and-actually-listen",
         "invocation-location-and-confirmation",
@@ -285,6 +285,7 @@
         "reuse-the-accepted-voice-before-making-new-auditions",
         "continuous-narration-and-synthesis-units",
         "one-narration-master-and-one-shared-processing-chain",
+        "read-only-preflight-on-any-source-retake-or-assembled-wav-before-masteringediting",
         "optional-local-adapter",
         "run-records-and-audio-binding",
         "ordered-multisource-manifest-for-necessary-segmentation",
@@ -440,7 +441,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "fad27427294d027a145668e170f38c5a3a617cfd2e5f2b4946c10d72405a70d4",
+      "sha256": "b5f52a5770604cd659ebce59552a924fd7dbda6232f268290dc232e03cf94ca1",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

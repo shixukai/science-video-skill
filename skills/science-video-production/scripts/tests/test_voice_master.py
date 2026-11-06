@@ -342,5 +342,58 @@ class NativeSyntheticTests(Fixtures):
         self.assertFalse(self.rec.exists())
 
 
+class ContinuityDiagnosticsTests(Fixtures):
+    def _write_two_segment_wave(self, path, amp1=0.08, freq1=180.0, amp2=0.08, freq2=180.0, spike=False):
+        rate = 24000
+        data = bytearray()
+        for n in range(rate * 6):
+            amp, freq = (amp1, freq1) if n < rate * 3 else (amp2, freq2)
+            value = amp * math.sin(2 * math.pi * freq * n / rate)
+            if spike and int(rate * 1.5) <= n < int(rate * 1.5) + 6:
+                value = 0.92 if n % 2 == 0 else -0.92
+            data.extend(struct.pack("<h", max(-32768, min(32767, round(value * 32767)))))
+        with wave.open(str(path), "wb") as output:
+            output.setnchannels(1)
+            output.setsampwidth(2)
+            output.setframerate(rate)
+            output.writeframes(data)
+
+    def test_uniform_tone_reports_nominal_continuity_and_accurate_f0(self):
+        self._write_two_segment_wave(self.src, amp1=0.08, freq1=200.0, amp2=0.08, freq2=200.0)
+        diag = master.analyze_continuity(self.src, boundaries=[3.0])
+        self.assertEqual(diag["status"], "within_nominal_bounds")
+        self.assertEqual(diag["flags"], [])
+        self.assertAlmostEqual(diag["f0_median_hz"], 200.0, delta=3.0)
+        self.assertEqual(len(diag["boundary_checks"]), 1)
+        self.assertFalse(diag["boundary_checks"][0]["flagged"])
+
+    def test_boundary_level_and_pitch_jumps_are_flagged_accurately(self):
+        self._write_two_segment_wave(self.src, amp1=0.04, freq1=160.0, amp2=0.16, freq2=220.0)
+        diag = master.analyze_continuity(self.src, boundaries=[3.0])
+        self.assertEqual(diag["status"], "flagged_for_review")
+        self.assertIn("adjacent_window_level_jump", diag["flags"])
+        self.assertIn("pitch_register_jump", diag["flags"])
+        self.assertIn("boundary_level_or_pitch_jump", diag["flags"])
+        boundary = diag["boundary_checks"][0]
+        self.assertTrue(boundary["flagged"])
+        self.assertGreater(boundary["level_jump_db"], 10.0)
+        self.assertGreater(boundary["semitone_jump"], 4.5)
+
+    def test_isolated_transient_spike_is_pinpointed_in_diagnostics(self):
+        self._write_two_segment_wave(self.src, amp1=0.02, freq1=180.0, amp2=0.02, freq2=180.0, spike=True)
+        diag = master.analyze_continuity(self.src, peak_limited=True, target_shortfall_lu=4.0)
+        self.assertIn("isolated_transient_limiting_gain", diag["flags"])
+        self.assertTrue(diag["isolated_transient_peaks"])
+        self.assertAlmostEqual(diag["isolated_transient_peaks"][0]["second"], 1.5, delta=0.1)
+
+    def test_analyze_only_cli_runs_without_creating_master_files(self):
+        self._write_two_segment_wave(self.src, amp1=0.05, freq1=190.0, amp2=0.12, freq2=240.0)
+        code = master.main(["--analyze-only", "--episode-dir", str(self.root),
+                            "--input", self.src.name, "--boundaries", "3.0"])
+        self.assertEqual(code, 0)
+        self.assertFalse(self.out.exists())
+        self.assertFalse(self.rec.exists())
+
+
 if __name__ == "__main__":
     unittest.main()
