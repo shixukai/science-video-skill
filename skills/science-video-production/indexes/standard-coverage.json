@@ -77,7 +77,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "7a1efb76d9242031170de5e2f1fe23ae8d562f75412e61030f94a38493f08a2d",
+      "sha256": "0f7469145a2a7409d630baa55c6a6ed61b39b5171c2879044bf68accfd054952",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -317,7 +317,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "fae6dc0a897b78dd25bb29cacb07f1130d79d4a19e7b68e831e8c6e2622d5ab8",
+      "sha256": "9e2a8e17f9650953c7176977a7d3c6a68d6c48619378c471a3edd7cd144e1858",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -356,7 +356,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "246acc8cce6ec556544a011e527288e7e2478c832df29d5c4b98e7ffe25f7886",
+      "sha256": "a71298ec31e378dedeb846a0d1eae0ccebf4f5b120fdacd49a69c1aa042974a9",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -370,6 +370,7 @@
         "choose-exploded-views-or-cutaways",
         "visible-connections-in-cooling-and-piping-mechanisms",
         "bounded-trials-and-reliable-reuse",
+        "qualify-critical-assets-before-whole-film-integration",
         "design-3d-film-and-series-covers-separately",
         "archive-used-3d-assets-in-one-library",
         "standing-authorization-for-library-archiving",
@@ -380,7 +381,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "779cfe34c320a393a753c490b867e969a712f1752b4cd6e9ebc2567adeee6729",
+      "sha256": "5c2fd88f737d69976caff77ca6545c42548f01fbe509c1417c71214590ea771c",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -442,7 +443,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "b5f52a5770604cd659ebce59552a924fd7dbda6232f268290dc232e03cf94ca1",
+      "sha256": "4ea0551f2058b577cf722ace20909586703303bfa1dd24e8e34f814d49966ae0",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

@@ -129,6 +129,12 @@ For a moving cutaway, design the complete opening/hold/closing cycle with the fi
 <a id="有界试制与可靠复用"></a>
 ## Bounded trials and reliable reuse
 
+### Qualify critical assets before whole-film integration
+
+For a main subject, close-up part or shared asset whose failure would invalidate several shots, establish its usable shape, necessary structure and deformation at the closest intended view before adapting it across the film. Use representative views and relevant rest/extreme states in the existing grouped samples; reuse evidence that covers this use. A successful import, intact texture binding or numerical rig test does not approve the asset's appearance. This is dependency ordering within G2/G3, not an extra approval or a test for every background prop.
+
+Keep a stable asset source and only the interfaces needed next: units, axes, root/pivots, deformation controls and contact/outlet anchors. Interface sketches, local deformation tests and low-cost story/motion blocking may proceed with explicit proxies. If the asset is visibly failed or its key structure remains unresolved, stop detailed whole-film adapters, repeated per-shot compatibility scans and dependent beauty renders. Correct the shared construction or select a suitable licensed replacement before that work resumes; texture polish cannot repair silhouette or topology. Then validate one complete high-risk interaction and its joins before expansion. Qualification supports only its observed asset/use scope; the actual scene and complete film still need their applicable reviews.
+
 Use the existing G2/G3 workflow in three production passes; these are work products, not extra approvals:
 
 | Pass | Produce and check | Keep costly work out until |
