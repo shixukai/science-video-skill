@@ -194,6 +194,7 @@
     "daily_actual_unique_target": 10,
     "additional_requests_separate": true,
     "no_schedule_change_from_adoption": true,
+    "optional_ai_creation": false,
     "platform_sync": {
       "primary": "douyin",
       "secondary": "toutiao",

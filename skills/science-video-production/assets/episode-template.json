@@ -1154,6 +1154,7 @@
       "ai_disclosure": {
         "status": "pending",
         "contains_generated_content": null,
+        "platform_declaration_required": null,
         "applicable_platform_controls_checked": false,
         "platform_declaration_used": false,
         "required_provenance_preserved": false,

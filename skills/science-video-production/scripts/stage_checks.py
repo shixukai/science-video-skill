@@ -843,9 +843,17 @@ class Checks:
   generated=obj(self.data.get('narration')).get('voice_type')=='synthetic' or any(obj(a).get('kind')=='ai_generated' and obj(a).get('id') in used_asset_ids(self.data) for a in seq(self.data.get('assets')))
   if generated:self.need(declaration.get('contains_generated_content') is True,'known generated content cannot be marked absent')
   if declaration.get('contains_generated_content') is True:
-   for key in ('applicable_platform_controls_checked','platform_declaration_used','required_provenance_preserved'):self.need(declaration.get(key) is True,'AI disclosure '+key+' not checked')
+   # Preserve the declaration requirement in records predating the applicability field.
+   required=declaration.get('platform_declaration_required',True)
+   self.need(isinstance(required,bool),'AI disclosure platform declaration requirement must be verified')
+   for key in ('applicable_platform_controls_checked','required_provenance_preserved'):self.need(declaration.get(key) is True,'AI disclosure '+key+' not checked')
    for key in ('current_rule_reference','declaration_evidence'):self.need(text(declaration.get(key)),'AI disclosure '+key+' required')
-  else:self.need(text(declaration.get('not_applicable_reason')),'AI disclosure non-applicability reason required')
+   if required is True:self.need(declaration.get('platform_declaration_used') is True,'AI disclosure platform_declaration_used not checked')
+   if required is False:self.need(text(declaration.get('not_applicable_reason')),'AI disclosure non-applicability reason required')
+  else:
+   required=declaration.get('platform_declaration_required')
+   self.need(required is None or required is False,'AI disclosure requirement conflicts with absence of generated content')
+   self.need(text(declaration.get('not_applicable_reason')),'AI disclosure non-applicability reason required')
  def real_anchor_required(self):
   default=json.loads((Path(__file__).resolve().parents[1]/'config/series-profile.json').read_text(encoding='utf-8'))
   profile=default
