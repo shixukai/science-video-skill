@@ -30,7 +30,7 @@ class ReleaseAIDisclosureTests(unittest.TestCase):
             "narration": {"voice_type": "synthetic"},
             "qa": {
                 "reviewed_sha256": {"video": "a" * 64},
-                "mobile_preview": {"phone": {
+                "mobile_preview": {"platform": "Other destination", "phone": {
                     "status": "pass", "surface": "actual_device",
                     "device": "Fixture", "app_version": "1", "checked_at": "fixture time",
                     "video_sha256": "a" * 64, "main_content_visible": True,
@@ -67,6 +67,22 @@ class ReleaseAIDisclosureTests(unittest.TestCase):
         self.declaration["platform_declaration_used"] = True
         self.assertEqual(self.errors(), [])
 
+    def test_declaration_for_ai_narration_with_authored_3d(self):
+        self.data["shots"] = [{"id": "SH1", "modality": "controlled_3d", "asset_ids": ["MODEL"]}]
+        self.data["assets"] = [{"id": "MODEL", "kind": "controlled_3d"}]
+        for platform in ("douyin", "Toutiao", "fanqie_video", "抖音", "今日头条", "番茄视频"):
+            with self.subTest(platform=platform):
+                self.data["qa"]["mobile_preview"]["platform"] = platform
+                self.declaration.update(platform_declaration_required=False, platform_declaration_used=False)
+                self.assertIn(
+                    "stage: AI-synthesized narration requires a platform declaration for this destination",
+                    self.errors(),
+                )
+                self.declaration["platform_declaration_required"] = True
+                self.assertIn("stage: AI disclosure platform_declaration_used not checked", self.errors())
+                self.declaration["platform_declaration_used"] = True
+                self.assertEqual(self.errors(), [])
+
     def test_unknown_requirement_cannot_pass(self):
         self.declaration["platform_declaration_required"] = None
         self.assertIn("stage: AI disclosure platform declaration requirement must be verified", self.errors())
@@ -75,7 +91,8 @@ class ReleaseAIDisclosureTests(unittest.TestCase):
         self.declaration["contains_generated_content"] = False
         expected = "stage: known generated content cannot be marked absent"
         self.assertIn(expected, self.errors())
-        self.data["narration"]["voice_type"] = "recorded"
+        self.data["qa"]["mobile_preview"]["platform"] = "douyin"
+        self.data["narration"]["voice_type"] = "human"
         self.data["assets"] = [{"id": "AI1", "kind": "ai_generated"}]
         self.assertEqual(self.errors(), [])
         self.data["shots"] = [{"id": "SH1", "asset_ids": ["AI1"]}]

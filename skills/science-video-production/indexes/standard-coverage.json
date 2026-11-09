@@ -41,7 +41,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "df49f9c456abb8b4500439ab500eb60cc29beb42c5a6aa3a56a7ca0225a83f67",
+      "sha256": "ba71c8cab15577a4aa70b3cead2142e5ebfba289e6479b8d5bfbaf68433fefee",
       "anchors": [
         "facts-asset-rights-and-production-statements",
         "original-visual-provenance-contract",
@@ -77,7 +77,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b1144fd0dd5ed6132a07f1d903c915b29f18bb365dd54dec6e5a92545ba3531d",
+      "sha256": "6f9f44679023103a883ede04bfdb8274cf2ddf999e12a772c06e8ebb510431ff",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -91,7 +91,7 @@
         "6-check-from-export-through-actual-platform-completion",
         "delivery-package-and-publication-receipts",
         "cross-platform-association-monetization-and-download-controls",
-        "keep-the-optional-ai-creation-control-off",
+        "declare-ai-generated-content-at-publication",
         "actual-g1g7-progression-records",
         "capacity-cost-and-retrospectives",
         "platform-topic-selection-and-data-review",
@@ -444,7 +444,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "73a8e67a90f22b4c9c931361f5267f02b5216cc47b95eb3472a9791a95b94958",
+      "sha256": "611dd2b9805ee13cbdaff106f9bf4e456413fb98c187e95156b6c1a8c189282f",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

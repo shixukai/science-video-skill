@@ -840,12 +840,21 @@ class Checks:
   self.evidence(phone.get('screenshot'),'phone preview screenshot')
   declaration=obj(self.record('release').get('ai_disclosure'))
   self.need(declaration.get('status')=='pass' and isinstance(declaration.get('contains_generated_content'),bool),'AI disclosure applicability/status required')
-  generated=obj(self.data.get('narration')).get('voice_type')=='synthetic' or any(obj(a).get('kind')=='ai_generated' and obj(a).get('id') in used_asset_ids(self.data) for a in seq(self.data.get('assets')))
+  synthetic_narration=obj(self.data.get('narration')).get('voice_type')=='synthetic'
+  generated=synthetic_narration or any(obj(a).get('kind')=='ai_generated' and obj(a).get('id') in used_asset_ids(self.data) for a in seq(self.data.get('assets')))
   if generated:self.need(declaration.get('contains_generated_content') is True,'known generated content cannot be marked absent')
   if declaration.get('contains_generated_content') is True:
    # Preserve the declaration requirement in records predating the applicability field.
    required=declaration.get('platform_declaration_required',True)
-   self.need(isinstance(required,bool),'AI disclosure platform declaration requirement must be verified')
+   platform=preview.get('platform')
+   destination=platform.strip().casefold() if text(platform) else ''
+   if synthetic_narration and destination in (
+    'douyin','抖音','toutiao','toutiao video','头条','头条视频','今日头条','今日头条视频',
+    'fanqie_video','fanqie video','番茄视频',
+   ):
+    self.need(required is True,'AI-synthesized narration requires a platform declaration for this destination')
+   else:
+    self.need(isinstance(required,bool),'AI disclosure platform declaration requirement must be verified')
    for key in ('applicable_platform_controls_checked','required_provenance_preserved'):self.need(declaration.get(key) is True,'AI disclosure '+key+' not checked')
    for key in ('current_rule_reference','declaration_evidence'):self.need(text(declaration.get(key)),'AI disclosure '+key+' required')
    if required is True:self.need(declaration.get('platform_declaration_used') is True,'AI disclosure platform_declaration_used not checked')
