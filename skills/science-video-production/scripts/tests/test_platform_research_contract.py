@@ -65,6 +65,39 @@ class PlatformResearchContractTests(unittest.TestCase):
             data = copy.deepcopy(self.data); data['record_formats']['experiment'].pop(field)
             self.assertTrue(check_platform_record_formats(data), field)
 
+    def test_review_retains_scope_cohorts_and_concrete_next_production_brief(self):
+        for field in ('commissioned_series', 'coverage', 'cohort_basis', 'diagnosis_limits', 'next_production_brief'):
+            data = copy.deepcopy(self.data)
+            data['record_formats']['platform_research'].pop(field)
+            self.assertTrue(check_platform_record_formats(data), field)
+
+    def test_blank_review_cannot_pretend_work_census_or_diagnosis_is_observed(self):
+        for field, value in (('coverage', {'observed': 4}), ('cohort_basis', 'all recommendation traffic'),
+                             ('next_production_brief', 'proven audience improvement')):
+            data = copy.deepcopy(self.data)
+            data['record_formats']['platform_research'][field] = value
+            self.assertTrue(any('coverage, diagnosis' in error for error in check_platform_record_formats(data)))
+
+    def test_payoff_requires_media_evidence_and_is_not_prefilled_from_mean_or_chapter(self):
+        for field in ('first_verified_payoff_s', 'payoff_evidence'):
+            data = copy.deepcopy(self.data)
+            data['record_formats']['retention_review'].pop(field)
+            self.assertTrue(check_platform_record_formats(data), field)
+        for field, value in (('first_verified_payoff_s', 0), ('first_verified_payoff_s', 12),
+                             ('payoff_evidence', ['automatic chapter label'])):
+            data = copy.deepcopy(self.data)
+            data['record_formats']['retention_review'][field] = value
+            self.assertTrue(any('verified media payoff' in error for error in check_platform_record_formats(data)))
+
+    def test_next_experiment_retains_action_owner_and_continuous_review_scope(self):
+        for field in ('production_action', 'responsible_role', 'review_segment'):
+            data = copy.deepcopy(self.data)
+            data['record_formats']['experiment'].pop(field)
+            self.assertTrue(check_platform_record_formats(data), field)
+            data = copy.deepcopy(self.data)
+            data['record_formats']['experiment'][field] = 'synthetic implemented change'
+            self.assertTrue(any('implemented production change' in error for error in check_platform_record_formats(data)))
+
     def test_no_media_or_platform_approval_is_encoded_in_empty_template(self):
         self.assertEqual(self.data['record_formats']['experiment']['observation_status'], 'not_measured')
         self.assertIsNone(self.snapshot['hours_since_publication'])

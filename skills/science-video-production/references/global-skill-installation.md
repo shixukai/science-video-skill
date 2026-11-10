@@ -1,11 +1,11 @@
 <a id="一个全局-skill项目只保存制作数据"></a>
 # One global Skill; projects retain production data only
 
-Keep exactly one executable global `science-video-production` installation, identified by its actual invocation location. Default is `${CODEX_HOME}/skills`, or `.codex/skills` under the user home when unset; locate by SKILL `name`, not version guesses from legacy folders. Do not install, copy or modify this Skill inside projects, or create `rules/<skill>`, `skill-snapshot-*`, project `.agents/skills` or `.codex/skills` copies.
+Keep exactly one executable global `science-video-production` installation, identified by its actual invocation location. Use the current host's supported installation mechanism. Local Codex defaults to `${CODEX_HOME}/skills`, or `.codex/skills` under the user home when unset. A host-managed personal Skill uses its official personal-skills checkout; identify it by the Skill frontmatter name and verify the checkout root and official remote. The locator supports the runtime home's `skills/remote-skills` and the managed cloud host's `/root/.codex/skills/remote-skills`, excluding disabled entries under `uninstalled`. These are alternative installation locations, not permission for a second copy. Locate by SKILL `name`, not version guesses from legacy folders. Do not install, copy or modify this Skill inside projects, or create `rules/<skill>`, `skill-snapshot-*`, project `.agents/skills` or `.codex/skills` copies.
 
 At startup/continuation read the global entrypoint and route references, checking old projects against latest user requirements; old locks prove historical execution, not current rules.
 
-[Video subagents](subagent-orchestration.md#installation-and-invocation) use this same global entrypoint. The six maintained TOML definitions sync only to personal Codex `agents` for host discovery; they are not separate Skills or project installs. Role updates do not automatically restart work/change running contexts.
+[Video subagents](subagent-orchestration.md#installation-and-invocation) use this same global entrypoint. The six maintained TOML definitions sync only to personal Codex `agents` for host discovery; they are not separate Skills or project installs. Role updates do not automatically restart work/change running contexts. A read-only runtime home is not a reason to change security permissions or disguise maintenance source as an installation. Use the official personal-Skill workflow where supported and report any uncompleted role installation separately; the existing fallback invocation remains available. Current conversation/catalog caches are not proof that a saved installation has or has not refreshed.
 
 <a id="项目保存什么"></a>
 ## What projects retain

@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "472aaae9aceead64b3371c10136d02f9b16ffb09a78ba1b4c13c586601a72452",
+      "sha256": "928b20ccc13f9ccc932fb96d31dce7b1752973ef6bc7e37d34a6a7237bacf9c8",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -77,7 +77,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "ab62cd4f9e9fea930f055e428c26bbb451ff5d717a591e34d159772dadd098c5",
+      "sha256": "75c5284bd51bb8d207f1ac8ff8d9811d5afe91d940ae03514dee3c0cb9018ac8",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -95,6 +95,9 @@
         "actual-g1g7-progression-records",
         "capacity-cost-and-retrospectives",
         "platform-topic-selection-and-data-review",
+        "export-first-then-reconcile-the-actual-coverage",
+        "diagnose-entry-promise-and-payoff-separately",
+        "turn-each-useful-review-into-a-next-production-change",
         "completion-definition-for-a-benchmark-and-repeatability",
         "whole-film-coverage-and-expansion-boundaries",
         "from-learning-a-reference-to-actual-improvement",
@@ -433,7 +436,7 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "dec42b9ec310e8946d20b90d28e609bac6a4e4dab9913ae6c9d9ab436feaccc9",
+      "sha256": "dbfcdc389adaef859899ddad8f082f64aa77973e17f9daa0e6116de997dd0663",
       "anchors": [
         "one-global-skill-projects-retain-production-data-only",
         "what-projects-retain",
@@ -444,7 +447,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "611dd2b9805ee13cbdaff106f9bf4e456413fb98c187e95156b6c1a8c189282f",
+      "sha256": "d3a932121ad751d5538672b641ce9e6585cdd3e62f22bce90121c40399577720",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

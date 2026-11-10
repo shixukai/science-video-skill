@@ -103,4 +103,6 @@ Swipe-risk points go to the responsible author as concrete repairs. This check i
 
 After authorized publication, record each platform's own metrics under [platform data review](production-checkpoints.md#platform-topic-selection-and-data-review), using the platform's field names and definitions (for example 2-second exits, 5-second completion, completion rate, average viewing time, likes, comments, shares, saves and cover click-through). Compare actual exit points with the swipe-risk points predicted before publication, and change one main variable per round (title, cover, hook pattern or angle) under the existing experiment records.
 
+Apply [entry/intent/payoff diagnosis and the next-production brief](production-checkpoints.md#diagnose-entry-promise-and-payoff-separately) before turning a metric into an opening, length or style prescription. Search-intent mismatch, recommendation entry loss and delayed explanatory payoff need different tests; average viewing is not an exit timestamp and platform chapter labels are not media truth.
+
 Keep a private, evidence-backed pattern library in the project: which angles, hooks, titles and covers performed, with versions and data windows. Feed it back into appeal screening. Account data, works and feedback stay private; only general methods may enter this public Skill.

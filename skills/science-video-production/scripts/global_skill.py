@@ -5,6 +5,10 @@ import os
 from pathlib import Path
 import re
 import stat
+import subprocess
+
+PERSONAL_SKILLS_REMOTE = "https://chatgpt.com/backend-api/git-authed/skills"
+MANAGED_PERSONAL_SKILLS = Path("/root/.codex/skills/remote-skills")
 
 NAME = 'science-video-production'
 SKIP = {'.git', 'node_modules', '.venv', 'venv', '__pycache__', 'site-packages'}
@@ -22,19 +26,64 @@ def is_science_skill(path):
     return re.search(r'(?m)^name:\s*[\"\x27]?science-video-production[\"\x27]?\s*$', frontmatter) is not None
 
 
+def _entries(folder):
+    if not folder.is_dir():
+        return []
+    found = []
+    for child in folder.iterdir():
+        if child.is_dir() and is_science_skill(child / 'SKILL.md'):
+            resolved = child.resolve()
+            if resolved.parent != folder.resolve():
+                raise ValueError('Global Skill entry must live in its installed skills directory: ' + str(child))
+            found.append(resolved)
+    return found
+
+
+def _verify_personal_checkout(folder):
+    """Recognize the host-managed checkout, never an arbitrary project copy."""
+    if (folder.is_symlink()
+            or getattr(folder.lstat(), 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
+        raise ValueError('Personal Skill checkout root must not be a filesystem alias: ' + str(folder))
+    try:
+        def git(*args):
+            return subprocess.run(['git', '-C', str(folder), *args], check=True,
+                                  capture_output=True, text=True, timeout=10).stdout.strip()
+        actual_root = Path(git('rev-parse', '--show-toplevel')).resolve()
+        remote = git('remote', 'get-url', 'origin').rstrip('/')
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise ValueError('Cannot verify personal Skill checkout: ' + str(folder)) from exc
+    if actual_root != folder.resolve() or remote != PERSONAL_SKILLS_REMOTE:
+        raise ValueError('Personal Skill directory is not the official managed checkout: ' + str(folder))
+
+
 def global_installation(codex_home=None):
     home = Path(codex_home) if codex_home is not None else Path(os.environ.get('CODEX_HOME') or Path.home() / '.codex')
     folder = home / 'skills'
-    found = []
-    if folder.is_dir():
-        for child in folder.iterdir():
-            if child.is_dir() and is_science_skill(child / 'SKILL.md'):
-                resolved = child.resolve()
-                # A global alias into a project is not a global installation.
-                if resolved.parent != folder.resolve():
-                    raise ValueError('Global Skill entry must live in the global skills directory: ' + str(child))
-                if resolved not in found:
-                    found.append(resolved)
+    found = _entries(folder)
+    personal_roots = [(folder / 'remote-skills', False)]
+    # The managed cloud host can keep its official personal checkout separate
+    # from the read-only runtime home. An explicit home isolates callers/tests.
+    if codex_home is None:
+        personal_roots.append((MANAGED_PERSONAL_SKILLS, True))
+    checked = set()
+    for personal, optional in personal_roots:
+        try:
+            resolved = personal.resolve()
+            if resolved in checked:
+                continue
+            checked.add(resolved)
+            active = _entries(personal)
+        except PermissionError:
+            # A normal desktop user may not be allowed to inspect /root.
+            # This optional host candidate must not break a valid local install.
+            # Errors in the selected runtime home remain explicit failures.
+            if optional:
+                continue
+            raise
+        if active:
+            _verify_personal_checkout(personal)
+            found.extend(active)
+    found = list(dict.fromkeys(found))
     if len(found) != 1:
         raise ValueError('Expected one global science-video-production installation; found ' + str(len(found)))
     return found[0]

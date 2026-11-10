@@ -63,7 +63,9 @@
         "platform-topic-evidence",
         "precise-control-and-efficient-iteration",
         "analogy-to-mechanism-mapping",
-        "parallel-process-handoff-and-cycle-editing"
+        "parallel-process-handoff-and-cycle-editing",
+        "platform-entry-intent-payoff-diagnosis",
+        "review-to-next-production-change"
       ],
       "supporting_files": [
         "references/viewer-retention-design.md"

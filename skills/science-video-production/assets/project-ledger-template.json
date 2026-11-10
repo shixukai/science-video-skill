@@ -103,7 +103,10 @@
       "comparison_window": "",
       "metrics_to_check": [],
       "traffic_and_sample_limits": "",
-      "observation_status": "not_measured"
+      "observation_status": "not_measured",
+      "production_action": "",
+      "responsible_role": "",
+      "review_segment": ""
     },
     "rule_regression": {
       "rule_id": "",
@@ -158,7 +161,9 @@
       "sample_and_traffic_limits": "",
       "alternative_explanations": "",
       "next_hypothesis": "",
-      "result": "not_measured"
+      "result": "not_measured",
+      "first_verified_payoff_s": null,
+      "payoff_evidence": []
     },
     "platform_research": {
       "collected_at": "",
@@ -167,7 +172,12 @@
       "candidate_hypotheses": [],
       "ai_suggestions": [],
       "activity_constraints": "",
-      "next_check": ""
+      "next_check": "",
+      "commissioned_series": "",
+      "coverage": {},
+      "cohort_basis": "",
+      "diagnosis_limits": "",
+      "next_production_brief": ""
     }
   },
   "experiments": [],

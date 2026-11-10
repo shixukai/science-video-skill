@@ -75,8 +75,9 @@ def check_platform_record_formats(ledger):
     formats = ledger["record_formats"]
     required = {
         "platform_snapshot": {"collected_at", "denominators", "hours_since_publication", "duration_s", "traffic_and_audience", "source_url", "page_filters", "window_note", "data_updated_display", "update_status", "published_display", "publication_timezone", "age_basis", "sample_note", "field_definitions", "raw_display_values", "field_states", "inconsistency_note", "evidence"},
-        "platform_research": {"collected_at", "snapshot_references", "availability_note", "candidate_hypotheses", "ai_suggestions", "activity_constraints", "next_check"},
-        "experiment": {"hypothesis", "primary_variable", "baseline_version", "candidate_version", "comparison_window", "metrics_to_check", "traffic_and_sample_limits", "observation_status", "result", "limits"},
+        "platform_research": {"collected_at", "snapshot_references", "availability_note", "candidate_hypotheses", "ai_suggestions", "activity_constraints", "next_check", "commissioned_series", "coverage", "cohort_basis", "diagnosis_limits", "next_production_brief"},
+        "experiment": {"hypothesis", "primary_variable", "baseline_version", "candidate_version", "comparison_window", "metrics_to_check", "traffic_and_sample_limits", "observation_status", "result", "limits", "production_action", "responsible_role", "review_segment"},
+        "retention_review": {"first_verified_payoff_s", "payoff_evidence"},
     }
     for name, keys in required.items():
         record = formats.get(name)
@@ -95,6 +96,18 @@ def check_platform_record_formats(ledger):
     experiment = formats.get("experiment", {})
     if isinstance(experiment, dict) and (experiment.get("observation_status") != "not_measured" or experiment.get("result") != ""):
         errors.append("blank experiment must preserve unmeasured status and empty result")
+    research = formats.get("platform_research", {})
+    if isinstance(research, dict):
+        if research.get("coverage") != {} or any(research.get(key) != "" for key in
+                ("commissioned_series", "cohort_basis", "diagnosis_limits", "next_production_brief")):
+            errors.append("blank research must not invent coverage, diagnosis or next-production findings")
+    retention = formats.get("retention_review", {})
+    if isinstance(retention, dict) and (retention.get("first_verified_payoff_s") is not None
+            or retention.get("payoff_evidence") != []):
+        errors.append("blank retention review must not invent a verified media payoff")
+    if isinstance(experiment, dict) and any(experiment.get(key) != "" for key in
+            ("production_action", "responsible_role", "review_segment")):
+        errors.append("blank experiment must not invent an implemented production change")
     if ledger.get("platform_research") != []:
         errors.append("blank platform research must not invent research findings")
     return errors
