@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "928b20ccc13f9ccc932fb96d31dce7b1752973ef6bc7e37d34a6a7237bacf9c8",
+      "sha256": "15db0f6290f10a8eafd2841cd96d5ccddd44403111ca3e72f25fe78bb493a463",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -41,7 +41,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "fa5593130104ee7b57198a467752fc1f133d1720abe034bacc2e0c691c51dcd7",
+      "sha256": "c9c7fc67ff15adaf7ab1a7aaf9e05cf9cfdbf98f09b5473290d11031abf5c96d",
       "anchors": [
         "facts-asset-rights-and-production-statements",
         "original-visual-provenance-contract",
@@ -53,7 +53,8 @@
         "two-indexes-and-private-storage",
         "minimum-production-statement",
         "fact-cards-and-formal-asset-admission",
-        "actual-publication-steps-for-generated-content-declarations"
+        "actual-publication-steps-for-generated-content-declarations",
+        "preserve-claim-meaning-through-production-handoffs"
       ]
     },
     {
@@ -77,7 +78,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "75c5284bd51bb8d207f1ac8ff8d9811d5afe91d940ae03514dee3c0cb9018ac8",
+      "sha256": "a932f719d2bb6e1b607cb63db9ea5c415c20925d9c9d9bf545e0e36d4b1189e3",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -110,13 +111,14 @@
         "single-submission-and-minimum-recovery-record",
         "segmented-timing-and-controlled-service-reuse",
         "prioritize-output-reviewfeedback-and-archive",
-        "stop-hard-failures-and-substantiate-optimization-claims"
+        "stop-hard-failures-and-substantiate-optimization-claims",
+        "choose-a-comparison-that-separates-explanations"
       ]
     },
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "9c8b79bb29b2edcc71a91c57ecc092ed1f5d1a60db2e907b1fc045a636c64ccd",
+      "sha256": "3e88e50bd14cd6856bc0cb8da0568018cb9f474304202cebb76a7cbf5d7c60bf",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -131,7 +133,8 @@
         "stage-key-discoveries-in-sound-and-picture",
         "let-the-roughcut-determine-order-and-duration",
         "make-the-opening-image-understandable-by-the-ending",
-        "handoff-to-production-agents-and-internal-review"
+        "handoff-to-production-agents-and-internal-review",
+        "diagnose-competing-attention-before-making-the-edit-faster"
       ]
     },
     {
@@ -321,7 +324,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "9e2a8e17f9650953c7176977a7d3c6a68d6c48619378c471a3edd7cd144e1858",
+      "sha256": "efcb0486a544b51cd75048384f1c1774ef3f08154de599b0743e95d7b180b9a6",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -341,7 +344,9 @@
         "using-stage-evidence-checks-and-their-limits",
         "levels-of-fine-finish-and-itemized-evidence",
         "stage-evidence-for-art-methods",
-        "autonomous-explanation-and-expression-review"
+        "autonomous-explanation-and-expression-review",
+        "probe-understanding-without-inventing-an-audience-test",
+        "declared-independent-review-identity-checks"
       ]
     },
     {
@@ -447,14 +452,15 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "d3a932121ad751d5538672b641ce9e6585cdd3e62f22bce90121c40399577720",
+      "sha256": "bfc60d1e2372692b0778cfb901d92669c9668757fb1778eb2dd9c93fe0ab3fb3",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
         "shared-assignment-contract",
         "scheduling-and-handoff",
         "independent-review",
-        "installation-and-invocation"
+        "installation-and-invocation",
+        "accept-handoffs-by-meaning-not-only-by-file-presence"
       ]
     },
     {

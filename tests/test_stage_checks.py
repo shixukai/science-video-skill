@@ -15,6 +15,11 @@ class CanonicalStageTests(unittest.TestCase):
  def errors(s,stage='G6'):return gates.check_stage(s.d,s.root,stage)
  def rejects(s,part,stage='G6'):s.assertTrue(any(part in e for e in s.errors(stage)),s.errors(stage))
  def test_valid(s):s.assertEqual(s.errors(),[])
+ def test_same_agent_review_identity(s):
+  s.d['qa']['expression_review']['reviewer']=s.d['qa']['explanation_review']['reviewer'];s.rejects('must not reuse the same reviewer','G5')
+ def test_same_agent_review_task(s):
+  for name in ('explanation_review','expression_review'):s.d['qa'][name]['review_task_id']='same-task'
+  s.rejects('must not reuse the same review_task_id','G5')
  def test_missing_expansion_intent(s):
   s.d['qa']['visual_frames']['animation'].pop('next_action');s.rejects('next_action','G3')
  def test_unknown_expansion_intent(s):
@@ -367,6 +372,11 @@ class CoverageStageTests(unittest.TestCase):
  def errors(s,stage='G6'):return gates.check_stage(s.d,s.root,stage)
  def rejects(s,part,stage='G6'):s.assertTrue(any(part in e for e in s.errors(stage)),s.errors(stage))
  def test_valid(s):s.assertEqual(s.errors(),[])
+ def test_same_agent_review_identity(s):
+  roles=s.d['qa']['comprehension']['internal_review']['responsibilities'];roles['expression']['reviewer']=roles['explanation']['reviewer'];s.rejects('must not reuse the same reviewer','G5')
+ def test_same_agent_review_task(s):
+  for record in s.d['qa']['comprehension']['internal_review']['responsibilities'].values():record['review_task_id']='same-task'
+  s.rejects('must not reuse the same review_task_id','G5')
  def test_missing_expansion_intent(s):
   s.d['qa']['visual_frames']['animation'].pop('next_action');s.rejects('next_action','G3')
  def test_unknown_expansion_intent(s):

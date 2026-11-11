@@ -3,7 +3,7 @@
 
 Use this page to make a science film that ordinary viewers choose, keep watching, and share. It applies to editorial topic selection and to every complete new film meant for feed platforms. A user-selected topic keeps its scope; apply these methods to find its strongest honest entry instead of changing the topic. The [topic contract](topic-contract.md) owns the question and scope, [viewer retention](viewer-retention-design.md) owns explanation progression, [visual system](visual-system.md#design-the-two-cover-ratios-independently) owns cover finish, and [production checkpoints](production-checkpoints.md#platform-topic-selection-and-data-review) owns platform data records. This page owns appeal screening, package-first design, the first seconds, retention cadence, interaction and the post-publication learning loop. It adds no gate, score or record schema.
 
-A hit science video usually combines four things: a **broad entry** many people recognize, a **first-second pull** that stops the scroll, **continuous visible payoff** that keeps viewers watching, and a **reason to share or comment** afterward. Every hook must be honest: the film itself delivers what the title, cover and first seconds promise. Mismatch is punished by early exits and negative comments, so honesty is also the better-performing strategy.
+A hit science video usually combines four things: a **broad entry** many people recognize, a **first-second pull** that stops the scroll, **continuous visible payoff** that keeps viewers watching, and a **reason to share or comment** afterward. Every hook must be honest: the film itself delivers what the title, cover and first seconds promise. Promise mismatch is a concrete editorial risk to inspect, not proof of a particular exit/comment cause. Honesty is required regardless of measured performance; whether a package improves outcomes remains a hypothesis until comparable data exists.
 
 ## Screen appeal before deep research
 
@@ -31,7 +31,7 @@ Before locking the G1 script, draft the package viewers will actually see in the
 
 Choose the package with the strongest promise that the film can fully deliver, then write the script to fulfill it. If no candidate is compelling, the angle is weak; revise it now, when it is cheap. Keep title, cover, first frame and first line promising the same question, as checked by the existing [cover-to-opening alignment](topic-contract.md#continuously-check-the-covers-question-against-the-actual-opening).
 
-Title patterns that work for Chinese feed platforms (examples only, each must match the actual film):
+Candidate title patterns to test for Chinese feed platforms (examples only, each must match the actual film):
 
 | Pattern | Example |
 | --- | --- |
@@ -45,7 +45,7 @@ Use numbers only when sourced. Do not use “震惊”, “99%的人不知道”
 
 ## Win the first three seconds
 
-Feed viewers decide within one to three seconds. For a complete new film intended for feed platforms, this is the default design target, not a numeric gate:
+For a complete new film intended for feed platforms, inspect recognition in the first one to three seconds as an editorial starting point, not a universal audience decision time or numeric gate:
 
 - **The first frame is already the hook**: the topic's most striking real visual, in motion. No logo, black frame, title card, slow establishing shot or greeting such as “大家好”.
 - **The first spoken line** (roughly one breath) offers a specific observation, meaningful fact, real tension or genuine question matched to the picture; a question is not mandatory.
@@ -76,7 +76,7 @@ Map these onto the existing `payoff_steps` and section handoffs instead of creat
 - **Escalation.** Order sections so difficulty, stakes or spectacle rise when dependencies allow. Place the strongest reveal late, without withholding the core answer artificially.
 - **Purposeful pattern change.** Change scale, viewpoint, sound or rhythm where attention would sag, and make every change carry information.
 - **Remove dead air.** Cut greetings, channel introductions, repeated summaries and filler such as “接下来我们来看看”. Keep a natural, brisk narration pace under the accepted voice preset; do not slow down for completeness or speed up artificially.
-- **Shareable moments.** Slow motion, macro detail, before/after, cross-section reveals and perfect fits invite rewatching and sharing; plan at least one per film where the topic supports it.
+- **Shareable moments.** Slow motion, macro detail, before/after, cross-section reveals and perfect fits offer candidate moments worth inspecting, not proven rewatch/share effects; plan at least one per film where the topic supports it.
 
 ## End fast and invite real interaction
 
@@ -84,7 +84,7 @@ Deliver the answer, return to the opening image with the new understanding, and 
 
 ## Duration, format and series identity
 
-The topic contract still lets the complete explanation determine duration; never skip necessary steps to hit a length. When a complete chain is long, the honest way to fit feed platforms is to split it into a series of episodes, each with its own question and payoff, or to make a separately commissioned short cut-down that points to the full film. The series default canvas is 1920×1080 landscape; a vertical version requires an explicit request and its own layout review.
+The topic contract still lets the complete explanation determine duration; never skip necessary steps to hit a length. When a complete chain is long, propose a series with self-contained questions/payoffs or a separately commissioned cut-down when useful. Neither proposal changes an already commissioned complete-chain film: preserve that deliverable unless the user chooses the changed scope. The series default canvas is 1920×1080 landscape; a vertical version requires an explicit request and its own layout review.
 
 Build series recognition: a consistent title style, cover design and accepted voice; use recurring visual devices such as a cutaway only where the topic supports them. A one-sentence pointer to a next episode is allowed only when that episode actually exists or is committed.
 

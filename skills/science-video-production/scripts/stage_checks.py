@@ -17,6 +17,31 @@ from feedback_guard import validate_feedback
 from opening_alignment_guard import check_opening_plan, validate_opening_review
 from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
 
+def review_identity_errors(qa):
+ """Reject declared same-agent reuse; different strings do not prove independence.
+ Historical human-review scope remains for actual review, not invented task IDs.
+ """
+ if not isinstance(qa,dict):return []
+ legacy=qa.get('comprehension',{})
+ legacy=legacy.get('internal_review',{}) if isinstance(legacy,dict) else {}
+ legacy=legacy if isinstance(legacy,dict) else {}
+ roles=legacy.get('responsibilities',{})
+ records=[]
+ for name in ('explanation','expression'):
+  record=qa.get(name+'_review')
+  if not isinstance(record,dict):
+   record=roles.get(name,{}) if isinstance(roles,dict) else {}
+   record=dict(record) if isinstance(record,dict) else {}
+   record['reviewer_kind']=legacy.get('reviewer_kind')
+  records.append(record)
+ if not all(r.get('reviewer_kind')=='agent' for r in records):return []
+ errors=[]
+ for key in ('reviewer','review_task_id'):
+  vals=[r.get(key) for r in records]
+  if all(isinstance(v,str) and v.strip() for v in vals) and vals[0].strip()==vals[1].strip():
+   errors.append('G5 independent agent reviews must not reuse the same '+key)
+ return errors
+
 GATES = tuple(f'G{i}' for i in range(1, 8))
 REQUIRED_REVIEWS = {
  'G1': ('science', 'explanation_logic'), 'G2': ('shotbook', 'expression_plan'),
@@ -1047,6 +1072,7 @@ class Checks:
     if text(ident):seen.add(ident)
     self.need(e.get('status')=='pass' and text(e.get('evidence')),'G5 actual process evidence required')
    self.need(seen==set(steps),'G5 full primary explanation evidence incomplete (legacy full primary causal chain evidence incomplete)')
+   for error in review_identity_errors(self.qa):self.need(False,error)
    self.real_anchor()
    self.caption_and_flicker(policy);self.scores(policy);self.internal_review('explanation_review','G5',steps,cards,final=True);self.internal_review('expression_review','G5',steps,cards,final=True);self.cold_view(policy)
   if n>=5:

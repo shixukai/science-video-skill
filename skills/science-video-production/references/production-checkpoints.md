@@ -385,3 +385,9 @@ Before each round, state hard-failure conditions and the round's stopping bounda
 If motion repairs repeatedly introduce the same defect family or exceed the round's estimate, the parent follows the [complete repair cycle](blender-execution.md#complete-a-repair-cycle-before-expanding) to reassess implementation root cause, next watchable output and duration. Stopping ineffective patch chains does not abandon the requested motion. A changed implementation must retain the explanation objective, valid assets and accepted voice; time cost does not authorize reducing it to a static presentation.
 
 Optimization reports separately state changes, measured results, applicable conditions and unknowns. Without comparative measurements, do not claim quality or speed improvements.
+
+## Choose a comparison that separates explanations
+
+When a commissioned question turns on a misconception or competing explanation, ask what source-supported observable difference would distinguish the alternatives. If both predict the selected picture, it cannot decide between them. Keep relevant conditions trackable; do not manufacture a rival, force a counterexample into every simple explanation, or present an illustrative animation as a newly performed experiment.
+
+For example, to distinguish surface temperature from the rate of heat transfer in why metal and wood feel different, first establish the supported equal-initial-temperature condition. Different starting temperatures would confound that comparison. Use existing expression-card `misconception`, `boundary`, `visual_action` and `inferable_outcome` notes. Research settles the supported relation before the artist chooses how to reveal it. This does not add a second experiment or new stage.

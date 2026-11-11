@@ -202,3 +202,11 @@ Reuse these records:
 Independent reviewers first continuously watch/listen at normal speed and record the first unidentified object, lost relationship or unclear sound, then diagnose against design. Muting/extracting frames diagnoses problems but cannot replace sound-and-picture review.
 
 With real retention curves, inspect whether dips correspond to unmet expectation, difficulty, repetition or task completion; peaks may reflect rewatching. Consider audience/traffic conditions rather than automatically cutting necessary steps.
+
+## Diagnose competing attention before making the edit faster
+
+When a continuous interval is hard to follow, identify what the viewer is being asked to locate, hear, read and compare **at the same moment**. Reuse the action card and actual timeline. A fast voice may be fine over one clear action and fail when a cutaway, new term, subtitle and camera move arrive together; do not prescribe a universal speech or cut rate.
+
+Choose the smallest repair for the observed conflict: introduce the referent before its new term, keep orientation while revealing the causal change, delay a decorative camera move, or move a spoken qualification next to its comparison. Let captions preserve the spoken meaning, but do not make reading them the only way to resolve an otherwise avoidable referent conflict. Diagnose source narration, visual timing and final mix separately before resynthesizing a whole track or changing the accepted voice.
+
+Compare the changed interval with its joins at normal speed. Muted picture, transcript or isolated audio may locate a problem but do not establish the integrated result. If the interval is already clear and only platform data is low, leave this diagnosis as unconfirmed rather than manufacturing a cognitive-overload defect.
