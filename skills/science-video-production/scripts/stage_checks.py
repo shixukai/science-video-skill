@@ -15,6 +15,7 @@ from topic_selection_guard import validate_topic_selection
 from connection_guard import validate_connection_review
 from feedback_guard import validate_feedback
 from opening_alignment_guard import check_opening_plan, validate_opening_review
+from opening_hook import validate_opening_hook
 from presentation_checks import validate_text_plan, validate_text_review, validate_voice_continuity
 
 def review_identity_errors(qa):
@@ -1028,6 +1029,7 @@ class Checks:
    validate_subject_motion(self,animation.get('subject_motion'),obj(animation.get('viewing')),'G3',policy['subject_motion'],set(x for x in seq(animation.get('step_ids')) if text(x)))
    validate_text_review(self,'G3',obj(animation.get('viewing')),text_items)
    validate_voice_continuity(self,'G3',obj(animation.get('viewing')))
+   validate_opening_hook(self,policy,'G3')
    if n>=3:self.asset_catalog(steps,representative=False)
    design=obj(self.data.get('design'));approval=obj(design.get('approval'))
    self.need(approval.get('status')=='pass','actual design approval missing/failed')
@@ -1056,6 +1058,7 @@ class Checks:
    validate_connection_review(self,'G5',[obj(s).get('id') for s in seq(self.data.get('shots'))])
    if cover_keys(self.data):validate_cover_review(self)
    validate_opening_review(self)
+   validate_opening_hook(self,policy,'G5')
    self.viewing(self.record('visual_frames').get('viewing'),'G5 complete viewing','full_episode',final=True)
    validate_subject_motion(self,self.record('visual_frames').get('subject_motion'),obj(self.record('visual_frames').get('viewing')),'G5',policy['subject_motion'],set(steps))
    validate_text_review(self,'G5',obj(self.record('visual_frames').get('viewing')),text_items)

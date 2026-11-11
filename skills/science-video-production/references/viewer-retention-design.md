@@ -26,11 +26,11 @@ G2 checks this same progression in the complete sound-and-picture rough cut, usi
 <a id="先建立情境和看点再进入解释"></a>
 ## Establish context and a reason to watch before explaining
 
-A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show a striking relevant visual in motion and offer a specific observation, meaningful fact, tension or genuine question in natural language, as described in [win the first three seconds](viral-appeal-and-packaging.md#win-the-first-three-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it. The responsibilities below may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
+A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show a striking relevant visual in motion from frame 0 and land a specific observation, meaningful fact, tension or genuine question by about two seconds, as specified in [win the first two seconds](viral-appeal-and-packaging.md#win-the-first-two-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it: put context into the hook picture, never into a slow first clause or establishing shot before the hook. The responsibilities below follow the hook and may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
 
 | Opening responsibility | What viewers should gain | Corresponding sound/picture design |
 | --- | --- | --- |
-| Recognize context | What is present, where does it happen, or what is it for? | Enter through a concrete object, product application, complete phenomenon or supported result; provide recognition time and necessary narration rather than a list of technical terms |
+| Recognize context | What is present, where does it happen, or what is it for? | Enter through a concrete object, product application, complete phenomenon or supported result that is already moving in the hook shot; recognition happens inside that shot and its caption, not in a separate slow establishing shot or a list of technical terms |
 | See a worthwhile question | What real difficulty, difference, constraint or phenomenon needs understanding? | Use visible goals, comparisons, operational difficulty or a result/process question. Lead with the topic's strongest real surprise, spectacle or stakes; do not manufacture counterintuitive claims, crises or spectacle |
 | Understand the viewing promise | What does the film explain, and what can viewers understand/judge afterward? | Narrow overall context to the original concrete question/scope and a clear benefit; retain only orienting route information rather than reciting a full contents list |
 | Enter the first step naturally | Why inspect this detail/process now? | Move from the opening object/goal into the first necessary observation/explanation with identity, scale and state continuity; do not jump from a lively teaser to an unexplained teaching model |
@@ -51,7 +51,7 @@ Before expansion, continuously watch/listen to the opening at normal speed throu
 <a id="从本题选择开场看点"></a>
 ## Select an opening point of interest from this topic
 
-First establish the body's first observation viewers must understand, then work backward to a natural opening. Connect what viewers first see, what deserves a question and what the body answers. Interest requires corresponding imagery and scientific basis, not narration rhetoric alone. The following are options, not mandatory trials/combinations for every episode:
+Pick the hook from the film's strongest honest visible moment through the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-films-material), and establish the body's first observation viewers must understand; then design the short bridge between them. Connect what viewers first see, what deserves a question and what the body answers. Interest requires corresponding imagery and scientific basis, not narration rhetoric alone. The following are options, not mandatory trials/combinations for every episode:
 
 | Topic advantage | Possible opening | Basis for entering the body |
 | --- | --- | --- |
@@ -85,7 +85,7 @@ Transitions follow the primary route: arrange realistic work in MoneyPrinterTurb
 <a id="工程示例从应用走进芯片刻蚀"></a>
 ### Engineering example: from application to chip etching
 
-Adapt the example to actual equipment, material and process. Combine/expand semantic sections as needed without fixed shots/seconds.
+Adapt the example to actual equipment, material and process. Combine/expand semantic sections as needed without fixed shots/seconds. For a feed film the hook lab first decides the first two seconds (for example a moving macro reveal of an etched pattern with “这些线，比很多病毒还细。”); the table shows the bridge that follows the hook.
 
 | Narrative task | Planned main image | Example narration and handoff |
 | --- | --- | --- |

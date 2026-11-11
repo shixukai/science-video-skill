@@ -1017,6 +1017,25 @@
         }
       }
     },
+    "opening_hook": {
+      "status": "pending",
+      "not_applicable_reason": "",
+      "commission_reference": "",
+      "sample": {
+        "status": "pending",
+        "evidence": {
+          "file": "",
+          "sha256": ""
+        }
+      },
+      "final": {
+        "status": "pending",
+        "evidence": {
+          "file": "",
+          "sha256": ""
+        }
+      }
+    },
     "gates": {
       "G1": {
         "status": "not_reviewed",
@@ -1685,7 +1704,30 @@
           ],
           "contribution": ""
         }
-      ]
+      ],
+      "hook": {
+        "pattern": "",
+        "first_frame": "",
+        "frame0_motion": "",
+        "first_sound": "",
+        "first_line": "",
+        "payload_clause": "",
+        "tension": "",
+        "muted_read": "",
+        "phone_read": "",
+        "source_shot_id": "",
+        "return_in_body": "",
+        "candidates": [
+          {
+            "pattern": "",
+            "first_frame": "",
+            "first_line": "",
+            "tension": "",
+            "selected": false,
+            "lost_because": ""
+          }
+        ]
+      }
     },
     "coverage": [
       {

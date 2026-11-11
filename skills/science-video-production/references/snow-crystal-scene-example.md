@@ -54,7 +54,7 @@ For similar growth under stable conditions, directly compare corresponding arms 
 
 Under [opening/bridging](viewer-retention-design.md), establish visible similarity/difference, pose the question and enter the same tip. The first answer supplies enough relationship to continue, not the whole mechanism upfront.
 
-Optional opening narration: “看这片雪晶：六条枝伸向不同方向，细看却有相似的分叉。它们不是互相照着长，为什么还能这么像？先认住这条枝上的旧分叉，再看枝尖新长出的部分。” Follow that old fork into the tip at the end; first body sentence “旧分叉还在，新的冰继续加在边界上” accompanies new solid matter. Then explain corresponding structures through shared conditions. Formal facts, meaning and timing follow episode sources, full script and audio.
+Optional opening narration (frame 0: the crystal already growing in time-lapse, filling the frame): “六条枝各长各的，却这么像。它们不是互相照着长，相似从哪里来？答案藏在枝尖。” Let the picture pick out one branch's old fork and follow it into the tip at the end of the opening; first body sentence “旧分叉还在，新的冰继续加在边界上” accompanies new solid matter. Then explain corresponding structures through shared conditions. Formal facts, meaning and timing follow episode sources, full script and audio.
 
 | Understanding gained | Next worthwhile task | Visible delivery |
 | --- | --- | --- |

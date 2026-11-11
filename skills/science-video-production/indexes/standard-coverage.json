@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "9ee60cb5d985567759fc1103494256320a7a8f0779884d78adfffedc977f2b66",
+      "sha256": "b7ce1e8e338c23651209ddd4d0cf5e49bc9056d60cb974cff315dcf222cba45c",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -25,12 +25,18 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "15db0f6290f10a8eafd2841cd96d5ccddd44403111ca3e72f25fe78bb493a463",
+      "sha256": "2c52db611f19f3b6ecd53534c8491d000986a85a46b1d860c0c2fdbb10e69fcf",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
         "design-the-package-before-the-script",
-        "win-the-first-three-seconds",
+        "win-the-first-two-seconds",
+        "why-openings-lose-viewers",
+        "the-two-second-beat-sheet",
+        "find-the-hook-in-this-films-material",
+        "run-the-hook-lab-at-g1",
+        "produce-and-test-the-hook-first",
+        "keep-the-hook-honest",
         "keep-a-reason-to-stay",
         "end-fast-and-invite-real-interaction",
         "duration-format-and-series-identity",
@@ -60,7 +66,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "6994102ee4b21fc40f3bf7f45aeee4d70d549d6dcf86ea831f2e283e47e0ccc6",
+      "sha256": "8ed9c8930e1917d12c49cb3e5448b52787da1e9975ecfa96e6d1abbc15f85387",
       "anchors": [
         "realistic-style-moneyprinterturbo-production-and-local-model-assets",
         "lock-modality-at-startup",
@@ -78,7 +84,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a932f719d2bb6e1b607cb63db9ea5c415c20925d9c9d9bf545e0e36d4b1189e3",
+      "sha256": "ff22a89df85e2d6bc9a3a254e8eb57919fd14bb3802f87f862ea589f7a44603e",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -118,7 +124,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "3e88e50bd14cd6856bc0cb8da0568018cb9f474304202cebb76a7cbf5d7c60bf",
+      "sha256": "500625c5d9315c19be8d095e029b333cfe119e5547c4649bf89ba3ce6ceedcbd",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -203,7 +209,7 @@
     {
       "owner_id": "visual",
       "file": "references/snow-crystal-scene-example.md",
-      "sha256": "85a114d7d4889a55706c64c6bda3a1c758fb7f6be3c70190564b0112bd721368",
+      "sha256": "2ddeae2f382d35387e0c77abfbd4ddc219d1291b66f94469e17f441876ca5a94",
       "anchors": [
         "snow-crystal-growth-scene-and-action-design-example",
         "question-and-scientific-scope",
@@ -284,7 +290,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "2eae5e4ab9bcd199bd5255b0b29651b8cc089ebb1f356ed227703a1eb143cfaa",
+      "sha256": "8efd9a607e531332152b0de2f295a02228bb20ea0b3a7be5829e6a2e631ebd2c",
       "anchors": [
         "mandarin-narration-confirm-the-qwen-invocation-location-and-actually-listen",
         "invocation-location-and-confirmation",
@@ -324,7 +330,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "efcb0486a544b51cd75048384f1c1774ef3f08154de599b0743e95d7b180b9a6",
+      "sha256": "cab37add00846e098ff39f94336474ecdd4c3cf3c6a562b0ca278dabd0cecb7e",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -365,7 +371,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "a71298ec31e378dedeb846a0d1eae0ccebf4f5b120fdacd49a69c1aa042974a9",
+      "sha256": "8ca2605eab60f3a9802d8aae0b7939e6c10e9b8ae87f0b3d9cf39d2fa641bf18",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -452,7 +458,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "bfc60d1e2372692b0778cfb901d92669c9668757fb1778eb2dd9c93fe0ab3fb3",
+      "sha256": "608f463d037ee6f29b09f67afb434c953706ad322320ea2ffefea77900e2febd",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

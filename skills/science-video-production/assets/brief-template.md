@@ -21,7 +21,8 @@ Record `episode.brief.topic_selection` under [adult-audience topic selection](..
 Apply [viral appeal and packaging](../references/viral-appeal-and-packaging.md) to complete new films; reuse the topic card fields above rather than a new form.
 - Angles considered and the appeal drivers each has (broad entry plus real surprise, visible spectacle, extreme scale, personal stakes, social currency or timeliness); which driver is visible in the picture; strongest losing angle:
 - Three to five title candidates and the selected title; cover concept (large subject in its most surprising real state plus short question); sources for every number or surprising claim:
-- First three seconds: first picture in motion and first spoken line; what the viewer learns next about why it matters:
+- First two seconds ([hook lab](../references/viral-appeal-and-packaging.md#run-the-hook-lab-at-g1), recorded in `topic_alignment.opening.hook`): hook inventory of the film's strongest visible moments; at least three candidates across two or more patterns and why each loser lost; selected first picture already moving at frame 0, first sound, first line with its payload clause and timed read-aloud; muted and phone-feed reading; what the viewer learns next about why it matters:
+- Hook sample and test: 0–5 s sample file/version, `opening_hook.py` report and flags/repairs, cold two-second test result (muted and with sound), recheck; final-export report bound in `qa.opening_hook.final`:
 - Payoff map through the body (where each new visible payoff or concrete re-hook lands), the strongest reveal, the shareable moment and the ending interaction, if any:
 - Scroll-viewer check results with swipe-risk times, repairs and recheck (internal diagnostic only):
 

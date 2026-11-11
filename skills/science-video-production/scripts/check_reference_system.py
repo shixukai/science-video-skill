@@ -246,6 +246,17 @@ def check(root):
              and motion["no_cut_or_speed_workaround"] is True, "subject motion screening/semantic boundaries required")
         need(motion["screen"] == {"sample_fps": 4, "sample_size": 64, "mae_threshold": .002, "candidate_min_seconds": 3.0},
              "subject motion screen settings must match current project revision")
+        hook = policy["opening_hook"]
+        need(hook["owner"] == "references/viral-appeal-and-packaging.md#win-the-first-two-seconds"
+             and hook["required_stages"] == ["G1", "G3", "G5"]
+             and hook["measurement_tool"] == "scripts/opening_hook.py"
+             and (root / hook["measurement_tool"]).is_file()
+             and hook["measurement_is_not_appeal_acceptance"] is True, "opening hook owner/stages/tool required")
+        need(type(hook["payload_deadline_s"]) in (int, float) and 0 < hook["payload_deadline_s"] <= 3
+             and type(hook["payload_max_spoken_units"]) is int and 4 <= hook["payload_max_spoken_units"] <= 14
+             and type(hook["min_candidates"]) is int and hook["min_candidates"] >= 2
+             and 0 < hook["audio_onset_max_s"] <= hook["payload_deadline_s"]
+             and 0 < hook["first_caption_max_s"] <= hook["payload_deadline_s"], "opening hook timing defaults out of range")
         need([policy["defaults"]["output"]["width"], policy["defaults"]["output"]["height"]] == limits["canvas"], "policy output must match current series default canvas")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")

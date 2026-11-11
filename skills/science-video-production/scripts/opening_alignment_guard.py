@@ -56,6 +56,11 @@ def check_opening_plan(data):
             errors.append("opening alignment: opening." + key + " concrete plan required")
     if opening.get("question_relation") != "specific_equivalent":
         errors.append("opening alignment: specific_equivalent question review required; generic_only/different_question/pending cannot pass")
+    # New packages carry a first-two-seconds hook design (template field). Its
+    # structure is checked here; whether it stops a viewer needs actual media.
+    if "hook" in opening:
+        from opening_hook import check_hook_plan, load_policy
+        errors.extend(check_hook_plan(opening, load_policy()))
     # Legacy plans remain readable. A newly supplied interest design must be
     # complete and point into the existing answer evidence, not a parallel plan.
     if {"curiosity_gap", "viewer_payoff", "payoff_steps"} & opening.keys():

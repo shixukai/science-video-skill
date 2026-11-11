@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "1.3.0",
+  "version": "1.4.0",
   "status": "adopted_requirements_pending_media_validation",
   "meaning": "H requirements cannot be offset by scores; D values are internal calibration starting points, not platform or industry standards.",
   "gates": {
@@ -243,6 +243,28 @@
     "no_cut_or_speed_workaround": true,
     "timing_mode": "review_triggers",
     "observation_hold_requires_actual_review": true
+  },
+  "opening_hook": {
+    "owner": "references/viral-appeal-and-packaging.md#win-the-first-two-seconds",
+    "applies_to": "complete new films intended for feed platforms; qa.opening_hook.status=not_applicable only with a commission reference and concrete non-feed reason",
+    "classification": "Production defaults for the first two seconds. Technical flags must be repaired or carry a concrete recorded exception; the cold two-second test records actual perception and is not an audience prediction.",
+    "required_stages": [
+      "G1",
+      "G3",
+      "G5"
+    ],
+    "payload_deadline_s": 2.0,
+    "payload_max_spoken_units": 10,
+    "min_candidates": 3,
+    "audio_onset_max_s": 0.35,
+    "first_caption_max_s": 0.35,
+    "audio_gate_dbfs": -45,
+    "static_mae_max": 0.004,
+    "black_luma_max": 0.06,
+    "fade_in_ratio": 0.6,
+    "first_frame_contrast_min": 0.04,
+    "measurement_tool": "scripts/opening_hook.py",
+    "measurement_is_not_appeal_acceptance": true
   },
   "audience_text": {
     "owner": "references/visual-system.md#visible-text-purposes-and-production-excuses",
