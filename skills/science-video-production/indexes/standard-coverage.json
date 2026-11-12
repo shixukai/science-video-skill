@@ -290,7 +290,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "8efd9a607e531332152b0de2f295a02228bb20ea0b3a7be5829e6a2e631ebd2c",
+      "sha256": "258086e145020c4590fcd7778b1d6537403ef876ca897708a9905cb96b113511",
       "anchors": [
         "mandarin-narration-confirm-the-qwen-invocation-location-and-actually-listen",
         "invocation-location-and-confirmation",
@@ -371,7 +371,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "9e49eb2c5501da547c0caae74d8719246bf160a91f4e3ad6d0b52e9c7d98a21d",
+      "sha256": "53f8a8682b54f70d72be71e9515dbd875b9c54c4329c8d4e25a039c869549685",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",

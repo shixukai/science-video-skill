@@ -92,6 +92,7 @@
       220,
       270
     ],
+    "opening_speech_max_cjk_per_minute": 245,
     "caption_chars_per_line": [
       12,
       14
