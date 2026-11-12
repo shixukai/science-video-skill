@@ -92,9 +92,9 @@ def check_hook_plan(opening, policy):
         need(relation in HOST_RELATIONS, "hook.host_relation must be one of " + "/".join(HOST_RELATIONS))
         if relation == "part_of_host":
             need(concrete(hook.get("host_system")),
-                 "hook.host_system concrete complete host object/system required when host_relation=part_of_host")
+                 "hook.host_system concrete host object or functional host cabin/bay required when host_relation=part_of_host")
             need(concrete(hook.get("whole_to_part_bridge")),
-                 "hook.whole_to_part_bridge concrete 0-5 s whole-host-to-mechanism orientation plan required when host_relation=part_of_host")
+                 "hook.whole_to_part_bridge concrete 0-5 s host-to-mechanism single-take/cutaway orientation plan required when host_relation=part_of_host")
     line, payload = hook.get("first_line"), hook.get("payload_clause")
     if concrete(line) and concrete(payload):
         position = line.find(payload)
@@ -341,7 +341,7 @@ def _validate_report(checks, entry, label, policy, expected_sha=None, host_relat
         need(concrete(cold.get("host_system_seen")),
              "cold test host_system_seen visual observation required when host_relation=part_of_host")
         need(cold.get("part_in_whole_clear") is True,
-             "cold viewer could not visually place the mechanism inside its complete host system; establish macro whole-host orientation in the 0-5 s opening")
+             "cold viewer could not visually place the mechanism inside its recognizable host or functional cabin/bay; establish macro host-to-part orientation in the 0-5 s opening")
     need(cold.get("would_stop") is True, "cold viewer would not stop; redesign the first two seconds")
 
 
@@ -382,7 +382,7 @@ def main(argv=None):
     m.add_argument("--captions", type=Path, help="SRT/VTT/ASS caption file used by this export")
     m.add_argument("--preview-dir", type=Path, help="write local phone-feed strip and 0-3 s feed clip here")
     m.add_argument("--host-relation", choices=HOST_RELATIONS,
-                   help="standalone subject or part_of_host subsystem requiring macro whole-host orientation")
+                   help="standalone subject or part_of_host subsystem requiring macro host-to-part orientation")
     m.add_argument("--report", type=Path, required=True, help="new JSON report path inside the episode directory")
     p = sub.add_parser("plan", help="check topic_alignment.opening.hook in an episode.json")
     p.add_argument("episode", type=Path)

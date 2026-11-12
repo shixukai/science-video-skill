@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "5245843157ac2975a2c2ba4ce2061cc48b14e8f8f3d0a85d119dee2ad09c3b19",
+      "sha256": "451ebd07dec3cc8b48dd0aa9ef25b0f384f5b6cd642c017200913ecf5377b4a2",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -124,7 +124,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "b955d0655fa9072e1c72c63af27fbc67eece7cd798c97f224a862710f5ce3f10",
+      "sha256": "ff7099cc34ea9b155dcad7d61cfa79d0bce3c7e7584cf8c32d9ccc9b23157345",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -371,7 +371,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "b8bea39910cfb494fe44f201d0f842edc3e428ca6cb7ebf59fc2ded9e030a8c2",
+      "sha256": "9e49eb2c5501da547c0caae74d8719246bf160a91f4e3ad6d0b52e9c7d98a21d",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",

@@ -211,14 +211,21 @@ class HookEvidenceTests(unittest.TestCase):
         checks.data = plan_data
         validate_opening_hook(checks, FULL_POLICY, "G5")
         self.assertTrue(any("host_system_seen" in e for e in checks.errors), checks.errors)
-        self.assertTrue(any("complete host system" in e for e in checks.errors), checks.errors)
+        self.assertTrue(any("recognizable host or functional cabin/bay" in e for e in checks.errors), checks.errors)
 
-        unclear_cold = dict(self.cold, host_system_seen="仅见局部金属壳体与座椅边缘，看不出整台机器", part_in_whole_clear=False)
+        unclear_cold = dict(self.cold, host_system_seen="仅见孤立金属台架壳体，看不出所属设备或舱室", part_in_whole_clear=False)
         unclear_rep = self.write_report(name="hook-part-unclear.json", cold_test=unclear_cold)
         checks2 = FakeChecks(self.root, self.qa(unclear_rep))
         checks2.data = plan_data
         validate_opening_hook(checks2, FULL_POLICY, "G5")
-        self.assertTrue(any("complete host system" in e for e in checks2.errors), checks2.errors)
+        self.assertTrue(any("recognizable host or functional cabin/bay" in e for e in checks2.errors), checks2.errors)
+
+        cabin_cold = dict(self.cold, host_system_seen="敞门汽车驾驶室（方向盘、座椅、三点式安全带与B柱安装位）", part_in_whole_clear=True)
+        cabin_rep = self.write_report(name="hook-part-cabin-clear.json", cold_test=cabin_cold)
+        checks_cabin = FakeChecks(self.root, self.qa(cabin_rep))
+        checks_cabin.data = plan_data
+        validate_opening_hook(checks_cabin, FULL_POLICY, "G5")
+        self.assertEqual(checks_cabin.errors, [])
 
         clear_cold = dict(self.cold, host_system_seen="完整机翼与发动机短舱外轮廓", part_in_whole_clear=True)
         clear_rep = self.write_report(name="hook-part-clear.json", cold_test=clear_cold)
