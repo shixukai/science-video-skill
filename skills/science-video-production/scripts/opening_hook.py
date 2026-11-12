@@ -33,6 +33,7 @@ PATTERNS = (
     "result_first", "strange_phenomenon", "extreme_contrast", "question_with_evidence",
     "satisfying_process", "stakes_in_action", "extreme_scale", "failure_or_breakage",
 )
+HOST_RELATIONS = ("standalone", "part_of_host")
 COLD_METHODS = ("normal_speed_continuous_av",)
 FRAME_W, FRAME_H, FRAME_FPS = 64, 36, 10
 AUDIO_RATE, AUDIO_WINDOW_S = 16000, 0.01
@@ -86,6 +87,14 @@ def check_hook_plan(opening, policy):
                 "tension", "muted_read", "phone_read"):
         need(concrete(hook.get(key)), "hook." + key + " concrete plan required")
     need(hook.get("pattern") in PATTERNS, "hook.pattern must be one of " + "/".join(PATTERNS))
+    if any(k in hook for k in ("host_relation", "host_system", "whole_to_part_bridge")):
+        relation = hook.get("host_relation")
+        need(relation in HOST_RELATIONS, "hook.host_relation must be one of " + "/".join(HOST_RELATIONS))
+        if relation == "part_of_host":
+            need(concrete(hook.get("host_system")),
+                 "hook.host_system concrete complete host object/system required when host_relation=part_of_host")
+            need(concrete(hook.get("whole_to_part_bridge")),
+                 "hook.whole_to_part_bridge concrete 0-5 s whole-host-to-mechanism orientation plan required when host_relation=part_of_host")
     line, payload = hook.get("first_line"), hook.get("payload_clause")
     if concrete(line) and concrete(payload):
         position = line.find(payload)
@@ -207,7 +216,9 @@ def _previews(path, out_dir, stem, rel):
     }
 
 
-def measure(video, policy, captions=None, preview_dir=None, report_path=None):
+def measure(video, policy, captions=None, preview_dir=None, report_path=None, host_relation=None):
+    if host_relation is not None and host_relation not in HOST_RELATIONS:
+        raise ValueError("host_relation must be one of " + "/".join(HOST_RELATIONS))
     video = Path(video)
     base = Path(report_path).resolve().parent if report_path else video.resolve().parent
     def rel(path):
@@ -270,16 +281,19 @@ def measure(video, policy, captions=None, preview_dir=None, report_path=None):
             "status": "pending", "reviewer": "", "review_task_id": "", "context": "pending",
             "method": "pending", "actually_watched": False, "actually_heard": False,
             "muted_at_1s": "", "muted_at_2s": "", "sound_at_2s": "", "object_named": "",
+            "host_system_seen": "", "part_in_whole_clear": None,
             "tension_or_question": "", "would_stop": None, "swipe_reason_if_any": "",
         },
         "limits": "Technical screen only; the cold test records actual perception. No audience prediction.",
     }
+    if host_relation is not None:
+        report["host_relation"] = host_relation
     return report
 
 
 # ---------------------------------------------------------------- evidence validation
 
-def _validate_report(checks, entry, label, policy, expected_sha=None):
+def _validate_report(checks, entry, label, policy, expected_sha=None, host_relation=None):
     def need(ok, message):
         return checks.need(ok, "opening hook " + label + ": " + message)
     entry = obj(entry)
@@ -319,6 +333,15 @@ def _validate_report(checks, entry, label, policy, expected_sha=None):
          "cold test must actually watch and hear the bound file")
     for key in ("reviewer", "muted_at_1s", "muted_at_2s", "sound_at_2s", "object_named", "tension_or_question"):
         need(concrete(cold.get(key)), "cold test " + key + " observation required")
+    effective_relation = host_relation if host_relation is not None else report.get("host_relation")
+    if effective_relation is not None:
+        need(effective_relation in HOST_RELATIONS,
+             "hook host_relation must be one of " + "/".join(HOST_RELATIONS))
+    if effective_relation == "part_of_host":
+        need(concrete(cold.get("host_system_seen")),
+             "cold test host_system_seen visual observation required when host_relation=part_of_host")
+        need(cold.get("part_in_whole_clear") is True,
+             "cold viewer could not visually place the mechanism inside its complete host system; establish macro whole-host orientation in the 0-5 s opening")
     need(cold.get("would_stop") is True, "cold viewer would not stop; redesign the first two seconds")
 
 
@@ -331,7 +354,8 @@ def validate_opening_hook(checks, policy, stage):
     qa = checks.qa
     if "opening_hook" not in qa:
         return
-    if obj(obj(getattr(checks, "data", {})).get("scope")).get("kind", "episode") != "episode":
+    data = obj(getattr(checks, "data", {}))
+    if obj(data.get("scope")).get("kind", "episode") != "episode":
         return
     record = obj(qa.get("opening_hook"))
     hook_policy = policy["opening_hook"]
@@ -339,11 +363,14 @@ def validate_opening_hook(checks, policy, stage):
         checks.need(concrete(record.get("not_applicable_reason")) and concrete(record.get("commission_reference")),
                     "opening hook: not_applicable needs the commission reference and concrete non-feed reason")
         return
+    plan_hook = obj(obj(obj(data.get("topic_alignment")).get("opening")).get("hook"))
+    host_relation = plan_hook.get("host_relation") if "host_relation" in plan_hook else None
     if stage == "G3":
-        _validate_report(checks, record.get("sample"), "sample", hook_policy)
+        _validate_report(checks, record.get("sample"), "sample", hook_policy, host_relation=host_relation)
     else:
         expected = obj(qa.get("reviewed_sha256")).get("video")
-        _validate_report(checks, record.get("final"), "final", hook_policy, expected_sha=expected)
+        _validate_report(checks, record.get("final"), "final", hook_policy,
+                         expected_sha=expected, host_relation=host_relation)
         checks.need(record.get("status") == "pass", "opening hook: final opening hook status must be pass")
 
 
@@ -354,6 +381,8 @@ def main(argv=None):
     m.add_argument("video", type=Path)
     m.add_argument("--captions", type=Path, help="SRT/VTT/ASS caption file used by this export")
     m.add_argument("--preview-dir", type=Path, help="write local phone-feed strip and 0-3 s feed clip here")
+    m.add_argument("--host-relation", choices=HOST_RELATIONS,
+                   help="standalone subject or part_of_host subsystem requiring macro whole-host orientation")
     m.add_argument("--report", type=Path, required=True, help="new JSON report path inside the episode directory")
     p = sub.add_parser("plan", help="check topic_alignment.opening.hook in an episode.json")
     p.add_argument("episode", type=Path)
@@ -370,7 +399,7 @@ def main(argv=None):
             return 1 if errors else 0
         if args.report.exists():
             raise ValueError("report exists; use a new receipt filename")
-        report = measure(args.video, policy, args.captions, args.preview_dir, args.report)
+        report = measure(args.video, policy, args.captions, args.preview_dir, args.report, args.host_relation)
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"report": str(args.report), "flags": report["flags"],
                           "measurements": report["measurements"]}, ensure_ascii=False, indent=2))

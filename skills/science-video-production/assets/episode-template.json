@@ -1707,6 +1707,9 @@
       ],
       "hook": {
         "pattern": "",
+        "host_relation": "",
+        "host_system": "",
+        "whole_to_part_bridge": "",
         "first_frame": "",
         "frame0_motion": "",
         "first_sound": "",

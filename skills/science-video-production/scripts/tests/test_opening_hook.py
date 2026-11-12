@@ -86,6 +86,20 @@ class HookPlanTests(unittest.TestCase):
         data["topic_alignment"]["opening"]["hook"] = {}
         self.assertTrue(any("opening hook" in e for e in check_opening_plan(data)))
 
+    def test_part_of_host_hook_requires_macro_host_and_whole_to_part_bridge(self):
+        opening = good_opening()
+        opening["hook"]["host_relation"] = "standalone"
+        self.assertEqual(check_hook_plan(opening, POLICY), [])
+        opening["hook"]["host_relation"] = "invalid_scope"
+        self.assertTrue(any("host_relation" in e for e in check_hook_plan(opening, POLICY)))
+        opening["hook"]["host_relation"] = "part_of_host"
+        errors = check_hook_plan(opening, POLICY)
+        self.assertTrue(any("host_system" in e for e in errors), errors)
+        self.assertTrue(any("whole_to_part_bridge" in e for e in errors), errors)
+        opening["hook"]["host_system"] = "一整台行驶中的双发客机发动机短舱"
+        opening["hook"]["whole_to_part_bridge"] = "0-1.5s 先看到机翼下完整短舱进气，1.5-5.0s 连续半透明剖开外壳推入高压压气机级间安装位"
+        self.assertEqual(check_hook_plan(opening, POLICY), [])
+
 
 class FakeChecks:
     def __init__(self, root, qa):
@@ -188,6 +202,30 @@ class HookEvidenceTests(unittest.TestCase):
         checks.data = {"scope": {"kind": "local_sample"}}
         validate_opening_hook(checks, FULL_POLICY, "G3")
         self.assertEqual(checks.errors, [])
+
+    def test_part_of_host_cold_test_requires_visual_host_and_part_in_whole_clarity(self):
+        plan_data = {"scope": {"kind": "episode"},
+                     "topic_alignment": {"opening": {"hook": {"host_relation": "part_of_host"}}}}
+        missing_host = self.write_report(name="hook-part-missing.json")
+        checks = FakeChecks(self.root, self.qa(missing_host))
+        checks.data = plan_data
+        validate_opening_hook(checks, FULL_POLICY, "G5")
+        self.assertTrue(any("host_system_seen" in e for e in checks.errors), checks.errors)
+        self.assertTrue(any("complete host system" in e for e in checks.errors), checks.errors)
+
+        unclear_cold = dict(self.cold, host_system_seen="仅见局部金属壳体与座椅边缘，看不出整台机器", part_in_whole_clear=False)
+        unclear_rep = self.write_report(name="hook-part-unclear.json", cold_test=unclear_cold)
+        checks2 = FakeChecks(self.root, self.qa(unclear_rep))
+        checks2.data = plan_data
+        validate_opening_hook(checks2, FULL_POLICY, "G5")
+        self.assertTrue(any("complete host system" in e for e in checks2.errors), checks2.errors)
+
+        clear_cold = dict(self.cold, host_system_seen="完整机翼与发动机短舱外轮廓", part_in_whole_clear=True)
+        clear_rep = self.write_report(name="hook-part-clear.json", cold_test=clear_cold)
+        checks3 = FakeChecks(self.root, self.qa(clear_rep))
+        checks3.data = plan_data
+        validate_opening_hook(checks3, FULL_POLICY, "G5")
+        self.assertEqual(checks3.errors, [])
 
 
 @unittest.skipUnless(HAS_FFMPEG, "ffmpeg/ffprobe unavailable")
