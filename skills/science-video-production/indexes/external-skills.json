@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "catalog": "external_skills",
-  "version": "1.1.1",
-  "checked_at": "2026-10-10",
+  "version": "1.1.2",
+  "checked_at": "2026-11-14",
   "timezone": "Asia/Shanghai",
   "purpose": "Scoped external source/function/license references; not an install list, current runtime inventory or independent production authority.",
-  "entry_count": 30,
+  "entry_count": 31,
   "copied_reference_count": 3,
   "policy": {
     "no_global_install_from_reference_curation_alone": true,
@@ -2695,6 +2695,64 @@
           "local_copy": null
         }
       ]
+    },
+    {
+      "id": "vork-engine",
+      "repository": "https://github.com/voyager-so/vork",
+      "commit": "011e3f12e6c17696b3d854c173dca37a8159c6c4",
+      "review_scope": "repository metadata, README, LICENSE and local v0.5.1 headless GPU still/video execution verification; not a primary-route replacement",
+      "classification": "complementary_engine_reference",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "adopt": "Supporting code-authored 3D/VFX shots, Slang GPU simulations/custom shaders, tracked-plate 3D relighting composites and glTF supporting passes",
+      "limitations": "Never replaces MoneyPrinterTurbo or Blender as the locked primary tool; requires a local hardware-ray-query GPU (NVIDIA RTX Vulkan or Apple Silicon Metal) under local-first rules, lacks character rigging/lip-sync/modifier ecosystems, and requires higher sample counts or std/path when 4/8-sample OIDN softens fine detail.",
+      "license": {
+        "classification": "vork_preview_source_available_commercial_media_permitted_version_scoped",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/voyager-so/vork/011e3f12e6c17696b3d854c173dca37a8159c6c4/LICENSE",
+            "sha256": "8c7b76187920a341880d135df6882130164b91ec4629b82c6715ed26e740404e",
+            "bytes": 3203,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": null,
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/voyager-so/vork/011e3f12e6c17696b3d854c173dca37a8159c6c4/LICENSE",
+          "sha256": "8c7b76187920a341880d135df6882130164b91ec4629b82c6715ed26e740404e",
+          "bytes": 3203,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/voyager-so/vork/011e3f12e6c17696b3d854c173dca37a8159c6c4/README.md",
+          "sha256": "8a9a4c5e0ae2603e440be0a653b2fc997ab2e9b3fc9f0faf027c7cd741f0fea5",
+          "bytes": 35164,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "vork",
+        "license_classification": "vork_preview_license_v0_5_1_plus_optional_gpl3_blender_bridge",
+        "primary_reference": "https://github.com/voyager-so/vork#start-here",
+        "validation_status": "local_gpu_1080p_still_and_mp4_verified"
+      },
+      "data_transfer_and_cost": "Local Vulkan/Metal GPU execution requires no cloud upload; do not invoke vork cloud without explicit user cloud authorization. Set VORK_NO_UPDATE_NOTIFIER=1 in automated runs when needed.",
+      "media_quality_validation": "shot_specific_G3_and_G5_actual_viewing_still_required",
+      "checked_at": "2026-11-14",
+      "execution": {
+        "routing_reference": "references/tool-routing.md#vork-execution",
+        "source_relation": "primary_repository_verified",
+        "installation_required": true
+      }
     }
   ]
 }

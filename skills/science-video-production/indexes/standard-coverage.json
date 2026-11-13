@@ -414,7 +414,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "24528280e1bd69a8fe4cf361a9fbe553f6490664fa7edf4a857a611cf0d8dc48",
+      "sha256": "928d4d592eb0662417621489107bda7417453f02b22f8ca3be350a75ee493eb2",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -427,6 +427,7 @@
         "scenario-selection",
         "assignments-to-supporting-tools",
         "huashu-art-motion-execution",
+        "vork-execution",
         "other-execution-notes",
         "source-identification"
       ]
@@ -434,7 +435,7 @@
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "40bd1894241ca7e17a90eedd2b5c40badbd2297fbbf9d885db3e34d6538de2eb",
+      "sha256": "5a453b012fecfeae778ca6d08cfb2effec1dd5213eeb46f28f7d48b0b40aa5c6",
       "anchors": [
         "external-video-skills-adopted-methods-and-licenses",
         "small-included-reference-set-and-production-routes",
@@ -458,7 +459,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "608f463d037ee6f29b09f67afb434c953706ad322320ea2ffefea77900e2febd",
+      "sha256": "9f0138a37a6bfdcb665b6c3da85f9cf265105145767f07607a5d5c3c8f0fed0c",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

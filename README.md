@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.9; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.11; the Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender.** Finished visual style selects the main tool; model generation, captions and encoding remain supporting stages.
 - **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. Maintenance source is not a production entry. On continuation, read global changes, migrate explicitly and retain old execution records.

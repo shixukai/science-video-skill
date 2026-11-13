@@ -76,7 +76,7 @@ Use [one global installation](references/global-skill-installation.md). Do not c
 | Narration generation, continuity and listening | [Chinese narration](references/voice-reference.md) |
 | Shots, assets, versions and action records | [Shotbook](references/shotbook.md) |
 | Acceptance, unreviewed work, failure and repairs | [Quality acceptance](references/quality-acceptance.md) |
-| Tools and optional methods | [Tool routing](references/tool-routing.md) |
+| Tools, optional methods and supporting vork VFX/simulation passes | [Tool routing](references/tool-routing.md), [vork execution](references/tool-routing.md#vork-execution) |
 | Complex coordination, invocation and independent review | [Subagent orchestration](references/subagent-orchestration.md): parent directs; actually delegate applicable roles for complex production/repairs, distinguishing loaded definition, native/fallback invocation and artifact. Perform small changes directly. |
 | Appeal screening, titles, covers' promise, two-second hook lab/measurement/cold test, payoff cadence and hit-pattern learning | [Viral appeal and packaging](references/viral-appeal-and-packaging.md) |
 | Retention or alpha/canvas faults | Read [viewer retention](references/viewer-retention-design.md) or [render evidence](references/render-evidence.md) as needed |
