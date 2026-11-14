@@ -201,10 +201,8 @@
       "primary": "douyin",
       "enabled": true,
       "preserve_observed_setting": false,
-      "excluded_douyin_sync_targets": ["toutiao"],
-      "direct_publication_targets": ["toutiao"],
       "unverified_result_is_not_success": true,
-      "scope": "Publish commissioned videos directly on the Toutiao creator page with the Toutiao association off on Douyin. Enable the other eligible associations on Douyin for authorized connected destinations. Verify each destination independently. Current explicit overrides and commissioned work/account/version scope control. Leave unverified results pending and preserve confirmed single-platform outcomes.",
+      "scope": "Enable all applicable Douyin associations for authorized connected destinations, including Toutiao. Use each destination's creator page when its association is unavailable or cannot apply the required settings. Select and verify the applicable originality declaration on every supporting destination. Verify each destination independently. Current explicit overrides and commissioned work/account/version scope control. Leave unverified results pending and preserve confirmed single-platform outcomes.",
       "targets": [
         "douyin",
         "toutiao",
