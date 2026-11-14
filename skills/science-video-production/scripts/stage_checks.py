@@ -877,6 +877,7 @@ class Checks:
    if synthetic_narration and destination in (
     'douyin','抖音','toutiao','toutiao video','头条','头条视频','今日头条','今日头条视频',
     'fanqie_video','fanqie video','番茄视频',
+    'xiaohongshu','xiao hong shu','小红书',
    ):
     self.need(required is True,'AI-synthesized narration requires a platform declaration for this destination')
    else:

@@ -207,7 +207,8 @@
       "targets": [
         "douyin",
         "toutiao",
-        "fanqie_video"
+        "fanqie_video",
+        "xiaohongshu"
       ],
       "trigger": "every_authorized_video_publication_on_any_configured_destination",
       "include_all_connected_supported_destinations": true,
@@ -220,7 +221,8 @@
       "platforms": [
         "douyin",
         "toutiao",
-        "fanqie_video"
+        "fanqie_video",
+        "xiaohongshu"
       ],
       "verify_before_submission": true,
       "scope": "Preserve disabled-download preference on every destination exposing a control; keep Douyin/Toutiao requirement, verify actual states, distinguish unavailable/unverified, and never auto-edit published works.",

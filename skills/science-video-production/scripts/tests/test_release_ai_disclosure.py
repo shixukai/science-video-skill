@@ -70,7 +70,7 @@ class ReleaseAIDisclosureTests(unittest.TestCase):
     def test_declaration_for_ai_narration_with_authored_3d(self):
         self.data["shots"] = [{"id": "SH1", "modality": "controlled_3d", "asset_ids": ["MODEL"]}]
         self.data["assets"] = [{"id": "MODEL", "kind": "controlled_3d"}]
-        for platform in ("douyin", "Toutiao", "fanqie_video", "抖音", "今日头条", "番茄视频"):
+        for platform in ("douyin", "Toutiao", "fanqie_video", "抖音", "今日头条", "番茄视频", "xiaohongshu", "xiao hong shu", "小红书"):
             with self.subTest(platform=platform):
                 self.data["qa"]["mobile_preview"]["platform"] = platform
                 self.declaration.update(platform_declaration_required=False, platform_declaration_used=False)
