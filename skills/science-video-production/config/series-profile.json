@@ -225,7 +225,7 @@
         "xiaohongshu"
       ],
       "verify_before_submission": true,
-      "scope": "Preserve disabled-download preference on every destination exposing a control; keep Douyin/Toutiao requirement, verify actual states, distinguish unavailable/unverified, and never auto-edit published works.",
+      "scope": "Default to disabled download/save on every destination exposing a control for each authorized future publication, without asking again for the same setting; honor current explicit overrides and enforced approvals, verify actual states, distinguish unavailable/unverified, and never auto-edit published works.",
       "include_all_connected_supported_destinations": true
     },
     "daily_completed_unique_target": 10,
