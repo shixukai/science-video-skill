@@ -32,7 +32,7 @@ Read the table only for methods actually missing in this shot; source index hold
 | [OpenMontage](https://github.com/calesthio/OpenMontage) | Link shot needs, coverage, provenance and editing timelines. Inspected AGPL-3.0 framework is neither copied nor installed here. |
 | [jianying-editor-skill](https://github.com/luoluoluo22/jianying-editor-skill) | Check compatibility only for requested Jianying multitrack delivery. Main MIT, bundled pyJianYingDraft Apache-2.0; app/cloud assets separate. Preserve this voice. |
 | [seedance2-skill](https://github.com/dexhunter/seedance2-skill) | Role-separated prompts for identity, structure, style, action and framing. MIT guide is not a model/renderer. |
-| [vork](https://github.com/voyager-so/vork) | Local Vulkan/Metal headless 3D/VFX engine for scoped [supporting simulations/shaders/plate composites](tool-routing.md#vork-execution). Source-available `vork Preview License` (version-scoped commercial media permitted at v0.5.1; optional `integrations/blender` is GPL-3.0-or-later; never copy modified binaries, run `vork cloud` unauthorized or reuse example credits as filler). |
+| [vork](https://github.com/voyager-so/vork) | Local Vulkan/Metal headless 3D/VFX engine [automatically selected by the agent](tool-routing.md#vork-execution) for suitable full 3D episodes, 3D shots or supporting field/simulation/shader/plate passes. Source-available `vork Preview License` (version-scoped commercial media permitted at v0.5.1; optional `integrations/blender` is GPL-3.0-or-later; never copy modified binaries, run `vork cloud` unauthorized or reuse example credits as filler). |
 
 <a id="scenario只接入有增量的方法"></a>
 ## Scenario: adopt only methods with added value

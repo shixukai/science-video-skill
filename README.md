@@ -1,8 +1,8 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.11; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.12; the Git commit identifies the exact revision.
 
-- **Realistic → MoneyPrinterTurbo; 3D animation → Blender.** Finished visual style selects the main tool; model generation, captions and encoding remain supporting stages.
+- **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
 - **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. Maintenance source is not a production entry. On continuation, read global changes, migrate explicitly and retain old execution records.
 - **Open with context and a reason to watch.** Work backward from the first body observation; design the opening's final sentence/frame together with the body's first sentence/frame and continuously review through that observation. Topic and route may flow naturally in one sentence; do not split them merely for time fields.
 - **Explain the full requested engineering/manufacturing chain.** Organize input, principle, key processes, result and verification by topic scope. Actual explanation and observation determine duration.

@@ -2700,15 +2700,17 @@
       "id": "vork-engine",
       "repository": "https://github.com/voyager-so/vork",
       "commit": "011e3f12e6c17696b3d854c173dca37a8159c6c4",
-      "review_scope": "repository metadata, README, LICENSE and local v0.5.1 headless GPU still/video execution verification; not a primary-route replacement",
+      "review_scope": "repository metadata, README, LICENSE and local v0.5.1 headless GPU still, sample and full-episode 1080p execution verification",
       "classification": "complementary_engine_reference",
       "production_stages": [
+        "G1",
         "G2",
         "G3",
-        "G4"
+        "G4",
+        "G5"
       ],
-      "adopt": "Supporting code-authored 3D/VFX shots, Slang GPU simulations/custom shaders, tracked-plate 3D relighting composites and glTF supporting passes",
-      "limitations": "Never replaces MoneyPrinterTurbo or Blender as the locked primary tool; requires a local hardware-ray-query GPU (NVIDIA RTX Vulkan or Apple Silicon Metal) under local-first rules, lacks character rigging/lip-sync/modifier ecosystems, and requires higher sample counts or std/path when 4/8-sample OIDN softens fine detail.",
+      "adopt": "Agent-selected full-episode or per-shot code-authored 3D rendering, invisible physical field/wave/heatmap visualization, Slang GPU simulations/custom shaders, tracked-plate 3D relighting composites and glTF passes",
+      "limitations": "Agent selects vork automatically when fields/waves/simulations/shaders or clean parametric/glTF scenes fit and a local hardware-ray-query GPU (NVIDIA RTX Vulkan or Apple Silicon Metal) is verified; routes to Blender for complex CAD/boolean cutaways/rigging/lip-sync, keeps MoneyPrinterTurbo for realistic-route multi-shot assembly, and requires std/path or higher sample counts when 4/8-sample OIDN softens fine detail.",
       "license": {
         "classification": "vork_preview_source_available_commercial_media_permitted_version_scoped",
         "evidence": [

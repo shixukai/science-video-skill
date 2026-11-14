@@ -371,7 +371,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "53f8a8682b54f70d72be71e9515dbd875b9c54c4329c8d4e25a039c869549685",
+      "sha256": "9473234ac316425f37ab767fcb780788d64f4359eed67a252447ecc703fd7027",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -414,7 +414,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "928d4d592eb0662417621489107bda7417453f02b22f8ca3be350a75ee493eb2",
+      "sha256": "f9a32d88802239b7a081f215374a69c7fcf70f2286a937f75a6c6d4c7b4eea5b",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -435,7 +435,7 @@
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "5a453b012fecfeae778ca6d08cfb2effec1dd5213eeb46f28f7d48b0b40aa5c6",
+      "sha256": "124ca0ddad5de51f0cee049b6076c24b67e7f1d2610bc1aae3fcdebf65c7488a",
       "anchors": [
         "external-video-skills-adopted-methods-and-licenses",
         "small-included-reference-set-and-production-routes",
@@ -459,7 +459,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "9f0138a37a6bfdcb665b6c3da85f9cf265105145767f07607a5d5c3c8f0fed0c",
+      "sha256": "d65871aac0440f3991b5c6e8ad0b97f7972f5b80a42c671428a6af85c617019a",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

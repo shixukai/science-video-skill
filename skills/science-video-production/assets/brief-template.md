@@ -38,9 +38,9 @@ Under the [original-visual contract](../references/science-and-rights.md#origina
 
 <a id="成片风格与主制作工程"></a>
 ## Finished style and main production project
-Record the [fixed style routing](../references/tool-routing.md#lock-the-primary-tool-by-final-film-style): realistic → MoneyPrinterTurbo, 3D animation → Blender; do not route by subject matter.
-- Current style/request/design basis, main tool and existing project version; for mixed projects, only the explicitly authorized scopes/shots:
-- Asset provenance and auxiliary-tool responsibilities; actual MoneyPrinterTurbo assembly/composition or Blender rendering inputs/outputs, with existing execution evidence. Unexecuted work remains unreviewed:
+Record the [fixed style routing](../references/tool-routing.md#lock-the-primary-tool-by-final-film-style): realistic → MoneyPrinterTurbo (plus automatic supporting `vork` passes when needed), 3D animation → Blender or agent-selected `vork`; do not route by subject matter.
+- Current style/request/design basis, selected main tool (`MoneyPrinterTurbo`, `Blender` or `vork`), automatic `vork` selection rationale (when applicable) and existing project version; for mixed projects, only the explicitly authorized scopes/shots:
+- Asset provenance and auxiliary-tool responsibilities; actual MoneyPrinterTurbo assembly/composition or Blender/`vork` rendering inputs/outputs, with existing execution evidence. Unexecuted work remains unreviewed:
 
 <a id="全局入口与先行短样"></a>
 ## Global entry and early sample

@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.11",
+  "version": "1.6.12",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "Route by finished style: realistic video uses MoneyPrinterTurbo, 3D animation uses Blender. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
+    "direction": "Route by finished style: realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
     "art_direction": "../assets/style/bright-nature.art-direction.json",
@@ -52,24 +52,26 @@
         "required_operation": "actual_local_material_assembly_or_verified_video_compositing",
         "visual_sources": [
           "ai_generated",
-          "real_footage"
+          "real_footage",
+          "controlled_3d"
         ],
-        "generation_backend_when_needed": "existing_confirmed_local_video_model",
+        "generation_backend_when_needed": "existing_confirmed_local_video_model_or_agent_selected_vork_supporting_pass",
         "guide": "references/ai-generated-video.md"
       },
       "three_d_animation": {
-        "production_project": "Blender",
+        "production_project": "Blender_or_vork_agent_selected",
         "required_operation": "actual_scene_animation_and_render",
         "modality": "controlled_3d",
         "includes_photorealistic_3d": true,
         "ai_failure_trial_required": false,
-        "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_Blender",
+        "engine_selection": "agent_automatic_by_mechanism_simulation_and_asset_fit_unless_user_specifies",
+        "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_controlled_3d_rendering",
         "guide": "references/engineering-blender.md"
       }
     },
     "mixed_style": "Only within explicit project scope; each segment follows its style route and records its actual production evidence.",
-    "unavailable_tool": "Report the concrete missing capability; continue independent work without silently replacing the required production project.",
-    "evidence_boundary": "Actual MoneyPrinterTurbo assembly or Blender rendering required for the selected route; names, configuration, text generation and structural checks alone do not prove execution or media quality."
+    "unavailable_tool": "Report the concrete missing capability; fall back automatically from vork to Blender when local ray-query GPU or mechanism fit is absent, and never silently replace a required style route.",
+    "evidence_boundary": "Actual MoneyPrinterTurbo assembly or Blender/vork rendering required for the selected route; names, configuration, text generation and structural checks alone do not prove execution or media quality."
   },
   "audio": {
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
