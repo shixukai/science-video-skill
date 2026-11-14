@@ -84,7 +84,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "8be4b9fec42539655f0083087311599a4bdb01b3e57a31f58dca54914246b6d0",
+      "sha256": "a5d69d81192d59a905a22c466933b9398b5a762ee6745dc77528eb63ba3220fb",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -97,6 +97,7 @@
         "5-sole-entry-for-quality-judgments",
         "6-check-from-export-through-actual-platform-completion",
         "delivery-package-and-publication-receipts",
+        "select-relevant-tags-at-publication",
         "cross-platform-association-monetization-and-download-controls",
         "declare-ai-generated-content-at-publication",
         "actual-g1g7-progression-records",

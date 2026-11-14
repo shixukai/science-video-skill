@@ -115,7 +115,7 @@ Apply the item checks, unreviewed gates and feedback closure in [quality accepta
 <a id="6-从导出到实际平台完成检查"></a>
 ## 6. Check from export through actual platform completion
 
-Enter the platform only with the necessary upload/preview authorization. Use the actual target account, enter the final title, complete description and tags, and wait for platform UI, copy and previews to actually load. Preserve actual overlay areas such as username, interaction bar and copy. Check beginning/middle/end, densest captions, transitions and motion extrema. Copy length may change occlusion; a short-title preview cannot replace final copy.
+Enter the platform only with the necessary upload/preview authorization. Use the actual target account, enter the final title and complete description, apply [supported tags](#select-relevant-tags-at-publication), and wait for platform UI, copy and previews to actually load. Preserve actual overlay areas such as username, interaction bar and copy. Check beginning/middle/end, densest captions, transitions and motion extrema. Copy length may change occlusion; a short-title preview cannot replace final copy.
 
 Record the preview source: actual phone/platform publishing-page preview/local player, together with export version, final copy and key-time screenshots. A phone-styled browser preview is not an actual device. If a screenshot crops frame boundaries, do not infer full 9:16 coordinates from it. State that no actual-device check occurred when no device is available.
 
@@ -131,6 +131,12 @@ Provide deliverables according to the commission. The default series package `de
 Keep the public title, description, tags and any prepared pinned comment focused on the episode. At G6, remove production-only text such as software and render-method credits or generic “原理示意” disclaimers before submission. Keep production provenance in the internal release record. Use the platform declaration for AI narration. If a verified obligation requires public wording, place only the required notice where the obligation specifies.
 
 Before upload, scheduling or public publication, check that existing specific authorization covers the account, content version and action. Do not repeatedly request existing approval; handle scope/risk changes under current permissions. Delivery or use of this Skill does not grant publication authorization. Record published only with actual successful publication status, work ID/link or a platform receipt. Record in review, draft, scheduled, failed and unknown separately. For unknown results, check for duplicates/read back first rather than blindly republishing. Failure does not automatically authorize account changes, payment or public posting elsewhere. Rule updates do not republish already posted, canceled or prohibited content. When platform testing is unavailable, deliver a version awaiting platform checks without claiming adaptation.
+
+### Select relevant tags at publication
+
+For each authorized publication, add relevant public tags or topics on every destination that supports them. Start with the specific subject and add terms viewers would naturally search for, such as the mechanism or a real application covered in the video. Prefer platform suggestions and current topics when they closely fit the episode. Skip duplicate tags, generic traffic bait and unrelated trends.
+
+Use the platform's topic picker or tag field when available, or its recognized hashtag format where supported. Stay within the destination's current limits. Keep the final choices with the existing `tags` and release notes, including destination-specific differences. Confirm the final tags in the composer before submitting and read them back where visible, including on synced works.
 
 <a id="抖音同步头条与不可下载"></a>
 <a id="sync-douyin-to-toutiao-and-disable-downloads"></a>
