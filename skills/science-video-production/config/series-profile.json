@@ -209,7 +209,8 @@
         "douyin",
         "toutiao",
         "fanqie_video",
-        "xiaohongshu"
+        "xiaohongshu",
+        "xigua"
       ],
       "trigger": "every_authorized_video_publication_on_any_configured_destination",
       "include_all_connected_supported_destinations": true,
@@ -223,7 +224,8 @@
         "douyin",
         "toutiao",
         "fanqie_video",
-        "xiaohongshu"
+        "xiaohongshu",
+        "xigua"
       ],
       "verify_before_submission": true,
       "scope": "Default to disabled download/save on every destination exposing a control for each authorized future publication, without asking again for the same setting; honor current explicit overrides and enforced approvals, verify actual states, distinguish unavailable/unverified, and never auto-edit published works.",
@@ -254,7 +256,7 @@
       "applies_to_all_intended_destinations": true,
       "verify_before_submission": true,
       "verify_obtainable_after_submission": true,
-      "scope": "For each authorized work enable all eligible per-video revenue and incentive controls supported by the account, work and program, including “广告分成” on the Toutiao creator publishing page when available. Apply this standing preference to routine per-video settings. Report ineligible/unavailable/exclusive choices or new enrollment/identity/payout prerequisites truthfully; do not infer revenue or treat unsupported rights claims and paid promotion as revenue options."
+      "scope": "For each authorized work enable all eligible per-video revenue and incentive controls supported by the account, work and program, including “广告分成” on Toutiao when available and all eligible options on Xigua Video. Apply this standing preference to routine per-video settings. Report ineligible/unavailable/exclusive choices or new enrollment/identity/payout prerequisites truthfully; do not infer revenue or treat unsupported rights claims and paid promotion as revenue options."
     }
   },
   "landscape_captions": {
