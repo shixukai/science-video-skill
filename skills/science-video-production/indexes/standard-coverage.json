@@ -84,7 +84,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "657c9d188988fcb138f026381589decf2c84f5198447851ddc3a1b45bb7b676d",
+      "sha256": "91759ee4043161b2aff9871dc1efd2540d8f766330aed05b63570569a5f4ee64",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -460,7 +460,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "d65871aac0440f3991b5c6e8ad0b97f7972f5b80a42c671428a6af85c617019a",
+      "sha256": "98a4f2b13293b625ffac07b3ce4bab7d8e78e3c631a53e3d4b3ceba5459e5ece",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

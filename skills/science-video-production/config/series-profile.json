@@ -199,13 +199,12 @@
     "optional_ai_creation": false,
     "platform_sync": {
       "primary": "douyin",
-      "secondary": "toutiao",
       "enabled": true,
       "preserve_observed_setting": false,
-      "independent_secondary_verification": true,
-      "unknown_secondary_result_blocks_primary": false,
+      "excluded_douyin_sync_targets": ["toutiao"],
+      "direct_publication_targets": ["toutiao"],
       "unverified_result_is_not_success": true,
-      "scope": "Associate the same authorized work with all connected supported publishing destinations each time, including named targets where actually available. The named list is not exhaustive; on the Douyin publishing screen enable every available platform association/sync option. Verify each separately; unavailable/unknown targets leave all-platform completion pending without undoing confirmed success. Current explicit overrides and commissioned work/account/version scope control; no automatic edits to published works.",
+      "scope": "Publish commissioned videos directly on the Toutiao creator page with the Toutiao association off on Douyin. Enable the other eligible associations on Douyin for authorized connected destinations. Verify each destination independently. Current explicit overrides and commissioned work/account/version scope control. Leave unverified results pending and preserve confirmed single-platform outcomes.",
       "targets": [
         "douyin",
         "toutiao",
@@ -214,7 +213,7 @@
       ],
       "trigger": "every_authorized_video_publication_on_any_configured_destination",
       "include_all_connected_supported_destinations": true,
-      "select_all_available_related_platform_associations": true,
+      "select_all_eligible_related_platform_associations": true,
       "targets_authoritative": false,
       "named_destination_resolution": "fanqie_video preserves the user-named Fanqie Video; verify actual supported destination/account identity rather than substituting another service"
     },
@@ -255,7 +254,7 @@
       "applies_to_all_intended_destinations": true,
       "verify_before_submission": true,
       "verify_obtainable_after_submission": true,
-      "scope": "For each authorized work enable ordinary relevant per-video revenue/incentive controls supported by the actual account/work/program. No repeat permission per checkbox. Report ineligible/unavailable/exclusive choices or new enrollment/identity/payout prerequisites truthfully; do not infer revenue or treat unsupported rights claims and paid promotion as revenue options."
+      "scope": "For each authorized work enable all eligible per-video revenue and incentive controls supported by the account, work and program, including “广告分成” on the Toutiao creator publishing page when available. Apply this standing preference to routine per-video settings. Report ineligible/unavailable/exclusive choices or new enrollment/identity/payout prerequisites truthfully; do not infer revenue or treat unsupported rights claims and paid promotion as revenue options."
     }
   },
   "landscape_captions": {
