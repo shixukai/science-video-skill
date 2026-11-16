@@ -51,6 +51,7 @@
       "file": "references/google-flow-production.md",
       "owns": [
         "google-flow-cloud-generation",
+        "flow-mechanism-coverage-and-explanation-led-timing",
         "bilingual-clip-budget-and-24fps-cadence",
         "serial-1080p-upscaled-staging",
         "dual-text-cloud-narration-and-native-foley",
@@ -67,6 +68,7 @@
         "whole-episode-roughcut",
         "platform-procedure",
         "publication-receipts",
+        "accepted-and-published-video-storage",
         "explanation-structure",
         "expression-card-design",
         "typed-explanation-path",

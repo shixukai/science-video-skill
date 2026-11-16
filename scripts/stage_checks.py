@@ -271,8 +271,9 @@ def validate_output_dimensions(data,stream,need,label='formal video'):
   need((width,height)==target,f'{label}: actual {width}x{height} must match design.output {target[0]}x{target[1]} exactly')
 
 class Checks:
- def __init__(self,data,root):
+ def __init__(self,data,root,*,stored_video=None):
   self.data=data;self.root=Path(root).resolve();self.qa=obj(data.get('qa'));self.errors=[];self.cache={}
+  self.stored_video=stored_video
  def need(self,ok,msg):
   if not ok:self.errors.append('stage: '+msg)
   return bool(ok)
@@ -289,12 +290,24 @@ class Checks:
   result.setdefault('note',responsibility.get('evidence',nested.get('evidence')))
   result.setdefault('evidence',responsibility.get('evidence'))
   return result
+ def file_path(self, name):
+  original = Path(name)
+  resolved = (self.root / original).resolve()
+  if original.is_absolute() or not resolved.is_relative_to(self.root):
+   return None
+  if self.stored_video and name == self.stored_video.episode_file:
+   return self.stored_video.path
+  return resolved
+ def evidence_digest(self, path):
+  if self.stored_video and path == self.stored_video.path:
+   return self.stored_video.sha256
+  return file_digest(path)
  def evidence(self,r,label):
   r=obj(r);name=r.get('file')
   if not self.need(text(name),label+' evidence file required'):return None
-  p=(self.root/name).resolve()
-  if not self.need(not Path(name).is_absolute() and p.is_relative_to(self.root) and p.is_file(),label+' evidence path missing/unsafe'):return None
-  self.need(r.get('sha256')==file_digest(p),label+' evidence hash stale')
+  p=self.file_path(name)
+  if not self.need(p is not None and p.is_file(),label+' evidence path missing/unsafe'):return None
+  self.need(r.get('sha256')==self.evidence_digest(p),label+' evidence hash stale')
   return p
  def duration(self,path,require_audio=True,require_video=True,label='viewing media',formal_output=False):
   cache_key=(path,require_audio,require_video,formal_output)
@@ -1107,10 +1120,10 @@ class Checks:
    for key in ('platform','account'):self.need(text(p.get(key)) and p.get(key)==self.record('mobile_preview').get(key),'publication readback destination mismatch')
   return self.errors
 
-def check_stage(data,root,target):
+def check_stage(data,root,target,*,stored_video=None):
  try:
   policy=json.loads((Path(__file__).resolve().parents[1]/'config/production-policy.json').read_text(encoding='utf-8'))
-  return Checks(data,root).run(target,policy)
+  return Checks(data,root,stored_video=stored_video).run(target,policy)
  except (KeyError, TypeError, ValueError, OSError) as exc:
   return ['stage: malformed or missing required evidence/policy: '+str(exc)]
 

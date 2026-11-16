@@ -229,6 +229,43 @@ class GatesRegression(unittest.TestCase):
   self.d['qa']['visual_frames']['process_steps']=[row for row in self.d['qa']['visual_frames']['process_steps'] if row['step_id'] in ('MAIN2','MAIN3')]
   self.assert_reject('full primary explanation evidence incomplete','G5')
  def test_fixture_valid_complete_path(self):self.assertEqual(self.complete(),[])
+
+ def test_verified_video_can_be_checked_after_each_move(self):
+  from video_storage import bind_stored_video
+
+  scratch = self.enterContext(tempfile.TemporaryDirectory(dir=TEST_TMP_ROOT))
+  nas = Path(scratch).resolve()
+  ready = nas / "release-candidate"
+  archive = nas / "archive"
+  ready.mkdir()
+  archive.mkdir()
+  configuration = nas / "video-storage.local.json"
+  configuration.write_text(json.dumps({"archive_root": str(nas)}), encoding="utf-8")
+  logical_name = self.d["deliverables"]["video"]
+  source = self.root / logical_name
+  original_packet = copy.deepcopy(self.d)
+  accepted = source.rename(ready / "episode-v01-zh.mp4")
+
+  self.assertTrue(self.complete())
+  for destination in (accepted, archive / accepted.name):
+   if destination.parent == archive:
+    accepted.rename(destination)
+   stored = bind_stored_video(self.d, self.root, destination, config=configuration)
+   stages = ("delivery", "G7" if destination.parent == archive else "publish_ready")
+   for stage_name in stages:
+    with self.subTest(stage=stage_name):
+     errors, _ = check.check(self.d, self.root, stage_name, stored_video=stored)
+     self.assertEqual(errors, [])
+   self.assertEqual(self.d, original_packet)
+   self.assertFalse(source.exists())
+
+  outside = nas / "unapproved-location.mp4"
+  outside.write_bytes(destination.read_bytes())
+  with self.assertRaisesRegex(ValueError, "configured release-candidate or archive"):
+   bind_stored_video(self.d, self.root, outside, config=configuration)
+  destination.write_bytes(b"wrong edition or changed video")
+  with self.assertRaisesRegex(ValueError, "does not match the reviewed SHA-256"):
+   bind_stored_video(self.d, self.root, destination, config=configuration)
  def test_bridge_all_visual_scopes_unblocks_real_g3_and_full_preflight(self):
   for scope in ('whole_episode','series_style','segment'):
    self.bridge(scope)

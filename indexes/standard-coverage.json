@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "c1161336bcff2b43253784aacc58807e58e30a4b6b163ba9339ef606d3841095",
+      "sha256": "5d9df877bfad264d881ee4a9448f2bdd2f2a6fcad21f1351b29e04983cb5debf",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -99,7 +99,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a7a28e353ab47de05ada8206db7e808719864efb7ae01681e086003949947e31",
+      "sha256": "a1e1f4d2c43b91ee80a0c1c956655c03de6f3d25b8ae89d4c6c9f665c50a35ea",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -112,6 +112,7 @@
         "5-sole-entry-for-quality-judgments",
         "6-check-from-export-through-actual-platform-completion",
         "delivery-package-and-publication-receipts",
+        "move-accepted-and-published-videos",
         "manual-clicks-and-publication-review-handoff",
         "select-relevant-tags-at-publication",
         "cross-platform-association-monetization-and-download-controls",
@@ -483,7 +484,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "460198f2b9d8a0fe23063a5977070f3d34c0bafd0660380b6f409aeb55a0a47c",
+      "sha256": "e0ddbb77f18ba21f3a8e573fbea85e06fe74e17da5ee3fb7fd795b39df7f4b43",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -529,7 +530,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "bb52c3fa830c2599db92377ccff74aae03f31628e8698554ea8fae69d3a7c0c3",
+      "sha256": "d61ceb638fc0eadc09022cc12ee99725f220d231836a916b88100acd2bfc3d7a",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

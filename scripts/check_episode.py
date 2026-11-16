@@ -14,6 +14,7 @@ from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from task_scope import cover_keys, validate_scope
+from video_storage import bind_stored_video
 from opening_alignment_guard import check_opening_plan
 from cover_guard import validate_cover_review, LIMITS as COVER_LIMITS
 from stage_checks import Checks, narration_language, validate_output_dimensions
@@ -583,7 +584,7 @@ def check_visual_logic(shots, assets):
 from topic_selection_guard import validate_topic_selection
 
 
-def check(data, root, stage):
+def check(data, root, stage, *, stored_video=None):
     # macOS /var and /private/var may name the same temporary directory.
     # Normalize once before all containment checks, including the public API.
     root = Path(root).resolve()
@@ -594,7 +595,7 @@ def check(data, root, stage):
     if stage in GATES:
         # Quality reuses actual episode checks; release also reuses the platform path.
         base = "publish_ready" if stage in ("G6", "G7") else "quality" if stage == "G5" else "plan"
-        errors, notes = check(data, root, base)
+        errors, notes = check(data, root, base, stored_video=stored_video)
         if stage != "G1":
             for shot in data.get("shots", []):
                 if not isinstance(shot, dict):
@@ -604,11 +605,11 @@ def check(data, root, stage):
                 if isinstance(timing, dict) and timing.get("mode") == "relative_plan":
                     errors.append(f"{stage}: actual audio timing required; relative_plan is only a G1/plan artifact")
         if stage not in ("G5", "G6"):
-            errors.extend(check_stage(data, root, stage))
+            errors.extend(check_stage(data, root, stage, stored_video=stored_video))
         notes.append("Stage evidence checks only; no actual viewing, quality or authorization is supplied by the checker")
         return errors, notes
     complete = stage in ("delivery", "quality", "publish_ready")
-    selection = Checks(data, root); validate_scope(selection); validate_topic_selection(selection)
+    selection = Checks(data, root, stored_video=stored_video); validate_scope(selection); validate_topic_selection(selection)
     errors, notes = list(selection.errors), semantic_warnings(data)
 
     def require(ok, message):
@@ -635,9 +636,8 @@ def check(data, root, stage):
     def local_file(value, label):
         if not require(nonempty(value), f"{label}: file path is missing"):
             return None
-        path = Path(value)
-        target = (root / path).resolve()
-        if not require(not path.is_absolute() and target.is_relative_to(root), f"{label}: path must stay inside the episode directory"):
+        target = selection.file_path(value)
+        if not require(target is not None, f"{label}: path must stay inside the episode directory"):
             return None
         return target if require(target.is_file(), f"{label}: file not found: {value}") else None
 
@@ -645,7 +645,7 @@ def check(data, root, stage):
         ref = ref if isinstance(ref, dict) else {}
         path = local_file(ref.get("file"), label)
         if path:
-            require(ref.get("sha256") == file_sha256(path), label + " hash stale/missing")
+            require(ref.get("sha256") == selection.evidence_digest(path), label + " hash stale/missing")
 
     require(data.get("schema_version") == 1, "schema_version must be 1")
     require(nonempty(data.get("episode_id")), "episode_id is missing")
@@ -942,7 +942,7 @@ def check(data, root, stage):
         notes.append("PLAN ONLY: no footage, rights, decoding, scientific accuracy or visual/mobile approval is established")
         return errors, notes
 
-    errors.extend(check_stage(data, root, "G6" if stage == "publish_ready" else "G5"))
+    errors.extend(check_stage(data, root, "G6" if stage == "publish_ready" else "G5", stored_video=stored_video))
     errors.extend(check_finesse(data))
     require(nonempty(data.get("production_statement")), "actual production_statement required")
     deliverables = data.get("deliverables", {})
@@ -989,8 +989,7 @@ def check(data, root, stage):
         target = local_file(deliverables.get(key), key)
         if target is None:
             continue
-        with target.open("rb") as handle:
-            digest = hashlib.file_digest(handle, "sha256").hexdigest()
+        digest = selection.evidence_digest(target)
         require(reviewed.get(key) == digest, f"{key}: reviewed_sha256 missing/stale; current hash {digest}")
         if not probe:
             continue
@@ -1043,7 +1042,7 @@ def validation_resources():
     """Fingerprint the local rules used by this checker, not external evidence."""
     root = Path(__file__).resolve().parents[1]
     names = (
-        "scripts/task_scope.py", "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/render_gate.py", "scripts/realism_guard.py", "scripts/origin_guard.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/opening_hook.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
+        "scripts/task_scope.py", "scripts/check_episode.py", "scripts/stage_checks.py", "scripts/video_storage.py", "scripts/render_gate.py", "scripts/realism_guard.py", "scripts/origin_guard.py", "scripts/topic_selection_guard.py", "scripts/connection_guard.py", "scripts/cover_guard.py", "scripts/feedback_guard.py", "scripts/opening_alignment_guard.py", "scripts/opening_hook.py", "scripts/subject_motion.py", "scripts/presentation_checks.py", "scripts/label_permission_guard.py",
         "config/production-policy.json", "config/series-profile.json",
         "assets/production-asset.schema.json", "indexes/rule-owners.json",
     )
@@ -1054,12 +1053,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path)
     parser.add_argument("--stage", choices=("plan", "covers", "delivery", "publish_ready", *GATES), required=True)
+    parser.add_argument("--stored-video", type=Path,
+                        help="verify the accepted video at its configured release-candidate or archive location")
     parser.add_argument("--report", type=Path,
                         help="save a JSON local-check receipt to a NEW file; never changes QA or approvals")
     args = parser.parse_args()
     started_at = datetime.now(timezone.utc).isoformat()
     errors, notes = [], []
-    packet_hash, resources = None, {}
+    packet_hash, resources, stored_video = None, {}, None
     result, exit_code = "invalid_input", 2
     try:
         # Refuse existing files (including dangling symlinks) before expensive checks.
@@ -1071,7 +1072,16 @@ def main():
         data = json.loads(raw.decode("utf-8"))
         if not isinstance(data, dict):
             raise ValueError("episode JSON must be an object")
-        errors, notes = check(data, args.episode.resolve().parent, args.stage)
+        episode_dir = args.episode.resolve().parent
+        if args.stored_video is not None:
+            if args.stage not in ("delivery", "publish_ready", "G5", "G6", "G7"):
+                raise ValueError("--stored-video applies only to final delivery and release checks")
+            stored_video = bind_stored_video(data, episode_dir, args.stored_video)
+            errors, notes = check(data, episode_dir, args.stage, stored_video=stored_video)
+            if not stored_video.unchanged():
+                errors.append("stored video changed during validation")
+        else:
+            errors, notes = check(data, episode_dir, args.stage)
         if file_sha256(args.episode) != packet_hash:
             errors.append("episode changed during validation; rerun against a stable packet")
         if args.report and validation_resources() != resources:
@@ -1088,6 +1098,9 @@ def main():
             "validation_resources": resources, "errors": errors, "notes": notes,
             "limits": "Local record/file checks only. Not scientific, rights, audiovisual, quality or publication approval. Referenced media are not snapshotted; rerun after any change.",
         }
+        if stored_video is not None:
+            receipt["stored_video"] = {"episode_file": stored_video.episode_file,
+                                       "file": str(stored_video.path), "sha256": stored_video.sha256}
         try:
             # Exclusive creation protects packets, media and earlier receipts.
             with args.report.open("x", encoding="utf-8") as handle:

@@ -11,6 +11,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+from video_storage import LOCAL_CONFIG
+
 LIMITS = "Records and execution checks do not prove actual viewing, taste, hearing, science or authorization. A rendered candidate remains unreviewed."
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 IGNORED = {"__pycache__", ".git"}
@@ -54,7 +56,7 @@ def skill_snapshot(root=SKILL_ROOT):
     files = {}
     for p in sorted(root.rglob("*")):
         rel = p.relative_to(root)
-        if any(part in IGNORED for part in rel.parts) or p.suffix == ".pyc":
+        if rel == LOCAL_CONFIG or any(part in IGNORED for part in rel.parts) or p.suffix == ".pyc":
             continue
         if p.is_symlink():
             raise ValueError("Skill lock does not accept symlinks: " + str(rel))

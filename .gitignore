@@ -3,6 +3,7 @@ __pycache__/
 .DS_Store
 .env
 .env.*
+/config/video-storage.local.json
 credentials*.json
 *.pem
 *.key
