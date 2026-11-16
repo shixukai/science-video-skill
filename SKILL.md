@@ -19,7 +19,7 @@ If the production route and visual style are unspecified, use the series' local 
 
 | Commission | Scope and entry |
 | --- | --- |
-| Maintain this Skill | Remove repetition and instructions with no production use; reconcile bodies, configuration, templates and scripts, and run appropriate checks. Do not invoke models, resume production or publish. A failed video/chat referenced during maintenance is diagnostic context; it does not itself change the commission to project/media repair. |
+| Maintain this Skill | Work directly in the [installed Git working tree](references/global-skill-installation.md#maintain-the-installed-git-working-tree); do not create temporary editing copies or separate maintenance repositories. Remove repetition and instructions with no production use; reconcile bodies, configuration, templates and scripts, and run appropriate checks. Do not invoke models, resume production or publish. A failed video/chat referenced during maintenance is diagnostic context; it does not itself change the commission to project/media repair. |
 | Planning only | Read the [topic contract](references/topic-contract.md), [viral appeal and packaging](references/viral-appeal-and-packaging.md), [science and rights](references/science-and-rights.md) and [explanation design](references/production-checkpoints.md). Include the draft package (title candidates, cover concept and the [hook lab](references/viral-appeal-and-packaging.md#run-the-hook-lab-at-g1) for the first two seconds). Deliver clearly identified research-pending drafts without invented sources, audio or timestamps. `plan` checks an existing sourced structure; it is not mandatory approval for every draft. |
 | 3D model, static preview, search or catalog only | Read [asset-task scope](references/engineering-blender.md#scope-of-asset-only-tasks); check the model, scientific relations, dependencies and archival state. Do not manufacture a soundtrack, full episode or G3. Intermediate modeling within a full-video commission retains its later video obligations. |
 | New or continued video | Prefer the existing package. G1 explanation design including the hook lab → hook sample (0–5 s at final quality, measured and cold-tested) → G2 complete sound rough cut → G3 representative sequence (expansion needs the passed hook sample) → G4 complete candidate → G5 final quality. Validate an applicable sample before expansion. |
@@ -34,7 +34,7 @@ When the user explicitly requests publication of an existing, identified video, 
 
 ## One global production installation
 
-Use [one global installation](references/global-skill-installation.md). Do not copy the Skill into projects or run production from a project snapshot or maintenance source. At startup and continuation, read current global rules and the latest user request. Projects retain production data, actual execution evidence and rule-hash locks. Explicitly migrate when global rules change; an old lock cannot override new instructions or silently carry forward review approval.
+Use [one global installation](references/global-skill-installation.md). The installed directory is also the Git working tree. Do not copy the Skill into projects or use separate maintenance snapshots. At startup and continuation, read current global rules and the latest user request. Projects retain production data, actual execution evidence and rule-hash locks. Explicitly migrate when global rules change; an old lock cannot override new instructions or silently carry forward review approval.
 
 ## Critical production requirements
 

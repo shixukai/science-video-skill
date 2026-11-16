@@ -4,7 +4,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import unittest
-SCRIPTS = Path(__file__).resolve().parents[1] / 'skills/science-video-production/scripts'
+SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
 sys.path.insert(0, str(SCRIPTS))
 spec = importlib.util.spec_from_file_location('origin_render_fixture', SCRIPTS/'tests/test_render_gate.py')
 fixture = importlib.util.module_from_spec(spec); spec.loader.exec_module(fixture)

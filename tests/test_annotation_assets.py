@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 import xml.etree.ElementTree as ET
 
-ROOT = Path(__file__).resolve().parents[1] / 'skills/science-video-production'
+ROOT = Path(__file__).resolve().parents[1]
 NS = {'s': 'http://www.w3.org/2000/svg'}
 
 

@@ -3,12 +3,11 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
-import shutil
 import sys
-import tempfile
 import unittest
+from tests.reference_overlay import ReferenceOverlay
 
-ROOT = Path(__file__).resolve().parents[1]/'skills/science-video-production'
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
 spec=importlib.util.spec_from_file_location('iteration_reference_check',ROOT/'scripts/check_reference_system.py')
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
@@ -27,8 +26,8 @@ class IterationStandardTests(unittest.TestCase):
   self.assertEqual(registry['status'],'navigation_only')
   self.assertEqual(m.check(ROOT),[])
  def test_removed_responsibility_clause_fails_index(self):
-  with tempfile.TemporaryDirectory() as tmp:
-   target=Path(tmp)/'skill';shutil.copytree(ROOT,target)
+  with ReferenceOverlay(ROOT):
+   target=ROOT
    p=target/'references/production-checkpoints.md';s=p.read_text()
    clause='changing only design variables stated in advance'
    self.assertIn(clause,s)

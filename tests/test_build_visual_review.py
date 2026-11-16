@@ -15,7 +15,7 @@ from fs_support import symlink_or_skip
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "skills/science-video-production/scripts/build_visual_review.py"
+SCRIPT = ROOT / "scripts/build_visual_review.py"
 SPEC = importlib.util.spec_from_file_location("build_visual_review", SCRIPT)
 review = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(review)

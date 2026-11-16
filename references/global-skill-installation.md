@@ -6,18 +6,24 @@ At startup/continuation read the global entrypoint and route references, checkin
 
 [Video subagents](subagent-orchestration.md#installation-and-invocation) use this same global entrypoint. The six maintained TOML definitions sync only to personal Codex `agents` for host discovery; they are not separate Skills or project installs. Role updates do not automatically restart work/change running contexts. A read-only runtime home is not a reason to change security permissions or disguise maintenance source as an installation. Use the official personal-Skill workflow where supported and report any uncompleted role installation separately; the existing fallback invocation remains available. Current conversation/catalog caches are not proof that a saved installation has or has not refreshed.
 
+## Maintain the installed Git working tree
+
+For this local Codex installation, keep the Skill at `${CODEX_HOME}/skills/science-video-production` (default `~/.codex/skills/science-video-production`) with `SKILL.md` and `.git` at its root. `origin` is `https://github.com/shixukai/science-video-skill.git`, and `main` tracks `origin/main`. This directory is the single editing and execution location; there is no version-suffixed installation or separate maintenance repository. The official managed-host alternative above retains its host-required layout.
+
+Before editing, inspect status and fetch the remote in this directory. Reconcile local and remote changes without overwriting either, edit the actual Skill files, rebuild the navigation index when its bodies change, and run relevant checks. Commit and push within the user's authorized scope; report the exact commit and whether the working tree and upstream agree. Do not create temporary modification directories, staged source copies, candidate repositories, extra clones or Git worktrees. Git history retains committed versions. Test data is not a place to edit or install the Skill.
+
 ## What projects retain
 
 - Keep scripts, shots/audio/subtitles, assets, adapters, provenance, actual run/review records and a write-once rule-file hash lock. Call Skill scripts globally; a lock is a digest record, not an executable Skill.
-- Project-specific reference images, instantiated templates and concrete supporting assets may be stored with provenance/hashes; do not copy complete rules, checkers/defaults. Temporary maintenance/test copies are isolated validation only and removed afterward, not project production entrypoints.
+- Project-specific reference images, instantiated templates and concrete supporting assets may be stored with provenance/hashes; do not copy complete rules, checkers/defaults. Keep maintenance edits in the installed Git tree. Tests use in-memory mutations or small synthetic data fixtures, without copying the installed Skill.
 - Global updates do not automatically validate old locks. After current jobs finish, compare changes, write a new migration record for affected design/execution/review and unreviewed scope, and generate applicable current locks. Never rewrite receipts, backdate passes, automatically render or revive canceled projects.
 - Never unpack historical installs to bypass new rules. Read archived originals/hashes only for historical tracing; they are not production entrypoints.
 
 ## Remove existing copies
 
-List actual directories first and distinguish full installs, partial backups, historical entrypoint text and maintenance source. Handle this Skill only, preserving other Skills, user media and neighboring evidence. For complete copies first hash every file, archive/compress and verify readback, then remove. Historical entry text may be archived/renamed clearly as non-entrypoint evidence with original contents/mapping retained.
+List actual directories first and distinguish full installs, partial backups, historical entrypoint text and maintenance source. Handle this Skill only, preserving other Skills, user media and neighboring evidence. Before removing redundant copies, reconcile their changes with the installed tree and remote history. Verify the retained version and successful push before deleting obsolete editing directories; do not create another temporary source copy or backup directory for this cleanup. Historical entry text may be archived/renamed clearly as non-entrypoint evidence with original contents/mapping retained.
 
-Legacy paths needing compatibility may link to the single global directory, without independent files; resolved paths must equal the global installation. Old hashes differing from global still require migration; links do not revive old approvals. GitHub maintenance sources live outside projects, only for edits/checks/sync, never as another production install or direct production entrypoint.
+Legacy paths needing compatibility may link to the single global directory, without independent files; resolved paths must equal the global installation. Old hashes differing from global still require migration; links do not revive old approvals. The canonical installed directory itself is the Git working tree. Separate GitHub maintenance clones and temporary editing trees are not retained.
 
 Rescan known project roots after cleanup and report coverage, unread directories, independent copy count and compatibility links. Failed scans do not prove absence. Trace creators of new copies rather than repeatedly deleting files. Archives serve recovery/evidence only; public repositories exclude private project paths, feedback and production evidence.
 
@@ -27,4 +33,4 @@ Rescan known project roots after cleanup and report coverage, unread directories
 
     python -X utf8 <global-skill-root>/scripts/global_skill.py --scan <project-directory> <another-project-directory>
 
-The `render_gate.py lock/run` CLI checks unique-global installation before writing locks/invoking project executors, rejecting project copies/repository source. Offline structural/unit tests are not production runs; use isolated temporary directories and clean them.
+The `render_gate.py lock/run` CLI checks unique-global installation before writing locks/invoking project executors, rejecting project copies/repository source. Offline structural/unit tests are not production runs. Use in-memory overlays for rule mutations; synthetic episode fixtures may be short-lived and cleaned automatically, but must not become Skill editing directories or full Skill copies.

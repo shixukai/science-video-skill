@@ -4,7 +4,7 @@ import copy, hashlib, importlib.util, json, subprocess, tempfile, unittest
 from pathlib import Path
 from stage_fixture import upgrade, refresh, attach_topic_selection_fixture
 PROJECT=Path(__file__).resolve().parents[1]
-p=PROJECT/'skills/science-video-production/scripts/check_episode.py'
+p=PROJECT/'scripts/check_episode.py'
 spec=importlib.util.spec_from_file_location('checks',p); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
 plan=json.loads((PROJECT/'examples/blue-sky/episode.json').read_text())
 attach_topic_selection_fixture(plan)

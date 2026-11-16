@@ -26,4 +26,4 @@ episodes/
 *.gif
 
 # Style references are part of the Skill, separate from production media.
-!skills/science-video-production/assets/style/accepted-style-reference.png
+!assets/style/accepted-style-reference.png

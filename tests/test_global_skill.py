@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-SCRIPTS = Path(__file__).resolve().parents[1] / 'skills/science-video-production/scripts'
+SCRIPTS = Path(__file__).resolve().parents[1] / 'scripts'
 spec = importlib.util.spec_from_file_location('global_skill', SCRIPTS / 'global_skill.py')
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)

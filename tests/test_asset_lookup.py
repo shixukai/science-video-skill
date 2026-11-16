@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-path = Path(__file__).resolve().parents[1] / 'skills/science-video-production/scripts/find_3d_assets.py'
+path = Path(__file__).resolve().parents[1] / 'scripts/find_3d_assets.py'
 spec = importlib.util.spec_from_file_location('finder', path)
 finder = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(finder)

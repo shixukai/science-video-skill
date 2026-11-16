@@ -1,7 +1,7 @@
 <a id="完整场景与机制表达行为回归"></a>
 # Complete scenes and mechanism expression: behavioral regression
 
-Use this to check an independent executor's production decisions, not as an automated aesthetic test of a finished film. Give only the task inputs to a fresh execution context, together with the current Skill; withhold the review criteria below and earlier conclusions. Save responses in an independent temporary workspace, outside the Skill and public repository. The executor makes only authorized plans and judgments, without generating, publishing or modifying existing media.
+Use this to check an independent executor's production decisions, not as an automated aesthetic test of a finished film. Give only the task inputs to a fresh execution context, together with the current Skill; withhold the review criteria below and earlier conclusions. Return responses in the conversation or save them as evidence in the existing commissioned project; do not create a temporary Skill editing directory. The executor makes only authorized plans and judgments, without generating, publishing or modifying existing media.
 
 <a id="任务输入"></a>
 ## Task inputs

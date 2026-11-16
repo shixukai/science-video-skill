@@ -1,12 +1,12 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.20; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.21; the Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
-- **Google Flow cloud production.** Generate all video and audio in the cloud (`1080p Upscaled` staging, `24 fps` native CFR cadence, serial queue ledger), use Flow for supported post-production and review steps, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](skills/science-video-production/references/google-flow-production.md).
-- **Realistic direction craft and audit.** Assign each shot a truth register and verified time scale, write physical shot cards before prompts, layer event-accurate sound, and screen exports with `realistic_audit.py` and `google_flow_audit.py`. See [realistic direction](skills/science-video-production/references/realistic-direction.md).
-- **Potentially disturbing footage.** Use proportional treatment for blood, exposed organs and injuries while preserving explanatory structure, and review the actual opening, covers and exports. See [visual treatment](skills/science-video-production/references/visual-system.md#handle-potentially-disturbing-imagery).
-- **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. Maintenance source is not a production entry. On continuation, read global changes, migrate explicitly and retain old execution records.
+- **Google Flow cloud production.** Generate all video and audio in the cloud (`1080p Upscaled` staging, `24 fps` native CFR cadence, serial queue ledger), use Flow for supported post-production and review steps, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](references/google-flow-production.md).
+- **Realistic direction craft and audit.** Assign each shot a truth register and verified time scale, write physical shot cards before prompts, layer event-accurate sound, and screen exports with `realistic_audit.py` and `google_flow_audit.py`. See [realistic direction](references/realistic-direction.md).
+- **Potentially disturbing footage.** Use proportional treatment for blood, exposed organs and injuries while preserving explanatory structure, and review the actual opening, covers and exports. See [visual treatment](references/visual-system.md#handle-potentially-disturbing-imagery).
+- **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. The installed Skill is also the Git working tree; maintenance happens directly in that directory. On continuation, read global changes, migrate explicitly and retain old execution records.
 - **Open with context and a reason to watch.** Work backward from the first body observation; design the opening's final sentence/frame together with the body's first sentence/frame and continuously review through that observation. Topic and route may flow naturally in one sentence; do not split them merely for time fields.
 - **Explain the full requested engineering/manufacturing chain.** Organize input, principle, key processes, result and verification by topic scope. Actual explanation and observation determine duration.
 - **Sample before expanding.** Verify subject, action, voice and joins at actual playback rhythm. Low-frame-rate layout proxies remain internal; the complete film still needs full viewing/listening.
@@ -20,36 +20,38 @@ The production bodies unify executable opening, transition, picture and sound ac
 <a id="使用入口"></a>
 ## Entry
 
-Start at [SKILL.md](skills/science-video-production/SKILL.md) and read responsibility bodies for the actual commission. New work defaults to 1920×1080; historical 2D/portrait parameters apply only within their explicit scope. Local video delivery ends at G5; platform preparation/publication enters G6/G7 only when commissioned.
+Start at [SKILL.md](SKILL.md) and read responsibility bodies for the actual commission. New work defaults to 1920×1080; historical 2D/portrait parameters apply only within their explicit scope. Local video delivery ends at G5; platform preparation/publication enters G6/G7 only when commissioned.
 
 | Need | Body |
 | --- | --- |
-| Original topic, complete chain and opening | [Topic contract](skills/science-video-production/references/topic-contract.md), [opening/transitions](skills/science-video-production/references/viewer-retention-design.md) |
-| Actual tools and execution stages | [Tool routing](skills/science-video-production/references/tool-routing.md), [production checkpoints](skills/science-video-production/references/production-checkpoints.md) |
-| Realistic craft & Google Flow | [Realistic direction](skills/science-video-production/references/realistic-direction.md), [Google Flow production](skills/science-video-production/references/google-flow-production.md) |
-| Picture, annotations and covers | [Visual system](skills/science-video-production/references/visual-system.md), [precision annotation](skills/science-video-production/references/annotation-style.md) |
-| Sound | [Voice and actual listening](skills/science-video-production/references/voice-reference.md) |
-| Failures and acceptance | [Quality acceptance](skills/science-video-production/references/quality-acceptance.md) |
-| 3D asset reuse | [Blender and asset library](skills/science-video-production/references/engineering-blender.md) |
-| Subagent ownership, installation and invocation | [Six roles and parent direction](skills/science-video-production/references/subagent-orchestration.md), [installable TOML definitions](skills/science-video-production/agents) |
+| Original topic, complete chain and opening | [Topic contract](references/topic-contract.md), [opening/transitions](references/viewer-retention-design.md) |
+| Actual tools and execution stages | [Tool routing](references/tool-routing.md), [production checkpoints](references/production-checkpoints.md) |
+| Realistic craft & Google Flow | [Realistic direction](references/realistic-direction.md), [Google Flow production](references/google-flow-production.md) |
+| Picture, annotations and covers | [Visual system](references/visual-system.md), [precision annotation](references/annotation-style.md) |
+| Sound | [Voice and actual listening](references/voice-reference.md) |
+| Failures and acceptance | [Quality acceptance](references/quality-acceptance.md) |
+| 3D asset reuse | [Blender and asset library](references/engineering-blender.md) |
+| Subagent ownership, installation and invocation | [Six roles and parent direction](references/subagent-orchestration.md), [installable TOML definitions](agents) |
 
 Run scripts from the global installation. `render_gate.py lock/run` rejects non-global production entry; `roughcut` serves G2, `sample` produces the review-pending representative sequence, and `full` requires G3. Use new receipt filenames; do not refresh old hashes to pretend an earlier approval covers a new version. Keep private media, accounts and review records out of this repository.
 
 <a id="子代理"></a>
 ## Subagents
 
-The parent retains direction/integration and invokes research, visual art, animation, audio/editing, local execution and independent review roles as needed. Six definitions do not require six concurrent workers. Roles read standards from the unique global Skill and inherit the host's model/permissions. See [orchestration](skills/science-video-production/references/subagent-orchestration.md#installation-and-invocation) for installation and natural-language invocation examples.
+The parent retains direction/integration and invokes research, visual art, animation, audio/editing, local execution and independent review roles as needed. Six definitions do not require six concurrent workers. Roles read standards from the unique global Skill and inherit the host's model/permissions. See [orchestration](references/subagent-orchestration.md#installation-and-invocation) for installation and natural-language invocation examples.
 
 <a id="维护检查"></a>
 ## Maintenance checks
 
-From the maintenance repository root, use Python 3.11+. Media-related tests require FFmpeg/ffprobe. Select regressions appropriate to the change.
+From the installed Skill/repository root, use Python 3.11+. Media-related tests require FFmpeg/ffprobe and Pillow. Select regressions appropriate to the change.
 
 ```bash
-python -X utf8 skills/science-video-production/scripts/rebuild_standard_index.py
-python -X utf8 skills/science-video-production/scripts/check_reference_system.py skills/science-video-production
+python -X utf8 scripts/rebuild_standard_index.py
+python -X utf8 scripts/check_reference_system.py .
 python -X utf8 -m unittest discover -s tests -t .
-python -X utf8 -m unittest discover -s skills/science-video-production/scripts/tests
+python -X utf8 -m unittest discover -s scripts/tests
 ```
+
+Edit and validate in the installed `science-video-production` directory. Fetch and reconcile `origin/main` there before changing files, then commit and push when authorized. Do not create temporary editing directories, candidate trees, separate maintenance clones or worktrees. See [in-place maintenance](references/global-skill-installation.md#maintain-the-installed-git-working-tree) and [repository instructions](AGENTS.md).
 
 The section index maintains body links, hashes and anchors only. READMEs for `scripts/bounded_blender` and `scripts/bounded_i2v` define their bounded execution/recovery scope. `third-party` retains original licenses and pinned provenance. Historical paper examples and `references/learning-candidates` are unverified research records, not current production permission or passing evidence. Git history retains prior revisions.

@@ -516,9 +516,10 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "3130ac628d3c5fbce5a5237a650e66d9a0f1a310dc15d19bcac07f1b22ee7a97",
+      "sha256": "a8899bf3c3ad5c949e4a888db4ed2636a78af874b4b31a9af69ec61ed92b683f",
       "anchors": [
         "one-global-skill-projects-retain-production-data-only",
+        "maintain-the-installed-git-working-tree",
         "what-projects-retain",
         "remove-existing-copies",
         "executable-checks"

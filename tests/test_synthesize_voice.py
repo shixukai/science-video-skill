@@ -18,7 +18,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "synthesize_voice", ROOT / "skills/science-video-production/scripts/synthesize_voice.py")
+    "synthesize_voice", ROOT / "scripts/synthesize_voice.py")
 voice = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(voice)
 REVISION = "0c0e3051f131929182e2c023b9537f8b1c68adfe"

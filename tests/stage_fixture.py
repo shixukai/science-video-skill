@@ -4,8 +4,8 @@ import copy
 import importlib.util
 import json
 import sys
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts'))
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/science-video-production/scripts/tests'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts/tests'))
 from topic_selection_fixture import attach_topic_selection_fixture, refresh_topic_selection_fixture
 import stage_checks as gates
 import subject_motion

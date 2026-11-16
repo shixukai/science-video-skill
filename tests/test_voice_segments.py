@@ -13,7 +13,7 @@ import wave
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "voice_segment_checks", ROOT / "skills/science-video-production/scripts/check_episode.py")
+    "voice_segment_checks", ROOT / "scripts/check_episode.py")
 checks = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(checks)
 

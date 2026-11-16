@@ -12,7 +12,7 @@ from unittest.mock import patch
 
 
 PROJECT = Path(__file__).resolve().parents[1]
-SCRIPT = PROJECT / "skills/science-video-production/scripts/check_episode.py"
+SCRIPT = PROJECT / "scripts/check_episode.py"
 spec = importlib.util.spec_from_file_location("receipt_checks", SCRIPT)
 checker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checker)

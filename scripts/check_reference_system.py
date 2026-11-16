@@ -360,6 +360,8 @@ def check(root):
              "external source identity/copy count inconsistent")
 
         for p in root.rglob("*"):
+            if any(part in {".git", "__pycache__"} for part in p.relative_to(root).parts):
+                continue
             if p.is_file() and p.suffix in (".md", ".json", ".svg", ".css", ".py"):
                 text = p.read_text(encoding="utf-8")
                 need(PRIVATE_ID.search(text) is None, "private identity in public resource: " + str(p.relative_to(root)))

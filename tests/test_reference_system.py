@@ -5,12 +5,11 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
-import shutil
 import sys
-import tempfile
 import unittest
+from tests.reference_overlay import ReferenceOverlay
 
-ROOT = Path(__file__).resolve().parents[1] / "skills/science-video-production"
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 spec = importlib.util.spec_from_file_location("reference_checks", ROOT / "scripts/check_reference_system.py")
 m = importlib.util.module_from_spec(spec)
@@ -19,11 +18,8 @@ spec.loader.exec_module(m)
 
 class ReferenceSystemTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory()
-        self.root = Path(self.temp.name) / "skill"
-        shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns("__pycache__"))
-    def tearDown(self):
-        self.temp.cleanup()
+        self.root = ROOT
+        self.enterContext(ReferenceOverlay(ROOT))
     def edit(self, path, f):
         p = self.root / path
         d = json.loads(p.read_text())
