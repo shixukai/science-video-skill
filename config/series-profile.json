@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.28",
+  "version": "1.6.29",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -50,14 +50,15 @@
       "id": "google_flow",
       "production_project": "Google Flow",
       "video_sources": "generated_in_google_flow",
-      "audio_sources": "generated_and_processed_in_google_flow",
+      "audio_sources": "continuous_whole_script_gemini_tts_in_google_ai_studio_and_google_flow_foley",
+      "zh_narration_source": "google_ai_studio_gemini_tts_continuous_whole_script",
       "delivery_languages": ["zh", "en"],
       "native_clip_fps": 24,
       "min_staged_clip_quality": "1080p_upscaled",
       "desktop_viewport_min": [1440, 900],
-      "scene_export_mode": "1080p_clip_staging_and_native_720p_cloud_scene",
+      "scene_export_mode": "1080p_clip_staging_muxed_with_continuous_gemini_tts_master",
       "serial_browser_queue": true,
-      "postproduction": "google_flow_only_no_local_resources",
+      "postproduction": "composite_continuous_gemini_tts_with_1080p_flow_visuals",
       "audit_tool": "scripts/google_flow_audit.py",
       "guide": "references/google-flow-production.md"
     },

@@ -513,7 +513,7 @@ def _is_google_flow_url(location: Any) -> bool:
         return False
     if parsed.scheme != "https" or parsed.username:
         return False
-    return parsed.hostname == "flow.google.com" or (
+    return parsed.hostname in ("flow.google.com", "aistudio.google.com", "generativelanguage.googleapis.com") or (
         parsed.hostname == "labs.google" and parsed.path.startswith(("/fx/tools/flow", "/flow"))
     )
 
@@ -522,7 +522,22 @@ def _is_google_flow_tool(tool_val: Any) -> bool:
     if not isinstance(tool_val, str) or not tool_val.strip():
         return False
     raw = tool_val.strip()
-    return raw.lower() in ("google_flow", "google flow") or _is_google_flow_url(raw)
+    low = raw.lower()
+    if any(bad in low for bad in ("synthesize_voice", "qwen", "edge-tts", "os_tts")):
+        return False
+    if low in (
+        "google_flow",
+        "google flow",
+        "google_ai_studio",
+        "google ai studio",
+        "gemini_tts",
+        "ffmpeg",
+        "prepare_voice_master",
+        "prepare_voice_master.py",
+        "scripts/prepare_voice_master.py",
+    ):
+        return True
+    return _is_google_flow_url(raw)
 
 
 def _check_flow_origin_purity(
@@ -530,7 +545,7 @@ def _check_flow_origin_purity(
     edition: str,
     flags: list[dict[str, Any]],
 ) -> None:
-    """Flag non-Flow voice generation/processing or local resource workarounds."""
+    """Flag non-Google-Cloud voice generation (e.g. Qwen/edge-tts) or forbidden gap workarounds."""
     if not isinstance(episode, dict):
         return
     reasons: list[str] = []
@@ -556,7 +571,7 @@ def _check_flow_origin_purity(
                     gen_data = _load_json(gen_path)
                     if isinstance(gen_data, dict):
                         prov = gen_data.get("provider")
-                        if isinstance(prov, str) and prov.strip() and prov != "Google Flow":
+                        if isinstance(prov, str) and prov.strip() and prov not in ("Google Flow", "Google AI Studio", "Google"):
                             reasons.append(f"non_flow_provider:{prov}")
                         bk = gen_data.get("backend")
                         if isinstance(bk, str) and any(t in bk.lower() for t in ("local", "qwen", "edge-tts", "os_tts")):

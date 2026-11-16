@@ -329,7 +329,20 @@ class GoogleFlowAuditTests(unittest.TestCase):
         ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
         ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
 
-        # Clean Google Flow voice/processing metadata on EN should pass with zero flags
+        # Clean Google AI Studio (Gemini TTS) continuous ZH + Google Flow EN + linear mastering/compositing should pass
+        clean_gen_zh = self.root / "aistudio_gen_zh.json"
+        write_json(clean_gen_zh, {"provider": "Google AI Studio", "backend": "gemini_tts", "model_id": "gemini-2.5-pro-preview-tts"})
+        clean_post_zh = self.root / "master_post_zh.json"
+        write_json(clean_post_zh, {"steps": [{"tool": "prepare_voice_master.py"}, {"tool": "ffmpeg"}]})
+        ep_zh_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "service",
+            "location": "https://aistudio.google.com/generate-speech",
+        }
+        ep_zh_data["narration"]["generation_record"] = {"file": "aistudio_gen_zh.json"}
+        ep_zh_data["narration"]["postprocess_record"] = {"file": "master_post_zh.json"}
+        write_json(ep_zh, ep_zh_data)
+
         clean_gen_en = self.root / "flow_gen_en.json"
         write_json(clean_gen_en, {"provider": "Google Flow", "backend": "flow_speech"})
         clean_post_en = self.root / "flow_post_en.json"
@@ -349,14 +362,14 @@ class GoogleFlowAuditTests(unittest.TestCase):
             "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
             "--clips-dir", str(self.clips_dir), "--report", str(rep_ok),
         ])
-        self.assertEqual(code_ok, 0, f"Pure Google Flow metadata should pass: {err_ok} {data_ok}")
+        self.assertEqual(code_ok, 0, f"Google AI Studio Gemini TTS + Flow metadata should pass: {err_ok} {data_ok}")
         self.assertEqual(data_ok["flags"], [])
 
-        # Non-Flow / local resources on ZH (local_project + edge-tts + flow_postproduction_gaps + ffmpeg) must flag
+        # Non-Google / local TTS resources on ZH (local_project + edge-tts + flow_postproduction_gaps + synthesize_voice.py) must flag
         bad_gen_zh = self.root / "bad_gen_zh.json"
         write_json(bad_gen_zh, {"provider": "Microsoft", "backend": "edge-tts"})
         bad_post_zh = self.root / "bad_post_zh.json"
-        write_json(bad_post_zh, {"steps": [{"tool": "ffmpeg"}]})
+        write_json(bad_post_zh, {"steps": [{"tool": "synthesize_voice.py"}]})
         ep_zh_data["design"]["flow_postproduction_gaps"] = ["loudnorm"]
         ep_zh_data["narration"]["execution"] = {
             "status": "confirmed",
@@ -383,7 +396,7 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("non_flow_execution_location", reasons)
         self.assertIn("non_flow_provider:Microsoft", reasons)
         self.assertIn("non_flow_backend:edge-tts", reasons)
-        self.assertIn("local_postprocess_tool:ffmpeg", reasons)
+        self.assertIn("local_postprocess_tool:synthesize_voice.py", reasons)
 
     def test_catches_clickbait_telegraphese_compressed_episode_and_ping_pong_cuts(self) -> None:
         zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
