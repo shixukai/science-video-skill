@@ -258,6 +258,47 @@ class VoiceSegmentTests(unittest.TestCase):
         errors, _ = checks.check(packet, self.root, "plan")
         self.assertTrue(any(error.startswith("narration:") and "language" in error for error in errors), errors)
 
+    def test_flow_accepts_verified_local_qwen_with_blocker_evidence(self):
+        blocker_ref = self.write_json("cloud-tts-403.json", {"status": 403, "error": "Region not supported"})
+        for lang_code, lang_name, speaker in (("zh", "Chinese", "Serena"), ("en", "English", "Ryan")):
+            with self.subTest(lang=lang_code):
+                (self.root / "script.txt").write_text(
+                    "Continuous conversational test line.\n" if lang_code == "en" else "这是连续自然的测试旁白。\n",
+                    encoding="utf-8",
+                )
+                self.narration.update(
+                    language=lang_code,
+                    script_sha256=self.ref("script.txt")["sha256"],
+                    execution={
+                        "status": "confirmed",
+                        "mode": "local_project",
+                        "location": "D:\\AI-Models\\ComfyUI-20261025\\Qwen3-TTS",
+                        "confirmation_reference": "series voice-baseline.json + cloud 403 blocker",
+                    },
+                )
+                record = {
+                    "schema_version": 1,
+                    "status": "generated",
+                    "backend": "local_qwen",
+                    "provider": "Qwen",
+                    "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+                    "resolved_model_revision": "a" * 40,
+                    "model_manifest_sha256": "b" * 64,
+                    "execution": copy.deepcopy(self.narration["execution"]),
+                    "voice": {"speaker": speaker, "language": lang_name, "instruct": "Calm conversational delivery."},
+                    "cloud_tts_blocker_evidence": blocker_ref,
+                    "input": self.ref("script.txt"),
+                    "output": self.ref("assembled.wav"),
+                }
+                packet = self.packet()
+                packet.setdefault("design", {})["production_route"] = "google_flow"
+                voice = packet["narration"]
+                voice.pop("generation_manifest", None)
+                voice.pop("postprocess_record", None)
+                voice["generation_record"] = self.write_json(f"qwen-flow-{lang_code}.json", record)
+                errors, _ = checks.check(packet, self.root, "plan")
+                self.assertFalse(any(e.startswith("narration:") for e in errors), errors)
+
     def test_flow_ordered_segments_bind_the_english_variant_language(self):
         inputs = ("First, observe the motion.\n\n", "Then, notice what changes.\n")
         (self.root / "script.txt").write_text("".join(inputs), encoding="utf-8")

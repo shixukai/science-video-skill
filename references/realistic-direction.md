@@ -207,7 +207,7 @@ Live-action picture over silence, or over narration alone, reads as fake within 
 
 | Layer | Direction | Starting point to calibrate by listening | Failure to return |
 | --- | --- | --- | --- |
-| Room tone and ambience | One continuous bed per location, carried across cuts in that location, changed when the location changes | Clearly audible in narration gaps on a phone speaker, never masking consonants under narration | Digital silence between clips; ambience restarting at each cut |
+| Room tone and ambience | One continuous bed per location/act, carried across cuts in that location and crossfaded cleanly (`150–400 ms`) when the world changes | Clearly audible in narration gaps on a phone speaker, never masking consonants under narration; avoid dropping individual shot foley fades to `0.0` at every cut | Digital silence between clips; ambience restarting or pumping down/up at each cut |
 | Event sound | Contacts, pours, clicks, ignitions and impacts on their visible frame | Within one frame of the visible contact for nearby events | Early or late hits; one generic whoosh for different events |
 | Sound perspective | Close shots near and detailed; wide shots with more room and distance | Change perspective with shot scale, not per clip | Close-miked sound on a distant wide |
 | Instrument views | A distinct, restrained treatment for slowed or magnified views (stretched or softened event sound) | Consistent across all shots of that register | Real-time sound over obviously slowed picture |
@@ -251,6 +251,8 @@ Fixed generation lengths make every shot last the same time, which flattens atte
 ### Choose cut points
 
 - Cut on action, in the middle of a movement whose phase matches across the cut.
+- Group outdoor wildlife/live shots and 3D cutaway/model sequences into sustained acts rather than ping-ponging bright outdoor scenes and dark studio shots for single isolated lines; use restrained `0.20–0.30 s` dissolves only across world transitions.
+- Offset sound and picture slightly (`0.12–0.30 s` J-cuts and L-cuts inside natural breath valleys) so narration carries seamlessly across cuts instead of freezing on dead pauses before every edit.
 - Cut after a state change completes, not just before it. Never cut away during the change the narration promised.
 - Bring the referent on screen at or slightly before the noun that names it.
 - Mandarin often puts the result at the end of the clause (“……一下子变成了蒸汽”). Land the visible event on that verb, and leave about 0.2 s of picture after the comma before cutting.

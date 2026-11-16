@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.24",
+  "version": "1.6.25",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -50,7 +50,7 @@
       "id": "google_flow",
       "production_project": "Google Flow",
       "video_sources": "generated_in_google_flow",
-      "audio_sources": "generated_in_google_flow_or_authorized_companion_cloud_service",
+      "audio_sources": "generated_in_google_flow_or_authorized_companion_cloud_service_or_verified_series_qwen_baseline_when_cloud_tts_blocked",
       "delivery_languages": ["zh", "en"],
       "native_clip_fps": 24,
       "min_staged_clip_quality": "1080p_upscaled",

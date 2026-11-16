@@ -21,6 +21,11 @@ SRT_TIME_RE = re.compile(
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
 WORD_RE = re.compile(r"[A-Za-z0-9]+(?:'[A-Za-z0-9]+)?")
 LEAKED_MARKUP_RE = re.compile(r"</?(?:speak|break|phoneme|prosody|say-as|sub)\b", re.IGNORECASE)
+PROMPT_COLON_RE = re.compile(
+    r"(?:^|[\n。！？])\s*(?:第[一二三四五六七八九十\d]+[步点条层关][^，。！？\n]{0,8}|"
+    r"先打破一个常识误区|一句话总结|核心在于|关键在于|原因如下|说白了)[：:]"
+)
+PCT_RATE_RE = re.compile(r"^\s*([+-]?\d+(?:\.\d+)?)\s*%\s*$")
 
 
 def load_policy() -> dict[str, Any]:
@@ -548,9 +553,13 @@ def _check_speech_and_holds(
                     )
 
     min_hold = float(speech_cfg.get("min_observation_hold_s", 0.8))
-    min_hold_ratio = float(speech_cfg.get("min_observation_hold_ratio", 0.3))
+    min_hold_ratio = float(speech_cfg.get("min_observation_hold_ratio", 0.15))
+    long_wait_s = float(speech_cfg.get("long_empty_wait_s", 1.45))
+    max_long_ratio = float(speech_cfg.get("max_long_empty_wait_ratio", 0.4))
+    max_abs_rate_pct = float(speech_cfg.get("max_tts_rate_abs_pct", 6.0))
     hold_count: int | None = None
     sample_units = 0
+    known: list[float] = []
     if episode and isinstance(episode.get("shots"), list):
         explicit_holds = [_extract_observation_hold(s) for s in episode["shots"] if isinstance(s, dict)]
         known = [h for h in explicit_holds if h is not None]
@@ -572,6 +581,71 @@ def _check_speech_and_holds(
                     "holds_ge_min_s": hold_count,
                     "required_min": required,
                     "min_hold_s": min_hold,
+                }
+            )
+    if len(known) >= 6:
+        long_holds = sum(1 for h in known if h >= long_wait_s)
+        if long_holds / len(known) > max_long_ratio:
+            flags.append(
+                {
+                    "code": "mechanical_chopped_pauses",
+                    "edition": edition,
+                    "long_holds": long_holds,
+                    "total_shots": len(known),
+                    "threshold_s": long_wait_s,
+                }
+            )
+
+    raw_rate = None
+    script_source_text = text
+    if episode and isinstance(episode.get("narration"), dict):
+        nar = episode["narration"]
+        raw_rate = nar.get("rate")
+        ep_dir = episode.get("_dir")
+        if raw_rate is None and isinstance(ep_dir, Path):
+            gen_ref = nar.get("generation_record")
+            if isinstance(gen_ref, dict) and isinstance(gen_ref.get("file"), str):
+                gen_path = _resolve_path(ep_dir, gen_ref["file"])
+                if gen_path.is_file():
+                    try:
+                        gen_data = _load_json(gen_path)
+                        if isinstance(gen_data, dict) and isinstance(gen_data.get("voice"), dict):
+                            raw_rate = gen_data["voice"].get("rate")
+                    except (OSError, ValueError):
+                        pass
+        if isinstance(ep_dir, Path) and isinstance(nar.get("script_file"), str) and nar["script_file"].strip():
+            script_path = _resolve_path(ep_dir, nar["script_file"])
+            if script_path.is_file():
+                try:
+                    script_source_text = script_path.read_text(encoding="utf-8")
+                except (OSError, UnicodeError):
+                    pass
+
+    if raw_rate is not None:
+        m_rate = PCT_RATE_RE.match(str(raw_rate))
+        if m_rate and abs(float(m_rate.group(1))) > max_abs_rate_pct:
+            flags.append(
+                {
+                    "code": "tts_rate_warping",
+                    "edition": edition,
+                    "measured_rate": str(raw_rate).strip(),
+                    "max_abs_pct": max_abs_rate_pct,
+                }
+            )
+
+    if isinstance(script_source_text, str) and script_source_text.strip():
+        ai_reasons = []
+        if edition == "zh" and PROMPT_COLON_RE.search(script_source_text):
+            ai_reasons.append("prompt_header_colon")
+        blocks = [b.strip() for b in re.split(r"\r?\n\s*\r?\n", script_source_text) if b.strip()]
+        if len(blocks) >= 8 and sum(1 for b in blocks if len(b) <= 95) / len(blocks) >= 0.7:
+            ai_reasons.append(f"per_shot_paragraph_splitting:{len(blocks)}_blocks")
+        if ai_reasons:
+            flags.append(
+                {
+                    "code": "script_ai_tone_markers",
+                    "edition": edition,
+                    "reasons": ai_reasons,
                 }
             )
 

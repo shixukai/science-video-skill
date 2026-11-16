@@ -412,7 +412,10 @@
         160
       ],
       "min_observation_hold_s": 0.8,
-      "min_observation_hold_ratio": 0.3
+      "min_observation_hold_ratio": 0.15,
+      "max_tts_rate_abs_pct": 6.0,
+      "long_empty_wait_s": 1.45,
+      "max_long_empty_wait_ratio": 0.4
     },
     "caption": {
       "max_sync_offset_s": 0.35,

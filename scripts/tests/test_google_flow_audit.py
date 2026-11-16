@@ -286,6 +286,44 @@ class GoogleFlowAuditTests(unittest.TestCase):
         rate_flags = [f for f in data_rush["flags"] if f.get("code") == "speech_rate_out_of_range"]
         self.assertEqual({f["edition"] for f in rate_flags}, {"zh", "en"})
 
+    def test_anti_ai_voice_warping_chopped_pauses_and_script_markers(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        # Write clean 3-paragraph script for EN and bad script + warped rate + 5/6 long holds for ZH
+        bad_script = self.root / "bad_zh.txt"
+        bad_script.write_text(
+            "第一步靠慢消化：袋熊啃干草。\n\n" + "\n\n".join(f"第{i}镜头只有短短一句话。" for i in range(2, 11)),
+            encoding="utf-8",
+        )
+        gen_rec = self.root / "bad_gen.json"
+        write_json(gen_rec, {"voice": {"rate": "-14%"}})
+        ep_zh_data["narration"]["script_file"] = "bad_zh.txt"
+        ep_zh_data["narration"]["generation_record"] = {"file": "bad_gen.json"}
+        ep_zh_data["shots"] = [
+            {"id": f"SH0{i}", "duration_s": 5.5, "observation_hold_s": 1.7 if i <= 5 else 0.3}
+            for i in range(1, 7)
+        ]
+        write_json(ep_zh, ep_zh_data)
+
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+        ep_en_data["shots"] = [
+            {"id": f"SH0{i}", "duration_s": 5.5, "observation_hold_s": 0.9 if i == 1 else 0.3}
+            for i in range(1, 7)
+        ]
+        write_json(ep_en, ep_en_data)
+
+        rep = self.root / "report_ai_tone.json"
+        code, data, _ = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep),
+        ])
+        self.assertEqual(code, 1)
+        codes = set(data["summary"]["flag_codes"])
+        self.assertIn("tts_rate_warping", codes)
+        self.assertIn("mechanical_chopped_pauses", codes)
+        self.assertIn("script_ai_tone_markers", codes)
+
 
 if __name__ == "__main__":
     unittest.main()
