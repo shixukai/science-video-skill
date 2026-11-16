@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.27; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.28; the Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
 - **Google Flow cloud production.** Generate and process all video, voiceover/narration, and `Scenes` edits directly inside Google Flow (`>= 1440×900` desktop viewport, `1080p Upscaled` single-clip staging, native `1280×720` cloud `Scenes` export, `24 fps` CFR cadence, serial queue ledger, full `3–5` chapter depth, anti-AI-tone spoken screening) with zero local media resources, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](references/google-flow-production.md).
