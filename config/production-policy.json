@@ -89,10 +89,10 @@
       "priority": "Whole-final-mix defaults for new or revised exports, measured after music/effects; separate from audio.mix_preset narration-master targets. Preserve valid accepted mixes and record explicit commissioned exceptions; parameters do not establish listening approval."
     },
     "speech_cjk_per_minute": [
-      220,
-      270
+      180,
+      240
     ],
-    "opening_speech_max_cjk_per_minute": 245,
+    "opening_speech_max_cjk_per_minute": 235,
     "caption_chars_per_line": [
       12,
       14
@@ -404,15 +404,15 @@
     },
     "speech": {
       "cjk_chars_per_min": [
-        210,
-        270
+        175,
+        240
       ],
       "en_words_per_min": [
-        130,
-        175
+        115,
+        160
       ],
-      "min_observation_hold_s": 0.6,
-      "min_observation_hold_ratio": 0.2
+      "min_observation_hold_s": 0.8,
+      "min_observation_hold_ratio": 0.3
     },
     "caption": {
       "max_sync_offset_s": 0.35,

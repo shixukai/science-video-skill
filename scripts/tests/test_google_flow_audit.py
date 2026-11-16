@@ -92,25 +92,25 @@ class GoogleFlowAuditTests(unittest.TestCase):
             newline="\n",
         )
 
-        # ~72 CJK chars in 18s = 240 chars/min; ~44 EN words in 18s = ~146.7 wpm.
-        zh_text = "玻璃假体里的透明液体在稳定向前流动，随着底部持续升温，膨胀压力稳步上升并把内部阀门平稳顶开，最后冷却收缩使阀门再次完全回落关闭。"
+        # ~54 CJK chars over ~15.5s active cue span = ~209 chars/min; ~36 EN words over ~15.4s active cue span = ~140 wpm.
+        zh_text = "玻璃假体里的液体在稳定流动，随着底部持续升温，压力稳步上升并顶开内部阀门，随后冷却使阀门重新完全闭合。"
         en_text = (
-            "Transparent fluid inside the clear glass phantom moves steadily forward through the channel. "
-            "As heat builds from below, rising internal pressure lifts the valve smoothly open by one full millimeter. "
-            "Once cooling returns the liquid back to rest, the valve settles shut cleanly."
+            "Fluid inside the clear phantom moves steadily forward through the channel. "
+            "As heat rises from below, internal pressure pushes the valve smoothly open. "
+            "Once the vessel cools back down, the valve settles shut cleanly."
         )
         ep_zh = self.root / "episode.zh.json"
         ep_en = self.root / "episode.en.json"
         common_design = {"production_route": "google_flow", "output": {"width": 1920, "height": 1080, "fps": 24}}
         shots_zh = [
-            {"id": "SH01", "duration_s": 6.0, "observation_hold_s": 0.8},
+            {"id": "SH01", "duration_s": 6.0, "observation_hold_s": 0.9},
             {"id": "SH02", "duration_s": 6.0, "observation_hold_s": 0.9},
-            {"id": "SH03", "duration_s": 6.0, "observation_hold_s": 0.8},
+            {"id": "SH03", "duration_s": 6.0, "observation_hold_s": 0.9},
         ]
         shots_en = [
-            {"id": "SH01", "duration_s": 6.0, "observation_hold_s": 0.8},
+            {"id": "SH01", "duration_s": 6.0, "observation_hold_s": 0.9},
             {"id": "SH02", "duration_s": 6.0, "observation_hold_s": 0.9},
-            {"id": "SH03", "duration_s": 6.0, "observation_hold_s": 0.8},
+            {"id": "SH03", "duration_s": 6.0, "observation_hold_s": 0.9},
         ]
         write_json(ep_zh, {"design": common_design, "narration": {"language": "zh", "text": zh_text}, "shots": shots_zh, "captions": {"file": "captions.zh.srt", "wrap_style": 2, "font_size": 22}})
         write_json(ep_en, {"design": common_design, "narration": {"language": "en", "text": en_text}, "shots": shots_en, "captions": {"file": "captions.en.srt", "wrap_style": 0}})
@@ -240,6 +240,51 @@ class GoogleFlowAuditTests(unittest.TestCase):
             str(report_30),
         ])
         self.assertEqual(code3, 0, f"Expected clean with --allow-fps-conversion, got {data3}")
+
+    def test_calm_vs_rushed_speech_pacing(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        # Calm: ~49 CJK chars over ~15.5s active cues (~189.7 CJK/min), ~32 EN words over ~15.4s (~124.7 WPM), >=30% holds >=0.8s
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+        ep_zh_data["narration"]["text"] = "玻璃假体里面的液体正在慢慢流过，底部持续温和加热后压力顶开内部阀门，等到冷却下来时阀门又稳稳闭合起来了。"
+        ep_en_data["narration"]["text"] = (
+            "Clear liquid inside the glass phantom moves calmly along the channel. "
+            "Rising heat slowly builds internal pressure and pushes the inner valve open. "
+            "Once the vessel cools back down again, the valve settles shut."
+        )
+        # Verify 1 of 3 shots >=0.8s (33.3% >= 30%) passes holds check alongside calm speech rate
+        ep_zh_data["shots"][0]["observation_hold_s"] = 0.4
+        ep_zh_data["shots"][1]["observation_hold_s"] = 0.85
+        ep_zh_data["shots"][2]["observation_hold_s"] = 0.4
+        ep_en_data["shots"][0]["observation_hold_s"] = 0.4
+        ep_en_data["shots"][1]["observation_hold_s"] = 0.85
+        ep_en_data["shots"][2]["observation_hold_s"] = 0.4
+        write_json(ep_zh, ep_zh_data)
+        write_json(ep_en, ep_en_data)
+
+        report_calm = self.root / "report_calm.json"
+        code_calm, data_calm, err_calm = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(report_calm),
+        ])
+        self.assertEqual(code_calm, 0, f"Calm documentary pace should pass cleanly: {err_calm} {data_calm}")
+        self.assertEqual(data_calm["flags"], [])
+
+        # Rushed: ~68 CJK chars (~263 CJK/min > 240) and ~45 EN words (~175 WPM > 160) -> both flagged
+        ep_zh_data["narration"]["text"] = "高" * 68
+        ep_en_data["narration"]["text"] = " ".join(["word"] * 45)
+        write_json(ep_zh, ep_zh_data)
+        write_json(ep_en, ep_en_data)
+        report_rush = self.root / "report_rush.json"
+        code_rush, data_rush, _ = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(report_rush),
+        ])
+        self.assertEqual(code_rush, 1)
+        rate_flags = [f for f in data_rush["flags"] if f.get("code") == "speech_rate_out_of_range"]
+        self.assertEqual({f["edition"] for f in rate_flags}, {"zh", "en"})
 
 
 if __name__ == "__main__":

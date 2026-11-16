@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "5d9df877bfad264d881ee4a9448f2bdd2f2a6fcad21f1351b29e04983cb5debf",
+      "sha256": "a0064881124b561bf67fdaef72fece36f96b1e4bdf3fd29508a8c6c3d0470361",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -164,7 +164,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "aebe6748f3a33b391755817056a4375747927045cc65f3f04fd9f1c83ed9a949",
+      "sha256": "3123aa4cb0eb02c01e2c297972c2be1966b457d192cef7c32e8a88b48386399b",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -391,7 +391,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-direction.md",
-      "sha256": "96af4f940250d66f102062d60a589f554c3ec6f91d0b8229fc52eb7aa95d1636",
+      "sha256": "e01fa9af9489c8ed290e8243d01e25cf00313564fdba9018c0c20a4181c9dd01",
       "anchors": [
         "realistic-direction-honest-clear-told-heard-paced-and-finished",
         "use-this-page-by-stage",

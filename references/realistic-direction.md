@@ -29,7 +29,7 @@ Decide the register before writing the prompt and record it in `shotbook.realism
 | Verified capture (`naked_eye` or `instrument`, medium `authentic_recording`) | This happened, as filmed | The actual footage; crop, speed and grade recorded | Only speed or processing that changes meaning: “这段画面放慢了四倍。” | Generated shots cut in as if they were part of the capture |
 | Reconstruction (`naked_eye`) | This is what it looks like at true size and speed | Photoreal at true scale and real time, physically plausible | None per shot; the episode disclosure applies. Name it a recreation when viewers could take it as a specific record (a named person, place, date or experiment): “我们按实验记录重现了这一幕。” | A specific historical event, person or experiment presented as documentation |
 | Instrument view (`instrument`) | This is what the instrument shows | The instrument's real output (see the next table) | Name the instrument or speed once: “放慢大约三十倍”“这是显微镜下的样子”“热像仪里，越亮越热。” | An instrument view with color, depth, blur or lighting the instrument cannot produce |
-| Model (`not_observable`) | This is an explanation, not a picture of reality | Realistic host plate plus a clearly non-photographic explanation layer, or the existing [per-shot nonrealistic exception](realistic-production.md#declaration-structure-and-validation-scope) | “示意一下”“如果我们能看见水分子……” | Glossy photoreal atoms, electrons, field lines, heat or forces lit and focused as if a camera saw them |
+| Model (`not_observable`) | This is an explanation, not a picture of reality | Realistic host plate plus a clearly non-photographic explanation layer, a warm non-graphic 3D biological cutaway anchored to the host organism, or the existing [per-shot nonrealistic exception](realistic-production.md#declaration-structure-and-validation-scope) | “示意一下”“如果我们能看见水分子……” | Glossy photoreal atoms, electrons, field lines, heat or forces lit and focused as if a camera saw them, or unexplained industrial fixtures substituted while narration names biological organs |
 
 Instrument views keep the look markers of the real instrument:
 
@@ -118,11 +118,11 @@ Use hands, tools, coins, leaves, doors or a person in frame whenever size matter
 
 ### Analogy shots
 
-When an [analogy](production-checkpoints.md#expression-plan-for-each-key-difficulty) becomes its own live-action shot, show only the correspondence that holds, then cut straight back to the real process at the matching position, direction or action.
+When an [analogy](production-checkpoints.md#expression-plan-for-each-key-difficulty) becomes its own live-action shot, show only the correspondence that holds, then cut straight back to the real process at the matching position, direction or action. Internal biological explanations in `Model` register should stay anchored to the host organism's clean anatomical cutaway rather than cutting to unexplained industrial fixtures while narration names biological organs.
 
 ### Probe with a retell
 
-For each section, write the one sentence a non-specialist should be able to repeat after watching it. At G2, compare that sentence with what the cut actually shows, using the existing [understanding probe](quality-acceptance.md#probe-understanding-without-inventing-an-audience-test). If the sentence needs a word the film never showed, repair the section.
+For each section, write the one sentence a non-specialist should be able to repeat after watching it. At G2, compare that sentence with what the cut actually shows, using the existing [understanding probe](quality-acceptance.md#probe-understanding-without-inventing-an-audience-test). Ensure the visual sequence explicitly answers the viewer's most immediate physical counter-question (for example, why a soft circular sphincter stretches around an already-firmed block instead of rounding it back out). If the sentence needs a word or step the film never showed, repair the section.
 
 ## Narrative: build scenes, not shots
 
@@ -230,7 +230,7 @@ Image-to-video clips often begin on the conditioning still and ramp up to speed;
 
 Estimate each shot's length from its narration first, then apply the job's minimum picture time:
 
-1. **Narration time.** At the policy speech rate of 220–270 CJK characters per minute, Mandarin runs at about 4 characters per second; count characters, not words, and measure the actual track once it exists.
+1. **Narration time.** At the policy speech rate of 180–240 CJK characters per minute (185–220 CJK/min on counter-intuitive mechanisms), Mandarin runs at about 3.2–3.8 characters per second; count characters, not words, and measure the actual track once it exists.
 2. **Job minimum.** The table below gives the least picture time a job needs even without words.
 3. **Shot length** is the larger of the two, plus any wordless hold. If narration outruns one shot by far, split it into coverage (for example, ask → insert) rather than holding one clip or slowing it.
 

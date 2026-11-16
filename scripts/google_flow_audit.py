@@ -520,7 +520,7 @@ def _check_speech_and_holds(
             chars = len(CJK_RE.findall(text))
             if chars > 0:
                 rate_val = round(chars / minutes, 1)
-                lo, hi = speech_cfg.get("cjk_chars_per_min", [210, 270])
+                lo, hi = speech_cfg.get("cjk_chars_per_min", [175, 240])
                 if rate_val < lo or rate_val > hi:
                     flags.append(
                         {
@@ -535,7 +535,7 @@ def _check_speech_and_holds(
             words = len(WORD_RE.findall(text))
             if words > 0:
                 rate_val = round(words / minutes, 1)
-                lo, hi = speech_cfg.get("en_words_per_min", [130, 175])
+                lo, hi = speech_cfg.get("en_words_per_min", [115, 160])
                 if rate_val < lo or rate_val > hi:
                     flags.append(
                         {
@@ -547,8 +547,8 @@ def _check_speech_and_holds(
                         }
                     )
 
-    min_hold = float(speech_cfg.get("min_observation_hold_s", 0.6))
-    min_hold_ratio = float(speech_cfg.get("min_observation_hold_ratio", 0.2))
+    min_hold = float(speech_cfg.get("min_observation_hold_s", 0.8))
+    min_hold_ratio = float(speech_cfg.get("min_observation_hold_ratio", 0.3))
     hold_count: int | None = None
     sample_units = 0
     if episode and isinstance(episode.get("shots"), list):
