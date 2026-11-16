@@ -143,10 +143,10 @@ def validate_cover_review(checks):
                     label + " actual export opening and baseline comparison required")
         checks.need(row.get("layout_kind") == "independent_cover_scene", label + " mechanism/slide/capture layout prohibited")
         checks.need(row.get("style") == "detailed_2d_nature" and row.get("title_position") == "upper_left",
-                    label + " current series requires detailed 2D nature and upper-left title")
+                    label + " series editorial subject style and upper-left title required")
         for field in ("subject", "title", "question"):
             checks.need(meaningful(row.get(field)), label + " " + field + " required")
-        checks.need(row.get("prohibited_elements") == [], label + " prohibited arrows/small labels/subtitle capture unresolved")
+        checks.need(row.get("prohibited_elements") == [], label + " unresolved prohibited cover elements, such as a stylized background or subtitle capture")
         preview = obj(row.get("mobile_preview"))
         image_size(checks, preview, label + " mobile preview")
         checks.need(preview.get("file") != reference.get("file"), label + " separate mobile preview required")

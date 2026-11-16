@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "3b07ffe32beb3ed2c3f2549ccd8ed03f81ba94f69040e30d16600e5ba06c7f56",
+      "sha256": "4ca0915938396ab252e920cfc7206b270e241bd2f2208feb644c4db1fb1bcf4a",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -163,7 +163,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "c448270a9574115a490894e5a70f07849846c4737476cdb75eb3e19b6261d5d3",
+      "sha256": "aebe6748f3a33b391755817056a4375747927045cc65f3f04fd9f1c83ed9a949",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -184,6 +184,7 @@
         "visible-text-purposes-and-production-excuses",
         "in-picture-markings-require-specific-consent",
         "design-the-two-cover-ratios-independently",
+        "realistic-backgrounds-for-every-cover",
         "finished-cover-standards-for-engineering-and-manufacturing-topics",
         "production-workflow",
         "actual-cover-image-binding-and-release",

@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.21; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.22; the Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
 - **Google Flow cloud production.** Generate all video and audio in the cloud (`1080p Upscaled` staging, `24 fps` native CFR cadence, serial queue ledger), use Flow for supported post-production and review steps, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](references/google-flow-production.md).
@@ -10,7 +10,7 @@ A science-video production Skill for nature, daily life, engineering and industr
 - **Open with context and a reason to watch.** Work backward from the first body observation; design the opening's final sentence/frame together with the body's first sentence/frame and continuously review through that observation. Topic and route may flow naturally in one sentence; do not split them merely for time fields.
 - **Explain the full requested engineering/manufacturing chain.** Organize input, principle, key processes, result and verification by topic scope. Actual explanation and observation determine duration.
 - **Sample before expanding.** Verify subject, action, voice and joins at actual playback rhythm. Low-frame-rate layout proxies remain internal; the complete film still needs full viewing/listening.
-- **Precision annotation and independent covers.** Distinguish location, direction and range. Arrow heads/shafts are continuous, tips sharp, with no shaft overshoot. Compose each commissioned cover ratio independently and inspect phone thumbnails.
+- **Precision annotation and independent covers.** Distinguish location, direction and range. Arrow heads/shafts are continuous, tips sharp, with no shaft overshoot. Compose each commissioned cover ratio independently with a [realistic background](references/visual-system.md#realistic-backgrounds-for-every-cover) showing the topic's actual setting, and inspect the phone thumbnails.
 - **Repairable, verifiable sound.** Reuse accepted voice, audition opening/difficult phrases, and repair misreads, sluggishness, phrasing and joins by cause. Listen separately to source and final mix.
 - **Current-series original visual provenance.** Use self-generation, scene/animation rendering, self-design or verified authorized user capture. Suitable open-licensed 3D models may be used directly, retaining external authorship/license and actual adaptation records. Third-party finished footage/stills and paper imagery remain research only.
 - **English maintenance language.** Skill instructions, normative references, templates and role definitions use English. Actual Chinese narration/captions/copy examples, language-sensitive fixtures and approved model-input payloads retain their intended language.
