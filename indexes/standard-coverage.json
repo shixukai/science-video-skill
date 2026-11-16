@@ -99,7 +99,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b2cbafc40239d4b1b59c12b379c1776c02ab363d65ecf4f18946b5398ee2b411",
+      "sha256": "284086db5b9b4c62f6192ac7fc36af0d6fdd90423f561320f02e8daeb935cc2b",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -122,6 +122,7 @@
         "platform-topic-selection-and-data-review",
         "export-first-then-reconcile-the-actual-coverage",
         "diagnose-entry-promise-and-payoff-separately",
+        "reconcile-platform-advice-with-dimension-level-evidence",
         "turn-each-useful-review-into-a-next-production-change",
         "completion-definition-for-a-benchmark-and-repeatability",
         "whole-film-coverage-and-expansion-boundaries",
