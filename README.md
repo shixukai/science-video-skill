@@ -1,9 +1,9 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.23; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.26; the Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
-- **Google Flow cloud production.** Generate all video and audio in the cloud (`1080p Upscaled` staging, `24 fps` native CFR cadence, serial queue ledger), use Flow for supported post-production and review steps, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](references/google-flow-production.md).
+- **Google Flow cloud production.** Generate and process all video, voiceover/narration, captions, and edits directly inside Google Flow (`1080p Upscaled` staging, `24 fps` native CFR cadence, serial queue ledger, `Scenes`, built-in Speech/Audio, `Tools`) with zero local media resources, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](references/google-flow-production.md).
 - **Realistic direction craft and audit.** Assign each shot a truth register and verified time scale, write physical shot cards before prompts, layer event-accurate sound, and screen exports with `realistic_audit.py` and `google_flow_audit.py`. See [realistic direction](references/realistic-direction.md).
 - **Final video handoff.** Move accepted videos to the configured NAS release queue and archive each confirmed publication. See [accepted and published video storage](references/production-checkpoints.md#move-accepted-and-published-videos).
 - **Potentially disturbing footage.** Use proportional treatment for blood, exposed organs and injuries while preserving explanatory structure, and review the actual opening, covers and exports. See [visual treatment](references/visual-system.md#handle-potentially-disturbing-imagery).

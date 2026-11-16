@@ -11,6 +11,7 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 SKILL_ROOT = Path(__file__).resolve().parent.parent
 POLICY_PATH = SKILL_ROOT / "config" / "production-policy.json"
@@ -492,6 +493,88 @@ def _check_captions(
     return cues, summary
 
 
+def _is_google_flow_url(location: Any) -> bool:
+    if not isinstance(location, str) or not location.strip():
+        return False
+    try:
+        parsed = urlparse(location.strip())
+    except ValueError:
+        return False
+    if parsed.scheme != "https" or parsed.username:
+        return False
+    return parsed.hostname == "flow.google.com" or (
+        parsed.hostname == "labs.google" and parsed.path.startswith(("/fx/tools/flow", "/flow"))
+    )
+
+
+def _is_google_flow_tool(tool_val: Any) -> bool:
+    if not isinstance(tool_val, str) or not tool_val.strip():
+        return False
+    raw = tool_val.strip()
+    return raw.lower() in ("google_flow", "google flow") or _is_google_flow_url(raw)
+
+
+def _check_flow_origin_purity(
+    episode: dict[str, Any] | None,
+    edition: str,
+    flags: list[dict[str, Any]],
+) -> None:
+    """Flag non-Flow voice generation/processing or local resource workarounds."""
+    if not isinstance(episode, dict):
+        return
+    reasons: list[str] = []
+    design = episode.get("design") if isinstance(episode.get("design"), dict) else {}
+    if design.get("flow_postproduction_gaps"):
+        reasons.append("flow_postproduction_gaps_forbidden")
+    nar = episode.get("narration") if isinstance(episode.get("narration"), dict) else {}
+    exc = nar.get("execution") if isinstance(nar.get("execution"), dict) else {}
+    if exc:
+        mode = exc.get("mode")
+        if mode and mode != "service":
+            reasons.append(f"execution_mode:{mode}")
+        loc = exc.get("location")
+        if isinstance(loc, str) and loc.strip() and not _is_google_flow_url(loc):
+            reasons.append("non_flow_execution_location")
+    ep_dir = episode.get("_dir")
+    if isinstance(ep_dir, Path):
+        gen_ref = nar.get("generation_record")
+        if isinstance(gen_ref, dict) and isinstance(gen_ref.get("file"), str) and gen_ref["file"].strip():
+            gen_path = _resolve_path(ep_dir, gen_ref["file"])
+            if gen_path.is_file():
+                try:
+                    gen_data = _load_json(gen_path)
+                    if isinstance(gen_data, dict):
+                        prov = gen_data.get("provider")
+                        if isinstance(prov, str) and prov.strip() and prov != "Google Flow":
+                            reasons.append(f"non_flow_provider:{prov}")
+                        bk = gen_data.get("backend")
+                        if isinstance(bk, str) and any(t in bk.lower() for t in ("local", "qwen", "edge-tts", "os_tts")):
+                            reasons.append(f"non_flow_backend:{bk}")
+                except (OSError, ValueError):
+                    pass
+        post_ref = nar.get("postprocess_record")
+        if isinstance(post_ref, dict) and isinstance(post_ref.get("file"), str) and post_ref["file"].strip():
+            post_path = _resolve_path(ep_dir, post_ref["file"])
+            if post_path.is_file():
+                try:
+                    post_data = _load_json(post_path)
+                    steps = post_data.get("steps") if isinstance(post_data, dict) else None
+                    if isinstance(steps, list):
+                        for step in steps:
+                            if isinstance(step, dict) and step.get("tool") is not None and not _is_google_flow_tool(step.get("tool")):
+                                reasons.append(f"local_postprocess_tool:{step.get('tool')}")
+                except (OSError, ValueError):
+                    pass
+    if reasons:
+        flags.append(
+            {
+                "code": "non_flow_voice_or_local_resource",
+                "edition": edition,
+                "reasons": reasons,
+            }
+        )
+
+
 def _check_speech_and_holds(
     edition: str,
     episode: dict[str, Any] | None,
@@ -649,6 +732,7 @@ def _check_speech_and_holds(
                 }
             )
 
+    _check_flow_origin_purity(episode, edition, flags)
     return {"edition": edition, "speech_rate": rate_val, "observation_holds": hold_count, "sample_units": sample_units}
 
 

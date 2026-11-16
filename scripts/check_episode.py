@@ -102,74 +102,47 @@ def canonical_sha256(value):
                                     separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
+def _is_google_flow_url(location):
+    if not substantive(location):
+        return False
+    try:
+        service = urlparse(str(location).strip())
+        if service.scheme != "https" or service.username:
+            return False
+        if service.hostname == "flow.google.com":
+            return True
+        return bool(service.hostname == "labs.google" and service.path.startswith(("/fx/tools/flow", "/flow")))
+    except ValueError:
+        return False
+
+
+def _is_google_flow_tool(tool_val):
+    if not substantive(tool_val):
+        return False
+    raw = str(tool_val).strip()
+    return raw.lower() in ("google_flow", "google flow") or _is_google_flow_url(raw)
+
+
 def cloud_voice_execution(execution):
     location = execution.get("location")
     if (execution.get("status") != "confirmed" or execution.get("mode") != "service"
             or not substantive(location) or not substantive(execution.get("confirmation_reference"))):
         return False
-    try:
-        service = urlparse(location)
-        return bool(service.scheme == "https" and service.hostname and not service.username)
-    except ValueError:
-        return False
+    return _is_google_flow_url(location)
 
 
 def check_cloud_voice_generation(generated, need, evidence, label, language):
+    backend = str(generated.get("backend") or "")
+    bad_backend = any(tok in backend.lower() for tok in ("local", "qwen", "edge-tts", "os_tts"))
     need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-         and all(substantive(generated.get(key)) for key in ("backend", "provider", "model_id")),
-         label + " actual cloud synthesis provider/backend/model required")
+         and generated.get("provider") == "Google Flow"
+         and substantive(backend) and not bad_backend
+         and substantive(generated.get("model_id")),
+         label + " actual Google Flow voice synthesis provider/backend/model required")
     voice = generated.get("voice")
     need(isinstance(voice, dict) and language is not None and voice.get("language") == language,
          label + " cloud voice language must match the narration version")
     evidence(generated.get("cloud_evidence"), label + " cloud generation evidence")
-
-
-def is_qwen_blocker_fallback(execution, generated):
-    return (
-        isinstance(execution, dict)
-        and execution.get("mode") == "local_project"
-        and isinstance(generated, dict)
-        and generated.get("provider") == "Qwen"
-        and generated.get("backend") == "local_qwen"
-    )
-
-
-def check_local_qwen_generation(generated, need, evidence, label, language, *, require_blocker_evidence=False):
-    need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-         and generated.get("provider") == "Qwen" and substantive(generated.get("backend"))
-         and substantive(generated.get("model_id")), label + " actual synthesis backend/model required")
-    revision = generated.get("resolved_model_revision")
-    manifest = generated.get("model_manifest_sha256")
-    if revision or manifest:
-        need(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
-             and bool(re.fullmatch(r"[0-9a-f]{64}", str(manifest))),
-             label + " resolved model revision/manifest required when claimed")
-    else:
-        need(substantive(generated.get("model_version_reference")),
-             label + " actual model version reference or unavailable-version evidence required")
-    voice = generated.get("voice")
-    expected_lang = language or "Chinese"
-    need(isinstance(voice, dict) and substantive(voice.get("speaker"))
-         and voice.get("language") == expected_lang and substantive(voice.get("instruct")),
-         label + " current voice configuration changed")
-    if require_blocker_evidence:
-        evidence(generated.get("cloud_tts_blocker_evidence"), label + " cloud TTS blocker evidence")
-
-
-def _peek_local_json(root, ref):
-    if not isinstance(ref, dict):
-        return None
-    name = ref.get("file")
-    if not isinstance(name, str) or not name.strip() or Path(name).is_absolute():
-        return None
-    try:
-        path = (root / name).resolve()
-        if not path.is_relative_to(root) or not path.is_file():
-            return None
-        loaded = json.loads(path.read_text(encoding="utf-8"))
-        return loaded if isinstance(loaded, dict) else None
-    except (OSError, ValueError, RuntimeError):
-        return None
 
 
 def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chinese"):
@@ -295,15 +268,14 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
         infos.append(audio_info(output_path, label))
         sources.append({"segment_id": ident, "file": output_ref.get("file"), "sha256": output_ref.get("sha256")})
         generated = read_record(segment.get("generation_record"), label + " generation record")
-        qwen_fallback = cloud and is_qwen_blocker_fallback(execution, generated)
-        if cloud and not qwen_fallback:
+        if cloud:
             check_cloud_voice_generation(generated, need, evidence, label, cloud_language)
         else:
             need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
                  and generated.get("provider") == "Qwen" and text(generated.get("backend"))
                  and text(generated.get("model_id")), label + " actual Qwen generation record required")
         actual_execution = obj(generated.get("execution"))
-        confirmed_execution = (cloud_voice_execution(execution) if (cloud and not qwen_fallback) else
+        confirmed_execution = (cloud_voice_execution(execution) if cloud else
                                execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service"))
         need(confirmed_execution
              and all(text(execution.get(k)) and actual_execution.get(k) == execution.get(k)
@@ -313,19 +285,17 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
         voice = obj(generated.get("voice"))
         effective = generated.get("effective_generation_params")
         runtime = generated.get("load_parameters") if execution.get("mode") == "local_project" else generated.get("runtime_parameters")
-        if not cloud or qwen_fallback:
+        if not cloud:
             if revision or model_hash:
                 need(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
                      and bool(re.fullmatch(r"[0-9a-f]{64}", str(model_hash))), label + " model version evidence invalid")
             else:
                 need(text(generated.get("model_version_reference")), label + " model version evidence required")
-            need(text(voice.get("speaker")) and (True if cloud else voice.get("speaker") == "Serena")
-                 and voice.get("language") == (cloud_language if qwen_fallback else "Chinese")
+            need(text(voice.get("speaker")) and voice.get("speaker") == "Serena"
+                 and voice.get("language") == "Chinese"
                  and text(voice.get("instruct")), label + " actual voice and instruct required")
             need(isinstance(effective, dict) and bool(effective), label + " actual effective generation parameters required")
             need(isinstance(runtime, dict) and bool(runtime), label + " actual runtime parameters required")
-            if qwen_fallback:
-                evidence(generated.get("cloud_tts_blocker_evidence"), label + " cloud TTS blocker evidence")
         config = {key: generated.get(key) for key in ("backend", "provider", "model_id", "resolved_model_revision",
                   "model_manifest_sha256", "model_version_reference", "voice", "effective_generation_params",
                   "actual_device", "environment")}
@@ -358,6 +328,9 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
     need(isinstance(steps, list) and bool(steps)
          and all(isinstance(s, dict) and text(s.get("tool")) and text(s.get("version")) and bool(s.get("parameters"))
                  for s in steps), "postprocess actual tool/version/parameters required")
+    if cloud and isinstance(steps, list):
+        need(all(_is_google_flow_tool(s.get("tool")) for s in steps if isinstance(s, dict)),
+             "narration: Google Flow voice processing must run in Google Flow without local audio tools")
     assembly_ref = obj(post.get("output"))
     assembly_path = evidence(assembly_ref, "assembled output")
     assembly_info = audio_info(assembly_path, "assembled output")
@@ -376,6 +349,9 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
                       and isinstance(master_steps[0], dict)
                       and text(master_steps[0].get("tool")) and text(master_steps[0].get("version")))
         need(valid_step, "whole-track master requires one actual gain/resample step")
+        if cloud and valid_step:
+            need(_is_google_flow_tool(master_steps[0].get("tool")),
+                 "narration: Google Flow voice processing must run in Google Flow without local audio tools")
         params = obj(master_steps[0].get("parameters")) if valid_step else {}
         rate = params.get("output_sample_rate_hz")
         need(params.get("processing_mode") == "whole_track_linear_gain" and number(params.get("gain_db"))
@@ -768,6 +744,9 @@ def check(data, root, stage, *, stored_video=None):
         narration = {}
     design = data.get("design")
     cloud_narration = isinstance(design, dict) and design.get("production_route") == "google_flow"
+    if cloud_narration:
+        require(not design.get("flow_postproduction_gaps"),
+                "design: Google Flow route forbids local postproduction gap workarounds; generate and process all video and audio in Google Flow")
     ready = narration.get("status") == "ready"
     language = narration_language(data)
     language_requirement = "Chinese (zh or zh-*) or English (en or en-*) required for Google Flow" if cloud_narration else "Chinese language (zh or zh-*) required"
@@ -784,18 +763,9 @@ def check(data, root, stage, *, stored_video=None):
     reused = isinstance(reuse, dict) and reuse.get("status") == "previously_accepted"
     execution = narration.get("execution", {})
     execution = execution if isinstance(execution, dict) else {}
-    peeked_single = _peek_local_json(root, narration.get("generation_record"))
-    single_qwen_fallback = cloud_narration and is_qwen_blocker_fallback(execution, peeked_single)
     if cloud_narration and (ready or complete):
-        require(voice_type == "synthetic", "narration: the Google Flow route requires cloud-generated voiceover")
-        if single_qwen_fallback:
-            require(execution.get("status") == "confirmed"
-                    and execution.get("mode") == "local_project"
-                    and nonempty(execution.get("location"))
-                    and nonempty(execution.get("confirmation_reference")),
-                    "narration: confirmed Qwen execution location/reference required")
-        else:
-            require(cloud_voice_execution(execution), "narration: confirmed cloud service location/reference required")
+        require(voice_type == "synthetic", "narration: the Google Flow route requires Google Flow-generated voiceover")
+        require(cloud_voice_execution(execution), "narration: confirmed cloud service location/reference required")
     elif voice_type == "synthetic" and ready and not reused:
         require(execution.get("status") == "confirmed"
                 and execution.get("mode") in ("local_project", "service")
@@ -830,24 +800,31 @@ def check(data, root, stage, *, stored_video=None):
                         require(isinstance(generated, dict), "narration: malformed generation record")
                         if not isinstance(generated, dict):
                             generated = {}
-                        qwen_fallback = cloud_narration and is_qwen_blocker_fallback(execution, generated)
-                        if cloud_narration and not qwen_fallback:
+                        if cloud_narration:
                             check_cloud_voice_generation(generated, require, hashed_file, "narration:", language)
                         else:
-                            check_local_qwen_generation(
-                                generated, require, hashed_file, "narration:",
-                                language if qwen_fallback else "Chinese",
-                                require_blocker_evidence=qwen_fallback,
-                            )
-                            if not cloud_narration:
-                                voice = generated.get("voice", {})
-                                require(isinstance(voice, dict) and voice.get("speaker") == "Serena",
-                                        "narration: current voice configuration changed")
+                            require(generated.get("status") == "generated" and nonempty(generated.get("backend"))
+                                    and generated.get("provider") == "Qwen"
+                                    and nonempty(generated.get("model_id")), "narration: actual synthesis backend/model required")
                         actual_execution = generated.get("execution", {})
                         require(isinstance(actual_execution, dict)
                                 and all(actual_execution.get(k) == execution.get(k)
                                         for k in ("status", "mode", "location", "confirmation_reference")),
                                 "narration: generation execution differs from confirmed location")
+                        if not cloud_narration:
+                            revision = generated.get("resolved_model_revision")
+                            manifest = generated.get("model_manifest_sha256")
+                            if revision or manifest:
+                                require(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
+                                        and bool(re.fullmatch(r"[0-9a-f]{64}", str(manifest))),
+                                        "narration: resolved model revision/manifest required when claimed")
+                            else:
+                                require(nonempty(generated.get("model_version_reference")),
+                                        "narration: actual model version reference or unavailable-version evidence required")
+                            voice = generated.get("voice", {})
+                            require(isinstance(voice, dict) and voice.get("speaker") == "Serena"
+                                    and voice.get("language") == "Chinese",
+                                    "narration: current voice configuration changed")
                         source = generated.get("input", {})
                         require(isinstance(source, dict) and source.get("sha256") == narration.get("script_sha256")
                                 and nonempty(narration.get("script_sha256")), "narration: generation input differs from current script")
@@ -861,10 +838,14 @@ def check(data, root, stage, *, stored_video=None):
                             if post_file:
                                 require(file_sha256(post_file) == post_ref.get("sha256"), "narration: stale postprocess record hash")
                                 post = json.loads(post_file.read_text(encoding="utf-8"))
-                                require(isinstance(post, dict) and post.get("status") == "processed"
-                                        and isinstance(post.get("source"), dict) and post["source"].get("sha256") == output.get("sha256")
-                                        and isinstance(post.get("output"), dict) and post["output"].get("sha256") == narration.get("audio_sha256")
-                                        and isinstance(post.get("steps"), list) and bool(post["steps"]), "narration: postprocess source/output/steps must bind actual audio")
+                                valid_post = (isinstance(post, dict) and post.get("status") == "processed"
+                                              and isinstance(post.get("source"), dict) and post["source"].get("sha256") == output.get("sha256")
+                                              and isinstance(post.get("output"), dict) and post["output"].get("sha256") == narration.get("audio_sha256")
+                                              and isinstance(post.get("steps"), list) and bool(post["steps"]))
+                                require(valid_post, "narration: postprocess source/output/steps must bind actual audio")
+                                if cloud_narration and valid_post:
+                                    require(all(_is_google_flow_tool(s.get("tool")) for s in post["steps"] if isinstance(s, dict)),
+                                            "narration: Google Flow voice processing must run in Google Flow without local audio tools")
                         else:
                             require(output.get("sha256") == narration.get("audio_sha256"), "narration: generated output differs from actual audio")
                     except (OSError, ValueError, TypeError) as exc:

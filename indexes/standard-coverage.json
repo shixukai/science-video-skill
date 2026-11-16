@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "95c07300bf2da780c5d573b96c7342442985f8b7fbe70b7fd105f73713300da5",
+      "sha256": "5a554dc4e975b352c5974035adf7b0900d788862461fb9ee3bee24151b158280",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -99,7 +99,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a1e1f4d2c43b91ee80a0c1c956655c03de6f3d25b8ae89d4c6c9f665c50a35ea",
+      "sha256": "b2cbafc40239d4b1b59c12b379c1776c02ab363d65ecf4f18946b5398ee2b411",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -309,7 +309,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "65e61f7ff3c4fc8100186537f80292482445671ca75b06527922708d77dcc225",
+      "sha256": "8aff1f9a00f08c66808eb0c2b2681307b181949c8b6cc8257009db8e767a8921",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -484,7 +484,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "e0ddbb77f18ba21f3a8e573fbea85e06fe74e17da5ee3fb7fd795b39df7f4b43",
+      "sha256": "f9aa117eb01c5d647d077de93bb15dbd213aefccf349626407b2310da298229a",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -530,7 +530,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "d61ceb638fc0eadc09022cc12ee99725f220d231836a916b88100acd2bfc3d7a",
+      "sha256": "28fc4adf8990224badfad90247eb2dfb0cd3999ab4308174b33ae115b0723bd7",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

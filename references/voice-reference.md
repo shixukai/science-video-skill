@@ -1,6 +1,6 @@
 # Narration, voice invocation and actual listening
 
-The default voice setup follows the [series profile](../config/series-profile.json) with Qwen CustomVoice, Serena and Chinese. For [Google Flow production](google-flow-production.md), prepare a cloud-generated narrator master for each of the Chinese and English editions. Apply the spoken edit, continuity, shared processing and listening standards per edition. The Qwen invocation and preset details apply when Qwen is the selected voice backend.
+The default voice setup for local routes follows the [series profile](../config/series-profile.json) with Qwen CustomVoice, Serena and Chinese (using `synthesize_voice.py` and `prepare_voice_master.py`). For [Google Flow production](google-flow-production.md), generate and process Chinese and English voiceovers directly inside Google Flow without local TTS, external non-Flow TTS, or local audio post-production. Apply the spoken edit, anti-AI-tone, continuity, and listening standards per edition on all routes. The Qwen invocation and local mastering details below apply strictly when Qwen is the selected local voice backend.
 
 ## Invocation location and confirmation
 

@@ -324,6 +324,67 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("mechanical_chopped_pauses", codes)
         self.assertIn("script_ai_tone_markers", codes)
 
+    def test_flags_non_flow_voice_or_local_resource(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+
+        # Clean Google Flow voice/processing metadata on EN should pass with zero flags
+        clean_gen_en = self.root / "flow_gen_en.json"
+        write_json(clean_gen_en, {"provider": "Google Flow", "backend": "flow_speech"})
+        clean_post_en = self.root / "flow_post_en.json"
+        write_json(clean_post_en, {"steps": [{"tool": "https://flow.google.com/project/demo"}]})
+        ep_en_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "service",
+            "location": "https://flow.google.com/project/demo",
+        }
+        ep_en_data["narration"]["generation_record"] = {"file": "flow_gen_en.json"}
+        ep_en_data["narration"]["postprocess_record"] = {"file": "flow_post_en.json"}
+        write_json(ep_en, ep_en_data)
+
+        rep_ok = self.root / "report_flow_ok.json"
+        code_ok, data_ok, err_ok = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep_ok),
+        ])
+        self.assertEqual(code_ok, 0, f"Pure Google Flow metadata should pass: {err_ok} {data_ok}")
+        self.assertEqual(data_ok["flags"], [])
+
+        # Non-Flow / local resources on ZH (local_project + edge-tts + flow_postproduction_gaps + ffmpeg) must flag
+        bad_gen_zh = self.root / "bad_gen_zh.json"
+        write_json(bad_gen_zh, {"provider": "Microsoft", "backend": "edge-tts"})
+        bad_post_zh = self.root / "bad_post_zh.json"
+        write_json(bad_post_zh, {"steps": [{"tool": "ffmpeg"}]})
+        ep_zh_data["design"]["flow_postproduction_gaps"] = ["loudnorm"]
+        ep_zh_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "local_project",
+            "location": "https://speech.platform.bing.com/edge/v1",
+        }
+        ep_zh_data["narration"]["generation_record"] = {"file": "bad_gen_zh.json"}
+        ep_zh_data["narration"]["postprocess_record"] = {"file": "bad_post_zh.json"}
+        write_json(ep_zh, ep_zh_data)
+
+        rep_bad = self.root / "report_non_flow.json"
+        code_bad, data_bad, _ = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep_bad),
+        ])
+        self.assertEqual(code_bad, 1)
+        non_flow = [f for f in data_bad["flags"] if f.get("code") == "non_flow_voice_or_local_resource"]
+        self.assertEqual(len(non_flow), 1)
+        self.assertEqual(non_flow[0]["edition"], "zh")
+        reasons = set(non_flow[0]["reasons"])
+        self.assertIn("flow_postproduction_gaps_forbidden", reasons)
+        self.assertIn("execution_mode:local_project", reasons)
+        self.assertIn("non_flow_execution_location", reasons)
+        self.assertIn("non_flow_provider:Microsoft", reasons)
+        self.assertIn("non_flow_backend:edge-tts", reasons)
+        self.assertIn("local_postprocess_tool:ffmpeg", reasons)
+
 
 if __name__ == "__main__":
     unittest.main()

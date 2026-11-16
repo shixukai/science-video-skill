@@ -34,7 +34,7 @@ Under the [original-visual contract](../references/science-and-rights.md#origina
 ## Finished style and main production project
 Record the [production route](../references/tool-routing.md#lock-the-primary-tool-by-final-film-style). Use `design.production_route=google_flow` (with `design.output.fps=24` CFR unless explicitly converted) for commissioned Google Flow work. Map each necessary causal step to shots, spoken explanation and observation time in both languages. Derive shot count and duration from that plan.
 - Current style, commissioned tool, and project/version. Record the engine rationale for controlled 3D and the scope of any mixed styles.
-- Asset provenance, actual generation and assembly evidence. For Google Flow, record the disk-backed prompt ledger, `1080p Upscaled` staged clip probes, cloud video/audio sources, native `48 kHz` audio disposition (`keep foley` vs `mute`), and which post-production steps Flow supported (`design.flow_postproduction_gaps` for any unmet step).
+- Asset provenance, actual generation and assembly evidence. For Google Flow, record the disk-backed prompt ledger, `1080p Upscaled` staged clip probes, Flow video/voiceover/ambience/caption sources and exports (zero local media resources), and native `48 kHz` audio disposition (`keep foley` vs `mute`).
 - For a complete Google Flow film, identify the paired `episode.zh.json` and `episode.en.json` records budgeted across `max(span_zh, span_en)`, common picture sources, clean text-free cover base art with separate `zh`/`en` typography, and each edition's own voice, captions, export, `google_flow_audit.py` report and independent review evidence.
 
 ## Global entry and early sample
@@ -51,7 +51,7 @@ Record the [production route](../references/tool-routing.md#lock-the-primary-too
 - Art-reference index version and actually viewed intervals for this film; not asset-use authorization:
 - Available asset/component index version and used IDs/versions/hashes/rights; missing items:
 - Caption layout baseline, canvas and actual positions. For an existing layout migration/revision, retain revision ID, old/new baselines, applied state, cumulative offset, resolution-rounding and extra local avoidance:
-- Current voice setup, acceptance scope and actual audio hash. Record the designated execution location for Qwen or the preflight-verified authorized cloud narration service for Google Flow (with paired `(spoken_text, caption_text)` alignment, `rate="+0%"` single-pass synthesis and room-tone observation holds), along with the generation and `cloud_evidence` hashes.
+- Current voice setup, acceptance scope and actual audio hash. Record the designated execution location for Qwen on local routes, or the active Google Flow project URL (`https://flow.google.com/project/<id>`) where `google_flow` voiceover and captions are generated and processed without local resources (preserving `1.0×` natural delivery, room-tone observation holds, and `cloud_evidence` hashes).
 
 ## Opening context and viewing reason
 Apply [opening design](../references/viewer-retention-design.md#establish-context-and-a-reason-to-watch-before-explaining) to full new films; chapter/local repairs follow actual scope. Reuse `opening` and action cards, without another approval.

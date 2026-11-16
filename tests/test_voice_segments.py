@@ -186,11 +186,12 @@ class VoiceSegmentTests(unittest.TestCase):
         self.rejects("actual effective")
 
     def configure_cloud_segments(self, language):
-        self.narration["execution"].update(mode="service", location="https://cloud.example.test/project")
+        self.narration["execution"].update(mode="service", location="https://flow.google.com/project/fixture")
+        self.post["steps"][0]["tool"] = "https://flow.google.com/project/fixture"
         for index, generation in enumerate(self.generations):
             for key in ("resolved_model_revision", "model_manifest_sha256", "effective_generation_params", "load_parameters"):
                 generation.pop(key)
-            generation.update(backend="browser", provider="Fixture Cloud", model_id="fixture-model",
+            generation.update(backend="flow_speech", provider="Google Flow", model_id="flow-speech-v1",
                               execution=copy.deepcopy(self.narration["execution"]), voice={"language": language},
                               cloud_evidence=self.write_json(f"cloud-job-{index}.json", {"job": index}))
             self.save_generation(index)
@@ -208,10 +209,10 @@ class VoiceSegmentTests(unittest.TestCase):
         self.assertTrue(any("cloud generation evidence hash stale" in e for e in errors), errors)
 
     def cloud_single_packet(self, language):
-        self.narration["execution"].update(mode="service", location="https://cloud.example.test/project")
+        self.narration["execution"].update(mode="service", location="https://flow.google.com/project/fixture")
         record = {
-            "schema_version": 1, "status": "generated", "backend": "browser", "provider": "Fixture Cloud",
-            "model_id": "fixture-model", "execution": copy.deepcopy(self.narration["execution"]),
+            "schema_version": 1, "status": "generated", "backend": "flow_speech", "provider": "Google Flow",
+            "model_id": "flow-speech-v1", "execution": copy.deepcopy(self.narration["execution"]),
             "voice": {"language": language}, "cloud_evidence": self.write_json("job.json", {"job": "fixture"}),
             "input": self.ref("script.txt"), "output": self.ref("assembled.wav"),
         }
@@ -258,46 +259,56 @@ class VoiceSegmentTests(unittest.TestCase):
         errors, _ = checks.check(packet, self.root, "plan")
         self.assertTrue(any(error.startswith("narration:") and "language" in error for error in errors), errors)
 
-    def test_flow_accepts_verified_local_qwen_with_blocker_evidence(self):
+    def test_flow_rejects_local_qwen_external_tts_and_local_postprocess(self):
         blocker_ref = self.write_json("cloud-tts-403.json", {"status": 403, "error": "Region not supported"})
-        for lang_code, lang_name, speaker in (("zh", "Chinese", "Serena"), ("en", "English", "Ryan")):
-            with self.subTest(lang=lang_code):
-                (self.root / "script.txt").write_text(
-                    "Continuous conversational test line.\n" if lang_code == "en" else "这是连续自然的测试旁白。\n",
-                    encoding="utf-8",
-                )
-                self.narration.update(
-                    language=lang_code,
-                    script_sha256=self.ref("script.txt")["sha256"],
-                    execution={
-                        "status": "confirmed",
-                        "mode": "local_project",
-                        "location": "D:\\AI-Models\\ComfyUI-20261025\\Qwen3-TTS",
-                        "confirmation_reference": "series voice-baseline.json + cloud 403 blocker",
-                    },
-                )
-                record = {
-                    "schema_version": 1,
-                    "status": "generated",
-                    "backend": "local_qwen",
-                    "provider": "Qwen",
-                    "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-                    "resolved_model_revision": "a" * 40,
-                    "model_manifest_sha256": "b" * 64,
-                    "execution": copy.deepcopy(self.narration["execution"]),
-                    "voice": {"speaker": speaker, "language": lang_name, "instruct": "Calm conversational delivery."},
-                    "cloud_tts_blocker_evidence": blocker_ref,
-                    "input": self.ref("script.txt"),
-                    "output": self.ref("assembled.wav"),
-                }
-                packet = self.packet()
-                packet.setdefault("design", {})["production_route"] = "google_flow"
-                voice = packet["narration"]
-                voice.pop("generation_manifest", None)
-                voice.pop("postprocess_record", None)
-                voice["generation_record"] = self.write_json(f"qwen-flow-{lang_code}.json", record)
-                errors, _ = checks.check(packet, self.root, "plan")
-                self.assertFalse(any(e.startswith("narration:") for e in errors), errors)
+        # (a) Local Qwen project fallback is forbidden on Google Flow
+        packet, record = self.cloud_single_packet("Chinese")
+        qwen_exec = {
+            "status": "confirmed",
+            "mode": "local_project",
+            "location": "D:\\AI-Models\\ComfyUI-20261025\\Qwen3-TTS",
+            "confirmation_reference": "series voice-baseline.json + cloud 403 blocker",
+        }
+        packet["narration"]["execution"] = qwen_exec
+        qwen_rec = {
+            "schema_version": 1, "status": "generated", "backend": "local_qwen", "provider": "Qwen",
+            "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+            "resolved_model_revision": "a" * 40, "model_manifest_sha256": "b" * 64,
+            "execution": copy.deepcopy(qwen_exec),
+            "voice": {"speaker": "Serena", "language": "Chinese", "instruct": "Calm conversational delivery."},
+            "cloud_tts_blocker_evidence": blocker_ref,
+            "input": self.ref("script.txt"), "output": self.ref("assembled.wav"),
+        }
+        packet["narration"]["generation_record"] = self.write_json("qwen-flow-zh.json", qwen_rec)
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertTrue(any("confirmed cloud service location/reference required" in e for e in errors), errors)
+
+        # (b) External non-Flow TTS service (e.g. Microsoft edge-tts) is rejected
+        packet, record = self.cloud_single_packet("Chinese")
+        packet["narration"]["execution"]["location"] = "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1"
+        record["execution"]["location"] = packet["narration"]["execution"]["location"]
+        record.update(provider="Microsoft", backend="edge-tts")
+        packet["narration"]["generation_record"] = self.write_json("edge-flow.json", record)
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertIn("narration: confirmed cloud service location/reference required", errors)
+        self.assertTrue(any("Google Flow voice synthesis" in e for e in errors), errors)
+
+        # (c) Local FFmpeg postprocess step on Google Flow is rejected
+        packet, _ = self.cloud_single_packet("Chinese")
+        post = {
+            "schema_version": 1, "status": "processed",
+            "source": self.ref("assembled.wav"), "output": self.ref("assembled.wav"),
+            "steps": [{"tool": "ffmpeg", "version": "7.0", "parameters": {"action": "loudnorm"}}],
+        }
+        packet["narration"]["postprocess_record"] = self.write_json("local-post.json", post)
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertTrue(any("must run in Google Flow without local audio tools" in e for e in errors), errors)
+
+        # (d) design.flow_postproduction_gaps workaround is forbidden
+        packet, _ = self.cloud_single_packet("Chinese")
+        packet["design"]["flow_postproduction_gaps"] = ["loudnorm"]
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertTrue(any("forbids local postproduction gap workarounds" in e for e in errors), errors)
 
     def test_flow_ordered_segments_bind_the_english_variant_language(self):
         inputs = ("First, observe the motion.\n\n", "Then, notice what changes.\n")
