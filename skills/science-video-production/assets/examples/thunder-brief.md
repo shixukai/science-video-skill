@@ -1,23 +1,19 @@
-<a id="雷声声源条件式研究与制作示例"></a>
 # Thunder Sound Source: Conditional Research and Production Example
 
-Use only when the episode concerns the source of thunder. Select MoneyPrinterTurbo or Blender by current finished style. This is an explanation plan awaiting production; sources, assets, audio and actual sound/picture still need verification for this episode. Reuse a matching existing track first.
+Use only when the episode concerns the source of thunder. Select the primary route (MoneyPrinterTurbo, Blender/vork, or Google Flow when commissioned) by current finished style. This is an explanation plan awaiting production; sources, assets, audio and actual sound/picture still need verification for this episode. Reuse a matching existing track first.
 
-<a id="问题与科学边界"></a>
 ## Question and scientific limits
 
 For adults without specialist training, the main question is “雷声为什么产生”. The causal chain is rapid heating of surrounding air by the discharge channel → rapid expansion and compression of neighboring regions → outward shock-wave propagation → audible thunder. Before use, verify [NOAA's sound-source explanation](https://www.noaa.gov/jetstream/lightning/sound-of-thunder) and its scope. This is neither a fluid simulation nor a precise numerical model.
 
 Do not expand into cloud charge separation, all lightning types, every cause of rolling thunder or distance estimates. Prohibit colliding clouds as the sound source, swelling individual air molecules, one glowing sphere/air parcel flying from channel to ear, actually visible colored ripples in air, or instructional slow motion presented as real speed. Random decorative particles cannot replace interacting continuous air regions.
 
-<a id="口播与可见任务"></a>
 ## Narration and visible tasks
 
 First establish recognizable lightning/thunder context, with sound-picture timing supported by science. The opening's final sentence can be “闪电划过时，周围的空气会被迅速加热”; its last frame locates that region. The body begins “受热的空气猛烈膨胀，向外挤压周围的空气”, entering a close-up of the same local region with a spatial anchor. Explain rapid heating, local expansion, adjacent compression and outward transfer of compression, then return to the original scene to answer the sound-source question. Duration follows actual explanation needs; do not fix 60 seconds and invent timestamps afterward.
 
 Explain schematic encoding/time scaling from the first slowed instructional view or invisible-state color encoding, not halfway through narration. Use picture text only for necessary air/heated/compressed-region location under the applicable medium's rules; three successive words cannot replace the process, and do not copy the entire narration into the picture.
 
-<a id="连续分镜与动作卡"></a>
 ## Continuous shots and action cards
 
 1. Establish lightning/thunder context in the chosen style and locate the channel. For actual footage, verify original provenance under the source contract; identify the role of simulation. Thunder effects are not original observation; retain necessary sound captions and avoid repeated intense flashes.
@@ -28,7 +24,6 @@ Explain schematic encoding/time scaling from the first slowed instructional view
 
 Shots may merge with actual narration; do not enforce a fixed count. The core action card records one continuous air region and its neighbors, a clear initial state, heating trigger, local expansion → adjacent compression → outward propagation key states, path/rate/observation pauses and the causal understanding. Retain only meaningful related changes, without facial expressions or spring rebounds. Narration must not already discuss propagation while adjacent compression remains unseen.
 
-<a id="条件性风格试验与验收"></a>
 ## Conditional style experiment and acceptance
 
 Only when exploring a new style, compare two approaches with the same facts, objects, soundtrack, canvas and causal chain, each with deliberately designed silhouette, material, key states and continuous action; changing filters is insufficient. Preserve an already settled style within its approval scope; a new mechanism still needs three-scale and actual sound-picture representative-sequence validation.

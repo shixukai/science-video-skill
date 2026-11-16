@@ -37,7 +37,6 @@ Keep the accepted narration and editable text/annotation source separate from th
 
 Use the existing editor or FFmpeg adapter to combine scene picture, matching 3D text passes, delivery-size 2D captions, narration and sound. Preserve linear/color-transform handling for EXR rather than treating it as display-ready PNG. A 2D caption correction can reuse verified picture; a 3D text correction rerenders the affected text geometry/material pass and any changed receiving shadows/reflections or occlusion dependencies, reusing unaffected beauty frames. A voice edit reuses picture when timing still matches. New timing, camera, geometry or visibility can change dependent ranges. Verify the recomposed result and applicable audiovisual scope through the existing phase entry; frame reuse is not automatic review reuse.
 
-<a id="可选复用光照分组而非每次重渲"></a>
 ### Optionally reuse light groups instead of rerendering every adjustment
 
 When repeated key/fill balancing is genuinely needed and the project already has usable Light Groups/separate lighting passes, rebalance gains locally in compositing, preserving linear masters, channel mapping, actual output files/hashes and editable composition. Reuse only real passes verified in this environment. Generic PNG/OPEN_EXR frame support does not establish multilayer EXR/Light Groups; do not invent JSON render keys. Authors configure new passes in supported scene/compositing workflows when needed, checking actual output/reuse benefit in existing representative work rather than adding a per-episode pass-test gate.

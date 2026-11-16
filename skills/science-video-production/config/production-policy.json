@@ -113,25 +113,6 @@
         320
       ],
       "note": "Group range160–320ms; tokens split attention160–280 and label180–320. Internal adaptable starts, not physical timing rules."
-    },
-    "texture_opacity": [
-      0.02,
-      0.04
-    ],
-    "platform_inset_trial_px": {
-      "top": 160,
-      "right": 180,
-      "bottom": 360,
-      "left": 72,
-      "status": "legacy_portrait_only_nonofficial; do_not_apply_to_landscape"
-    },
-    "legacy_caption_rect_reference": {
-      "x": 72,
-      "y": 1390,
-      "width": 828,
-      "height": 160,
-      "effective": false,
-      "reason": "current series baseline and actual glyph-tight backing take precedence; rectangle top is not text baseline"
     }
   },
   "flicker": {
@@ -166,17 +147,10 @@
     "documents_and_assets_alone_not_system_completion": true
   },
   "precedence": {
-    "caption_geometry": "series-profile.json captions; does not adopt legacy y=1390",
+    "caption_geometry": "series-profile.json delivery.caption_layout and landscape_captions for new 16:9 work; series-profile.json captions for legacy portrait revisions only",
     "art_direction": "series-profile.json design and approved project board; supplied base assets are reference only",
     "voice": "series-profile.json audio; no forced regeneration or rate adjustment",
     "real_anchor": "series-profile.json medium; verified_authorized_user_capture_only requires verified original capture evidence for selected real footage; when_real_footage_selected also requires an actually used real source; neither forces footage into approved AI/3D; legacy authentic_continuous_video retains an episode-wide anchor; pure_2d still requires the existing scoped exception"
-  },
-  "source_metadata": {
-    "manual_version": "1.0",
-    "visual_version": "0.1.0",
-    "date": "2026-10-07",
-    "package_status": "proposed_not_deployed",
-    "note": "Historical source package status; current adopted policy status is separate."
   },
   "purpose": "Production and publication evidence requirements, not a film approval or authority to act externally.",
   "limitations": [
@@ -349,5 +323,103 @@
     "no_retroactive_source_or_approval_rewriting": true,
     "structural_checks_do_not_prove_authorship": true,
     "licensed_3d_scope": "Native model inputs and necessary licensed bundled dependencies; retain external creator/license, actual local use and file hashes. Finished third-party footage/stills stay research-only."
+  },
+  "realistic_audit": {
+    "owner": "references/realistic-direction.md#measure-the-edit-before-judging-it",
+    "measurement_tool": "scripts/realistic_audit.py",
+    "measurement_is_not_acceptance": true,
+    "required_stages": [],
+    "recommended_stages": [
+      "G2",
+      "G3",
+      "G5"
+    ],
+    "status": "calibratable_screening_defaults",
+    "frame_size": [
+      32,
+      18
+    ],
+    "cut_detection": {
+      "min_diff": 0.1,
+      "local_ratio": 4.0,
+      "window_frames": 15,
+      "min_shot_s": 0.25
+    },
+    "cadence": {
+      "run_min": 4,
+      "tolerance_ratio": 0.12,
+      "min_shot_s": 1.0
+    },
+    "ramp_head": {
+      "window_s": 0.3,
+      "head_ratio": 0.35,
+      "motion_floor": 0.004
+    },
+    "frozen_tail": {
+      "window_s": 0.3,
+      "motion_max": 0.0008
+    },
+    "duplicate": {
+      "dup_eps": 0.0008,
+      "motion_eps": 0.004,
+      "ratio_max": 0.05,
+      "min_count": 3
+    },
+    "grade_jump": {
+      "window_s": 0.3,
+      "luma": 0.12,
+      "chroma": 0.04,
+      "saturation": 0.08
+    },
+    "digital_silence": {
+      "gate_dbfs": -70,
+      "min_s": 0.15
+    },
+    "note": "Internal starting points for screening realistic exports; calibrate against actual reviewed films. Flags trigger review, never acceptance or rejection by themselves."
+  },
+  "google_flow_audit": {
+    "owner": "references/google-flow-production.md#audit-staged-clips-and-paired-editions-before-delivery",
+    "measurement_tool": "scripts/google_flow_audit.py",
+    "measurement_is_not_acceptance": true,
+    "required_stages": [],
+    "recommended_stages": [
+      "G2",
+      "G3",
+      "G5",
+      "delivery"
+    ],
+    "status": "calibratable_screening_defaults",
+    "native_fps": 24,
+    "expected_clip_fps": 24,
+    "min_short_edge_px": 1080,
+    "clip_duration": {
+      "max_overrun_ratio": 1.05,
+      "max_overrun_s": 0.35,
+      "ideal_core_min_s": 6.4,
+      "ideal_core_max_s": 7.5
+    },
+    "bilingual": {
+      "max_duration_divergence_ratio": 0.12,
+      "max_duration_divergence_s": 15.0
+    },
+    "speech": {
+      "cjk_chars_per_min": [
+        210,
+        270
+      ],
+      "en_words_per_min": [
+        130,
+        175
+      ],
+      "min_observation_hold_s": 0.6,
+      "min_observation_hold_ratio": 0.2
+    },
+    "caption": {
+      "max_sync_offset_s": 0.35,
+      "zh_wrap_style": 2,
+      "en_wrap_style": 0,
+      "min_zh_font_size": 20
+    },
+    "note": "Screening parameters grounded in historical Flow raw clips and paired zh/en runs; flags trigger investigation and review, never acceptance or rejection by themselves."
   }
 }

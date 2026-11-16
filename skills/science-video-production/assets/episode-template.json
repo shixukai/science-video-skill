@@ -287,7 +287,9 @@
           "scientific_basis": "",
           "visible_motion": "",
           "motion_kind": "subject_motion",
-          "disclosure": ""
+          "disclosure": "",
+          "observation_level": "",
+          "time_scale": ""
         }
       },
       "modality": ""
@@ -1875,6 +1877,7 @@
     }
   },
   "design": {
+    "production_route": "",
     "style_version": "",
     "tokens_sha256": "",
     "board_reference": "",
@@ -1931,6 +1934,24 @@
         "sha256": ""
       },
       "scientific_constraints": ""
+    },
+    "realistic_direction": {
+      "stance": "",
+      "thread": "",
+      "camera_package": {
+        "lens_by_role": "",
+        "focus_depth_logic": "",
+        "camera_height": "",
+        "frame_rate_and_shutter": "",
+        "support_vocabulary": ""
+      },
+      "scene_preambles": [],
+      "ambience_by_location": [],
+      "grade_reference": {
+        "file": "",
+        "sha256": ""
+      },
+      "audit_reports": []
     },
     "output": {
       "width": 1920,

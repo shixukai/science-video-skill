@@ -1,7 +1,5 @@
-<a id="视频指示信息精密技术标注"></a>
 # Video Guidance Graphics: Precision Technical Annotations
 
-<a id="适用范围与确认"></a>
 ## Scope and Approval
 
 This series uses the approved mature, precise, restrained annotation language: viewers see the object and its change first, then understand the necessary explanation. It applies to object labels, locating leader lines, directional arrows, area emphasis, and dimension indications in science, engineering science, industrial production, and advanced manufacturing videos. It does not change the primary medium or scientific colors; captions, chapter headings, and covers follow their own design standards.
@@ -10,12 +8,11 @@ The approved style may be reused. Make a concrete sample before changing the ent
 
 3D picture permits only necessary single-letter locating/variable markers, made under the [single-letter and spatial rules](spatial-typography.md). Chinese text, English words/abbreviations, numbers/units, and explanatory sentences are all prohibited; making them 3D grants no exemption. Ordinary synchronized captions remain 2D. The short Chinese labels, value text, and text backings below apply only to other media and cannot serve as 3D exceptions. Responsibilities: this page owns annotation design and arrow construction; the [visual system](visual-system.md#text-centering-and-motion) owns general text layout, and [quality acceptance](quality-acceptance.md) owns actual viewing and stage conclusions. Numeric values are maintained only in the [landscape annotation parameters](../assets/style/precision-annotations.tokens.json). The [vector example](../assets/style/leader-and-arrow.svg) is for editing and adaptation and does not replace review of actual output. The historical portrait labels, rounded backplates, and arrow values in `bright-nature.tokens.json` do not override this standard, nor does this standard thereby change caption or cover parameters.
 
-<a id="图形与信息层级"></a>
 ## Graphic and Information Hierarchy
 
 | Element | Production standard |
 | --- | --- |
-| Object labels | Use a consistent sans-serif Chinese font, preferably an existing, legally available Source Han Sans/Noto Sans CJK SC. A system font may be a documented substitute; do not claim pixel equivalence. Use regular or medium weight, avoiding extremely thin lettering. Use high-contrast neutral text colors. State the necessary object/state directly in short phrases and retain scientific terminology. Do not color every label differently, stack paragraphs, or shrink type to fit excess text. |
+| Object labels | Use a consistent sans-serif font matching the edition's language—preferably an existing, legally available Source Han Sans/Noto Sans CJK SC for Chinese or a clean matching sans-serif for English editions. A system font may be a documented substitute; do not claim pixel equivalence. Use regular or medium weight, avoiding extremely thin lettering. Use high-contrast neutral text colors. State the necessary object/state directly in short phrases and retain scientific terminology. Do not color every label differently, stack paragraphs, or shrink type to fit excess text. |
 | Locating leader lines | Use a single stroke of consistent thickness, normally straight or with one simple bend, with a steady segment beside the label. Place the target end precisely on the identified part, using a small solid dot or, when necessary, a small open ring. A thin structure may be indicated at its edge; do not cover it with a large dot. Add no arrowhead when no direction is intended. Lines must not cross, pass through text, or touch other objects along their path that could be mistaken for the target. If ambiguity remains, rearrange, enlarge, or show the information at different times. |
 | Directional arrows | Express only verified motion, force, flow, or causal direction. Do not conflate locating, temporal order, and physical flow. Keep the head and shaft continuous and the tip distinct, using the construction in the next section. Direction, curvature, and path must match the relationship being explained; do not reverse them for compositional convenience. |
 | Area emphasis | Use a restrained color area, local outline, or short bracket following the actual target boundary, retaining material appearance and key detail. Explain thin layers through their boundaries or necessary magnification; do not thicken them for the annotation. Consider a rectangular box only when the target really is a rectangular region and locating it has a real purpose. Avoid unrelated large red boxes, flashing, and luminous halos. |
@@ -23,7 +20,6 @@ The approved style may be reused. Make a concrete sample before changing the ent
 | Color and background | Use dark text/lines on light scenes and near-white text/lines on dark scenes. A small amount of accent color serves the current focus or an explicit variable. Preserve the same variable's identity across shots and do not distinguish variables by color alone. Colors must be distinguishable against the actual local background; do not select them solely from the film's overall light/dark appearance. First choose open space, rearrange, or use a restrained neutral backing fitted closely to the text. Text/leader-line outlines are off by default. Do not compensate with thick strokes, heavy shadows, glass cards, or neon. A dark background, cyan, or gold is not required for a premium appearance. |
 | Hierarchy and density | Prioritize the subject's structure and process, then the current observation target; labels assist. Usually concentrate on one observation task, retaining both sides when comparison requires it. Unfold complex information over time. Do not remove necessary scientific information to meet a fixed count, or use numerous labels to conceal an undersized subject. Apply the existing deletion test to text necessity. |
 
-<a id="箭头尖端与头杆连接"></a>
 ## Arrow Tips and Head–Shaft Joins
 
 The foremost end is defined by the head's single tip. Draw order must not be used to conceal a protruding shaft.
@@ -34,7 +30,6 @@ The foremost end is defined by the head's single tip. Draw order must not be use
 - When using an SVG marker, specify `refX/refY`, coordinate units, viewport, clipping, and shaft endpoint, and inspect the actual transformation. Established components receive no exemption. After scaling, rotation, masking, alpha compositing, animation extremes, and encoding, the tip must remain distinct, the join seamless, and the direction unambiguous.
 - If the tip is too small to distinguish, adjust its size or the composition and export again. A magnified detail, successful geometry test, or correct original SVG does not establish acceptance at the final viewing scale.
 
-<a id="参数尺度与可读性"></a>
 ## Parameters, Scale, and Readability
 
 Read the [landscape annotation parameters](../assets/style/precision-annotations.tokens.json) as a starting point for calibration, and fix the current weight, line width, spacing, and color roles. Read screen-layout weights, font sizes, and line widths only from the parameter file; do not introduce another set of numbers in this text. Determine the world size, thickness, and orientation of 3D spatial letters from the actual camera and final projected readability; do not use pixel values directly as scene units. Scale screen layouts proportionally for 4K at the same aspect ratio. Redesign other aspect ratios rather than swapping old width/height coordinates.
@@ -43,7 +38,6 @@ Retain the actual font and editable text and line layers. Measure glyph bounds b
 
 In addition to native size, inspect a complete frame at 360px width for small-screen readability, calibrated to the actual publication context. If it is unreadable, first reduce text, rearrange, separate information in time, or enlarge the relationship, then adjust font size and line width. A larger preview cannot substitute for this check. In the final encoding, verify that text, lines, dots, and tips remain distinguishable; check text contrast over the actual moving background under the visual system.
 
-<a id="动态与对象绑定"></a>
 ## Motion and Object Binding
 
 1. Set display intervals under [body auxiliary text: use and hold](visual-system.md#body-auxiliary-text-use-and-hold): make the target recognizable first, then provide a complete, stable reading and observation interval. Reveal/exit parameters govern transitions only; they do not count as readable hold time or prescribe shot duration.
@@ -51,7 +45,6 @@ In addition to native size, inspect a complete frame at 360px width for small-sc
 3. Bind the target end to the actual object/feature point. In 3D, the only permitted necessary single-letter markers use real spatial glyphs and reasonable world/object anchors, preserving correct perspective, depth, occlusion, and lighting as the camera moves. They may face the camera but cannot become fixed screen stickers. For 2D annotations over live-action/generated picture, use verified tracking. A label may stay in a stable screen region while its leader line absorbs changes and hysteresis handles avoidance. In every mode, do not ease the target end away from its object or sacrifice actual binding for screen stability.
 4. Promptly hide, rearrange, or rebind when a target becomes occluded, leaves frame, a cut occurs, or its identity changes. If this leaves too little time to read, shorten the explanation or rework the shot. Do not leave a targetless label hanging, or accept a flash merely because it hides correctly. Do not let a line pass through foreground while claiming the target is visible, or lengthen a leader line to conceal lost tracking. Explicit see-through diagrams follow the relevant scientific boundaries. When an arrow's direction changes, its head and shaft must use the same geometry state; separate interpolation must not misalign them.
 
-<a id="实审与记录"></a>
 ## Actual Review and Records
 
 Inspect the light scenes, dark scenes, complex backgrounds, movement, occlusion, and other conditions that actually occur in the current encoded film. View at native size, at small-screen size, and in continuous normal-speed playback. Do not fabricate evidence for absent conditions or create extra fixed test shots. Use the existing [art-direction record](../assets/art-direction-template.md#annotations-and-dynamic-binding) and action cards to record objects/anchors, necessity, text and intervals, symbol semantics, parameter version, and actual observations. Reference the existing in-picture text and visual QA; do not add another approval form.

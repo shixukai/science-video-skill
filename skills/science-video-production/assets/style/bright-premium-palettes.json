@@ -8,7 +8,7 @@
     {
       "id": "LOOK_A",
       "name": "Bright precision workstation",
-      "use_when": "Evidence-based equipment, manufacturing operations, precision mechanisms or assembly environments. Applicable to either realism or Blender without automatically switching tools.",
+      "use_when": "Evidence-based equipment, manufacturing operations, precision mechanisms or assembly environments. Applicable to either realism or controlled 3D (Blender or vork) without automatically switching tools.",
       "palette": [
         {
           "hex": "#E7E2D7",
@@ -27,7 +27,7 @@
           "role": "Use only when the real object already has this paint color or in a necessary self-designed emphasis layer; do not compete with scientific functional colors"
         }
       ],
-      "palette_note": "These are sRGB visual starting points for self-produced environments/design layers, not mandatory scientific-object colors, Blender scene-linear values or a fixed whole-film grade.",
+      "palette_note": "These are sRGB visual starting points for self-produced environments/design layers, not mandatory scientific-object colors, 3D scene-linear shader values or a fixed whole-film grade.",
       "optional_accent": {
         "hex": "#2D6CDF",
         "role": "Small clean cobalt accent on a legitimately designed environment/graphic area; avoid competing with the observation target or existing semantic colors."
@@ -112,7 +112,7 @@
         }
       ],
       "lighting_note": "A broad key light shapes form, local fill reveals interfaces as needed, and light control/reflection surfaces organize curvature. The subject must not become only a bright outline; preserve depth in backgrounds and black materials. No fixed light count, lighting ratio or passing exposure value.",
-      "palette_note": "Optional sRGB display reference for self-produced environments, not a fixed dark background for the whole film, mandatory scientific-material colors or unconverted scene-linear shader values."
+      "palette_note": "Optional sRGB display reference for self-produced environments, not a fixed dark background for the whole film, mandatory scientific-material colors or unconverted 3D scene-linear shader values."
     }
   ]
 }

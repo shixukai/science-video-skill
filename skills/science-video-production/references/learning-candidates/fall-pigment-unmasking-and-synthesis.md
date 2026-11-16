@@ -1,9 +1,7 @@
-<a id="候选学习记录秋叶显色不等于所有色素新生"></a>
 # Candidate Learning Record: Visible Autumn Colors Do Not Mean Every Pigment Is Newly Produced
 
 Status: limited paused-frame observation, complete transcript reading, and source checks on 2026-10-27 UTC. Not continuously watched in full, not actually listened to, and not applied to a film. This is neither a formal standard nor a validated improvement.
 
-<a id="来源与实际观察"></a>
 ## Sources and Actual Observations
 
 PBS North / The Slice, “The Science of Fall Colors”; the page lists 2026-10-19 and 1 minute 31 seconds:
@@ -21,7 +19,6 @@ The assistant's cloud player displayed 1x. The paused positions below were actua
 
 These are discrete visual observations. They do not establish intervening shot order, motion continuity, or audiovisual synchronization. The complete page transcript was also read: its text moves from nutrient recovery to climate effects and then local viewing locations. A transcript cannot count as listening review. Voice, rhythm, opening retention, and cover performance were not evaluated, nor was the full film certified as an “excellent example.”
 
-<a id="科学核对与窄新增价值"></a>
 ## Scientific Checks and Narrow Added Value
 
 U.S. Forest Service, “Why Leaves Change Color,” pages 1–3 of the original government archive:
@@ -35,7 +32,6 @@ This record does not infer pigment concentrations, species, nutrient transport p
 
 Baseline: science-video-skill main 5755421f134a835d9fdec7376372ebf768d92566. The current SKILL already requires scientific grounds, limits on what picture establishes, and actual audiovisual acceptance. Existing candidates cover raindrop imagery, rain-smell interfaces, onions, and optical paths. This candidate does not rewrite general rules. Its addition is a specific untested question in the autumn-leaf case: “unmasking existing constituents” and “producing new constituents” must not be collapsed into one color gradient.
 
-<a id="尚未实施的原创代表段设计"></a>
 ## Unimplemented Original Representative-Segment Design
 
 Consider only under a separate explicit production task with applicable scientific sources. This record does not resume paused or handed-off films or appropriate third-party shots.
@@ -46,7 +42,6 @@ Consider only under a separate explicit production task with applicable scientif
 - Graphics use explicit existing/new-state labels, without unsupported glowing particles or green blocks turning directly into red blocks to fabricate a chemical transformation. Do not depict a universal, obligatory green → yellow → red sequence, or use a fixed number of icons to imply unchanged carotenoids. Clearly identify the microscopic layer as a nonquantitative explanatory diagram; realistic appearance itself is not intracellular observation.
 - Actual duration and narration timing depend on the real track and visible action. Do not invent seconds before they exist or describe tentative narration as an approved voice sample.
 
-<a id="验证边界"></a>
 ## Validation Boundaries
 
 A future independent internal reviewer would continuously watch and listen to actual A/B versions at normal speed, judging whether unmasking and new production are distinguishable, whether all red/yellow leaves seem to share one mechanism, and whether landscape is mistaken for microscopic evidence. Use the current project's existing quality process, without adding real-time audience feedback or new fixed thresholds.

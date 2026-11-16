@@ -1,4 +1,3 @@
-<a id="3d动画制作blender-与-3d-素材复用"></a>
 # 3D animation production: Blender and 3D asset reuse
 
 3D-animation-style videos use **Blender** or agent-selected **[`vork`](tool-routing.md#vork-execution)** for nature, everyday-life, engineering, industrial and manufacturing topics: unless the user explicitly specifies an engine, the agent chooses Blender for multi-part mechanical CAD/mesh topology, boolean/modifier cutaways, non-rigid deformations, armatures, character rigging/lip-sync and `.blend` library reuse, and chooses `vork` (for the full episode or selected shots) when invisible physical fields/waves, thermal/concentration gradients, Slang GPU simulations, custom shaders or clean code-authored parametric/`glTF` studio mechanisms express the phenomenon more directly. Reuse existing projects and 3D assets, register `controlled_3d`, and do not require a video-model trial first. Photorealistic 3D also belongs to this route; AI-generated 3D-looking footage or MoneyPrinterTurbo montage cannot replace controlled 3D rendering. Realistic-style work uses MoneyPrinterTurbo under [style-based routing](tool-routing.md#lock-the-primary-tool-by-final-film-style); engineering topics do not automatically select 3D style.
@@ -7,19 +6,16 @@ Engineering examples check only components applicable to this topic; reuse suppo
 
 Organize the complete engineering explanation under [full chain and duration](topic-contract.md#complete-chains-and-duration-for-engineering-and-manufacturing-topics) before planning whole-object, local and process shots in 3D. Local modeling detail cannot replace explaining upstream/downstream stages, manufacturing or system results.
 
-<a id="仅做资产时的任务范围"></a>
 ## Scope of asset-only tasks
 
 For model, static-preview, retrieval or cataloging commissions alone, deliver the relevant editable asset and inspection/archive results: check source models, scientific structure, connections/orientation, required views and dependencies; check action only when motion is involved. With no audio-track purpose, do not invent narration, a full-episode shot plan or G3. Modeling within a complete video remains intermediate work with subsequent audiovisual production and acceptance obligations.
 
-<a id="先认得出真实对象再解释内部"></a>
 ## Recognize the actual object before explaining its interior
 
 - Research public real-object photographs, sectional views and reliable technical information; first check silhouette, key components, relative scale and spatial relationships. A modern airliner engine cannot be identified by a cylinder and repeated blades alone: retain fan, nacelle, bypass/core-flow relationships as the topic requires before local refinement. When the topic explains an internal mechanism, sub-assembly or component inside a larger vehicle, machine, appliance or installation, make the host system unmistakable in the 0–5 s opening—either via the complete host or via an immediately recognizable functional host space/cabin/bay (such as a driver's cockpit with steering wheel, seat, belt path and pillar)—and bridge in one unbroken single-take move or simultaneous cutaway into the mechanism's real mounting site and relative scale before isolating internals; do not retreat to a simplified distant exterior shell when a functional cabin/bay already establishes clear host orientation at closer scale, and never open on a disembodied studio rig or unrecognizable fragment. Do not mandate the same model, stage count or parts list for every subject.
 - Public product information can guide exterior form; it does not make a self-built model manufacturer-official CAD, a precise maintenance drawing or a validated flow field. Distinguish resemblance, teaching geometry and engineering simulation, keeping sources, rights and applicability limits in [science and asset records](science-and-rights.md).
 - Check necessary structures in whole-object, medium and mechanism close-ups before surface polish. Give pipes, cables and passages real endpoints and interfaces. Distinguish materials through appropriate roughness and reflection response. For metallic mechanisms, controlled broad reflections can reveal curvature, edges and separations; adjust light size and direction so glare does not erase the interfaces being explained. Check these relationships at the target viewing size. Surface detail cannot conceal missing structural connections.
 
-<a id="明亮灯光与材质的实际执行"></a>
 ## Actual execution of bright lighting and materials
 
 First define color roles and foreground/background duties under [professional color and spatial direction](art-direction.md#color-composition-and-space-design-the-viewing-order-first). Achieve the [bright-style standard](visual-system.md#bright-style-and-premium-materials) and applicable [industrial studio target](visual-system.md#industrial-product-studio-material-standard) in the actual camera, closest view and final engine. Use existing scene parameters, editable project and art review; do not add another project-wide experiment round.
@@ -48,8 +44,6 @@ For material spill, dirty spots, seams or wrong scale, first inspect editable no
 4. **Calibrate color through final output.** Record actual OCIO configuration, working/texture spaces, View Transform, Look, Exposure and encoding conversion. Distinguish color textures from roughness/normal/data maps. Linear EXR is not display-mapped PNG: avoid omitted/duplicate display transforms. In verified supported environments, applicable transforms such as AgX may protect highlights before target value calibration. Changing Look or globally raising exposure does not repair a film. Preserve scientific color meaning; check SDR/Rec.709 conversion and pixel ranges rather than just tagging color. See [Blender color management](https://docs.blender.org/manual/en/4.4/render/color_management.html) for linear/display workflows.
 5. **Deliver detail in motion.** Reuse existing representative shots at camera/subject rotation, darkest facing directions, strong reflection angles and transparent overlap. Under established light/reflection fields, highlights move smoothly along curves with viewpoint and surface orientation, continually explaining shape/material differences. Texture remains surface-attached; reflections must not stick to texture/screen coordinates or flicker/jump. Do not reset material, reflection field or exposure each frame to chase highlights. Review continuous footage for realism; stills cannot pass motion. Choose final engine/settings supporting required reflection, transmission and indirect light. Denoising must not erase fine lines/seams; sampling, filtering and encoding must not smear perforations, sheet/layer thickness and thin-edge highlights or create shimmer, breaks or plastic appearance. Compare masters/final encode to locate damage, then repair the relevant stage. Use local GPU, caches and batching for throughput without preemptively sacrificing materials/light.
 
-
-<a id="blender-场景背景与空间完成度"></a>
 ## Blender backgrounds and spatial completion
 
 The background is part of the shot's space, purpose and observation conditions and needs the subject's finished standard. Do not default an entire video to objects floating over the same solid/gradient, infinite platform or generic dark studio while only camera, background color and subtitles change. In existing scene cards choose required environment, reference basis, reusable assets and whole-to-local entry; “premium” is not a producible scene plan.
@@ -63,7 +57,6 @@ The background is part of the shot's space, purpose and observation conditions a
 
 Examples: Establish machine scale in an evidenced installation/test setting before a location-preserving structural close-up. Connect manufacturing stages through appropriate workstations and real input/output, then reduce periphery in local cuts. For microscopic material, establish macroscopic application/carrier, then explain in bounded material space. These are methods, not mandatory openings/facility lists.
 
-<a id="人物绑定动捕与口型"></a>
 ## Character rigging, motion capture and lip sync
 
 Enable this branch when a character's performance helps demonstrate an operation, interaction or explanation. Reuse a suitable local character, rig, actions and facial controls before building new ones. Choose the required output first: editable 3D performance belongs in Blender; generated face-video postprocessing produces a video layer. Follow the selected [production route](tool-routing.md#lock-the-primary-tool-by-final-film-style) and the actual [source/usage requirements](science-and-rights.md); an available tool or animation library does not expand the allowed asset origins or external uploads.
@@ -74,7 +67,6 @@ Enable this branch when a character's performance helps demonstrate an operation
 4. **Animate speech from the approved audio.** Reuse the current [voice track](voice-reference.md), then map audio-relative mouth cues to facial bones/visemes or relative shape keys at the project fps and offset. Use a language-compatible aligner or manually corrected cues; Chinese characters/subtitle timings are not one-to-one mouth shapes. Keep curves editable, blend neighboring mouth shapes, preserve pauses/closed lips, and combine jaw, lips, expression and gaze without double deformation. Audio or edit changes invalidate the affected alignment, not automatically the entire rig.
 5. **Test the real difficulty.** Use the existing G2/G3 sample to cover the planned close-up and difficult turn, occlusion, grasp/release or speech transition. Check deformation/contact in motion, watch normal-speed with the actual audio for synchronization, and inspect mouth/teeth/tongue clipping, identity, edge stability and silent sections. An idle pose, a walk cycle or one frontal talking still cannot validate these harder uses. Record actual observations and unreviewed ranges in the existing QA; tool completion is not performance approval.
 
-<a id="按需选择人物工具"></a>
 ### Select character tools as needed
 
 These are capability candidates, not preinstalled or production-validated claims. Select only what the shot needs, verify the current release and loaded dependencies, and run its representative use before expansion.
@@ -87,8 +79,6 @@ These are capability candidates, not preinstalled or production-validated claims
 | Rough audio-driven mouth cues | [Rhubarb](https://github.com/DanielSWolf/rhubarb-lip-sync#recognizers) → timestamped cues → character-specific mouth shapes | Default recognizer is English; language-independent `phonetic` can be tried for Chinese but has lower accuracy. Validate and correct it instead of claiming Chinese-specific alignment. |
 | Face-video animation or lip redraw | [LivePortrait](https://github.com/KlingAIResearch/LivePortrait#3-inference-) for image/video + driving performance; [LatentSync](https://github.com/bytedance/LatentSync) for video + audio | Outputs generated video, not an editable Blender facial rig or viseme curves. Record the generated layer and inspect identity, mouth, occlusions and temporal continuity. Check the exact weights/detector terms, not only the code license: bundled InsightFace model restrictions and version-specific capacity can affect use. |
 
-
-<a id="同一几何与方位基准"></a>
 ## Shared geometry and orientation baseline
 
 - Preserve one geometry source for physical parts reused across assembly, extraction, cutaway and ending views; reference the same asset/build functions rather than independently rebuilding lookalike substitutes.
@@ -99,7 +89,6 @@ These are capability candidates, not preinstalled or production-validated claims
 - For close-up mechanisms, cutaways and flexible straps/ribbons/cables, pair mesh-interpenetration checks (such as `BVHTree.overlap` on visible evaluated meshes across representative rest, mid-travel and locked/actuated poses) with **bounded mating-proximity checks** (`0 < clearance <= max_contact_gap`) and **ribbon frame continuity checks**. Never satisfy `overlap == 0` by pulling connected parts apart into empty air: spring hook eyes wrap concentrically around anchor pins, latched connectors/tongues seat inside slotted receptacles, cam/ball/lever followers maintain visible tangential contact along open cutaway ramps and intermediate linkages, pivoted pedals/arms keep uniform parent scale (`(1, 1, 1)`) so non-uniform scaling never crushes child linkages into slivers, and wound rolls/spools rotate coherently with attached flanges and peeling straps. Route flexible ribbons/straps in consistent world/parent coordinates (keeping position transforms distinct from normalized direction vectors) through every intermediate guide and latch without 180-degree normal flips or floating loops that bypass anchors, and inspect full-resolution preflight stills of both close-up mechanism interfaces and whole-carrier routing before batch rendering.
 - Illustrative orange/blue denotes only explained variables; streamlines still require real coordinate support. Distinguish stationary-frame absolute flow and blade-frame relative flow; do not join them without transformation as one “validated” path. Curves, particles and colors are not CFD/measurement evidence.
 
-<a id="从整体连续进入局部"></a>
 ## Move continuously from the whole into the local view
 
 - Locate the target within the whole before moving closer. When exposing internals, choose a local cutaway, shell removal or selective transparency that reveals the needed region while retaining enough silhouette, adjacent structure and interfaces to recognize its original position. Keep relevant wall thickness and cut edges readable. Preserve recognizable features across shots; a matching name, hard cut or dissolve alone does not establish component identity.
@@ -108,7 +97,6 @@ These are capability candidates, not preinstalled or production-validated claims
 - Check obstruction roles for local inspection. Handle supports/fasteners dependent on the removed shell together in applicable display groups; do not leave thick unattached rods obscuring the subject. Save inspection states in named views/layers, preserving default complete assets; do not remove necessary supports indiscriminately for cleanliness.
 - Shell, internals and holes share a shape definition. After shell removal its hole rows, trailing exits and silhouette still correspond; do not hide wrong connections with plates or geometric breaks with cuts.
 
-<a id="爆炸图与剖切的选择"></a>
 ### Choose exploded views or cutaways
 
 Use an exploded view to explain component order, interfaces and assembly relationships; use a cutaway to reveal a path or mechanism that must remain connected. Select the view for the observation task, rather than cutting and rejoining an object repeatedly to create motion.
@@ -120,14 +108,12 @@ For a moving cutaway, design the complete opening/hold/closing cycle with the fi
 - Stage **assembled recognition → separation → interface observation → reassembly or matched handoff**. Reassembly is useful only when the next explanation needs it. Space parts enough to expose their connections at phone size; preserve necessary fasteners, supports and connector identity. Keep camera movement quiet while the layers become distinguishable.
 - Check start, intermediate, fully separated and handoff states, then normal-speed playback: the same parts remain recognizable, paths do not intersect accidentally, and the exposed interfaces answer the question. Explain the transition from a structural tour to a manufacturing sequence through the narration/edit; display order does not establish real production or servicing order.
 
-<a id="冷却与管道机制的可见连接"></a>
 ## Visible connections in cooling and piping mechanisms
 
 - Derive channel, partition, inlet/outlet, passage and surface-film positions/directions from shared geometry/surface functions, updating together after airfoil changes. Do not move shells while leaving internal paths/flow lines in old coordinates.
 - Check that inlets enter cavities, bends remain open, partitions do not inadvertently penetrate and exits are actual holes. Lines on metal, touching cylinders or glowing points cannot replace fluid passages.
 - Film flow starts at existing holes, following the corresponding blade surface downstream in its coordinate frame; do not pass coolant through solids or reverse explanation direction for beauty. Mesh/visible-frame checks have distinct scopes; lack of obvious penetration cannot establish hidden topology or flow validation.
 
-<a id="有界试制与可靠复用"></a>
 ## Bounded trials and reliable reuse
 
 ### Qualify critical assets before whole-film integration
@@ -154,29 +140,24 @@ Freeze code, assets, engine/settings and frame mapping before a batch. A changed
 
 Reuse the accepted continuous narration; place necessary observation pauses at semantic breaks and update picture, captions and annotations together. Measure preparation, scene build, render/write, edit and review separately. Technical frame/geometry checks do not certify actual appearance, science or hearing, and an optimization is not a measured speedup until comparable work has been timed.
 
-<a id="3d-正片与系列封面分别设计"></a>
 ## Design 3D-film and series covers separately
 
 Design 3D-film covers independently under [series cover standards](visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics). Models may inform form/light, but engineering previews or subtitled screenshots are not covers. Compose each ratio separately and inspect original/phone thumbnails.
 
-<a id="使用过的-3d-素材统一归档"></a>
 ## Archive used 3D assets in one library
 
 Read the shared root from `shared_3d_library` in [series configuration](../config/series-profile.json), search under the next section and verify new uses.
 
-<a id="素材库归档的持续授权"></a>
 ### Standing authorization for library archiving
 
 Read local `shared_3d_library.standing_authorization`. With authorization and matching actual `target_root`, directly perform authorized copying, version folders, index/readback checks without asking again across episodes, sessions or retries. Preserve effective local authorization when syncing maintenance code; public defaults do not authorize other users.
 
 Preserve source/existing versions; archive additions as new versions. Reconcile inventory, copy and read back target hashes. Record temporarily unavailable targets as pending sync with reasons and recover under original authorization. Changed destination, source deletion, overwrites or external transfer require actual new authorization; latest scope/revocation controls.
 
-<a id="查找与选择已有素材"></a>
 ### Find and select existing assets
 
 Search the shared master catalog before starting by subject, object, use, scene and synonyms, inspecting `reusable`, `pending` and applicable history separately. Prefer linking/appending/adapting suitable usable existing objects/settings to rebuilding. Only after recording real absence, dependency gaps or unsuitable new use in existing records, build missing parts. If ordinary search misses, use aliases and `--include-supporting` history. Pending candidates need scope, dependency and current-picture checks; incomplete historical review does not automatically require rebuilding. Failed/diagnostic counterexamples serve repair/evidence only, not default reuse.
 
-<a id="开放许可模型可以直接采用"></a>
 ### Open-licensed models may be adopted directly
 
 Search local/shared assets first, then target open-model libraries for the specific missing object. Matching use-compatible licensed models may be downloaded with necessary files and linked/appended/imported directly, without per-model reapproval or rebuilding for “originality.” Modify only needed materials, scale, structure, rig or animation; retain usable parts. Download only current models/dependencies; prefer caches to whole-library or repeat transfers.
@@ -186,7 +167,6 @@ Check specific model page, creator and actual license for current publication/co
 Open the model and inspect identity, units/axes, proportion, topology, internals, close-up detail, materials and required motion/cutaway. Availability does not establish science or suitability: fix actual gaps, retain suitable parts. Import data without auto-running package scripts. Record external authorship and actual project staging/animation/rendering separately, not self-created model claims. Model prerenders/promotional stills are not permitted production imagery by this route. See [licensed-model provenance](science-and-rights.md#licensed-3d-model-inputs).
 
 Deduplicate identical catalog files by SHA-256, preserving sources, original versions and review scopes. `reusable` is a starting point only within listed scope, not new-film audiovisual/scientific/publication approval. `pending` lacks sufficient review/dependency evidence; `failed` records a failed version/diagnostic counterexample with cause/scope. Preserve conflicting context results as pending. Verify target files/dependencies before use; index presence is not availability.
-
 
 Query structured `asset-index.json` with read-only [find_3d_assets.py](../scripts/find_3d_assets.py), not the first `INDEX.md` entry or a filename:
 

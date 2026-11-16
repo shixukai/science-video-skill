@@ -1,9 +1,7 @@
-<a id="从成品音轨到可复核的逐镜记录"></a>
 # From finished audio to verifiable per-shot records
 
 Write per-shot records in `shots[].shotbook`. Actual gaps are permitted during planning; complete the current version before requesting finished-film delivery.
 
-<a id="音频先行但不牺牲画面"></a>
 ## Audio first without sacrificing the picture
 
 Use the complete continuous explanation saved in `narration.script_file` as narration text. First divide it into complete semantic sections by understanding task, then arrange shots and semantic beats. Each shot's `narration_exact_text` matches an original passage from that script; do not write separate mini-scripts and stitch them into narration. Determine times from the current actual track, without inferring them from estimated character counts or fixed 4–6-second cuts. Each beat states its attention task and priority without a mechanical object-count limit, as well as the narration trigger, actual track time, relevant object action/state or relationship to observe. Introduce objects before referring to them. Stationary observation can be a legitimate action; do not add floating, shaking or forced pushes/zooms merely to look lively.
@@ -14,14 +12,12 @@ At G2, concatenating `narration_exact_text` in shot order must reconstruct the f
 
 Write the current narration file's SHA-256 to `narration.audio_sha256`. After recording changes, cropping, speed changes or reordering, listen again and realign all affected semantic beats. Updating a checksum cannot replace listening.
 
-<a id="先设计状态再精绘关键态与分层动作"></a>
 ## Design states before refining key states and layered motion
 
-Under [animation scene design](animation-scene-design.md#work-order-action-intent-before-detailed-art), determine state changes, persistent/new/separating structures and inter-shot relationships before key states and assets. Review key states for this episode's medium and [visual baseline](visual-system.md), recording file, SHA-256, conclusion and observations in `keyframe_review`. MoneyPrinterTurbo is the main production tool for realism; Blender is the main tool for 3D animation. 2D is restricted to explicitly authorized scope. Panning/zooming or revealing a final-state image cannot replace process animation.
+Under [animation scene design](animation-scene-design.md#work-order-action-intent-before-detailed-art), determine state changes, persistent/new/separating structures and inter-shot relationships before key states and assets. Review key states for this episode's [production route](tool-routing.md#lock-the-primary-tool-by-final-film-style) and [visual baseline](visual-system.md), recording file, SHA-256, conclusion and observations in `keyframe_review`. 2D is restricted to explicitly authorized scope. Panning/zooming or revealing a final-state image cannot replace process animation.
 
 At a cut, design the preceding shot's `final_state` and following shot's `initial_state` as a pair. `transition_reason` states preceding/following shot IDs/times, the conclusion carried forward and next task. Preserve recognizable correspondence with `object_ids/spatial_anchor` and viewpoint. Motion-card fields are below; do not create a duplicate ledger. Record actual audiovisual review in `qa.shotbook`, with `reviewed_sha256=shotbook_sha256(data)`. Recheck affected content after shot, asset or track changes. `assets[].sha256` binds the current file.
 
-<a id="整片视觉抽帧工具"></a>
 ## Full-film frame extraction helper
 
 When static location/diagnosis is needed and `shotbook.start/end` already align with media, [build_visual_review.py](../scripts/build_visual_review.py) can create local support material. Reuse suitable existing extracted frames; running the tool is not a mandatory operation at every stage. Run from the Skill directory:
@@ -40,7 +36,6 @@ The manifest preserves the episode snapshot, source video, HTML/PNG digests and 
 
 The page supports [whole-film arrangement](visual-system.md#whole-film-color-and-composition-thumbnail-strip) and static diagnosis. Color fidelity, small-screen/platform display, motion and complete audiovisual media require separate actual review.
 
-<a id="设计和资产引用绑定"></a>
 ## Bind design and asset references
 
 Templates for new realistic work include design.visual_intent and per-shot shotbook.realism; fill them according to actual implementation. Default empty values are not authorization. G1 binds only textual meaning and purpose; later layout/media stages recheck coordinates/timing. A local label movement does not require redoing unchanged topic selection. First-sample baselines and roughcut/sample/full receipts are defined in the [production entry](production-checkpoints.md#start-lock-and-actual-rendering-entry).
@@ -51,7 +46,6 @@ Actually inspect consistency among the design board, configuration and picture u
 
 Only when a specific historical 2D style is authorized, register fixed versions/hashes of the Skill's [reference image](../assets/style/accepted-style-reference.png) and [art specification](../assets/style/bright-nature.art-direction.json) in the brief's references. Record actual image viewing and this shot's adopted features in the art record; prose cannot establish that an image was viewed. If generating a project design board from those references, `design.board_reference/board_sha256` still points to the current actual board. Separate reference-appearance approval from the new board's actual review scope; do not fill in the series-reference hash as new-board approval. For stage freezes, separately list used reference copies, specifications and actual comparison files in existing gate evidence. Do not infer old project inputs from a later installed version.
 
-<a id="逐镜结构与方向图形记录"></a>
 ## Per-shot structure and directional-graphics records
 
 Save checks of the actual export for this shot in `shotbook.visual_logic`, without another ledger detached from the storyboard:
@@ -65,14 +59,12 @@ Inventory all relevant objects and graphics actually exported in each shot. Repa
 
 Per-shot provenance belongs in `shotbook.origin`, and asset provenance in `assets[].origin`. Fields, evidence and the research/delivery closure boundary uniformly follow the [original visual provenance contract](science-and-rights.md#per-shot-provenance-evidence). Preserve existing modality, rights and viewing records. Added provenance fields are neither approval nor permission to rewrite historical results retroactively.
 
-<a id="素材选择要能复核"></a>
 ## Make asset selection verifiable
 
 First state the object, action, framing, duration and supporting claim. Then actually inspect corresponding candidate intervals and compare object correctness, action coverage, clarity, composition margins and rights. Search thumbnails cannot replace viewing.
 
 `candidates` preserves provenance, `viewing_note` and selection decisions. A main candidate's `asset_id` must belong to this shot; auxiliary layers use separate `asset_ids`. `source_interval` records original-footage in/out points and time basis. Only static references/original images may use `still/full`; panning/zooming a photo is not live footage. If there is only one lawful candidate, explain with `alternatives_note`. Preserve source, creator, rights evidence, scope and attribution through the asset ledger.
 
-<a id="可选工作方式"></a>
 ## Optional working methods
 
 Editable editing projects may use separate narration, captions, music/effects, picture and in-picture annotation tracks for replacement and verification. Claim delivery of an editable project only after actual export and opening/verification in the target editor. Current rules do not promise compatibility with a particular editor.
@@ -81,7 +73,6 @@ For generated references, identify each reference's responsibility for object id
 
 For external methods' provenance, licenses, fixed versions and actually adopted features, see [external skill selection](video-skills-curation.md).
 
-<a id="动作卡镜头配方与事件复核"></a>
 ## Motion cards, shot recipes and event review
 
 For actual process shots, implement eight motion-card items in the existing shotbook: object/anchor, initial state, trigger, key change, final state, trajectory, speed/observation pauses and what viewers learn. Add physical conditions, teaching simplifications, key poses, narration events and actual audio hash. Do not impose a universal elastic curve on different mechanisms. Changes in path, direction, constraints, occlusion or observation conditions may be substantive mechanisms; deformation is not mandatory. Key images also state viewpoint, attention center, motion path, caption area and scale changes.
@@ -92,7 +83,6 @@ For D timing such as locating/labels, scale changes and observation pauses, see 
 
 Preserve recoverable briefs, sources, scripts, storyboards, designs/assets, raw audio/mix stems, timecodes, captions, media versions, reviews and authorization/platform receipts. Filenames distinguish episode/edit/audio/aspect-ratio versions; captions/covers/copy have independent hashes. Recheck [affected dependencies](quality-acceptance.md#handling-failures) after changes without reusing old acceptance.
 
-<a id="按动作类别补充信息"></a>
 ### Add information by action class
 
 Fill `shotbook.action_class` (deduplicated list) and `action_class_details` (organized by class key) only for classes actually used in this shot. Reuse existing object, anchor, trigger/key_states/trajectory and related fields. Do not require all five classes for every shot:
@@ -111,7 +101,6 @@ Read the responsibility references and actual configuration needed for the curre
 If adopting the thunder-mechanism recipe, also read the [conditional complete example](../assets/examples/thunder-brief.md), preserving its specific prohibited depictions, first-use slow-motion disclosure and unproduced state. This does not force other topics to explain thunder or revive canceled topics.
 
 Resolve actual dependencies uniformly by asset ID. design.font_asset_id and design.render_asset_ids are shared representative-segment/full-film dependencies; per-shot asset_ids preserve each shot's scope; deliverable_asset_ids records lists by deliverable. The representative segment and actual dependencies of its captions and three-scale design enter rights checks and version binding. Unused later assets do not invalidate the current representative segment. All dependencies must have correct types and resolve; do not silently treat invalid fields as empty lists.
-<a id="无音轨的-g1-纸面计划"></a>
 ### G1 paper plan without audio
 
 `plan` / G1 may use `timing_basis.mode=relative_plan`, with specific `relative_phases` and `note` describing semantic order, observation tasks and actual times awaiting audio. Leave `start` and `end` null or absent. If planned semantic beats exist, leave `beats[].at` null and add a specific `phase`, intended trigger wording, attention object and action; an empty `beats` is also allowed temporarily. Do not mark intended but unsynthesized narration as a silent shot.
@@ -120,7 +109,6 @@ Before obtaining media, use `candidates=[]`, with `alternatives_note` stating ob
 
 The plan package's `assets` may register explicit asset needs still awaiting production/acquisition, referenced by stable IDs in shot `asset_ids`. `source` states planned acquisition method and use, `creator` truthfully remains undetermined, `file` is empty and `rights.status=pending`. These records do not establish asset possession. `candidates` contains only actually viewed candidates; keep the two distinct. Choose `kind` for the planned medium, and truthfully supply required `disclosure` for diagrams/simulations. Add actual original provenance, author, file and rights evidence only after acquisition. If asset needs themselves are still undetermined, deliver a brief first rather than inventing assets or scientific sources to satisfy structural checks.
 
-<a id="解释设计与实际镜头的绑定"></a>
 ## Bind explanation design to actual shots
 
 Reuse scope and shot references in `topic_alignment.coverage` to bind [explanation types and difficulty solutions](production-checkpoints.md#e02e07-explanation-design-before-refinement) to actual shots and semantic beats. Typed relationship paths use each `explanation_steps` step's `relation_type`; old scope-level `explanation_type` is read for compatibility, and historical causal records may use `causal_steps`. Do not fill two competing structures for the same scope. Each step retains necessary prerequisites, key relationship, derivation, boundaries, mappings from references to depicted objects, shot IDs, handoff and dynamic applicability. Causal steps additionally record before/change/after. `prerequisites` binds specific reused conclusions with `knowledge` and `source=audience_prior/step`, adding `step_id` for step sources. Audience prerequisites, presentation order and old-string migration follow the [prerequisite-source rules](production-checkpoints.md#2-make-explanatory-relationships-visible). If dynamics are unnecessary, explain why the static relationship is sufficient rather than using nonapplicability to hide a missing process.

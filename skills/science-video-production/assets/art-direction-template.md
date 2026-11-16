@@ -1,9 +1,7 @@
-<a id="单集美术与画质记录"></a>
 # Episode Art and Image-Quality Record
 
 Copy to the episode's private directory and fill only applicable sections. Cite existing briefs, action cards or QA directly. Unproduced/unviewed work remains pending; actual conclusions belong in existing QA.
 
-<a id="版本与范围"></a>
 ## Version and scope
 
 - Episode, stage, record version and date:
@@ -17,7 +15,6 @@ Copy to the episode's private directory and fill only applicable sections. Cite 
 
 Save stage snapshots under [stage evidence](../references/quality-acceptance.md#stage-evidence-for-art-methods), such as `art-direction-G3-v1.md`. Save a new version for later stages; retain the actual file reviewed at the earlier stage.
 
-<a id="指示信息与动态绑定"></a>
 ## Annotations and dynamic binding
 
 Apply [precision technical annotation](../references/annotation-style.md) only to actual current annotations; cite existing action cards, picture-text inventory or QA directly.
@@ -29,7 +26,6 @@ Apply [precision technical annotation](../references/annotation-style.md) only t
 - In 3D picture, only necessary single-letter markers; no explanatory sentences, words/abbreviations, numbers/units or plaques. Under [single-letter spatial rules](../references/spatial-typography.md), record actual anchor/geometry/material/light/perspective/occlusion; no words assembled from letters. Genuine synchronized captions remain 2D; other media keep their own text rules. Actual readable interval, target binding and unreviewed scope:
 - Original size, actual small-screen width, final encoding and continuous-sequence references; reviewed/pending/failed, repair version and existing QA:
 
-<a id="代表样与同镜完成度对照"></a>
 ## Representative samples and same-shot completion comparisons
 
 Choose actual risks under [representative samples/calibration](../references/visual-system.md#representative-samples-and-l2l3-calibration). Do not manufacture sample counts or deliberately crude comparison art to fill a table.
@@ -40,7 +36,6 @@ Choose actual risks under [representative samples/calibration](../references/vis
 
 Accepted baseline's reuse scope and uncovered objects/scales/actions:
 
-<a id="封面完成度到连续场景"></a>
 ## From cover-level finish to continuous scenes
 
 Use [complete-scene methods](../references/visual-system.md#from-cover-finish-to-controllable-dynamic-scenes); add only observations not already covered by action cards/QA.
@@ -51,7 +46,6 @@ Use [complete-scene methods](../references/visual-system.md#from-cover-finish-to
 - Normal-speed sound-picture observations of object change, stable reference, readable result and narration correspondence; cite temporary overlay-hidden diagnosis separately through `object_result_review`:
 - Reviewed/failed/pending, repair version and actual recheck; objects/scales/relations still needed for expansion:
 
-<a id="参考学习与实际应用对照"></a>
 ## Reference learning versus actual application
 
 Record under the [learning loop](../references/production-checkpoints.md#from-learning-a-reference-to-actual-improvement); fill only actual work and directly cite existing records.
@@ -63,7 +57,6 @@ Record under the [learning loop](../references/production-checkpoints.md#from-le
 - Actual phone-size/normal-speed audiovisual observations, improvements/new defects and evidence times:
 - Keep/revise/discard/pending decision and reason; reusable scope, uncovered work and actual updated rule location:
 
-<a id="当前反馈与分维度复查"></a>
 ## Current feedback and dimensional rechecks
 
 Cite original feedback, media/hash, range and scope in `qa.feedback` without another ledger. Check each failure's repair artifact and actual recheck of its dimensions. Comprehension approval cannot offset art, animation, layout or sound failures.
@@ -72,7 +65,6 @@ Cite original feedback, media/hash, range and scope in `qa.feedback` without ano
 - Change, repair version, precise recheck time/results; unreviewed and unresolved items:
 - If maintaining the Skill too: responsible clause, changed location, regression records and media validation still pending:
 
-<a id="动画场景设计卡"></a>
 ## Animation scene-design card
 
 For substantial animation, still-to-motion conversion or empty-scene repairs, use the [detailed design standard](../references/animation-scene-design.md) and [snow-crystal example](../references/snow-crystal-scene-example.md). Cite existing explanation steps/action cards without a second storyboard. Design intentions are not observations.
@@ -81,7 +73,7 @@ For substantial animation, still-to-motion conversion or empty-scene repairs, us
 - Observation task, new information and its use by the next shot:
 - Applicable method and concrete action: exploded view/cutaway, parallel convergence, process loop, accumulation montage or return to whole; fixed reference, key states, expected visible result and likely misreading. Implement through the existing action card above, not another mandatory form:
 - Subject, necessary situation/reference and each role; purpose of negative space:
-- Blender environment type/basis, support/ancillary structures/scale references, spatial depth, materials/light; local simplification, whole/local handoff, actual composition and cross-shot repetition check (3D only):
+- 3D (Blender or vork) environment type/basis, support/ancillary structures/scale references, spatial depth, materials/light; local simplification, whole/local handoff, actual composition and cross-shot repetition check (3D only):
 - Shared-library search terms/categories, selected asset ID/version/digest, dependencies/adaptations; reason for new work and pending archival:
 - Driver/trigger, established contact/constraint, responding object and shared state; initial → necessary intermediate → result; retained/added/deformed/removed parts and basis:
 - Main change region, specific feature supporting the conclusion, stable reference and recognition at target viewing size; corresponding narration event:
@@ -96,10 +88,9 @@ For substantial animation, still-to-motion conversion or empty-scene repairs, us
 - Pending complete composite/key states/continuous sequence; expected change, actually observed result and unreviewed items separately:
 - Corresponding A/D/I items and actual evidence times; present/readable, present/subtle, absent or unreviewed; repair/recheck scope:
 
-<a id="构图主次与主体精修"></a>
 ## Composition, hierarchy and subject refinement
 
-Use [composition](../references/visual-system.md#portrait-aspect-ratio-and-composition) and [refinement order](../references/visual-system.md#three-scale-form-and-production-detail). Compare composition thumbnails only when the approach is uncertain. Grayscale, reduction or blur are diagnosis, not another aesthetic approval.
+Use [composition](../references/visual-system.md#aspect-ratio-and-frame-composition) and [refinement order](../references/visual-system.md#three-scale-form-and-production-detail). Compare composition thumbnails only when the approach is uncertain. Grayscale, reduction or blur are diagnosis, not another aesthetic approval.
 
 | Shot/frame | Relation and attention center | Subject scale/negative-space purpose | Value/edge/detail hierarchy | Current refinement and visible defect | Revision and actual recheck |
 | --- | --- | --- | --- | --- | --- |
@@ -107,7 +98,6 @@ Use [composition](../references/visual-system.md#portrait-aspect-ratio-and-compo
 
 Local detail/full composites and intended comparison size; corresponding A01–A08 items:
 
-<a id="整片色彩与构图缩略带"></a>
 ## Whole-film color and composition thumbnail strip
 
 Under [whole-film design](../references/visual-system.md#whole-film-color-and-composition-thumbnail-strip), cite current storyboard/extracted-frame sheets. Extraction diagnoses existing work; early design thumbnails remain plans, never actual final-film observations.
@@ -121,7 +111,6 @@ Under [whole-film design](../references/visual-system.md#whole-film-color-and-co
 
 Additional actual evidence for key states, medium joins or motion extremes missed by fixed sampling:
 
-<a id="科学色义与造型光影"></a>
 ## Scientific color semantics and form lighting
 
 Record color mappings only when color encodes scientific identity, category or value; otherwise state the actual situation. Check [color priority](../references/visual-system.md#three-scale-form-and-production-detail), without inventing a physical variable to justify a decorative gradient.
@@ -132,7 +121,6 @@ Record color mappings only when color encodes scientific identity, category or v
 
 Invented boundaries, extrema, glow or category changes; observation evidence and scientific limits:
 
-<a id="母版交付编码与平台细节"></a>
 ## Master, delivery encode and platform detail
 
 Under [final-encode comparison](../references/visual-system.md#detail-retention-in-the-final-encoding), view actual playback size/normal speed before zooming for diagnosis. If platform access is missing, mark pending; do not upload merely to fill a record.
@@ -145,7 +133,6 @@ Under [final-encode comparison](../references/visual-system.md#detail-retention-
 - Platform result source, account/interface/device/date and file/screenshot references; distinction from local encoding:
 - Actual conclusions for A04/A06/A07/A08/A10 and D05/I04:
 
-<a id="可核对的证据文件"></a>
 ## Verifiable evidence files
 
 List the actual page snapshot, comparisons, videos, thumbnail sheets, extracted frames and manifests used for conclusions separately in `qa.gates.G2/G3/G5/G6.evidence`, each with episode-relative `file` and current `sha256`. The checker does not recursively freeze Markdown/HTML links; listing only this page or a manifest does not automatically bind its images. Select tool outputs according to actual review scope; generation is not viewing.

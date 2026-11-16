@@ -1,9 +1,7 @@
-<a id="动画场景设计从实体状态到完整镜头"></a>
 # Animation scene design: from physical state to complete shots
 
 For substantial animation or turning static assets into animation, design subject, context, visible change and shot handoffs before asset refinement. Record results in existing action cards and [art records](../assets/art-direction-template.md#animation-scene-design-card). Realistic main imagery follows the [realistic production contract](realistic-production.md); 2D implementation stays within approved scope/supporting layers.
 
-<a id="先诊断空在哪里"></a>
 ## Diagnose what is missing first
 
 | Actual symptom | First diagnosis | First repair | Unsupported conclusion |
@@ -17,14 +15,12 @@ For substantial animation or turning static assets into animation, design subjec
 
 Distinguish necessary negative space from missing content: state the region's observation, motion, comparison or text role, then check real usefulness. Large quiet backgrounds are allowed; do not fill them when subject, relationship and payoff hold. Complete Blender videos also follow [background/spatial completion](engineering-blender.md#blender-backgrounds-and-spatial-completion): local negative space/minimal inspection does not authorize omitted environments or identical backgrounds/platforms throughout.
 
-<a id="先区分缺失与不显著"></a>
 ### Distinguish missing from insufficiently visible
 
 When inspecting existing work, classify each item as present and clear / present but inconspicuous / missing / unreviewed before choosing repair. Existing growth, close-ups or two-object differences do not justify generic tasks to add them again. Record precise times, preserved structure, actual change and observation method. If sparse frames do not reveal change, add key-state/continuous observation first; not clearly seen does not mean absent.
 
 When materials/transparent edges already work but key new areas are too small, preserve effective assets and prioritize framing, references and state expression.
 
-<a id="开工顺序动作意图先于精绘"></a>
 ## Work order: action intent before detailed art
 
 Write the visible relationship/state sequence before choosing refined key states, occluded surfaces and independent parts. Finished stills check appearance; they do not establish a workflow of generating a beautiful whole image and making it drift afterward.
@@ -35,12 +31,10 @@ Write the visible relationship/state sequence before choosing refined key states
 4. Create a continuous representative segment in the original timeline. Schedule events, observation pauses and cuts from actual meaning/audio; paper-example seconds are not sync evidence.
 5. Inspect the current full composite first, then diagnose with local views/overlays hidden. Restore the original composition for continuous recheck after repair. Existing G2/G3/G5 evidence requirements remain.
 
-<a id="手调曲线先分清停驻与持续接触"></a>
 ### Distinguish holds from sustained contact before hand-editing curves
 
 For held poses/positions, preserve explicit start/end states and check interpolation for hidden drift during the hold. Sustained moving contact requires continuous constraints, contact points and object responses along the intended path, not automatic ease-in/out around every contact key causing sliding, separation or unsupported slowing. Adjust interpolation, tangents or segments only for affected controllers/intervals; do not globally smooth/simplify animation. Existing solutions, caches or measured rates follow their real conditions, not uniform linear/Bezier conversion. Review the complete action/joins; attractive curves do not prove contact/causality.
 
-<a id="镜头内容的四种职责"></a>
 ## Four responsibilities of shot content
 
 These are design questions, not four required layers or four types of content present in every frame.
@@ -54,7 +48,6 @@ These are design questions, not four required layers or four types of content pr
 
 Environment needs a concrete role, e.g. scale, light/color/occlusion, verified conditions or action handoff. Do not add unsupported wind, fog, collision or melting for activity. Clean local spaces are allowed when mechanisms need no exterior setting; composition, materials and relationships still require completion.
 
-<a id="场景设计检查"></a>
 ## Scene-design checks
 
 Check these within the [visual-system A/D/I standards](visual-system.md#static-picture-a01a10). This page supplies state/action methods, not a duplicate art-rating table.
@@ -67,7 +60,6 @@ Check these within the [visual-system A/D/I standards](visual-system.md#static-p
 | Camera, handoffs and sound | New observation per scene; bridge through features/direction/state and align events/meaning | Identity retained; main action, necessary labels and captions do not compete | D07/D08/I01–I03 |
 | Compositing/output | Shared geometry/anchors, completed hidden faces/backplates, surface-attached materials | No sliding skin, ghosts, jitter or intersections; final encoding preserves key gaps/edges | A06/A07/D05/I04/I05 |
 
-<a id="把已有变化变成可读的证据"></a>
 ## Make existing change readable as evidence
 
 For implemented but unclear shots, use the table's composition, main-action, state-memory, camera and narrative standards; do not add another quality level.
@@ -86,7 +78,6 @@ For continuously shared conditions, show the same context, corresponding regions
 
 Location markers may appear briefly and leave to locate results; highlighting is not new matter. Marker order for corresponding same-stage areas denotes explanation order, not sequential occurrence. 3D auxiliary text permits only necessary single letters; names/conditions/values belong in narration and genuine synced captions. Other media retain existing necessary-label rules. The goal is correspondence between explanation/evidence, not more picture prose.
 
-<a id="工艺动作要留下可观察的结果"></a>
 ### Process actions must leave observable results
 
 For a process explanation, show the workpiece before the operation, the interaction at the active region, and the resulting changed material/structure. Equipment travel alone does not demonstrate what happened to the workpiece.
@@ -103,7 +94,6 @@ Give the important explanation a consequential event to follow: establish a goal
 
 Choose the actual mechanism before adding effects. ALD, for example, uses sequential surface reactions and can coat complex topography; generic downward particle rain can misrepresent it. [Lam Research's ALD explanation](https://newsroom.lamresearch.com/Tech-Brief-A-Look-at-Atomic-Layer-Deposition-ALD) is an example of a process-specific visual basis. Likewise, an optical-path graphic must follow the selected system: [ASML's EUV description](https://www.asml.com/en/products/euv-lithography-systems) uses reflective reticles and mirrors. An illustrative ray path must not imply that invisible radiation is an ordinary visible beam. These examples guide verification, not a particle/beam preset for every manufacturing video.
 
-<a id="把动作写到可以制作"></a>
 ## Write actions so they can be produced
 
 “Slowly forming snowflakes,” “natural water flow” and “cinematic camera” are not executable. Instructions must at least answer:
@@ -125,14 +115,12 @@ Select a state model for the subject:
 
 Masks, visibility and draw-on may reveal real state models or explicitly locate teaching content. A time wipe over a finished image does not prove growth. Review state sequence/results before implementation technique. Static observation may show full form but cannot replace promised change.
 
-<a id="可交给制作-agent-的任务写法"></a>
 ## Writing tasks for production agents
 
 Fill the [animation scene card](../assets/art-direction-template.md#animation-scene-design-card) directly, referencing current shots, science and stage-appropriate actual audio/timeline rather than copying another table.
 
 Assignments require accessible applicable reference images, initial/key-intermediate/result states, stable references, distinguishing features and handoff objects. Establish state/composition before refinement. If the tool cannot make the change, repair inputs/implementation within the locked medium. Record concrete remaining capability gaps and continue independent work; do not retreat to symbols with background decoration.
 
-<a id="制作端如何检查"></a>
 ## Production-side inspection
 
 Use existing G2/G3/G5 checks, not mandatory external audience feedback:
@@ -145,7 +133,6 @@ Use existing G2/G3/G5 checks, not mandatory external audience feedback:
 
 If only color, texture or background improve while subject results, context and progression are absent, return to state/shot design instead of batching similar shots.
 
-<a id="雪花案例的使用方式"></a>
 ## Using the snow-crystal case
 
 See the [snow-crystal growth example](snow-crystal-scene-example.md): turn state, context, close-up and asset duties into tasks within approved 2D scope; adapt other topics to their own scientific relationships.

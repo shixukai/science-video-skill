@@ -1,9 +1,7 @@
-<a id="原题问题类型与交付范围不能在局部返工中丢失"></a>
 # Preserve the original topic, question type and delivery scope during local revisions
 
 At the start, on resumption and during revisions, recover the topic, question type and required answer scope from the original commission. Local feedback identifies the repair location only. Record specific missing information rather than substituting a description of use for a manufacturing process, a component for the whole, or a local cause for a complete comparison. Change the topic or necessary scope only in response to the user's explicit request.
 
-<a id="保存原始锚点"></a>
 ## Preserve the original anchor
 
 Copy `assets/topic-anchor-template.json` to `topic-anchor.json` in the episode directory. Establish it from the existing commission:
@@ -17,7 +15,6 @@ Copy `assets/topic-anchor-template.json` to `topic-anchor.json` in the episode d
 
 When the user explicitly changes the topic, intent or necessary scope, update current and record `status=explicit_user_request`, the request reference and `from_sha256/to_sha256` in `change_approval`. Verify the request's actual author, content and scope. Preserve the old anchor for provenance. Without a corresponding request, do not invent approval or rewrite the anchor; an existing new direction must not be blocked by the old anchor either.
 
-<a id="工程与制造题材的全链路和片长"></a>
 ## Complete chains and duration for engineering and manufacturing topics
 
 A video may be longer when its content needs it. Do not impose a uniform short-video ceiling or minimum duration. Engineering science, industrial production and advanced manufacturing topics default to explaining the topic's complete chain first; the full explanation, necessary demonstrations and observation time then determine duration. Do not skip key stages, speed up narration or turn a manufacturing process into an introduction to component uses to shorten the video.
@@ -32,7 +29,6 @@ Use [context and viewing interest](viewer-retention-design.md#establish-context-
 
 Write the complete-chain script and chapters first, then determine duration from narration at a normal speaking rate, demonstrations and observation time. During research, record only a provisional estimate and its basis. A tool's single-call duration limit can be handled by chapters/shots and is not a ceiling for the film. Maintain continuity of objects, terminology, voice and timeline across segments, and check coverage and joins in the G2 rough cut, G3 representative segment and G5 full-film review. Keep operations with insufficient information pending research; generated imagery cannot supply missing facts.
 
-<a id="整期章节与局部样片分开"></a>
 ## Separate episodes, chapters and local samples
 
 `scope.kind` is `episode`, `chapter` or `local_sample`. Local content still references the episode anchor; also record its `parent_episode_id`, `chapter_id`, current `purpose` and `delivery_context`. Use `placement=chapter_only` and `publication_ready=false` to make clear that it is neither the episode opening nor an episode ready to publish. If local content must become a new episode, first obtain an explicit topic-change request and establish the corresponding version; changing a label is insufficient.
@@ -43,7 +39,6 @@ A local delivery message states the original episode topic, its position in the 
 
 A local repair within a chapter may enter the corresponding sample-repair check with `scope.kind=local_sample`, `placement=chapter_only`, `publication_ready=false` and the existing `qa.visual_frames.animation.next_action=repair_sample`. The four ownership/purpose fields must be specific and complete; the original episode anchor, current and topic-change authorization rules remain unchanged. For this narrow scope, `opening/ending` need only inherit the original topic's `intent`, the `scope_ids` actually covered in this task and the real first/last `shot_ids` for location. Do not invent episode title cards, topic narration, `spoken_question/answer_route` or a full-episode closing answer for a middle-section repair. `coverage` must be nonempty and belong to the original required scope; `main_scope_ids` must be nonempty and within this task's coverage; `omitted_scope_ids` must list the complete, duplicate-free complement of original required scope minus current coverage. This local declaration does not exempt `chapter`, incomplete metadata, `next_action=expand` or an episode package. Even if current coverage happens to include every required scope item, it remains a local repair sample. G4 and later, quality/delivery still require an episode, and unresolved feedback/known failures continue to block expansion. Local approval does not approve an episode or publication; do not delete the original topic, change the title or fabricate a historical pass to get through a check.
 
-<a id="成人受众的选题筛选"></a>
 ## Topic selection for adult audiences
 
 For editorial topic selection, this series defaults to adults with everyday knowledge and no professional training. Prioritize questions with concrete explanatory value and avoid title-only changes. If the user has explicitly specified a basic question or audience, preserve that scope and explain it with clear examples, applicable conditions or visible relationships; do not reject or change it merely because the topic is simple. Scientific errors, unavailable rights, missing necessary explanations and actual infeasibility still require correction. Before research is complete, a planning draft with explicitly pending research may be delivered; verify primary sources and feasibility before formal G1 and rendering.
@@ -64,7 +59,6 @@ Reference available platform data according to [platform topic selection and dat
 
 `plan`, G1 and subsequent stage checks reuse the same card; actual `render_gate` sample/full calls also check it before invocation. Before resuming production under this version, old packages need a truthful topic-review record; a missing card cannot receive a compatibility pass. Merely preserving historical files does not require retroactively signing past execution. If an editorial topic is not selected, continue source research, comparison and topic revision. For a user-specified topic, complete research and explanation design within the original scope; do not spend time producing first and add topic-selection reasons afterward. A cover-only check does not require reopening topic selection for completed work.
 
-<a id="先比较观众会选什么再决定制作什么"></a>
 ### Compare what viewers would choose before deciding what to produce
 
 For editorial topic selection, first propose a small number of different questions in text, then choose one to advance. Describe each proposal in everyday language: the object, use or situation viewers recognize; why they would ask further; and what change, structure or comparison the film will let them see. Unfamiliar technology can also start from a familiar product outcome or an appealing visible process; do not narrow the range to everyday tips. Do not substitute “高端、硬核、前沿、涨知识” for a reason to watch, or automatically exclude a topic category or claim that the public will certainly like it.
@@ -91,14 +85,12 @@ The following examples demonstrate angles only. Each requires research into fact
 | 轮胎材料与结构分类 | 轮胎为什么要做出不同的花纹？ | Observe contact, drainage and design tradeoffs under explicit road conditions. |
 | 电梯曳引系统说明 | 电梯怎样把一厢人平稳送到楼上？ | Establish the overall load and transmission relationships, then follow starting, running and stopping. |
 
-<a id="好坏题成对比较"></a>
 ### Compare stronger and weaker topics in pairs
 
 The following applies to editorial topic selection and does not reject an explicitly requested basic teaching topic. Verify primary sources, specific conditions and rights before production.
 
 “热会从热处传向冷处吗” offers insufficient explanatory increment if it only repeats the direction of transfer. “45℃冷却液怎样给AI芯片降温，为什么不用更冷的水？” can explain system constraints and energy tradeoffs through cold-plate heat absorption, circulating transport, outdoor heat rejection and refrigeration demand. 45℃ applies only to the [specific architectural conditions described by NVIDIA](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/). Avoiding mechanical refrigeration depends on location and design; do not generalize this into all data centers saving water or never using refrigeration.
 
-<a id="开场与观众范围"></a>
 ## Opening and audience scope
 
 The default audience is adults without relevant professional training; follow the user's request when an audience is specified. Open on a recognizable object in its most interesting honest state, then narrow to the original question and connect to the first main-body observation; for feed films the object and its tension land within the [first two seconds](viral-appeal-and-packaging.md#win-the-first-two-seconds), with context carried by the hook picture rather than a slow first clause. Specific audiovisual methods are owned by [opening direction](viewer-retention-design.md). Make the topic clear within the opening section and consistent with the cover. Do not require a first-sentence definition or a spoken answer first.
@@ -117,7 +109,6 @@ The examples below demonstrate only question-to-evidence relationships. Choose t
 
 Set one main question per episode. Explain the necessity of subsidiary questions and the established relationships they depend on. Complete the main explanation before necessary extensions. The first screen, narration route, principal shots and ending must answer the main question together. Keep or remove subsidiary content according to its role, without a fixed proportion.
 
-<a id="四处回查原题不靠关键词打勾"></a>
 ## Recheck the original question in four places without keyword box-ticking
 
 Bind the current topic digest in `topic_alignment` and record:
@@ -135,8 +126,6 @@ Actually review opening expression under [Opening and audience scope](#opening-a
 
 Use `topic_review_sha256(data)` to bind the current topic, scope, storyboard, actual audio, assets, delivery files and reviewed-media hashes. Recheck after title narration, shots, assets or exports change. Recalculating the digest alone cannot carry forward old conclusions. Original-topic verification precedes local art and rhythm acceptance; if the work has drifted, restore scope and the opening before judging art quality.
 
-
-<a id="封面题意到实际开场的连续核对"></a>
 ## Continuously check the cover's question against the actual opening
 
 Continuously check the chain from cover promise to relevant context/actual interest, specific topic introduction, overall answer or route, and first main-body observation. Natural equivalent wording is sufficient, but objects, conditions and relationships must be explicit. For example, “看看天空，它怎么这样” cannot replace “晴天天空的蓝色从哪里来”. Do not require reading the cover aloud or adding a static topic card.
@@ -151,7 +140,6 @@ Actual review sources may be editor, independent or user. `sources` may combine 
 
 The checker verifies fields, timecodes, versions and existence of references; actual reviewers supply the meaning and transition judgments. Uncovered items remain pending. Local praise and technical passes cannot retroactively sign every gate.
 
-<a id="e01解释承诺与问题范围"></a>
 ## E01: Explanation promise and question scope
 
 Before work, separately state the topic, concrete question and what viewers should be able to explain or judge after watching. A topic name cannot serve as an explanation objective. Bind every promise to an explicit answer and the section responsible for explaining it. Organize related questions as main and subsidiary questions, without a generic question-count ceiling or expansion beyond the user's scope. If narrowing is necessary, update the title, opening and ending together under this page's scope-authority rules; do not silently delete promises that are difficult to explain.

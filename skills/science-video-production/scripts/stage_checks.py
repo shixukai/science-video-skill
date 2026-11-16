@@ -72,6 +72,15 @@ def seq(x):
 def text(x):
  return isinstance(x, str) and bool(x.strip())
 
+def narration_language(data):
+ language = obj(data.get('narration')).get('language')
+ base = language.lower().split('-', 1)[0] if text(language) else None
+ if base == 'zh':
+  return 'Chinese'
+ if base == 'en' and obj(data.get('design')).get('production_route') == 'google_flow':
+  return 'English'
+ return None
+
 def number(x):
  try:
   return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
@@ -1018,7 +1027,9 @@ class Checks:
    narration=obj(self.data.get('narration'))
    script_path=self.evidence({'file':narration.get('script_file'),'sha256':narration.get('script_sha256')},'narration script')
    self.narration_sequence(script_path)
-   self.need(narration.get('status')=='ready' and isinstance(narration.get('language'),str) and narration['language'].lower().split('-')[0]=='zh','actual ready Chinese working narration required')
+   language = narration_language(self.data)
+   self.need(narration.get('status')=='ready' and language is not None,
+             f"actual ready {language or 'Chinese'} working narration required")
    audio=next((a for a in seq(self.data.get('assets')) if isinstance(a,dict) and a.get('id')==narration.get('asset_id')), {})
    self.need(audio.get('kind')=='audio','source narration must be an audio asset')
    audio_path=self.evidence({'file':audio.get('file'),'sha256':narration.get('audio_sha256')},'source narration')

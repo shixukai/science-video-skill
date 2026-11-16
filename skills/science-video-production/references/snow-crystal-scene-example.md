@@ -1,9 +1,7 @@
-<a id="雪花生长场景与动作设计示例"></a>
 # Snow-crystal growth: scene and action design example
 
-Status: **paper example awaiting production and actual audiovisual validation**. Use only within explicitly approved 2D scope. New videos still select MoneyPrinterTurbo/Blender through [style routing](tool-routing.md#lock-the-primary-tool-by-final-film-style), not 2D by this example.
+Status: **paper example awaiting production and actual audiovisual validation**. Use only within explicitly approved 2D scope. New videos still select MoneyPrinterTurbo, Blender/vork, or Google Flow through [style routing](tool-routing.md#lock-the-primary-tool-by-final-film-style), not 2D by this example.
 
-<a id="题目与科学范围"></a>
 ## Question and scientific scope
 
 Example question: **同一片星状雪晶的六条枝，为什么常常那么像？** Focus on branches sharing similar conditions and leaving similar structures in later growth. Different crystals and imperfect branch identity supply limits/closure. Establish tip growth, crystal structure and vapor deposition only as needed, without displacing the main question.
@@ -20,7 +18,6 @@ Limit this to vapor-deposition growth after a seed exists. Explain nucleation, a
 
 Scientific references establish structure/mechanism, not automatic photo/video production rights. SnowCrystals' current [copyright statement](https://www.snowcrystals.com/copyright/copyright.html) excludes internet publication from license-free personal use. Under the current original-visual contract, this example uses only verified authorized user capture; external reference licenses are not this film's asset permission.
 
-<a id="先选择观察情境"></a>
 ## Choose the observation context first
 
 Within approved mixed scope, this example uses actual observation anchor → pure-2D single-crystal growth illustration; source footage still follows current [science/assets](science-and-rights.md) requirements. Crystal-referenced 2D retains clear faces, directions and active growth. Restrained air-space backgrounds may include quiet distant droplets/ice cues only with established scale and unobstructed observation.
@@ -31,7 +28,6 @@ A controlled growth observation window is another option for fixed objects, cond
 
 Cloud density, background temperature colors or decorative particle counts are not direct temperature/supersaturation measurements. Necessary comparisons use short labels/evidenced coding clearly identified as conditions; subject structures show results.
 
-<a id="一段可以制作的镜头组织"></a>
 ## Producible shot organization
 
 These candidate sections follow comprehension tasks and may combine, split or omit out-of-topic comparisons. No fixed shot count/seconds; formal timing follows actual complete narration.
@@ -49,7 +45,6 @@ Insert vapor source, lattice or diffusion only as required for this relationship
 
 For similar growth under stable conditions, directly compare corresponding arms without inventing condition changes. Add change nodes/results only when explaining how subsequent form records different stages.
 
-<a id="持续观看的纸面编排"></a>
 ## Paper planning for sustained viewing
 
 Under [opening/bridging](viewer-retention-design.md), establish visible similarity/difference, pose the question and enter the same tip. The first answer supplies enough relationship to continue, not the whole mechanism upfront.
@@ -67,7 +62,6 @@ Schedule lattice, deposition and diffusion by current-task necessity; retain adv
 
 Return to the opening's corresponding whole crystal to recognize overall arm mapping/local differences, allow enough observation, then end. Check normal-speed sample/full sound-and-picture continuity from opening location through tip growth to six-arm comparison.
 
-<a id="枝尖近景的设计卡示范"></a>
 ## Example tip-close-up design card
 
 **Observation task:** See solid matter grow beyond an existing boundary on one branch and distinguish old/new structure.
@@ -86,7 +80,6 @@ Return to the opening's corresponding whole crystal to recognize overall arm map
 
 **Motion/static duties:** Main action is boundary growth; old structures remain references. Background may stay still. Necessary slight drift must not outrank growth. Surface/view-dependent highlights must not sweep as a false signal of growing matter.
 
-<a id="资产与程序应怎样组织"></a>
 ## Organize assets and code
 
 Separate by actual action, not asset quotas:
@@ -102,7 +95,6 @@ Separate by actual action, not asset quotas:
 
 2D-generated images can supply reviewed key states/materials, not unconstrained per-frame crystal regeneration. Code maintains coordinates, states, occlusion/events. Fixed seeds give reproducibility, not natural structure/temporal continuity. Without model/experimental validation call it “生长示意”, not precise physical simulation.
 
-<a id="对照验收从空洞到有内容"></a>
 ## Comparative acceptance: from empty display to substance
 
 | Faulty approach | Possible repair | Validation evidence |

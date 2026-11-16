@@ -1,9 +1,7 @@
-<a id="候选学习补核气泡开放与液体射流断裂不是同一事件"></a>
 # Candidate Follow-Up Learning Check: Bubble Opening and Liquid-Jet Breakup Are Different Events
 
 Status: time-specific screenshot observation, partial paper-body reading, and an unexecuted transfer hypothesis on 2026-10-25 UTC. No continuous viewing, actual listening, application, or improvement validation occurred. This is not a formal standard and adds no production gate.
 
-<a id="来源及观察边界"></a>
 ## Sources and Observation Boundaries
 
 ACS/PBS Reactions, “What's That After-Rain Smell Made Of?” The PBS page lists Season 5 Episode 11, 3 minutes 58 seconds, and 2018-09-10:
@@ -19,7 +17,6 @@ In this session, the public player (1x) was operated in the assistant's cloud br
 
 These discrete images are insufficient to evaluate whole-film narrative, cut joins, motion rhythm, or ending payoff. Institutional identity does not justify prejudging the entire film as a validated excellent example. No third-party media, screenshots, or full captions were downloaded, attached, or repurposed.
 
-<a id="科学原文本轮实际读到什么"></a>
 ## Original Scientific Text: What Was Actually Read This Round
 
 Joung and Buie, “Aerosol generation by raindrop impact on soil,” Nature Communications 6:6083, 2015-01-14, DOI 10.1038/ncomms7083:
@@ -33,7 +30,6 @@ Within the paper's wettable, porous experimental surfaces that retain their stru
 
 That body text does not replace further checks of specific imaging conditions, film-opening geometry, jet-neck timing, or numerical parameters. It does not establish that every raindrop behaves this way or prove odor components, dose, or perceived intensity. Do not shrink an air bubble and turn it directly into a water drop, or treat “bubble bursting” and “liquid-jet breakup” as one object-change event.
 
-<a id="窄新增价值与待测方案"></a>
 ## Narrow Added Value and Untested Proposal
 
 Baseline: shixukai/science-video-skill main, f7af35d217b451b6ae95560465090cca8a7b3416. Existing candidates already cover source changes, material comparisons, and spatial/time scales; these are not repeated as new improvements. This follow-up's narrow question is: **can viewers distinguish opening an air space from severing a liquid connection, rather than merely seeing one small ball disappear and another fly away?** It arises from joint study of partial scientific text and limited images; it does not claim the reference film already solved it through a particular method.

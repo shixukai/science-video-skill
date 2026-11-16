@@ -1,8 +1,11 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.12; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.20; the Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
+- **Google Flow cloud production.** Generate all video and audio in the cloud (`1080p Upscaled` staging, `24 fps` native CFR cadence, serial queue ledger), use Flow for supported post-production and review steps, and deliver paired Chinese and English editions from one shared picture sequence. See [Google Flow production](skills/science-video-production/references/google-flow-production.md).
+- **Realistic direction craft and audit.** Assign each shot a truth register and verified time scale, write physical shot cards before prompts, layer event-accurate sound, and screen exports with `realistic_audit.py` and `google_flow_audit.py`. See [realistic direction](skills/science-video-production/references/realistic-direction.md).
+- **Potentially disturbing footage.** Use proportional treatment for blood, exposed organs and injuries while preserving explanatory structure, and review the actual opening, covers and exports. See [visual treatment](skills/science-video-production/references/visual-system.md#handle-potentially-disturbing-imagery).
 - **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. Maintenance source is not a production entry. On continuation, read global changes, migrate explicitly and retain old execution records.
 - **Open with context and a reason to watch.** Work backward from the first body observation; design the opening's final sentence/frame together with the body's first sentence/frame and continuously review through that observation. Topic and route may flow naturally in one sentence; do not split them merely for time fields.
 - **Explain the full requested engineering/manufacturing chain.** Organize input, principle, key processes, result and verification by topic scope. Actual explanation and observation determine duration.
@@ -23,6 +26,7 @@ Start at [SKILL.md](skills/science-video-production/SKILL.md) and read responsib
 | --- | --- |
 | Original topic, complete chain and opening | [Topic contract](skills/science-video-production/references/topic-contract.md), [opening/transitions](skills/science-video-production/references/viewer-retention-design.md) |
 | Actual tools and execution stages | [Tool routing](skills/science-video-production/references/tool-routing.md), [production checkpoints](skills/science-video-production/references/production-checkpoints.md) |
+| Realistic craft & Google Flow | [Realistic direction](skills/science-video-production/references/realistic-direction.md), [Google Flow production](skills/science-video-production/references/google-flow-production.md) |
 | Picture, annotations and covers | [Visual system](skills/science-video-production/references/visual-system.md), [precision annotation](skills/science-video-production/references/annotation-style.md) |
 | Sound | [Voice and actual listening](skills/science-video-production/references/voice-reference.md) |
 | Failures and acceptance | [Quality acceptance](skills/science-video-production/references/quality-acceptance.md) |

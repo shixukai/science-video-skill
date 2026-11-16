@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.12",
+  "version": "1.6.20",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
-    "direction": "Route by finished style: realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
+    "direction": "Route by finished style and commission: local realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), controlled 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit, and commissioned cloud production uses Google Flow with paired Chinese and English editions. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
     "art_direction": "../assets/style/bright-nature.art-direction.json",
@@ -45,7 +45,20 @@
     "runtime_policy": "reuse_existing_confirmed_project_workflow_environment_and_weights",
     "voice_policy": "reuse_confirmed_full_narration",
     "repository_policy": "bind_user_selected_or_existing_checkout_origin_and_commit; do_not_replace_or_clone_by_name",
-    "routing_precedence": "current_explicit_user_instruction > selected_video_style > default_style; topic_is_not_a_router",
+    "routing_precedence": "current_explicit_user_instruction > commissioned_production_route > selected_video_style > default_style; topic_is_not_a_router",
+    "cloud_route": {
+      "id": "google_flow",
+      "production_project": "Google Flow",
+      "video_sources": "generated_in_google_flow",
+      "audio_sources": "generated_in_google_flow_or_authorized_companion_cloud_service",
+      "delivery_languages": ["zh", "en"],
+      "native_clip_fps": 24,
+      "min_staged_clip_quality": "1080p_upscaled",
+      "serial_browser_queue": true,
+      "postproduction": "google_flow_where_supported; local_only_for_specific_capability_gaps",
+      "audit_tool": "scripts/google_flow_audit.py",
+      "guide": "references/google-flow-production.md"
+    },
     "style_routing": {
       "realistic": {
         "production_project": "MoneyPrinterTurbo",
@@ -71,7 +84,7 @@
     },
     "mixed_style": "Only within explicit project scope; each segment follows its style route and records its actual production evidence.",
     "unavailable_tool": "Report the concrete missing capability; fall back automatically from vork to Blender when local ray-query GPU or mechanism fit is absent, and never silently replace a required style route.",
-    "evidence_boundary": "Actual MoneyPrinterTurbo assembly or Blender/vork rendering required for the selected route; names, configuration, text generation and structural checks alone do not prove execution or media quality."
+    "evidence_boundary": "Bind actual MoneyPrinterTurbo assembly, Blender/vork rendering, or Google Flow generation and production evidence according to the route. Media quality requires actual review."
   },
   "audio": {
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
@@ -80,10 +93,6 @@
     "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。以自然陈述为主，不争辩、不鼓动，也不逐字念；保持同一个人的自然音色和音区，语速从容清楚，起音自然，句尾自然收住。提问像邀请对方观察，停顿顺着意思走，不做夸张表演。",
     "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
     "reuse_matching_audio": true,
-    "postprocess_example": {
-      "status": "deprecated_reference_only; active whole-narration defaults are in audio.mix_preset",
-      "replaced_by": "audio.mix_preset"
-    },
     "backend": "confirm_at_invocation",
     "provider": "Qwen",
     "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
@@ -188,7 +197,7 @@
     "no_friend_mentions": true,
     "aspect_ratio": "16:9",
     "caption_layout": "landscape_captions",
-    "default_scope": "Future new productions and explicitly requested landscape work only; preserve approved/published portrait identities and media."
+    "default_scope": "New productions default to 1920x1080 landscape; preserve approved/published portrait identities and media."
   },
   "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none.",
   "operations": {
@@ -202,12 +211,11 @@
       "enabled": true,
       "preserve_observed_setting": false,
       "unverified_result_is_not_success": true,
-      "scope": "Enable all applicable Douyin associations for authorized connected destinations, including Toutiao. Use each destination's creator page when its association is unavailable or cannot apply the required settings. Select and verify the applicable originality declaration on every supporting destination. Verify each destination independently. Current explicit overrides and commissioned work/account/version scope control. Leave unverified results pending and preserve confirmed single-platform outcomes.",
+      "scope": "Enable eligible Douyin associations for authorized destinations, including Toutiao and Xigua. Exclude Xiaohongshu from assistant-triggered submissions. Use pre-submission controls to verify settings and coverage for each destination. The user owns all Xiaohongshu clicks and all platforms' post-submission reviews. Apply the manual-click and publication review handoff in references/production-checkpoints.md.",
       "targets": [
         "douyin",
         "toutiao",
         "fanqie_video",
-        "xiaohongshu",
         "xigua"
       ],
       "trigger": "every_authorized_video_publication_on_any_configured_destination",
@@ -234,6 +242,7 @@
       "counters_independent": true,
       "completion_basis": "unique_full_episode_completed_and_G5_passed_today",
       "publication_basis": "unique_first_publication_with_verified_G7_readback_today",
+      "publication_evidence_source": "user_provided_on_request",
       "excluded_credits": [
         "failed",
         "sample",
@@ -284,6 +293,5 @@
       "operations": [],
       "policy": "Use an actual recorded user grant; preserve local grants when synchronizing maintenance changes. No repeated confirmation within the granted scope."
     }
-  },
-  "maintenance_revision": "2026-10-28-style-routing"
+  }
 }

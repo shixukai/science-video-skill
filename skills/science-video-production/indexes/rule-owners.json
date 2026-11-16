@@ -47,6 +47,18 @@
       ]
     },
     {
+      "id": "google-flow",
+      "file": "references/google-flow-production.md",
+      "owns": [
+        "google-flow-cloud-generation",
+        "bilingual-clip-budget-and-24fps-cadence",
+        "serial-1080p-upscaled-staging",
+        "dual-text-cloud-narration-and-native-foley",
+        "flow-first-postproduction-and-review",
+        "cloud-source-and-export-provenance"
+      ]
+    },
+    {
       "id": "production",
       "file": "references/production-checkpoints.md",
       "owns": [
@@ -83,6 +95,7 @@
         "caption-geometry",
         "text-deletion-test",
         "covers",
+        "potentially-disturbing-imagery-treatment",
         "finesse-positive-criteria",
         "audience-text-purpose",
         "on-frame-label-permission",
@@ -158,7 +171,15 @@
       "owns": [
         "realistic-main-picture",
         "nonrealistic-exception-scope",
-        "realistic-style-and-sample-contract"
+        "realistic-style-and-sample-contract",
+        "realistic-truth-registers-and-physical-plausibility",
+        "realistic-accessibility-and-scene-narrative",
+        "realistic-shot-cards-and-prompt-wording",
+        "realistic-layered-sound-pacing-and-grade",
+        "realistic-edit-audit-screening"
+      ],
+      "supporting_files": [
+        "references/realistic-direction.md"
       ]
     },
     {

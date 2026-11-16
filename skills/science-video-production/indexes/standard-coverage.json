@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "b7ce1e8e338c23651209ddd4d0cf5e49bc9056d60cb974cff315dcf222cba45c",
+      "sha256": "524c70714eb4f6076121d5e0bb714fff357e002f242cf09403e2fd79a9642bfb",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "451ebd07dec3cc8b48dd0aa9ef25b0f384f5b6cd642c017200913ecf5377b4a2",
+      "sha256": "3b07ffe32beb3ed2c3f2549ccd8ed03f81ba94f69040e30d16600e5ba06c7f56",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -47,7 +47,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "c9c7fc67ff15adaf7ab1a7aaf9e05cf9cfdbf98f09b5473290d11031abf5c96d",
+      "sha256": "0063b72f03e47f90340638081298f586cd72deba7f04ed009fc83bf8331827c5",
       "anchors": [
         "facts-asset-rights-and-production-statements",
         "original-visual-provenance-contract",
@@ -66,7 +66,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "8ed9c8930e1917d12c49cb3e5448b52787da1e9975ecfa96e6d1abbc15f85387",
+      "sha256": "46fa2f0344fffb3029bbf763ec7ea2e4f9b725d411e4c61ffef32dbb268ff3e5",
       "anchors": [
         "realistic-style-moneyprinterturbo-production-and-local-model-assets",
         "lock-modality-at-startup",
@@ -82,9 +82,24 @@
       ]
     },
     {
+      "owner_id": "google-flow",
+      "file": "references/google-flow-production.md",
+      "sha256": "c1161336bcff2b43253784aacc58807e58e30a4b6b163ba9339ef606d3841095",
+      "anchors": [
+        "google-flow-cloud-production",
+        "select-the-route-and-budget-bilingual-chains-at-g1",
+        "start-with-active-project-controls-pacing-and-1080p-upscaled-staging",
+        "prompting-conditioning-clean-phantoms-and-native-foley",
+        "build-a-cloud-generated-narration-master-for-each-language",
+        "edit-mix-caption-export-and-review-in-flow",
+        "audit-staged-clips-and-paired-editions-before-delivery",
+        "diagnose-by-symptom"
+      ]
+    },
+    {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "f6411211e3bf7430594810c3f660362c1811fa67faa77c91346b3de230713a88",
+      "sha256": "a7a28e353ab47de05ada8206db7e808719864efb7ae01681e086003949947e31",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -97,6 +112,7 @@
         "5-sole-entry-for-quality-judgments",
         "6-check-from-export-through-actual-platform-completion",
         "delivery-package-and-publication-receipts",
+        "manual-clicks-and-publication-review-handoff",
         "select-relevant-tags-at-publication",
         "cross-platform-association-monetization-and-download-controls",
         "declare-ai-generated-content-at-publication",
@@ -125,7 +141,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "ff7099cc34ea9b155dcad7d61cfa79d0bce3c7e7584cf8c32d9ccc9b23157345",
+      "sha256": "2f0ad8e3a6629db0073b7bd14095f77324486a337bfa74e631ac5a553a60dcba",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -147,7 +163,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "1c6e0a1b3f9d36f9a01f81a407f572583a514e457e5d97888ed6ef20a09045f1",
+      "sha256": "c448270a9574115a490894e5a70f07849846c4737476cdb75eb3e19b6261d5d3",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -158,10 +174,10 @@
         "from-cover-finish-to-controllable-dynamic-scenes",
         "actual-implementation-of-approved-designs",
         "preserve-recognition-and-give-the-topic-room",
+        "handle-potentially-disturbing-imagery",
         "pure-2d-explanation-and-real-assets",
-        "portrait-aspect-ratio-and-composition",
+        "aspect-ratio-and-frame-composition",
         "whole-film-color-and-composition-thumbnail-strip",
-        "future-landscape-work-and-moderate-approachable-treatment",
         "text-centering-and-motion",
         "body-auxiliary-text-use-and-hold",
         "audience-picture-and-delivery-records",
@@ -190,7 +206,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "33b6c91bf01b27767e7054b6432c8d449db0d36aaa4719989551c2ea185cc992",
+      "sha256": "32b041c3e34454c19220636d6986f4e7a77aeca030371a3c12b8c323d733e08b",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
@@ -210,7 +226,7 @@
     {
       "owner_id": "visual",
       "file": "references/snow-crystal-scene-example.md",
-      "sha256": "2ddeae2f382d35387e0c77abfbd4ddc219d1291b66f94469e17f441876ca5a94",
+      "sha256": "55ee4355e9d6706c6464e43a29f4bc8164ec6349164cb63b6297c79bbeef724f",
       "anchors": [
         "snow-crystal-growth-scene-and-action-design-example",
         "question-and-scientific-scope",
@@ -225,7 +241,7 @@
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "ae8de6d32eebfecc9684c5e641b0b9a14ba125438a7ce5c76dc586454afe7f78",
+      "sha256": "76ae1abb70a21ab19b410595832c1e8ba270fa35ad082fe54b4bfdf4e4b3e204",
       "anchors": [
         "video-guidance-graphics-precision-technical-annotations",
         "scope-and-approval",
@@ -239,7 +255,7 @@
     {
       "owner_id": "visual",
       "file": "references/art-direction.md",
-      "sha256": "6cd28d557a032e108c32b4f60a0ae3322704f8c850da75fe21ebf1580dca32cf",
+      "sha256": "2092aac44ad9b94bee29a84e2eb1905b9ea3306142b8adb554df4508a737f0b0",
       "anchors": [
         "professional-art-direction-and-clean-rendering",
         "bright-style-and-premium-materials",
@@ -255,7 +271,7 @@
     {
       "owner_id": "visual",
       "file": "assets/style/bright-premium-palettes.json",
-      "sha256": "813eda22a4a5901d3a9d01093ab7e6411091e908f4af2bc79101c6bfe8abc587",
+      "sha256": "b5e7ac57411ab08b247d7cf5463148c858d69b90426f7b73c264dc168abf433c",
       "anchors": []
     },
     {
@@ -291,12 +307,12 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "258086e145020c4590fcd7778b1d6537403ef876ca897708a9905cb96b113511",
+      "sha256": "3d230d1fc6bd50190c0c36fe84c2abfd6a5825181beaaaf200d645b270b17206",
       "anchors": [
-        "mandarin-narration-confirm-the-qwen-invocation-location-and-actually-listen",
+        "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
         "check-the-script-before-full-episode-synthesis",
-        "edit-mandarin-for-the-ear",
+        "edit-narration-and-dialogue-for-the-ear",
         "reuse-the-accepted-voice-before-making-new-auditions",
         "continuous-narration-and-synthesis-units",
         "one-narration-master-and-one-shared-processing-chain",
@@ -312,7 +328,7 @@
     {
       "owner_id": "shotbook",
       "file": "references/shotbook.md",
-      "sha256": "000037a317b750e44b40211634fb90ccc23ec15812bfd97653c40368a48a62f9",
+      "sha256": "06dc432787dae2c797925a69b62e7b030cfdf51be4ef8e3d9e7f405b4806226c",
       "anchors": [
         "from-finished-audio-to-verifiable-per-shot-records",
         "audio-first-without-sacrificing-the-picture",
@@ -331,7 +347,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "cab37add00846e098ff39f94336474ecdd4c3cf3c6a562b0ca278dabd0cecb7e",
+      "sha256": "a24786b5728bf65ab9c7c09e9ccbde8acbe42bfc258e1a3b925c90d9056b372f",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -359,20 +375,71 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-production.md",
-      "sha256": "02dfce71d1a1f09715cb49f3ecb6c1a5397b575bb3fd28817808a16ddbea2861",
+      "sha256": "f8d5dc06500c96f76106377f0c0af45a159d9f0379216d13523256b95f720182",
       "anchors": [
         "realistic-production-contract",
         "main-imagery-and-tool-boundaries",
         "observable-standards-for-realistic-imagery",
+        "direct-realistic-footage",
         "references-and-continuous-samples-before-production",
         "run-records",
         "declaration-structure-and-validation-scope"
       ]
     },
     {
+      "owner_id": "realism",
+      "file": "references/realistic-direction.md",
+      "sha256": "96af4f940250d66f102062d60a589f554c3ec6f91d0b8229fc52eb7aa95d1636",
+      "anchors": [
+        "realistic-direction-honest-clear-told-heard-paced-and-finished",
+        "use-this-page-by-stage",
+        "rigor-what-a-photoreal-shot-claims",
+        "assign-a-truth-register-to-every-shot",
+        "declare-and-verify-time-scale",
+        "audit-physical-plausibility-on-the-hardest-event",
+        "keep-numbers-instruments-and-readable-surfaces-honest",
+        "show-safe-procedure-frame-hazards-as-hazards",
+        "protect-evidence-colors",
+        "speak-the-register-without-slowing-the-film",
+        "accessibility-make-the-unfamiliar-feel-already-known",
+        "show-then-name-then-use",
+        "translate-magnitudes-into-things-viewers-can-picture",
+        "one-new-idea-per-shot-one-task-per-moment",
+        "let-hands-and-familiar-objects-carry-scale",
+        "analogy-shots",
+        "probe-with-a-retell",
+        "narrative-build-scenes-not-shots",
+        "choose-one-observing-stance",
+        "give-every-shot-a-job",
+        "cover-a-scene-the-way-a-crew-would",
+        "carry-one-thread",
+        "shot-cards-and-generation-prompts",
+        "write-a-shot-card-before-the-prompt",
+        "word-prompts-physically",
+        "generate-and-select-in-the-right-order",
+        "sound-make-the-pictures-world-audible",
+        "pacing-cut-by-what-the-viewer-needs",
+        "use-each-clips-usable-core",
+        "let-narration-and-the-shots-job-set-its-length",
+        "break-the-generators-cadence",
+        "choose-cut-points",
+        "texture-one-camera-one-light-one-grade",
+        "fix-a-camera-package",
+        "motion-blur-and-frame-rate",
+        "move-the-camera-as-a-real-crew-could",
+        "diagnose-the-ai-look-signature",
+        "keep-light-continuous",
+        "grade-in-a-fixed-order",
+        "resolution-and-upscaling",
+        "measure-the-edit-before-judging-it",
+        "diagnose-by-symptom",
+        "worked-example-why-does-a-drop-of-water-make-hot-oil-explode"
+      ]
+    },
+    {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "9473234ac316425f37ab767fcb780788d64f4359eed67a252447ecc703fd7027",
+      "sha256": "3ffbf1f04d7b1f5cbc64bbeaf767b8fa2fd7c22c1f508d27d3e3444c20b56ca5",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -397,7 +464,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "5c2fd88f737d69976caff77ca6545c42548f01fbe509c1417c71214590ea771c",
+      "sha256": "800512751fe8154998337410827b03edfff4133a9001cf7a6aaecf302815e9b1",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -415,7 +482,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "f9a32d88802239b7a081f215374a69c7fcf70f2286a937f75a6c6d4c7b4eea5b",
+      "sha256": "460198f2b9d8a0fe23063a5977070f3d34c0bafd0660380b6f409aeb55a0a47c",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -436,7 +503,7 @@
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "124ca0ddad5de51f0cee049b6076c24b67e7f1d2610bc1aae3fcdebf65c7488a",
+      "sha256": "d2c7edd9d52260e886092334b8f3053811645ab84e747eaff01d9890be50290f",
       "anchors": [
         "external-video-skills-adopted-methods-and-licenses",
         "small-included-reference-set-and-production-routes",
@@ -449,7 +516,7 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "dbfcdc389adaef859899ddad8f082f64aa77973e17f9daa0e6116de997dd0663",
+      "sha256": "3130ac628d3c5fbce5a5237a650e66d9a0f1a310dc15d19bcac07f1b22ee7a97",
       "anchors": [
         "one-global-skill-projects-retain-production-data-only",
         "what-projects-retain",
@@ -460,7 +527,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "98a4f2b13293b625ffac07b3ce4bab7d8e78e3c631a53e3d4b3ceba5459e5ece",
+      "sha256": "bb52c3fa830c2599db92377ccff74aae03f31628e8698554ea8fae69d3a7c0c3",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
@@ -474,7 +541,7 @@
     {
       "owner_id": "render-evidence",
       "file": "references/render-evidence.md",
-      "sha256": "80271086fdb55b4fb646882e030cff7c9bc055b35c23f5c6dbefd5d66c6075fb",
+      "sha256": "7613d880f29dcfe71a3f69eeb769bad2a4e1b2762a9a390392044198a629851e",
       "anchors": [
         "render-boundaries-and-evidence-copies",
         "alpha-check-before-the-final-assignment",

@@ -1,9 +1,7 @@
-<a id="外部视频-skills采用点与许可"></a>
 # External video Skills: adopted methods and licenses
 
 Select needed capabilities through [tool routing](tool-routing.md) and execute under [preparation/installation](tool-routing.md#preparation-and-installation-before-calls). Frozen commits, read files, license evidence and candidate state live in the [external-source index](../indexes/external-skills.json); this page lists directly usable methods/limits only.
 
-<a id="已纳入的少量参考与生产路由"></a>
 ## Small included reference set and production routes
 
 Three Apache-2.0 technical references are retained; originals, SHA-256 and full license are in [source notes](../third-party/videozero-motion-canvas/README.md). Read only for needed capability in existing Motion Canvas projects or approved 2D scope; citation does not migrate primary tools.
@@ -16,7 +14,6 @@ Three Apache-2.0 technical references are retained; originals, SHA-256 and full 
 
 Verify the Motion Canvas engine separately under its [MIT license](https://github.com/motion-canvas/motion-canvas/blob/7b91435c301d530351dcf5ebb91dd139c002e405/LICENSE); reference Apache-2.0 does not cover engine/assets/services.
 
-<a id="优先参考的来源"></a>
 ## Preferred reference sources
 
 Read the table only for methods actually missing in this shot; source index holds fixed files/license evidence.
@@ -34,7 +31,6 @@ Read the table only for methods actually missing in this shot; source index hold
 | [seedance2-skill](https://github.com/dexhunter/seedance2-skill) | Role-separated prompts for identity, structure, style, action and framing. MIT guide is not a model/renderer. |
 | [vork](https://github.com/voyager-so/vork) | Local Vulkan/Metal headless 3D/VFX engine [automatically selected by the agent](tool-routing.md#vork-execution) for suitable full 3D episodes, 3D shots or supporting field/simulation/shader/plate passes. Source-available `vork Preview License` (version-scoped commercial media permitted at v0.5.1; optional `integrations/blender` is GPL-3.0-or-later; never copy modified binaries, run `vork cloud` unauthorized or reuse example credits as filler). |
 
-<a id="scenario只接入有增量的方法"></a>
 ## Scenario: adopt only methods with added value
 
 Study selected [Scenario Skills](https://github.com/scenario-labs/skills/tree/7f4b801c7248d51b093ec365aceb114bd06139e6) texts at the fixed commit; [source index](../indexes/external-skills.json) holds license evidence/read hashes. Adopt methods, not the whole Skill family, scripts, runtime/media assets or Scenario cloud production chain.
@@ -46,14 +42,12 @@ Study selected [Scenario Skills](https://github.com/scenario-labs/skills/tree/7f
 | [Animation](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-animation/SKILL.md) | [Holds/contact](animation-scene-design.md#distinguish-holds-from-sustained-contact-before-hand-editing-curves): real-action holds, sustained contact/local curves rather than global smoothing/drift. |
 | [Lighting/rendering](https://github.com/scenario-labs/skills/blob/7f4b801c7248d51b093ec365aceb114bd06139e6/skills/dcc/blender/scenario-blender-lighting-rendering/SKILL.md) | [Optional light-group reuse](blender-execution.md#optionally-reuse-light-groups-instead-of-rerendering-every-adjustment): actual locally verified passes only; main-frame export is not multilayer capability. |
 
-Refinement, same-condition comparisons, measured input duration and clean masters already exist here; do not duplicate workflows. Do not adopt source cloud models/accounts, online display/upload, fixed candidate/retry counts, per-second extraction or scoring gates. Retain MoneyPrinterTurbo/Blender routes, local-first bandwidth requirements, clickable local review links and risk-based rechecks. External authors' tests do not validate this machine/film.
+Refinement, same-condition comparisons, measured input duration and clean masters already exist here; do not duplicate workflows. Do not adopt source cloud models/accounts, online display/upload, fixed candidate/retry counts, per-second extraction or scoring gates. Retain the Skill's primary routes (MoneyPrinterTurbo, Blender/vork, and Google Flow when commissioned), local-first bandwidth requirements, clickable local review links and risk-based rechecks. External authors' tests do not validate this machine/film.
 
-<a id="扩展检索中保留或排除的候选"></a>
 ## Candidates retained or excluded in extended research
 
 See the [source index](../indexes/external-skills.json) fields `classification`, `limitations`, `license` for full candidates/exclusions. Do not copy missing/incomplete-license sources or adopt explicitly nonproduction sources. Check current versions/relevant files when new needs arise; discovery is not an installation list.
 
-<a id="引擎服务文本传输与成本"></a>
 ## Engine, service, text transfer and costs
 
 Check referenced text, actual engines/dependencies, assets/fonts/audio and cloud terms separately. Guide defaults do not change existing voice/current primary tools.

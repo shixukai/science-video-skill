@@ -185,6 +185,101 @@ class VoiceSegmentTests(unittest.TestCase):
         self.save_generation(1)
         self.rejects("actual effective")
 
+    def configure_cloud_segments(self, language):
+        self.narration["execution"].update(mode="service", location="https://cloud.example.test/project")
+        for index, generation in enumerate(self.generations):
+            for key in ("resolved_model_revision", "model_manifest_sha256", "effective_generation_params", "load_parameters"):
+                generation.pop(key)
+            generation.update(backend="browser", provider="Fixture Cloud", model_id="fixture-model",
+                              execution=copy.deepcopy(self.narration["execution"]), voice={"language": language},
+                              cloud_evidence=self.write_json(f"cloud-job-{index}.json", {"job": index}))
+            self.save_generation(index)
+
+    def test_cloud_segments_bind_evidence_without_qwen_parameters(self):
+        self.configure_cloud_segments("Chinese")
+        packet = self.packet()
+        packet.setdefault("design", {})["production_route"] = "google_flow"
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(e.startswith(("narration:", "narration segments:")) for e in errors), errors)
+
+        self.generations[1]["cloud_evidence"]["sha256"] = "0" * 64
+        self.save_generation(1)
+        errors = checks.check_voice_segments(self.narration, self.root, cloud=True)
+        self.assertTrue(any("cloud generation evidence hash stale" in e for e in errors), errors)
+
+    def cloud_single_packet(self, language):
+        self.narration["execution"].update(mode="service", location="https://cloud.example.test/project")
+        record = {
+            "schema_version": 1, "status": "generated", "backend": "browser", "provider": "Fixture Cloud",
+            "model_id": "fixture-model", "execution": copy.deepcopy(self.narration["execution"]),
+            "voice": {"language": language}, "cloud_evidence": self.write_json("job.json", {"job": "fixture"}),
+            "input": self.ref("script.txt"), "output": self.ref("assembled.wav"),
+        }
+        packet = self.packet()
+        packet.setdefault("design", {})["production_route"] = "google_flow"
+        voice = packet["narration"]
+        voice.pop("generation_manifest")
+        voice.pop("postprocess_record")
+        voice["generation_record"] = self.write_json("cloud-generation.json", record)
+        return packet, record
+
+    def test_ready_cloud_single_generation_requires_hash_bound_service_evidence(self):
+        packet, record = self.cloud_single_packet("Chinese")
+        voice = packet["narration"]
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(e.startswith("narration:") for e in errors), errors)
+
+        voice["execution"]["mode"] = "local_project"
+        record["execution"]["mode"] = "local_project"
+        voice["generation_record"] = self.write_json("cloud-generation.json", record)
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertIn("narration: confirmed cloud service location/reference required", errors)
+
+        voice["reuse_record"] = {"status": "previously_accepted", "reference": "fixture", "audio_sha256": voice["audio_sha256"]}
+        voice.pop("generation_record")
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertIn("narration generation record: file path is missing", errors)
+
+    def test_flow_single_voice_accepts_english_only_with_a_matching_cloud_receipt(self):
+        (self.root / "script.txt").write_text("This synthetic fixture has English text.\n", encoding="utf-8")
+        self.narration.update(language="en", script_sha256=self.ref("script.txt")["sha256"])
+        packet, record = self.cloud_single_packet("English")
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(error.startswith("narration:") for error in errors), errors)
+
+        record["voice"]["language"] = "Chinese"
+        packet["narration"]["generation_record"] = self.write_json("cloud-generation.json", record)
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertIn("narration: cloud voice language must match the narration version", errors)
+
+        record["voice"]["language"] = "English"
+        packet["narration"]["generation_record"] = self.write_json("cloud-generation.json", record)
+        packet["design"].pop("production_route")
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertTrue(any(error.startswith("narration:") and "language" in error for error in errors), errors)
+
+    def test_flow_ordered_segments_bind_the_english_variant_language(self):
+        inputs = ("First, observe the motion.\n\n", "Then, notice what changes.\n")
+        (self.root / "script.txt").write_text("".join(inputs), encoding="utf-8")
+        self.manifest["script"] = self.ref("script.txt")
+        self.narration.update(language="en-US", script_sha256=self.manifest["script"]["sha256"])
+        for segment, generation, text in zip(self.manifest["segments"], self.generations, inputs):
+            name = segment["input"]["file"]
+            (self.root / name).write_text(text, encoding="utf-8")
+            segment["input"] = self.ref(name)
+            generation["input"] = {**segment["input"], "text_transformation": "none"}
+        self.configure_cloud_segments("English")
+        packet = self.packet()
+        packet.setdefault("design", {})["production_route"] = "google_flow"
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(error.startswith(("narration:", "narration segments:")) for error in errors), errors)
+
+        self.generations[1]["voice"]["language"] = "Chinese"
+        self.save_generation(1)
+        packet["narration"]["generation_manifest"] = self.narration["generation_manifest"]
+        errors, _ = checks.check(packet, self.root, "plan")
+        self.assertIn("narration segments: segment 2 cloud voice language must match the narration version", errors)
+
     def test_reason_needs_supported_kind_and_bound_evidence(self):
         self.manifest["reason"] = {"kind": "one_shot_per_scene", "note": "Convenient segmentation"}
         self.save()

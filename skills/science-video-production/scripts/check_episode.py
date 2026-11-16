@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from task_scope import cover_keys, validate_scope
 from opening_alignment_guard import check_opening_plan
 from cover_guard import validate_cover_review, LIMITS as COVER_LIMITS
-from stage_checks import Checks, validate_output_dimensions
+from stage_checks import Checks, narration_language, validate_output_dimensions
 from stage_checks import GATES, check_stage, context_sha256 as stage_context_sha256, semantic_warnings, content_scope, used_asset_ids, substantive, local_repair_scope
 
 
@@ -101,7 +101,29 @@ def canonical_sha256(value):
                                     separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
-def check_voice_segments(narration, root):
+def cloud_voice_execution(execution):
+    location = execution.get("location")
+    if (execution.get("status") != "confirmed" or execution.get("mode") != "service"
+            or not substantive(location) or not substantive(execution.get("confirmation_reference"))):
+        return False
+    try:
+        service = urlparse(location)
+        return bool(service.scheme == "https" and service.hostname and not service.username)
+    except ValueError:
+        return False
+
+
+def check_cloud_voice_generation(generated, need, evidence, label, language):
+    need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
+         and all(substantive(generated.get(key)) for key in ("backend", "provider", "model_id")),
+         label + " actual cloud synthesis provider/backend/model required")
+    voice = generated.get("voice")
+    need(isinstance(voice, dict) and language is not None and voice.get("language") == language,
+         label + " cloud voice language must match the narration version")
+    evidence(generated.get("cloud_evidence"), label + " cloud generation evidence")
+
+
+def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chinese"):
     """Bind ordered whole segments and listening evidence; never infer voice quality."""
     root = Path(root).resolve()
     errors = []
@@ -224,27 +246,33 @@ def check_voice_segments(narration, root):
         infos.append(audio_info(output_path, label))
         sources.append({"segment_id": ident, "file": output_ref.get("file"), "sha256": output_ref.get("sha256")})
         generated = read_record(segment.get("generation_record"), label + " generation record")
-        need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-             and generated.get("provider") == "Qwen" and text(generated.get("backend"))
-             and text(generated.get("model_id")), label + " actual Qwen generation record required")
+        if cloud:
+            check_cloud_voice_generation(generated, need, evidence, label, cloud_language)
+        else:
+            need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
+                 and generated.get("provider") == "Qwen" and text(generated.get("backend"))
+                 and text(generated.get("model_id")), label + " actual Qwen generation record required")
         actual_execution = obj(generated.get("execution"))
-        need(execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service")
+        confirmed_execution = (cloud_voice_execution(execution) if cloud else
+                               execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service"))
+        need(confirmed_execution
              and all(text(execution.get(k)) and actual_execution.get(k) == execution.get(k)
                      for k in ("status", "mode", "location", "confirmation_reference")),
              label + " execution differs from confirmed location")
         revision, model_hash = generated.get("resolved_model_revision"), generated.get("model_manifest_sha256")
-        if revision or model_hash:
-            need(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
-                 and bool(re.fullmatch(r"[0-9a-f]{64}", str(model_hash))), label + " model version evidence invalid")
-        else:
-            need(text(generated.get("model_version_reference")), label + " model version evidence required")
         voice = obj(generated.get("voice"))
-        need(voice.get("speaker") == "Serena" and voice.get("language") == "Chinese"
-             and text(voice.get("instruct")), label + " actual voice and instruct required")
         effective = generated.get("effective_generation_params")
         runtime = generated.get("load_parameters") if execution.get("mode") == "local_project" else generated.get("runtime_parameters")
-        need(isinstance(effective, dict) and bool(effective), label + " actual effective generation parameters required")
-        need(isinstance(runtime, dict) and bool(runtime), label + " actual runtime parameters required")
+        if not cloud:
+            if revision or model_hash:
+                need(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
+                     and bool(re.fullmatch(r"[0-9a-f]{64}", str(model_hash))), label + " model version evidence invalid")
+            else:
+                need(text(generated.get("model_version_reference")), label + " model version evidence required")
+            need(voice.get("speaker") == "Serena" and voice.get("language") == "Chinese"
+                 and text(voice.get("instruct")), label + " actual voice and instruct required")
+            need(isinstance(effective, dict) and bool(effective), label + " actual effective generation parameters required")
+            need(isinstance(runtime, dict) and bool(runtime), label + " actual runtime parameters required")
         config = {key: generated.get(key) for key in ("backend", "provider", "model_id", "resolved_model_revision",
                   "model_manifest_sha256", "model_version_reference", "voice", "effective_generation_params",
                   "actual_device", "environment")}
@@ -613,6 +641,12 @@ def check(data, root, stage):
             return None
         return target if require(target.is_file(), f"{label}: file not found: {value}") else None
 
+    def hashed_file(ref, label):
+        ref = ref if isinstance(ref, dict) else {}
+        path = local_file(ref.get("file"), label)
+        if path:
+            require(ref.get("sha256") == file_sha256(path), label + " hash stale/missing")
+
     require(data.get("schema_version") == 1, "schema_version must be 1")
     require(nonempty(data.get("episode_id")), "episode_id is missing")
     title = data.get("title", "")
@@ -680,8 +714,12 @@ def check(data, root, stage):
     if not isinstance(narration, dict):
         require(False, "narration must be an object")
         narration = {}
-    language = narration.get("language")
-    require(isinstance(language, str) and language.lower().split("-")[0] == "zh", "narration: Chinese language (zh or zh-*) required")
+    design = data.get("design")
+    cloud_narration = isinstance(design, dict) and design.get("production_route") == "google_flow"
+    ready = narration.get("status") == "ready"
+    language = narration_language(data)
+    language_requirement = "Chinese (zh or zh-*) or English (en or en-*) required for Google Flow" if cloud_narration else "Chinese language (zh or zh-*) required"
+    require(language is not None, "narration: " + language_requirement)
     require(narration.get("status") in ("pending", "ready"), "narration: status must be pending/ready")
     voice_type = narration.get("voice_type")
     require(voice_type in ("pending", "human", "synthetic"), "narration: voice_type must be pending/human/synthetic")
@@ -694,7 +732,10 @@ def check(data, root, stage):
     reused = isinstance(reuse, dict) and reuse.get("status") == "previously_accepted"
     execution = narration.get("execution", {})
     execution = execution if isinstance(execution, dict) else {}
-    if voice_type == "synthetic" and narration.get("status") == "ready" and not reused:
+    if cloud_narration and (ready or complete):
+        require(voice_type == "synthetic", "narration: the Google Flow route requires cloud-generated voiceover")
+        require(cloud_voice_execution(execution), "narration: confirmed cloud service location/reference required")
+    elif voice_type == "synthetic" and ready and not reused:
         require(execution.get("status") == "confirmed"
                 and execution.get("mode") in ("local_project", "service")
                 and nonempty(execution.get("location"))
@@ -702,23 +743,22 @@ def check(data, root, stage):
                 "narration: confirmed Qwen execution location/reference required")
     manifest_ref = narration.get("generation_manifest")
     has_manifest = bool(manifest_ref) and (not isinstance(manifest_ref, dict) or any(manifest_ref.values()))
-    if has_manifest and (narration.get("status") == "ready" or complete):
+    if has_manifest and (ready or complete):
         single_ref = narration.get("generation_record")
         has_single = bool(single_ref) and (not isinstance(single_ref, dict) or any(single_ref.values()))
-        require(voice_type == "synthetic" and not reused and not has_single,
+        require(voice_type == "synthetic" and (cloud_narration or not reused) and not has_single,
                 "narration: choose exactly one generation manifest, single generation record or accepted reuse")
-        errors.extend(check_voice_segments(narration, root))
+        errors.extend(check_voice_segments(narration, root, cloud=cloud_narration, cloud_language=language))
     if complete:
-        require(narration.get("status") == "ready" and voice_type in ("human", "synthetic"), "narration: ready Chinese voiceover required; captions/music alone are incomplete")
+        require(ready and voice_type in ("human", "synthetic"), f"narration: ready {language or 'Chinese'} voiceover required; captions/music alone are incomplete")
         require(nonempty(narration_id), "narration: recorded voiceover asset_id required")
         require(nonempty(narration.get("series_sample_reference")), "narration: first shared series voice sample reference required")
+    if complete or (cloud_narration and ready):
         if voice_type == "synthetic":
-            reuse = narration.get("reuse_record", {})
-            reused = isinstance(reuse, dict) and reuse.get("status") == "previously_accepted"
             if reused:
                 require(nonempty(reuse.get("reference")) and reuse.get("audio_sha256") == narration.get("audio_sha256")
                         and nonempty(reuse.get("audio_sha256")), "narration: existing accepted audio reference/hash required")
-            elif not has_manifest:
+            if not has_manifest and (cloud_narration or not reused):
                 record_ref = narration.get("generation_record", {})
                 record_ref = record_ref if isinstance(record_ref, dict) else {}
                 record_file = local_file(record_ref.get("file"), "narration generation record")
@@ -729,25 +769,29 @@ def check(data, root, stage):
                         require(isinstance(generated, dict), "narration: malformed generation record")
                         if not isinstance(generated, dict):
                             generated = {}
-                        require(generated.get("status") == "generated" and nonempty(generated.get("backend"))
-                                and generated.get("provider") == "Qwen"
-                                and nonempty(generated.get("model_id")), "narration: actual synthesis backend/model required")
+                        if cloud_narration:
+                            check_cloud_voice_generation(generated, require, hashed_file, "narration:", language)
+                        else:
+                            require(generated.get("status") == "generated" and nonempty(generated.get("backend"))
+                                    and generated.get("provider") == "Qwen"
+                                    and nonempty(generated.get("model_id")), "narration: actual synthesis backend/model required")
                         actual_execution = generated.get("execution", {})
                         require(isinstance(actual_execution, dict)
                                 and all(actual_execution.get(k) == execution.get(k)
                                         for k in ("status", "mode", "location", "confirmation_reference")),
                                 "narration: generation execution differs from confirmed location")
-                        revision = generated.get("resolved_model_revision")
-                        manifest = generated.get("model_manifest_sha256")
-                        if revision or manifest:
-                            require(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
-                                    and bool(re.fullmatch(r"[0-9a-f]{64}", str(manifest))),
-                                    "narration: resolved model revision/manifest required when claimed")
-                        else:
-                            require(nonempty(generated.get("model_version_reference")),
-                                    "narration: actual model version reference or unavailable-version evidence required")
-                        voice = generated.get("voice", {})
-                        require(isinstance(voice, dict) and voice.get("speaker") == "Serena" and voice.get("language") == "Chinese", "narration: current voice configuration changed")
+                        if not cloud_narration:
+                            revision = generated.get("resolved_model_revision")
+                            manifest = generated.get("model_manifest_sha256")
+                            if revision or manifest:
+                                require(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
+                                        and bool(re.fullmatch(r"[0-9a-f]{64}", str(manifest))),
+                                        "narration: resolved model revision/manifest required when claimed")
+                            else:
+                                require(nonempty(generated.get("model_version_reference")),
+                                        "narration: actual model version reference or unavailable-version evidence required")
+                            voice = generated.get("voice", {})
+                            require(isinstance(voice, dict) and voice.get("speaker") == "Serena" and voice.get("language") == "Chinese", "narration: current voice configuration changed")
                         source = generated.get("input", {})
                         require(isinstance(source, dict) and source.get("sha256") == narration.get("script_sha256")
                                 and nonempty(narration.get("script_sha256")), "narration: generation input differs from current script")
@@ -769,8 +813,8 @@ def check(data, root, stage):
                             require(output.get("sha256") == narration.get("audio_sha256"), "narration: generated output differs from actual audio")
                     except (OSError, ValueError, TypeError) as exc:
                         require(False, "narration: unreadable generation/postprocess record: " + str(exc))
-    elif narration.get("status") != "ready":
-        notes.append("narration: pending Chinese voiceover; captions/music alone are not a completed episode")
+    elif not ready:
+        notes.append(f"narration: pending {language or 'Chinese'} voiceover; captions/music alone are not a completed episode")
     # Shotbook declarations constrain the packet; they never prove visual quality.
     def seconds(value):
         try:

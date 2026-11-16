@@ -1,9 +1,7 @@
-<a id="候选学习准备把切洋葱的物理喷出与致泪化学分开"></a>
 # Candidate Learning Preparation: Separate Physical Ejection in Onion Cutting from Tear-Inducing Chemistry
 
 Status: limited reference-picture observation, first-party scientific source checks, and an unexecuted expression hypothesis. This is not a complete video-viewing record, a formal new standard, a validated method, or a conclusion that a film improved. Verification date: 2026-10-20 UTC.
 
-<a id="参考身份与真实观察边界"></a>
 ## Reference Identity and Boundaries of Actual Observation
 
 ACS/PBS Reactions, “Why Do Onions Make You Cry?”:
@@ -13,7 +11,6 @@ The PBS page lists Season 3 Episode 24, 2 minutes 18 seconds, and 2016-06-07. In
 
 The full video was not continuously watched at normal speed, and no audio was actually heard. Voiceover, music, effects, and audiovisual coordination cannot be evaluated. No independently confirmable formal cover was obtained, so the cover is not evaluated. A functioning player does not mean the reviewer watched and listened. Elapsed playback time, webpage descriptions, captions, and summaries were not used to fill these gaps. This is only a candidate awaiting complete viewing, not a film prejudged excellent because of its institutional origin.
 
-<a id="科学证据与范围"></a>
 ## Scientific Evidence and Scope
 
 1. A first-party account from the research team's institution, whose body text was actually read:
@@ -27,12 +24,10 @@ The full video was not continuously watched at normal speed, and no audio was ac
 
 The 2016 video is not treated here as a communication example for the 2025 paper, nor is it claimed to show that new research. The sources serve separate roles: candidate-reference identity and scientific research preparation.
 
-<a id="与已有候选的区别"></a>
 ## Difference from Existing Candidates
 
 The existing raindrop candidate concerns boundaries between imagery sources; the rain-smell candidate concerns material comparisons and spatial/time scales. This candidate adds the question of “what evidence each explanatory level needs within one everyday action”: physical ejection, chemical production, and sensory response cannot be merged into established causality by one attractive particle trajectory. It does not add a universal gate or repeatedly elevate existing scientific-verification or actual-viewing/listening rules.
 
-<a id="低多边形3d代表段的待测方案"></a>
 ## Untested Low-Poly 3D Representative-Segment Proposal
 
 The following is a paper A/B proposal, not a genuine before/after modification of an existing film. No current work has been located or diagnosed, no media generated, and no track, actual seconds, or review results exist. Use it in the future only while the specific film remains authorized and its original project is verifiable. This record does not resume canceled films.
@@ -48,12 +43,10 @@ For testing, retain the same explanatory task, total duration, and comparable di
 
 Only after this production and audiovisual comparison are actually complete may a limited-scope decision be made to keep, revise, or discard the proposal. Clearer understanding still cannot justify a claim of improved retention.
 
-<a id="权利与当前结果"></a>
 ## Rights and Current Results
 
 This record contains only original summaries, public links, and an unvalidated proposal, with no third-party media, screenshots, complete caption passages, private projects, or user-review records. Readable sources do not imply reusable media. No actual film has changed; no rendering, installation/synchronization, or publication occurred; no formal production rule was added.
 
-<a id="2026-10-21-补核反应参与者不等于离开组织的产物"></a>
 ## 2026-10-21 Follow-Up Check: Reaction Participants Are Not the Products Leaving the Tissue
 
 In this session, discrete paused frames were actually checked in the same PBS cloud player: 00:07 showed a partially visible title image, 00:12 a blue ball-and-stick form, and 00:42 a close-up of blade, onion cut face, and cutting board. The upper player area was incomplete in the first two frames, so they are not used for layout evaluation. 00:42 was inspected fullscreen and shows layered cross-section and cutting location, but one frame does not establish compression, rupture, or microdroplet motion. A subsequent seek operation timed out; no next frame was obtained, and no later time is invented. These added observations still are not continuous viewing. No actual listening occurred, so this film's chemical explanation or editing cannot be judged correct.

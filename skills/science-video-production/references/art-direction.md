@@ -1,12 +1,10 @@
-<a id="专业美术编排与洁净渲染"></a>
 # Professional Art Direction and Clean Rendering
 
 Use for color design, foreground/background organization, bright materials, and snow-like noise defects. Reuse existing design boards, scene cards, color thumbnail strips, and G3/G5 reviews. The methods are self-contained; they do not require installing another directing Skill or changing the primary production route.
 
-<a id="明亮风格与高级材质"></a>
 ## Bright Style and Premium Materials
 
-The default visual direction is bright, clear, and finely finished, applying to realistic footage, Blender animation, and their covers/previews. Here, “bright” means effective use of lighting: the subject's illumination, form transitions, key dark areas, and material reflections are clear, with detail retained in highlights. It does not require a light background, high-key lighting, low contrast, or a brighter entire frame. Choose light, midtone, dark, or even black backgrounds according to content, material, and composition; a dark set should still present a bright, lively subject. Reject an underlit subject, unreadable key relationships, a gray cast, or lost highlights. A dark background alone is not a failure. Reuse references within their applicable lighting, material, and action scope. A dark background does not by itself invalidate prior approval. Historical 2D references still establish only their original scope; previously rejected or canceled versions are not automatically revived.
+The default visual direction is bright, clear, and finely finished, applying to realistic footage, controlled 3D animation (Blender or vork), and their covers/previews. Here, “bright” means effective use of lighting: the subject's illumination, form transitions, key dark areas, and material reflections are clear, with detail retained in highlights. It does not require a light background, high-key lighting, low contrast, or a brighter entire frame. Choose light, midtone, dark, or even black backgrounds according to content, material, and composition; a dark set should still present a bright, lively subject. Reject an underlit subject, unreadable key relationships, a gray cast, or lost highlights. A dark background alone is not a failure. Reuse references within their applicable lighting, material, and action scope. A dark background does not by itself invalidate prior approval. Historical 2D references still establish only their original scope; previously rejected or canceled versions are not automatically revived.
 
 For 3D, apply the [general material rendering standard](material-rendering.md) and its grouped test/reuse rules. Substrate, finish and condition determine appearance; a broad highlight alone does not establish roughness.
 
@@ -18,12 +16,10 @@ In the existing G3 representative-segment and G5 actual-encoding reviews, check 
 
 A dark background is a normal art-direction choice and needs no justification in terms of a scientific phenomenon. Handle genuine observation conditions that require low illumination separately: necessary references must remain distinguishable, but do not add fictional illumination that would alter the phenomenon being explained. “Cinematic” cannot excuse an underlit subject or an entirely gray film, and “bright” cannot justify damaging a scientific phenomenon in a dark environment. When a sample is submitted for the user's judgment, provide a clickable local file link under [delivery through material links](tool-routing.md#review-media-without-repeated-uploads); review-transfer constraints still apply.
 
-<a id="配色构图与空间先设计观看次序"></a>
 ## Color, Composition, and Space: Design the Viewing Order First
 
 In existing design boards/scene cards, use actionable descriptions to establish the current observation subject and visual highlight, light/dark hierarchy, color roles, subject–foreground/background relationships, light-source/reflection shapes, and what persists across shots. “Against a deep graphite background, a broad side key light shapes the metal curve; soft local fill reveals the black interface, while the background's dark areas retain spatial layers” is more actionable than “premium, cinematic, 8K.” Visual highlights should arise from this topic's forms, material differences, changes of scale, or supported action payoffs. A luminous ring, particles, transitions, or moving lights cannot replace the mechanism itself.
 
-<a id="色彩角色与可见主次"></a>
 ### Color Roles and Visible Hierarchy
 
 - **Read value before color.** In the actual shot composition, check that contours separate from adjacent surfaces. Use a grayscale thumbnail for diagnosis when needed, then return to color and complete audiovisual playback. Light-on-light and dark-on-dark combinations are both valid, provided lighting transitions, controlled reflections, adjacent values, or spatial relationships reveal contours and motion. Do not force a background change merely because colors are similar, or let necessary parts merge and disappear. Give the main action region clear local contrast. Avoid a background that simultaneously contains the strongest highlights, saturation, and detail.
@@ -33,7 +29,6 @@ In existing design boards/scene cards, use actionable descriptions to establish 
 
 For method, see [Adobe's color contrast guidance](https://www.adobe.com/uk/creativecloud/design/discover/color-contrast.html) on value, saturation, and area contrast. [Pixar's color script](https://www.pixar.com/toy-story-2) helps explain whole-film light/color planning; it is not permission to copy its imagery or evidence that this film's appearance has been verified.
 
-<a id="前景中景和背景各自有工作"></a>
 ### Foreground, Midground, and Background Each Have a Job
 
 | Layer | Production responsibility | Symptoms requiring repair |
@@ -44,12 +39,10 @@ For method, see [Adobe's color contrast guidance](https://www.adobe.com/uk/creat
 
 Choose layers according to the shot's needs; all three need not appear at once. Build space through real distance, overlap, scale, direction, lighting, and motion parallax. Depth of field, fog, and postproduction blur must serve relationships and cannot hide model gaps. When explaining interaction between two objects, keep both key contact and comparison objects within a readable range. Refer to [Adobe's visual emphasis guidance](https://www.adobe.com/creativecloud/photography/discover/emphasis-in-photography.html) for composition, distance, and background organization, then adapt to the actual scientific subject.
 
-<a id="材质反射与配色一起设计"></a>
 ### Design Material Reflections Together with the Palette
 
 Differentiate actual surfaces under the [Blender material steps](engineering-blender.md#actual-execution-of-bright-lighting-and-materials). For metal and glossy surfaces, design the light/dark shapes they reflect, retaining broad highlight bands and midtones that explain curvature. A light striking an object does not mean the camera necessarily sees the needed reflection. Transparent parts need distinguishable edges, thickness, and a relationship to the background. Rough/matte surfaces rely on lit volume and credible surface properties. Control key, fill, local separation, and background lighting by purpose; do not impose the same light count/ratio on every shot or trace every edge with strong rim light. The [RenderMan lighting example](https://prod.renderman.pixar.com/robot-walker) may inform reflection-field organization; learn its method without taking its assets.
 
-<a id="可选方向不是已认可画风"></a>
 ### Optional Directions, Not Approved Styles
 
 When a new approach is needed, choose an applicable direction from the [palette starting points](../assets/style/bright-premium-palettes.json), adapt it to this film's objects, and record it on the existing design board. Do not render all approaches by default or override established scientific colors. Hexadecimal values are display reference colors, not linear values that can be written without conversion into every Blender shading input.
@@ -60,7 +53,6 @@ When a new approach is needed, choose an applicable direction from the [palette 
 
 - **Dark set, shaped subject lighting**: graphite, deep blue, or deep green backgrounds support a sufficiently lit subject. Key-light gradients, appropriate fill, and restrained reflection bands reveal the volume, interfaces, and contacts of metal/black materials. Preserve depth in the background and black materials. Do not raise the entire set to pale gray or leave the front unreadable while tracing only a bright rim.
 
-<a id="画面洁净度先定位雪花感的来源"></a>
 ## Image Cleanliness: Locate the Source of Snow-Like Noise First
 
 Do not add film grain, retro noise, scanlines, heavy dirt, or random bump by default to create texture. Present real material microstructure at a scale and shot size the encoding can support. Random surface details must remain stably attached to objects rather than changing arbitrarily every frame. Handle the sampler's own animated random pattern separately according to the engine; do not conflate it with material seeds.
@@ -76,7 +68,6 @@ Do not add film grain, retro noise, scanlines, heavy dirt, or random bump by def
 
 See the [Blender sampling manual](https://docs.blender.org/manual/it/4.5/render/cycles/render_settings/sampling.html) for controllable sampling/denoising settings, and the [Blender light-path manual](https://docs.blender.org/manual/th/4.5/render/cycles/render_settings/light_paths.html) for highlight-limiting tradeoffs. No sample count, exposure, or noise threshold is a universal pass number for every shot. Minimal technical-previs parameters are not a formal picture-quality standard. Required states must actually be set through supported execution parameters or scene drivers, with their real values read back; the presence of a JSON key does not establish that it took effect.
 
-<a id="把学习落实到角色与既有审查"></a>
 ## Apply the Methods Through Existing Roles and Reviews
 
 The visual role delivers actual color roles, foreground/background and focus placement, light/reflection sources, material differences, and current gaps. The animation role verifies occlusion, parallax, contact, reflections, and material stability in motion. The editing role maintains cross-shot light/color consistency and observation rhythm. The execution role checks actual parameters, raw frames, and the encoding chain. The review role states what it actually recognized in the current media and when defects appeared. Record these through existing design boards, action cards, execution receipts, and `qa.visual_frames.art`; do not add a per-episode art exam or approval chain.

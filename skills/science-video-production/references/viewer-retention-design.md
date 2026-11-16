@@ -1,4 +1,3 @@
-<a id="持续观看把解释组织成有回报的发现过程"></a>
 # Sustained viewing: organize explanation as rewarding discovery
 
 Use this for openings, section handoffs and sound-and-picture roughcuts; reuse `opening`, `payoff_steps`, action cards and stage QA. Original-topic scope is governed by the [topic contract](topic-contract.md); actual acceptance by [quality standards](quality-acceptance.md).
@@ -23,7 +22,6 @@ At G1, the parent reads the current whole draft without relying on its title, ta
 
 G2 checks this same progression in the complete sound-and-picture rough cut, using the existing normal-speed viewing; G5 checks the final film. Judge what the work conveys, not what its author intended. If only the first sentence has changed while the promise, case and conclusion still disagree, return the whole affected script for revision. Reuse valid assets and evidence; this is part of the existing gates, not an added approval stage or fixed timing quota.
 
-<a id="先建立情境和看点再进入解释"></a>
 ## Establish context and a reason to watch before explaining
 
 A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show a striking relevant visual in motion from frame 0 and land a specific observation, meaningful fact, tension or genuine question by about two seconds, as specified in [win the first two seconds](viral-appeal-and-packaging.md#win-the-first-two-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it: put context into the hook picture, never into a slow first clause or empty establishing shot before the hook. When the film explains an embedded mechanism, component or local subsystem of a larger machine, vehicle, appliance, facility or organism, putting context into the picture requires macro host-to-part orientation in the 0–5 s opening: open on either the complete host or an immediately recognizable functional host space/cabin/bay in real operation and locate where the subsystem sits inside it (via an unbroken single-take push-in or simultaneous cutaway, without forcing a distant whole-exterior shell when a functional cabin/bay already makes the host unmistakable), never a disembodied benchtop cutaway or an unrecognizable fragment floating in studio space. The responsibilities below follow the hook and may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
@@ -41,14 +39,12 @@ Engineering/manufacturing openings prioritize product tasks, performance require
 
 `opening.voiceover` stores the full opening, `curiosity_gap` its real point of interest, `viewer_payoff` the benefit, `visual_handoff` the bridge to the first body observation, and `shot_ids` the actual opening/handoff shots. Without audio record semantic order first; add real times after audio exists.
 
-<a id="让开场画面兑现应用情境"></a>
 ### Make opening pictures deliver the application context
 
 When narration describes use, show recognizable application objects/actions before materials or microscopic relationships. Device screens, instruments and interfaces are contextual assets too: show identifiable task states/feedback consistent with that spoken use, not later film shots or the same subject screenshot in every display. Dark material blocks, texture close-ups and titles cannot replace whole-machine context. Obtain/create imagery under current scientific conditions/style; arbitrary equipment footage is not evidence of a specific application.
 
 Before expansion, continuously watch/listen to the opening at normal speed through delivery of the first body observation; check first-screen recognition, reason to watch, speech rate, detail and handoff. Repair specific failures using the table below and recheck the same interval before expansion. Subtitle/cover revisions cannot close voice, subject or motion defects.
 
-<a id="从本题选择开场看点"></a>
 ## Select an opening point of interest from this topic
 
 Pick the hook from the film's strongest honest visible moment through the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-films-material), and establish the body's first observation viewers must understand; then design the short bridge between them. Connect what viewers first see, what deserves a question and what the body answers. Interest requires corresponding imagery and scientific basis, not narration rhetoric alone. The following are options, not mandatory trials/combinations for every episode:
@@ -64,10 +60,9 @@ Keep a clear main object and readable action/state on the first screen. Unrelate
 
 Check legal availability/credible production after selection, specifying missing objects/actions. Compare uncertain key approaches cheaply; multiple proposals are not mandatory each episode.
 
-<a id="把开场接成正文的第一项观察"></a>
 ## Connect the opening to the first body observation
 
-Write **the last opening sentence → the first body sentence** together and state **the just-seen result/constraint → the necessary part/relationship → the evidence actually visible in the first body shot**. If the cut already locates the subject, let it do that work. The next spoken sentence adds an observation, cause or constraint that advances the explanation. Apply the [spoken-script edit](voice-reference.md#edit-mandarin-for-the-ear) to both sides of the cut.
+Write **the last opening sentence → the first body sentence** together and state **the just-seen result/constraint → the necessary part/relationship → the evidence actually visible in the first body shot**. If the cut already locates the subject, let it do that work. The next spoken sentence adds an observation, cause or constraint that advances the explanation. Apply the [spoken-script edit](voice-reference.md#edit-narration-and-dialogue-for-the-ear) to both sides of the cut.
 
 Pair opening end/body start in `visual_handoff` / `handoff` or the action card: what remains, where to look, which shape/location/action anchor continues, and how changed object/time/scale correspond. Locate before cutting/enlarging. Clearly mark a return from product to manufacturing; attractive morphing is not real process continuity.
 
@@ -80,9 +75,8 @@ Pair opening end/body start in `visual_handoff` / `handoff` or the action card: 
 
 Use straight cuts when they already explain the relationship. Dissolves, occlusion, zooms or graphic transitions must aid space/time/mapping recognition. Avoid changing object, scale, terms, music and observation task at once. Continuous narration may cross cuts; reduce music at the first explanation. Do not default to impacts, black screens or opening logos.
 
-Transitions follow the primary route: arrange realistic work in MoneyPrinterTurbo, 3D animation in Blender. Check actual timeline/adapter capabilities first. If an effect is unavailable, use a clear straight-cut handoff rather than changing the main tool.
+Transitions follow the [selected route](tool-routing.md#lock-the-primary-tool-by-final-film-style). Check actual timeline and adapter capabilities. If an effect is unavailable, use a clear straight-cut handoff when it preserves the relationship.
 
-<a id="工程示例从应用走进芯片刻蚀"></a>
 ### Engineering example: from application to chip etching
 
 Adapt the example to actual equipment, material and process. Combine/expand semantic sections as needed without fixed shots/seconds. For a feed film the hook lab first decides the first two seconds (for example a moving macro reveal of an etched pattern with “这些线，比很多病毒还细。”); the table shows the bridge that follows the hook.
@@ -98,7 +92,6 @@ When the opening establishes protection/openings, show those objects and the rel
 
 For nature, a handoff may follow recognizable frost location → evidenced crystal features → same-region location retained into growth. Between chapters, use the previous result to enter the next observation.
 
-<a id="先定位继续观看的阻力"></a>
 ## Locate resistance to continued viewing first
 
 Mark concrete sticking points in a normal-speed short sample, revise under this table and recheck the same interval:
@@ -113,7 +106,6 @@ Mark concrete sticking points in a normal-speed short sample, revise under this 
 | Cuts, terms, legends and narration all advance simultaneously | Too little time to locate/digest | Reduce competing tasks and give the result an observation window; do not begin with acceleration, effects or more labels |
 | The question is answered but ending prolongs summary or opens another topic | Closed content still consumes time | Return to the phenomenon for recognition/judgment and aesthetic closure, then end; put necessary qualifications beside the relevant conclusion |
 
-<a id="一段结束后为什么值得看下一段"></a>
 ## Why watch the next section after this one?
 
 Connect **what is understood → what still needs inspection → the next evidence** through `payoff_steps[].contribution` and `handoff`. Reference identical content once; short shots need no separate table.
@@ -129,7 +121,6 @@ Choose among these forms of progression as the topic requires:
 
 Deliver the current observation before introducing the next necessary one; “more amazing next” or “watch to the end” cannot replace a concrete task. A concrete re-hook that opens the next specific question is encouraged; see [keep a reason to stay](viral-appeal-and-packaging.md#keep-a-reason-to-stay) for payoff cadence and escalation. Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
 
-<a id="用镜头关系表达按需使用蒙太奇"></a>
 ## Express relationships through shots; use montage as needed
 
 Design objects, changes and before/after relationships before deciding on text. Whole location → same-object/reference local entry → continuous key change → whole result usually needs motivated continuity editing; one continuous push-in is not itself montage. If removing “what is being shown” sentences destroys orientation, repair shots/actions rather than adding another title box.
@@ -142,7 +133,6 @@ Montage organizes information through purposeful shot combinations, often compre
 
 Preserve necessary uncertainty, applicability and illustration/empirical distinctions accurately in relevant narration, subtitles or existing disclosure channels; deleting picture text must not turn uncertainty into fact. Use existing action cards, `handoff` and edit timelines for mapping. G2/G3/G5 inspect orientation, state change and audiovisual correspondence without another text inventory/approval stage.
 
-<a id="把关键发现编排到声画里"></a>
 ## Stage key discoveries in sound and picture
 
 For explanatory growth, comparison, structural reveals or prediction tests, design visible delivery before decorating shots:
@@ -159,7 +149,6 @@ All three may fit one continuous action; schedule against actual audio/readabili
 
 **Aesthetic holds** specify what to appreciate, such as crystal planes or complete structure. Restrain decoration at difficult points and provide observation space after a result holds.
 
-<a id="用草排决定顺序和片长"></a>
 ## Let the roughcut determine order and duration
 
 Use current assets/audio to revise actual repetition, delay or difficult progression; verify order before art refinement. Without audio, judge only paper dependencies and leave voice rhythm unreviewed.
@@ -175,14 +164,12 @@ Use current assets/audio to revise actual repetition, delay or difficult progres
 
 Keep before/after versions and principal variables for revisions so the cause of improvement can be judged.
 
-<a id="结尾让开头的画面变得能看懂"></a>
 ## Make the opening image understandable by the ending
 
 `ending.answer` answers the original question through renewed recognition/judgment of the opening object/relationships; do not repeat the whole film or prolong closure with a new topic. Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
 
 For example, a snow-crystal case may progress from appreciating six ornate branches to recognizing similar structures from corresponding stages and local differences. Aesthetic holds serve that final observation. Music resolution, branding or repeating the title cannot alone supply satisfaction.
 
-<a id="交给制作-agent-与内部审查"></a>
 ## Handoff to production agents and internal review
 
 Give the next author/reviewer the current version, specific problem, shots/interval, preserved conditions, intended visible change and existing evidence. List new ideas as unvalidated rather than inventing prior failures.

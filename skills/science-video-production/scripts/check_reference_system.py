@@ -8,7 +8,7 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 
-OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "production", "visual", "voice", "shotbook", "quality", "realism", "engineering", "tools", "render-evidence"}
+OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "google-flow", "production", "visual", "voice", "shotbook", "quality", "realism", "engineering", "tools", "render-evidence"}
 HEX = re.compile(r"#[0-9A-Fa-f]{6}$")
 PRIVATE_ID = re.compile(r"(?:libfile_|Sentinel_)[0-9a-f]{20,}|file_[0-9a-f]{24,}")
 
@@ -258,6 +258,18 @@ def check(root):
              and 0 < hook["audio_onset_max_s"] <= hook["payload_deadline_s"]
              and 0 < hook["first_caption_max_s"] <= hook["payload_deadline_s"], "opening hook timing defaults out of range")
         need([policy["defaults"]["output"]["width"], policy["defaults"]["output"]["height"]] == limits["canvas"], "policy output must match current series default canvas")
+        audit = policy["realistic_audit"]
+        need(audit["owner"] == "references/realistic-direction.md#measure-the-edit-before-judging-it"
+             and audit["measurement_tool"] == "scripts/realistic_audit.py"
+             and (root / audit["measurement_tool"]).is_file()
+             and audit["measurement_is_not_acceptance"] is True
+             and audit["required_stages"] == [], "realistic audit must stay a screening tool owned by the realistic direction handbook")
+        flow_audit = policy["google_flow_audit"]
+        need(flow_audit["owner"] == "references/google-flow-production.md#audit-staged-clips-and-paired-editions-before-delivery"
+             and flow_audit["measurement_tool"] == "scripts/google_flow_audit.py"
+             and (root / flow_audit["measurement_tool"]).is_file()
+             and flow_audit["measurement_is_not_acceptance"] is True
+             and flow_audit["required_stages"] == [], "google flow audit must stay a screening tool owned by the google flow handbook")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
         need("cold_view" not in policy and policy["internal_review"]["real_audience_required"] is False

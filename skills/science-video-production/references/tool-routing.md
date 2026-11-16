@@ -1,30 +1,28 @@
-<a id="按制作场景调用工具"></a>
 # Invoke tools by production scenario
 
 Select the primary production tool from the table first, then add only capabilities actually missing for this task. Reuse existing models, Blender and MoneyPrinterTurbo projects.
 
 Fixed external sources, versions and licenses are in the [external-source index](../indexes/external-skills.json); verify actual installation/runtime capability in the current host.
 
-<a id="按成片风格锁定主制作工具"></a>
 ## Lock the primary tool by final-film style
 
-Determine style from the user's request/current project records, not subject category, then let the agent automatically decide whether `vork` (`vork-engine`) should serve as the 3D engine or a supporting 3D/simulation pass unless the user explicitly names a tool:
+Use the commissioned Google Flow route when selected. Otherwise determine the local route by finished visual style. The topic category never selects the route.
 
-| Final-film style | Required primary tool | Responsibilities, automatic `vork` decision and boundaries |
+| Production route or final-film style | Required primary tool | Responsibilities, automatic `vork` decision and boundaries |
 | --- | --- | --- |
+| Commissioned Google Flow cloud production (`design.production_route=google_flow`) | **Google Flow** | Generate the picture in Flow (`1080p Upscaled`, `24 fps` native CFR) using strict serial browser submission from a disk-backed prompt ledger, and generate all audible sources in Flow or a preflight-verified companion cloud service. Edit, mix, caption, export and review in Flow where supported; use local FFmpeg/post tools only for documented capability gaps (`design.flow_postproduction_gaps`). See [Google Flow production](google-flow-production.md). |
 | Realistic style (live-action appearance, including AI realism and authorized user capture) | **MoneyPrinterTurbo** | Use the existing repository for actual asset arrangement or verified compositing, accepted narration/subtitles and aspect-correct export. Local video models provide realistic clips, and the agent **automatically selects [`vork`](#vork-execution)** for supporting 3D field/wave/heatmap overlays, Slang GPU simulations, custom shader reveals or tracked-plate 3D relighting passes whenever controlled 3D/simulation explains an invisible mechanism or physical state more accurately than pure AI video generation. Models, FFmpeg joining, `vork` or Blender renders do not replace MoneyPrinterTurbo's realistic assembly role. See [realistic workflow](ai-generated-video.md). |
 | 3D-animation style (controlled 3D scenes/animation, including photorealistic 3D materials) | **Blender** or **`vork`** *(agent-selected automatically)* | Unless the user explicitly specifies Blender or `vork`, the agent automatically selects between **Blender**, **[`vork`](#vork-execution)**, or a shot/layer hybrid at G1 without asking the user to pick an engine: choose **`vork`** when the explanation centers on invisible physical fields, waves/standing-wave nodes and lobes, thermal/concentration gradients, Slang GPU particle/fluid/swarm simulations, custom procedural/optical shaders, or clean code-authored parametric/`glTF` studio mechanisms where headless JSON + hardware ray-query rendering (`std/previs` → `std/final`/`std/path`) expresses the mechanism more directly; choose **Blender** when the work requires complex multi-part mechanical CAD/mesh topology, boolean/modifier cutaways, non-rigid deformations, armatures, character rigging/mocap/lip-sync, cloth/rigid-body constraints or `.blend` library rigs/collections. Supporting audio/subtitle/mix/encode tools may be reused; AI “3D-looking” video or MoneyPrinterTurbo montage cannot replace controlled 3D rendering. See [Blender workflow](engineering-blender.md) and [`vork` execution](#vork-execution). |
 
-If no style is specified/selected in context, use the series realistic default with MoneyPrinterTurbo (automatically adding supporting `vork` passes only when a shot genuinely benefits from controlled field/simulation visuals); engineering does not automatically select 3D style. Execute existing explicit style or tool choices without asking about tools again. Later explicit user style/tool instructions control their recorded scope. Before locking `vork` as primary 3D engine or supporting pass, verify local hardware-ray-query GPU readiness (`vork --version`); if unavailable or if a `vork` sample encounters geometry/rig/denoiser limits that `std/path` or higher samples cannot resolve cleanly, route or fall back automatically to Blender (for 3D) or non-`vork` realistic assets and record the reason. Missing required style-level tools (such as neither Blender nor `vork` usable for a 3D commission, or MoneyPrinterTurbo missing for realistic assembly) must be stated explicitly while independent research, scripting and design continue.
+If neither route nor style is selected in context, use the local realistic default with MoneyPrinterTurbo and optional supporting `vork` passes. Execute existing explicit style or tool choices without asking about tools again. Later explicit user style/tool instructions control their recorded scope. Before locking `vork` as primary 3D engine or supporting pass, verify local hardware-ray-query GPU readiness (`vork --version`). If unavailable, or if `std/path` or higher samples cannot resolve a `vork` sample defect, select Blender for 3D or other applicable local realistic assets and record the reason. Report missing required tools while research, scripting and design continue.
 
 Use both realistic and 3D routes by section only within explicit mixed-style scope, recording projects/shot IDs separately. Supporting captions/arrows or an agent-selected `vork` supporting overlay inside a realistic shot do not require changing the episode's overall style route. Covers/independent 3D assets follow their commissions; video routing does not force covers through MoneyPrinterTurbo.
 
-Record style, selected main tool (`MoneyPrinterTurbo`, `Blender`, or `vork`), automatic selection rationale, project/engine version and actual input/output in brief, shot design, `execution` and (when `vork` runs) `tool_applications`. Realistic films retain MoneyPrinterTurbo calls/composites; 3D retains Blender or `vork` scene sources/build code/render records. G1 checks route and engine choice, G2/G3 samples, G5 final output; configuration tool names do not prove execution.
+Record style, selected main tool, rationale, version and actual input/output in the brief, shot design and `execution`. The local realistic route retains MoneyPrinterTurbo calls and composites, the controlled 3D route retains scene sources and render records, and the Google Flow route retains cloud generation and post-production evidence. G1 checks the route, G2/G3 the samples, and G5 the final output.
 
-<a id="本地执行最少传输与吞吐"></a>
 ## Local execution, minimal transfer and throughput
 
-Bandwidth conservation is a hard execution requirement for the parent and every subagent. Work the user's computer can perform at the required quality must run locally: asset preparation, model inference, rendering, editing, encoding, transcription/alignment, media probing and validation. Reuse local inputs and transfer only necessary changes. Apply these requirements within the selected production route and existing authorization:
+Bandwidth conservation applies to the parent and every subagent. For local routes, run capable preparation, processing and validation locally. For the Google Flow route, generate video and audio in the cloud and use Flow for each supported post-production and review step. Reuse working assets and downloads and send only the references needed for the selected operation.
 
 - **Keep processing near the data.** Reuse the installed tools, confirmed model locations, loaded models and verified assets. Run file searches, JSON/log filtering, hashes, measurements and report generation locally; return paths/IDs, concise results and relevant errors. Keep full logs, source media, weights and intermediate frame sequences locally instead of repeatedly sending them through the conversation or a remote runner.
 - **Transfer only what the next step needs.** Use local review when the reviewer has actual access and perception capability; remote media calls must satisfy the [pre-submission requirement](#review-media-without-repeated-uploads). Remote processing needs an explicitly selected service or a demonstrated local capability/capacity gap; convenience or faster remote execution alone cannot override bandwidth conservation. Reuse verified local models/assets and cached downloads; do not fetch or upload a whole project/library for a local change. Use existing authorization without adding a per-transfer permission request.
@@ -52,17 +50,15 @@ Local files do not imply local perception. Treat `view_image`, `emitImage` and i
 4. **Avoid duplicate submissions.** Assign one owner per review responsibility, media version and range; retain the separate G5 explanation and expression reviewers. Update the pre-submission entry with the actual result status and any changed crop/scale. Reuse observations for unchanged content in the same context; the parent receives paths, time-coded findings and only needed evidence, not another copy of every inspected frame. Repeat a submission only for a concrete reason such as missing detail, a new comparison or required independent review. A fresh reviewer must receive the media it needs without relying on the author's verdict; a shared path/hash is not a shared model cache. If a batch response is missing or oversized, inspect its status and resend only the missing needed items, not the whole batch automatically.
 5. **Account honestly.** When diagnosing transfer cost, count actual media-submission events and repetitions, and record locally measured derivative sizes in the existing log. File bytes are an estimate of selected payload, not measured network traffic: encoding, resizing, cache behavior, retries and protocol overhead may differ. Report wire bytes only when actually measured and scoped. Do not upload more images to investigate an upload problem or print base64/full media logs into the conversation.
 
-<a id="按需选择与应用证据"></a>
 ## Need-based selection and application evidence
 
 `tool_applications` defaults empty and records only actually selected external Skills: `need`, `selection_reason`, `source_id`, `usage_mode` (`method`/`runtime`), `read_reference` (actual version/file), `shot_ids`, `status`. Method references must be read/applied to shots without installing whole frameworks.
 
 `planned` means pending implementation. `applied` attaches `artifact_evidence` (file/SHA-256), with outcomes in existing QA. `runtime` also attaches `installation_evidence` and `execution_evidence`; valid same-version/environment evidence may be reused.
 
-<a id="逐镜选择与同目标小样"></a>
 ## Per-shot selection and same-target samples
 
-Lock the primary tool by style as above. Realistic films follow the [realistic contract](realistic-production.md), 3D the [Blender requirements](engineering-blender.md). The 2D tools below serve supporting layers or specifically commissioned 2D scope, not main production in either route. Drawings/code animation are not video-model calls.
+Lock the route as above. For Google Flow, apply [bilingual budgeting, serial `1080p Upscaled` staging and clean phantoms](google-flow-production.md#select-the-route-and-budget-bilingual-chains-at-g1) alongside the same science and observable motion checks. The tool choices below apply to local production.
 
 - Realistic atmosphere, environment establishment and opening phenomena: produce through MoneyPrinterTurbo. Prepare assets with confirmed, use-authorized local video generation, also evaluating continuous original footage with verified user authorship/use authorization. Third-party public, CC/Commons and paper footage is research only, never filler because downloadable/licensed. Generated footage is representation/illustration, not actual observation evidence. Scientific arguments still need verifiable sources; citing a paper does not introduce its video into production. Delivery provenance follows the [original-visual contract](science-and-rights.md#original-visual-provenance-contract).
 - 3D processes requiring exact structure, contact order, direction, topology, fields or mechanism states: controlled 3D (`Blender` or agent-selected [`vork`](#vork-execution) according to topology/rig versus field/simulation/parametric fit) must drive whole/local/bridge from shared geometry/state without a prior video-model trial. These requirements do not authorize silently switching a realistic episode's whole style to 3D, though a realistic episode may automatically incorporate a bounded `vork` field/simulation/cutaway overlay pass where needed. All outputs need scientific sources and actual continuous-state checks.
@@ -81,10 +77,8 @@ Use a short paired trial when a neural redraw is a plausible improvement for the
 4. **Measure time to a usable result.** Follow the existing [stage timing definitions](production-checkpoints.md#segmented-timing-and-controlled-service-reuse). Report shared preparation once and each route's preparation/control export, startup, queue, loading, execution, encoding, repairs and actual review. The redraw route includes its required Blender work: if controls come from a beauty render, include that dependency; a cheap depth/clay-export alternative is a different trial. Separate first deployment/download costs from reusable work and state cache conditions. Measure route wall time; overlapping stages are not additive. Mark untimed work and unseparated stages instead of calling execution time the full total or pure inference.
 5. **Adopt the demonstrated use, not the tool name.** A useful production method needs the required quality plus an observed quality or total-time benefit at comparable viewing conditions. A failed redraw still informs shot selection; it does not establish that all models fail. Keep unreviewed results as candidates. One short trial does not justify a series-wide engine/model change, universal speed claim, fixed low-VRAM setting, or replacing material/light work with automatic redraw.
 
-
 Recheck tool/asset changes by [affected dependencies](quality-acceptance.md#handling-failures); continuations compare [global migration](global-skill-installation.md) without hot-switching active jobs.
 
-<a id="调用前准备与安装"></a>
 ## Preparation and installation before calls
 
 1. Check existing installations, readable entrypoints, projects and dependencies; absent session listings do not mean uninstalled. Reuse verified environments without overwriting customization or downgrading for historical indices.
@@ -92,11 +86,11 @@ Recheck tool/asset changes by [affected dependencies](quality-acceptance.md#hand
 3. Read entrypoints after installation, verify versions and run the minimum needed capability with actual output binding. Library archiving follows [standing authorization](engineering-blender.md#standing-authorization-for-library-archiving).
 4. Stop a repeatedly failing dependency without new repair evidence, record gaps and continue independent work; never silently replace a locked main tool. Unlocked supporting capabilities may use existing equivalents.
 
-<a id="场景选择"></a>
 ## Scenario selection
 
 | Task | Entry and output | Execution points |
 | --- | --- | --- |
+| Google Flow video | [Cloud production](google-flow-production.md) → serial `1080p Upscaled` `24 fps` clips, paired cloud narration & stems, sibling `zh`/`en` exports | Verify active controls, cloud TTS preflight, shot timing vs `~7.0 s` usable core, native foley vs muted speech/music, `4–8 s` contact sheet, `google_flow_audit.py` and asset origins |
 | Realistic video | [MoneyPrinterTurbo workflow](ai-generated-video.md) → finished composite | Explicit order/crops, complete narration reuse, check loops/captions/publication side effects |
 | 3D animation/independent assets | [Blender production](engineering-blender.md) or agent-selected [vork execution](#vork-execution); [library search](../scripts/find_3d_assets.py) → sources, renders or assets | Search library first; agent chooses Blender vs `vork` automatically by mechanism/asset/simulation fit unless user specifies; asset-only work invents no episode audio/G3 |
 | Rigging/mocap/lip sync | [Character performance](engineering-blender.md#character-rigging-motion-capture-and-lip-sync) → editable character/action/face curves or explicit generated-video layer | Activate by shot need in Blender, reuse characters/audio; separately check skeleton, skin, retarget, contact and mouth. Candidates are not installed/tested claims |
@@ -113,14 +107,12 @@ Consult [source/capability index](../indexes/external-skills.json) for other too
 
 For complex tasks with independent work/review, delegate under [subagent coordination](subagent-orchestration.md). The parent retains overall narrative/delivery and the local producer coordinates jobs. Role definitions do not alter routes, stages or actual permissions.
 
-<a id="交给子工具的任务"></a>
 ## Assignments to supporting tools
 
 Supply question, shot/semantic timecodes, before/end states, formal narration/approved voice, applicable style/assets, aspect/fps, allowed text and output directory. Return outputs to the same episode/full narration; cuts do not select a new voice or synthesize another isolated TTS sentence.
 
 Reuse tool checks in existing stages; review content, image and listening under their owning references. Upstream colors, seconds, effects and default voices do not override this design.
 
-<a id="huashu-art-motion-执行"></a>
 ## huashu-art-motion execution
 
 Use only in approved 2D scope. Read its `references/09-视频动画语法.md` and needed syntax cards, copy `scripts/engine/` into a new episode project and freeze upstream commit/project changes. Check relationships before parameterized clips: e.g. `y1` center/satellite nodes do not directly represent condensation; use layered assets/scene code for cup wall, vapor and drops.
@@ -136,12 +128,11 @@ New environments/Chromium installation follow existing authorization/host permis
 
 Upstream code/docs are MIT, fonts their respective OFL, stroke-order derivative data Arphic; author characters/frames are demonstrations only. Check production-asset rights separately.
 
-<a id="vork-执行"></a>
 ## vork execution
 
 The agent automatically decides whether to use `vork` (`voyager-so/vork`, `source_id: "vork-engine"`)—without asking the user to choose an engine unless the user explicitly specifies one—by evaluating mechanism fit and local GPU capability:
 - **Use `vork` (full 3D episode, specific 3D shots, or supporting passes in realistic/Blender episodes)** when the visual payoff centers on invisible physical fields, electromagnetic/acoustic waves, standing-wave nodes and antinode lobes, thermal/concentration gradients, Slang GPU compute simulations (particles, fluids, swarms, field lines), custom optical/procedural/wireframe-reveal shaders, tracked-camera 3D relighting over authorized plates, or clean code-authored parametric/`glTF` studio mechanisms with transform/quaternion/material animation.
-- **Prefer `Blender` instead of `vork`** when the work requires complex multi-part mechanical CAD/mesh modeling, animated boolean/modifier cutaways, non-rigid mesh deformations, armatures, character rigging/mocap/lip-sync, cloth/soft-body/rigid-body constraint solvers, `.blend`-native shared-library rigs, or when the current host lacks a compatible hardware-ray-query GPU. In realistic-style episodes, keep final multi-shot realistic assembly, narration and captions in MoneyPrinterTurbo unless the user commissions a 3D episode.
+- **Prefer `Blender` instead of `vork`** when the work requires complex multi-part mechanical CAD/mesh modeling, animated boolean/modifier cutaways, non-rigid mesh deformations, armatures, character rigging/mocap/lip-sync, cloth/soft-body/rigid-body constraint solvers, `.blend`-native shared-library rigs, or when the current host lacks a compatible hardware-ray-query GPU. On the local realistic route, keep final multi-shot assembly, narration and captions in MoneyPrinterTurbo.
 
 1. **Local GPU runtime and setup:** Execute locally on a compatible hardware-ray-query GPU (Vulkan on NVIDIA RTX or Metal on Apple Silicon; Windows default `%LOCALAPPDATA%\Programs\vork\vork.exe`, Unix `~/.local/bin/vork`). Check `vork --version` and run `vork setup` once per build/driver to warm shader caches and verify ray queries, GPU OIDN denoising and FFmpeg `h264_nvenc`/`libx264`. Set `VORK_NO_UPDATE_NOTIFIER=1` during automated jobs. Do not send scenes or assets to `vork cloud` without explicit user cloud authorization.
 2. **Scene schema, OpenPBR and animation tracks (`version: 2`):** Query exact fields on demand with `vork help`, `vork help animation --all`, `vork help programs --all` and `vork help field <PATH>` instead of guessing parameter names:
@@ -150,7 +141,6 @@ The agent automatically decides whether to use `vork` (`voyager-so/vork`, `sourc
    - Frame ranges include both endpoints (`--frame-start 0 --frame-end N-1` renders `N` frames at `render.fps` × `render.duration`). Pre-roll simulations and camera tracks so frame 0 is already moving when used in openings or active cuts.
 3. **Profiles, HD quality and episode records:** Match `render.resolution` to episode `design.output` (default `1920x1080`). Iterate layout/blocking with `--profile std/previs` or `std/draft`, then render deliverables with `--profile std/final` (8 samples + OIDN) or `--profile std/path` when hybrid `std/final` darkens interior indirect/glossy bounces; raise `--set samples=32` (or higher) when 4/8-sample OIDN softens fine geometry edges, mottles surfaces, roughens defocus or alters sparse highlights. Probe output dimensions/fps/duration with `ffprobe`, inspect actual playback, enforce the [3D single-letter rule](spatial-typography.md) on 3D geometry, bind `tool_applications` (`source_id: "vork-engine"`, `usage_mode: "runtime"`) with installation/execution/artifact hashes, record layered provenance (`controlled_3d` separately from any `real_footage`/`ai_generated` plate, retaining `licensed_3d_model` credits and never reusing upstream `examples/` demo media as uncredited production footage), and mux silent clips against the episode's single continuous narration master. Re-verify version-scoped `vork Preview License` terms before upgrading (v0.5.1 permits commercial media output; optional `integrations/blender` is separate `GPL-3.0-or-later`).
 
-<a id="其他执行说明"></a>
 ## Other execution notes
 
 - **FFmpeg/local Mandarin ASR:** Read current tool docs before `probe.py`, processing and `check.py`. Edit before recognizing/aligning with prepared Mandarin models; default English is not a Mandarin solution. Fully offline use first verifies local weights. Without `subtitles`/`drawtext`, distinguish SRT, soft captions and burned captions; do not claim unproduced caption versions.
@@ -158,7 +148,6 @@ The agent automatically decides whether to use `vork` (`voyager-so/vork`, `sourc
 - **browser-video-recording:** Use only for necessary operation demos; it composites screenshots, not continuous capture. Explicitly set `cursor_asset`, `cursor_hotspot`, run `scripts/render_browser_demo.py --config <config> --output <new-output.mp4>`, and avoid default fullscreen masks/system-cursor capture branches. Add episode narration to silent output.
 - **Model/cloud candidates:** Verify exact entrypoints, prepared models/accounts and authorization first; do not guess commands for unknown sources. Prompt guides are not executable renderers, translators not TTS, cloud transcription not fully local processing.
 
-<a id="来源识别"></a>
 ## Source identification
 
 Use actual repositories/files/licenses in the [fixed-source index](../indexes/external-skills.json), not duplicated/mismatched post links. `video-dubbing` is not verified as executable; same-name candidates such as `app-demo-agent` require real-source checks.
