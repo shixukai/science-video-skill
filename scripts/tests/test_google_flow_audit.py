@@ -385,6 +385,75 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("non_flow_backend:edge-tts", reasons)
         self.assertIn("local_postprocess_tool:ffmpeg", reasons)
 
+    def test_catches_clickbait_telegraphese_compressed_episode_and_ping_pong_cuts(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        make_clip(zh_vid, 1920, 1080, 24, 80.0)
+        make_clip(en_vid, 1920, 1080, 24, 80.0)
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+
+        bad_zh_script = self.root / "bad_telegraphic_zh.txt"
+        bad_zh_script.write_text(
+            "圆出口竟能拉出方便便，袋熊是怎么做到的？不是方形模具，而是软硬肠壁。袋熊啃食干草。肠道慢慢脱水。"
+            "硬带压平粪面。软沟折出棱角。并非出口定型，而是末端挤压。圆环弹性撑开。"
+            "斜坡圆粒滚走，方块稳停；喂太湿会变圆。只有干纤维配软硬肠壁，才留得住路标。\n",
+            encoding="utf-8",
+        )
+        ep_zh_data["narration"]["script_file"] = "bad_telegraphic_zh.txt"
+        scopes = [{"id": f"R{i}"} for i in range(1, 6)]
+        ep_zh_data["topic"] = {"current": {"required_scope": scopes}}
+        ep_en_data["topic"] = {"current": {"required_scope": scopes}}
+        ping_pong_shots = [
+            {"id": "SH01", "duration_s": 6.0, "observation_hold_s": 0.9, "shotbook": {"realism": {"observation_level": "naked_eye"}}},
+            {"id": "SH02", "duration_s": 6.0, "observation_hold_s": 0.3, "shotbook": {"realism": {"observation_level": "not_observable"}}},
+            {"id": "SH03", "duration_s": 6.0, "observation_hold_s": 0.9, "shotbook": {"realism": {"observation_level": "naked_eye"}}},
+            {"id": "SH04", "duration_s": 6.0, "observation_hold_s": 0.3, "shotbook": {"realism": {"observation_level": "not_observable"}}},
+        ]
+        make_clip(self.clips_dir / "SH04.mp4", 1920, 1080, 24, 7.833)
+        ep_zh_data["shots"] = ping_pong_shots
+        ep_en_data["shots"] = ping_pong_shots
+        write_json(ep_zh, ep_zh_data)
+        write_json(ep_en, ep_en_data)
+
+        rep = self.root / "report_patchwork.json"
+        code, data, _ = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep),
+        ])
+        self.assertEqual(code, 1)
+        codes = set(data["summary"]["flag_codes"])
+        self.assertIn("script_ai_tone_markers", codes)
+        self.assertIn("compressed_checklist_episode", codes)
+        self.assertIn("world_ping_pong_cuts", codes)
+        zh_ai = next(f for f in data["flags"] if f["code"] == "script_ai_tone_markers" and f["edition"] == "zh")
+        ai_reasons = set(zh_ai["reasons"])
+        self.assertIn("clickbait_contrast_hook", ai_reasons)
+        self.assertIn("strawman_reversal_density", ai_reasons)
+        self.assertIn("semicolon_tail_stuffing", ai_reasons)
+        self.assertIn("slogan_closing_formula", ai_reasons)
+        self.assertTrue(any(r.startswith("telegraphic_short_sentences:") for r in ai_reasons), ai_reasons)
+
+    def test_native_720p_flow_scene_export_passes_with_1080p_staged_clips(self) -> None:
+        _, _, ep_zh, ep_en, _, _ = self._build_clean_project()
+        zh_720 = self.root / "scene_zh_720.mp4"
+        en_720 = self.root / "scene_en_720.mp4"
+        make_clip(zh_720, 1280, 720, 24, 18.0)
+        make_clip(en_720, 1280, 720, 24, 18.0)
+        for p in (ep_zh, ep_en):
+            d = json.loads(p.read_text(encoding="utf-8"))
+            d["design"]["flow_scene_export"] = "native_720p_scene"
+            d["design"]["output"] = {"width": 1280, "height": 720, "fps": 24}
+            write_json(p, d)
+        rep = self.root / "report_native_720_scene.json"
+        code, data, err = run_audit([
+            str(zh_720), "--en-video", str(en_720),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep),
+        ])
+        self.assertEqual(code, 0, f"Native 720p Flow Scene export with 1080p staged clips should pass: {err} {data}")
+        self.assertEqual(data["flags"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -35,6 +35,11 @@ PATTERNS = (
 )
 HOST_RELATIONS = ("standalone", "part_of_host")
 COLD_METHODS = ("normal_speed_continuous_av",)
+CLICKBAIT_HOOK_RE = re.compile(
+    r"(?:竟能?[^，。！？\n]{1,12}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
+    r"明明[^，。！？\n]{1,10}却[^，。！？\n]{1,10}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
+    r"^\s*(?:你以为|很多人以为|不是[^，。！？\n]{1,14}[，,]?而是))"
+)
 FRAME_W, FRAME_H, FRAME_FPS = 64, 36, 10
 AUDIO_RATE, AUDIO_WINDOW_S = 16000, 0.01
 
@@ -96,6 +101,9 @@ def check_hook_plan(opening, policy):
             need(concrete(hook.get("whole_to_part_bridge")),
                  "hook.whole_to_part_bridge concrete 0-5 s host-to-mechanism single-take/cutaway orientation plan required when host_relation=part_of_host")
     line, payload = hook.get("first_line"), hook.get("payload_clause")
+    if concrete(line):
+        need(not CLICKBAIT_HOOK_RE.search(line),
+             "avoid formulaic AI/clickbait contrast slogans in hook.first_line; describe the concrete observation in natural everyday grammar")
     if concrete(line) and concrete(payload):
         position = line.find(payload)
         need(position >= 0, "hook.payload_clause must be quoted verbatim from hook.first_line")
@@ -317,8 +325,10 @@ def _validate_report(checks, entry, label, policy, expected_sha=None, host_relat
     if expected_sha is not None:
         need(video.get("sha256") == expected_sha, "hook report must measure the current reviewed final video")
     window = report.get("window_s")
+    rep_deadline = obj(report.get("policy")).get("payload_deadline_s")
+    effective_deadline = rep_deadline if (finite(rep_deadline) and 2.0 <= rep_deadline <= policy["payload_deadline_s"]) else policy["payload_deadline_s"]
     need(isinstance(window, list) and len(window) == 2 and window[0] == 0 and finite(window[1])
-         and window[1] >= policy["payload_deadline_s"], "measurement window must start at frame 0 and cover the payload deadline")
+         and window[1] >= effective_deadline, "measurement window must start at frame 0 and cover the payload deadline")
     flags = report.get("flags")
     need(isinstance(flags, list) and all(f in FLAGS for f in flags), "known technical flag list required")
     exceptions = obj(report.get("exceptions"))

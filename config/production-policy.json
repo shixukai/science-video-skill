@@ -228,8 +228,8 @@
       "G3",
       "G5"
     ],
-    "payload_deadline_s": 2.0,
-    "payload_max_spoken_units": 10,
+    "payload_deadline_s": 3.5,
+    "payload_max_spoken_units": 20,
     "min_candidates": 3,
     "audio_onset_max_s": 0.35,
     "first_caption_max_s": 0.35,
@@ -392,6 +392,15 @@
     "native_fps": 24,
     "expected_clip_fps": 24,
     "min_short_edge_px": 1080,
+    "native_scene_short_edge_px": 720,
+    "narrative_depth": {
+      "min_scope_items_for_full_depth": 4,
+      "min_episode_cjk_chars": 450,
+      "min_cjk_chars_per_scope_item": 95,
+      "min_episode_en_words": 280,
+      "min_en_words_per_scope_item": 60,
+      "min_episode_duration_s": 135.0
+    },
     "clip_duration": {
       "max_overrun_ratio": 1.05,
       "max_overrun_s": 0.35,

@@ -252,8 +252,8 @@ def check(root):
              and hook["measurement_tool"] == "scripts/opening_hook.py"
              and (root / hook["measurement_tool"]).is_file()
              and hook["measurement_is_not_appeal_acceptance"] is True, "opening hook owner/stages/tool required")
-        need(type(hook["payload_deadline_s"]) in (int, float) and 0 < hook["payload_deadline_s"] <= 3
-             and type(hook["payload_max_spoken_units"]) is int and 4 <= hook["payload_max_spoken_units"] <= 14
+        need(type(hook["payload_deadline_s"]) in (int, float) and 0 < hook["payload_deadline_s"] <= 4.5
+             and type(hook["payload_max_spoken_units"]) is int and 8 <= hook["payload_max_spoken_units"] <= 24
              and type(hook["min_candidates"]) is int and hook["min_candidates"] >= 2
              and 0 < hook["audio_onset_max_s"] <= hook["payload_deadline_s"]
              and 0 < hook["first_caption_max_s"] <= hook["payload_deadline_s"], "opening hook timing defaults out of range")

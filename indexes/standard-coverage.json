@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "524c70714eb4f6076121d5e0bb714fff357e002f242cf09403e2fd79a9642bfb",
+      "sha256": "af77d7b212a1c34108cb2fa1e07317d42b332d98b2fbbc9a6ae310c0ab4daaeb",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "4ca0915938396ab252e920cfc7206b270e241bd2f2208feb644c4db1fb1bcf4a",
+      "sha256": "a7e3f7219e1fbc3a82ceb8aaf533eb8dafa5785d223e6a4bc64e131c834c9340",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "5a554dc4e975b352c5974035adf7b0900d788862461fb9ee3bee24151b158280",
+      "sha256": "4083d2885364c5ea6bd2a8f58429590839f5573f11b2fae37307282a7781f308",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -142,7 +142,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "2f0ad8e3a6629db0073b7bd14095f77324486a337bfa74e631ac5a553a60dcba",
+      "sha256": "2ce5233b0a450b004ec9dae3d21abbdc5bfd6abed5233d3a1280426a9a06bda3",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -309,7 +309,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "8aff1f9a00f08c66808eb0c2b2681307b181949c8b6cc8257009db8e767a8921",
+      "sha256": "5b8620024d3d2d38b772419c96e0fb7a2073a8423d20d4b34ffac98b64f32be6",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -349,7 +349,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "a24786b5728bf65ab9c7c09e9ccbde8acbe42bfc258e1a3b925c90d9056b372f",
+      "sha256": "4716585f8e66f43560469f92381e512f6dd2bf534a81223ac78d23758bab3c2f",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -391,7 +391,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-direction.md",
-      "sha256": "30d904030e96250942787b8682a99c3bf66de7daa416bf5b8d12161ddbe08d60",
+      "sha256": "17988fb1693ef9c854f850d9b28c9b907b35e20c6612cf5a5970c774c6112ea2",
       "anchors": [
         "realistic-direction-honest-clear-told-heard-paced-and-finished",
         "use-this-page-by-stage",

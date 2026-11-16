@@ -24,7 +24,18 @@ WORD_RE = re.compile(r"[A-Za-z0-9]+(?:'[A-Za-z0-9]+)?")
 LEAKED_MARKUP_RE = re.compile(r"</?(?:speak|break|phoneme|prosody|say-as|sub)\b", re.IGNORECASE)
 PROMPT_COLON_RE = re.compile(
     r"(?:^|[\n。！？])\s*(?:第[一二三四五六七八九十\d]+[步点条层关][^，。！？\n]{0,8}|"
-    r"先打破一个常识误区|一句话总结|核心在于|关键在于|原因如下|说白了)[：:]"
+    r"先打破一个常识误区|一句话总结|核心在于|关键在于|原因如下|说白了)[：:，,]"
+)
+CLICKBAIT_HOOK_RE = re.compile(
+    r"(?:竟能?[^，。！？\n]{1,12}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
+    r"明明[^，。！？\n]{1,10}却[^，。！？\n]{1,10}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事))"
+)
+STRAWMAN_REVERSAL_RE = re.compile(
+    r"(?:不是[^，。！？\n]{1,16}[，,]?而是|并非[^，。！？\n]{1,16}[，,]?而是|"
+    r"你以为[^，。！？\n]{1,16}[，,]?其实|看似[^，。！？\n]{1,16}[，,]?实则)"
+)
+SLOGAN_CLOSING_RE = re.compile(
+    r"(?:只有[^，。！？\n]{1,14}配[^，。！？\n]{1,14}[，,]才|正是[^，。！？\n]{1,20}造就了)"
 )
 PCT_RATE_RE = re.compile(r"^\s*([+-]?\d+(?:\.\d+)?)\s*%\s*$")
 
@@ -718,8 +729,27 @@ def _check_speech_and_holds(
 
     if isinstance(script_source_text, str) and script_source_text.strip():
         ai_reasons = []
-        if edition == "zh" and PROMPT_COLON_RE.search(script_source_text):
-            ai_reasons.append("prompt_header_colon")
+        raw_sents = [s.strip() for s in re.split(r"[。！？!?]+", script_source_text) if s.strip()]
+        if edition == "zh":
+            if PROMPT_COLON_RE.search(script_source_text):
+                ai_reasons.append("prompt_header_colon")
+            if CLICKBAIT_HOOK_RE.search(script_source_text):
+                ai_reasons.append("clickbait_contrast_hook")
+            if len(STRAWMAN_REVERSAL_RE.findall(script_source_text)) >= 2:
+                ai_reasons.append("strawman_reversal_density")
+            zh_sents = [len(CJK_RE.findall(s)) for s in raw_sents if len(CJK_RE.findall(s)) > 0]
+            if len(zh_sents) >= 8:
+                mean_cjk = sum(zh_sents) / len(zh_sents)
+                short_ratio = sum(1 for n in zh_sents if n <= 18) / len(zh_sents)
+                if mean_cjk < 22.0 or short_ratio >= 0.55:
+                    ai_reasons.append(f"telegraphic_short_sentences:mean={mean_cjk:.1f},short_ratio={short_ratio:.2f}")
+            tail_text = "。".join(raw_sents[-2:]) if raw_sents else ""
+            if SLOGAN_CLOSING_RE.search(tail_text):
+                ai_reasons.append("slogan_closing_formula")
+        semi_count = len(re.findall(r"[；;]", script_source_text))
+        tail_semi = any(re.search(r"[；;]", s) for s in raw_sents[-2:]) if raw_sents else False
+        if semi_count >= 2 or tail_semi:
+            ai_reasons.append("semicolon_tail_stuffing")
         blocks = [b.strip() for b in re.split(r"\r?\n\s*\r?\n", script_source_text) if b.strip()]
         if len(blocks) >= 8 and sum(1 for b in blocks if len(b) <= 95) / len(blocks) >= 0.7:
             ai_reasons.append(f"per_shot_paragraph_splitting:{len(blocks)}_blocks")
@@ -732,8 +762,113 @@ def _check_speech_and_holds(
                 }
             )
 
+    _check_narrative_depth_and_world_continuity(episode, edition, script_source_text, dur_s, policy, flags)
     _check_flow_origin_purity(episode, edition, flags)
     return {"edition": edition, "speech_rate": rate_val, "observation_holds": hold_count, "sample_units": sample_units}
+
+
+def _extract_required_scope_count(episode: dict[str, Any] | None) -> int:
+    if not isinstance(episode, dict):
+        return 0
+    scope_obj = episode.get("scope")
+    if isinstance(scope_obj, dict) and scope_obj.get("kind", "episode") != "episode":
+        return 0
+    counts = [0]
+    topic = episode.get("topic")
+    if isinstance(topic, dict):
+        cur = topic.get("current")
+        if isinstance(cur, dict) and isinstance(cur.get("required_scope"), list):
+            counts.append(len(cur["required_scope"]))
+    ta = episode.get("topic_alignment")
+    if isinstance(ta, dict) and isinstance(ta.get("coverage"), list):
+        counts.append(len(ta["coverage"]))
+    return max(counts)
+
+
+def _extract_shot_observation_level(shot: dict[str, Any]) -> str | None:
+    if isinstance(shot.get("observation_level"), str) and shot["observation_level"].strip():
+        return shot["observation_level"].strip()
+    sb = shot.get("shotbook")
+    if isinstance(sb, dict):
+        rl = sb.get("realism")
+        if isinstance(rl, dict) and isinstance(rl.get("observation_level"), str) and rl["observation_level"].strip():
+            return rl["observation_level"].strip()
+    return None
+
+
+def _check_narrative_depth_and_world_continuity(
+    episode: dict[str, Any] | None,
+    edition: str,
+    script_text: str,
+    dur_s: float | None,
+    policy: dict[str, Any],
+    flags: list[dict[str, Any]],
+) -> None:
+    if not isinstance(episode, dict):
+        return
+    depth_cfg = policy.get("narrative_depth", {})
+    min_scopes = int(depth_cfg.get("min_scope_items_for_full_depth", 4))
+    scope_count = _extract_required_scope_count(episode)
+    if scope_count >= min_scopes:
+        depth_reasons: list[str] = []
+        if edition == "zh":
+            min_zh = max(
+                int(depth_cfg.get("min_episode_cjk_chars", 450)),
+                int(depth_cfg.get("min_cjk_chars_per_scope_item", 95)) * scope_count,
+            )
+            cjk_len = len(CJK_RE.findall(script_text or ""))
+            if cjk_len < min_zh:
+                depth_reasons.append(f"cjk_chars:{cjk_len}<{min_zh}")
+        else:
+            min_en = max(
+                int(depth_cfg.get("min_episode_en_words", 280)),
+                int(depth_cfg.get("min_en_words_per_scope_item", 60)) * scope_count,
+            )
+            en_len = len(WORD_RE.findall(script_text or ""))
+            if en_len < min_en:
+                depth_reasons.append(f"en_words:{en_len}<{min_en}")
+        min_dur = float(depth_cfg.get("min_episode_duration_s", 135.0))
+        if dur_s is not None and dur_s < min_dur:
+            depth_reasons.append(f"duration_s:{round(dur_s, 2)}<{min_dur}")
+        if depth_reasons:
+            flags.append(
+                {
+                    "code": "compressed_checklist_episode",
+                    "edition": edition,
+                    "scope_count": scope_count,
+                    "reasons": depth_reasons,
+                }
+            )
+
+    shots = episode.get("shots")
+    if isinstance(shots, list):
+        seq: list[tuple[str, str | None]] = []
+        for idx, sh in enumerate(shots):
+            if isinstance(sh, dict):
+                seq.append((_extract_shot_id(sh, idx), _extract_shot_observation_level(sh)))
+        if len(seq) >= 4:
+            islands: list[str] = []
+            for idx in range(1, len(seq) - 1):
+                prev_lvl = seq[idx - 1][1]
+                cur_lvl = seq[idx][1]
+                next_lvl = seq[idx + 1][1]
+                if (
+                    prev_lvl
+                    and cur_lvl
+                    and next_lvl
+                    and prev_lvl == next_lvl
+                    and cur_lvl != prev_lvl
+                    and ("not_observable" in (prev_lvl, cur_lvl))
+                ):
+                    islands.append(f"{seq[idx][0]}:{prev_lvl}->{cur_lvl}->{next_lvl}")
+            if islands:
+                flags.append(
+                    {
+                        "code": "world_ping_pong_cuts",
+                        "edition": edition,
+                        "islands": islands,
+                    }
+                )
 
 
 def run_audit(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
@@ -840,6 +975,14 @@ def run_audit(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         editions_cfg = [("zh", exports_info.get("zh"), ep_zh, args.captions_zh), ("en", exports_info.get("en"), ep_en, args.captions_en)]
         for ed, exp, ep_obj, cap_arg in editions_cfg:
             if exp is not None:
+                scene_min_edge = min_edge
+                if (
+                    ep_obj
+                    and isinstance(ep_obj.get("design"), dict)
+                    and ep_obj["design"].get("production_route") == "google_flow"
+                    and ep_obj["design"].get("flow_scene_export") == "native_720p_scene"
+                ):
+                    scene_min_edge = int(policy.get("native_scene_short_edge_px", 720))
                 if not exp["has_video"] or not exp["has_audio"]:
                     flags.append(
                         {
@@ -849,14 +992,14 @@ def run_audit(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
                             "has_audio": exp["has_audio"],
                         }
                     )
-                elif exp["width"] is not None and exp["height"] is not None and min(exp["width"], exp["height"]) < min_edge:
+                elif exp["width"] is not None and exp["height"] is not None and min(exp["width"], exp["height"]) < scene_min_edge:
                     flags.append(
                         {
                             "code": "export_stream_mismatch",
                             "edition": ed,
                             "width": exp["width"],
                             "height": exp["height"],
-                            "min_short_edge_px": min_edge,
+                            "min_short_edge_px": scene_min_edge,
                         }
                     )
                 if ep_obj and isinstance(ep_obj.get("design"), dict) and isinstance(ep_obj["design"].get("output"), dict):

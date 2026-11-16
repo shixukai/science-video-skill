@@ -100,6 +100,20 @@ class HookPlanTests(unittest.TestCase):
         opening["hook"]["whole_to_part_bridge"] = "0-1.5s 先看到机翼下完整短舱进气，1.5-5.0s 连续半透明剖开外壳推入高压压气机级间安装位"
         self.assertEqual(check_hook_plan(opening, POLICY), [])
 
+    def test_natural_everyday_opening_passes_while_clickbait_contrast_hook_fails(self):
+        opening = good_opening()
+        opening["hook"]["first_line"] = "岩石坡上稳稳停着几颗两厘米见方的粪粒。"
+        opening["hook"]["payload_clause"] = "稳稳停着几颗两厘米见方的粪粒"
+        opening["voiceover"] = opening["hook"]["first_line"] + "它的肠道出口明明是柔软的圆环。"
+        self.assertEqual(check_hook_plan(opening, POLICY), [])
+
+        bad = good_opening()
+        bad["hook"]["first_line"] = "圆出口竟能拉出方便便，袋熊是怎么做到的？"
+        bad["hook"]["payload_clause"] = "圆出口竟能拉出方便便"
+        bad["voiceover"] = bad["hook"]["first_line"]
+        errors = check_hook_plan(bad, POLICY)
+        self.assertTrue(any("clickbait contrast slogans" in e for e in errors), errors)
+
 
 class FakeChecks:
     def __init__(self, root, qa):
@@ -143,7 +157,7 @@ class HookEvidenceTests(unittest.TestCase):
 
     def write_report(self, name="hook-final-001.json", **changes):
         report = {"schema_version": 1, "video": {"file": "final.mp4", "sha256": sha256_file(self.video)},
-                  "window_s": [0, 2.05], "flags": [], "exceptions": {}, "cold_test": copy.deepcopy(self.cold)}
+                  "window_s": [0, round(POLICY["payload_deadline_s"] + 0.05, 2)], "flags": [], "exceptions": {}, "cold_test": copy.deepcopy(self.cold)}
         report.update(changes)
         path = self.root / "exports" / name
         path.write_text(json.dumps(report, ensure_ascii=False), encoding="utf-8")

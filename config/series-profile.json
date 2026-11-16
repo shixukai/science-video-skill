@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.26",
+  "version": "1.6.27",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -54,6 +54,8 @@
       "delivery_languages": ["zh", "en"],
       "native_clip_fps": 24,
       "min_staged_clip_quality": "1080p_upscaled",
+      "desktop_viewport_min": [1440, 900],
+      "scene_export_mode": "1080p_clip_staging_and_native_720p_cloud_scene",
       "serial_browser_queue": true,
       "postproduction": "google_flow_only_no_local_resources",
       "audit_tool": "scripts/google_flow_audit.py",
@@ -90,7 +92,7 @@
     "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
     "speaker": "Serena",
     "language": "Chinese",
-    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。以自然陈述为主，不争辩、不鼓动，也不逐字念；保持同一个人的自然音色和音区，语速从容清楚，起音自然，句尾自然收住。提问像邀请对方观察，停顿顺着意思走，不做夸张表演。",
+    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。以自然日常陈述为主，不争辩、不鼓动、不逐字念，严禁短视频营销号反差腔、生造四字缩略词、对称口号式排比或押韵收尾；保持同一个人的自然音色和音区，语速从容清楚，起音自然，句尾自然收住。提问像邀请对方一起观察，停顿顺着意思走，不做夸张表演。",
     "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
     "reuse_matching_audio": true,
     "backend": "confirm_at_invocation",

@@ -251,7 +251,7 @@ Fixed generation lengths make every shot last the same time, which flattens atte
 ### Choose cut points
 
 - Cut on action, in the middle of a movement whose phase matches across the cut.
-- Group outdoor wildlife/live shots and 3D cutaway/model sequences into sustained acts rather than ping-ponging bright outdoor scenes and dark studio shots for single isolated lines; use restrained `0.20–0.30 s` dissolves only across world transitions.
+- Group outdoor wildlife/live shots and 3D cutaway/model sequences into sustained multi-shot chapters (`4–7` chained shots per chapter for multi-stage mechanisms) rather than ping-ponging bright outdoor scenes and dark studio shots on isolated single shots (`world_ping_pong_cuts` in `google_flow_audit.py`); use restrained `0.20–0.30 s` dissolves only across world transitions when the editing environment supports them, or a matched whole-to-part anatomical bridge.
 - Offset sound and picture slightly (`0.12–0.30 s` J-cuts and L-cuts inside natural breath valleys) so narration carries seamlessly across cuts instead of freezing on dead pauses before every edit.
 - Cut after a state change completes, not just before it. Never cut away during the change the narration promised.
 - Bring the referent on screen at or slightly before the noun that names it.

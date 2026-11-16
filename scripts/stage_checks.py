@@ -250,6 +250,14 @@ def legacy_failure_sha256(item):
  return digest({k:obj(item).get(k) for k in ('id','scope','note')})
 
 
+def _allows_flow_native_720p_scene(data,label):
+ design=obj(data.get('design'))
+ return (
+  design.get('production_route')=='google_flow'
+  and design.get('flow_scene_export')=='native_720p_scene'
+  and 'cover' not in str(label).lower()
+ )
+
 def output_target(data,need,label='formal video'):
  """Optional episode canvas, already bound by the existing design context."""
  design=obj(data.get('design'))
@@ -258,6 +266,8 @@ def output_target(data,need,label='formal video'):
  valid=isinstance(target,dict) and all(type(target.get(k)) is int and target[k]>0 for k in ('width','height'))
  if not need(valid,label+': design.output must contain positive integer width and height'):return None
  width,height=target['width'],target['height']
+ if _allows_flow_native_720p_scene(data,label) and (width,height) in ((1280,720),(720,1280)):
+  return width,height
  need(min(width,height)>=1080,label+': design.output short edge must be at least 1080 pixels')
  return width,height
 
@@ -266,7 +276,8 @@ def validate_output_dimensions(data,stream,need,label='formal video'):
  target=output_target(data,need,label)
  width,height=obj(stream).get('width'),obj(stream).get('height')
  if not need(all(type(v) is int and v>0 for v in (width,height)),label+': ffprobe pixel dimensions missing/invalid; positive integer width and height required'):return
- need(min(width,height)>=1080,f'{label}: actual {width}x{height} is below the 1080-pixel short-edge minimum')
+ min_edge=720 if (_allows_flow_native_720p_scene(data,label) and target in ((1280,720),(720,1280))) else 1080
+ need(min(width,height)>=min_edge,f'{label}: actual {width}x{height} is below the {min_edge}-pixel short-edge minimum')
  if target is not None:
   need((width,height)==target,f'{label}: actual {width}x{height} must match design.output {target[0]}x{target[1]} exactly')
 

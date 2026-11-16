@@ -190,6 +190,41 @@ class OutputResolutionTests(unittest.TestCase):
         self.assertEqual(errors, [])
         cover_check.assert_called_once()
 
+    def test_google_flow_native_720p_scene_allowed_only_when_explicitly_declared(self):
+        flow_scene_data = {
+            'design': {
+                'production_route': 'google_flow',
+                'flow_scene_export': 'native_720p_scene',
+                'output': {'width': 1280, 'height': 720},
+            }
+        }
+        checks_ok = Checks(flow_scene_data, self.media_root)
+        checks_ok.duration(self.media['low'], formal_output=True)
+        self.assertEqual(checks_ok.errors, [])
+
+        # Without flow_scene_export='native_720p_scene', google_flow still requires >= 1080
+        flow_default_data = {
+            'design': {
+                'production_route': 'google_flow',
+                'output': {'width': 1280, 'height': 720},
+            }
+        }
+        checks_default = Checks(flow_default_data, self.media_root)
+        checks_default.duration(self.media['low'], formal_output=True)
+        self.assertTrue(any('1080' in e for e in checks_default.errors), checks_default.errors)
+
+        # Non-Flow route with flow_scene_export='native_720p_scene' still rejects 720p
+        non_flow_data = {
+            'design': {
+                'production_route': 'local_realistic',
+                'flow_scene_export': 'native_720p_scene',
+                'output': {'width': 1280, 'height': 720},
+            }
+        }
+        checks_non_flow = Checks(non_flow_data, self.media_root)
+        checks_non_flow.duration(self.media['low'], formal_output=True)
+        self.assertTrue(any('1080' in e for e in checks_non_flow.errors), checks_non_flow.errors)
+
 
 if __name__ == '__main__':
     unittest.main()
