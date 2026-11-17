@@ -50,6 +50,8 @@ Feed platforms report two-second exits, and a recommendation feed autoplays the 
 
 Diagnose the actual opening against these failures before polishing anything else:
 
+The anti-preamble rule rejects background that delays the observation, not necessary subject naming. Apply [minimum viewer orientation](viewer-retention-design.md#orient-the-viewer-before-introducing-a-detail): put the recognizable object/function and the interesting event or question together. Do not make an unfamiliar technical detail the first payload merely to meet a short timing target; an image that experts recognize may still need a natural spoken referent for general viewers.
+
 | Failure seen in the first two seconds | Why viewers leave | Repair |
 | --- | --- | --- |
 | Context-first line such as “杯里的冰浮在水面。同样是水，结冰后为什么……” or AI clickbait slogan such as “圆出口竟能拉出方便便，它是怎么做到的？” | Context-first delays tension to 5+ seconds; compressed marketing-account contrast slogans (`竟能…怎么做到的`) and coined shorthand (`圆出口拉方块`) trigger immediate AI-voice distrust | Lead with the concrete observation in natural everyday grammar within `payload_max_spoken_units` (`20` units, `~3.5 s`): “这块冰明明是固体，落进水里却自己浮了上来。” Let the picture carry the setting |
@@ -76,7 +78,7 @@ A question is not mandatory. A specific surprising observation, a sourced extrem
 
 ### Find the hook in this film's material
 
-Before writing the first line, list the three to five most arresting visible moments anywhere in the planned film. Typical candidates are the climax reveal, an extreme close-up or cutaway, a failure or breakage, a before/after contrast, the most satisfying moment of a process, an extreme of scale or speed, and a hand acting on the object; visible human action draws attention when it is part of the real operation. Rate each for motion salience (large, fast or transforming), rarity of the view (inside, macro, slow motion), clear stakes, contrast and recognizability inside a phone-feed band. The strongest moment is often a result or climax from later in the film: open on it, then return to the start of the process with a clear signal, and record that return in `hook.return_in_body`.
+Before writing the first line, list the three to five most arresting visible moments anywhere in the planned film. Typical candidates are the climax reveal, an extreme close-up or cutaway, a failure or breakage, a before/after contrast, the most satisfying moment of a process, an extreme of scale or speed, and a hand acting on the object; visible human action draws attention when it is part of the real operation. Rate each for motion salience (large, fast or transforming), rarity of the view (inside, macro, slow motion), clear stakes, contrast and recognizability inside a phone-feed band. A result or climax from later in the film is eligible only when its subject/function and question are understandable in the opening itself; later background cannot retroactively supply a missing referent. Establish that orientation with the first readable picture and natural first line, then clearly signal any return to the process start in `hook.return_in_body`. Choose another moment when that cannot be done without overloading the opening.
 
 | `hook.pattern` | First picture (in motion at frame 0) | Front-loaded first line (examples; verify before use) |
 | --- | --- | --- |

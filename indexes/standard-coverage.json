@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "a7e3f7219e1fbc3a82ceb8aaf533eb8dafa5785d223e6a4bc64e131c834c9340",
+      "sha256": "e837f95419614beb5abbaab6ab65fb52717cf6b822c4f20377212638d073f421",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -143,11 +143,12 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "2ce5233b0a450b004ec9dae3d21abbdc5bfd6abed5233d3a1280426a9a06bda3",
+      "sha256": "a4bc5cc3d7f303edc10ae29bd5582a539f48c59d921b53ea35765caa386cf44f",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
         "establish-context-and-a-reason-to-watch-before-explaining",
+        "orient-the-viewer-before-introducing-a-detail",
         "make-opening-pictures-deliver-the-application-context",
         "select-an-opening-point-of-interest-from-this-topic",
         "connect-the-opening-to-the-first-body-observation",
