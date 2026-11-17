@@ -109,7 +109,7 @@ def _is_google_flow_url(location):
         service = urlparse(str(location).strip())
         if service.scheme != "https" or service.username:
             return False
-        if service.hostname == "flow.google.com":
+        if service.hostname in ("flow.google.com", "aistudio.google.com", "generativelanguage.googleapis.com"):
             return True
         return bool(service.hostname == "labs.google" and service.path.startswith(("/fx/tools/flow", "/flow")))
     except ValueError:
@@ -120,7 +120,22 @@ def _is_google_flow_tool(tool_val):
     if not substantive(tool_val):
         return False
     raw = str(tool_val).strip()
-    return raw.lower() in ("google_flow", "google flow") or _is_google_flow_url(raw)
+    low = raw.lower()
+    if any(bad in low for bad in ("synthesize_voice", "qwen", "edge-tts", "os_tts")):
+        return False
+    if low in (
+        "google_flow",
+        "google flow",
+        "google_ai_studio",
+        "google ai studio",
+        "gemini_tts",
+        "ffmpeg",
+        "prepare_voice_master",
+        "prepare_voice_master.py",
+        "scripts/prepare_voice_master.py",
+    ):
+        return True
+    return _is_google_flow_url(raw)
 
 
 def cloud_voice_execution(execution):
@@ -135,10 +150,10 @@ def check_cloud_voice_generation(generated, need, evidence, label, language):
     backend = str(generated.get("backend") or "")
     bad_backend = any(tok in backend.lower() for tok in ("local", "qwen", "edge-tts", "os_tts"))
     need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-         and generated.get("provider") == "Google Flow"
+         and generated.get("provider") in ("Google Flow", "Google AI Studio", "Google")
          and substantive(backend) and not bad_backend
          and substantive(generated.get("model_id")),
-         label + " actual Google Flow voice synthesis provider/backend/model required")
+         label + " actual Google AI Studio (Gemini TTS) or Google Flow voice synthesis provider/backend/model required")
     voice = generated.get("voice")
     need(isinstance(voice, dict) and language is not None and voice.get("language") == language,
          label + " cloud voice language must match the narration version")

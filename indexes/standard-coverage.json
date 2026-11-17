@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "077e7cd7b7c39ca8a9e6865f7fb09c0ad2a0d3d3ec69e9af38436dbd7d2187d9",
+      "sha256": "712e03973aa84339cbae95a08e487fe22178ead11f31f5a80f1211e74ba95ee2",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -310,7 +310,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "5b8620024d3d2d38b772419c96e0fb7a2073a8423d20d4b34ffac98b64f32be6",
+      "sha256": "ca3d95e2bb5f384542807a1be1de0988d66f98f695cdb8fc2c84cd6d011b40d8",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",

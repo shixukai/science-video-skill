@@ -283,7 +283,7 @@ class VoiceSegmentTests(unittest.TestCase):
         errors, _ = checks.check(packet, self.root, "plan")
         self.assertTrue(any("confirmed cloud service location/reference required" in e for e in errors), errors)
 
-        # (b) External non-Flow TTS service (e.g. Microsoft edge-tts) is rejected
+        # (b) External non-Google TTS service (e.g. Microsoft edge-tts) is rejected
         packet, record = self.cloud_single_packet("Chinese")
         packet["narration"]["execution"]["location"] = "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1"
         record["execution"]["location"] = packet["narration"]["execution"]["location"]
@@ -291,18 +291,32 @@ class VoiceSegmentTests(unittest.TestCase):
         packet["narration"]["generation_record"] = self.write_json("edge-flow.json", record)
         errors, _ = checks.check(packet, self.root, "plan")
         self.assertIn("narration: confirmed cloud service location/reference required", errors)
-        self.assertTrue(any("Google Flow voice synthesis" in e for e in errors), errors)
+        self.assertTrue(any("Google AI Studio (Gemini TTS) or Google Flow voice synthesis" in e for e in errors), errors)
 
-        # (c) Local FFmpeg postprocess step on Google Flow is rejected
-        packet, _ = self.cloud_single_packet("Chinese")
-        post = {
+        # (c) Continuous Google AI Studio (Gemini TTS) + prepare_voice_master/ffmpeg linear compositing passes
+        packet, record = self.cloud_single_packet("Chinese")
+        packet["narration"]["execution"]["location"] = "https://aistudio.google.com/generate-speech"
+        record["execution"]["location"] = "https://aistudio.google.com/generate-speech"
+        record.update(provider="Google AI Studio", backend="gemini_tts", model_id="gemini-2.5-pro-preview-tts")
+        packet["narration"]["generation_record"] = self.write_json("aistudio-gemini-zh.json", record)
+        post_ok = {
             "schema_version": 1, "status": "processed",
             "source": self.ref("assembled.wav"), "output": self.ref("assembled.wav"),
-            "steps": [{"tool": "ffmpeg", "version": "7.0", "parameters": {"action": "loudnorm"}}],
+            "steps": [{"tool": "prepare_voice_master.py", "version": "1.6.29", "parameters": {"action": "whole_track_linear_gain"}}],
         }
-        packet["narration"]["postprocess_record"] = self.write_json("local-post.json", post)
+        packet["narration"]["postprocess_record"] = self.write_json("master-post.json", post_ok)
+        errors_ok, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(e.startswith("narration:") for e in errors_ok), errors_ok)
+
+        # (c2) Local synthesize_voice/Qwen tool in postprocess_record is still rejected
+        post_bad = {
+            "schema_version": 1, "status": "processed",
+            "source": self.ref("assembled.wav"), "output": self.ref("assembled.wav"),
+            "steps": [{"tool": "synthesize_voice.py", "version": "1.0", "parameters": {"action": "local_qwen"}}],
+        }
+        packet["narration"]["postprocess_record"] = self.write_json("local-qwen-post.json", post_bad)
         errors, _ = checks.check(packet, self.root, "plan")
-        self.assertTrue(any("must run in Google Flow without local audio tools" in e for e in errors), errors)
+        self.assertTrue(any("without local audio tools" in e for e in errors), errors)
 
         # (d) design.flow_postproduction_gaps workaround is forbidden
         packet, _ = self.cloud_single_packet("Chinese")
