@@ -61,6 +61,49 @@ def summarize_comments(comments, owner_id=None, complete=False):
             "audience_consensus": "not_inferred"}
 
 
+def summarize_media_observations(published_version, observations):
+    """Group supplied observations, not verification; never inherit across surfaces.
+
+    Each record identifies version, surface (publication_text/captions/narration),
+    and a nonempty observation. Media records also need finite start_s/end_s.
+    Intervals describe observed coverage, not inferred subtitle boundaries.
+    """
+    if not isinstance(published_version, str) or not published_version.strip():
+        raise ValueError("published version required")
+    surfaces = {key: [] for key in ("publication_text", "captions", "narration")}
+    excluded = 0
+    for record in observations:
+        version = record.get("version")
+        if not isinstance(version, str) or not version.strip():
+            raise ValueError("observation version required")
+        surface = record.get("surface")
+        if surface not in surfaces:
+            raise ValueError("unknown observation surface")
+        note = record.get("observation")
+        if not isinstance(note, str) or not note.strip():
+            raise ValueError("actual observation required")
+        result = {"observation": note}
+        if surface != "publication_text":
+            start, end = record.get("start_s"), record.get("end_s")
+            for value in (start, end):
+                if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                    raise ValueError("finite nonnegative media observation interval required")
+            if end < start:
+                raise ValueError("observation interval reversed")
+            result.update(start_s=start, end_s=end)
+        if version != published_version:
+            excluded += 1
+            continue
+        surfaces[surface].append(result)
+    return {"published_version": published_version,
+            "surfaces": {key: {"coverage": "observed_intervals_only" if rows else "unknown",
+                               "observations": rows} for key, rows in surfaces.items()},
+            "other_version_records": excluded,
+            "scientific_correctness": "not_assessed",
+            "continuous_audiovisual_review": "not_assessed",
+            "correction_verification": "not_assessed"}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path)

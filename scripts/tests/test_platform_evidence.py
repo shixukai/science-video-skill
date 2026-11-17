@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from platform_evidence import align_observed_times, summarize_comments
+from platform_evidence import align_observed_times, summarize_comments, summarize_media_observations
 
 
 class PlatformEvidenceTests(unittest.TestCase):
@@ -62,6 +62,44 @@ class PlatformEvidenceTests(unittest.TestCase):
     def test_empty_observations_not_fabricated(self):
         self.assertEqual(align_observed_times({}), [])
         self.assertEqual(summarize_comments([], complete="yes")["coverage"], "partial_or_unknown")
+
+
+    def test_description_correction_does_not_verify_media(self):
+        result = summarize_media_observations("edit-b", [
+            {"version": "edit-b", "surface": "publication_text", "observation": "description changed"},
+            {"version": "edit-b", "surface": "captions", "observation": "earlier wording visible", "start_s": 4, "end_s": 4}])
+        self.assertEqual(result["surfaces"]["narration"]["coverage"], "unknown")
+        self.assertEqual(result["scientific_correctness"], "not_assessed")
+        self.assertEqual(result["correction_verification"], "not_assessed")
+        self.assertEqual(len(result["surfaces"]["captions"]["observations"]), 1)
+
+    def test_visible_caption_without_native_track_is_still_observation(self):
+        result = summarize_media_observations("v1", [{"version": "v1", "surface": "captions",
+            "observation": "burned-in subtitle visible; native track list empty", "start_s": 3, "end_s": 3}])
+        self.assertEqual(result["surfaces"]["captions"]["coverage"], "observed_intervals_only")
+        self.assertEqual(result["surfaces"]["narration"]["coverage"], "unknown")
+
+    def test_sampled_frames_never_become_continuous_review(self):
+        rows = [{"version": "v1", "surface": "captions", "observation": "sample text",
+                 "start_s": t, "end_s": t} for t in (1, 4, 9)]
+        result = summarize_media_observations("v1", rows)
+        self.assertEqual(result["continuous_audiovisual_review"], "not_assessed")
+        self.assertEqual([r["start_s"] for r in result["surfaces"]["captions"]["observations"]], [1, 4, 9])
+
+    def test_other_versions_cannot_supply_current_evidence(self):
+        rows = [{"version": "old", "surface": s, "observation": "reviewed", "start_s": 0, "end_s": 10}
+                for s in ("publication_text", "captions", "narration")]
+        result = summarize_media_observations("new", rows)
+        self.assertEqual(result["other_version_records"], 3)
+        self.assertTrue(all(r["coverage"] == "unknown" for r in result["surfaces"].values()))
+
+    def test_observation_identity_and_intervals_required(self):
+        with self.assertRaises(ValueError): summarize_media_observations("", [])
+        base = {"version": "v", "surface": "captions", "observation": "text", "start_s": 1, "end_s": 2}
+        for field, value in (("version", ""), ("surface", "native_tracks"), ("observation", ""),
+                             ("start_s", True), ("end_s", float("nan")), ("end_s", 0)):
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                summarize_media_observations("v", [dict(base, **{field: value})])
 
 
 if __name__ == "__main__": unittest.main()
