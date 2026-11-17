@@ -190,7 +190,7 @@ class OutputResolutionTests(unittest.TestCase):
         self.assertEqual(errors, [])
         cover_check.assert_called_once()
 
-    def test_google_flow_native_720p_scene_allowed_only_when_explicitly_declared(self):
+    def test_google_flow_native_720p_scene_cannot_lower_formal_minimum(self):
         flow_scene_data = {
             'design': {
                 'production_route': 'google_flow',
@@ -200,7 +200,10 @@ class OutputResolutionTests(unittest.TestCase):
         }
         checks_ok = Checks(flow_scene_data, self.media_root)
         checks_ok.duration(self.media['low'], formal_output=True)
-        self.assertEqual(checks_ok.errors, [])
+        self.assertTrue(any("1080" in e for e in checks_ok.errors), checks_ok.errors)
+        internal = Checks(flow_scene_data, self.media_root)
+        internal.duration(self.media["low"], formal_output=False)
+        self.assertEqual(internal.errors, [])
 
         # Without flow_scene_export='native_720p_scene', google_flow still requires >= 1080
         flow_default_data = {

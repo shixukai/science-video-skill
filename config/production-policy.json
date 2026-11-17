@@ -392,7 +392,6 @@
     "native_fps": 24,
     "expected_clip_fps": 24,
     "min_short_edge_px": 1080,
-    "native_scene_short_edge_px": 720,
     "narrative_depth": {
       "min_scope_items_for_full_depth": 4,
       "min_episode_cjk_chars": 450,

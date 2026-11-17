@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "712e03973aa84339cbae95a08e487fe22178ead11f31f5a80f1211e74ba95ee2",
+      "sha256": "428eed6fd52fc7e646a48f9ae0ec8e8211647be3c7fa1b056b773499bc8d8b35",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -351,7 +351,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "4716585f8e66f43560469f92381e512f6dd2bf534a81223ac78d23758bab3c2f",
+      "sha256": "d03204ef9f51a6941a78d79d33e2274e22c3fada2190e093cfaa73fa05e97601",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",

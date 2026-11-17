@@ -991,13 +991,6 @@ def run_audit(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         for ed, exp, ep_obj, cap_arg in editions_cfg:
             if exp is not None:
                 scene_min_edge = min_edge
-                if (
-                    ep_obj
-                    and isinstance(ep_obj.get("design"), dict)
-                    and ep_obj["design"].get("production_route") == "google_flow"
-                    and ep_obj["design"].get("flow_scene_export") == "native_720p_scene"
-                ):
-                    scene_min_edge = int(policy.get("native_scene_short_edge_px", 720))
                 if not exp["has_video"] or not exp["has_audio"]:
                     flags.append(
                         {

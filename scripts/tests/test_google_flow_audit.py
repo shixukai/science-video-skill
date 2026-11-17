@@ -447,7 +447,7 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("slogan_closing_formula", ai_reasons)
         self.assertTrue(any(r.startswith("telegraphic_short_sentences:") for r in ai_reasons), ai_reasons)
 
-    def test_native_720p_flow_scene_export_passes_with_1080p_staged_clips(self) -> None:
+    def test_native_720p_flow_scene_export_rejected_even_with_1080p_staged_clips(self) -> None:
         _, _, ep_zh, ep_en, _, _ = self._build_clean_project()
         zh_720 = self.root / "scene_zh_720.mp4"
         en_720 = self.root / "scene_en_720.mp4"
@@ -464,8 +464,9 @@ class GoogleFlowAuditTests(unittest.TestCase):
             "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
             "--clips-dir", str(self.clips_dir), "--report", str(rep),
         ])
-        self.assertEqual(code, 0, f"Native 720p Flow Scene export with 1080p staged clips should pass: {err} {data}")
-        self.assertEqual(data["flags"], [])
+        self.assertEqual(code, 1, (err, data))
+        mismatches = [f for f in data["flags"] if f["code"] == "export_stream_mismatch"]
+        self.assertEqual({f["edition"] for f in mismatches}, {"zh", "en"})
 
 
 if __name__ == "__main__":
