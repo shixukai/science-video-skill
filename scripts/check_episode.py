@@ -128,6 +128,7 @@ def _is_google_flow_tool(tool_val):
     low = raw.lower()
     if any(bad in low for bad in ("synthesize_voice", "qwen", "os_tts")):
         return False
+    stem = Path(raw.replace("\\", "/")).stem.lower()
     if low in (
         "edge-tts",
         "synthesize_edge_tts",
@@ -142,7 +143,7 @@ def _is_google_flow_tool(tool_val):
         "prepare_voice_master",
         "prepare_voice_master.py",
         "scripts/prepare_voice_master.py",
-    ):
+    ) or stem in ("edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
         return True
     return _is_google_flow_url(raw)
 
