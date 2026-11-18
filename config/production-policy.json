@@ -413,11 +413,11 @@
     "speech": {
       "cjk_chars_per_min": [
         175,
-        240
+        290
       ],
       "en_words_per_min": [
         115,
-        160
+        175
       ],
       "min_observation_hold_s": 0.8,
       "min_observation_hold_ratio": 0.15,

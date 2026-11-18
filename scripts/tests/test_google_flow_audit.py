@@ -271,9 +271,9 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertEqual(code_calm, 0, f"Calm documentary pace should pass cleanly: {err_calm} {data_calm}")
         self.assertEqual(data_calm["flags"], [])
 
-        # Rushed: ~68 CJK chars (~263 CJK/min > 240) and ~45 EN words (~175 WPM > 160) -> both flagged
-        ep_zh_data["narration"]["text"] = "高" * 68
-        ep_en_data["narration"]["text"] = " ".join(["word"] * 45)
+        # Rushed: ~85 CJK chars (~329 CJK/min > 290) and ~52 EN words (~202 WPM > 175) -> both flagged
+        ep_zh_data["narration"]["text"] = "高" * 85
+        ep_en_data["narration"]["text"] = " ".join(["word"] * 52)
         write_json(ep_zh, ep_zh_data)
         write_json(ep_en, ep_en_data)
         report_rush = self.root / "report_rush.json"
