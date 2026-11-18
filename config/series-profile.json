@@ -217,6 +217,7 @@
     "additional_requests_separate": true,
     "no_schedule_change_from_adoption": true,
     "optional_ai_creation": false,
+    "youtube_made_for_kids": false,
     "required_publication_tag": "科普",
     "platform_sync": {
       "primary": "douyin",
