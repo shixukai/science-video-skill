@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. Current version: 1.6.33; the Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.34. The Git commit identifies the exact revision.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
 - **Default voice across all routes → Microsoft Edge `edge-tts` (`zh-CN-YunxiNeural`, `+4%`).** Synthesize whole-script continuous narration via `scripts/synthesize_edge_tts.py` (`zh-CN-YunxiNeural` at `+4%`, paired with `en-US-AndrewMultilingualNeural` at `+4%` for English editions) and master linearly via `prepare_voice_master.py`.

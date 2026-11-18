@@ -47,7 +47,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "0063b72f03e47f90340638081298f586cd72deba7f04ed009fc83bf8331827c5",
+      "sha256": "8b925e81dfb5f4cf24a7fa3c6e9574a8123eacdd2ab339c40d1a298a1244a470",
       "anchors": [
         "facts-asset-rights-and-production-statements",
         "original-visual-provenance-contract",
@@ -99,7 +99,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "9a795444a7622d460b6bcf396c3bb3760534c77ca1b6b3668a8d9a1372156ec8",
+      "sha256": "43db3e895336b3ef23d27de6a1d647305f1b5ce40c7eccca7d0730b37cc84285",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",

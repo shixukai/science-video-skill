@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.33",
+  "version": "1.6.34",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -217,30 +217,35 @@
     "additional_requests_separate": true,
     "no_schedule_change_from_adoption": true,
     "optional_ai_creation": false,
+    "required_publication_tag": "科普",
     "platform_sync": {
       "primary": "douyin",
       "enabled": true,
       "preserve_observed_setting": false,
       "unverified_result_is_not_success": true,
-      "scope": "Enable eligible Douyin associations for authorized destinations, including Toutiao and Xigua. Exclude Xiaohongshu from assistant-triggered submissions. Use pre-submission controls to verify settings and coverage for each destination. The user owns all Xiaohongshu clicks and all platforms' post-submission reviews. Apply the manual-click and publication review handoff in references/production-checkpoints.md.",
+      "scope": "Use one Douyin Creator Center video composer for authorized Douyin, Xigua, Toutiao and Fanqie Novel releases. Select the requested native destinations and submit the form once.",
       "targets": [
         "douyin",
+        "xigua",
         "toutiao",
-        "fanqie_video",
-        "xigua"
+        "fanqie_novel"
       ],
-      "trigger": "every_authorized_video_publication_on_any_configured_destination",
-      "include_all_connected_supported_destinations": true,
-      "select_all_eligible_related_platform_associations": true,
-      "targets_authoritative": false,
-      "named_destination_resolution": "fanqie_video preserves the user-named Fanqie Video; verify actual supported destination/account identity rather than substituting another service"
+      "trigger": "authorized_douyin_group_publication",
+      "include_all_connected_supported_destinations": false,
+      "select_all_eligible_related_platform_associations": false,
+      "targets_authoritative": true,
+      "association_labels": {
+        "xigua": "西瓜视频",
+        "toutiao": "今日头条",
+        "fanqie_novel": "番茄小说"
+      }
     },
     "video_download": {
       "allow_download": false,
       "platforms": [
         "douyin",
         "toutiao",
-        "fanqie_video",
+        "fanqie_novel",
         "xiaohongshu",
         "xigua"
       ],
