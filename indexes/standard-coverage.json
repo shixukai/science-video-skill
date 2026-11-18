@@ -99,7 +99,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "2689c710a2c7bbaabcae7da7fc95002d40f635a0578423c75eebf3ed1bb6c381",
+      "sha256": "81439266f4af1259638a323bd11b667273016b62506270444ac9f086aa8fd9b5",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
