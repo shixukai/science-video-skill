@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.29",
+  "version": "1.6.30",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "design": {
@@ -50,15 +50,15 @@
       "id": "google_flow",
       "production_project": "Google Flow",
       "video_sources": "generated_in_google_flow",
-      "audio_sources": "continuous_whole_script_gemini_tts_in_google_ai_studio_and_google_flow_foley",
-      "zh_narration_source": "google_ai_studio_gemini_tts_continuous_whole_script",
+      "audio_sources": "continuous_whole_script_edge_tts_yunxi_plus4_and_google_flow_foley",
+      "zh_narration_source": "edge_tts_zh_cn_yunxineural_plus4_continuous_whole_script",
       "delivery_languages": ["zh", "en"],
       "native_clip_fps": 24,
       "min_staged_clip_quality": "1080p_upscaled",
       "desktop_viewport_min": [1440, 900],
-      "scene_export_mode": "1080p_clip_staging_muxed_with_continuous_gemini_tts_master",
+      "scene_export_mode": "1080p_clip_staging_muxed_with_continuous_edge_tts_master",
       "serial_browser_queue": true,
-      "postproduction": "composite_continuous_gemini_tts_with_1080p_flow_visuals",
+      "postproduction": "composite_continuous_edge_tts_with_1080p_flow_visuals",
       "audit_tool": "scripts/google_flow_audit.py",
       "guide": "references/google-flow-production.md"
     },
@@ -90,15 +90,20 @@
     "evidence_boundary": "Bind actual MoneyPrinterTurbo assembly, Blender/vork rendering, or Google Flow generation and production evidence according to the route. Media quality requires actual review."
   },
   "audio": {
-    "model": "Qwen3-TTS-12Hz-1.7B-CustomVoice",
-    "speaker": "Serena",
+    "model": "edge-tts",
+    "speaker": "zh-CN-YunxiNeural",
+    "en_speaker": "en-US-AndrewMultilingualNeural",
     "language": "Chinese",
-    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。以自然日常陈述为主，不争辩、不鼓动、不逐字念，严禁短视频营销号反差腔、生造四字缩略词、对称口号式排比或押韵收尾；保持同一个人的自然音色和音区，语速从容清楚，起音自然，句尾自然收住。提问像邀请对方一起观察，停顿顺着意思走，不做夸张表演。",
-    "runtime_parameters": "Use the confirmed project's verified runtime; local adapter examples apply only when that adapter is explicitly selected.",
+    "rate": "+4%",
+    "pitch": "+0Hz",
+    "volume": "+0%",
+    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。以自然日常陈述为主，不争辩、不鼓动、不逐字念，严禁短视频营销号反差腔、生造四字缩略词、对称口号式排比或押韵收尾；保持同一个人的自然音色和音区，语速从容清楚（edge-tts 默认 zh-CN-YunxiNeural +4%），起音自然，句尾自然收住。提问像邀请对方一起观察，停顿顺着意思走，不做夸张表演。",
+    "runtime_parameters": "Default across all routes: Microsoft Edge cloud neural TTS (edge-tts, zh-CN-YunxiNeural, rate +4%) via scripts/synthesize_edge_tts.py; optional local Qwen adapter applies only when explicitly selected.",
     "reuse_matching_audio": true,
-    "backend": "confirm_at_invocation",
-    "provider": "Qwen",
-    "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+    "backend": "edge-tts",
+    "provider": "Microsoft Edge",
+    "model_id": "edge-tts",
+    "service_endpoint": "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1",
     "execution_policy": {
       "confirmation_required": true,
       "confirmation_scope": "available_context",
@@ -113,6 +118,9 @@
     },
     "local_adapter_example": {
       "scope": "optional_local_adapter_only",
+      "provider": "Qwen",
+      "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+      "speaker": "Serena",
       "model_revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
       "runtime": {
         "device": "cpu",
@@ -121,7 +129,7 @@
       },
       "generation_params": {}
     },
-    "voice_preset_id": "mandarin-calm-serena-v1",
+    "voice_preset_id": "mandarin-yunxi-plus4-v1",
     "model_revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
     "seed": 42,
     "generation_params": {

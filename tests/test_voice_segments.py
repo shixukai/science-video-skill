@@ -283,17 +283,27 @@ class VoiceSegmentTests(unittest.TestCase):
         errors, _ = checks.check(packet, self.root, "plan")
         self.assertTrue(any("confirmed cloud service location/reference required" in e for e in errors), errors)
 
-        # (b) External non-Google TTS service (e.g. Microsoft edge-tts) is rejected
+        # (b) Default Microsoft Edge cloud neural TTS (edge-tts, zh-CN-YunxiNeural, +4%) passes cleanly on Google Flow
         packet, record = self.cloud_single_packet("Chinese")
         packet["narration"]["execution"]["location"] = "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1"
         record["execution"]["location"] = packet["narration"]["execution"]["location"]
-        record.update(provider="Microsoft", backend="edge-tts")
-        packet["narration"]["generation_record"] = self.write_json("edge-flow.json", record)
-        errors, _ = checks.check(packet, self.root, "plan")
-        self.assertIn("narration: confirmed cloud service location/reference required", errors)
-        self.assertTrue(any("Google AI Studio (Gemini TTS) or Google Flow voice synthesis" in e for e in errors), errors)
+        record.update(provider="Microsoft Edge", backend="edge-tts", model_id="edge-tts")
+        record["voice"] = {"speaker": "zh-CN-YunxiNeural", "language": "Chinese", "rate": "+4%"}
+        packet["narration"]["generation_record"] = self.write_json("edge-yunxi-flow.json", record)
+        errors_edge, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(e.startswith("narration:") for e in errors_edge), errors_edge)
 
-        # (c) Continuous Google AI Studio (Gemini TTS) + prepare_voice_master/ffmpeg linear compositing passes
+        # (b2) Unapproved non-Microsoft/non-Google TTS service or wrong Chinese speaker/rate is rejected
+        bad_packet, bad_rec = self.cloud_single_packet("Chinese")
+        bad_packet["narration"]["execution"]["location"] = "https://tts.unapproved-vendor.example/v1"
+        bad_rec["execution"]["location"] = bad_packet["narration"]["execution"]["location"]
+        bad_rec.update(provider="UnapprovedVendor", backend="os_tts")
+        bad_packet["narration"]["generation_record"] = self.write_json("bad-vendor-flow.json", bad_rec)
+        errors, _ = checks.check(bad_packet, self.root, "plan")
+        self.assertIn("narration: confirmed cloud service location/reference required", errors)
+        self.assertTrue(any("edge-tts (Microsoft Edge)" in e for e in errors), errors)
+
+        # (c) Continuous Google AI Studio (Gemini TTS) + prepare_voice_master/ffmpeg linear compositing also passes
         packet, record = self.cloud_single_packet("Chinese")
         packet["narration"]["execution"]["location"] = "https://aistudio.google.com/generate-speech"
         record["execution"]["location"] = "https://aistudio.google.com/generate-speech"
@@ -302,7 +312,7 @@ class VoiceSegmentTests(unittest.TestCase):
         post_ok = {
             "schema_version": 1, "status": "processed",
             "source": self.ref("assembled.wav"), "output": self.ref("assembled.wav"),
-            "steps": [{"tool": "prepare_voice_master.py", "version": "1.6.29", "parameters": {"action": "whole_track_linear_gain"}}],
+            "steps": [{"tool": "prepare_voice_master.py", "version": "1.6.30", "parameters": {"action": "whole_track_linear_gain"}}],
         }
         packet["narration"]["postprocess_record"] = self.write_json("master-post.json", post_ok)
         errors_ok, _ = checks.check(packet, self.root, "plan")

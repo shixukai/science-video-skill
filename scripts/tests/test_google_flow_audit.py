@@ -329,30 +329,46 @@ class GoogleFlowAuditTests(unittest.TestCase):
         ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
         ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
 
-        # Clean Google AI Studio (Gemini TTS) continuous ZH + Google Flow EN + linear mastering/compositing should pass
-        clean_gen_zh = self.root / "aistudio_gen_zh.json"
-        write_json(clean_gen_zh, {"provider": "Google AI Studio", "backend": "gemini_tts", "model_id": "gemini-2.5-pro-preview-tts"})
+        # Default Microsoft Edge edge-tts (zh-CN-YunxiNeural +4%) continuous ZH + EN + linear mastering/compositing should pass
+        clean_gen_zh = self.root / "edge_gen_zh.json"
+        write_json(
+            clean_gen_zh,
+            {
+                "provider": "Microsoft Edge",
+                "backend": "edge-tts",
+                "model_id": "edge-tts",
+                "voice": {"speaker": "zh-CN-YunxiNeural", "language": "Chinese", "rate": "+4%"},
+            },
+        )
         clean_post_zh = self.root / "master_post_zh.json"
-        write_json(clean_post_zh, {"steps": [{"tool": "prepare_voice_master.py"}, {"tool": "ffmpeg"}]})
+        write_json(clean_post_zh, {"steps": [{"tool": "synthesize_edge_tts.py"}, {"tool": "prepare_voice_master.py"}, {"tool": "ffmpeg"}]})
         ep_zh_data["narration"]["execution"] = {
             "status": "confirmed",
             "mode": "service",
-            "location": "https://aistudio.google.com/generate-speech",
+            "location": "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1",
         }
-        ep_zh_data["narration"]["generation_record"] = {"file": "aistudio_gen_zh.json"}
+        ep_zh_data["narration"]["generation_record"] = {"file": "edge_gen_zh.json"}
         ep_zh_data["narration"]["postprocess_record"] = {"file": "master_post_zh.json"}
         write_json(ep_zh, ep_zh_data)
 
-        clean_gen_en = self.root / "flow_gen_en.json"
-        write_json(clean_gen_en, {"provider": "Google Flow", "backend": "flow_speech"})
+        clean_gen_en = self.root / "edge_gen_en.json"
+        write_json(
+            clean_gen_en,
+            {
+                "provider": "Microsoft Edge",
+                "backend": "edge-tts",
+                "model_id": "edge-tts",
+                "voice": {"speaker": "en-US-AndrewMultilingualNeural", "language": "English", "rate": "+4%"},
+            },
+        )
         clean_post_en = self.root / "flow_post_en.json"
-        write_json(clean_post_en, {"steps": [{"tool": "https://flow.google.com/project/demo"}]})
+        write_json(clean_post_en, {"steps": [{"tool": "edge-tts"}, {"tool": "ffmpeg"}]})
         ep_en_data["narration"]["execution"] = {
             "status": "confirmed",
             "mode": "service",
-            "location": "https://flow.google.com/project/demo",
+            "location": "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1",
         }
-        ep_en_data["narration"]["generation_record"] = {"file": "flow_gen_en.json"}
+        ep_en_data["narration"]["generation_record"] = {"file": "edge_gen_en.json"}
         ep_en_data["narration"]["postprocess_record"] = {"file": "flow_post_en.json"}
         write_json(ep_en, ep_en_data)
 
@@ -362,19 +378,19 @@ class GoogleFlowAuditTests(unittest.TestCase):
             "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
             "--clips-dir", str(self.clips_dir), "--report", str(rep_ok),
         ])
-        self.assertEqual(code_ok, 0, f"Google AI Studio Gemini TTS + Flow metadata should pass: {err_ok} {data_ok}")
+        self.assertEqual(code_ok, 0, f"Default edge-tts Yunxi +4% + Flow metadata should pass: {err_ok} {data_ok}")
         self.assertEqual(data_ok["flags"], [])
 
-        # Non-Google / local TTS resources on ZH (local_project + edge-tts + flow_postproduction_gaps + synthesize_voice.py) must flag
+        # Local Qwen / OS TTS resources on ZH (local_project + local_qwen + flow_postproduction_gaps + synthesize_voice.py) must flag
         bad_gen_zh = self.root / "bad_gen_zh.json"
-        write_json(bad_gen_zh, {"provider": "Microsoft", "backend": "edge-tts"})
+        write_json(bad_gen_zh, {"provider": "Qwen", "backend": "local_qwen"})
         bad_post_zh = self.root / "bad_post_zh.json"
         write_json(bad_post_zh, {"steps": [{"tool": "synthesize_voice.py"}]})
         ep_zh_data["design"]["flow_postproduction_gaps"] = ["loudnorm"]
         ep_zh_data["narration"]["execution"] = {
             "status": "confirmed",
             "mode": "local_project",
-            "location": "https://speech.platform.bing.com/edge/v1",
+            "location": "https://unapproved-local-tts.example/v1",
         }
         ep_zh_data["narration"]["generation_record"] = {"file": "bad_gen_zh.json"}
         ep_zh_data["narration"]["postprocess_record"] = {"file": "bad_post_zh.json"}
@@ -394,8 +410,8 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("flow_postproduction_gaps_forbidden", reasons)
         self.assertIn("execution_mode:local_project", reasons)
         self.assertIn("non_flow_execution_location", reasons)
-        self.assertIn("non_flow_provider:Microsoft", reasons)
-        self.assertIn("non_flow_backend:edge-tts", reasons)
+        self.assertIn("non_flow_provider:Qwen", reasons)
+        self.assertIn("non_flow_backend:local_qwen", reasons)
         self.assertIn("local_postprocess_tool:synthesize_voice.py", reasons)
 
     def test_catches_clickbait_telegraphese_compressed_episode_and_ping_pong_cuts(self) -> None:

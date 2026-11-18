@@ -1,6 +1,6 @@
 # Narration, voice invocation and actual listening
 
-The default voice setup for local routes follows the [series profile](../config/series-profile.json) with Qwen CustomVoice, Serena and Chinese (using `synthesize_voice.py` and `prepare_voice_master.py`). For [Google Flow production](google-flow-production.md), synthesize **Chinese (`zh`) narration continuously as one whole-script pass in Google AI Studio (`https://aistudio.google.com/`, Gemini TTS)** (and paired English `en` narration continuously in Google AI Studio Gemini TTS or uniform native Google Flow `Veo 3.1` speech), master whole-track linear loudness (`prepare_voice_master.py`), and composite (`ffmpeg`) with the `1080p Upscaled` Google Flow visuals—never routing `google_flow` to local `Qwen3-TTS`, OS TTS, or `edge-tts`. Apply the spoken edit, anti-AI-tone, continuity, and listening standards per edition on all routes. The Qwen invocation details below apply strictly when Qwen is the selected local voice backend.
+The universal default voice setup across **all production routes** (`local_realistic`, `three_d_animation`, and [Google Flow production](google-flow-production.md)) follows the [series profile](../config/series-profile.json): **Microsoft Edge cloud neural TTS (`edge-tts`), Mandarin speaker `zh-CN-YunxiNeural`, speaking rate `+4%`** (`pitch="+0Hz"`, `volume="+0%"`, paired English neural speaker `en-US-AndrewMultilingualNeural` at `+4%` when bilingual editions are required), invoked continuously on the whole episode script via [synthesize_edge_tts.py](../scripts/synthesize_edge_tts.py) and mastered linearly via [prepare_voice_master.py](../scripts/prepare_voice_master.py). Apply the spoken edit, anti-AI-tone, continuity, and listening standards per edition on all routes. The optional Qwen invocation details below (`synthesize_voice.py`) apply strictly when a user explicitly selects local Qwen instead of the `edge-tts` default.
 
 ## Invocation location and confirmation
 
@@ -39,20 +39,17 @@ Editorial references: [Humanizer-zh](https://github.com/op7418/Humanizer-zh) for
 
 ## Reuse the accepted voice before making new auditions
 
-The [series profile](../config/series-profile.json) owns the executable default `mandarin-calm-serena-v1`. Reuse an applicable accepted voice recipe and comparison anchor from current/prior project records or the private cross-project baseline `CODEX_HOME/data/science-video-production/voice-baseline.json` (default `~/.codex/data/science-video-production/voice-baseline.json`). This data file is not another Skill installation. Keep actual audio, feedback, hashes, locations and approval scope private; configuration alone is not evidence of user acceptance. A more recent explicit voice choice or rejection takes priority.
+The [series profile](../config/series-profile.json) owns the executable default `mandarin-yunxi-plus4-v1` (`edge-tts`, `zh-CN-YunxiNeural`, `rate="+4%"`). Reuse an applicable accepted voice recipe and comparison anchor from current/prior project records or the private cross-project baseline `CODEX_HOME/data/science-video-production/voice-baseline.json` (default `~/.codex/data/science-video-production/voice-baseline.json`). This data file is not another Skill installation. Keep actual audio, feedback, hashes, locations and approval scope private; configuration alone is not evidence of user acceptance. A more recent explicit voice choice or rejection takes priority.
 
 **Changing wording, a storyboard cut, an episode, an agent or a maintenance version does not reopen voice selection.** Carry forward the accepted model/version, speaker, language, delivery instruction, supported generation settings, seed strategy and validated runtime. Reuse matching accepted audio; generate only changed text when necessary, with the contextual units below. Do not ask the user to choose or approve the same voice again, or send successive samples because one sentence changed. Keep manuscript review and new-track quality review separate from voice-direction acceptance.
 
-| Setting | Series default |
+| Setting | Series default (`mandarin-yunxi-plus4-v1`) |
 | --- | --- |
-| Model and revision | Official `Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice`; `audio.model_revision` pins the actual weight revision |
-| Speaker and language | `Serena`, `Chinese` |
-| Delivery | The exact Mandarin `audio.instruct` payload: calm, conversational, restrained; natural onsets and endings without an argumentative or promotional delivery. Preserve lexical tones and meaningful emphasis |
-| Main sampling | `do_sample=true`, `temperature=0.9`, `top_k=50`, `top_p=1.0`, `repetition_penalty=1.05` |
-| Subtalker sampling | `subtalker_dosample=true`, `subtalker_temperature=0.9`, `subtalker_top_k=50`, `subtalker_top_p=1.0`; preserve the wrapper's actual parameter spelling |
-| Seed and mode | `seed=42`, `non_streaming_mode=true`. The bundled adapter uses `audio.seed` when no explicit seed is supplied |
-| Output capacity | `max_new_tokens=4096` is a starting capacity, not a voice characteristic or a duration limit. Increase it for a verified length/truncation need or use justified contextual sections; this alone requires no new user voice audition |
-| Runtime and source | Keep the confirmed project's validated device, dtype, attention implementation and package/model evidence. Preserve the model-native mono FLOAT WAV; mix/export settings are separate |
+| Provider, backend and tool | `Microsoft Edge`, `edge-tts` (`https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1`), invoked via `scripts/synthesize_edge_tts.py` |
+| Speaker, language and rate | `zh-CN-YunxiNeural`, `Chinese`, **`rate="+4%"`**, `pitch="+0Hz"`, `volume="+0%"` (paired bilingual English default: `en-US-AndrewMultilingualNeural`, `rate="+4%"`) |
+| Synthesis unit and decode | Synthesize the complete `3–5` chapter script continuously in one call (`boundary="SentenceBoundary"`), decode directly to `48000 Hz` mono `pcm_f32le` WAV, and preserve neural boundary timestamps (`*.boundaries.json` / `.srt`) |
+| Whole-track mastering | Apply `scripts/prepare_voice_master.py` (`-18 LUFS` / `-2 dBTP` whole-track linear gain) before mixing (`-16 LUFS` / `-1.5 dBTP` final export); never slice per shot or warp speed beyond `+4%` |
+| Optional legacy local Qwen | `Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice` (`Serena`, `seed=42`, `local_adapter_example`) applies only when explicitly requested by the user |
 
 These values preserve a reusable recipe, not guaranteed identical speech across different text, hardware or software. Inspect actual effective settings before synthesis; do not silently fall back to wrapper defaults, change voice or vary sampling per shot. The confirmed project's accepted recipe takes priority over an unreviewed generic example. A service may use only its supported fields; record unexposed settings honestly rather than inventing equivalent controls. Do not impose a numeric speech-rate control that the selected interface does not support, a universal words-per-minute target or automatic speedup. The fixed whole-narration mix preset and measured processing remain separate from generation below.
 

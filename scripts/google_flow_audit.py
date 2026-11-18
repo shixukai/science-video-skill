@@ -513,7 +513,12 @@ def _is_google_flow_url(location: Any) -> bool:
         return False
     if parsed.scheme != "https" or parsed.username:
         return False
-    return parsed.hostname in ("flow.google.com", "aistudio.google.com", "generativelanguage.googleapis.com") or (
+    return parsed.hostname in (
+        "speech.platform.bing.com",
+        "flow.google.com",
+        "aistudio.google.com",
+        "generativelanguage.googleapis.com",
+    ) or (
         parsed.hostname == "labs.google" and parsed.path.startswith(("/fx/tools/flow", "/flow"))
     )
 
@@ -523,9 +528,13 @@ def _is_google_flow_tool(tool_val: Any) -> bool:
         return False
     raw = tool_val.strip()
     low = raw.lower()
-    if any(bad in low for bad in ("synthesize_voice", "qwen", "edge-tts", "os_tts")):
+    if any(bad in low for bad in ("synthesize_voice", "qwen", "os_tts")):
         return False
     if low in (
+        "edge-tts",
+        "synthesize_edge_tts",
+        "synthesize_edge_tts.py",
+        "scripts/synthesize_edge_tts.py",
         "google_flow",
         "google flow",
         "google_ai_studio",
@@ -545,7 +554,7 @@ def _check_flow_origin_purity(
     edition: str,
     flags: list[dict[str, Any]],
 ) -> None:
-    """Flag non-Google-Cloud voice generation (e.g. Qwen/edge-tts) or forbidden gap workarounds."""
+    """Flag local TTS workarounds (e.g. Qwen/OS TTS) or forbidden gap workarounds."""
     if not isinstance(episode, dict):
         return
     reasons: list[str] = []
@@ -571,10 +580,15 @@ def _check_flow_origin_purity(
                     gen_data = _load_json(gen_path)
                     if isinstance(gen_data, dict):
                         prov = gen_data.get("provider")
-                        if isinstance(prov, str) and prov.strip() and prov not in ("Google Flow", "Google AI Studio", "Google"):
+                        if isinstance(prov, str) and prov.strip() and prov not in (
+                            "Microsoft Edge",
+                            "Google Flow",
+                            "Google AI Studio",
+                            "Google",
+                        ):
                             reasons.append(f"non_flow_provider:{prov}")
                         bk = gen_data.get("backend")
-                        if isinstance(bk, str) and any(t in bk.lower() for t in ("local", "qwen", "edge-tts", "os_tts")):
+                        if isinstance(bk, str) and any(t in bk.lower() for t in ("local", "qwen", "os_tts")):
                             reasons.append(f"non_flow_backend:{bk}")
                 except (OSError, ValueError):
                     pass

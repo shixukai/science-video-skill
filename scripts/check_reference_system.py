@@ -141,10 +141,14 @@ def check(root):
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "realistic_main_with_scoped_explanation", "current series requires realistic main footage with scoped explanation")
         need(profile["medium"]["real_anchor"] == "verified_authorized_user_capture_only", "real video anchor must be verified authorized user capture only")
-        need(profile["audio"]["speaker"] == "Serena" and profile["audio"]["language"] == "Chinese", "current voice configuration changed")
+        need(profile["audio"]["speaker"] == "zh-CN-YunxiNeural"
+             and profile["audio"]["language"] == "Chinese"
+             and profile["audio"].get("rate") == "+4%", "current voice configuration changed")
         voice = profile["audio"]
-        need(voice.get("backend") == "confirm_at_invocation" and voice.get("provider") == "Qwen",
-             "voice execution location must be confirmed at invocation")
+        need(voice.get("backend") == "edge-tts" and voice.get("provider") == "Microsoft Edge"
+             and voice.get("model_id") == "edge-tts"
+             and (root / "scripts/synthesize_edge_tts.py").is_file(),
+             "default edge-tts voice backend required; optional local Qwen execution location must be confirmed at invocation")
         execution = voice.get("execution_policy", {})
         need(isinstance(execution, dict) and execution.get("confirmation_required") is True
              and execution.get("confirmation_scope") == "available_context"

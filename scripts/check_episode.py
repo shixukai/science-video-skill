@@ -109,7 +109,12 @@ def _is_google_flow_url(location):
         service = urlparse(str(location).strip())
         if service.scheme != "https" or service.username:
             return False
-        if service.hostname in ("flow.google.com", "aistudio.google.com", "generativelanguage.googleapis.com"):
+        if service.hostname in (
+            "speech.platform.bing.com",
+            "flow.google.com",
+            "aistudio.google.com",
+            "generativelanguage.googleapis.com",
+        ):
             return True
         return bool(service.hostname == "labs.google" and service.path.startswith(("/fx/tools/flow", "/flow")))
     except ValueError:
@@ -121,9 +126,13 @@ def _is_google_flow_tool(tool_val):
         return False
     raw = str(tool_val).strip()
     low = raw.lower()
-    if any(bad in low for bad in ("synthesize_voice", "qwen", "edge-tts", "os_tts")):
+    if any(bad in low for bad in ("synthesize_voice", "qwen", "os_tts")):
         return False
     if low in (
+        "edge-tts",
+        "synthesize_edge_tts",
+        "synthesize_edge_tts.py",
+        "scripts/synthesize_edge_tts.py",
         "google_flow",
         "google flow",
         "google_ai_studio",
@@ -148,15 +157,23 @@ def cloud_voice_execution(execution):
 
 def check_cloud_voice_generation(generated, need, evidence, label, language):
     backend = str(generated.get("backend") or "")
-    bad_backend = any(tok in backend.lower() for tok in ("local", "qwen", "edge-tts", "os_tts"))
+    provider = generated.get("provider")
+    bad_backend = any(tok in backend.lower() for tok in ("local", "qwen", "os_tts"))
     need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-         and generated.get("provider") in ("Google Flow", "Google AI Studio", "Google")
+         and provider in ("Microsoft Edge", "Google Flow", "Google AI Studio", "Google")
          and substantive(backend) and not bad_backend
          and substantive(generated.get("model_id")),
-         label + " actual Google AI Studio (Gemini TTS) or Google Flow voice synthesis provider/backend/model required")
+         label + " actual edge-tts (Microsoft Edge), Google AI Studio, or Google Flow voice synthesis provider/backend/model required")
     voice = generated.get("voice")
     need(isinstance(voice, dict) and language is not None and voice.get("language") == language,
          label + " cloud voice language must match the narration version")
+    if provider == "Microsoft Edge" and isinstance(voice, dict):
+        if language == "Chinese":
+            need(voice.get("speaker") == "zh-CN-YunxiNeural" and voice.get("rate", "+4%") == "+4%",
+                 label + " default Chinese edge-tts voice must be zh-CN-YunxiNeural at rate +4%")
+        elif language == "English":
+            need(substantive(voice.get("speaker")) and str(voice.get("speaker")).endswith("Neural"),
+                 label + " English edge-tts voice must specify a valid Neural speaker")
     evidence(generated.get("cloud_evidence"), label + " cloud generation evidence")
 
 
@@ -287,8 +304,8 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
             check_cloud_voice_generation(generated, need, evidence, label, cloud_language)
         else:
             need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-                 and generated.get("provider") == "Qwen" and text(generated.get("backend"))
-                 and text(generated.get("model_id")), label + " actual Qwen generation record required")
+                 and generated.get("provider") in ("Microsoft Edge", "Qwen") and text(generated.get("backend"))
+                 and text(generated.get("model_id")), label + " actual edge-tts or Qwen generation record required")
         actual_execution = obj(generated.get("execution"))
         confirmed_execution = (cloud_voice_execution(execution) if cloud else
                                execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service"))
@@ -306,9 +323,15 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
                      and bool(re.fullmatch(r"[0-9a-f]{64}", str(model_hash))), label + " model version evidence invalid")
             else:
                 need(text(generated.get("model_version_reference")), label + " model version evidence required")
-            need(text(voice.get("speaker")) and voice.get("speaker") == "Serena"
-                 and voice.get("language") == "Chinese"
-                 and text(voice.get("instruct")), label + " actual voice and instruct required")
+            if generated.get("provider") == "Microsoft Edge":
+                need(voice.get("speaker") == "zh-CN-YunxiNeural"
+                     and voice.get("language") == "Chinese"
+                     and voice.get("rate", "+4%") == "+4%",
+                     label + " default edge-tts voice zh-CN-YunxiNeural (+4%) required")
+            else:
+                need(text(voice.get("speaker")) and voice.get("speaker") == "Serena"
+                     and voice.get("language") == "Chinese"
+                     and text(voice.get("instruct")), label + " actual voice and instruct required")
             need(isinstance(effective, dict) and bool(effective), label + " actual effective generation parameters required")
             need(isinstance(runtime, dict) and bool(runtime), label + " actual runtime parameters required")
         config = {key: generated.get(key) for key in ("backend", "provider", "model_id", "resolved_model_revision",
@@ -819,7 +842,7 @@ def check(data, root, stage, *, stored_video=None):
                             check_cloud_voice_generation(generated, require, hashed_file, "narration:", language)
                         else:
                             require(generated.get("status") == "generated" and nonempty(generated.get("backend"))
-                                    and generated.get("provider") == "Qwen"
+                                    and generated.get("provider") in ("Microsoft Edge", "Qwen")
                                     and nonempty(generated.get("model_id")), "narration: actual synthesis backend/model required")
                         actual_execution = generated.get("execution", {})
                         require(isinstance(actual_execution, dict)
@@ -837,9 +860,15 @@ def check(data, root, stage, *, stored_video=None):
                                 require(nonempty(generated.get("model_version_reference")),
                                         "narration: actual model version reference or unavailable-version evidence required")
                             voice = generated.get("voice", {})
-                            require(isinstance(voice, dict) and voice.get("speaker") == "Serena"
-                                    and voice.get("language") == "Chinese",
-                                    "narration: current voice configuration changed")
+                            if generated.get("provider") == "Microsoft Edge":
+                                require(isinstance(voice, dict) and voice.get("speaker") == "zh-CN-YunxiNeural"
+                                        and voice.get("language") == "Chinese"
+                                        and voice.get("rate", "+4%") == "+4%",
+                                        "narration: current voice configuration changed")
+                            else:
+                                require(isinstance(voice, dict) and voice.get("speaker") == "Serena"
+                                        and voice.get("language") == "Chinese",
+                                        "narration: current voice configuration changed")
                         source = generated.get("input", {})
                         require(isinstance(source, dict) and source.get("sha256") == narration.get("script_sha256")
                                 and nonempty(narration.get("script_sha256")), "narration: generation input differs from current script")

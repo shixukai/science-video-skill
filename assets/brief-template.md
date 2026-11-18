@@ -51,7 +51,7 @@ Record the [production route](../references/tool-routing.md#lock-the-primary-too
 - Art-reference index version and actually viewed intervals for this film; not asset-use authorization:
 - Available asset/component index version and used IDs/versions/hashes/rights; missing items:
 - Caption layout baseline, canvas and actual positions. For an existing layout migration/revision, retain revision ID, old/new baselines, applied state, cumulative offset, resolution-rounding and extra local avoidance:
-- Current voice setup, acceptance scope and actual audio hash. Record the designated execution location for Qwen on local routes, or the active Google Flow project URL (`https://flow.google.com/project/<id>`) where `google_flow` voiceover and captions are generated and processed without local resources (preserving `1.0×` natural delivery, room-tone observation holds, and `cloud_evidence` hashes).
+- Current voice setup, acceptance scope and actual audio hash. Default across all routes: Microsoft Edge cloud neural TTS (`edge-tts`, `zh-CN-YunxiNeural`, `rate="+4%"` via `scripts/synthesize_edge_tts.py`, preserving continuous whole-script synthesis, room-tone observation holds, and `cloud_evidence` hashes; record designated location only if optional local Qwen is explicitly requested).
 
 ## Opening context and viewing reason
 Apply [opening design](../references/viewer-retention-design.md#establish-context-and-a-reason-to-watch-before-explaining) to full new films; chapter/local repairs follow actual scope. Reuse `opening` and action cards, without another approval.
