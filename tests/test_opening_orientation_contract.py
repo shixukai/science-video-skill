@@ -36,6 +36,18 @@ class OpeningOrientationContractTests(unittest.TestCase):
         self.assertIn("later background cannot retroactively supply a missing referent", hook)
         self.assertIn("not necessary subject naming", hook)
 
+    def test_visible_clue_is_not_the_capture_tool(self):
+        owner = self.text("references/viewer-retention-design.md")
+        for phrase in ("If the subject is the specimen or phenomenon",
+                       "If the subject is how the tool works",
+                       "the instrument can stay offscreen",
+                       "only if the source identifies them",
+                       "Leave the explanation open"):
+            self.assertIn(phrase, owner)
+        hook = self.text("references/viral-appeal-and-packaging.md")
+        self.assertIn("what visible clue makes it worth watching", hook)
+        self.assertIn("viewer-retention-design.md#orient-the-viewer-before-introducing-a-detail", hook)
+
     def test_roles_route_to_shared_owner(self):
         for role in ("video_researcher", "video_audio_editor", "video_reviewer"):
             with self.subTest(role=role):
@@ -46,7 +58,7 @@ class OpeningOrientationContractTests(unittest.TestCase):
     def test_positive_and_negative_calibration_cases_retained(self):
         text = self.text("references/viewer-retention-design.md")
         for name in ("Detail without an object", "Instrument and question together",
-                     "Result with a named source", "A recognizable everyday object",
+                     "Same image, different subject", "A recognizable everyday object",
                      "Topic word without a connection", "Background instead of orientation"):
             self.assertIn("| " + name + " |", text)
 
