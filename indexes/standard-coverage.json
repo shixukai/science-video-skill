@@ -25,10 +25,10 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "2e22bd98f8e8f55ba7df27d6b084e6cd26cf21b36185934af982e05e133bb078",
+      "sha256": "074741d113588cf8d5024c2835872301169b570f27590e6bd08905008ddef320",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
-        "screen-appeal-before-deep-research",
+        "carry-topic-appeal-into-production",
         "design-the-package-before-the-script",
         "win-the-first-two-seconds",
         "why-openings-lose-viewers",
