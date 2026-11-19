@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "af77d7b212a1c34108cb2fa1e07317d42b332d98b2fbbc9a6ae310c0ab4daaeb",
+      "sha256": "2980dd2f1293ff7dacf8fa4a74081fb01fcee596b073446a5ba795eb75f8622f",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",

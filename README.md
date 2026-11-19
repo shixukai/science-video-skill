@@ -28,6 +28,7 @@ Start at [SKILL.md](SKILL.md) and read responsibility bodies for the actual comm
 
 | Need | Body |
 | --- | --- |
+| Research and select a topic before scripting | [Standalone topic-selection Skill](skills/science-video-topic-selection/SKILL.md) |
 | Original topic, complete chain and opening | [Topic contract](references/topic-contract.md), [opening/transitions](references/viewer-retention-design.md) |
 | Actual tools and execution stages | [Tool routing](references/tool-routing.md), [production checkpoints](references/production-checkpoints.md) |
 | Realistic craft & Google Flow | [Realistic direction](references/realistic-direction.md), [Google Flow production](references/google-flow-production.md) |

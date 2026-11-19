@@ -61,35 +61,13 @@ Reference available platform data according to [platform topic selection and dat
 
 ### Compare what viewers would choose before deciding what to produce
 
-For editorial topic selection, first propose a small number of different questions in text, then choose one to advance. Describe each proposal in everyday language: the object, use or situation viewers recognize; why they would ask further; and what change, structure or comparison the film will let them see. Unfamiliar technology can also start from a familiar product outcome or an appealing visible process; do not narrow the range to everyday tips. Do not substitute “高端、硬核、前沿、涨知识” for a reason to watch, or automatically exclude a topic category or claim that the public will certainly like it.
+Use the standalone [Science Video Topic Selection Skill](../skills/science-video-topic-selection/SKILL.md) for pre-script research, originality checks, feasibility and comparison. Do not select an editorial candidate while a material gap remains. An explicit commission keeps its original question and scope without a rival-topic comparison.
 
-Make these editorial judgments before production, using the existing topic card and review without adding an approval stage:
-
-- `adult_relevance` states a specific viewing situation and stakes/curiosity: for example, something viewers have used, seen or chosen between, or the visible change that would attract them. Relevant to everyone and technology is important are insufficient.
-- `conflict_or_question` states a concrete question understandable without specialist prerequisites; introduce technical terms when they need explanation. A familiar object does not imply a common-knowledge answer, and an unusual object is not automatically appealing.
-- `knowledge_increment` states what viewers will understand differently, distinguish or explain after watching. Adding terms and operation names alone is not a payoff. `causal_visualization` states the key visible change/relationship and its evidence, rather than only make polished 3D animation.
-- Keep at least one genuinely feasible, strongest competing alternative question in `alternatives`, with `question` and `not_selected_reason`; do not use an obviously weak topic as a foil. It may take another angle on the same object but cannot merely retitle the same question. Compare audience entry, the specific question, visible explanatory payoff and feasibility. Reuse `review.reason` to state why the current topic was selected, without long rankings or invented scores.
-- Form a short proposal from the question, audience entry and key visible payoff. The reviewer compares proposals from an unfamiliar viewer's perspective before inspecting the technical explanation and production plan. If it is unclear why someone would voluntarily click, the key imagery cannot deliver the promise, or all candidates interest only specialists, revise the topic/angle before expensive research, generation and rendering. Rich documentation, existing models and production familiarity can help implementation but cannot decide the topic alone.
-
-If `specialist_only_hook` or `no_viewer_entry` is found, an editorial topic cannot be marked selected and proceed to production. Changing the title, adding a sense of danger or “震撼揭秘” does not resolve the problem. Screen candidate angles with the [appeal drivers](viral-appeal-and-packaging.md#screen-appeal-before-deep-research) and draft the [package before the script](viral-appeal-and-packaging.md#design-the-package-before-the-script); a topic whose honest title, cover and first seconds cannot be made compelling needs a better angle before production. If the user explicitly specifies the topic/specialist audience, improve the entry and expression within that scope. Do not require alternative comparisons or reject the commission based on general-public taste; scientific, source, feasibility and actual-viewing requirements still apply. When the user gives negative feedback on topic selection, reassess the topic and angle before resorting to more expensive models or more spectacular imagery.
-
-This method draws on [YouTube's official guidance on expanding content reach](https://support.google.com/youtube/answer/16559650?hl=en): a specialist topic can give nonspecialists an entry through a more universal question. These proposal comparisons are editorial hypotheses. Structural checks can verify comparison records, obvious duplication and versions, but cannot determine popularity. Actual clicks, retention and satisfaction feedback continue in the existing truthful retrospective records; title appeal is not complete viewing quality.
-
-The following examples demonstrate angles only. Each requires research into facts, applicable conditions and visualization feasibility before selection; they are neither a default topic library nor verified popular topics:
-
-| Object-name/professional-catalog topic | Audience-facing question pending research | Planned visible payoff for comparison |
-| --- | --- | --- |
-| 电磁感应原理概述 | 电磁炉隔着玻璃，怎样把锅加热？ | Trace electrical energy, magnetic fields and where heat is generated in the pan; compare materials. |
-| 塑料吹塑工艺流程 | 瓶胚怎样变成你手里的饮料瓶？ | Continuous deformation from preform to bottle, mold constraints and quality checks. |
-| 光学防抖结构介绍 | 手在抖，手机镜头怎样把画面稳住？ | Compare structural action and imaging results side by side under the same shake. |
-| 轮胎材料与结构分类 | 轮胎为什么要做出不同的花纹？ | Observe contact, drainage and design tradeoffs under explicit road conditions. |
-| 电梯曳引系统说明 | 电梯怎样把一厢人平稳送到楼上？ | Establish the overall load and transmission relationships, then follow starting, running and stopping. |
+Map its decision card into the existing `brief.topic_selection` and private evidence record. For editorial selection, keep the strongest genuinely feasible competing question in `alternatives` with `question` and `not_selected_reason`; capture the decisive comparison under `review.reason`. Do not publish audience evidence or add another approval stage. These are editorial decisions, not claims of audience demand or future viewing performance.
 
 ### Compare stronger and weaker topics in pairs
 
-The following applies to editorial topic selection and does not reject an explicitly requested basic teaching topic. Verify primary sources, specific conditions and rights before production.
-
-“热会从热处传向冷处吗” offers insufficient explanatory increment if it only repeats the direction of transfer. “45℃冷却液怎样给AI芯片降温，为什么不用更冷的水？” can explain system constraints and energy tradeoffs through cold-plate heat absorption, circulating transport, outdoor heat rejection and refrigeration demand. 45℃ applies only to the [specific architectural conditions described by NVIDIA](https://blogs.nvidia.com/blog/liquid-cooling-ai-factories/). Avoiding mechanical refrigeration depends on location and design; do not generalize this into all data centers saving water or never using refrigeration.
+Use the same standalone Skill to compare distinct questions and evidence, not retitled copies. Preserve a user-commissioned teaching objective.
 
 ## Opening and audience scope
 
