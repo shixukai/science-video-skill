@@ -280,21 +280,21 @@
       "anchor": "final_line_baseline",
       "requires_textless_master": true
     },
-    "default_palette": "night",
+    "default_palette": "slate",
     "palettes": {
       "night": {
         "band": "#1B2A30",
         "topic": "#E39B78",
         "question": "#D6CFC0",
         "caption": "#EAE4D8",
-        "note": "Default. Deep ink-teal band from the series ink color; lightened terracotta topic and softened cream text avoid glare in dark rooms and sit with the dark platform UI."
+        "note": "Deep ink-teal band from the series ink color; lightened terracotta topic and softened cream text avoid glare in dark rooms and sit with the dark platform UI."
       },
       "slate": {
         "band": "#22272B",
         "topic": "#E0A27E",
         "question": "#CFCAC2",
         "caption": "#E8E4DC",
-        "note": "Neutral dark slate; the most color-neutral choice for films with mixed or saturated picture colors."
+        "note": "Default. Neutral dark slate; the most color-neutral choice, keeping films with mixed or saturated picture colors in front while avoiding glare in dark rooms."
       },
       "navy": {
         "band": "#172334",
