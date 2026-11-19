@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "d19b1ef973a7fd3d9adcf2435653f3da464623ebbbb5d4c56b98545c5c969208",
+      "sha256": "e0053ac3477189492f98f849d3d3deecf5acbda811157c5ab9d7e248af13f3d4",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -172,7 +172,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "22fc01c12c1e582757644e17dab4298dfeb3aaa1804c759a9841ffe6cff795dd",
+      "sha256": "0b9e244cf33efab4658e67e05969ffda0a5f65594afc52248ece052c8e4963ce",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",

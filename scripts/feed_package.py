@@ -13,7 +13,7 @@ Two caption modes:
   is scaled to the full width and centered.
 
 In both modes a persistent two-tier header (topic noun, then the film's
-question) sits in the top band with flat series colors and no stroke, shadow
+question) sits in the top band with flat palette colors and no stroke, shadow
 or backing box. ``--ending-question`` swaps the question lines for one genuine
 experience question from ``--ending-from`` seconds.
 
@@ -63,6 +63,42 @@ def find_font(policy, explicit=None):
         if item and Path(item).is_file():
             return Path(item)
     raise ValueError("no legally available CJK bold font found; pass --font <path to the series font>")
+
+
+def relative_luminance(hex_color):
+    h = hex_color.lstrip("#")
+    c = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+    c = [v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4 for v in c]
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+
+def contrast_ratio(a, b):
+    la, lb = sorted((relative_luminance(a), relative_luminance(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+
+def check_palette(policy, name):
+    """Return the palette and its contrast record; refuse glaring or unreadable night combinations."""
+    palettes = policy["palettes"]
+    if name not in palettes:
+        raise ValueError("unknown palette %s; choose one of %s" % (name, "/".join(palettes)))
+    pal = palettes[name]
+    rules = policy["contrast"]
+    record = {"band_relative_luminance": round(relative_luminance(pal["band"]), 4)}
+    for role in ("topic", "question", "caption"):
+        record[role] = round(contrast_ratio(pal["band"], pal[role]), 2)
+    if name not in rules["exempt_palettes"]:
+        problems = []
+        if record["band_relative_luminance"] > rules["band_max_relative_luminance"]:
+            problems.append("band too bright for night viewing")
+        for role in ("topic", "question", "caption"):
+            if record[role] < rules[role + "_min"]:
+                problems.append("%s contrast %.2f below %.1f" % (role, record[role], rules[role + "_min"]))
+            if record[role] > rules["text_max"]:
+                problems.append("%s contrast %.2f above glare limit %.1f" % (role, record[role], rules["text_max"]))
+        if problems:
+            raise ValueError("palette %s rejected: %s" % (name, "; ".join(problems)))
+    return pal, record
 
 
 def _even(value):
@@ -224,10 +260,11 @@ def _text_width(draw, text, font):
 
 
 class Renderer:
-    def __init__(self, policy, font_path):
+    def __init__(self, policy, font_path, palette):
         from PIL import Image, ImageDraw, ImageFont
         self.Image, self.ImageDraw = Image, ImageDraw
         self.policy = policy
+        self.palette = palette
         h = policy["header"]
         self.topic_font = ImageFont.truetype(str(font_path), h["topic_size"])
         self.question_font = ImageFont.truetype(str(font_path), h["question_size"])
@@ -258,20 +295,20 @@ class Renderer:
     def frame(self, topic, question_lines, caption_lines, geo, out_png):
         h = self.policy["header"]
         cw, ch = self.policy["canvas"]
-        img = self.Image.new("RGB", (cw, ch), h["band_color"])
+        img = self.Image.new("RGB", (cw, ch), self.palette["band"])
         draw = self.ImageDraw.Draw(img)
         top, bottom, q_line = self.header_box(question_lines, geo["picture_top"])
-        draw.text((h["left_x"], top), topic, font=self.topic_font, fill=h["topic_color"])
+        draw.text((h["left_x"], top), topic, font=self.topic_font, fill=self.palette["topic"])
         y = top + h["topic_size"] + h["topic_question_gap"]
         for line in question_lines:
-            draw.text((h["left_x"], y), line, font=self.question_font, fill=h["question_color"])
+            draw.text((h["left_x"], y), line, font=self.question_font, fill=self.palette["question"])
             y += q_line
         if caption_lines:
             band = self.policy["caption_band"]
             # Final-line baseline stays fixed; a one-line caption sits on the last line position.
             y = geo["caption_bottom"] - geo["caption_line_h"] * len(caption_lines)
             for line in caption_lines:
-                draw.text((band["left_x"], y), line, font=self.caption_font, fill=band["color"])
+                draw.text((band["left_x"], y), line, font=self.caption_font, fill=self.palette["caption"])
                 y += geo["caption_line_h"]
         img.save(out_png)
         return [top, bottom]
@@ -315,7 +352,7 @@ def _probe(path):
 
 
 def compose(master, topic, question, output, policy, zoom=None, font=None, report_path=None, crf=18,
-            captions=None, ending_question=None, ending_from=None):
+            captions=None, ending_question=None, ending_from=None, palette=None):
     master, output = Path(master), Path(output)
     if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
         raise RuntimeError("ffmpeg and ffprobe are required for the feed package")
@@ -338,7 +375,9 @@ def compose(master, topic, question, output, policy, zoom=None, font=None, repor
     duration = float(meta["format"]["duration"])
     geo = layout(policy, src_w, src_h, zoom, caption_band=captions is not None)
     font_path = find_font(policy, font)
-    renderer = Renderer(policy, font_path)
+    palette = palette or policy["default_palette"]
+    colors, contrast = check_palette(policy, palette)
+    renderer = Renderer(policy, font_path, colors)
     renderer.check_header(topic, lines)
     if end_lines:
         renderer.check_header(topic, end_lines)
@@ -391,6 +430,8 @@ def compose(master, topic, question, output, policy, zoom=None, font=None, repor
         "output": {"file": rel(output), "sha256": sha256_file(output),
                    "width": out_v.get("width"), "height": out_v.get("height"),
                    "frame_rate": out_v.get("avg_frame_rate"), "audio_stream": out_a is not None},
+        "palette": {"name": palette, "colors": {k: colors[k] for k in ("band", "topic", "question", "caption")},
+                    "contrast": contrast},
         "header": {"topic": topic, "question_lines": lines, "font": str(font_path),
                    "font_sha256": sha256_file(font_path), "box_y": header_boxes[0] if header_boxes else None},
         "ending_question": {"lines": end_lines, "from_s": ending_from} if end_lines else None,
@@ -423,6 +464,7 @@ def main(argv=None):
     c.add_argument("--report", type=Path, required=True, help="new JSON report path")
     c.add_argument("--zoom", type=float, help="1.0 (default) to feed_package.max_zoom; >1 crops the sides")
     c.add_argument("--font", help="path to a legally available CJK bold font")
+    c.add_argument("--palette", help="feed_package.palettes key; default feed_package.default_palette")
     args = parser.parse_args(argv)
     try:
         policy = load_policy()
@@ -430,7 +472,7 @@ def main(argv=None):
             raise ValueError("report exists; use a new receipt filename")
         report = compose(args.master, args.topic, args.question, args.output, policy, args.zoom, args.font,
                          args.report, captions=args.captions, ending_question=args.ending_question,
-                         ending_from=args.ending_from)
+                         ending_from=args.ending_from, palette=args.palette)
         args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"report": str(args.report), "output": report["output"]}, ensure_ascii=False, indent=2))
         return 0

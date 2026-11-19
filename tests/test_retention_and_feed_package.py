@@ -103,6 +103,26 @@ class FeedLayoutTests(unittest.TestCase):
             feed_package.layout(FEED, 1920, 1080, FEED["max_zoom"] + 0.1)
 
 
+class PaletteTests(unittest.TestCase):
+    def test_all_non_exempt_palettes_are_dark_and_glare_checked(self):
+        for name in FEED["palettes"]:
+            with self.subTest(palette=name):
+                colors, record = feed_package.check_palette(FEED, name)
+                if name not in FEED["contrast"]["exempt_palettes"]:
+                    self.assertLessEqual(record["band_relative_luminance"], FEED["contrast"]["band_max_relative_luminance"])
+
+    def test_bright_band_and_glaring_text_are_rejected(self):
+        policy = copy.deepcopy(FEED)
+        policy["palettes"]["bright"] = {"band": "#FFFBF1", "topic": "#994B37", "question": "#193E4B", "caption": "#243840"}
+        policy["palettes"]["glare"] = {"band": "#000000", "topic": "#E39B78", "question": "#FFFFFF", "caption": "#FFFFFF"}
+        for name in ("bright", "glare"):
+            with self.subTest(palette=name), self.assertRaises(ValueError):
+                feed_package.check_palette(policy, name)
+
+    def test_default_is_a_night_palette(self):
+        self.assertNotIn(FEED["default_palette"], FEED["contrast"]["exempt_palettes"])
+
+
 class CaptionWrapTests(unittest.TestCase):
     measure = staticmethod(lambda text: 54 * len(text))  # synthetic monospace width
 
@@ -218,15 +238,18 @@ class MediaTests(unittest.TestCase):
         self.assertEqual(geo["mode"], "caption_band")
         self.assertEqual(report["source_master"]["kind"], "textless_master")
 
-        def band_dark_pixels(t):
+        band_luma = round(255 * feed_package.relative_luminance(report["palette"]["colors"]["band"]) ** (1 / 2.2))
+
+        def text_pixels(t):
             y0, y1 = geo["caption_top"], geo["caption_bottom"]
             raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", str(t), "-i", str(out), "-frames:v", "1",
                                   "-vf", f"crop=1080:{y1 - y0}:0:{y0},format=gray", "-f", "rawvideo", "-"],
                                  capture_output=True, check=True).stdout
-            return sum(1 for v in raw if v < 128)
+            return sum(1 for v in raw if abs(v - band_luma) > 60)
 
-        self.assertGreater(band_dark_pixels(1.0), 500)
-        self.assertLess(band_dark_pixels(2.6), 50)
+        self.assertEqual(report["palette"]["name"], FEED["default_palette"])
+        self.assertGreater(text_pixels(1.0), 500)
+        self.assertLess(text_pixels(2.6), 50)
         self.assertEqual(report["ending_question"]["from_s"], 3.0)
 
 
