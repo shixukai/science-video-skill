@@ -414,6 +414,66 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("non_flow_backend:local_qwen", reasons)
         self.assertIn("local_postprocess_tool:synthesize_voice.py", reasons)
 
+    def test_allows_indextts2_zh_clone_paired_with_edge_en(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+
+        idx_gen_zh = self.root / "indextts2_gen_zh.json"
+        write_json(
+            idx_gen_zh,
+            {
+                "provider": "IndexTTS",
+                "backend": "local_indextts2",
+                "model_id": "IndexTeam/IndexTTS-2.5",
+                "voice": {"speaker": "user_clone", "language": "Chinese", "reference_prompt_sha256": "a" * 64},
+            },
+        )
+        idx_post_zh = self.root / "indextts2_polish_zh.json"
+        write_json(
+            idx_post_zh,
+            {"steps": [{"tool": "synthesize_indextts2.py"}, {"tool": "prepare_voice_master.py"}, {"tool": "ffmpeg"}]},
+        )
+        ep_zh_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "local_project",
+            "location": "/fixture-only/indextts2",
+            "confirmation_reference": "audition #5",
+        }
+        ep_zh_data["narration"]["generation_record"] = {"file": "indextts2_gen_zh.json"}
+        ep_zh_data["narration"]["postprocess_record"] = {"file": "indextts2_polish_zh.json"}
+        write_json(ep_zh, ep_zh_data)
+
+        edge_gen_en = self.root / "edge_gen_en.json"
+        write_json(
+            edge_gen_en,
+            {
+                "provider": "Microsoft Edge",
+                "backend": "edge-tts",
+                "model_id": "edge-tts",
+                "voice": {"speaker": "en-US-AndrewMultilingualNeural", "language": "English", "rate": "+4%"},
+            },
+        )
+        edge_post_en = self.root / "edge_post_en.json"
+        write_json(edge_post_en, {"steps": [{"tool": "synthesize_edge_tts.py"}, {"tool": "prepare_voice_master.py"}]})
+        ep_en_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "service",
+            "location": "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1",
+        }
+        ep_en_data["narration"]["generation_record"] = {"file": "edge_gen_en.json"}
+        ep_en_data["narration"]["postprocess_record"] = {"file": "edge_post_en.json"}
+        write_json(ep_en, ep_en_data)
+
+        rep_ok = self.root / "report_indextts2_ok.json"
+        code_ok, data_ok, err_ok = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep_ok),
+        ])
+        self.assertEqual(code_ok, 0, f"Default IndexTTS-2.5 #5 zh + edge-tts en should pass: {err_ok} {data_ok}")
+        self.assertEqual(data_ok["flags"], [])
+
     def test_catches_clickbait_telegraphese_compressed_episode_and_ping_pong_cuts(self) -> None:
         zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
         make_clip(zh_vid, 1920, 1080, 24, 80.0)

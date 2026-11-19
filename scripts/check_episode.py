@@ -130,6 +130,10 @@ def _is_google_flow_tool(tool_val):
         return False
     stem = Path(raw.replace("\\", "/")).stem.lower()
     if low in (
+        "indextts2",
+        "synthesize_indextts2",
+        "synthesize_indextts2.py",
+        "scripts/synthesize_indextts2.py",
         "edge-tts",
         "synthesize_edge_tts",
         "synthesize_edge_tts.py",
@@ -143,9 +147,69 @@ def _is_google_flow_tool(tool_val):
         "prepare_voice_master",
         "prepare_voice_master.py",
         "scripts/prepare_voice_master.py",
-    ) or stem in ("edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
+    ) or stem in ("indextts2", "synthesize_indextts2", "edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
         return True
     return _is_google_flow_url(raw)
+
+
+def _is_indextts2_record(generated):
+    return (
+        isinstance(generated, dict)
+        and generated.get("provider") == "IndexTTS"
+        and generated.get("backend") == "local_indextts2"
+    )
+
+
+def local_indextts2_execution(execution):
+    return (
+        isinstance(execution, dict)
+        and execution.get("status") == "confirmed"
+        and execution.get("mode") == "local_project"
+        and substantive(execution.get("location"))
+        and substantive(execution.get("confirmation_reference"))
+    )
+
+
+def check_indextts2_voice_generation(generated, need, label, language):
+    need(
+        generated.get("schema_version") == 1
+        and generated.get("status") == "generated"
+        and generated.get("provider") == "IndexTTS"
+        and generated.get("backend") == "local_indextts2"
+        and substantive(generated.get("model_id")),
+        label + " actual IndexTTS-2.5 generation record required",
+    )
+    voice = generated.get("voice")
+    need(
+        isinstance(voice, dict)
+        and language is not None
+        and voice.get("language") == language
+        and substantive(voice.get("speaker")),
+        label + " IndexTTS-2.5 voice speaker and matching language required",
+    )
+    ref_sha = voice.get("reference_prompt_sha256") if isinstance(voice, dict) else None
+    need(
+        bool(re.fullmatch(r"[0-9a-f]{64}", str(ref_sha or ""))),
+        label + " IndexTTS-2.5 reference_prompt_sha256 required",
+    )
+    commit = generated.get("repo_commit")
+    ckpt_fp = generated.get("checkpoints_fingerprint_sha256")
+    has_hashes = bool(re.fullmatch(r"[0-9a-f]{40}", str(commit or ""))) and bool(
+        re.fullmatch(r"[0-9a-f]{64}", str(ckpt_fp or ""))
+    )
+    need(
+        substantive(generated.get("model_version_reference")) or has_hashes,
+        label + " IndexTTS-2.5 model_version_reference or repo/checkpoints digest required",
+    )
+    need(
+        isinstance(generated.get("load_parameters"), dict) and bool(generated.get("load_parameters")),
+        label + " actual IndexTTS-2.5 load_parameters required",
+    )
+    need(
+        isinstance(generated.get("effective_generation_params"), dict)
+        and bool(generated.get("effective_generation_params")),
+        label + " actual IndexTTS-2.5 effective_generation_params required",
+    )
 
 
 def cloud_voice_execution(execution):
@@ -301,15 +365,25 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
         infos.append(audio_info(output_path, label))
         sources.append({"segment_id": ident, "file": output_ref.get("file"), "sha256": output_ref.get("sha256")})
         generated = read_record(segment.get("generation_record"), label + " generation record")
+        is_indextts2_seg = _is_indextts2_record(generated)
         if cloud:
-            check_cloud_voice_generation(generated, need, evidence, label, cloud_language)
+            if is_indextts2_seg and cloud_language == "Chinese":
+                check_indextts2_voice_generation(generated, need, label, cloud_language)
+            else:
+                check_cloud_voice_generation(generated, need, evidence, label, cloud_language)
+        elif is_indextts2_seg:
+            check_indextts2_voice_generation(generated, need, label, "Chinese")
         else:
             need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-                 and generated.get("provider") in ("Microsoft Edge", "Qwen") and text(generated.get("backend"))
-                 and text(generated.get("model_id")), label + " actual edge-tts or Qwen generation record required")
+                 and generated.get("provider") in ("IndexTTS", "Microsoft Edge", "Qwen") and text(generated.get("backend"))
+                 and text(generated.get("model_id")), label + " actual IndexTTS, edge-tts or Qwen generation record required")
         actual_execution = obj(generated.get("execution"))
-        confirmed_execution = (cloud_voice_execution(execution) if cloud else
-                               execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service"))
+        if cloud and not (is_indextts2_seg and cloud_language == "Chinese"):
+            confirmed_execution = cloud_voice_execution(execution)
+        elif is_indextts2_seg:
+            confirmed_execution = local_indextts2_execution(execution)
+        else:
+            confirmed_execution = execution.get("status") == "confirmed" and execution.get("mode") in ("local_project", "service")
         need(confirmed_execution
              and all(text(execution.get(k)) and actual_execution.get(k) == execution.get(k)
                      for k in ("status", "mode", "location", "confirmation_reference")),
@@ -318,7 +392,7 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
         voice = obj(generated.get("voice"))
         effective = generated.get("effective_generation_params")
         runtime = generated.get("load_parameters") if execution.get("mode") == "local_project" else generated.get("runtime_parameters")
-        if not cloud:
+        if not cloud and not is_indextts2_seg:
             if revision or model_hash:
                 need(bool(re.fullmatch(r"[0-9a-f]{40}", str(revision)))
                      and bool(re.fullmatch(r"[0-9a-f]{64}", str(model_hash))), label + " model version evidence invalid")
@@ -336,7 +410,8 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
             need(isinstance(effective, dict) and bool(effective), label + " actual effective generation parameters required")
             need(isinstance(runtime, dict) and bool(runtime), label + " actual runtime parameters required")
         config = {key: generated.get(key) for key in ("backend", "provider", "model_id", "resolved_model_revision",
-                  "model_manifest_sha256", "model_version_reference", "voice", "effective_generation_params",
+                  "model_manifest_sha256", "repo_commit", "checkpoints_fingerprint_sha256",
+                  "model_version_reference", "voice", "effective_generation_params",
                   "actual_device", "environment")}
         config["runtime"] = runtime
         try:
@@ -355,7 +430,8 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
          "ordered segment inputs must exactly reconstruct whole script bytes")
 
     final_post = read_record(narration.get("postprocess_record"), "multi-source postprocess record")
-    mastered = final_post.get("mode") == "whole_track_linear_gain"
+    master_mode = final_post.get("mode")
+    mastered = master_mode in ("whole_track_linear_gain", "whole_track_speech_polish")
     post = (read_record(final_post.get("upstream_record"), "upstream concatenation record")
             if mastered else final_post)
     need(post.get("schema_version") == 1 and post.get("status") == "processed"
@@ -393,13 +469,23 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
                  "narration: Google Flow voice processing must run in Google Flow without local audio tools")
         params = obj(master_steps[0].get("parameters")) if valid_step else {}
         rate = params.get("output_sample_rate_hz")
-        need(params.get("processing_mode") == "whole_track_linear_gain" and number(params.get("gain_db"))
-             and params.get("speed_factor") == 1 and not isinstance(params.get("speed_factor"), bool)
-             and params.get("pitch_shift_semitones") == 0 and not isinstance(params.get("pitch_shift_semitones"), bool)
-             and params.get("channels") == "preserve" and params.get("codec") == "pcm_f32le"
-             and params.get("per_shot_normalization") is False and params.get("dynamic_compression") is False
-             and isinstance(rate, int) and not isinstance(rate, bool) and rate > 0,
-             "whole-track master permits only declared constant gain and resampling, without pitch/speed/dynamic processing")
+        if master_mode == "whole_track_speech_polish":
+            need(params.get("processing_mode") == "whole_track_speech_polish"
+                 and params.get("speed_factor") == 1 and not isinstance(params.get("speed_factor"), bool)
+                 and params.get("pitch_shift_semitones") == 0 and not isinstance(params.get("pitch_shift_semitones"), bool)
+                 and params.get("channels") == "preserve" and params.get("codec") == "pcm_f32le"
+                 and params.get("per_shot_normalization") is False and params.get("echo") == "none"
+                 and text(params.get("filter_chain"))
+                 and isinstance(rate, int) and not isinstance(rate, bool) and rate > 0,
+                 "whole-track speech polish permits declared non-echo EQ/comp/loudnorm and resampling only, preserving pitch/speed")
+        else:
+            need(params.get("processing_mode") == "whole_track_linear_gain" and number(params.get("gain_db"))
+                 and params.get("speed_factor") == 1 and not isinstance(params.get("speed_factor"), bool)
+                 and params.get("pitch_shift_semitones") == 0 and not isinstance(params.get("pitch_shift_semitones"), bool)
+                 and params.get("channels") == "preserve" and params.get("codec") == "pcm_f32le"
+                 and params.get("per_shot_normalization") is False and params.get("dynamic_compression") is False
+                 and isinstance(rate, int) and not isinstance(rate, bool) and rate > 0,
+                 "whole-track master permits only declared constant gain and resampling, without pitch/speed/dynamic processing")
         output_path = evidence(output_ref, "whole-track master output")
         output_info = audio_info(output_path, "whole-track master output")
         if output_info is not None:
@@ -410,7 +496,8 @@ def check_voice_segments(narration, root, *, cloud=False, cloud_language="Chines
                  "whole-track master must preserve assembled channels")
             # A rate conversion may round at the PCM sample boundary. This is
             # timing/provenance validation, not a voice-quality or pitch test.
-            precision = 1 / assembly_info["format"][1] + 1 / output_info["format"][1] + 0.000001
+            extra_tol = 0.005 if master_mode == "whole_track_speech_polish" else 0.000001
+            precision = 1 / assembly_info["format"][1] + 1 / output_info["format"][1] + extra_tol
             need(abs(assembly_info["duration"] - output_info["duration"]) <= precision,
                  "whole-track master must preserve complete assembled duration; cuts/gaps/speed changes unsupported")
     valid_infos = bool(infos) and all(info is not None for info in infos) and assembly_info is not None
@@ -802,9 +889,39 @@ def check(data, root, stage, *, stored_video=None):
     reused = isinstance(reuse, dict) and reuse.get("status") == "previously_accepted"
     execution = narration.get("execution", {})
     execution = execution if isinstance(execution, dict) else {}
+
+    def _safe_read_rel_json(rel_name):
+        if not isinstance(rel_name, str) or not rel_name.strip() or Path(rel_name).is_absolute():
+            return None
+        try:
+            cand = (root / rel_name).resolve()
+            if not cand.is_relative_to(root) or not cand.is_file():
+                return None
+            obj_val = json.loads(cand.read_text(encoding="utf-8"))
+            return obj_val if isinstance(obj_val, dict) else None
+        except (OSError, ValueError, RuntimeError):
+            return None
+
+    cloud_uses_indextts2 = False
+    if cloud_narration and language == "Chinese":
+        single_peek = narration.get("generation_record")
+        if isinstance(single_peek, dict) and nonempty(single_peek.get("file")):
+            rec_peek = _safe_read_rel_json(single_peek.get("file"))
+            cloud_uses_indextts2 = _is_indextts2_record(rec_peek)
+        elif isinstance(narration.get("generation_manifest"), dict) and nonempty(narration["generation_manifest"].get("file")):
+            man_peek = _safe_read_rel_json(narration["generation_manifest"].get("file"))
+            segs_peek = man_peek.get("segments") if isinstance(man_peek, dict) else None
+            if isinstance(segs_peek, list) and segs_peek and isinstance(segs_peek[0], dict):
+                s0_ref = segs_peek[0].get("generation_record")
+                if isinstance(s0_ref, dict):
+                    cloud_uses_indextts2 = _is_indextts2_record(_safe_read_rel_json(s0_ref.get("file")))
+
     if cloud_narration and (ready or complete):
         require(voice_type == "synthetic", "narration: the Google Flow route requires Google Flow-generated voiceover")
-        require(cloud_voice_execution(execution), "narration: confirmed cloud service location/reference required")
+        if cloud_uses_indextts2:
+            require(local_indextts2_execution(execution), "narration: confirmed local IndexTTS-2.5 execution location/reference required")
+        else:
+            require(cloud_voice_execution(execution), "narration: confirmed cloud service location/reference required")
     elif voice_type == "synthetic" and ready and not reused:
         require(execution.get("status") == "confirmed"
                 and execution.get("mode") in ("local_project", "service")
@@ -839,18 +956,24 @@ def check(data, root, stage, *, stored_video=None):
                         require(isinstance(generated, dict), "narration: malformed generation record")
                         if not isinstance(generated, dict):
                             generated = {}
+                        is_indextts2 = _is_indextts2_record(generated)
                         if cloud_narration:
-                            check_cloud_voice_generation(generated, require, hashed_file, "narration:", language)
+                            if is_indextts2 and language == "Chinese":
+                                check_indextts2_voice_generation(generated, require, "narration:", language)
+                            else:
+                                check_cloud_voice_generation(generated, require, hashed_file, "narration:", language)
+                        elif is_indextts2:
+                            check_indextts2_voice_generation(generated, require, "narration:", "Chinese")
                         else:
                             require(generated.get("status") == "generated" and nonempty(generated.get("backend"))
-                                    and generated.get("provider") in ("Microsoft Edge", "Qwen")
+                                    and generated.get("provider") in ("IndexTTS", "Microsoft Edge", "Qwen")
                                     and nonempty(generated.get("model_id")), "narration: actual synthesis backend/model required")
                         actual_execution = generated.get("execution", {})
                         require(isinstance(actual_execution, dict)
                                 and all(actual_execution.get(k) == execution.get(k)
                                         for k in ("status", "mode", "location", "confirmation_reference")),
                                 "narration: generation execution differs from confirmed location")
-                        if not cloud_narration:
+                        if not cloud_narration and not is_indextts2:
                             revision = generated.get("resolved_model_revision")
                             manifest = generated.get("model_manifest_sha256")
                             if revision or manifest:

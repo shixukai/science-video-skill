@@ -50,6 +50,15 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_moving_model_revision_is_not_a_fixed_default(self):
         self.edit("config/series-profile.json", lambda d: d["audio"]["local_adapter_example"].update(model_revision="main"))
         self.errors("optional local adapter fixed revision")
+    def test_indextts2_private_paths_cannot_be_hardcoded_in_public_profile(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"]["indextts2"].update(project_dir="/private/indextts2"))
+        self.errors("private local paths")
+    def test_indextts2_drive_literal_path_cannot_leak_into_public_profile(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"]["indextts2"].update(reference_prompt_policy="D:\\private\\prompt.wav"))
+        self.errors("private local paths")
+    def test_speech_polish_preset_must_not_enable_echo(self):
+        self.edit("config/series-profile.json", lambda d: d["audio"]["speech_polish_preset"].update(echo="room"))
+        self.errors("speech polish")
     def test_aesthetic_average_cannot_replace_dimension_completion(self):
         self.edit("config/production-policy.json", lambda d: d["quality"]["finesse"].update(no_average_override=False))
         self.errors("independent dimension target")

@@ -77,6 +77,44 @@ def read_preset(profile):
     return preset, target, ceiling, rate, hashlib.sha256(raw).hexdigest()
 
 
+FORBIDDEN_POLISH_TOKENS = ("aecho", "atempo", "asetrate", "rubberband", "loudnorm")
+
+
+def read_speech_polish_preset(profile):
+    raw = Path(profile).read_bytes()
+    try:
+        preset = json.loads(raw)["audio"]["speech_polish_preset"]
+    except (ValueError, KeyError, TypeError):
+        raise VoiceMasterError("Profile needs audio.speech_polish_preset") from None
+    if not isinstance(preset, dict):
+        raise VoiceMasterError("speech_polish_preset must be an object")
+    if (not isinstance(preset.get("id"), str) or not preset["id"].strip() or
+            preset.get("processing_mode") != "whole_track_speech_polish"):
+        raise VoiceMasterError("An identified whole_track_speech_polish preset is required")
+    target = finite(preset.get("target_i_lufs"), "target_i_lufs")
+    ceiling = finite(preset.get("true_peak_ceiling_dbtp"), "true_peak_ceiling_dbtp")
+    lra = finite(preset.get("target_lra_lu"), "target_lra_lu")
+    rate = preset.get("output_sample_rate_hz")
+    if not -70 <= target <= -5 or not -9 <= ceiling <= 0 or not 1 <= lra <= 20:
+        raise VoiceMasterError("Target or LRA is outside FFmpeg loudnorm ranges")
+    if isinstance(rate, bool) or not isinstance(rate, int) or rate <= 0:
+        raise VoiceMasterError("output_sample_rate_hz must be a positive integer")
+    if (finite(preset.get("pitch_shift_semitones", 0), "pitch_shift_semitones") != 0 or
+            finite(preset.get("speed_factor", 1), "speed_factor") != 1 or
+            preset.get("per_shot_normalization", False) is not False):
+        raise VoiceMasterError("Speech polish preset supports no speed, pitch or per-shot normalization")
+    if preset.get("echo") != "none":
+        raise VoiceMasterError("Speech polish preset requires echo='none'")
+    filter_chain = preset.get("filter_chain")
+    if not isinstance(filter_chain, str) or not filter_chain.strip():
+        raise VoiceMasterError("Speech polish preset requires a nonempty filter_chain")
+    low_chain = filter_chain.lower()
+    for token in FORBIDDEN_POLISH_TOKENS:
+        if re.search(r"\b" + token + r"\b", low_chain):
+            raise VoiceMasterError(f"Speech polish filter_chain forbids '{token}'")
+    return preset, target, ceiling, lra, rate, hashlib.sha256(raw).hexdigest()
+
+
 def find_tool(requested, name, partner=None):
     candidate = requested
     if candidate is None and partner is not None:
@@ -130,11 +168,11 @@ def probe(path, ffprobe):
         raise VoiceMasterError("Cannot read a valid audio stream from the probe") from None
 
 
-def measure(path, ffmpeg, target, ceiling):
+def measure_loudnorm_stats(path, ffmpeg, target, ceiling, lra=50):
     # loudnorm is used only to measure INPUT values; its processed stream is discarded.
     result = run([ffmpeg, "-hide_banner", "-nostdin", "-protocol_whitelist", "file,pipe",
                   "-i", str(path), "-map", "0:a:0", "-vn", "-af",
-                  f"loudnorm=I={target}:TP={ceiling}:LRA=50:print_format=json", "-f", "null", "-"])
+                  f"loudnorm=I={target}:TP={ceiling}:LRA={lra}:print_format=json", "-f", "null", "-"])
     matches = list(re.finditer(r'\{[^{}]*"input_i"[^{}]*\}', result.stderr, re.S))
     if not matches:
         raise VoiceMasterError("FFmpeg did not return input loudness measurements")
@@ -142,9 +180,16 @@ def measure(path, ffmpeg, target, ceiling):
         raw = json.loads(matches[-1].group(0))
         return {"i_lufs": finite(raw["input_i"], "integrated loudness (silent or too-short input?)"),
                 "true_peak_dbtp": finite(raw["input_tp"], "true peak"),
-                "lra_lu": finite(raw["input_lra"], "loudness range")}
+                "lra_lu": finite(raw["input_lra"], "loudness range"),
+                "thresh": finite(raw["input_thresh"], "input threshold"),
+                "target_offset": finite(raw["target_offset"], "target offset")}
     except (KeyError, ValueError, TypeError):
         raise VoiceMasterError("Invalid input loudness measurement") from None
+
+
+def measure(path, ffmpeg, target, ceiling):
+    stats = measure_loudnorm_stats(path, ffmpeg, target, ceiling, lra=50)
+    return {k: stats[k] for k in ("i_lufs", "true_peak_dbtp", "lra_lu")}
 
 
 def gain_plan(measured, target, ceiling):
@@ -641,6 +686,123 @@ def prepare(episode_dir, source, output, record, profile=DEFAULT_PROFILE, ffmpeg
     return document
 
 
+def prepare_polish(episode_dir, source, output, record, profile=DEFAULT_PROFILE, ffmpeg=None, ffprobe=None,
+                   upstream_record=None, boundaries=None):
+    root, src, out, rec, prof = paths(episode_dir, source, output, record, profile)
+    preset, target, ceiling, lra, rate, profile_hash = read_speech_polish_preset(prof)
+    parsed_boundaries = _parse_boundaries(boundaries)
+    ffmpeg = find_tool(ffmpeg, "ffmpeg")
+    ffprobe = find_tool(ffprobe, "ffprobe", ffmpeg)
+    ffmpeg_version = run([ffmpeg, "-version"]).stdout.splitlines()[0]
+    ffprobe_version = run([ffprobe, "-version"]).stdout.splitlines()[0]
+    source_hash = sha256(src)
+    upstream = read_upstream(upstream_record, root, src, source_hash, out, rec, prof)
+    if parsed_boundaries is None and upstream:
+        parsed_boundaries = _infer_upstream_boundaries(upstream, root)
+    before_info = probe(src, ffprobe)
+    before = measure(src, ffmpeg, target, ceiling)
+    started = datetime.now(timezone.utc).isoformat()
+    filter_chain = preset["filter_chain"].strip()
+    with reserve(out, rec) as (audio_handle, record_handle):
+        with tempfile.TemporaryDirectory(prefix="voice-polish-", dir=out.parent) as temporary:
+            pre_wav = Path(temporary) / "polished_pre.wav"
+            candidate = Path(temporary) / "master.wav"
+            trimmed_wav = Path(temporary) / "master_trimmed.wav"
+            render_commands = []
+
+            cmd_polish = [ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin", "-n",
+                          "-protocol_whitelist", "file,pipe", "-i", str(src), "-map", "0:a:0", "-vn",
+                          "-af", filter_chain, "-ar", str(rate), "-c:a", "pcm_f32le", str(pre_wav)]
+            run(cmd_polish)
+            render_commands.append(cmd_polish)
+
+            ln_stats = measure_loudnorm_stats(pre_wav, ffmpeg, target, ceiling, lra=lra)
+            ln_filter = (
+                f"loudnorm=I={target}:TP={ceiling}:LRA={lra}"
+                f":measured_I={ln_stats['i_lufs']}:measured_LRA={ln_stats['lra_lu']}"
+                f":measured_TP={ln_stats['true_peak_dbtp']}:measured_thresh={ln_stats['thresh']}"
+                f":offset={ln_stats['target_offset']}:linear=true"
+            )
+            cmd_norm = [ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin", "-n",
+                        "-protocol_whitelist", "file,pipe", "-i", str(pre_wav), "-map", "0:a:0", "-vn",
+                        "-af", ln_filter, "-ar", str(rate), "-c:a", "pcm_f32le", str(candidate)]
+            run(cmd_norm)
+            render_commands.append(cmd_norm)
+
+            after = measure(candidate, ffmpeg, target, ceiling)
+            peak_limited = False
+            if after["true_peak_dbtp"] > ceiling:
+                peak_limited = True
+                trim_db = ceiling - after["true_peak_dbtp"] - PEAK_MARGIN_DB
+                cmd_trim = [ffmpeg, "-hide_banner", "-loglevel", "error", "-nostdin", "-n",
+                            "-protocol_whitelist", "file,pipe", "-i", str(candidate), "-map", "0:a:0", "-vn",
+                            "-af", f"volume={trim_db:.10f}dB:precision=double:eval=once",
+                            "-ar", str(rate), "-c:a", "pcm_f32le", str(trimmed_wav)]
+                run(cmd_trim)
+                render_commands.append(cmd_trim)
+                os.replace(trimmed_wav, candidate)
+                after = measure(candidate, ffmpeg, target, ceiling)
+                if after["true_peak_dbtp"] > ceiling:
+                    raise VoiceMasterError(
+                        "Measured polished output still exceeds true-peak ceiling after one bounded correction"
+                    )
+
+            after_info = probe(candidate, ffprobe)
+            if after_info["sample_rate_hz"] != rate or after_info["channels"] != before_info["channels"]:
+                raise VoiceMasterError("Processed rate or channels differ from the declared polish recipe")
+            if (before_info["channel_layout"] and after_info["channel_layout"] and
+                    before_info["channel_layout"] != after_info["channel_layout"]):
+                raise VoiceMasterError("Channel layout changed")
+            duration_delta = after_info["duration_seconds"] - before_info["duration_seconds"]
+            lossless = str(before_info["codec"]).startswith("pcm_") or before_info["codec"] == "flac"
+            duration_tolerance = 0.005 if lossless else 0.05
+            if abs(duration_delta) > duration_tolerance:
+                raise VoiceMasterError("Audio duration changed beyond the applicable polish tolerance")
+            if (sha256(src) != source_hash or sha256(prof) != profile_hash or
+                    (upstream and sha256(root / upstream["file"]) != upstream["sha256"])):
+                raise VoiceMasterError("Source audio or profile changed during processing; prepare a new version")
+            continuity = analyze_continuity(
+                candidate, boundaries=parsed_boundaries, peak_limited=peak_limited,
+                target_shortfall_lu=max(0.0, target - after["i_lufs"]))
+            output_hash = sha256(candidate)
+            document = {"schema_version": 1, "status": "processed", "kind": "whole_narration_master",
+                "mode": "whole_track_speech_polish",
+                "source": {"file": src.relative_to(root).as_posix(), "sha256": source_hash},
+                "output": {"file": out.relative_to(root).as_posix(), "sha256": output_hash},
+                "steps": [{"tool": ffmpeg, "version": ffmpeg_version,
+                           "parameters": {"processing_mode": "whole_track_speech_polish",
+                               "preset_id": preset["id"], "filter_chain": filter_chain, "echo": "none",
+                               "target_i_lufs": target, "true_peak_ceiling_dbtp": ceiling,
+                               "target_lra_lu": lra, "output_sample_rate_hz": rate,
+                               "codec": "pcm_f32le", "channels": "preserve", "render_commands": render_commands,
+                               "pitch_shift_semitones": 0, "speed_factor": 1,
+                               "dynamic_compression": True, "per_shot_normalization": False}}],
+                "preset_id": preset["id"], "profile_sha256": profile_hash,
+                "targets": {"narration_i_lufs": target, "true_peak_ceiling_dbtp": ceiling, "target_lra_lu": lra},
+                "measured_before": before, "measured_after": after,
+                "integrated_difference_from_target_lu": after["i_lufs"] - target,
+                "continuity_diagnostics": continuity,
+                "mix_review": "needed_for_peak_limited_target" if peak_limited else "pending",
+                "probe": {"tool": ffprobe, "version": ffprobe_version, "before": before_info,
+                          "after": after_info, "duration_difference_seconds": duration_delta,
+                          "sample_exact_duration_basis": lossless},
+                "technical": {"true_peak_ceiling_met": True, "render_attempts": len(render_commands),
+                              "source_preserved": True, "quality_approval": False},
+                "listening": {"status": "pending", "heard": False},
+                "started_at": started, "completed_at": datetime.now(timezone.utc).isoformat(),
+                "limits": "Whole-track speech polish (highpass, gentle EQ, light compression, zero echo) plus two-pass loudness normalization matching #5. No pitch/speed/per-shot changes. Actual voice/source/final listening remains required."}
+            if upstream:
+                document["upstream_record"] = upstream
+            with candidate.open("rb") as stream:
+                shutil.copyfileobj(stream, audio_handle)
+            audio_handle.flush()
+            os.fsync(audio_handle.fileno())
+            record_handle.write((json.dumps(document, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode("utf-8"))
+            record_handle.flush()
+            os.fsync(record_handle.fileno())
+    return document
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--episode-dir", help="existing episode root for relative source-chain references")
@@ -648,6 +810,8 @@ def main(argv=None):
     parser.add_argument("--output", help="new WAV; relative paths use episode-dir")
     parser.add_argument("--record", help="new provenance JSON; relative paths use episode-dir")
     parser.add_argument("--profile", default=str(DEFAULT_PROFILE))
+    parser.add_argument("--polish", action="store_true",
+                        help="apply declared audio.speech_polish_preset instead of linear-gain mix_preset")
     parser.add_argument("--upstream-record", help="existing processed concatenate_full_segments record for necessary segmented synthesis")
     parser.add_argument("--boundaries", help="optional comma-separated boundary seconds for seam level/pitch continuity diagnostics")
     parser.add_argument("--analyze-only", action="store_true", help="run read-only continuity/transient diagnostics on --input without writing a master")
@@ -665,18 +829,27 @@ def main(argv=None):
             return 0
         if not args.episode_dir or not args.output or not args.record:
             raise VoiceMasterError("--episode-dir, --output and --record are required unless --analyze-only is set")
-        result = prepare(args.episode_dir, args.input, args.output, args.record,
-                         args.profile, args.ffmpeg, args.ffprobe, args.upstream_record,
-                         boundaries=args.boundaries)
+        if args.polish:
+            result = prepare_polish(args.episode_dir, args.input, args.output, args.record,
+                                    args.profile, args.ffmpeg, args.ffprobe, args.upstream_record,
+                                    boundaries=args.boundaries)
+        else:
+            result = prepare(args.episode_dir, args.input, args.output, args.record,
+                             args.profile, args.ffmpeg, args.ffprobe, args.upstream_record,
+                             boundaries=args.boundaries)
     except (VoiceMasterError, OSError) as error:
         print(json.dumps({"status": "error", "error": str(error)}, ensure_ascii=False), file=sys.stderr)
         return 2
-    print(json.dumps({"status": "processed", "output": result["output"],
-                      "record": str((Path(args.episode_dir).resolve() / args.record).resolve()), "preset_id": result["preset_id"],
-                      "measured_after": result["measured_after"], "gain": result["gain"],
-                      "continuity_status": result["continuity_diagnostics"]["status"],
-                      "continuity_flags": result["continuity_diagnostics"]["flags"],
-                      "mix_review": result["mix_review"], "listening": "pending"}, ensure_ascii=False))
+    out_summary = {"status": "processed", "output": result["output"],
+                   "record": str((Path(args.episode_dir).resolve() / args.record).resolve()),
+                   "preset_id": result["preset_id"], "mode": result["mode"],
+                   "measured_after": result["measured_after"],
+                   "continuity_status": result["continuity_diagnostics"]["status"],
+                   "continuity_flags": result["continuity_diagnostics"]["flags"],
+                   "mix_review": result["mix_review"], "listening": "pending"}
+    if "gain" in result:
+        out_summary["gain"] = result["gain"]
+    print(json.dumps(out_summary, ensure_ascii=False))
     return 0
 
 

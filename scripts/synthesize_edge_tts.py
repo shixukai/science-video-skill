@@ -139,12 +139,13 @@ async def _stream_edge_tts(
 def load_profile_defaults(profile_path: Path) -> dict[str, Any]:
     data = json.loads(profile_path.read_text(encoding="utf-8"))
     audio = data.get("audio", {})
+    edge_cfg = audio.get("edge_fallback") if isinstance(audio.get("edge_fallback"), dict) else audio
     return {
-        "speaker": audio.get("speaker", "zh-CN-YunxiNeural"),
-        "en_speaker": audio.get("en_speaker", "en-US-AndrewMultilingualNeural"),
-        "rate": audio.get("rate", "+4%"),
-        "pitch": audio.get("pitch", "+0Hz"),
-        "volume": audio.get("volume", "+0%"),
+        "speaker": edge_cfg.get("speaker", "zh-CN-YunxiNeural"),
+        "en_speaker": edge_cfg.get("en_speaker", audio.get("en_speaker", "en-US-AndrewMultilingualNeural")),
+        "rate": edge_cfg.get("rate", audio.get("rate", "+4%")),
+        "pitch": edge_cfg.get("pitch", audio.get("pitch", "+0Hz")),
+        "volume": edge_cfg.get("volume", audio.get("volume", "+0%")),
     }
 
 

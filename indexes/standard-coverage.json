@@ -90,7 +90,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "06c91c20f797ba0f005961b03024871b6477bcbbff573cd15e7a8b051132b8a6",
+      "sha256": "e81f4666de7f4fc04b22ea9e79575016c2622bd72cf595e66eef364a752e074e",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -317,7 +317,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "840b403dc7591be719e68f9d02ae45df98de08ef523ef9ea06897fa06ac9870f",
+      "sha256": "ebc09c7d9df16bf504d56dbf73b782592c9f756629a003c3883d9a785cc88bfe",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -326,6 +326,8 @@
         "reuse-the-accepted-voice-before-making-new-auditions",
         "continuous-narration-and-synthesis-units",
         "one-narration-master-and-one-shared-processing-chain",
+        "5-speech-polish-+-two-pass-loudness-master-default-for-indextts-25-mandarin-clone",
+        "whole-track-linear-gain-only-default-for-edge-tts-english-or-cloud-fallback",
         "read-only-preflight-on-any-source-retake-or-assembled-wav-before-masteringediting",
         "optional-local-adapter",
         "run-records-and-audio-binding",

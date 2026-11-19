@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import math
 from pathlib import Path
 import shutil
 import struct
@@ -355,6 +356,161 @@ class VoiceSegmentTests(unittest.TestCase):
         packet["narration"]["generation_manifest"] = self.narration["generation_manifest"]
         errors, _ = checks.check(packet, self.root, "plan")
         self.assertIn("narration segments: segment 2 cloud voice language must match the narration version", errors)
+
+    def _indextts2_single_packet(self, *, flow=False):
+        samples = b"".join(struct.pack("<f", 0.05 * math.sin(2 * math.pi * 200 * i / 48000)) for i in range(19200))
+        fmt = struct.pack("<HHIIHH", 3, 1, 48000, 48000 * 4, 4, 32)
+        chunks = b"fmt " + struct.pack("<I", len(fmt)) + fmt + b"data" + struct.pack("<I", len(samples)) + samples
+        (self.root / "polished.wav").write_bytes(b"RIFF" + struct.pack("<I", len(chunks) + 4) + b"WAVE" + chunks)
+        polish_ref = self.ref("polished.wav")
+        raw_ref = self.ref("assembled.wav")
+        exec_cfg = {
+            "status": "confirmed",
+            "mode": "local_project",
+            "location": "/fixture-only/indextts2",
+            "confirmation_reference": "fixture audition #5",
+        }
+        gen_rec = {
+            "schema_version": 1,
+            "status": "generated",
+            "provider": "IndexTTS",
+            "backend": "local_indextts2",
+            "model_id": "IndexTeam/IndexTTS-2.5",
+            "repo_commit": "d" * 40,
+            "checkpoints_fingerprint_sha256": "e" * 64,
+            "model_version_reference": "IndexTTS-2.5 synthetic fixture",
+            "execution": copy.deepcopy(exec_cfg),
+            "voice": {
+                "speaker": "user_clone",
+                "voice_preset_id": "mandarin-indextts25-clone-polished-v1",
+                "language": "Chinese",
+                "reference_prompt_sha256": "f" * 64,
+            },
+            "load_parameters": {"use_bf16": True, "use_cuda_kernel": False, "use_qwen_emo": False},
+            "effective_generation_params": {"lang": "ZH", "duration_factor": 1.0, "use_emo_text": False},
+            "input": {**self.ref("script.txt"), "text_transformation": "none"},
+            "output": raw_ref,
+        }
+        post_rec = {
+            "schema_version": 1,
+            "status": "processed",
+            "mode": "whole_track_speech_polish",
+            "source": raw_ref,
+            "output": polish_ref,
+            "steps": [
+                {
+                    "tool": "prepare_voice_master.py",
+                    "version": "1.6.37",
+                    "parameters": {
+                        "processing_mode": "whole_track_speech_polish",
+                        "filter_chain": "highpass=f=75,acompressor=threshold=-20dB:ratio=2",
+                        "echo": "none",
+                        "output_sample_rate_hz": 48000,
+                        "codec": "pcm_f32le",
+                        "channels": "preserve",
+                        "speed_factor": 1,
+                        "pitch_shift_semitones": 0,
+                        "per_shot_normalization": False,
+                    },
+                }
+            ],
+        }
+        packet = self.packet()
+        if flow:
+            packet.setdefault("design", {})["production_route"] = "google_flow"
+        packet["assets"][-1].update(file="polished.wav", sha256=polish_ref["sha256"])
+        voice = packet["narration"]
+        voice.pop("generation_manifest", None)
+        voice.pop("source_listen_review", None)
+        voice["execution"] = copy.deepcopy(exec_cfg)
+        voice["audio_sha256"] = polish_ref["sha256"]
+        voice["series_sample_reference"] = "fixture sample #5"
+        voice["generation_record"] = self.write_json("indextts2-gen.json", gen_rec)
+        voice["postprocess_record"] = self.write_json("indextts2-polish.json", post_rec)
+        return packet, gen_rec, polish_ref
+
+    def test_indextts2_single_and_segmented_polish_pass_and_require_prompt_hash(self):
+        for flow in (False, True):
+            stage = "plan" if flow else "delivery"
+            with self.subTest(flow=flow, stage=stage):
+                packet, gen_rec, _ = self._indextts2_single_packet(flow=flow)
+                errors, _ = checks.check(packet, self.root, stage)
+                self.assertFalse(any(e.startswith("narration") for e in errors), errors)
+
+                bad_gen = copy.deepcopy(gen_rec)
+                bad_gen["voice"].pop("reference_prompt_sha256")
+                packet["narration"]["generation_record"] = self.write_json("indextts2-gen-bad.json", bad_gen)
+                errors_bad, _ = checks.check(packet, self.root, stage)
+                self.assertTrue(any("reference_prompt_sha256" in e for e in errors_bad), errors_bad)
+
+        # Segmented IndexTTS-2.5 + whole_track_speech_polish passes on standard & google_flow routes
+        exec_cfg = {
+            "status": "confirmed",
+            "mode": "local_project",
+            "location": "/fixture-only/indextts2",
+            "confirmation_reference": "fixture audition #5",
+        }
+        for seg, g in zip(self.manifest["segments"], self.generations):
+            for k in ("resolved_model_revision", "model_manifest_sha256"):
+                g.pop(k, None)
+            g.update(
+                provider="IndexTTS",
+                backend="local_indextts2",
+                model_id="IndexTeam/IndexTTS-2.5",
+                repo_commit="d" * 40,
+                checkpoints_fingerprint_sha256="e" * 64,
+                execution=copy.deepcopy(exec_cfg),
+                voice={
+                    "speaker": "user_clone",
+                    "voice_preset_id": "mandarin-indextts25-clone-polished-v1",
+                    "language": "Chinese",
+                    "reference_prompt_sha256": "f" * 64,
+                },
+                load_parameters={"use_bf16": True, "use_cuda_kernel": False, "use_qwen_emo": False},
+                effective_generation_params={"lang": "ZH", "duration_factor": 1.0, "use_emo_text": False},
+            )
+        self.narration["execution"] = copy.deepcopy(exec_cfg)
+        for i in range(len(self.generations)):
+            self.save_generation(i)
+        samples = b"".join(struct.pack("<f", 0.05 * math.sin(2 * math.pi * 200 * i / 48000)) for i in range(19200))
+        fmt = struct.pack("<HHIIHH", 3, 1, 48000, 48000 * 4, 4, 32)
+        chunks = b"fmt " + struct.pack("<I", len(fmt)) + fmt + b"data" + struct.pack("<I", len(samples)) + samples
+        (self.root / "seg-polished.wav").write_bytes(b"RIFF" + struct.pack("<I", len(chunks) + 4) + b"WAVE" + chunks)
+        polish_ref = self.ref("seg-polished.wav")
+        concat_doc = copy.deepcopy(self.post)
+        concat_doc["steps"][0]["tool"] = "synthesize_indextts2.py"
+        concat_ref = self.write_json("seg-concat.json", concat_doc)
+        master_polish = {
+            "schema_version": 1,
+            "status": "processed",
+            "mode": "whole_track_speech_polish",
+            "upstream_record": concat_ref,
+            "source": self.ref("assembled.wav"),
+            "output": polish_ref,
+            "steps": [
+                {
+                    "tool": "prepare_voice_master.py",
+                    "version": "1.6.37",
+                    "parameters": {
+                        "processing_mode": "whole_track_speech_polish",
+                        "filter_chain": "highpass=f=75,acompressor=threshold=-20dB:ratio=2",
+                        "echo": "none",
+                        "output_sample_rate_hz": 48000,
+                        "codec": "pcm_f32le",
+                        "channels": "preserve",
+                        "speed_factor": 1,
+                        "pitch_shift_semitones": 0,
+                        "per_shot_normalization": False,
+                    },
+                }
+            ],
+        }
+        self.post = master_polish
+        self.narration["audio_sha256"] = polish_ref["sha256"]
+        self.narration["source_listen_review"].update(polish_ref)
+        self.save()
+        self.assertEqual(checks.check_voice_segments(self.narration, self.root, cloud=False), [])
+        self.assertEqual(checks.check_voice_segments(self.narration, self.root, cloud=True, cloud_language="Chinese"), [])
 
     def test_reason_needs_supported_kind_and_bound_evidence(self):
         self.manifest["reason"] = {"kind": "one_shot_per_scene", "note": "Convenient segmentation"}

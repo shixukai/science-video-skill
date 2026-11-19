@@ -532,6 +532,10 @@ def _is_google_flow_tool(tool_val: Any) -> bool:
         return False
     stem = Path(raw.replace("\\", "/")).stem.lower()
     if low in (
+        "indextts2",
+        "synthesize_indextts2",
+        "synthesize_indextts2.py",
+        "scripts/synthesize_indextts2.py",
         "edge-tts",
         "synthesize_edge_tts",
         "synthesize_edge_tts.py",
@@ -545,7 +549,7 @@ def _is_google_flow_tool(tool_val: Any) -> bool:
         "prepare_voice_master",
         "prepare_voice_master.py",
         "scripts/prepare_voice_master.py",
-    ) or stem in ("edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
+    ) or stem in ("indextts2", "synthesize_indextts2", "edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
         return True
     return _is_google_flow_url(raw)
 
@@ -564,35 +568,51 @@ def _check_flow_origin_purity(
         reasons.append("flow_postproduction_gaps_forbidden")
     nar = episode.get("narration") if isinstance(episode.get("narration"), dict) else {}
     exc = nar.get("execution") if isinstance(nar.get("execution"), dict) else {}
-    if exc:
-        mode = exc.get("mode")
-        if mode and mode != "service":
-            reasons.append(f"execution_mode:{mode}")
-        loc = exc.get("location")
-        if isinstance(loc, str) and loc.strip() and not _is_google_flow_url(loc):
-            reasons.append("non_flow_execution_location")
     ep_dir = episode.get("_dir")
+    gen_data: dict[str, Any] | None = None
     if isinstance(ep_dir, Path):
         gen_ref = nar.get("generation_record")
         if isinstance(gen_ref, dict) and isinstance(gen_ref.get("file"), str) and gen_ref["file"].strip():
             gen_path = _resolve_path(ep_dir, gen_ref["file"])
             if gen_path.is_file():
                 try:
-                    gen_data = _load_json(gen_path)
-                    if isinstance(gen_data, dict):
-                        prov = gen_data.get("provider")
-                        if isinstance(prov, str) and prov.strip() and prov not in (
-                            "Microsoft Edge",
-                            "Google Flow",
-                            "Google AI Studio",
-                            "Google",
-                        ):
-                            reasons.append(f"non_flow_provider:{prov}")
-                        bk = gen_data.get("backend")
-                        if isinstance(bk, str) and any(t in bk.lower() for t in ("local", "qwen", "os_tts")):
-                            reasons.append(f"non_flow_backend:{bk}")
+                    loaded = _load_json(gen_path)
+                    if isinstance(loaded, dict):
+                        gen_data = loaded
                 except (OSError, ValueError):
                     pass
+    is_indextts2_zh = (
+        edition == "zh"
+        and isinstance(gen_data, dict)
+        and gen_data.get("provider") == "IndexTTS"
+        and gen_data.get("backend") == "local_indextts2"
+    )
+    if exc:
+        mode = exc.get("mode")
+        loc = exc.get("location")
+        if is_indextts2_zh:
+            if mode != "local_project":
+                reasons.append(f"execution_mode:{mode}")
+            if not (isinstance(loc, str) and loc.strip()):
+                reasons.append("non_flow_execution_location")
+        else:
+            if mode and mode != "service":
+                reasons.append(f"execution_mode:{mode}")
+            if isinstance(loc, str) and loc.strip() and not _is_google_flow_url(loc):
+                reasons.append("non_flow_execution_location")
+    if isinstance(gen_data, dict) and not is_indextts2_zh:
+        prov = gen_data.get("provider")
+        if isinstance(prov, str) and prov.strip() and prov not in (
+            "Microsoft Edge",
+            "Google Flow",
+            "Google AI Studio",
+            "Google",
+        ):
+            reasons.append(f"non_flow_provider:{prov}")
+        bk = gen_data.get("backend")
+        if isinstance(bk, str) and any(t in bk.lower() for t in ("local", "qwen", "os_tts")):
+            reasons.append(f"non_flow_backend:{bk}")
+    if isinstance(ep_dir, Path):
         post_ref = nar.get("postprocess_record")
         if isinstance(post_ref, dict) and isinstance(post_ref.get("file"), str) and post_ref["file"].strip():
             post_path = _resolve_path(ep_dir, post_ref["file"])

@@ -1,5 +1,6 @@
 """Behavior tests using disposable local records and synthetic audio only."""
 from contextlib import contextmanager
+import copy
 import hashlib
 import importlib.util
 import json
@@ -215,6 +216,25 @@ class ConfigurationAndFilesTests(Fixtures):
                 master.read_upstream(upstream, self.root, self.src, master.sha256(self.src),
                                      self.out, self.rec, self.profile)
 
+    def test_speech_polish_preset_validation(self):
+        preset, target, ceiling, lra, rate, _ = master.read_speech_polish_preset(master.DEFAULT_PROFILE)
+        self.assertEqual(preset["id"], "mandarin-clone-polish-v1")
+        self.assertEqual((target, ceiling, lra, rate), (-18.0, -2.0, 9.0, 48000))
+        self.assertEqual(preset["echo"], "none")
+
+        base = json.loads(Path(master.DEFAULT_PROFILE).read_text(encoding="utf-8"))
+        for key, value in (
+            ("echo", "subtle"),
+            ("speed_factor", 1.1),
+            ("per_shot_normalization", True),
+            ("filter_chain", "highpass=f=75,aecho=0.8:0.88:18:0.05"),
+        ):
+            mutated = copy.deepcopy(base)
+            mutated["audio"]["speech_polish_preset"][key] = value
+            self.profile.write_text(json.dumps(mutated), encoding="utf-8")
+            with self.subTest(key=key), self.assertRaises(master.VoiceMasterError):
+                master.read_speech_polish_preset(self.profile)
+
 
 FFMPEG = os.environ.get("VOICE_MASTER_TEST_FFMPEG") or shutil.which("ffmpeg")
 FFPROBE = os.environ.get("VOICE_MASTER_TEST_FFPROBE") or (
@@ -340,6 +360,25 @@ class NativeSyntheticTests(Fixtures):
         self.assertEqual(measured.call_count, 3)
         self.assertFalse(self.out.exists())
         self.assertFalse(self.rec.exists())
+
+    def test_prepare_polish_processes_whole_track_to_target_without_echo(self):
+        write_wave(self.src, duration=4, channels=1)
+        original = self.src.read_bytes()
+        result = master.prepare_polish(
+            self.root, self.src, self.out, self.rec, master.DEFAULT_PROFILE, FFMPEG, FFPROBE
+        )
+        rate, channels, samples = float_wave(self.out)
+        self.assertEqual((rate, channels), (48000, 1))
+        self.assertAlmostEqual(len(samples) / rate, 4.0, delta=0.005)
+        self.assertEqual(self.src.read_bytes(), original)
+        self.assertEqual(result["mode"], "whole_track_speech_polish")
+        self.assertEqual(result["preset_id"], "mandarin-clone-polish-v1")
+        self.assertEqual(result["steps"][0]["parameters"]["echo"], "none")
+        self.assertAlmostEqual(result["measured_after"]["i_lufs"], -18.0, delta=0.5)
+        self.assertLessEqual(result["measured_after"]["true_peak_dbtp"], -2.0)
+        self.assertEqual(result["listening"], {"status": "pending", "heard": False})
+        self.assertIn("continuity_diagnostics", result)
+        self.assertEqual(json.loads(self.rec.read_text(encoding="utf-8")), result)
 
 
 class ContinuityDiagnosticsTests(Fixtures):

@@ -141,14 +141,57 @@ def check(root):
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "realistic_main_with_scoped_explanation", "current series requires realistic main footage with scoped explanation")
         need(profile["medium"]["real_anchor"] == "verified_authorized_user_capture_only", "real video anchor must be verified authorized user capture only")
-        need(profile["audio"]["speaker"] == "zh-CN-YunxiNeural"
-             and profile["audio"]["language"] == "Chinese"
-             and profile["audio"].get("rate") == "+4%", "current voice configuration changed")
         voice = profile["audio"]
-        need(voice.get("backend") == "edge-tts" and voice.get("provider") == "Microsoft Edge"
-             and voice.get("model_id") == "edge-tts"
+        need(voice.get("speaker") == "user_clone"
+             and voice.get("language") == "Chinese"
+             and voice.get("voice_preset_id") == "mandarin-indextts25-clone-polished-v1",
+             "current voice configuration changed")
+        need(voice.get("backend") == "local_indextts2" and voice.get("provider") == "IndexTTS"
+             and voice.get("model_id") == "IndexTeam/IndexTTS-2.5"
+             and (root / "scripts/synthesize_indextts2.py").is_file(),
+             "default IndexTTS-2.5 voice clone backend required; local project and optional Qwen execution locations must be confirmed at invocation")
+        indextts2 = voice.get("indextts2", {})
+        forbidden_private_keys = {"project_dir", "python_executable", "checkpoints_dir", "cfg_path", "reference_prompt", "reference_prompt_file"}
+        def _has_private_path(node):
+            if isinstance(node, dict):
+                for k, v in node.items():
+                    if k in forbidden_private_keys or _has_private_path(v):
+                        return True
+            elif isinstance(node, list):
+                return any(_has_private_path(v) for v in node)
+            elif isinstance(node, str):
+                if re.search(r"(?:^|[\s\"'=])(?:[A-Za-z]:[/\\]|\\\\)", node):
+                    return True
+            return False
+        need(isinstance(indextts2, dict)
+             and indextts2.get("adapter") == "scripts/synthesize_indextts2.py"
+             and isinstance(indextts2.get("generation_params"), dict)
+             and indextts2["generation_params"].get("use_emo_text") is False,
+             "default IndexTTS-2.5 configuration and use_emo_text=False required")
+        need(not _has_private_path(indextts2),
+             "private local paths must stay outside public series-profile.json")
+        edge = voice.get("edge_fallback", {})
+        need(isinstance(edge, dict) and edge.get("provider") == "Microsoft Edge"
+             and edge.get("backend") == "edge-tts"
+             and edge.get("speaker") == "zh-CN-YunxiNeural"
+             and edge.get("en_speaker") == "en-US-AndrewMultilingualNeural"
+             and edge.get("rate") == "+4%"
              and (root / "scripts/synthesize_edge_tts.py").is_file(),
-             "default edge-tts voice backend required; optional local Qwen execution location must be confirmed at invocation")
+             "paired English and cloud fallback edge-tts configuration required")
+        polish = voice.get("speech_polish_preset", {})
+        need(isinstance(polish, dict) and polish.get("id") == "mandarin-clone-polish-v1"
+             and polish.get("processing_mode") == "whole_track_speech_polish"
+             and polish.get("echo") == "none"
+             and polish.get("per_shot_normalization") is False
+             and polish.get("pitch_shift_semitones") == 0
+             and polish.get("speed_factor") == 1
+             and polish.get("target_i_lufs") == -18.0
+             and polish.get("true_peak_ceiling_dbtp") == -2.0
+             and polish.get("output_sample_rate_hz") == 48000
+             and isinstance(polish.get("filter_chain"), str)
+             and bool(polish["filter_chain"].strip())
+             and "aecho" not in polish["filter_chain"].lower(),
+             "default #5 speech polish preset without echo required")
         execution = voice.get("execution_policy", {})
         need(isinstance(execution, dict) and execution.get("confirmation_required") is True
              and execution.get("confirmation_scope") == "available_context"
