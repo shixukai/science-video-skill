@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "5a3a6549660bf8e1c9585c69d7b4cc486df1b0b5662b3911419867a5156730d0",
+      "sha256": "d19b1ef973a7fd3d9adcf2435653f3da464623ebbbb5d4c56b98545c5c969208",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -105,7 +105,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "5cdbc94e351f5609423207c9af281122ae212b8c1568c58df14412983d50bbad",
+      "sha256": "6d186be9f9812c285cb2262c8f927f9b7d7a2820fb3d87436eadffc4ff836577",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -172,7 +172,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "f5395edd2dc5adfd9f02b62867f6af18719cd265a28796ea8fe79a5cd88aeb9c",
+      "sha256": "22fc01c12c1e582757644e17dab4298dfeb3aaa1804c759a9841ffe6cff795dd",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",

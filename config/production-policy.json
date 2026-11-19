@@ -268,6 +268,25 @@
     "destinations": ["douyin_composer_group", "xiaohongshu"],
     "master_destinations": ["youtube", "release_queue_master", "archive"],
     "picture_center_y": 1004,
+    "caption_band": {
+      "picture_center_y": 844,
+      "gap_below_picture": 36,
+      "bottom_safe_y": 1460,
+      "left_x": 72,
+      "max_width": 828,
+      "size": 54,
+      "line_spacing": 1.35,
+      "max_lines": 2,
+      "color": "#243840",
+      "anchor": "final_line_baseline",
+      "requires_textless_master": true
+    },
+    "ending_question": {
+      "replaces": "header_question_lines",
+      "max_lines": 2,
+      "scope": "One genuine content question viewers can answer from experience, shown only from ending.answer_time_s or later."
+    },
+    "experiments_not_default": ["dynamic_open_question_header", "chapter_progress_strip"],
     "default_zoom": 1.0,
     "max_zoom": 1.333,
     "header": {

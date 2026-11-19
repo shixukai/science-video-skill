@@ -82,6 +82,7 @@ class LedgerTests(unittest.TestCase):
         self.assertIn("viewing_promise", opening)
         self.assertIn("answer_time_s", template["topic_alignment"]["ending"])
         self.assertIn("feed_package", template["deliverables"])
+        self.assertIn("textless_master", template["deliverables"])
         self.assertIn("feed_package", template["qa"])
 
 
@@ -92,9 +93,61 @@ class FeedLayoutTests(unittest.TestCase):
         self.assertEqual(geo["crop_fraction_each_side"], 0)
         self.assertGreater(geo["picture_top"], FEED["header"]["top_safe_y"])
 
+    def test_caption_band_sits_between_picture_and_bottom_safe_area(self):
+        geo = feed_package.layout(FEED, 1920, 1080, 1.0, caption_band=True)
+        self.assertGreater(geo["caption_top"], geo["picture_bottom"])
+        self.assertLessEqual(geo["caption_bottom"], FEED["caption_band"]["bottom_safe_y"])
+
     def test_zoom_outside_policy_is_rejected(self):
         with self.assertRaises(ValueError):
             feed_package.layout(FEED, 1920, 1080, FEED["max_zoom"] + 0.1)
+
+
+class CaptionWrapTests(unittest.TestCase):
+    measure = staticmethod(lambda text: 54 * len(text))  # synthetic monospace width
+
+    def test_numbers_stay_with_units_and_punctuation_never_starts_a_line(self):
+        self.assertIn("0.917 g/cm³", feed_package.tokenize("密度只有0.917 g/cm³左右。"))
+        self.assertIn("4 °C", feed_package.tokenize("水在4 °C时最重"))
+        self.assertIn("100摄氏度，", feed_package.tokenize("加热到100摄氏度，"))
+        lines = feed_package.wrap("同样是水分子，结冰后却排成了带空隙的六边形。", self.measure, 828, 2)
+        self.assertEqual(len(lines), 2)
+        self.assertTrue(lines[0].endswith("，"))
+        self.assertTrue(all(line[0] not in feed_package.CLOSING for line in lines))
+
+    def test_overlong_cue_is_split_with_flagged_estimated_timing(self):
+        text = "同样是水分子，结冰后却排成了带空隙的六边形，所以密度只有0.917 g/cm³左右，比水还轻一点。"
+        parts = feed_package.fit_cue(2.0, 8.0, text, self.measure, 828, 2)
+        self.assertGreater(len(parts), 1)
+        self.assertTrue(all(split for _, _, _, split in parts))
+        self.assertEqual(parts[0][0], 2.0)
+        self.assertEqual(parts[-1][1], 8.0)
+        for a, b in zip(parts, parts[1:]):
+            self.assertEqual(a[1], b[0])
+
+    def test_unsplittable_cue_is_rejected(self):
+        with self.assertRaises(ValueError):
+            feed_package.fit_cue(0, 3, "这是一句没有任何标点而且长得根本放不进两行字幕带里的超长字幕文本内容示例", self.measure, 828, 2)
+
+    def test_parse_srt_and_ass_and_reject_overlap(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            srt = Path(tmp) / "c.srt"
+            srt.write_text("1\n00:00:00,000 --> 00:00:01,500\n冰是固体，\n却浮在水上。\n\n2\n00:00:02,000 --> 00:00:03,000\n第二句\n",
+                           encoding="utf-8")
+            self.assertEqual(feed_package.parse_captions(srt)[0], (0.0, 1.5, "冰是固体，却浮在水上。"))
+            ass = Path(tmp) / "c.ass"
+            ass.write_text("[Events]\nDialogue: 0,0:00:01.00,0:00:02.50,Default,,0,0,0,,{\\b1}第一句\\N换行\n", encoding="utf-8")
+            self.assertEqual(feed_package.parse_captions(ass), [(1.0, 2.5, "第一句换行")])
+            bad = Path(tmp) / "bad.srt"
+            bad.write_text("1\n00:00:00,000 --> 00:00:02,000\n甲\n\n2\n00:00:01,000 --> 00:00:03,000\n乙\n", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                feed_package.parse_captions(bad)
+
+    def test_states_switch_header_for_ending_question(self):
+        states = feed_package.build_states(10.0, [(0.0, 2.0, "a"), (3.0, 9.0, "b")], ending_from=8.0)
+        self.assertEqual(states[0], (0.0, 2.0, "a", False))
+        self.assertIn((8.0, 9.0, "b", True), states)
+        self.assertEqual(states[-1], (9.0, 10.0, None, True))
 
 
 @unittest.skipUnless(HAVE_FFMPEG, "ffmpeg/ffprobe required")
@@ -146,6 +199,35 @@ class MediaTests(unittest.TestCase):
         self.assertEqual(report["phone_view"]["status"], "pending")
         with self.assertRaises(ValueError):
             feed_package.compose(master, "浮冰", "一\n二\n三", self.root / "bad.mp4", FEED, font=str(font))
+
+    def test_caption_band_package_draws_captions_only_during_cues(self):
+        try:
+            font = feed_package.find_font(FEED)
+        except ValueError:
+            self.skipTest("no CJK bold font on this machine")
+        master = self.root / "textless.mp4"
+        subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "color=c=gray:s=1920x1080:r=24",
+                        "-f", "lavfi", "-i", "sine=frequency=330:sample_rate=48000", "-t", "4",
+                        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", str(master)], check=True)
+        srt = self.root / "band.srt"
+        srt.write_text("1\n00:00:00,500 --> 00:00:02,000\n冰是固体，却浮在水上。\n", encoding="utf-8")
+        out = self.root / "band.mp4"
+        report = feed_package.compose(master, "浮冰", "为什么会浮？", out, FEED, font=str(font),
+                                      captions=srt, ending_question="你家冰块浮着吗？", ending_from=3.0)
+        geo = report["geometry"]
+        self.assertEqual(geo["mode"], "caption_band")
+        self.assertEqual(report["source_master"]["kind"], "textless_master")
+
+        def band_dark_pixels(t):
+            y0, y1 = geo["caption_top"], geo["caption_bottom"]
+            raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", str(t), "-i", str(out), "-frames:v", "1",
+                                  "-vf", f"crop=1080:{y1 - y0}:0:{y0},format=gray", "-f", "rawvideo", "-"],
+                                 capture_output=True, check=True).stdout
+            return sum(1 for v in raw if v < 128)
+
+        self.assertGreater(band_dark_pixels(1.0), 500)
+        self.assertLess(band_dark_pixels(2.6), 50)
+        self.assertEqual(report["ending_question"]["from_s"], 3.0)
 
 
 if __name__ == "__main__":

@@ -279,7 +279,10 @@ def check(root):
              and feed.get("canvas") == [1080, 1920] and feed.get("required_stages") == []
              and feed.get("derivative_does_not_reopen_g5") is True and feed.get("actual_phone_view_required") is True
              and feed.get("header", {}).get("stroke_shadow_or_backing") is False
-             and 1.0 <= feed.get("default_zoom", 0) <= feed.get("max_zoom", 0) <= 1.5,
+             and 1.0 <= feed.get("default_zoom", 0) <= feed.get("max_zoom", 0) <= 1.5
+             and feed.get("caption_band", {}).get("requires_textless_master") is True
+             and feed.get("caption_band", {}).get("anchor") == "final_line_baseline"
+             and 1 <= feed.get("caption_band", {}).get("max_lines", 0) <= 3,
              "vertical feed package must stay a reviewed derivative of the landscape master")
         need([policy["defaults"]["output"]["width"], policy["defaults"]["output"]["height"]] == limits["canvas"], "policy output must match current series default canvas")
         audit = policy["realistic_audit"]
