@@ -176,6 +176,20 @@ class HookEvidenceTests(unittest.TestCase):
     def test_bound_cold_tested_report_passes(self):
         self.assertEqual(self.run_validate(self.qa(self.write_report())), [])
 
+    def test_two_second_observation_does_not_require_finished_sentence(self):
+        # Observation evidence and measurement coverage have different jobs.
+        # This checks report semantics, not the perception of synthetic bytes.
+        cold = dict(self.cold, sound_at_2s="冰块已辨认；旁白自然首句尚未说完，继续听至3.5秒")
+        self.assertEqual(self.run_validate(self.qa(self.write_report(cold_test=cold))), [])
+        short = self.write_report(name="short-window.json", cold_test=cold, window_s=[0, 2.0])
+        self.assertTrue(any("payload deadline" in e for e in self.run_validate(self.qa(short))))
+
+    def test_unidentified_detail_cannot_pass_by_technical_measurement(self):
+        cold = dict(self.cold, status="fail", object_named="无法辨认显微纹理的对象", would_stop=False)
+        errors = self.run_validate(self.qa(self.write_report(cold_test=cold)))
+        self.assertTrue(any("failed/unreviewed" in e for e in errors), errors)
+        self.assertTrue(any("would not stop" in e for e in errors), errors)
+
     def test_legacy_record_without_field_is_not_required(self):
         self.assertEqual(self.run_validate({"reviewed_sha256": {}}), [])
 

@@ -24,7 +24,7 @@ G2 checks this same progression in the complete sound-and-picture rough cut, usi
 
 ## Establish context and a reason to watch before explaining
 
-A complete new film first establishes the object and a real point of interest before terminology, principles or procedures. For feed platforms, the first frame and first spoken line already carry that point of interest: show a striking relevant visual in motion from frame 0 and land a specific observation, meaningful fact, tension or genuine question by about two seconds, as specified in [win the first two seconds](viral-appeal-and-packaging.md#win-the-first-two-seconds). The hook is the recognizable object in its most interesting state, so it supplies context rather than delaying it: combine orientation with the hook action and spoken observation; cut slow background, not the subject or relationship needed to understand that observation. When the film explains an embedded mechanism, component or local subsystem of a larger machine, vehicle, appliance, facility or organism, putting context into the picture requires macro host-to-part orientation in the 0–5 s opening: open on either the complete host or an immediately recognizable functional host space/cabin/bay in real operation and locate where the subsystem sits inside it (via an unbroken single-take push-in or simultaneous cutaway, without forcing a distant whole-exterior shell when a functional cabin/bay already makes the host unmistakable), never a disembodied benchtop cutaway or an unrecognizable fragment floating in studio space. The responsibilities below follow the hook and may be combined without fixed shot/second counts; explicitly commissioned direct answers or local excerpts follow that scope.
+A complete new film establishes a recognizable object and real interest before dependent terminology or procedures. Follow the [opening workbench](viral-appeal-and-packaging.md#win-the-first-two-seconds) for candidate selection, exact timing and the applicable 0–5 s host-to-part bridge. At 2 s inspect recognition and interest, not completion of the natural first sentence. Orientation must be present when the detail needs it; body sections and explicitly commissioned excerpts follow their scope.
 
 | Opening responsibility | What viewers should gain | Corresponding sound/picture design |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Synthetic contrast cases for reviewer calibration (not quotations from user work
 
 | Case | Opening and picture | Expected diagnosis / bounded repair |
 | --- | --- | --- |
-| Detail without an object | Unlabeled dots; "The beam scans one row at a time." | Missing referent: what beam, instrument and purpose? Establish the instrument's viewing task before its scan procedure. |
+| Detail without an object | Sharp electron-microscope texture or unlabeled dots; "The beam scans one row at a time." | Detail alone does not identify object, instrument or purpose. Establish the sample/result relationship and the actual question before the scan procedure. If explaining the specimen rather than the microscope, do not force a whole-machine exterior; choose the appropriate `host_relation`. |
 | Instrument and question together | Instrument/sample context; "How does an electron microscope make a picture with electrons?" followed by the first necessary observation | Candidate orientation pass: the instrument, task and question connect. Scientific claims and actual picture readability remain separate checks; this is not a required wording. |
 | Result with a named source | A clearly identified instrument result and sample; "This electron-microscope image shows the surface we are trying to understand." then a concrete question about making that image | Candidate orientation pass if the depicted source/result relationship is readable and supported. Do not insert a second generic topic introduction. |
 | A recognizable everyday object | A visible zipper opening; "Why does this zip split behind the slider?" | Candidate orientation pass without repeating "zipper" as a formal definition; the image supplies the referent. |
@@ -66,18 +66,7 @@ Before expansion, continuously watch/listen to the opening at normal speed throu
 
 ## Select an opening point of interest from this topic
 
-Select the strongest honest moment that a newcomer can understand with the subject/function established at its first use, using the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-films-material). If a visually strong detail requires a later explanation just to identify what the film is about, it is not yet an opening: redesign its picture/first line or choose another moment. Then bridge that already oriented hook to the body's first necessary observation. Connect what viewers first see, what deserves a question and what the body answers. Interest requires corresponding imagery and scientific basis, not narration rhetoric alone. The following are options, not mandatory trials/combinations for every episode:
-
-| Topic advantage | Possible opening | Basis for entering the body |
-| --- | --- | --- |
-| Clear application task/engineering constraint | Let a product perform one recognizable task, revealing required performance or actual difficulty | Trace the responsible structure, material or process; do not merely join promotional equipment clips |
-| Interesting finished change with an unclear manufacturing origin | Show a recognizable product feature corresponding to this episode's actual starting material/state | Clearly return to the premanufacturing state and follow its formation; distinguish preview from current process |
-| Real comparison with clear conditions/visible differences | Establish similarity/difference before posing the relationship to explain | Check difference-producing conditions in the body; do not fake contrast through different filming, exaggerated effects or uncontrolled conditions |
-| A developing phenomenon/operation | Enter a recognizable event and let its real change establish the observation | Continue the same object/event; do not invent accidents, mistakes or delays for suspense |
-
-Keep a clear main object and readable action/state on the first screen. Unrelated aerials, generic factory montages and “world-changing” adjectives cannot supply interest; retain necessary ambience and purposeful viewing holds.
-
-Check legal availability/credible production after selection, specifying missing objects/actions. Compare uncertain key approaches cheaply; multiple proposals are not mandatory each episode.
+Select using the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-films-material) and [candidate comparison](viral-appeal-and-packaging.md#run-the-hook-lab-at-g1). If a detail needs later context merely to identify the subject, it is not yet an opening: repair picture/first line or choose another event. Preserve credible production, rights and the evidence promised in the body. The following section owns that handoff, rather than a second opening-selection procedure.
 
 ## Connect the opening to the first body observation
 

@@ -341,6 +341,8 @@ def _validate_report(checks, entry, label, policy, expected_sha=None, host_relat
     need(cold.get("method") in COLD_METHODS, "normal-speed continuous audiovisual cold view required")
     need(cold.get("actually_watched") is True and cold.get("actually_heard") is True,
          "cold test must actually watch and hear the bound file")
+    # The 2 s fields record first-view observations, not sentence completion.
+    # Actual payload timing uses the configured deadline and normal-speed review.
     for key in ("reviewer", "muted_at_1s", "muted_at_2s", "sound_at_2s", "object_named", "tension_or_question"):
         need(concrete(cold.get(key)), "cold test " + key + " observation required")
     effective_relation = host_relation if host_relation is not None else report.get("host_relation")

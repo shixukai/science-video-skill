@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "e837f95419614beb5abbaab6ab65fb52717cf6b822c4f20377212638d073f421",
+      "sha256": "d59b9a044db5d65e016eb7302476fa1d541dec711f245ee6832386cd4f698315",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
@@ -84,7 +84,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "f6632307051c1d066f0fc5612f5fa2c3c57f4c255f88b276b325d6af7ec4dde1",
+      "sha256": "7c607f565ccb9d5cceb1729fa8c7c3a82b8588cdac8514eeb24d63a96ef5f7c1",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -99,7 +99,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "b1d63df91e3ca12b6d197740b7397551f99b60987491d9668a10c89e815bded5",
+      "sha256": "f3bc6acdb233c8c802ac4eacba1b2d33f6f8d8577e73e261be3891f55cf2a1ac",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -143,7 +143,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "a4bc5cc3d7f303edc10ae29bd5582a539f48c59d921b53ea35765caa386cf44f",
+      "sha256": "6c92d2bbdf43b5ff63d498bf260ca469577697fc3baeef6760bbea101d192350",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -166,7 +166,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "3123aa4cb0eb02c01e2c297972c2be1966b457d192cef7c32e8a88b48386399b",
+      "sha256": "d4d14b5763a0e4ac25e3c67e0e92f7d4b5da91dec7825c8cda874280afde7272",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -351,7 +351,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "16df967f087539fc107d6924d39bf13f614f5f332d2f25002a1be11384e96383",
+      "sha256": "7438f17e787be452e1cb48640ccbddbfe05b79bb677906d34c85cac061c5b786",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -486,7 +486,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "f9aa117eb01c5d647d077de93bb15dbd213aefccf349626407b2310da298229a",
+      "sha256": "2e6cb6e28657742d399a8d36cb9b2ac2b73dca85e1b7c278d0a0e6055631da35",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -520,7 +520,7 @@
     {
       "owner_id": "tools",
       "file": "references/global-skill-installation.md",
-      "sha256": "a8899bf3c3ad5c949e4a888db4ed2636a78af874b4b31a9af69ec61ed92b683f",
+      "sha256": "784e93367732e4fa1bb64739af1302f09369a22dea7368f3d7a9474d31cb2141",
       "anchors": [
         "one-global-skill-projects-retain-production-data-only",
         "maintain-the-installed-git-working-tree",
@@ -532,7 +532,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "28fc4adf8990224badfad90247eb2dfb0cd3999ab4308174b33ae115b0723bd7",
+      "sha256": "9a28789782dc5fefe485b21b5c7bab91de5aef423114b60c9b1fcd4cd0d5ccb6",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",
