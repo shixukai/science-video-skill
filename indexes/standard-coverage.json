@@ -25,21 +25,27 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "b74d0542c1abfbfe9548bfda4a1a273bc5ce535be97e58980eb132133b2c1c95",
+      "sha256": "5a3a6549660bf8e1c9585c69d7b4cc486df1b0b5662b3911419867a5156730d0",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "screen-appeal-before-deep-research",
         "design-the-package-before-the-script",
         "win-the-first-two-seconds",
         "why-openings-lose-viewers",
-        "the-two-second-beat-sheet",
+        "the-opening-beat-sheet",
+        "anchor-a-part-inside-its-host",
         "find-the-hook-in-this-films-material",
         "run-the-hook-lab-at-g1",
         "produce-and-test-the-hook-first",
         "keep-the-hook-honest",
+        "lock-a-concrete-viewing-promise-by-about-8-seconds",
         "keep-a-reason-to-stay",
+        "keep-one-question-open-until-the-final-answer",
+        "payoff-cadence-and-re-hooks",
+        "locate-retention-risks-on-the-actual-cut",
         "end-fast-and-invite-real-interaction",
         "duration-format-and-series-identity",
+        "package-the-landscape-master-for-vertical-feeds",
         "scroll-viewer-appeal-check",
         "learn-from-what-actually-performs"
       ]
@@ -99,7 +105,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "f3bc6acdb233c8c802ac4eacba1b2d33f6f8d8577e73e261be3891f55cf2a1ac",
+      "sha256": "5cdbc94e351f5609423207c9af281122ae212b8c1568c58df14412983d50bbad",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -143,7 +149,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "cc168434a490783d9c8e10fea634eb34541f8ea76f0f3ce6847c135b5a2c9235",
+      "sha256": "cad15d48321c319b260e08f74d4a6672ec49c91d7a455f9ff3589c48e33b649f",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -166,7 +172,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "d4d14b5763a0e4ac25e3c67e0e92f7d4b5da91dec7825c8cda874280afde7272",
+      "sha256": "f5395edd2dc5adfd9f02b62867f6af18719cd265a28796ea8fe79a5cd88aeb9c",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -351,7 +357,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "7438f17e787be452e1cb48640ccbddbfe05b79bb677906d34c85cac061c5b786",
+      "sha256": "e4ed2658c11a70b38e9911cf7ece341cb6aa68fbb864cf1fa0771b48ad14e629",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",

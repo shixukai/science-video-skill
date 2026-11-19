@@ -303,7 +303,8 @@
     "editable_project": "",
     "audio_stems": "",
     "source_manifest": "",
-    "post_copy": ""
+    "post_copy": "",
+    "feed_package": ""
   },
   "production_statement": "",
   "qa": {
@@ -1038,6 +1039,17 @@
         }
       }
     },
+    "feed_package": {
+      "status": "pending",
+      "not_applicable_reason": "",
+      "report": {
+        "file": "",
+        "sha256": ""
+      },
+      "sha256": "",
+      "source_master_sha256": "",
+      "observation": ""
+    },
     "gates": {
       "G1": {
         "status": "not_reviewed",
@@ -1698,13 +1710,21 @@
       "visual_handoff": "",
       "curiosity_gap": "",
       "viewer_payoff": "",
+      "viewing_promise": {
+        "line": "",
+        "fulfilled_by_scope_id": "",
+        "time_s": null
+      },
       "payoff_steps": [
         {
           "scope_id": "R1",
           "shot_ids": [
             "SH2"
           ],
-          "contribution": ""
+          "contribution": "",
+          "opens_question": "",
+          "closes_question": "",
+          "time_s": null
         }
       ],
       "hook": {
@@ -1774,6 +1794,7 @@
     "ending": {
       "answer": "",
       "intent": "",
+      "answer_time_s": null,
       "scope_ids": [
         "R1"
       ],

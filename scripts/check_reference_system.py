@@ -261,6 +261,26 @@ def check(root):
              and type(hook["min_candidates"]) is int and hook["min_candidates"] >= 2
              and 0 < hook["audio_onset_max_s"] <= hook["payload_deadline_s"]
              and 0 < hook["first_caption_max_s"] <= hook["payload_deadline_s"], "opening hook timing defaults out of range")
+        retention = policy.get("retention_design", {})
+        need(retention.get("owner") == "references/viral-appeal-and-packaging.md#keep-a-reason-to-stay"
+             and retention.get("measurement_tool") == "scripts/retention_timeline.py"
+             and (root / str(retention.get("measurement_tool"))).is_file()
+             and retention.get("measurement_is_not_acceptance") is True
+             and retention.get("required_stages") == [], "retention timeline must stay a locator owned by viral appeal")
+        window = retention.get("promise_window_s")
+        need(isinstance(window, list) and len(window) == 2 and all(type(v) in (int, float) for v in window)
+             and hook["payload_deadline_s"] <= window[0] < window[1] <= 15
+             and 0 < retention.get("final_answer_min_ratio", 0) < 1
+             and 0 < retention.get("answer_to_end_review_s", 0) <= 15
+             and 0 < retention.get("payoff_gap_review_s", 0) <= 60, "retention review points out of range")
+        feed = policy.get("feed_package", {})
+        need(feed.get("owner") == "references/viral-appeal-and-packaging.md#package-the-landscape-master-for-vertical-feeds"
+             and feed.get("tool") == "scripts/feed_package.py" and (root / str(feed.get("tool"))).is_file()
+             and feed.get("canvas") == [1080, 1920] and feed.get("required_stages") == []
+             and feed.get("derivative_does_not_reopen_g5") is True and feed.get("actual_phone_view_required") is True
+             and feed.get("header", {}).get("stroke_shadow_or_backing") is False
+             and 1.0 <= feed.get("default_zoom", 0) <= feed.get("max_zoom", 0) <= 1.5,
+             "vertical feed package must stay a reviewed derivative of the landscape master")
         need([policy["defaults"]["output"]["width"], policy["defaults"]["output"]["height"]] == limits["canvas"], "policy output must match current series default canvas")
         audit = policy["realistic_audit"]
         need(audit["owner"] == "references/realistic-direction.md#measure-the-edit-before-judging-it"

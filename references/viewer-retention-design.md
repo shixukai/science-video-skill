@@ -28,9 +28,9 @@ A complete new film establishes a recognizable object and real interest before d
 
 | Opening responsibility | What viewers should gain | Corresponding sound/picture design |
 | --- | --- | --- |
-| Recognize context | What object or host system is present, where inside it does this happen, or what is it for? | Enter through a concrete object, active host or recognizable functional host cabin/bay, product application, complete phenomenon or supported result that is already moving in the hook shot; recognition of both the host context and the subsystem's mounting site happens inside that 0–5 s opening and its caption, not in a slow distant exterior, an unrecognizable fragment or a list of technical terms |
+| Recognize context | What object or host system is present, where inside it does this happen, or what is it for? | Enter through a concrete object, active host, product application, complete phenomenon or supported result that is already moving in the hook shot; for a part inside a larger system apply the [host-to-part bridge](viral-appeal-and-packaging.md#anchor-a-part-inside-its-host). Recognition happens inside the 0–5 s opening and its caption, not in a slow distant exterior, an unrecognizable fragment or a list of technical terms |
 | See a worthwhile question | What real difficulty, difference, constraint or phenomenon needs understanding? | Use visible goals, comparisons, operational difficulty or a result/process question. Lead with the topic's strongest real surprise, spectacle or stakes; do not manufacture counterintuitive claims, crises or spectacle |
-| Understand the viewing promise | What does the film explain, and what can viewers understand/judge afterward? | Narrow overall context to the original concrete question/scope and a clear benefit; retain only orienting route information rather than reciting a full contents list |
+| Understand the viewing promise | What does the film explain, and what can viewers understand/judge afterward? | Narrow overall context to the original concrete question/scope and a clear benefit in one [concrete viewing promise](viral-appeal-and-packaging.md#lock-a-concrete-viewing-promise-by-about-8-seconds) that names something the film will visibly deliver; retain only orienting route information rather than reciting a full contents list |
 | Enter the first step naturally | Why inspect this detail/process now? | Move from the opening object/goal into the first necessary observation/explanation with identity, scale and state continuity; do not jump from a lively teaser to an unexplained teaching model |
 
 Retain only background needed to recognize the object, understand use/constraints and form the question. Cut series introductions, praise, scenery and repeated previews whose removal loses no understanding or expectation; move history, definitions and parameters to their use. Determine opening length from an actual roughcut.
@@ -116,7 +116,7 @@ Mark concrete sticking points in a normal-speed short sample, revise under this 
 
 ## Why watch the next section after this one?
 
-Connect **what is understood → what still needs inspection → the next evidence** through `payoff_steps[].contribution` and `handoff`. Reference identical content once; short shots need no separate table.
+Connect **what is understood → what still needs inspection → the next evidence** through `payoff_steps[].contribution` and `handoff`. The same steps carry the [open-loop ledger](viral-appeal-and-packaging.md#keep-one-question-open-until-the-final-answer) (`opens_question`, `closes_question`, `time_s`): each section should open its next concrete question before or as it closes the current one, and the main question stays open until the final answer. Reference identical content once; short shots need no separate table.
 
 Choose among these forms of progression as the topic requires:
 
@@ -174,7 +174,7 @@ Keep before/after versions and principal variables for revisions so the cause of
 
 ## Make the opening image understandable by the ending
 
-`ending.answer` answers the original question through renewed recognition/judgment of the opening object/relationships; do not repeat the whole film or prolong closure with a new topic. Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
+`ending.answer` answers the original question through renewed recognition/judgment of the opening object/relationships; do not repeat the whole film or prolong closure with a new topic. Deliver it late and end soon after it, under the [ending timing](viral-appeal-and-packaging.md#end-fast-and-invite-real-interaction) recorded in `ending.answer_time_s`. Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
 
 For example, a snow-crystal case may progress from appreciating six ornate branches to recognizing similar structures from corresponding stages and local differences. Aesthetic holds serve that final observation. Music resolution, branding or repeating the title cannot alone supply satisfaction.
 
