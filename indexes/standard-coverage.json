@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "074741d113588cf8d5024c2835872301169b570f27590e6bd08905008ddef320",
+      "sha256": "8866dcf142bb76ead2fd938865244f3c6f0d7478318bb304bc630ba41f2c8025",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
