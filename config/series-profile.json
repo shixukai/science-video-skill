@@ -269,6 +269,7 @@
     "optional_ai_creation": false,
     "youtube_made_for_kids": false,
     "required_publication_tag": "科普",
+    "douyin_join_eligible_activities": true,
     "platform_sync": {
       "primary": "douyin",
       "enabled": true,
