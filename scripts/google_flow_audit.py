@@ -812,27 +812,9 @@ def _check_speech_and_holds(
                 }
             )
 
-    _check_narrative_depth_and_world_continuity(episode, edition, script_source_text, dur_s, policy, flags)
+    _check_world_continuity(episode, edition, flags)
     _check_flow_origin_purity(episode, edition, flags)
     return {"edition": edition, "speech_rate": rate_val, "observation_holds": hold_count, "sample_units": sample_units}
-
-
-def _extract_required_scope_count(episode: dict[str, Any] | None) -> int:
-    if not isinstance(episode, dict):
-        return 0
-    scope_obj = episode.get("scope")
-    if isinstance(scope_obj, dict) and scope_obj.get("kind", "episode") != "episode":
-        return 0
-    counts = [0]
-    topic = episode.get("topic")
-    if isinstance(topic, dict):
-        cur = topic.get("current")
-        if isinstance(cur, dict) and isinstance(cur.get("required_scope"), list):
-            counts.append(len(cur["required_scope"]))
-    ta = episode.get("topic_alignment")
-    if isinstance(ta, dict) and isinstance(ta.get("coverage"), list):
-        counts.append(len(ta["coverage"]))
-    return max(counts)
 
 
 def _extract_shot_observation_level(shot: dict[str, Any]) -> str | None:
@@ -846,49 +828,13 @@ def _extract_shot_observation_level(shot: dict[str, Any]) -> str | None:
     return None
 
 
-def _check_narrative_depth_and_world_continuity(
+def _check_world_continuity(
     episode: dict[str, Any] | None,
     edition: str,
-    script_text: str,
-    dur_s: float | None,
-    policy: dict[str, Any],
     flags: list[dict[str, Any]],
 ) -> None:
     if not isinstance(episode, dict):
         return
-    depth_cfg = policy.get("narrative_depth", {})
-    min_scopes = int(depth_cfg.get("min_scope_items_for_full_depth", 4))
-    scope_count = _extract_required_scope_count(episode)
-    if scope_count >= min_scopes:
-        depth_reasons: list[str] = []
-        if edition == "zh":
-            min_zh = max(
-                int(depth_cfg.get("min_episode_cjk_chars", 450)),
-                int(depth_cfg.get("min_cjk_chars_per_scope_item", 95)) * scope_count,
-            )
-            cjk_len = len(CJK_RE.findall(script_text or ""))
-            if cjk_len < min_zh:
-                depth_reasons.append(f"cjk_chars:{cjk_len}<{min_zh}")
-        else:
-            min_en = max(
-                int(depth_cfg.get("min_episode_en_words", 280)),
-                int(depth_cfg.get("min_en_words_per_scope_item", 60)) * scope_count,
-            )
-            en_len = len(WORD_RE.findall(script_text or ""))
-            if en_len < min_en:
-                depth_reasons.append(f"en_words:{en_len}<{min_en}")
-        min_dur = float(depth_cfg.get("min_episode_duration_s", 135.0))
-        if dur_s is not None and dur_s < min_dur:
-            depth_reasons.append(f"duration_s:{round(dur_s, 2)}<{min_dur}")
-        if depth_reasons:
-            flags.append(
-                {
-                    "code": "compressed_checklist_episode",
-                    "edition": edition,
-                    "scope_count": scope_count,
-                    "reasons": depth_reasons,
-                }
-            )
 
     shots = episode.get("shots")
     if isinstance(shots, list):

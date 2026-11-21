@@ -507,14 +507,6 @@
     "native_fps": 24,
     "expected_clip_fps": 24,
     "min_short_edge_px": 1080,
-    "narrative_depth": {
-      "min_scope_items_for_full_depth": 4,
-      "min_episode_cjk_chars": 450,
-      "min_cjk_chars_per_scope_item": 95,
-      "min_episode_en_words": 280,
-      "min_en_words_per_scope_item": 60,
-      "min_episode_duration_s": 135.0
-    },
     "clip_duration": {
       "max_overrun_ratio": 1.05,
       "max_overrun_s": 0.35,
@@ -546,6 +538,6 @@
       "en_wrap_style": 0,
       "min_zh_font_size": 20
     },
-    "note": "Screening parameters grounded in historical Flow raw clips and paired zh/en runs; flags trigger investigation and review, never acceptance or rejection by themselves."
+    "note": "Screening parameters grounded in historical Flow raw clips and paired zh/en runs; no mandatory episode duration or word-count floor—flags trigger investigation and review, never acceptance or rejection by themselves."
   }
 }

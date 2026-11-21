@@ -343,6 +343,8 @@ def check(root):
              and (root / flow_audit["measurement_tool"]).is_file()
              and flow_audit["measurement_is_not_acceptance"] is True
              and flow_audit["required_stages"] == [], "google flow audit must stay a screening tool owned by the google flow handbook")
+        need("narrative_depth" not in flow_audit and "min_episode_duration_s" not in flow_audit,
+             "google flow audit must not impose mandatory episode duration or word-count floors")
         need(policy["gates"]["order"] == [f"G{i}" for i in range(1, 8)], "G1-G7 stage order required")
         need(sum(policy["quality"]["weights"].values()) == 100, "quality weights must sum to 100")
         need("cold_view" not in policy and policy["internal_review"]["real_audience_required"] is False

@@ -474,7 +474,7 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertEqual(code_ok, 0, f"Default IndexTTS-2.5 #5 zh + edge-tts en should pass: {err_ok} {data_ok}")
         self.assertEqual(data_ok["flags"], [])
 
-    def test_catches_clickbait_telegraphese_compressed_episode_and_ping_pong_cuts(self) -> None:
+    def test_catches_clickbait_telegraphese_and_ping_pong_cuts_without_duration_floor(self) -> None:
         zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
         make_clip(zh_vid, 1920, 1080, 24, 80.0)
         make_clip(en_vid, 1920, 1080, 24, 80.0)
@@ -513,7 +513,7 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertEqual(code, 1)
         codes = set(data["summary"]["flag_codes"])
         self.assertIn("script_ai_tone_markers", codes)
-        self.assertIn("compressed_checklist_episode", codes)
+        self.assertNotIn("compressed_checklist_episode", codes)
         self.assertIn("world_ping_pong_cuts", codes)
         zh_ai = next(f for f in data["flags"] if f["code"] == "script_ai_tone_markers" and f["edition"] == "zh")
         ai_reasons = set(zh_ai["reasons"])
@@ -522,6 +522,23 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("semicolon_tail_stuffing", ai_reasons)
         self.assertIn("slogan_closing_formula", ai_reasons)
         self.assertTrue(any(r.startswith("telegraphic_short_sentences:") for r in ai_reasons), ai_reasons)
+
+    def test_short_clear_multi_scope_episode_has_no_duration_floor(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        scopes = [{"id": f"R{i}"} for i in range(1, 6)]
+        for p in (ep_zh, ep_en):
+            d = json.loads(p.read_text(encoding="utf-8"))
+            d["topic"] = {"current": {"required_scope": scopes}}
+            write_json(p, d)
+        rep = self.root / "report_short_clear.json"
+        code, data, err = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep),
+        ])
+        self.assertEqual(code, 0, f"Concise clear multi-scope episode should pass without duration floor: {err} {data}")
+        self.assertEqual(data["status"], "clean")
+        self.assertEqual(data["flags"], [])
 
     def test_native_720p_flow_scene_export_rejected_even_with_1080p_staged_clips(self) -> None:
         _, _, ep_zh, ep_en, _, _ = self._build_clean_project()

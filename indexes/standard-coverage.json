@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "2980dd2f1293ff7dacf8fa4a74081fb01fcee596b073446a5ba795eb75f8622f",
+      "sha256": "a3d9dbbe659412daf72de6a0f7ae3354fb8517c82d1c0a6785e9c41b38af1dc0",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "8866dcf142bb76ead2fd938865244f3c6f0d7478318bb304bc630ba41f2c8025",
+      "sha256": "61bb7bea8cee1acd710b6e67a1329fc1567867178c5c39d3f97350e948bcdd7c",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -90,7 +90,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "e81f4666de7f4fc04b22ea9e79575016c2622bd72cf595e66eef364a752e074e",
+      "sha256": "5cdc678966a2ed53247386e95a35af3d440805b10dd170cb1301d0f54b21edde",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -149,7 +149,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "cad15d48321c319b260e08f74d4a6672ec49c91d7a455f9ff3589c48e33b649f",
+      "sha256": "9087173df5882f6e1122fc43b3d73e833512d410500ecd7cdc534925733ad956",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -317,7 +317,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "ebc09c7d9df16bf504d56dbf73b782592c9f756629a003c3883d9a785cc88bfe",
+      "sha256": "e98cb912da7a865b127a0694c971c092066f7331494f808a36468fbd44edbf04",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -401,7 +401,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-direction.md",
-      "sha256": "17988fb1693ef9c854f850d9b28c9b907b35e20c6612cf5a5970c774c6112ea2",
+      "sha256": "e3692dcabf29024f2b6acfe1cb971287bc81efec4506c1e57fbeaf6f793c1bbc",
       "anchors": [
         "realistic-direction-honest-clear-told-heard-paced-and-finished",
         "use-this-page-by-stage",

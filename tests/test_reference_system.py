@@ -294,6 +294,10 @@ class ReferenceSystemTests(unittest.TestCase):
         p.write_bytes(original.replace("## Subject Motion and Long Static Holds".encode(), b"## Deleted section"))
         self.errors("stale/incomplete chapter navigation")
 
+    def test_google_flow_audit_cannot_reintroduce_episode_duration_floor(self):
+        self.edit("config/production-policy.json", lambda d: d["google_flow_audit"].update(narrative_depth={"min_episode_duration_s": 135.0}))
+        self.errors("must not impose mandatory episode duration")
+
 
 if __name__ == "__main__":
     unittest.main()
