@@ -64,7 +64,7 @@ Record self-shot footage acquired only after footage was actually shot, and conf
 
 For institutional assets in permitted production classes (`licensed_3d_model` inputs, audio, fonts, or factual research citations), check credit and license version item by item; this never authorizes copying third-party photos or videos into delivered visual frames. Commercial use, adaptation, attribution, retained labels and placement follow the specific terms; an institution's name or free cannot replace rights evidence. Implement CC BY 4.0 attribution under [Section 3(a)](https://creativecommons.org/licenses/by/4.0/legalcode.en#s3a2) and the actual sharing context. Check NC, ND and other restrictions against each intended use.
 
-Purchases, acceptance of new terms, sharing personal data and transferring assets to external accounts follow current permissions. Missing rights may block delivery and cannot be waived through a production statement.
+Purchases, acceptance of new terms, sharing personal data and transferring assets to external accounts follow current permissions. Missing rights may block delivery and cannot be waived through a production statement. When an episode's commercial status is unspecified or targets public distribution, default to commercial-safe toolchains (`license_tier` clearing commercial/community use) and block `non_commercial_restricted` generators (`ThinkSound`, `TRELLIS.2` `nvdiffrast` rasterized textures) from public-release deliverables unless explicitly restricted to internal/non-commercial scope under [local AI toolkit routing and license gates](tool-routing.md#local-ai-toolkit-routing-and-license-gates).
 
 ## Two indexes and private storage
 

@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "a3d9dbbe659412daf72de6a0f7ae3354fb8517c82d1c0a6785e9c41b38af1dc0",
+      "sha256": "958fccb26448c6ba744ec8fb6b82ad6eb3b4ec2eafd81b230ef11ad74428d750",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "61bb7bea8cee1acd710b6e67a1329fc1567867178c5c39d3f97350e948bcdd7c",
+      "sha256": "55c30dc6bbfef7e88b6e29385799d10122eadc45c8ab1444c7ba420d45eb756c",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -53,7 +53,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "8b925e81dfb5f4cf24a7fa3c6e9574a8123eacdd2ab339c40d1a298a1244a470",
+      "sha256": "3565b73d9276e6eb133fe346ff324b2357e6a78723747357e5d9f227fb72d10f",
       "anchors": [
         "facts-asset-rights-and-production-statements",
         "original-visual-provenance-contract",
@@ -72,7 +72,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "46fa2f0344fffb3029bbf763ec7ea2e4f9b725d411e4c61ffef32dbb268ff3e5",
+      "sha256": "b2b1d79f80cbd248505c683ca5d30ea42f41695512aaa9bedec6005bf35838d1",
       "anchors": [
         "realistic-style-moneyprinterturbo-production-and-local-model-assets",
         "lock-modality-at-startup",
@@ -105,7 +105,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "42b3f75de919fe30f48fd6505c3beae00570d48d8a9faa2ea0397f2ab8e7e0b5",
+      "sha256": "fa94c0a04eee5244bba245bf336a2bafbe98e0daa48cb78480164a092948f3b0",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -494,7 +494,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "2e6cb6e28657742d399a8d36cb9b2ac2b73dca85e1b7c278d0a0e6055631da35",
+      "sha256": "8ba05ff92957d55e3500b177206c2c2382bd088c0824c6e6f4368865672efa32",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -509,7 +509,8 @@
         "huashu-art-motion-execution",
         "vork-execution",
         "other-execution-notes",
-        "source-identification"
+        "source-identification",
+        "local-ai-toolkit-routing-and-license-gates"
       ]
     },
     {

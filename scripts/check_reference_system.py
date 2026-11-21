@@ -64,6 +64,13 @@ def check_operations(operations):
         errors.append("old/unpublished inventory cannot automatically satisfy the new-work target")
     if operations.get("no_schedule_change_from_adoption") is not True:
         errors.append("profile target changes do not create or change a schedule")
+    spacing = operations.get("publication_spacing")
+    if (not isinstance(spacing, dict)
+            or type(spacing.get("recommended_min_gap_hours")) not in (int, float)
+            or spacing["recommended_min_gap_hours"] < 1
+            or spacing.get("avoid_burst_posting") is not True
+            or not str(spacing.get("scope", "")).strip()):
+        errors.append("publication spacing guidance requires a positive gap and explicit non-scheduling scope")
     return errors
 
 
@@ -138,6 +145,17 @@ def check(root):
         errors.extend(check_platform_record_formats(read("assets/project-ledger-template.json")))
         profile = read("config/series-profile.json")
         need(profile["schema_version"] == 1 and bool(re.fullmatch(r"\d+\.\d+\.\d+", str(profile.get("version", "")))), "unsupported profile schema/version")
+        positioning = profile.get("editorial_positioning")
+        mix = positioning.get("content_mix_guidance") if isinstance(positioning, dict) else None
+        need(isinstance(positioning, dict)
+             and bool(str(positioning.get("id", "")).strip())
+             and positioning.get("preserves_user_commissioned_topics") is True
+             and isinstance(mix, dict)
+             and all(isinstance(mix.get(k), dict) and bool(str(mix[k].get("id", "")).strip()) and bool(str(mix[k].get("focus", "")).strip())
+                     for k in ("primary_pillar", "secondary_pillar"))
+             and isinstance(mix.get("deprioritized_editorial_defaults"), list)
+             and all(isinstance(item, str) and item.strip() for item in mix["deprioritized_editorial_defaults"]),
+             "editorial positioning must define primary/secondary pillars and preserve user-commissioned topics")
         errors.extend(check_operations(profile.get("operations")))
         need(profile["medium"]["mechanism"] == "realistic_main_with_scoped_explanation", "current series requires realistic main footage with scoped explanation")
         need(profile["medium"]["real_anchor"] == "verified_authorized_user_capture_only", "real video anchor must be verified authorized user capture only")

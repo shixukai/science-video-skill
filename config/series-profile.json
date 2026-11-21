@@ -1,9 +1,34 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.38",
+  "version": "1.6.39",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
+  "editorial_positioning": {
+    "id": "everyday-mechanism-visualization-v1",
+    "status": "active_editorial_focus",
+    "preserves_user_commissioned_topics": true,
+    "scope": "Default editorial positioning for unassigned topic discovery, framing and series identity; never overrides an explicit user-commissioned topic.",
+    "core_proposition": "Reveal the hidden physical or structural mechanism behind familiar everyday objects, common devices and observable natural phenomena through concrete visual demonstration.",
+    "content_mix_guidance": {
+      "primary_pillar": {
+        "id": "everyday_objects_and_mechanisms",
+        "share_guidance": "~80%",
+        "focus": "Recognizable everyday objects, household or daily devices, packaging, kitchen physics, common materials and everyday safety/mechanical structures identifiable at frame 0."
+      },
+      "secondary_pillar": {
+        "id": "observable_scale_or_physical_paradoxes",
+        "share_guidance": "~20%",
+        "focus": "Immediately recognizable natural or physical phenomena framed around a stark concrete contradiction or physical limit (mass, height, force, pressure, phase or scale)."
+      },
+      "deprioritized_editorial_defaults": [
+        "standalone_animal_trivia",
+        "abstract_invisible_instrument_tutorials"
+      ]
+    },
+    "question_framing": "Lead with a concrete physical or structural contradiction rather than a flat encyclopedia 'how does X work' overview.",
+    "scope_discipline": "Scope each unassigned feed episode tightly to one core visible contradiction and primary mechanism; let clear explanation determine duration without any mandatory floor or ceiling."
+  },
   "design": {
     "tokens": "../assets/style/bright-nature.tokens.json",
     "direction": "Route by finished style and commission: local realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), controlled 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit, and commissioned cloud production uses Google Flow with paired Chinese and English editions. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
@@ -266,6 +291,11 @@
     "daily_actual_unique_target": 10,
     "additional_requests_separate": true,
     "no_schedule_change_from_adoption": true,
+    "publication_spacing": {
+      "recommended_min_gap_hours": 6,
+      "avoid_burst_posting": true,
+      "scope": "Editorial release-spacing guidance to avoid back-to-back self-competition in recommendation feeds; never overrides an explicit user schedule or creates an automated schedule."
+    },
     "optional_ai_creation": false,
     "youtube_made_for_kids": false,
     "required_publication_tag": "科普",

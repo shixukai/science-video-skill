@@ -1,6 +1,8 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.38. The Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.39. The Git commit identifies the exact revision.
+
+- **Default editorial focus → everyday mechanisms × concrete visual demonstration.** Unassigned topic discovery anchors on recognizable everyday objects, devices and visible structural/physical mechanisms (~80%) plus observable concrete physical/scale paradoxes (~20%), using contradiction-first questions, tight single-mechanism scoping and staggered release spacing (`editorial_positioning` and `operations.publication_spacing` in `config/series-profile.json`) while always preserving explicit user-commissioned topics.
 
 - **Realistic → MoneyPrinterTurbo; 3D animation → Blender or `vork` (agent-selected).** Finished visual style selects the route, and the agent automatically decides whether to use `vork` for full 3D episodes, 3D shots or supporting field/simulation/VFX passes based on mechanism and hardware fit.
 - **Default Mandarin voice across all routes → local IndexTTS-2.5 voice clone (`#5`, `mandarin-indextts25-clone-polished-v1`).** Synthesize cohesive Mandarin narration paragraphs via `scripts/synthesize_indextts2.py` (private `<=15 s` prompt from `CODEX_HOME/data/science-video-production/voice-baseline.json`, `use_emo_text=False`) and apply `#5` speech polish (`mandarin-clone-polish-v1`, zero echo) via `scripts/prepare_voice_master.py --polish`. Microsoft Edge `edge-tts` (`scripts/synthesize_edge_tts.py`) handles paired English (`en-US-AndrewMultilingualNeural` `+4%`) and cloud Mandarin fallback (`zh-CN-YunxiNeural` `+4%`) with linear mastering via `prepare_voice_master.py`.

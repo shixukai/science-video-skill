@@ -18,13 +18,14 @@ Before locking the G1 script, draft the package viewers will actually see in the
 
 Choose the package with the strongest promise that the film can fully deliver, then write the script to fulfill it. If no candidate is compelling, the angle is weak; revise it now, when it is cheap. Keep title, cover, first frame and first line promising the same question, as checked by the existing [cover-to-opening alignment](topic-contract.md#continuously-check-the-covers-question-against-the-actual-opening). In a recommendation feed the video autoplays from its first frame and the cover is usually not seen first, so the first frame and first line carry the click decision there; the cover matters most on profile, search and series pages.
 
-Candidate title patterns to test for Chinese feed platforms (examples only, each must match the actual film):
+Candidate title patterns to test for Chinese feed platforms (examples only, each must match the actual film). Prefer **concrete physical or structural contradiction framing** ("it breaks, separates or weighs X, yet Y happens — how/why?") on recognizable everyday objects or phenomena over flat encyclopedia prompts ("……是如何工作的？" / "……是怎么……的？"):
 
 | Pattern | Example |
 | --- | --- |
-| Surprise question | 冰明明是固体，为什么会浮在水上？ |
+| Everyday structural contradiction | 瓶盖一拧就断，当初怎么装上去的？ |
+| Surprise physical contradiction | 冰明明是固体，为什么会浮在水上？ |
 | Everyday mechanism | 电磁炉隔着玻璃，凭什么能把锅烧热？ |
-| Extreme precision | 比头发丝还细的线条，是怎么刻进芯片的？ |
+| Extreme scale / limit paradox | 百米高树没有水泵，怎么把水送上树顶？ |
 | Transformation | 一个小小的瓶胚，怎样变成你手里的饮料瓶？ |
 | Visible comparison | 同样是轮胎，为什么花纹差这么多？ |
 
@@ -46,6 +47,7 @@ The anti-preamble rule rejects background that delays the observation, not neces
 | --- | --- | --- |
 | Context-first line such as “杯里的冰浮在水面。同样是水，结冰后为什么……” or AI clickbait slogan such as “圆出口竟能拉出方便便，它是怎么做到的？” | Context-first delays tension to 5+ seconds; compressed marketing-account contrast slogans (`竟能…怎么做到的`) and coined shorthand (`圆出口拉方块`) trigger immediate AI-voice distrust | Lead with the concrete observation in natural everyday grammar within `payload_max_spoken_units` (`20` units, `~3.5 s`): “这块冰明明是固体，落进水里却自己浮了上来。” Let the picture carry the setting |
 | Throat-clearing starters: “大家好”, “你知道吗”, “你有没有想过”, “今天我们来聊”, “在我们的生活中”, “这是一个……” | Nothing happens; the viewer hears a format, not a reason | Delete them; start with the object and its event |
+| Flat encyclopedia prompt or abstract invisible subject without a visible contradiction (e.g., “……是怎么工作的？” over a generic machine shell or unfamiliar specimen) | Viewers feel homework rather than curiosity; no immediate contrast earns a second beat | Anchor frame 0 on a familiar object or observable state exhibiting a concrete contradiction (breaks/locks/floats/heats), and state that contrast immediately |
 | Look-directions: “先看”, “看这个”, “我们来看看”, “想知道……？先看……” | Announces viewing instead of giving the observation | Let the picture show it and say what it means |
 | Slow empty establishing wide shot, aerial, generic scenery or a tiny distant subject | Nothing recognizable at phone size | Open on the subject in its most striking honest state at phone-readable scale |
 | A part inside a larger machine, vehicle, appliance or organism shown as an isolated mechanism, unrecognizable fragment, floating studio cutaway or tiny simplified exterior | Viewers see disembodied parts without knowing their host, or a distant shell that hides the action | Apply the [host-to-part bridge](#anchor-a-part-inside-its-host) inside the 0–5 s opening |
@@ -177,9 +179,9 @@ Deliver the final answer late (normally in the last 10–20%; earlier than `rete
 
 ## Duration, format and series identity
 
-The topic contract enforces no mandatory minimum or maximum duration: let telling the story clearly determine length, never padding to stretch a concise explanation and never skipping necessary steps to hit a short target. When a complete chain is long, propose a series with self-contained questions/payoffs or a separately commissioned cut-down when useful. Neither proposal changes an already commissioned complete-chain film: preserve that deliverable unless the user chooses the changed scope. The series master canvas is 1920×1080 landscape. Vertical-feed destinations receive the [vertical feed package](#package-the-landscape-master-for-vertical-feeds) derived from the accepted master; a native vertical re-edit still requires an explicit request and its own layout review.
+The topic contract enforces no mandatory minimum or maximum duration: let telling the story clearly determine length, never padding to stretch a concise explanation and never skipping necessary steps to hit a short target. For standalone everyday-science feed episodes, tighten scope around **one concrete physical contradiction and its primary mechanism** so the film resolves cleanly and ends promptly without encyclopedic detours or mid-video bloat. When a complete chain is long, propose a series with self-contained questions/payoffs or a separately commissioned cut-down when useful. Neither proposal changes an already commissioned complete-chain film: preserve that deliverable unless the user chooses the changed scope. The series master canvas is 1920×1080 landscape. Vertical-feed destinations receive the [vertical feed package](#package-the-landscape-master-for-vertical-feeds) derived from the accepted master; a native vertical re-edit still requires an explicit request and its own layout review.
 
-Build series recognition: a consistent title style, cover design and accepted voice; use recurring visual devices such as a cutaway only where the topic supports them. A one-sentence pointer to a next episode is allowed only when that episode actually exists or is committed.
+Build series recognition so viewers who enjoy one episode immediately understand what following the channel will give them next: align topic selection (`editorial_positioning` in [series profile](../config/series-profile.json): unpacking hidden physical and structural mechanisms behind everyday objects and visible phenomena), contradiction-first titles, cover design, vertical-feed header phrasing and the accepted voice. Use recurring visual devices such as a cutaway or slow-motion stress reveal only where the topic supports them, and never place follow/subscribe prompts inside the picture or feed bands. A one-sentence pointer to a next episode is allowed only when that episode actually exists or is committed.
 
 ## Package the landscape master for vertical feeds
 

@@ -298,6 +298,14 @@ class ReferenceSystemTests(unittest.TestCase):
         self.edit("config/production-policy.json", lambda d: d["google_flow_audit"].update(narrative_depth={"min_episode_duration_s": 135.0}))
         self.errors("must not impose mandatory episode duration")
 
+    def test_editorial_positioning_must_preserve_user_commissioned_topics(self):
+        self.edit("config/series-profile.json", lambda d: d["editorial_positioning"].update(preserves_user_commissioned_topics=False))
+        self.errors("preserve user-commissioned topics")
+
+    def test_publication_spacing_requires_positive_gap(self):
+        self.edit("config/series-profile.json", lambda d: d["operations"]["publication_spacing"].update(recommended_min_gap_hours=0))
+        self.errors("publication spacing guidance")
+
 
 if __name__ == "__main__":
     unittest.main()
