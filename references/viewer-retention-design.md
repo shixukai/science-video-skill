@@ -112,6 +112,7 @@ Mark concrete sticking points in a normal-speed short sample, revise under this 
 | Sections are individually clear but require object re-recognition | Excess tracking cost | Carry the previous state/question into the next observation with object/reference continuity |
 | Animation/comparison exists, but differences are tiny or text explains them prematurely | Recognition effort without clear discovery | Adjust change region/timing until the stated result reads at target size; see [animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence) |
 | Cuts, terms, legends and narration all advance simultaneously | Too little time to locate/digest | Reduce competing tasks and give the result an observation window; do not begin with acceleration, effects or more labels |
+| Multi-stage mechanical cutaway dumps 4–6 nested internal parts at once (tiny balls, sleeves, springs, diaphragms and fluid paths crammed into one crowded cross-section) | Non-engineers lose track of what moves what on a single phone-size watch | Break the chain into 2–3 clean causal beats, visually dim/ghost/simplify inactive surrounding shells, and frame each active interface large enough to read without captions |
 | The question is answered but ending prolongs summary or opens another topic | Closed content still consumes time | Return to the phenomenon for recognition/judgment and aesthetic closure, then end; put necessary qualifications beside the relevant conclusion |
 
 ## Why watch the next section after this one?
@@ -150,6 +151,8 @@ For explanatory growth, comparison, structural reveals or prediction tests, desi
 3. **Connect meaning:** Match the observed result to the conclusion, retaining a recognizable state before the next task. Observation may overlap narration; actual viewing/listening determines whether viewers can follow.
 
 All three may fit one continuous action; schedule against actual audio/readability, not fixed three beats/cuts.
+
+**Chunk multi-stage mechanical chains into 2–3 isolated causal beats.** When an internal mechanism links four or more sequential sub-parts (for example sensing port → Venturi suction → vacuum chamber → flexible diaphragm → ball latch → spring-loaded main valve), never expose the entire dense nested assembly in one crowded cutaway and race through every sub-part in one unbroken run. Stage the explanation as **2–3 unmistakable cause-and-effect beats** where each beat isolates one moving interface at phone-readable scale while dimming, desaturating or temporarily ghosting inactive housings and sleeves (so tiny components such as lock balls, sensing holes or latch seats never shrink to unreadable specks inside a busy metallic shell). Once the core mechanism answers the opening question, return cleanly to the opening phenomenon and end promptly—integrate brief secondary edge cases (such as premature shutoff from splashes) inside the beat whose physical variable they test rather than bolting a detached tangent onto the tail.
 
 **The first effective information** may be use, constraint, difficulty, relationship or evidence, but must advance the original topic. Titles, push-ins and attractive assets are not automatic explanations; distinguish previews from actual explanation.
 

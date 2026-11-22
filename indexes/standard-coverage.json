@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "b67564cbdcbad41a52d51cc92eccc7d96a4335258c7c8b507ef350d317c88cb9",
+      "sha256": "296dcb8833309249840b512bec3ecadbfcb7e5ad98bf44c4aa7626de6c63bc4d",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -149,7 +149,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "9087173df5882f6e1122fc43b3d73e833512d410500ecd7cdc534925733ad956",
+      "sha256": "80aa72281f06f6741e1021b827e46e8f0d32b6523f3bf9e651591f8f1ccdf402",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -301,7 +301,7 @@
     {
       "owner_id": "visual",
       "file": "references/material-rendering.md",
-      "sha256": "d8c96346e1af6ae228ffa751d5369f39edc829f470c341a3f62c69847aa4b22a",
+      "sha256": "f95e68096903d8c4d547b209ece15fb11646e88de73da279d8cbda495304ea01",
       "anchors": [
         "general-material-rendering-standard-for-3d-video",
         "1-define-each-material-and-its-finish",
@@ -317,7 +317,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "e98cb912da7a865b127a0694c971c092066f7331494f808a36468fbd44edbf04",
+      "sha256": "19c6894e2aea1801728ce38a1d4347a97abbbf8c3a0bab278aa095bd4316549e",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -451,7 +451,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "3ffbf1f04d7b1f5cbc64bbeaf767b8fa2fd7c22c1f508d27d3e3444c20b56ca5",
+      "sha256": "863b82fc1e8096b50d664017b6dce0e5eab5486539bc7b1a187ceeef5d06de91",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -476,7 +476,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "800512751fe8154998337410827b03edfff4133a9001cf7a6aaecf302815e9b1",
+      "sha256": "f360371236cba80bb54146609c329dd0c1da5807d1affa725be4bb459d519eb3",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
