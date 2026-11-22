@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.45",
+  "version": "1.6.46",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -134,7 +134,7 @@
     "rate": "+4%",
     "pitch": "+0Hz",
     "volume": "+0%",
-    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。中文默认通过本地 IndexTTS-2.5 个人音色克隆（scripts/synthesize_indextts2.py，使用 <=15 s 私人参考音、duration_factor=1.0、interval_silence=220、paragraph_silence_s=0.55、关闭自动文本情绪 use_emo_text=false）与 #5 人声润色预设（prepare_voice_master.py --polish，mandarin-clone-polish-v1，无混响回声）完成整稿母带，不逐字念、不争辩、不鼓动，严禁短视频营销号反差腔、生造四字缩略词、对称口号式排比或押韵收尾；英文版或云端兜底仍使用 edge-tts（en-US-AndrewMultilingualNeural +4% / zh-CN-YunxiNeural +4%）。",
+    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。中文默认通过本地 IndexTTS-2.5 个人音色克隆（scripts/synthesize_indextts2.py，使用 <=15 s 私人参考音、duration_factor=1.0、interval_silence=220、paragraph_silence_s=0.55、关闭自动文本情绪 use_emo_text=false）与 #5 人声润色预设（prepare_voice_master.py --polish，mandarin-clone-polish-v1，无混响回声）完成整稿母带，不逐字念、不争辩、不鼓动，严禁使用“凭什么”“凭啥”等挑衅式反问句式，严禁短视频营销号反差腔、生造四字缩略词、对称口号式排比或押韵收尾；英文版或云端兜底仍使用 edge-tts（en-US-AndrewMultilingualNeural +4% / zh-CN-YunxiNeural +4%）。",
     "runtime_parameters": "Default Mandarin across all routes: local IndexTTS-2.5 voice clone (IndexTeam/IndexTTS-2.5, duration_factor=1.0, interval_silence=220, paragraph_silence_s=0.55, use_emo_text=false) via scripts/synthesize_indextts2.py + #5 whole-track speech polish (mandarin-clone-polish-v1) via scripts/prepare_voice_master.py --polish; Microsoft Edge edge-tts handles paired English (en-US-AndrewMultilingualNeural +4%) and cloud Mandarin fallback (zh-CN-YunxiNeural +4%) via scripts/synthesize_edge_tts.py; optional legacy local Qwen applies only when explicitly selected.",
     "reuse_matching_audio": true,
     "backend": "local_indextts2",

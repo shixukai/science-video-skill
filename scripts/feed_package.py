@@ -289,6 +289,11 @@ class Renderer:
     def check_header(self, topic, question_lines):
         h = self.policy["header"]
         for text, font in [(topic, self.topic_font)] + [(line, self.question_font) for line in question_lines]:
+            if re.search(r"凭什么|凭啥", text):
+                raise ValueError(
+                    "banned confrontational interrogative ('凭什么'/'凭啥') is forbidden in vertical-feed headers; "
+                    "rewrite in calm everyday Chinese: " + text
+                )
             if self.width(text, font) > h["max_width"]:
                 raise ValueError("header line too wide; break the question by meaning instead of shrinking type: " + text)
 

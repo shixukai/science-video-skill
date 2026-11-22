@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.45. The Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.46. The Git commit identifies the exact revision.
 
 - **Default editorial focus → everyday mechanisms × concrete visual demonstration.** Unassigned topic discovery anchors on recognizable everyday objects, devices and visible structural/physical mechanisms (~80%) plus observable concrete physical/scale paradoxes (~20%), using contradiction-first questions, tight single-mechanism scoping and staggered release spacing (`editorial_positioning` and `operations.publication_spacing` in `config/series-profile.json`) while always preserving explicit user-commissioned topics.
 

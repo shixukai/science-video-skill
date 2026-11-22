@@ -24,12 +24,12 @@ Candidate title patterns to test for Chinese feed platforms (examples only, each
 | --- | --- |
 | Everyday structural contradiction | 瓶盖一拧就断，当初怎么装上去的？ |
 | Surprise physical contradiction | 冰明明是固体，为什么会浮在水上？ |
-| Everyday mechanism | 电磁炉隔着玻璃，凭什么能把锅烧热？ |
+| Everyday mechanism | 电磁炉隔着玻璃，怎么把锅烧热的？ |
 | Extreme scale / limit paradox | 百米高树没有水泵，怎么把水送上树顶？ |
 | Transformation | 一个小小的瓶胚，怎样变成你手里的饮料瓶？ |
 | Visible comparison | 同样是轮胎，为什么花纹差这么多？ |
 
-Use numbers only when sourced. Do not use “震惊”, “99%的人不知道”, invented danger or claims the film does not show. A process-chain title such as “全流程” requires the film to cover that chain.
+Use numbers only when sourced. Do not use “震惊”, “99%的人不知道”, confrontational clickbait interrogatives (“凭什么”, “凭啥”), invented danger or claims the film does not show. A process-chain title such as “全流程” requires the film to cover that chain.
 
 ## Win the first two seconds
 
@@ -85,7 +85,7 @@ Before writing the first line, list the three to five most arresting visible mom
 | `result_first` | The finished product or final state forming | “瓶胚一吹，就成了饮料瓶。” |
 | `strange_phenomenon` | The real phenomenon happening | “冰是固体，却浮在水上。” |
 | `extreme_contrast` | Two states or objects side by side, already diverging | “叶子都湿了，荷叶却不沾。” |
-| `question_with_evidence` | The object performing its task | “隔着玻璃，锅凭什么变烫？” |
+| `question_with_evidence` | The object performing its task | “隔着玻璃，锅怎么变烫了？” |
 | `satisfying_process` | The most satisfying moment of the process | “凸轮一转，顶杆就抬起。” |
 | `stakes_in_action` | The consequence that touches viewers' money, safety or daily choice | “胎纹磨平，雨天刹车更远。” |
 | `extreme_scale` | A scale anchor beside the extreme object | “这些线，比很多病毒还细。”（首帧已是芯片结构的放大画面） |

@@ -110,6 +110,9 @@ def load_truetype(font_path: Path, size: int, weight: int) -> ImageFont.FreeType
     return font
 
 
+BANNED_RHETORICAL_RE = re.compile(r"凭什么|凭啥")
+
+
 def parse_lines(title: str, question: str) -> tuple[str, list[str]]:
     clean_title = title.replace("\\n", "\n").strip()
     if not clean_title or "\n" in clean_title:
@@ -119,6 +122,11 @@ def parse_lines(title: str, question: str) -> tuple[str, list[str]]:
     if len(q_lines) != 2:
         raise ValueError(
             f"Question subtitle must be strictly 2 non-empty lines separated by \\n (got {len(q_lines)} line(s))."
+        )
+    if BANNED_RHETORICAL_RE.search(clean_title) or any(BANNED_RHETORICAL_RE.search(ln) for ln in q_lines):
+        raise ValueError(
+            "Banned confrontational interrogative ('凭什么'/'凭啥') is forbidden in cover titles and questions; "
+            "rewrite in calm plain spoken Chinese (e.g. '怎么' / '为什么')."
         )
     return clean_title, q_lines
 

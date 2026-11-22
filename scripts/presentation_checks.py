@@ -33,6 +33,11 @@ BODY_META_CUES = (
 )
 
 
+# Hard-banned confrontational/clickbait interrogatives across all audience text surfaces
+# (narration, captions, titles, covers and feed headers).
+BANNED_RHETORICAL_RE = re.compile(r"凭什么|凭啥")
+
+
 def body_meta_cue(item, data):
     if item.get('surface') not in {'frame', 'caption', 'voiceover'} or not three_d_text_scope(item, data):
         return False
@@ -44,10 +49,13 @@ def body_meta_cue(item, data):
 def prohibited_cue(item, record, data=None):
     """Ambiguous scientific-model limits require a matching protected notice.
 
-    Purpose labels never exempt material defects, QA or production-choice
-    excuses. Actual scientific purpose still requires current-media review.
+    Purpose labels never exempt material defects, QA, banned confrontational
+    rhetorical phrases or production-choice excuses. Actual scientific purpose
+    still requires current-media review.
     """
     wording = item.get("text", "")
+    if isinstance(wording, str) and BANNED_RHETORICAL_RE.search(wording):
+        return True
     data = data if isinstance(data, dict) else {}
     if body_meta_cue(item, data) and not (scientific_condition_review(item, record) or scientific_subject_review(item)):
         return True
