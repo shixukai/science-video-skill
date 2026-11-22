@@ -313,6 +313,10 @@ class ReferenceSystemTests(unittest.TestCase):
         colab_entry = entries["google-colab-cli"]
         self.assertEqual(colab_entry["execution"]["routing_reference"], "references/tool-routing.md#colab-cli-and-remote-gpu-integration")
         self.assertTrue((self.root / "scripts/colab_cli.py").is_file())
+        profile = json.loads((self.root / "config/series-profile.json").read_text(encoding="utf-8"))
+        td = profile["video_generation"]["style_routing"]["three_d_animation"]
+        self.assertEqual(td["blender_render_compute_policy"], "colab_first_with_local_fallback")
+        self.assertEqual(td["blender_colab_entrypoint"], "scripts/colab_cli.py blender-render")
         registry = json.loads((self.root / "indexes/standard-coverage.json").read_text(encoding="utf-8"))
         sections = {row["file"]: row for row in registry["sections"]}
         self.assertEqual(sections["references/tool-routing.md"]["owner_id"], "tools")

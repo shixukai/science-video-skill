@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.42",
+  "version": "1.6.43",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -106,6 +106,8 @@
         "includes_photorealistic_3d": true,
         "ai_failure_trial_required": false,
         "engine_selection": "agent_automatic_by_mechanism_simulation_and_asset_fit_unless_user_specifies",
+        "blender_render_compute_policy": "colab_first_with_local_fallback",
+        "blender_colab_entrypoint": "scripts/colab_cli.py blender-render",
         "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_controlled_3d_rendering",
         "guide": "references/engineering-blender.md"
       }
