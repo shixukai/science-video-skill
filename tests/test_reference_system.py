@@ -306,6 +306,18 @@ class ReferenceSystemTests(unittest.TestCase):
         self.edit("config/series-profile.json", lambda d: d["operations"]["publication_spacing"].update(recommended_min_gap_hours=0))
         self.errors("publication spacing guidance")
 
+    def test_colab_cli_catalog_and_canonical_routing_stay_linked(self):
+        external = json.loads((self.root / "indexes/external-skills.json").read_text(encoding="utf-8"))
+        entries = {row["id"]: row for row in external["entries"]}
+        self.assertIn("google-colab-cli", entries)
+        colab_entry = entries["google-colab-cli"]
+        self.assertEqual(colab_entry["execution"]["routing_reference"], "references/tool-routing.md#colab-cli-and-remote-gpu-integration")
+        self.assertTrue((self.root / "scripts/colab_cli.py").is_file())
+        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text(encoding="utf-8"))
+        sections = {row["file"]: row for row in registry["sections"]}
+        self.assertEqual(sections["references/tool-routing.md"]["owner_id"], "tools")
+        self.assertIn("colab-cli-and-remote-gpu-integration", sections["references/tool-routing.md"]["anchors"])
+
 
 if __name__ == "__main__":
     unittest.main()

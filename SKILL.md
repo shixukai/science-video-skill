@@ -93,7 +93,7 @@ Read the linked responsibility sections before acting in that domain; these summ
 | Narration generation, continuity and listening | [Narration and listening](references/voice-reference.md) |
 | Shots, assets, versions and action records | [Shotbook](references/shotbook.md) |
 | Acceptance, unreviewed work, failure and repairs | [Quality acceptance](references/quality-acceptance.md) |
-| Tools, automatic `vork` selection and optional methods | [Tool routing](references/tool-routing.md), [local AI toolkit & license gates](references/tool-routing.md#local-ai-toolkit-routing-and-license-gates), [vork execution](references/tool-routing.md#vork-execution) |
+| Tools, automatic `vork` selection, Colab CLI/GPU offload and optional methods | [Tool routing](references/tool-routing.md), [local AI toolkit & license gates](references/tool-routing.md#local-ai-toolkit-routing-and-license-gates), [Colab CLI & remote GPU](references/tool-routing.md#colab-cli-and-remote-gpu-integration), [vork execution](references/tool-routing.md#vork-execution) |
 | Complex coordination, invocation and independent review | [Subagent orchestration](references/subagent-orchestration.md): parent directs; actually delegate applicable roles for complex production/repairs, distinguishing loaded definition, native/fallback invocation and artifact. Perform small changes directly. |
 | Appeal screening, titles, covers' promise, two-second hook lab/measurement/cold test, viewing promise, open-loop ledger, payoff cadence, ending timing, vertical feed package and hit-pattern learning | [Viral appeal and packaging](references/viral-appeal-and-packaging.md) |
 | Retention or alpha/canvas faults | Read [viewer retention](references/viewer-retention-design.md) or [render evidence](references/render-evidence.md) as needed |
@@ -119,6 +119,7 @@ Run scripts from the active global installation, substituting an existing workin
     python -X utf8 scripts/retention_timeline.py measure <export.mp4> --episode <episode.json> --preview-dir <local-preview-dir> --report <new-retention-report.json>
     python -X utf8 scripts/feed_package.py compose <textless-master.mp4> --captions <captions.srt> --topic <topic noun> --question <question with \n breaks> --output <feed-package.mp4> --report <new-feed-package-report.json>
     python -X utf8 scripts/compose_cover.py compose <text-free-cover.png> --ratio <3:4|4:3|16:9> --title <1-line topic> --question <line1\nline2> --palette <daylight_terracotta|daylight_navy|dark_terracotta|dark_ocean_gold> --lang <zh|en> --output <cover.png> --report <new-cover-receipt.json>
+    python -X utf8 scripts/colab_cli.py preflight --check-auth
     python -X utf8 scripts/check_episode.py <episode.json> --stage delivery --report <new-delivery-receipt.json>
 
 Select the actual stage and shot IDs. `roughcut` serves G2, `sample` creates the review-pending representative sequence, and neither requires a prior G3; `full` requires current G3 before expansion. Reuse a matching existing lock instead of generating one for every operation. `plan` does not advance a gate; G1–G7 check the applicable evidence. `delivery` checks local completion through G5, `publish_ready` through G6, and `covers` only covers. Use G7 only to validate user-supplied publication evidence offline when requested.

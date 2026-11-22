@@ -72,7 +72,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "b2b1d79f80cbd248505c683ca5d30ea42f41695512aaa9bedec6005bf35838d1",
+      "sha256": "b8cbf1c9fd5526b416e592c9c53f8c4a07fbef4744c5e1b10dab51c850293dae",
       "anchors": [
         "realistic-style-moneyprinterturbo-production-and-local-model-assets",
         "lock-modality-at-startup",
@@ -476,7 +476,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "f360371236cba80bb54146609c329dd0c1da5807d1affa725be4bb459d519eb3",
+      "sha256": "76a6c947563070aa9e799ece0193502e8068db59ba826b9d9e94473adb67543b",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -494,7 +494,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "8ba05ff92957d55e3500b177206c2c2382bd088c0824c6e6f4368865672efa32",
+      "sha256": "e05066869827b388f5c23aafef5c6a176578380d2158b4f18075e0a7a96a8139",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -510,13 +510,17 @@
         "vork-execution",
         "other-execution-notes",
         "source-identification",
-        "local-ai-toolkit-routing-and-license-gates"
+        "local-ai-toolkit-routing-and-license-gates",
+        "colab-cli-and-remote-gpu-integration",
+        "choose-between-two-authorized-access-modes-and-fall-back-locally",
+        "platform-preflight-authentication-and-non-interactive-agent-boundaries",
+        "provisioning-execution-bandwidth-discipline-and-mandatory-teardown"
       ]
     },
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "d2c7edd9d52260e886092334b8f3053811645ab84e747eaff01d9890be50290f",
+      "sha256": "c88f5b3658d28e6049c3c1f069f3c6d99bdda7dd051b9a72ff651c8dc3496fa1",
       "anchors": [
         "external-video-skills-adopted-methods-and-licenses",
         "small-included-reference-set-and-production-routes",
