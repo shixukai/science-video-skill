@@ -528,16 +528,19 @@ gpu_info = subprocess.run(
 ).stdout.strip()
 
 if not BLENDER_BIN.is_file():
+    print("[COLAB-BLENDER] Downloading Blender Linux runtime ...", flush=True)
     BLENDER_DIR.mkdir(parents=True, exist_ok=True)
     subprocess.run(["curl", "-fsSL", CFG["blender_url"], "-o", "/tmp/blender.tar.xz"], check=True)
     subprocess.run(["tar", "-xf", "/tmp/blender.tar.xz", "-C", str(BLENDER_DIR), "--strip-components=1"], check=True)
     pathlib.Path("/tmp/blender.tar.xz").unlink(missing_ok=True)
 
 if shutil.which("ffmpeg") is None:
+    print("[COLAB-BLENDER] Installing ffmpeg ...", flush=True)
     subprocess.run(["apt-get", "-qq", "update"], check=True)
     subprocess.run(["apt-get", "-qq", "install", "-y", "ffmpeg"], check=True)
 
 blender_version = subprocess.check_output([str(BLENDER_BIN), "--version"], text=True).splitlines()[0].strip()
+print(f"[COLAB-BLENDER] GPU={{gpu_info}} | {{blender_version}} | frames={{CFG['frame_start']}}..{{CFG['frame_end']}} | shards={{CFG['shards']}} | samples={{CFG['samples']}}", flush=True)
 
 if FRAMES_DIR.exists():
     shutil.rmtree(FRAMES_DIR, ignore_errors=True)
@@ -549,7 +552,11 @@ total_frames = f1 - f0 + 1
 n_shards = max(1, min(int(CFG["shards"]), total_frames))
 
 procs = []
+log_files = []
 for si in range(n_shards):
+    log_p = WORK_DIR / f"shard_{{si}}.log"
+    lf = log_p.open("w", encoding="utf-8", errors="replace")
+    log_files.append((si, log_p, lf))
     cmd = [
         str(BLENDER_BIN), "-b", CFG["remote_blend"], "-P", str(DRIVER_PY), "--",
         "--out-dir", str(FRAMES_DIR),
@@ -561,12 +568,31 @@ for si in range(n_shards):
         "--height", str(CFG["height"]),
         "--backend", CFG["backend"],
     ]
-    procs.append(subprocess.Popen(cmd))
+    procs.append(subprocess.Popen(cmd, stdout=lf, stderr=subprocess.STDOUT))
+
+last_beat = 0.0
+while any(p.poll() is None for p in procs):
+    now = time.monotonic()
+    if now - last_beat >= 10.0:
+        rendered = sum(1 for p in FRAMES_DIR.glob("frame_*.png") if p.stat().st_size > 1024)
+        elapsed = now - t0
+        pct = 100.0 * rendered / max(1, total_frames)
+        print(f"[PROGRESS] {{rendered}}/{{total_frames}} ({{pct:.1f}}%) elapsed={{elapsed:.0f}}s", flush=True)
+        last_beat = now
+    time.sleep(2.0)
 
 rcs = [p.wait() for p in procs]
+for _, _, lf in log_files:
+    lf.close()
 rendered = sum(1 for p in FRAMES_DIR.glob("frame_*.png") if p.stat().st_size > 1024)
 if any(rc != 0 for rc in rcs) or rendered != total_frames:
-    raise RuntimeError(f"Blender render failed: returncodes={{rcs}}, rendered={{rendered}}/{{total_frames}}")
+    tails = []
+    for si, log_p, _ in log_files:
+        if rcs[si] != 0 and log_p.is_file():
+            tails.append(f"shard_{{si}} rc={{rcs[si]}}: " + log_p.read_text(encoding="utf-8", errors="replace")[-400:])
+    raise RuntimeError(f"Blender render failed: returncodes={{rcs}}, rendered={{rendered}}/{{total_frames}}; " + " | ".join(tails))
+
+print(f"[COLAB-BLENDER] Encoding {{total_frames}} frames to Rec.709 MP4 ...", flush=True)
 
 mp4_path = pathlib.Path(CFG["remote_mp4"])
 mp4_path.parent.mkdir(parents=True, exist_ok=True)
@@ -662,7 +688,7 @@ def _execute_ephemeral_workflow(
     if high_mem:
         new_args.append("--high-mem")
 
-    exec_args = ["exec", "-s", session, "-f", _host_path_for_cli(script_resolved, tname)]
+    exec_args = ["exec", "-s", session, "--timeout", "0", "-f", _host_path_for_cli(script_resolved, tname)]
     for pair in env_pairs:
         exec_args += ["--env", pair]
 
@@ -672,7 +698,7 @@ def _execute_ephemeral_workflow(
     for local_p, remote_p in uploads:
         planned_steps.append(build_colab_cmd(info, ["upload", "-s", session, _host_path_for_cli(local_p, tname), remote_p], **common))
     # Redact --env values in plan summary
-    safe_exec_args = ["exec", "-s", session, "-f", _host_path_for_cli(script_resolved, tname)]
+    safe_exec_args = ["exec", "-s", session, "--timeout", "0", "-f", _host_path_for_cli(script_resolved, tname)]
     for k in env_keys:
         safe_exec_args += ["--env", f"{k}=[REDACTED]"]
     planned_steps.append(build_colab_cmd(info, safe_exec_args, **common))

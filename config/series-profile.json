@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.43",
+  "version": "1.6.44",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -108,6 +108,16 @@
         "engine_selection": "agent_automatic_by_mechanism_simulation_and_asset_fit_unless_user_specifies",
         "blender_render_compute_policy": "colab_first_with_local_fallback",
         "blender_colab_entrypoint": "scripts/colab_cli.py blender-render",
+        "colab_default_access_mode": "google_colab_cli",
+        "colab_default_visual_style": "industrial_exploded_3d_keynote",
+        "colab_3d_default": {
+          "access_mode": "google_colab_cli",
+          "cli_helper": "scripts/colab_cli.py",
+          "fallback_access_modes": ["https_tunnel", "local_gpu"],
+          "visual_style": "industrial_exploded_3d_keynote",
+          "visual_benchmark": "Pure-3D industrial exploded-view keynote caliber (Apple Keynote / Branch Education): real open-source high-poly CAD + 1:1 studio-photo-guided multi-part CNC hard-surface assemblies (ISO fasteners, 3D knurling, lathe profiles, EdgeSplit, angle-limited bevels); neural 3D (TRELLIS.2 --geometry-only / Hunyuan3D 2.1) reserved strictly for organic, soft or matte sculpted props, never glossy machined metals; true optical refraction/birefringence with backlight visible_transmission=false and <=1 mm micro-optic force cues; deterministic baked Blender Bullet rigid-body, cloth or fluid physics converted to quaternion F-curves for strided multi-shard Colab parity; zero opaque plastic blocks, chunky textbook arrows or unbaked toy shatter cubes.",
+          "preflight_requirement": "Inspect full-resolution 1920x1080 hero preflight stills locally before dispatching packed .blend jobs via Colab CLI."
+        },
         "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_controlled_3d_rendering",
         "guide": "references/engineering-blender.md"
       }

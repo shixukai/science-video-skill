@@ -172,7 +172,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "825287913cd3caa165e76c2ec3ba5fa466bb4a99199df692df64d85d5bceeeb1",
+      "sha256": "31153797c37d7bafa5ad46a0a26f4c1807d5dfd7bb679b0796380c15f9f70789",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -494,7 +494,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "5e8799f393a4b46846c7352b3a0d2aef676fd93ef63f0426905870cf22de0d44",
+      "sha256": "bb235165723c6d06139e8f78677211d958d8252fb1ab90700f21f7ec6fe57854",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -513,6 +513,7 @@
         "local-ai-toolkit-routing-and-license-gates",
         "colab-cli-and-remote-gpu-integration",
         "choose-between-two-authorized-access-modes-and-fall-back-locally",
+        "default-colab-3d-visual-style-industrial-exploded-view-keynote",
         "platform-preflight-authentication-and-non-interactive-agent-boundaries",
         "provisioning-execution-bandwidth-discipline-and-mandatory-teardown"
       ]
