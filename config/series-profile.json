@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.46",
+  "version": "1.6.47",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -314,6 +314,60 @@
     "youtube_made_for_kids": false,
     "required_publication_tag": "科普",
     "douyin_join_eligible_activities": true,
+    "douyin_collections": {
+      "enabled": true,
+      "owner": "references/production-checkpoints.md#assign-every-public-video-to-its-matching-douyin-collection",
+      "require_collection_at_publication": true,
+      "no_ad_hoc_collections_without_authorization": true,
+      "exclude_private_or_personal_videos": true,
+      "episode_ordering": "newest_first",
+      "profile_display_order": [
+        "everyday_mechanisms",
+        "peak_engineering",
+        "earth_and_cosmos",
+        "life_and_senses"
+      ],
+      "classification_priority": "Classify strictly by the video's primary physical or scientific mechanism rather than surface keywords; assign every public science video to exactly one standing collection in the Douyin composer before submission, resolving boundary topics by primary subject mechanism: everyday personal/household objects -> heavy/precision industrial or scientific engineering -> earth/atmosphere/space phenomena -> living organisms and human sensory/neural mechanisms.",
+      "collections": [
+        {
+          "id": "everyday_mechanisms",
+          "title": "透视日常造物",
+          "display_order": 1,
+          "editorial_lane": "primary_everyday_pillar",
+          "cover_ratio": "1:1",
+          "description": "拆开每天都在接触的日常器物、包装与家居装置，看清藏在方寸之间的物理与机械巧思。",
+          "scope": "Everyday objects, packaging, household appliances, kitchen and food physics, personal items, and daily-contact safety or mechanical devices identifiable in ordinary life (e.g., fuel nozzles, bottle caps, dry pasta fracture, QR code error correction, seatbelt retractors, pressure cookers, RCD breakers, beverage pull-tabs, soap bubbles, popcorn)."
+        },
+        {
+          "id": "peak_engineering",
+          "title": "解码巅峰工程",
+          "display_order": 2,
+          "editorial_lane": "heavy_and_precision_engineering",
+          "cover_ratio": "1:1",
+          "description": "从电梯安全钳、高铁钢轨到航空发动机与原子级显微成像，读懂硬核工程与重器背后的设计逻辑。",
+          "scope": "Heavy machinery, rail and transit infrastructure, aerospace and aviation propulsion or life-support systems, industrial manufacturing and 3D printing, and precision scientific or medical instruments (e.g., MRI, electron microscopes, elevator safety gears, high-speed rail pantographs and continuous welded rails, SLA photopolymer printing, hollow turbine blades, neutrino detectors, rockets, spacesuits)."
+        },
+        {
+          "id": "earth_and_cosmos",
+          "title": "丈量天地寰宇",
+          "display_order": 3,
+          "editorial_lane": "earth_atmosphere_and_space",
+          "cover_ratio": "1:1",
+          "description": "从雨后泥土香、500吨悬浮白云到雷电、火山与潮汐锁定，看懂自然现象与浩瀚宇宙的运行尺度。",
+          "scope": "Meteorology, atmospheric optics, phase-change weather physics, geology and volcanology, and space or astronomy phenomena (e.g., petrichor, cumulus clouds, lightning, frost, hurricanes, snowflakes, geysers, supercooled water, rainbows, dew, orbital sunrises, auroras, coronal rain, lava fountains, tidal locking)."
+        },
+        {
+          "id": "life_and_senses",
+          "title": "探秘生命法则",
+          "display_order": 4,
+          "editorial_lane": "biology_biomechanics_and_perception",
+          "cover_ratio": "1:1",
+          "description": "从哺乳动物体型下限、百米红杉输水到动物精妙结构与感官错觉，探索生命演化背后的物理法则。",
+          "scope": "Animal and plant biomechanics, evolutionary physical limits, biological structures and behaviors, and human sensory, physiological or perceptual mechanisms (e.g., chameleon and octopus camouflage, beaver incisors, wombat cube feces, coconut octopus, photosynthetic sea slugs, capsaicin sensation, high-altitude bird flight, mammalian size limits, redwood sap transport, hadal fish depth limits, mosquito attraction, silent owl flight, optical illusions)."
+        }
+      ],
+      "scope": "Standing Douyin collection taxonomy for authorized public science releases. Select the matching standing collection in the Douyin composer before submitting any public science video; exclude private or personal clips and never create ad-hoc collections without explicit creator authorization."
+    },
     "platform_sync": {
       "primary": "douyin",
       "enabled": true,

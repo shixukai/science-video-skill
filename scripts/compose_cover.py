@@ -23,6 +23,9 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 POLICY_PATH = ROOT / "config" / "production-policy.json"
 RATIO_ALIASES = {
+    "1:1": "cover_1_1",
+    "1x1": "cover_1_1",
+    "cover_1_1": "cover_1_1",
     "3:4": "cover_3_4",
     "3x4": "cover_3_4",
     "cover_3_4": "cover_3_4",
@@ -370,7 +373,7 @@ def cmd_list_palettes(args: argparse.Namespace) -> int:
 def cmd_compose(args: argparse.Namespace) -> int:
     ratio_key = RATIO_ALIASES.get(args.ratio.strip().lower())
     if not ratio_key:
-        print(f"ERROR: unsupported --ratio {args.ratio!r}; use 3:4, 4:3 or 16:9", file=sys.stderr)
+        print(f"ERROR: unsupported --ratio {args.ratio!r}; use 1:1, 3:4, 4:3 or 16:9", file=sys.stderr)
         return 2
     try:
         receipt = compose_cover(
@@ -408,7 +411,7 @@ def main(argv: list[str] | None = None) -> int:
 
     p_comp = sub.add_parser("compose", help="Compose a series cover using locked typography and color presets.")
     p_comp.add_argument("raw_image", type=Path, help="Clean text-free cover artwork matching the requested aspect ratio.")
-    p_comp.add_argument("--ratio", required=True, help="Target ratio: 3:4 (1080x1440), 4:3 (1440x1080), or 16:9 (1920x1080).")
+    p_comp.add_argument("--ratio", required=True, help="Target ratio: 1:1 (1080x1080), 3:4 (1080x1440), 4:3 (1440x1080), or 16:9 (1920x1080).")
     p_comp.add_argument("--title", required=True, help="1-line topic-noun main title.")
     p_comp.add_argument("--question", required=True, help=r"2-line question subtitle separated with \n.")
     p_comp.add_argument("--palette", default=None, help="Locked preset from cover_typography.color_presets (default: daylight_terracotta).")

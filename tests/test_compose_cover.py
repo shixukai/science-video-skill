@@ -89,6 +89,24 @@ class ComposeCoverTests(unittest.TestCase):
         self.assertEqual(r169["typography"]["main_color_hex"], "#1E3246")
         self.assertEqual(r169["typography"]["subtitle_color_hex"], "#243F4D")
 
+    def test_compose_1_1_collection_cover_and_preview_contract(self):
+        raw_sq = self._make_bg("raw_1_1.png", (1080, 1080), (12, 16, 20))
+        out11 = self.dir / "collection-1x1.png"
+        rep11 = self.dir / "collection-1x1.json"
+        r11 = compose_cover.compose_cover(
+            raw_sq, "cover_1_1", "透视日常造物", "拆开身边器物\n看清精密机关", out11, rep11,
+            palette="dark_terracotta", lang="zh",
+        )
+        self.assertTrue(out11.is_file())
+        with Image.open(out11) as im:
+            self.assertEqual(im.size, (1080, 1080))
+        with Image.open(self.dir / "collection-1x1-preview-270w.png") as pv:
+            self.assertEqual(pv.size, (270, 270))
+        self.assertEqual(r11["typography"]["main_size_px"], 108)
+        self.assertEqual(r11["typography"]["subtitle_size_px"], 56)
+        self.assertEqual(r11["typography"]["main_color_hex"], "#E39B78")
+        self.assertEqual(r11["typography"]["subtitle_color_hex"], "#EAE4D8")
+
     def test_rejects_unregistered_palette_wrong_background_tone_and_overflow(self):
         raw_light = self._make_bg("light.png", (1080, 1440), (245, 245, 245))
         raw_dark = self._make_bg("dark.png", (1080, 1440), (15, 22, 30))

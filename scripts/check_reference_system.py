@@ -71,6 +71,33 @@ def check_operations(operations):
             or spacing.get("avoid_burst_posting") is not True
             or not str(spacing.get("scope", "")).strip()):
         errors.append("publication spacing guidance requires a positive gap and explicit non-scheduling scope")
+    collections_cfg = operations.get("douyin_collections")
+    if (not isinstance(collections_cfg, dict)
+            or collections_cfg.get("enabled") is not True
+            or collections_cfg.get("owner") != "references/production-checkpoints.md#assign-every-public-video-to-its-matching-douyin-collection"
+            or collections_cfg.get("require_collection_at_publication") is not True
+            or collections_cfg.get("no_ad_hoc_collections_without_authorization") is not True
+            or collections_cfg.get("exclude_private_or_personal_videos") is not True
+            or collections_cfg.get("episode_ordering") != "newest_first"
+            or not str(collections_cfg.get("classification_priority", "")).strip()
+            or not str(collections_cfg.get("scope", "")).strip()):
+        errors.append("douyin_collections standing taxonomy and publication assignment rules required")
+    else:
+        rows = collections_cfg.get("collections")
+        order = collections_cfg.get("profile_display_order")
+        expected_titles = ["透视日常造物", "解码巅峰工程", "丈量天地寰宇", "探秘生命法则"]
+        if (not isinstance(rows, list) or len(rows) != 4
+                or not all(isinstance(r, dict)
+                           and bool(str(r.get("id", "")).strip())
+                           and bool(str(r.get("title", "")).strip())
+                           and bool(str(r.get("description", "")).strip())
+                           and bool(str(r.get("scope", "")).strip())
+                           and r.get("cover_ratio") == "1:1"
+                           and r.get("display_order") == idx
+                           for idx, r in enumerate(rows, start=1))
+                or [r["title"] for r in rows] != expected_titles
+                or order != [r["id"] for r in rows]):
+            errors.append("douyin_collections must define the four ordered standing collections with scopes and 1:1 covers")
     return errors
 
 
@@ -366,12 +393,13 @@ def check(root):
              and all(isinstance(cov_fonts[l].get("candidates"), list) and bool(cov_fonts[l]["candidates"]) for l in ("zh", "en")),
              "cover_typography must lock Noto Sans SC (zh) and en font specs without silent fallback")
         cov_ratios = cov_t.get("ratios", {})
-        need(isinstance(cov_ratios, dict) and {"cover_3_4", "cover_4_3", "cover_16_9"} <= set(cov_ratios)
+        need(isinstance(cov_ratios, dict) and {"cover_1_1", "cover_3_4", "cover_4_3", "cover_16_9"} <= set(cov_ratios)
+             and cov_ratios["cover_1_1"].get("canvas") == [1080, 1080]
              and cov_ratios["cover_3_4"].get("canvas") == [1080, 1440]
              and cov_ratios["cover_4_3"].get("canvas") == [1440, 1080]
              and cov_ratios["cover_16_9"].get("canvas") == [1920, 1080],
-             "cover_typography must define locked pixel canvases for 3:4, 4:3 and 16:9")
-        for rk in ("cover_3_4", "cover_4_3", "cover_16_9"):
+             "cover_typography must define locked pixel canvases for 1:1, 3:4, 4:3 and 16:9")
+        for rk in ("cover_1_1", "cover_3_4", "cover_4_3", "cover_16_9"):
             rcfg = cov_ratios.get(rk, {})
             need(all(type(rcfg.get(k)) is int and rcfg[k] > 0 for k in ("margin_x", "margin_y", "max_text_width", "mobile_preview_width_px"))
                  and all(type(rcfg.get(l, {}).get(k)) is int and rcfg[l][k] > 0

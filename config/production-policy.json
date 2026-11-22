@@ -395,6 +395,25 @@
       }
     },
     "ratios": {
+      "cover_1_1": {
+        "canvas": [1080, 1080],
+        "margin_x": 64,
+        "margin_y": 64,
+        "max_text_width": 952,
+        "mobile_preview_width_px": 270,
+        "zh": {
+          "main_size_px": 108,
+          "subtitle_size_px": 56,
+          "tier_gap_px": 22,
+          "line_gap_px": 14
+        },
+        "en": {
+          "main_size_px": 84,
+          "subtitle_size_px": 42,
+          "tier_gap_px": 18,
+          "line_gap_px": 12
+        }
+      },
       "cover_3_4": {
         "canvas": [1080, 1440],
         "margin_x": 64,

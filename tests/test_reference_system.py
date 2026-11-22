@@ -306,6 +306,14 @@ class ReferenceSystemTests(unittest.TestCase):
         self.edit("config/series-profile.json", lambda d: d["operations"]["publication_spacing"].update(recommended_min_gap_hours=0))
         self.errors("publication spacing guidance")
 
+    def test_douyin_collections_require_publish_assignment(self):
+        self.edit("config/series-profile.json", lambda d: d["operations"]["douyin_collections"].update(require_collection_at_publication=False))
+        self.errors("douyin_collections standing taxonomy")
+
+    def test_douyin_collections_require_four_ordered_standing_collections(self):
+        self.edit("config/series-profile.json", lambda d: d["operations"]["douyin_collections"]["collections"].pop())
+        self.errors("four ordered standing collections")
+
     def test_colab_cli_catalog_and_canonical_routing_stay_linked(self):
         external = json.loads((self.root / "indexes/external-skills.json").read_text(encoding="utf-8"))
         entries = {row["id"]: row for row in external["entries"]}
