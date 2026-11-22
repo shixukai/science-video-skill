@@ -356,6 +356,136 @@
     "actual_phone_view_required": true,
     "required_stages": []
   },
+  "cover_typography": {
+    "owner": "references/visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics",
+    "tool": "scripts/compose_cover.py",
+    "version": "cover-typography-locked-v1",
+    "classification": "Strict series cover typography, fixed pixel sizing and closed background-matched color-pairing presets. Enforced programmatically by scripts/compose_cover.py and structurally checked by scripts/cover_guard.py; actual viewing and phone-thumbnail inspection remain required.",
+    "title_position": "upper_left",
+    "main_lines": 1,
+    "subtitle_lines": 2,
+    "stroke_shadow_or_backing": false,
+    "no_auto_shrink": true,
+    "fonts": {
+      "zh": {
+        "family": "Noto Sans SC",
+        "main_weight": 850,
+        "subtitle_weight": 740,
+        "allow_fallback_family": false,
+        "candidates": [
+          "C:/Windows/Fonts/NotoSansSC-VF.ttf",
+          "C:/Windows/Fonts/Noto Sans SC Bold (TrueType).otf",
+          "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+          "/usr/share/fonts/truetype/noto/NotoSansSC-Bold.ttf",
+          "/Library/Fonts/NotoSansSC-VF.ttf"
+        ]
+      },
+      "en": {
+        "family": "Segoe UI / Noto Sans",
+        "main_weight": 800,
+        "subtitle_weight": 700,
+        "allow_fallback_family": false,
+        "candidates": [
+          "C:/Windows/Fonts/segoeuib.ttf",
+          "/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
+          "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+          "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
+        ]
+      }
+    },
+    "ratios": {
+      "cover_3_4": {
+        "canvas": [1080, 1440],
+        "margin_x": 64,
+        "margin_y": 68,
+        "max_text_width": 952,
+        "mobile_preview_width_px": 270,
+        "zh": {
+          "main_size_px": 114,
+          "subtitle_size_px": 60,
+          "tier_gap_px": 24,
+          "line_gap_px": 16
+        },
+        "en": {
+          "main_size_px": 88,
+          "subtitle_size_px": 44,
+          "tier_gap_px": 18,
+          "line_gap_px": 12
+        }
+      },
+      "cover_4_3": {
+        "canvas": [1440, 1080],
+        "margin_x": 72,
+        "margin_y": 62,
+        "max_text_width": 1296,
+        "mobile_preview_width_px": 360,
+        "zh": {
+          "main_size_px": 110,
+          "subtitle_size_px": 58,
+          "tier_gap_px": 22,
+          "line_gap_px": 14
+        },
+        "en": {
+          "main_size_px": 90,
+          "subtitle_size_px": 44,
+          "tier_gap_px": 18,
+          "line_gap_px": 12
+        }
+      },
+      "cover_16_9": {
+        "canvas": [1920, 1080],
+        "margin_x": 88,
+        "margin_y": 74,
+        "max_text_width": 1744,
+        "mobile_preview_width_px": 360,
+        "zh": {
+          "main_size_px": 128,
+          "subtitle_size_px": 66,
+          "tier_gap_px": 26,
+          "line_gap_px": 18
+        },
+        "en": {
+          "main_size_px": 108,
+          "subtitle_size_px": 54,
+          "tier_gap_px": 22,
+          "line_gap_px": 14
+        }
+      }
+    },
+    "default_palette": "daylight_terracotta",
+    "contrast": {
+      "main_min": 3.2,
+      "subtitle_min": 4.5,
+      "light_bg_min_luma": 0.48,
+      "dark_bg_max_luma": 0.22
+    },
+    "color_presets": {
+      "daylight_terracotta": {
+        "background_tone": "light",
+        "main_hex": "#994B37",
+        "subtitle_hex": "#193E4B",
+        "note": "Default series pairing for bright sky, daylight wall, mist, snow and clean light upper-left settings."
+      },
+      "daylight_navy": {
+        "background_tone": "light",
+        "main_hex": "#1E3246",
+        "subtitle_hex": "#243F4D",
+        "note": "For bright warm, ochre, terracotta, copper or sunset upper-left daylight backgrounds where terracotta loses hue separation."
+      },
+      "dark_terracotta": {
+        "background_tone": "dark",
+        "main_hex": "#E39B78",
+        "subtitle_hex": "#EAE4D8",
+        "note": "Dark-scene twin of daylight_terracotta (matching vertical feed slate/night headers) for night skies, space, storms and dark industrial settings."
+      },
+      "dark_ocean_gold": {
+        "background_tone": "dark",
+        "main_hex": "#F2C14E",
+        "subtitle_hex": "#E6F1F5",
+        "note": "For deep cool blue/teal/cyan physical backgrounds such as deep ocean, underwater trenches, dark ice or bioluminescence."
+      }
+    }
+  },
   "audience_text": {
     "owner": "references/visual-system.md#visible-text-purposes-and-production-excuses",
     "plan_stage": "G1",

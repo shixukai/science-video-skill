@@ -348,6 +348,45 @@ def check(root):
              and feed.get("default_palette") not in feed.get("contrast", {}).get("exempt_palettes", [None])
              and 0 < feed.get("contrast", {}).get("band_max_relative_luminance", 1) <= 0.1,
              "vertical feed package must stay a reviewed derivative of the landscape master")
+        cov_t = policy.get("cover_typography", {})
+        need(cov_t.get("owner") == "references/visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics"
+             and cov_t.get("tool") == "scripts/compose_cover.py" and (root / str(cov_t.get("tool"))).is_file()
+             and limits.get("cover_compositor") == "scripts/compose_cover.py"
+             and cov_t.get("title_position") == "upper_left"
+             and cov_t.get("main_lines") == 1 and cov_t.get("subtitle_lines") == 2
+             and cov_t.get("stroke_shadow_or_backing") is False
+             and cov_t.get("no_auto_shrink") is True,
+             "cover_typography must lock upper-left 1+2 flat typography via scripts/compose_cover.py without auto-shrink")
+        cov_fonts = cov_t.get("fonts", {})
+        need(isinstance(cov_fonts, dict) and {"zh", "en"} <= set(cov_fonts)
+             and cov_fonts["zh"].get("family") == "Noto Sans SC"
+             and cov_fonts["zh"].get("allow_fallback_family") is False
+             and all(type(cov_fonts[l].get(k)) is int and cov_fonts[l][k] > 0
+                     for l in ("zh", "en") for k in ("main_weight", "subtitle_weight"))
+             and all(isinstance(cov_fonts[l].get("candidates"), list) and bool(cov_fonts[l]["candidates"]) for l in ("zh", "en")),
+             "cover_typography must lock Noto Sans SC (zh) and en font specs without silent fallback")
+        cov_ratios = cov_t.get("ratios", {})
+        need(isinstance(cov_ratios, dict) and {"cover_3_4", "cover_4_3", "cover_16_9"} <= set(cov_ratios)
+             and cov_ratios["cover_3_4"].get("canvas") == [1080, 1440]
+             and cov_ratios["cover_4_3"].get("canvas") == [1440, 1080]
+             and cov_ratios["cover_16_9"].get("canvas") == [1920, 1080],
+             "cover_typography must define locked pixel canvases for 3:4, 4:3 and 16:9")
+        for rk in ("cover_3_4", "cover_4_3", "cover_16_9"):
+            rcfg = cov_ratios.get(rk, {})
+            need(all(type(rcfg.get(k)) is int and rcfg[k] > 0 for k in ("margin_x", "margin_y", "max_text_width", "mobile_preview_width_px"))
+                 and all(type(rcfg.get(l, {}).get(k)) is int and rcfg[l][k] > 0
+                         for l in ("zh", "en") for k in ("main_size_px", "subtitle_size_px", "tier_gap_px", "line_gap_px"))
+                 and all(rcfg[l]["main_size_px"] > rcfg[l]["subtitle_size_px"] for l in ("zh", "en")),
+                 "cover_typography fixed pixel sizes/margins malformed for " + rk)
+        cov_presets = cov_t.get("color_presets", {})
+        need(isinstance(cov_presets, dict) and len(cov_presets) >= 2
+             and cov_t.get("default_palette") in cov_presets
+             and all(isinstance(p, dict) and p.get("background_tone") in {"light", "dark"}
+                     and bool(HEX.fullmatch(str(p.get("main_hex", ""))))
+                     and bool(HEX.fullmatch(str(p.get("subtitle_hex", ""))))
+                     and bool(str(p.get("note", "")).strip())
+                     for p in cov_presets.values()),
+             "cover_typography closed color_presets must define valid hex pairs and light/dark background tones")
         need([policy["defaults"]["output"]["width"], policy["defaults"]["output"]["height"]] == limits["canvas"], "policy output must match current series default canvas")
         audit = policy["realistic_audit"]
         need(audit["owner"] == "references/realistic-direction.md#measure-the-edit-before-judging-it"

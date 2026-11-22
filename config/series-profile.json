@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.39",
+  "version": "1.6.40",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -277,6 +277,8 @@
       "3:4",
       "4:3"
     ],
+    "cover_typography_policy": "config/production-policy.json#cover_typography",
+    "cover_compositor": "scripts/compose_cover.py",
     "title_max_codepoints": 30,
     "description_and_tags_max_codepoints": 1000,
     "platform_count_authoritative": true,

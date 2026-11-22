@@ -111,6 +111,39 @@ class CoverGuardTests(unittest.TestCase):
             old = self.row()[field]; self.row()[field] = value
             self.assertTrue(self.errors()); self.row()[field] = old
 
+    def test_locked_typography_enforces_font_sizes_and_closed_color_presets(self):
+        # Missing typography record fails
+        saved = self.row().pop("typography")
+        self.assertTrue(any("typography" in e for e in self.errors()))
+        self.row()["typography"] = copy.deepcopy(saved)
+        # Alternate font family fails
+        self.row()["typography"]["font_family"] = "Microsoft YaHei"
+        self.assertTrue(any("font_family" in e for e in self.errors()))
+        self.row()["typography"]["font_family"] = saved["font_family"]
+        # Shrunk or drifted font size fails
+        self.row()["typography"]["main_size_px"] = 96
+        self.assertTrue(any("main_size_px" in e for e in self.errors()))
+        self.row()["typography"]["main_size_px"] = saved["main_size_px"]
+        self.row()["typography"]["subtitle_size_px"] = 52
+        self.assertTrue(any("subtitle_size_px" in e for e in self.errors()))
+        self.row()["typography"]["subtitle_size_px"] = saved["subtitle_size_px"]
+        # Unregistered palette or freestyle hex color fails
+        self.row()["typography"]["palette"] = "custom_yellow"
+        self.assertTrue(any("palette" in e for e in self.errors()))
+        self.row()["typography"]["palette"] = "daylight_terracotta"
+        self.row()["typography"]["main_color_hex"] = "#FFCE54"
+        self.assertTrue(any("main_color_hex" in e for e in self.errors()))
+        self.row()["typography"]["main_color_hex"] = "#994B37"
+        # Stroke/shadow/backing box forbidden
+        self.row()["typography"]["stroke_shadow_or_backing"] = True
+        self.assertTrue(any("stroke_shadow_or_backing" in e for e in self.errors()))
+        self.row()["typography"]["stroke_shadow_or_backing"] = False
+        # Valid dark preset passes cleanly
+        self.row()["typography"]["palette"] = "dark_ocean_gold"
+        self.row()["typography"]["main_color_hex"] = "#F2C14E"
+        self.row()["typography"]["subtitle_color_hex"] = "#E6F1F5"
+        self.assertEqual(self.errors(), [])
+
     def test_prohibited_elements_must_be_explicitly_clear(self):
         for value in (None, ["mechanism_arrows"], ["small_labels"], "none"):
             self.row()["prohibited_elements"] = value

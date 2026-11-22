@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import math
+from pathlib import Path
 import shutil
 import subprocess
 
@@ -14,6 +15,58 @@ OBSERVATIONS = ("style_match", "large_natural_subject", "upper_left_title_and_sh
 LIMITS = ("Cover record/file checks only: hashes, declarations and tests do not prove actual "
           "viewing, appearance, scientific truth, authorization or publication. Keep unviewed work pending.")
 _IMAGE_SIZES = {}
+_POLICY_PATH = Path(__file__).resolve().parents[1] / "config" / "production-policy.json"
+
+
+def _cover_typography_spec():
+    data = json.loads(_POLICY_PATH.read_text(encoding="utf-8"))
+    return obj(data.get("cover_typography"))
+
+
+def _norm_hex(value):
+    return value.strip().upper() if isinstance(value, str) else ""
+
+
+def validate_cover_typography(checks, row, name, label):
+    """Enforce locked font family, exact per-ratio pixel sizing, margins and closed color presets."""
+    spec = _cover_typography_spec()
+    typo = obj(row.get("typography"))
+    if not checks.need(bool(typo), label + " locked typography record required"):
+        return
+    checks.need(typo.get("spec_version") == spec.get("version"),
+                label + " typography spec_version must match locked cover_typography.version")
+    lang = typo.get("lang")
+    fonts = obj(spec.get("fonts"))
+    if not checks.need(isinstance(lang, str) and lang in fonts,
+                       label + " typography lang must be one of " + "/".join(sorted(fonts))):
+        return
+    font_cfg = obj(fonts.get(lang))
+    checks.need(typo.get("font_family") == font_cfg.get("family"),
+                label + " font_family must equal locked " + str(font_cfg.get("family")))
+    checks.need(type(typo.get("main_weight")) is int and typo.get("main_weight") == font_cfg.get("main_weight")
+                and type(typo.get("subtitle_weight")) is int and typo.get("subtitle_weight") == font_cfg.get("subtitle_weight"),
+                label + " main_weight/subtitle_weight must match locked cover_typography weights")
+    ratio_cfg = obj(obj(spec.get("ratios")).get(name))
+    lang_sizes = obj(ratio_cfg.get(lang))
+    for field in ("margin_x", "margin_y"):
+        checks.need(type(typo.get(field)) is int and typo.get(field) == ratio_cfg.get(field),
+                    label + " " + field + " must match locked cover_typography grid")
+    for field in ("main_size_px", "subtitle_size_px", "tier_gap_px", "line_gap_px"):
+        checks.need(type(typo.get(field)) is int and typo.get(field) == lang_sizes.get(field),
+                    label + " " + field + " must match locked cover_typography pixel size")
+    presets = obj(spec.get("color_presets"))
+    palette = typo.get("palette")
+    if checks.need(isinstance(palette, str) and palette in presets,
+                   label + " palette must be a locked cover_typography.color_presets key"):
+        preset = obj(presets.get(palette))
+        checks.need(_norm_hex(typo.get("main_color_hex")) == _norm_hex(preset.get("main_hex"))
+                    and _norm_hex(typo.get("subtitle_color_hex")) == _norm_hex(preset.get("subtitle_hex")),
+                    label + " main_color_hex/subtitle_color_hex must exactly match locked preset " + palette)
+    checks.need(type(typo.get("main_lines")) is int and typo.get("main_lines") == spec.get("main_lines")
+                and type(typo.get("subtitle_lines")) is int and typo.get("subtitle_lines") == spec.get("subtitle_lines"),
+                label + " main_lines must be 1 and subtitle_lines must be 2")
+    checks.need(typo.get("stroke_shadow_or_backing") is False,
+                label + " stroke_shadow_or_backing must be false (flat fill only)")
 
 
 def obj(value):
@@ -144,6 +197,7 @@ def validate_cover_review(checks):
         checks.need(row.get("layout_kind") == "independent_cover_scene", label + " mechanism/slide/capture layout prohibited")
         checks.need(row.get("style") == "detailed_2d_nature" and row.get("title_position") == "upper_left",
                     label + " series editorial subject style and upper-left title required")
+        validate_cover_typography(checks, row, name, label)
         for field in ("subject", "title", "question"):
             checks.need(meaningful(row.get(field)), label + " " + field + " required")
         checks.need(row.get("prohibited_elements") == [], label + " unresolved prohibited cover elements, such as a stylized background or subtitle capture")
