@@ -327,9 +327,10 @@
       "exempt_palettes": ["day"]
     },
     "ending_question": {
+      "default_enabled": false,
       "replaces": "header_question_lines",
       "max_lines": 2,
-      "scope": "One genuine content question viewers can answer from experience, shown only from ending.answer_time_s or later."
+      "scope": "Disabled by default: end cleanly right after explaining the mechanism without tacking on a trailing question. Use --ending-question/--ending-from only when the user explicitly requests one, shown only from ending.answer_time_s or later."
     },
     "experiments_not_default": ["dynamic_open_question_header", "chapter_progress_strip"],
     "default_zoom": 1.0,

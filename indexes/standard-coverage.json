@@ -25,7 +25,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "296dcb8833309249840b512bec3ecadbfcb7e5ad98bf44c4aa7626de6c63bc4d",
+      "sha256": "d5ca642f41d7bb6bb132ccc6330320156408b998f813ac41b278a00f821a03d8",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -43,7 +43,7 @@
         "keep-one-question-open-until-the-final-answer",
         "payoff-cadence-and-re-hooks",
         "locate-retention-risks-on-the-actual-cut",
-        "end-fast-and-invite-real-interaction",
+        "end-fast-after-explaining-the-mechanism",
         "duration-format-and-series-identity",
         "package-the-landscape-master-for-vertical-feeds",
         "scroll-viewer-appeal-check",
@@ -149,7 +149,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "80aa72281f06f6741e1021b827e46e8f0d32b6523f3bf9e651591f8f1ccdf402",
+      "sha256": "a789733d1d162e529a04298f7304fae3625e2168ba2f1651055cdc8d45118a4e",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
