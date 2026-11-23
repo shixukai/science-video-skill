@@ -10,7 +10,7 @@ Use the commissioned Google Flow route when selected. Otherwise determine the lo
 
 | Production route or final-film style | Required primary tool | Responsibilities, automatic `vork` decision and boundaries |
 | --- | --- | --- |
-| Commissioned Google Flow cloud production (`design.production_route=google_flow`) | **Google Flow** | Generate picture and physical foley in [Google Flow](https://flow.google.com/) with serial submission from the disk-backed ledger. Use the [Flow route contract](google-flow-production.md) for whole-script Edge cloud narration by default and scoped whole-track mastering/compositing of the paired HD edits. No local synthesis, replacement media or gap workarounds. |
+| Commissioned Google Flow cloud production (`design.production_route=google_flow`) | **Google Flow** | Generate picture and physical foley in [Google Flow](https://flow.google.com/) with serial submission from the disk-backed ledger. Use the [Flow route contract](google-flow-production.md) for continuous IndexTTS-2.5 Mandarin voice-clone narration (`#5` speech polish) + paired Edge English narration and scoped whole-track mastering/compositing of the paired HD edits. No replacement imagery/foley or gap workarounds. |
 | Realistic style (live-action appearance, including AI realism and authorized user capture) | **MoneyPrinterTurbo** | Use the existing repository for actual asset arrangement or verified compositing, accepted narration/subtitles and aspect-correct export. Local video models provide realistic clips, and the agent **automatically selects [`vork`](#vork-execution)** for supporting 3D field/wave/heatmap overlays, Slang GPU simulations, custom shader reveals or tracked-plate 3D relighting passes whenever controlled 3D/simulation explains an invisible mechanism or physical state more accurately than pure AI video generation. Models, FFmpeg joining, `vork` or Blender renders do not replace MoneyPrinterTurbo's realistic assembly role. See [realistic workflow](ai-generated-video.md). |
 | 3D-animation style (controlled 3D scenes/animation, including photorealistic 3D materials) | **Blender** or **`vork`** *(agent-selected automatically)* | Unless the user explicitly specifies Blender or `vork`, the agent automatically selects between **Blender**, **[`vork`](#vork-execution)**, or a shot/layer hybrid at G1 without asking the user to pick an engine: choose **`vork`** when the explanation centers on invisible physical fields, waves/standing-wave nodes and lobes, thermal/concentration gradients, Slang GPU particle/fluid/swarm simulations, custom procedural/optical shaders, or clean code-authored parametric/`glTF` studio mechanisms where headless JSON + hardware ray-query rendering (`std/previs` → `std/final`/`std/path`) expresses the mechanism more directly; choose **Blender** when the work requires complex multi-part mechanical CAD/mesh topology, boolean/modifier cutaways, non-rigid deformations, armatures, character rigging/mocap/lip-sync, cloth/rigid-body constraints or `.blend` library rigs/collections. For **3D Blender Cycles rendering** (samples, sequences and finals), default to **Colab GPU (`colab_first`)** via [`scripts/colab_cli.py blender-render`](#colab-cli-and-remote-gpu-integration), automatically falling back to local Blender GPU when Colab is unavailable, unauthenticated or explicitly overridden to local-only. Supporting audio/subtitle/mix/encode tools may be reused; AI “3D-looking” video or MoneyPrinterTurbo montage cannot replace controlled 3D rendering. See [Blender workflow](engineering-blender.md) and [`vork` execution](#vork-execution). |
 
@@ -90,7 +90,7 @@ Recheck tool/asset changes by [affected dependencies](quality-acceptance.md#hand
 
 | Task | Entry and output | Execution points |
 | --- | --- | --- |
-| Google Flow video | [Cloud production](google-flow-production.md) → serial `1080p Upscaled` `24 fps` clips and Flow foley, whole-script Edge cloud narration by default, scoped mastering/compositing, sibling `zh`/`en` exports | Verify active Flow controls, prompt ledger, shot timing vs `~7.0 s` usable core, applicable edit/caption tools, `4–8 s` contact sheet, `google_flow_audit.py` and asset origins |
+| Google Flow video | [Cloud production](google-flow-production.md) → serial `1080p Upscaled` `24 fps` clips and Flow foley, continuous IndexTTS-2.5 Mandarin clone (`#5`) + Edge English narration, scoped mastering/compositing, sibling `zh`/`en` exports | Verify active Flow controls, prompt ledger, shot timing vs `~7.0 s` usable core, applicable edit/caption tools, `4–8 s` contact sheet, `google_flow_audit.py` and asset origins |
 | Realistic video | [MoneyPrinterTurbo workflow](ai-generated-video.md) → finished composite | Explicit order/crops, complete narration reuse, check loops/captions/publication side effects |
 | 3D animation/independent assets | [Blender production](engineering-blender.md) (Cycles rendering defaults to [Colab GPU `colab_first`](#colab-cli-and-remote-gpu-integration) with local fallback) or agent-selected [vork execution](#vork-execution); [library search](../scripts/find_3d_assets.py) → sources, renders or assets | Search library first; agent chooses Blender vs `vork` automatically by mechanism/asset/simulation fit unless user specifies; asset-only work invents no episode audio/G3 |
 | Rigging/mocap/lip sync | [Character performance](engineering-blender.md#character-rigging-motion-capture-and-lip-sync) → editable character/action/face curves or explicit generated-video layer | Activate by shot need in Blender, reuse characters/audio; separately check skeleton, skin, retarget, contact and mouth. Candidates are not installed/tested claims |
@@ -102,7 +102,7 @@ Recheck tool/asset changes by [affected dependencies](quality-acceptance.md#hand
 | Rapid 3D prop/silhouette candidates | Local `Hunyuan3D 2.1` or `TRELLIS.2` (`.glb`) → Blender/`vork` inspection & adaptation | Use for supporting props/references (`licensed_3d_model`/AI-generated candidate path), never replacing controlled Blender/`vork` CAD mechanisms, cutaways or rigs |
 | Edit, mix, transcode, aspect | `ffmpeg-skill` → new media/checks | Check local codecs/filters; preserve sources |
 | Mandarin recognition/caption alignment | Prepared local ASR/aligner → SRT/caption version | Align final timeline; verify Mandarin models/caption renderer |
-| Approved 2D animation/support | Existing `huashu-art-motion`, Motion Canvas, `Manim Community` (`manim`) or Remotion → editable layers/picture tracks | Select relationship-appropriate capability, not replacement realistic/3D main production |
+| Approved 2D animation/support | Existing `Manim Community` (`manim`), Remotion or HyperFrames → editable layers/picture tracks | Select relationship-appropriate capability, not replacement realistic/3D main production |
 | Existing HTML/React supporting layers | Existing HyperFrames/Remotion → graphic track | Read entrypoints, verify dependencies/runtime rights; no migration for ordinary edits |
 | First frame, background, cover | Existing legal assets or selected image tool → still asset | Follow host image-tool requirements; stills are not registered as video |
 | Foreign-language captions/dubbing | Approved subtitle/voice tools → aligned captions/new-language audio | Translation is not dubbing; verify voice, uploads and costs under actual authorization |
@@ -116,21 +116,6 @@ For complex tasks with independent work/review, delegate under [subagent coordin
 Supply question, shot/semantic timecodes, before/end states, formal narration/approved voice, applicable style/assets, aspect/fps, allowed text and output directory. Return outputs to the same episode/full narration; cuts do not select a new voice or synthesize another isolated TTS sentence.
 
 Reuse tool checks in existing stages; review content, image and listening under their owning references. Upstream colors, seconds, effects and default voices do not override this design.
-
-## huashu-art-motion execution
-
-Use only in approved 2D scope. Read its `references/09-视频动画语法.md` and needed syntax cards, copy `scripts/engine/` into a new episode project and freeze upstream commit/project changes. Check relationships before parameterized clips: e.g. `y1` center/satellite nodes do not directly represent condensation; use layered assets/scene code for cup wall, vapor and drops.
-
-Prefer verified environments; these upstream parameterized entrypoints require shot-specific paths, content and duration:
-
-```sh
-uv run --isolated --python python3 --with playwright --with pillow --with numpy python <episode-project>/render.py --spec <shot.json> --out <new-picture-track.mp4>
-uv run --isolated --python python3 --with playwright --with pillow --with numpy python <huashu-installation>/scripts/qa.py --spec <shot.json> --out <new-QA-directory>
-```
-
-New environments/Chromium installation follow existing authorization/host permissions. After export use ffprobe for codec, dimensions, fps, frames/duration, then inspect selected frames/continuous samples. Reuse accepted voice/full narration. Use legitimate refined assets for complex people/nature shapes; code controls editable action/composition.
-
-Upstream code/docs are MIT, fonts their respective OFL, stroke-order derivative data Arphic; author characters/frames are demonstrations only. Check production-asset rights separately.
 
 ## vork execution
 
@@ -149,12 +134,11 @@ The agent automatically decides whether to use `vork` (`voyager-so/vork`, `sourc
 
 - **FFmpeg/local Mandarin ASR:** Read current tool docs before `probe.py`, processing and `check.py`. Edit before recognizing/aligning with prepared Mandarin models; default English is not a Mandarin solution. Fully offline use first verifies local weights. Without `subtitles`/`drawtext`, distinguish SRT, soft captions and burned captions; do not claim unproduced caption versions.
 - **HyperFrames/Remotion:** Read only used capability entrypoints/dependencies and reuse projects/audio. Set `HYPERFRAMES_NO_TELEMETRY=1` for local HyperFrames; asset transfer/feedback follows actual authorization. Check Remotion Skill/engine licenses separately. Use Studio `--no-open`; open through permitted browser tools only when needed.
-- **browser-video-recording:** Use only for necessary operation demos; it composites screenshots, not continuous capture. Explicitly set `cursor_asset`, `cursor_hotspot`, run `scripts/render_browser_demo.py --config <config> --output <new-output.mp4>`, and avoid default fullscreen masks/system-cursor capture branches. Add episode narration to silent output.
 - **Model/cloud candidates:** Verify exact entrypoints, prepared models/accounts and authorization first; do not guess commands for unknown sources. Prompt guides are not executable renderers, translators not TTS, cloud transcription not fully local processing.
 
 ## Source identification
 
-Use actual repositories/files/licenses in the [fixed-source index](../indexes/external-skills.json), not duplicated/mismatched post links. `video-dubbing` is not verified as executable; same-name candidates such as `app-demo-agent` require real-source checks.
+Use actual repositories/files/licenses in the [fixed-source index](../indexes/external-skills.json), not duplicated/mismatched post links.
 
 Use [precise control/efficient iteration](production-checkpoints.md#precise-control-and-efficient-iteration) for shot states/trial records.
 

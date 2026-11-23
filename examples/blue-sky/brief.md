@@ -17,7 +17,7 @@ Provisional identity: a nature-documentary feel; warm-white text, dark-gray tran
 <a id="脚本与镜头"></a>
 ## Script and shots
 
-Every video requires Mandarin narration. This example treats the Skill's Qwen natural-conversational technical reference as a starting point pending testing. No narration has been generated or actually heard; this is only a plan awaiting shooting/additional recording. Independently produce a listening sample and check the corresponding authorization to transmit this episode's script externally. Even later approval of a short sample does not approve this episode. Align captions sentence by sentence to narration and actually listen to verify naturalness, term/number pronunciation, pauses and music masking.
+Every video requires Mandarin narration. Follow the series default voice setup in `config/series-profile.json` (`IndexTTS-2.5` local clone + `#5` speech polish, or `edge-tts` cloud fallback). No narration has been generated or actually heard; this is only a historical test fixture awaiting production. Align captions sentence by sentence to narration and actually listen to verify naturalness, term/number pronunciation, pauses and music masking.
 
 Determine duration after actual narration and explanation samples. Preserve necessary mechanisms first, then remove repetition/branches, without a fixed duration or equal-length shots.
 

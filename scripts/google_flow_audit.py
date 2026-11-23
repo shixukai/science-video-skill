@@ -31,6 +31,9 @@ CLICKBAIT_HOOK_RE = re.compile(
     r"明明[^，。！？\n]{1,10}却[^，。！？\n]{1,10}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
     r"凭什么|凭啥)"
 )
+BLUNT_HARSH_TONE_RE = re.compile(
+    r"(?:偏要|别傻了|真以为|千万别再|听好了|看好了|说穿了|先说结论|一秒看懂|一句话告诉你|干爆|直接干掉)"
+)
 STRAWMAN_REVERSAL_RE = re.compile(
     r"(?:不是[^，。！？\n]{1,16}[，,]?而是|并非[^，。！？\n]{1,16}[，,]?而是|"
     r"你以为[^，。！？\n]{1,16}[，,]?其实|看似[^，。！？\n]{1,16}[，,]?实则)"
@@ -786,6 +789,8 @@ def _check_speech_and_holds(
                 ai_reasons.append("prompt_header_colon")
             if CLICKBAIT_HOOK_RE.search(script_source_text):
                 ai_reasons.append("clickbait_contrast_hook")
+            if BLUNT_HARSH_TONE_RE.search(script_source_text):
+                ai_reasons.append("blunt_or_harsh_tone")
             if len(STRAWMAN_REVERSAL_RE.findall(script_source_text)) >= 2:
                 ai_reasons.append("strawman_reversal_density")
             zh_sents = [len(CJK_RE.findall(s)) for s in raw_sents if len(CJK_RE.findall(s)) > 0]

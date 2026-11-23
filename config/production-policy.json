@@ -147,8 +147,8 @@
     "documents_and_assets_alone_not_system_completion": true
   },
   "precedence": {
-    "caption_geometry": "series-profile.json delivery.caption_layout and landscape_captions for new 16:9 work; series-profile.json captions for legacy portrait revisions only",
-    "art_direction": "series-profile.json design and approved project board; supplied base assets are reference only",
+    "caption_geometry": "series-profile.json delivery.caption_layout and landscape_captions for 16:9 masters; feed_package.caption_band for vertical feed derivatives",
+    "art_direction": "series-profile.json design and approved project board; supplied palette starting points are reference only",
     "voice": "series-profile.json audio; no forced regeneration or rate adjustment",
     "real_anchor": "series-profile.json medium; verified_authorized_user_capture_only requires verified original capture evidence for selected real footage; when_real_footage_selected also requires an actually used real source; neither forces footage into approved AI/3D; legacy authentic_continuous_video retains an episode-wide anchor; pure_2d still requires the existing scoped exception"
   },
@@ -265,8 +265,8 @@
     "owner": "references/viral-appeal-and-packaging.md#package-the-landscape-master-for-vertical-feeds",
     "classification": "Delivery derivative of the accepted 16:9 master for vertical-feed destinations. It does not reopen G5 picture/sound approval; header legibility, the first 5 s and any zoom crop need actual phone-size viewing.",
     "canvas": [1080, 1920],
-    "destinations": ["douyin_composer_group", "xiaohongshu"],
-    "master_destinations": ["youtube", "release_queue_master", "archive"],
+    "destinations": ["douyin_composer_group"],
+    "master_destinations": ["xiaohongshu", "youtube", "release_queue_master", "archive"],
     "picture_center_y": 1004,
     "caption_band": {
       "picture_center_y": 844,

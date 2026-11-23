@@ -132,7 +132,3 @@ Use existing G2/G3/G5 checks, not mandatory external audience feedback:
 - **Record:** State time, observed differences, A/D/I mapping, repair and unreviewed scope; distinguish clear, inconspicuous, missing and unreviewed content. Stills support their states only. Without continuous perception, leave action, rhythm and audiovisual work unreviewed rather than claiming improvement/L3.
 
 If only color, texture or background improve while subject results, context and progression are absent, return to state/shot design instead of batching similar shots.
-
-## Using the snow-crystal case
-
-See the [snow-crystal growth example](snow-crystal-scene-example.md): turn state, context, close-up and asset duties into tasks within approved 2D scope; adapt other topics to their own scientific relationships.

@@ -1,1728 +1,96 @@
 {
   "schema_version": 1,
+  "workflow_version": 3,
+  "template": true,
   "episode_id": "",
   "title": "",
   "description": "",
   "tags": [],
-  "sources": [
-    {
-      "id": "S1",
-      "url": "",
-      "accessed_on": "",
-      "note": "",
-      "title": "",
-      "publisher": "",
-      "published_at": null,
-      "supported_claim_ids": [],
-      "scope_note": ""
-    }
-  ],
-  "claims": [
-    {
-      "id": "C1",
-      "text": "",
-      "source_ids": [
-        "S1"
-      ],
-      "kind": "",
-      "source_locator": "",
-      "conditions_and_units": "",
-      "certainty": "",
-      "voice_lines": [],
-      "visual_risk": "",
-      "review": {
-        "status": "pending",
-        "reviewer": "",
-        "evidence": ""
-      },
-      "shot_ids": []
-    }
-  ],
-  "assets": [
-    {
-      "id": "A1",
-      "kind": "",
-      "source": "",
-      "creator": "",
-      "file": "",
-      "rights": {
-        "status": "pending",
-        "evidence": "",
-        "scope": "",
-        "credit": "",
-        "license_name": "",
-        "terms_version": "",
-        "commercial_use": null,
-        "adaptation_allowed": null,
-        "platform_scope": [],
-        "attribution_required": null,
-        "generation_tool_terms": "",
-        "voice_or_likeness_consent": "",
-        "checked_at": ""
-      },
-      "disclosure": "",
-      "sha256": "",
-      "preview": "",
-      "purpose": "",
-      "not_for": "",
-      "view_angle": "",
-      "anchor_points": [],
-      "design_references": {},
-      "rule_ids": [],
-      "change_history": [],
-      "catalog": {
-        "id": "",
-        "name": "",
-        "category": "",
-        "version": "",
-        "stage": "candidate",
-        "source_file": "",
-        "sha256": "",
-        "rendered_file": "",
-        "rendered_sha256": "",
-        "viewBox": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "rules": [],
-        "purpose": "",
-        "not_for": "",
-        "scientific_review": {
-          "status": "pending",
-          "claims": [],
-          "source_ids": [],
-          "conditions": [],
-          "simplifications": []
-        },
-        "rights": {
-          "status": "pending"
-        },
-        "approval": {
-          "status": "pending",
-          "asset_sha256": "",
-          "evidence_ref": "",
-          "scope": "",
-          "reviewer": "",
-          "reviewed_at": ""
-        },
-        "anchor_points": []
-      },
-      "usage": "catalog_reuse",
-      "origin": {
-        "category": "",
-        "method": "",
-        "entry_version": "",
-        "entrypoint": {
-          "file": "",
-          "sha256": ""
-        },
-        "design": {
-          "file": "",
-          "sha256": ""
-        },
-        "inputs": [],
-        "output": {
-          "file": "",
-          "sha256": ""
-        },
-        "frames": [],
-        "review": {
-          "file": "",
-          "sha256": ""
-        }
-      },
-      "source_file": "",
-      "source_sha256": "",
-      "scientific_review": {
-        "status": "pending",
-        "reason": ""
-      },
-      "observation": {
-        "source_interval": [],
-        "viewing_reference": "",
-        "capture_time": null,
-        "capture_place": null,
-        "processing_note": ""
-      },
-      "ai_disclosure_required": null,
-      "ai_disclosure_basis": ""
-    }
-  ],
-  "shots": [
-    {
-      "id": "SH1",
-      "claim_ids": [
-        "C1"
-      ],
-      "asset_ids": [
-        "A1"
-      ],
-      "visual_note": "",
-      "shotbook": {
-        "start": null,
-        "end": null,
-        "subject": "",
-        "action": "",
-        "framing": "",
-        "claim_support": "",
-        "motion_purpose": "",
-        "beats": [
-          {
-            "at": null,
-            "phase": "",
-            "trigger_words": "",
-            "attention_subject": "",
-            "action": ""
-          }
-        ],
-        "candidates": [
-          {
-            "source": "",
-            "viewing_note": "",
-            "decision_reason": "",
-            "selected": false,
-            "asset_id": "A1",
-            "source_interval": ""
-          }
-        ],
-        "alternatives_note": "",
-        "keyframe_review": {
-          "status": "pending",
-          "file": "",
-          "sha256": "",
-          "note": ""
-        },
-        "visual_logic": {
-          "review_scope": "pending",
-          "orientation": {
-            "applicable": true,
-            "status": "pending",
-            "reference": "",
-            "frame_mapping": "",
-            "structures": "",
-            "transforms": "",
-            "evidence": ""
-          },
-          "graphics": [],
-          "no_graphics_reason": "Per-shot inventory pending; not yet accepted"
-        },
-        "initial_state": "",
-        "trigger": "",
-        "key_states": [],
-        "final_state": "",
-        "spatial_anchor": "",
-        "trajectory": "",
-        "speed_and_pause": "",
-        "follow_through": "",
-        "viewer_takeaway": "",
-        "view_angle": "",
-        "transition_reason": "",
-        "return_location": "",
-        "physical_conditions": [],
-        "teaching_simplifications": [],
-        "semantic_events": [],
-        "expected_misconception": "",
-        "acceptance_observation": "",
-        "narration_exact_text": "",
-        "object_ids": [],
-        "attention_target": "",
-        "key_change": "",
-        "on_screen_labels": [],
-        "caption_text": "",
-        "simulation_or_scale_disclosure": "",
-        "sound_design": "",
-        "render_file": "",
-        "render_sha256": "",
-        "status": "pending",
-        "recipe": {
-          "question_type": "",
-          "conditions": "",
-          "skeleton": [],
-          "required_assets": [],
-          "motion_card_reference": "",
-          "semantic_events": [],
-          "science_risks": [],
-          "positive_reference": "",
-          "negative_reference": ""
-        },
-        "motion_id": "",
-        "semantic_event_record_format": {
-          "label": "",
-          "audio_time_ms": null,
-          "visual_time_ms": null,
-          "intentional_offset_reason": ""
-        },
-        "timing_basis": {
-          "mode": "relative_plan",
-          "audio_asset_id": "",
-          "audio_sha256": "",
-          "relative_phases": [],
-          "note": ""
-        },
-        "action_class": [],
-        "action_class_details": {},
-        "connections": {
-          "applicable": null,
-          "not_applicable_reason": "",
-          "links": []
-        },
-        "origin": {
-          "planned_method": "",
-          "design": {
-            "file": "",
-            "sha256": ""
-          },
-          "entrypoint": {
-            "file": "",
-            "sha256": ""
-          },
-          "entry_version": ""
-        },
-        "realism": {
-          "role": "main",
-          "medium": "",
-          "renderer": "",
-          "scientific_basis": "",
-          "visible_motion": "",
-          "motion_kind": "subject_motion",
-          "disclosure": "",
-          "observation_level": "",
-          "time_scale": ""
-        }
-      },
-      "modality": ""
-    }
-  ],
-  "deliverables": {
-    "video": "",
-    "cover_3_4": "",
-    "cover_4_3": "",
-    "captions": "",
-    "editable_project": "",
-    "audio_stems": "",
-    "source_manifest": "",
-    "post_copy": "",
-    "feed_package": "",
-    "textless_master": ""
-  },
-  "production_statement": "",
-  "qa": {
-    "science": {
-      "status": "pending",
-      "note": "",
-      "evidence": "",
-      "reviewer": "",
-      "visual_mechanism": {
-        "status": "pending",
-        "evidence": "",
-        "note": ""
-      }
-    },
-    "rights": {
-      "status": "pending",
-      "note": "",
-      "evidence": "",
-      "reviewer": ""
-    },
-    "visual_frames": {
-      "status": "pending",
-      "note": "",
-      "failures": [],
-      "viewing": {
-        "file": "",
-        "sha256": "",
-        "duration": null,
-        "ranges": [],
-        "method": "pending",
-        "playback_speed": null,
-        "watched": false,
-        "heard": false,
-        "reviewer": "",
-        "capability": "",
-        "reviewed_at": "",
-        "note": "",
-        "scope": "full_episode",
-        "devices": [],
-        "tool_capability_limits": []
-      },
-      "independent_of_generation_context": false,
-      "animation": {
-        "status": "pending",
-        "context_sha256": "",
-        "reference": "",
-        "reference_viewing_note": "",
-        "scope_note": "",
-        "step_ids": [],
-        "steps": [],
-        "viewing": {
-          "file": "",
-          "sha256": "",
-          "duration": null,
-          "ranges": [],
-          "method": "pending",
-          "playback_speed": null,
-          "watched": false,
-          "heard": false,
-          "reviewer": "",
-          "capability": "",
-          "reviewed_at": "",
-          "note": "",
-          "scope": "representative"
-        },
-        "captions": {
-          "file": "",
-          "sha256": "",
-          "version": ""
-        },
-        "review_id": "",
-        "subject_motion": {
-          "status": "pending",
-          "context_sha256": "",
-          "media_sha256": "",
-          "roi_review": "",
-          "excluded_motion_review": {
-            "captions": "",
-            "titles": "",
-            "decoration": "",
-            "camera_transform": "",
-            "static_cuts": ""
-          },
-          "screen": {
-            "file": "",
-            "sha256": ""
-          },
-          "spans": [],
-          "semantic_units": [],
-          "longest_no_progress_seconds": null,
-          "screen_resolutions": [],
-          "object_result_review": {
-            "status": "pending",
-            "media_sha256": "",
-            "units": []
-          }
-        },
-        "shot_intervals": [
-          {
-            "shot_id": "SH1",
-            "start": null,
-            "end": null
-          }
-        ],
-        "next_action": "repair_sample",
-        "style_comparison": {
-          "status": "pending",
-          "baseline_sha256": "",
-          "sample_sha256": "",
-          "actually_compared": false,
-          "observation": ""
-        },
-        "connection_review": {
-          "status": "pending",
-          "actually_inspected": false,
-          "media_sha256": "",
-          "plan_sha256": "",
-          "reviewer": "",
-          "links": []
-        }
-      },
-      "process_steps": [],
-      "review_id": "",
-      "reviewer_kind": "",
-      "tool_capability_limits": [],
-      "approval_scope": "",
-      "failure_record_format": {
-        "id": "",
-        "scope": "",
-        "severity": "",
-        "start": null,
-        "end": null,
-        "note": "",
-        "impact_on_explanation": "",
-        "owner": "",
-        "required_change": "",
-        "status": "open",
-        "resolution": {
-          "scope": "",
-          "sha256": "",
-          "context_sha256": "",
-          "evidence": ""
-        }
-      },
-      "art": {
-        "status": "pending",
-        "note": "",
-        "evidence": ""
-      },
-      "motion": {
-        "status": "pending",
-        "note": "",
-        "evidence": ""
-      },
-      "finesse": {
-        "status": "pending",
-        "target_level": "L3",
-        "reference": "",
-        "reference_note": "",
-        "media_sha256": "",
-        "context_sha256": "",
-        "static": {
-          "level": null,
-          "note": "",
-          "evidence": "",
-          "criteria": [
-            {
-              "id": "A01",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A02",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A03",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A04",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A05",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A06",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A07",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A08",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A09",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "A10",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            }
-          ]
-        },
-        "motion": {
-          "level": null,
-          "note": "",
-          "evidence": "",
-          "criteria": [
-            {
-              "id": "D01",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D02",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D03",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D04",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D05",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D06",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D07",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "D08",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            }
-          ]
-        },
-        "integration": {
-          "level": null,
-          "note": "",
-          "evidence": "",
-          "criteria": [
-            {
-              "id": "I01",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "I02",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "I03",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "I04",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            },
-            {
-              "id": "I05",
-              "status": "pending",
-              "note": "",
-              "evidence": "",
-              "reason": ""
-            }
-          ]
-        }
-      },
-      "subject_motion": {
-        "status": "pending",
-        "context_sha256": "",
-        "media_sha256": "",
-        "roi_review": "",
-        "excluded_motion_review": {
-          "captions": "",
-          "titles": "",
-          "decoration": "",
-          "camera_transform": "",
-          "static_cuts": ""
-        },
-        "screen": {
-          "file": "",
-          "sha256": ""
-        },
-        "spans": [],
-        "semantic_units": [],
-        "longest_no_progress_seconds": null,
-        "screen_resolutions": [],
-        "object_result_review": {
-          "status": "pending",
-          "media_sha256": "",
-          "units": []
-        }
-      },
-      "connection_review": {
-        "status": "pending",
-        "actually_inspected": false,
-        "media_sha256": "",
-        "plan_sha256": "",
-        "reviewer": "",
-        "links": []
-      }
-    },
-    "mobile_preview": {
-      "status": "pending",
-      "note": "",
-      "review_scope": "pending",
-      "surface": "",
-      "platform": "",
-      "account": "",
-      "reviewed_metadata_sha256": "",
-      "phone": {
-        "status": "pending",
-        "surface": "actual_device",
-        "device": "",
-        "app_version": "",
-        "checked_at": "",
-        "video_sha256": "",
-        "actual_overlay_geometry": [],
-        "main_content_visible": false,
-        "captions_visible": false,
-        "audio_checked": false,
-        "screenshot": {
-          "file": "",
-          "sha256": ""
-        },
-        "overlay_coordinate_space": "video_pixels",
-        "canvas": [
-          1920,
-          1080
-        ],
-        "note": ""
-      }
-    },
-    "audio": {
-      "status": "pending",
-      "note": "",
-      "environments": [],
-      "listening": {
-        "headphones": {
-          "file": "",
-          "sha256": "",
-          "duration": null,
-          "ranges": [],
-          "method": "pending",
-          "playback_speed": null,
-          "watched": false,
-          "heard": false,
-          "reviewer": "",
-          "capability": "",
-          "reviewed_at": "",
-          "note": "",
-          "scope": "full_episode"
-        },
-        "phone_speaker": {
-          "file": "",
-          "sha256": "",
-          "duration": null,
-          "ranges": [],
-          "method": "pending",
-          "playback_speed": null,
-          "watched": false,
-          "heard": false,
-          "reviewer": "",
-          "capability": "",
-          "reviewed_at": "",
-          "note": "",
-          "scope": "full_episode"
-        }
-      },
-      "evidence": "",
-      "reviewer": "",
-      "continuity": {
-        "G2": {
-          "status": "pending",
-          "context_sha256": "",
-          "media_sha256": "",
-          "audio_sha256": "",
-          "plan_sha256": "",
-          "method": "pending",
-          "actually_heard": false,
-          "reviewer": "",
-          "capability": "",
-          "evidence": "",
-          "ranges": [],
-          "criteria": {
-            "tone": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "rhythm": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "speech_rate": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "loudness": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "joins": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            }
-          },
-          "transitions": []
-        },
-        "G3": {
-          "status": "pending",
-          "context_sha256": "",
-          "media_sha256": "",
-          "audio_sha256": "",
-          "plan_sha256": "",
-          "method": "pending",
-          "actually_heard": false,
-          "reviewer": "",
-          "capability": "",
-          "evidence": "",
-          "ranges": [],
-          "criteria": {
-            "tone": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "rhythm": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "speech_rate": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "loudness": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "joins": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            }
-          },
-          "transitions": []
-        },
-        "G5": {
-          "status": "pending",
-          "context_sha256": "",
-          "media_sha256": "",
-          "audio_sha256": "",
-          "plan_sha256": "",
-          "method": "pending",
-          "actually_heard": false,
-          "reviewer": "",
-          "capability": "",
-          "evidence": "",
-          "ranges": [],
-          "criteria": {
-            "tone": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "rhythm": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "speech_rate": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "loudness": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            },
-            "joins": {
-              "status": "pending",
-              "observation": "",
-              "evidence": ""
-            }
-          },
-          "transitions": []
-        }
-      }
-    },
-    "covers": {
-      "status": "pending",
-      "note": "",
-      "evidence": "",
-      "reviewer": "",
-      "visual_review": {
-        "file": "",
-        "sha256": ""
-      }
-    },
-    "reviewed_sha256": {
-      "video": "",
-      "cover_3_4": "",
-      "cover_4_3": "",
-      "captions": "",
-      "post_copy": "",
-      "editable_project": "",
-      "audio_stems": "",
-      "source_manifest": ""
-    },
-    "narration": {
-      "status": "pending",
-      "note": "",
-      "review_scope": "pending",
-      "evidence": "",
-      "reviewer": ""
-    },
-    "comprehension": {
-      "status": "pending",
-      "note": "",
-      "audience_feedback_reference": "",
-      "independent_review_reference": "",
-      "evidence": "",
-      "reviewer": "",
-      "optional_audience_feedback": {
-        "status": "not_run",
-        "media_sha256": "",
-        "viewers": [],
-        "actual_viewer_count": 0,
-        "notes": "",
-        "viewer_record_format": {
-          "anonymous_id": "",
-          "real_person": false,
-          "not_in_production": false,
-          "no_relevant_training": false,
-          "first_unprompted_normal_watch": false,
-          "watched_current_version": false,
-          "raw_answers": {
-            "answer": "",
-            "relationships": "",
-            "transfer": "",
-            "boundaries": ""
-          },
-          "core_misconceptions": []
-        },
-        "population_rate_claimed": false
-      }
-    },
-    "shotbook": {
-      "status": "pending",
-      "reviewed_sha256": "",
-      "note": "",
-      "viewing": {
-        "file": "",
-        "sha256": "",
-        "duration": null,
-        "ranges": [],
-        "method": "pending",
-        "playback_speed": null,
-        "watched": false,
-        "heard": false,
-        "reviewer": "",
-        "capability": "",
-        "reviewed_at": "",
-        "note": "",
-        "scope": "full_roughcut"
-      },
-      "subject_motion": {
-        "status": "pending",
-        "context_sha256": "",
-        "media_sha256": "",
-        "roi_review": "",
-        "excluded_motion_review": {
-          "captions": "",
-          "titles": "",
-          "decoration": "",
-          "camera_transform": "",
-          "static_cuts": ""
-        },
-        "screen": {
-          "file": "",
-          "sha256": ""
-        },
-        "spans": [],
-        "semantic_units": [],
-        "longest_no_progress_seconds": null,
-        "screen_resolutions": [],
-        "object_result_review": {
-          "status": "pending",
-          "media_sha256": "",
-          "units": []
-        }
-      }
-    },
-    "topic_alignment": {
-      "status": "pending",
-      "reviewer_role": "editor",
-      "reviewed_sha256": "",
-      "opening_title": {
-        "status": "pending",
-        "note": "",
-        "evidence": ""
-      },
-      "opening_voiceover": {
-        "status": "pending",
-        "note": "",
-        "evidence": "",
-        "review_scope": "pending",
-        "heard_question": "",
-        "heard_answer_route": ""
-      },
-      "coverage": {
-        "status": "pending",
-        "note": "",
-        "evidence": ""
-      },
-      "ending": {
-        "status": "pending",
-        "note": "",
-        "evidence": ""
-      },
-      "note": "",
-      "evidence": "",
-      "opening_alignment": {
-        "status": "pending",
-        "evidence": {
-          "file": "",
-          "sha256": ""
-        }
-      }
-    },
-    "opening_hook": {
-      "status": "pending",
-      "not_applicable_reason": "",
-      "commission_reference": "",
-      "sample": {
-        "status": "pending",
-        "evidence": {
-          "file": "",
-          "sha256": ""
-        }
-      },
-      "final": {
-        "status": "pending",
-        "evidence": {
-          "file": "",
-          "sha256": ""
-        }
-      }
-    },
-    "feed_package": {
-      "status": "pending",
-      "not_applicable_reason": "",
-      "report": {
-        "file": "",
-        "sha256": ""
-      },
-      "sha256": "",
-      "source_master_sha256": "",
-      "textless_master_sha256": "",
-      "observation": ""
-    },
-    "gates": {
-      "G1": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": []
-      },
-      "G2": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": []
-      },
-      "G3": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": []
-      },
-      "G4": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": []
-      },
-      "G5": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": [],
-        "note": ""
-      },
-      "G6": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": []
-      },
-      "G7": {
-        "status": "not_reviewed",
-        "reviewer": "",
-        "reviewed_at": "",
-        "scope": "",
-        "context_sha256": "",
-        "review_refs": [],
-        "evidence": []
-      }
-    },
-    "captions": {
-      "status": "pending",
-      "note": "",
-      "evidence": "",
-      "file": "",
-      "sha256": "",
-      "formal_script_version": "",
-      "semantic_errors": [],
-      "nonverbal_cues": [],
-      "phone_preview_reference": "",
-      "actual_contrast_checks": [],
-      "static_checks": {
-        "status": "pending",
-        "evidence": "",
-        "method": "",
-        "covered_checks": [],
-        "not_run_reason": ""
-      },
-      "reviewer": "",
-      "contrast_record_format": {
-        "time": null,
-        "ratio": null,
-        "unrounded": true,
-        "foreground": "",
-        "actual_background": "",
-        "method": "",
-        "evidence": {
-          "file": "",
-          "sha256": ""
-        },
-        "worst_case_review": "",
-        "calibration_reason": ""
-      },
-      "formal_script_sha256": ""
-    },
-    "flicker": {
-      "status": "pending",
-      "note": "",
-      "evidence": "",
-      "designed_flash_limit_checked": false,
-      "continuous_review_reference": "",
-      "complex_sequence_assessment": "",
-      "limitations": "",
-      "reviewer": "",
-      "complex_sequence": null,
-      "complex_sequence_reason": "",
-      "designed_events": []
-    },
-    "release": {
-      "status": "pending",
-      "bundle_sha256": "",
-      "authorization_reference": "",
-      "authorization_scope": "",
-      "covers_exact_bundle": false,
-      "ai_disclosure_evidence": "",
-      "rights_evidence": "",
-      "voice_version": "",
-      "captions_version": "",
-      "cover_versions": {},
-      "copy_version": "",
-      "platform_sync_observed": "",
-      "platform_preview_audio_reference": "",
-      "font_rights_reference": "",
-      "release_id": "",
-      "authorized_by": "",
-      "existing_permission_reused": null,
-      "quality_review_reference": "",
-      "additional_request_group": "",
-      "ai_disclosure": {
-        "status": "pending",
-        "contains_generated_content": null,
-        "platform_declaration_required": null,
-        "applicable_platform_controls_checked": false,
-        "platform_declaration_used": false,
-        "required_provenance_preserved": false,
-        "current_rule_reference": "",
-        "declaration_evidence": "",
-        "not_applicable_reason": ""
-      },
-      "sync": {
-        "preserve_existing_setting": false,
-        "observed_setting": null,
-        "independently_verify_result": true,
-        "result": "pending"
-      },
-      "note": "",
-      "post_copy_version": "",
-      "authorization_status": "pending"
-    },
-    "publication": {
-      "status": "pending",
-      "state": "not_submitted",
-      "readback_matches_bundle": false,
-      "work_id": "",
-      "url": "",
-      "actual_published_at": "",
-      "timezone": "Asia/Shanghai",
-      "readback_reference": "",
-      "bundle_sha256": "",
-      "platform": "",
-      "account": "",
-      "attempted_at": null,
-      "readback_at": null,
-      "daily_count_eligible": false,
-      "note": ""
-    },
-    "feedback": [],
-    "technical": {
-      "status": "pending",
-      "note": "",
-      "evidence": ""
-    },
-    "feedback_record_format": {
-      "feedback_id": "",
-      "media_sha256": "",
-      "origin": "",
-      "received_at": "",
-      "original_feedback": "",
-      "scope": "",
-      "time_range_s": [],
-      "affected_assets_or_rules": [],
-      "classification": "",
-      "severity": "",
-      "status": "pending",
-      "owner": "",
-      "what_changes": "",
-      "what_must_remain_unchanged": [],
-      "invalidated_reviews": [],
-      "retest_evidence": [],
-      "resolved_at": null,
-      "skill_update": {
-        "rule_id": "",
-        "proposed_change": "",
-        "actual_commit": "",
-        "deployment_status": "not_deployed",
-        "sample_validation": "pending",
-        "disposition": "pending",
-        "status": "pending",
-        "rule_version": "",
-        "change_evidence": {
-          "file": "",
-          "sha256": ""
-        },
-        "regression_evidence": []
-      },
-      "contract_version": 1,
-      "source_ref": "",
-      "media_version": "",
-      "applies_to_gates": [],
-      "dimensions": {},
-      "repair_artifacts": [],
-      "repair_time_range_s": [],
-      "scope_kind": ""
-    },
-    "explanation_logic": {
-      "status": "pending",
-      "review_scope": "plan",
-      "reviewer": "",
-      "reviewed_at": "",
-      "note": "",
-      "evidence": "",
-      "context_sha256": "",
-      "reviewed_step_ids": []
-    },
-    "expression_plan": {
-      "status": "pending",
-      "review_scope": "plan",
-      "reviewer": "",
-      "reviewed_at": "",
-      "note": "",
-      "evidence": "",
-      "context_sha256": "",
-      "reviewed_step_ids": [],
-      "expression_card_ids": []
-    },
-    "explanation_review": {
-      "status": "pending",
-      "review_scope": "final_export",
-      "reviewer": "",
-      "reviewed_at": "",
-      "note": "",
-      "evidence": "",
-      "context_sha256": "",
-      "reviewed_step_ids": [],
-      "scope": "full_episode",
-      "media_sha256": "",
-      "independent_of_generation_context": false,
-      "actual_information_only": false,
-      "viewing": {
-        "file": "",
-        "sha256": "",
-        "duration": null,
-        "ranges": [],
-        "method": "pending",
-        "playback_speed": null,
-        "watched": false,
-        "heard": false,
-        "reviewer": "",
-        "capability": "",
-        "reviewed_at": "",
-        "note": "",
-        "scope": "full_episode",
-        "devices": [],
-        "tool_capability_limits": []
-      },
-      "understanding_goals": {
-        "answer": {
-          "status": "pending",
-          "evidence": ""
-        },
-        "relationships": {
-          "status": "pending",
-          "evidence": ""
-        },
-        "transfer": {
-          "status": "pending",
-          "evidence": ""
-        },
-        "boundaries": {
-          "status": "pending",
-          "evidence": ""
-        }
-      },
-      "steps": [
-        {
-          "step_id": "STEP1",
-          "status": "pending",
-          "start": null,
-          "end": null,
-          "shot_ids": [
-            "SH1"
-          ],
-          "prerequisites_observed": "",
-          "relation_observed": "",
-          "derivation_observed": "",
-          "boundary_observed": "",
-          "visual_evidence": "",
-          "narration_evidence": "",
-          "audio_visual_coherence": "",
-          "unpresented_assumptions": [],
-          "referent_evidence": {
-            "object": ""
-          }
-        }
-      ],
-      "visual_review_capable": false,
-      "audio_review_capable": false,
-      "basis": "presented_work_only",
-      "reviewer_kind": ""
-    },
-    "expression_review": {
-      "status": "pending",
-      "review_scope": "final_export",
-      "reviewer": "",
-      "reviewed_at": "",
-      "note": "",
-      "evidence": "",
-      "context_sha256": "",
-      "reviewed_step_ids": [],
-      "expression_card_ids": [],
-      "scope": "full_episode",
-      "media_sha256": "",
-      "independent_of_generation_context": false,
-      "actual_information_only": false,
-      "viewing": {
-        "file": "",
-        "sha256": "",
-        "duration": null,
-        "ranges": [],
-        "method": "pending",
-        "playback_speed": null,
-        "watched": false,
-        "heard": false,
-        "reviewer": "",
-        "capability": "",
-        "reviewed_at": "",
-        "note": "",
-        "scope": "full_episode",
-        "devices": [],
-        "tool_capability_limits": []
-      },
-      "understanding_goals": {
-        "answer": {
-          "status": "pending",
-          "evidence": ""
-        },
-        "relationships": {
-          "status": "pending",
-          "evidence": ""
-        },
-        "transfer": {
-          "status": "pending",
-          "evidence": ""
-        },
-        "boundaries": {
-          "status": "pending",
-          "evidence": ""
-        }
-      },
-      "steps": [
-        {
-          "step_id": "STEP1",
-          "status": "pending",
-          "start": null,
-          "end": null,
-          "shot_ids": [
-            "SH1"
-          ],
-          "prerequisites_observed": "",
-          "relation_observed": "",
-          "derivation_observed": "",
-          "boundary_observed": "",
-          "visual_evidence": "",
-          "narration_evidence": "",
-          "audio_visual_coherence": "",
-          "unpresented_assumptions": [],
-          "referent_evidence": {
-            "object": ""
-          }
-        }
-      ],
-      "visual_review_capable": false,
-      "audio_review_capable": false,
-      "basis": "presented_work_only",
-      "reviewer_kind": ""
-    },
-    "presentation_text": {
-      "G2": {
-        "status": "pending",
-        "context_sha256": "",
-        "media_sha256": "",
-        "inventory_sha256": "",
-        "actual_media_inspected": false,
-        "channel_reviews": {
-          "frame": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "caption": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "voiceover": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          }
-        },
-        "protected_notices_review": "",
-        "sources": {
-          "voiceover": {
-            "file": "",
-            "sha256": ""
-          },
-          "caption": {
-            "file": "",
-            "sha256": ""
-          }
-        },
-        "cover_files": [],
-        "evidence": "",
-        "companion_notices": [],
-        "overlay_evidence": {
-          "file": "",
-          "sha256": ""
-        }
-      },
-      "G3": {
-        "status": "pending",
-        "context_sha256": "",
-        "media_sha256": "",
-        "inventory_sha256": "",
-        "actual_media_inspected": false,
-        "channel_reviews": {
-          "frame": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "caption": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "voiceover": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          }
-        },
-        "protected_notices_review": "",
-        "sources": {
-          "voiceover": {
-            "file": "",
-            "sha256": ""
-          },
-          "caption": {
-            "file": "",
-            "sha256": ""
-          }
-        },
-        "cover_files": [],
-        "evidence": "",
-        "companion_notices": [],
-        "overlay_evidence": {
-          "file": "",
-          "sha256": ""
-        }
-      },
-      "G5": {
-        "status": "pending",
-        "context_sha256": "",
-        "media_sha256": "",
-        "inventory_sha256": "",
-        "actual_media_inspected": false,
-        "channel_reviews": {
-          "frame": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "caption": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "voiceover": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          },
-          "cover": {
-            "status": "pending",
-            "item_ids": [],
-            "observation": "",
-            "evidence": ""
-          }
-        },
-        "protected_notices_review": "",
-        "sources": {
-          "voiceover": {
-            "file": "",
-            "sha256": ""
-          },
-          "caption": {
-            "file": "",
-            "sha256": ""
-          }
-        },
-        "cover_files": [],
-        "evidence": "",
-        "companion_notices": [],
-        "overlay_evidence": {
-          "file": "",
-          "sha256": ""
-        }
-      }
-    },
-    "feedback_expected_ids": []
-  },
-  "narration": {
-    "language": "zh-CN",
-    "status": "pending",
-    "voice_type": "pending",
-    "asset_id": "",
-    "disclosure": "",
-    "series_sample_reference": "",
-    "audio_sha256": "",
-    "script_file": "",
-    "script_sha256": "",
-    "script_version": "",
-    "config_reference": "",
-    "regenerate_reason": "",
-    "duration_seconds": null,
-    "voice_version": "",
-    "transfer": {
-      "returned_files": "pending",
-      "decode": "pending",
-      "evidence": "",
-      "generation": "pending",
-      "local_generation": "pending"
-    },
-    "notes": "",
-    "included_audio_files": [],
-    "exact_model_revision_reference": "",
-    "source_listen_review": {
-      "status": "pending",
-      "file": "",
-      "sha256": "",
-      "scope": "source_sample_or_voice_track",
-      "ranges": [],
-      "reviewer": "",
-      "reviewed_at": "",
-      "method": "actual_listening",
-      "heard": false,
-      "evidence": ""
-    },
-    "generation_record": {
-      "file": "",
-      "sha256": ""
-    },
-    "reuse_record": {
-      "status": "pending",
-      "reference": "",
-      "audio_sha256": ""
-    },
-    "execution": {
-      "status": "unconfirmed",
-      "mode": "",
-      "location": "",
-      "confirmation_reference": ""
-    },
-    "generation_manifest": {
-      "file": "",
-      "sha256": ""
-    },
-    "delivery_plan": {
-      "mode": "continuous_first",
-      "target": {
-        "tone": "",
-        "rhythm": "",
-        "speech_rate": "",
-        "loudness": ""
-      },
-      "technical_limit": "",
-      "verified_method": "",
-      "capability_evidence": "",
-      "context_handoff": "",
-      "segments": [],
-      "generation_manifest": {
-        "file": "",
-        "sha256": ""
-      }
-    }
-  },
+  "delivery_scope": "release_package",
+  "delivery_scope_note": "",
+  "origin_contract": { "mode": "self_created_visuals" },
+  "scope": { "kind": "episode", "publication_ready": false },
   "topic": {
     "anchor_file": "topic-anchor.json",
     "anchor_sha256": "",
+    "origin_reference": "",
     "current": {
       "version": "1",
       "title": "",
       "question": "",
       "intent": "",
       "required_scope": [
-        {
-          "id": "R1",
-          "answer_requirement": ""
-        }
+        { "id": "R1", "answer_requirement": "" }
       ]
     },
     "current_sha256": "",
-    "change_approval": {
-      "status": "not_changed",
-      "request_reference": "",
-      "from_sha256": "",
-      "to_sha256": ""
-    },
-    "origin_reference": ""
+    "change_approval": { "status": "not_changed" }
   },
-  "scope": {
-    "kind": "episode",
-    "publication_ready": false
+  "brief": {
+    "audience": "Adult general audience without relevant professional training",
+    "one_sentence_answer": "",
+    "must_see_relation": "",
+    "must_make_understandable": "",
+    "out_of_scope": [],
+    "forbidden_misrepresentations": [],
+    "production_class": "N",
+    "roles": {
+      "producer": "",
+      "science_editor": "",
+      "director": "",
+      "art_animation": "",
+      "audio_caption": "",
+      "reviewer": "",
+      "publisher": ""
+    },
+    "audience_start": {
+      "assumed_knowledge": [],
+      "new_knowledge": [""],
+      "deferred_knowledge": []
+    },
+    "understanding_targets": {
+      "answer": "",
+      "relationships": "",
+      "transfer": "",
+      "boundaries": ""
+    },
+    "topic_selection": {
+      "audience_category": "ordinary_adults",
+      "selection_origin": "editorial",
+      "conflict_or_question": "",
+      "adult_relevance": "",
+      "knowledge_increment": "",
+      "source_ids": [],
+      "causal_visualization": "",
+      "feasibility": { "materials_and_rights_plan": "", "method": "", "constraints": "", "blocking_gaps": [] },
+      "interest_basis": "editorial_hypothesis",
+      "audience_evidence": [],
+      "disqualifiers": [],
+      "review": { "status": "pending", "reviewer": "", "reason": "", "context_sha256": "" }
+    }
   },
   "topic_alignment": {
     "topic_sha256": "",
+    "main_scope_ids": ["R1"],
+    "omitted_scope_ids": [],
     "opening": {
       "title": "",
       "voiceover": "",
       "intent": "",
-      "scope_ids": [
-        "R1"
-      ],
-      "shot_ids": [
-        "SH1"
-      ],
+      "scope_ids": ["R1"],
+      "shot_ids": ["SH1"],
       "spoken_question": "",
       "answer_route": "",
       "cover_question": "",
       "question_relation": "pending",
-      "question_comparison": "",
       "visual_handoff": "",
       "curiosity_gap": "",
       "viewer_payoff": "",
-      "viewing_promise": {
-        "line": "",
-        "fulfilled_by_scope_id": "",
-        "time_s": null
-      },
+      "viewing_promise": { "line": "", "fulfilled_by_scope_id": "", "time_s": null },
       "payoff_steps": [
         {
           "scope_id": "R1",
-          "shot_ids": [
-            "SH2"
-          ],
+          "shot_ids": ["SH2"],
           "contribution": "",
           "opens_question": "",
           "closes_question": "",
@@ -1745,204 +113,60 @@
         "source_shot_id": "",
         "return_in_body": "",
         "candidates": [
-          {
-            "pattern": "",
-            "first_frame": "",
-            "first_line": "",
-            "tension": "",
-            "selected": false,
-            "lost_because": ""
-          }
+          { "pattern": "", "first_frame": "", "first_line": "", "tension": "", "selected": false, "lost_because": "" }
         ]
       }
     },
     "coverage": [
       {
         "scope_id": "R1",
-        "shot_ids": [
-          "SH1"
-        ],
+        "shot_ids": ["SH1"],
         "answer_evidence": "",
         "explanation_steps": [
           {
             "id": "STEP1",
-            "handoff": "",
-            "shot_ids": [
-              "SH1"
-            ],
-            "requires_dynamic": true,
-            "still_reason": "",
             "relation_type": "",
-            "prerequisites": [
-              {
-                "knowledge": "",
-                "source": "audience_prior"
-              }
-            ],
-            "key_difficulty": true,
-            "before": "",
-            "change": "",
-            "after": "",
+            "prerequisites": [{ "knowledge": "", "source": "audience_prior" }],
             "key_relation": "",
             "derivation": "",
             "boundary": "",
-            "referent_mappings": {
-              "object": ""
-            }
+            "referent_mappings": { "object": "" },
+            "handoff": "",
+            "shot_ids": ["SH1"],
+            "requires_dynamic": true,
+            "key_difficulty": true
           }
         ]
       }
     ],
-    "ending": {
-      "answer": "",
-      "intent": "",
-      "answer_time_s": null,
-      "scope_ids": [
-        "R1"
-      ],
-      "shot_ids": [
-        "SH1"
-      ]
-    },
-    "omitted_scope_ids": [],
-    "main_scope_ids": [
-      "R1"
-    ],
+    "ending": { "answer": "", "intent": "", "answer_time_s": null, "scope_ids": ["R1"], "shot_ids": ["SH1"] },
     "expression_cards": [
       {
         "id": "EXPR1",
-        "step_ids": [
-          "STEP1"
-        ],
+        "step_ids": ["STEP1"],
         "difficulty": "",
         "prerequisites": [],
         "visual_action": "",
         "inferable_outcome": "",
         "misconception": "",
         "boundary": "",
-        "uncertain": false,
-        "variants": [],
-        "selection": {
-          "variant_id": "",
-          "rationale": "",
-          "criteria": []
-        }
+        "uncertain": false
       }
     ]
   },
-  "workflow_version": 3,
-  "brief": {
-    "audience": "Adult general audience without relevant professional training",
-    "one_sentence_answer": "",
-    "out_of_scope": [],
-    "forbidden_misrepresentations": [],
-    "production_class": "N",
-    "validation_triggers": [
-      "new_complex_mechanism"
-    ],
-    "roles": {
-      "producer": "",
-      "science_editor": "",
-      "director": "",
-      "art_animation": "",
-      "audio_caption": "",
-      "reviewer": "",
-      "publisher": ""
-    },
-    "existing_constraints": [],
-    "open_questions_that_block_work": [],
-    "work_can_continue_without_user": [],
-    "notes": "",
-    "must_see_relation": "",
-    "audience_prerequisites": {
-      "assumed": [],
-      "introduced": [],
-      "out_of_scope": []
-    },
-    "must_make_understandable": "",
-    "audience_start": {
-      "assumed_knowledge": [],
-      "new_knowledge": [
-        ""
-      ],
-      "deferred_knowledge": []
-    },
-    "understanding_targets": {
-      "answer": "",
-      "relationships": "",
-      "transfer": "",
-      "boundaries": ""
-    },
-    "topic_selection": {
-      "audience_category": "ordinary_adults",
-      "conflict_or_question": "",
-      "adult_relevance": "",
-      "knowledge_increment": "",
-      "source_ids": [],
-      "causal_visualization": "",
-      "feasibility": {
-        "materials_and_rights_plan": "",
-        "method": "",
-        "constraints": "",
-        "blocking_gaps": []
-      },
-      "interest_basis": "editorial_hypothesis",
-      "audience_evidence": [],
-      "disqualifiers": [],
-      "review": {
-        "status": "pending",
-        "reviewer": "",
-        "reason": "",
-        "context_sha256": ""
-      },
-      "selection_origin": "editorial",
-      "alternatives": []
-    }
-  },
   "design": {
     "production_route": "",
+    "output": { "width": 1920, "height": 1080 },
     "style_version": "",
-    "tokens_sha256": "",
     "board_reference": "",
     "board_sha256": "",
     "approved_scope": "",
     "font_version": "",
-    "color_spaces": {
-      "source": "",
-      "working": "",
-      "output": ""
-    },
+    "color_spaces": { "source": "", "working": "", "output": "" },
     "keyframe_scales": {},
-    "comparison_variants": [],
-    "actual_deviations": [],
-    "approval": {
-      "status": "pending",
-      "reviewer": "",
-      "sha256_map": {},
-      "scope": {
-        "visual_style": false,
-        "named_motion": false,
-        "voice": false,
-        "full_episode": false,
-        "platform_release": false
-      },
-      "actual_feedback_ref": "",
-      "approved_board_sha256": ""
-    },
-    "new_asset_ids": [],
-    "library_reference": {
-      "id": "",
-      "version": "",
-      "sha256": "",
-      "adoption": "reference_only"
-    },
-    "render_asset_ids": [],
     "approved_film_reference": {
       "kind": "initial_style_reference",
-      "reference": {
-        "file": "",
-        "sha256": ""
-      },
+      "reference": { "file": "", "sha256": "" },
       "selection_reason": "",
       "applicable_style": "",
       "actually_opened": false,
@@ -1952,92 +176,177 @@
     },
     "visual_intent": {
       "target": "scientific_realism",
-      "style_reference": {
-        "file": "",
-        "sha256": ""
-      },
+      "style_reference": { "file": "", "sha256": "" },
       "scientific_constraints": ""
     },
-    "realistic_direction": {
-      "stance": "",
-      "thread": "",
-      "camera_package": {
-        "lens_by_role": "",
-        "focus_depth_logic": "",
-        "camera_height": "",
-        "frame_rate_and_shutter": "",
-        "support_vocabulary": ""
-      },
-      "scene_preambles": [],
-      "ambience_by_location": [],
-      "grade_reference": {
-        "file": "",
-        "sha256": ""
-      },
-      "audit_reports": []
-    },
-    "output": {
-      "width": 1920,
-      "height": 1080
-    }
+    "approval": { "status": "pending", "reviewer": "", "actual_feedback_ref": "", "scope": {} }
   },
-  "template": true,
-  "notes": "",
-  "deliverable_asset_ids": {
-    "cover_3_4": [],
-    "cover_4_3": [],
-    "captions": [],
-    "design": []
+  "sources": [
+    {
+      "id": "S1",
+      "title": "",
+      "publisher": "",
+      "url": "",
+      "accessed_on": "",
+      "supported_claim_ids": [],
+      "note": ""
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "",
+      "source_ids": ["S1"],
+      "conditions_and_units": "",
+      "shot_ids": [],
+      "review": { "status": "pending", "reviewer": "", "evidence": "" }
+    }
+  ],
+  "assets": [
+    {
+      "id": "A1",
+      "kind": "",
+      "source": "",
+      "file": "",
+      "sha256": "",
+      "purpose": "",
+      "rights": { "status": "pending", "basis": "", "scope": "", "evidence": "" },
+      "origin": { "category": "", "method": "" },
+      "scientific_review": { "status": "pending", "reason": "" }
+    }
+  ],
+  "shots": [
+    {
+      "id": "SH1",
+      "modality": "",
+      "claim_ids": ["C1"],
+      "asset_ids": ["A1"],
+      "visual_note": "",
+      "shotbook": {
+        "start": null,
+        "end": null,
+        "subject": "",
+        "action": "",
+        "framing": "",
+        "claim_support": "",
+        "attention_target": "",
+        "viewer_takeaway": "",
+        "narration_exact_text": "",
+        "caption_text": "",
+        "sound_design": "",
+        "timing_basis": { "mode": "relative_plan", "note": "" },
+        "connections": { "applicable": null, "not_applicable_reason": "", "links": [] },
+        "origin": { "planned_method": "" },
+        "realism": { "role": "main", "medium": "", "renderer": "", "scientific_basis": "", "visible_motion": "" },
+        "status": "pending"
+      }
+    }
+  ],
+  "narration": {
+    "language": "zh-CN",
+    "status": "pending",
+    "voice_type": "pending",
+    "script_file": "",
+    "script_sha256": "",
+    "audio_sha256": "",
+    "duration_seconds": null,
+    "execution": { "status": "unconfirmed", "mode": "", "location": "", "confirmation_reference": "" },
+    "delivery_plan": { "mode": "continuous_first" },
+    "source_listen_review": { "status": "pending", "heard": false, "ranges": [] }
   },
   "presentation_text": {
     "channels": {
-      "frame": {
-        "status": "pending",
-        "note": ""
-      },
-      "caption": {
-        "status": "pending",
-        "note": ""
-      },
-      "voiceover": {
-        "status": "pending",
-        "note": ""
-      },
-      "cover": {
-        "status": "pending",
-        "note": ""
-      }
+      "frame": { "status": "pending", "note": "" },
+      "caption": { "status": "pending", "note": "" },
+      "voiceover": { "status": "pending", "note": "" },
+      "cover": { "status": "pending", "note": "" }
     },
     "items": [],
     "required_notices": []
   },
-  "tool_applications": [],
   "execution": {
-    "skill_lock": {
-      "file": "",
-      "sha256": ""
-    },
-    "entrypoint": {
-      "file": "",
-      "sha256": ""
-    },
-    "sample_receipt": {
-      "file": "",
-      "sha256": ""
-    },
-    "full_receipt": {
-      "file": "",
-      "sha256": ""
-    },
-    "roughcut_receipt": {
-      "file": "",
-      "sha256": ""
-    },
-    "contract_version": 2
+    "contract_version": 2,
+    "skill_lock": { "file": "", "sha256": "" },
+    "entrypoint": { "file": "", "sha256": "" },
+    "roughcut_receipt": { "file": "", "sha256": "" },
+    "sample_receipt": { "file": "", "sha256": "" },
+    "full_receipt": { "file": "", "sha256": "" }
   },
-  "delivery_scope": "release_package",
-  "delivery_scope_note": "",
-  "origin_contract": {
-    "mode": "self_created_visuals"
+  "deliverables": {
+    "video": "",
+    "cover_3_4": "",
+    "cover_4_3": "",
+    "captions": "",
+    "editable_project": "",
+    "audio_stems": "",
+    "source_manifest": "",
+    "post_copy": "",
+    "feed_package": "",
+    "textless_master": ""
+  },
+  "production_statement": "",
+  "qa": {
+    "reviewed_sha256": {},
+    "science": { "status": "pending", "reviewer": "", "note": "" },
+    "rights": { "status": "pending", "note": "" },
+    "technical": { "status": "pending", "note": "" },
+    "topic_alignment": { "status": "pending" },
+    "opening_hook": { "status": "pending", "sample": { "status": "pending" }, "final": { "status": "pending" } },
+    "explanation_logic": { "status": "pending", "reviewed_step_ids": [] },
+    "expression_plan": { "status": "pending", "reviewed_step_ids": [], "expression_card_ids": [] },
+    "shotbook": {
+      "status": "pending",
+      "viewing": { "status": "pending", "method": "continuous_playback", "watched": false, "heard": false, "ranges": [] },
+      "subject_motion": {
+        "status": "pending",
+        "object_result_review": { "status": "pending", "media_sha256": "", "units": [] }
+      }
+    },
+    "visual_frames": {
+      "status": "pending",
+      "failures": [],
+      "viewing": { "status": "pending", "method": "continuous_playback", "watched": false, "heard": false, "ranges": [] },
+      "animation": {
+        "status": "pending",
+        "next_action": "repair_sample",
+        "subject_motion": {
+          "status": "pending",
+          "object_result_review": { "status": "pending", "media_sha256": "", "units": [] }
+        }
+      },
+      "finesse": { "status": "pending", "target_level": "L3", "criteria": [] },
+      "subject_motion": {
+        "status": "pending",
+        "object_result_review": { "status": "pending", "media_sha256": "", "units": [] }
+      }
+    },
+    "audio": {
+      "status": "pending",
+      "listening": { "headphones": { "status": "pending" }, "phone_speaker": { "status": "pending" } },
+      "continuity": {}
+    },
+    "narration": { "status": "pending" },
+    "captions": { "status": "pending" },
+    "flicker": { "status": "pending" },
+    "presentation_text": {},
+    "explanation_review": { "status": "pending", "actual_information_only": true, "independent_of_generation_context": true },
+    "expression_review": { "status": "pending", "actual_information_only": true, "independent_of_generation_context": true },
+    "comprehension": { "status": "pending", "optional_audience_feedback": { "status": "not_run" } },
+    "covers": { "status": "pending", "visual_review": { "file": "", "sha256": "" } },
+    "feed_package": { "status": "pending", "report": { "file": "", "sha256": "" } },
+    "mobile_preview": { "status": "pending" },
+    "release": { "status": "pending", "authorization_status": "pending", "ai_disclosure": { "status": "pending" } },
+    "publication": { "status": "pending" },
+    "feedback": [],
+    "feedback_expected_ids": [],
+    "gates": {
+      "G1": { "status": "not_reviewed", "evidence": [] },
+      "G2": { "status": "not_reviewed", "evidence": [] },
+      "G3": { "status": "not_reviewed", "evidence": [] },
+      "G4": { "status": "not_reviewed", "evidence": [] },
+      "G5": { "status": "not_reviewed", "evidence": [] },
+      "G6": { "status": "not_reviewed", "evidence": [] },
+      "G7": { "status": "not_reviewed", "evidence": [] }
+    }
   }
 }

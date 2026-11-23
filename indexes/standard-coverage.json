@@ -7,15 +7,13 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "958fccb26448c6ba744ec8fb6b82ad6eb3b4ec2eafd81b230ef11ad74428d750",
+      "sha256": "0105a04dc7c40acb2d34f4d6ae0cf8a948ee124c85265f8d905206e917098678",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
         "complete-chains-and-duration-for-engineering-and-manufacturing-topics",
         "separate-episodes-chapters-and-local-samples",
         "topic-selection-for-adult-audiences",
-        "compare-what-viewers-would-choose-before-deciding-what-to-produce",
-        "compare-stronger-and-weaker-topics-in-pairs",
         "opening-and-audience-scope",
         "recheck-the-original-question-in-four-places-without-keyword-box-ticking",
         "continuously-check-the-covers-question-against-the-actual-opening",
@@ -25,7 +23,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "5c00b73259b206ad2c956ca28a5a280311850a5680db52d3910a5db123598f70",
+      "sha256": "82f491778a3300281458984186faded7895e02be45667a0e9148c7a07fde39e2",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -53,7 +51,7 @@
     {
       "owner_id": "science-rights",
       "file": "references/science-and-rights.md",
-      "sha256": "3565b73d9276e6eb133fe346ff324b2357e6a78723747357e5d9f227fb72d10f",
+      "sha256": "e9203fbad691719f95be706610c20c75c41cd68558170fc25075311df8db45be",
       "anchors": [
         "facts-asset-rights-and-production-statements",
         "original-visual-provenance-contract",
@@ -72,7 +70,7 @@
     {
       "owner_id": "ai-generated-video",
       "file": "references/ai-generated-video.md",
-      "sha256": "b8cbf1c9fd5526b416e592c9c53f8c4a07fbef4744c5e1b10dab51c850293dae",
+      "sha256": "831b7e6eed8b35c4a732a623fe344b1bde57f03d5a3c0648ccef9c2359ebc735",
       "anchors": [
         "realistic-style-moneyprinterturbo-production-and-local-model-assets",
         "lock-modality-at-startup",
@@ -90,7 +88,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "4a6a4b4eb3f84f179e61022030c1a13a10e213e050cfa02e4027f1d161a818d3",
+      "sha256": "c4c57fa730a48febf9135d30b75d5fd233e1fa781cc79667f8025ed643256dd9",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -105,7 +103,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a28a2d7588edcc7833917aaaa4d3f0880efe2c51e0164f3096c57d61ca3765bf",
+      "sha256": "a44555fb4e3bc02ec89d2571ef47545eb62b1503533245c7328a28d483a3dc00",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -150,7 +148,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "a789733d1d162e529a04298f7304fae3625e2168ba2f1651055cdc8d45118a4e",
+      "sha256": "6596835f623f1a436c45f476ad09ed2b321fba76f9583dd4a6dfdfb59700c5d6",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -173,7 +171,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "9af49ca853c989ed7c7e695765488b0f0168d240488fc9764eec6fd0d1038239",
+      "sha256": "4a7b76b2b2dd891a0b61ea296aff9090bca37112110aaeb49ac3333ba33869f5",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -217,7 +215,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "32b041c3e34454c19220636d6986f4e7a77aeca030371a3c12b8c323d733e08b",
+      "sha256": "3564f6f0d7bff33ab04d648431c7bd223543025bd6e05664f1c9fde33df70c53",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
@@ -230,29 +228,13 @@
         "process-actions-must-leave-observable-results",
         "write-actions-so-they-can-be-produced",
         "writing-tasks-for-production-agents",
-        "production-side-inspection",
-        "using-the-snow-crystal-case"
-      ]
-    },
-    {
-      "owner_id": "visual",
-      "file": "references/snow-crystal-scene-example.md",
-      "sha256": "55ee4355e9d6706c6464e43a29f4bc8164ec6349164cb63b6297c79bbeef724f",
-      "anchors": [
-        "snow-crystal-growth-scene-and-action-design-example",
-        "question-and-scientific-scope",
-        "choose-the-observation-context-first",
-        "producible-shot-organization",
-        "paper-planning-for-sustained-viewing",
-        "example-tip-close-up-design-card",
-        "organize-assets-and-code",
-        "comparative-acceptance-from-empty-display-to-substance"
+        "production-side-inspection"
       ]
     },
     {
       "owner_id": "visual",
       "file": "references/annotation-style.md",
-      "sha256": "76ae1abb70a21ab19b410595832c1e8ba270fa35ad082fe54b4bfdf4e4b3e204",
+      "sha256": "271e9f3fe877a794767bd7a1f2ef3efb191f58e550f1709331a4abcdd31518f5",
       "anchors": [
         "video-guidance-graphics-precision-technical-annotations",
         "scope-and-approval",
@@ -318,7 +300,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "cad9250ffff68a9d13fcf3ad920f1693017f81fa629d5137ffd81b64511d8d14",
+      "sha256": "cd2a00fc4d3fa7c351a5a46f6f24a05a71a3b6595d49e9207034478a80c34e37",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -327,10 +309,9 @@
         "reuse-the-accepted-voice-before-making-new-auditions",
         "continuous-narration-and-synthesis-units",
         "one-narration-master-and-one-shared-processing-chain",
-        "5-speech-polish-+-two-pass-loudness-master-default-for-indextts-25-mandarin-clone",
-        "whole-track-linear-gain-only-default-for-edge-tts-english-or-cloud-fallback",
-        "read-only-preflight-on-any-source-retake-or-assembled-wav-before-masteringediting",
-        "optional-local-adapter",
+        "5-speech-polish-+-two-pass-loudness-indextts-25-mandarin-clone",
+        "linear-gain-only-edge-tts-english--cloud-fallback",
+        "read-only-continuity-preflight",
         "run-records-and-audio-binding",
         "ordered-multisource-manifest-for-necessary-segmentation",
         "listen-separately-to-source-audio-and-the-final-mix",
@@ -341,7 +322,7 @@
     {
       "owner_id": "shotbook",
       "file": "references/shotbook.md",
-      "sha256": "06dc432787dae2c797925a69b62e7b030cfdf51be4ef8e3d9e7f405b4806226c",
+      "sha256": "7dd0945e421f268ce7dc113da8e36a017601ec0e4bdb8635e844cdaf8f58e523",
       "anchors": [
         "from-finished-audio-to-verifiable-per-shot-records",
         "audio-first-without-sacrificing-the-picture",
@@ -360,7 +341,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "e4ed2658c11a70b38e9911cf7ece341cb6aa68fbb864cf1fa0771b48ad14e629",
+      "sha256": "a4a568109978fe06aee64892bef5d670c30ca17748f2b80207abd0f3cfc575ca",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -402,7 +383,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-direction.md",
-      "sha256": "e3692dcabf29024f2b6acfe1cb971287bc81efec4506c1e57fbeaf6f793c1bbc",
+      "sha256": "88d5dbb4f0b97c140b63bdc10081282e7d3103c05c8aeb00205dc76c808723a8",
       "anchors": [
         "realistic-direction-honest-clear-told-heard-paced-and-finished",
         "use-this-page-by-stage",
@@ -495,7 +476,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "bb235165723c6d06139e8f78677211d958d8252fb1ab90700f21f7ec6fe57854",
+      "sha256": "cb6471a712b52f221e7e440aac87aa2f465c2a9970c58c324d9a0dd718f1c576",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -507,7 +488,6 @@
         "preparation-and-installation-before-calls",
         "scenario-selection",
         "assignments-to-supporting-tools",
-        "huashu-art-motion-execution",
         "vork-execution",
         "other-execution-notes",
         "source-identification",
@@ -522,13 +502,10 @@
     {
       "owner_id": "tools",
       "file": "references/video-skills-curation.md",
-      "sha256": "c88f5b3658d28e6049c3c1f069f3c6d99bdda7dd051b9a72ff651c8dc3496fa1",
+      "sha256": "2c8bb9d0a90534d379575345238b0b07083088d6f0eb8566ac75c9226a0db691",
       "anchors": [
         "external-video-skills-adopted-methods-and-licenses",
-        "small-included-reference-set-and-production-routes",
-        "preferred-reference-sources",
-        "scenario-adopt-only-methods-with-added-value",
-        "candidates-retained-or-excluded-in-extended-research",
+        "active-external-tools-and-references",
         "engine-service-text-transfer-and-costs"
       ]
     },
@@ -547,7 +524,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "9a28789782dc5fefe485b21b5c7bab91de5aef423114b60c9b1fcd4cd0d5ccb6",
+      "sha256": "8ef6178da2d2e8c12dea212d178e7d79235bfc63a7df3ba3f767e7cc0a7d31cc",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

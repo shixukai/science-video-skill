@@ -16,12 +16,12 @@
     "conclusion": "not_measured"
   },
   "publication_ledger": {
-    "daily_target": 10,
+    "daily_target": null,
     "actual_unique": null,
     "gap": null,
     "approved_unpublished_inventory": null,
     "additional_request_groups": [],
-    "inventory_start_goal": 10
+    "inventory_start_goal": null
   },
   "platform_snapshots": [],
   "feedback": [],
@@ -194,7 +194,7 @@
   "template": true,
   "asset_reuse": [],
   "production_ledger": {
-    "daily_target": 10,
+    "daily_target": null,
     "actual_unique_completed": null,
     "gap": null
   },

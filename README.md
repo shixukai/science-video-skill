@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.47. The Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.48. The Git commit identifies the exact revision.
 
 - **Default editorial focus → everyday mechanisms × concrete visual demonstration.** Unassigned topic discovery anchors on recognizable everyday objects, devices and visible structural/physical mechanisms (~80%) plus observable concrete physical/scale paradoxes (~20%), using contradiction-first questions, tight single-mechanism scoping and staggered release spacing (`editorial_positioning` and `operations.publication_spacing` in `config/series-profile.json`) while always preserving explicit user-commissioned topics.
 - **Standing Douyin collections & publish-time assignment.** Every authorized public science release in the Douyin composer is assigned to its single matching standing collection (`operations.douyin_collections` in `config/series-profile.json`: `透视日常造物`, `解码巅峰工程`, `丈量天地寰宇`, `探秘生命法则`) by primary mechanism, excluding private/personal clips and supporting `1:1` (`1080×1080`) collection covers in `scripts/compose_cover.py`. See [Douyin collection assignment](references/production-checkpoints.md#assign-every-public-video-to-its-matching-douyin-collection).
@@ -15,7 +15,7 @@ A science-video production Skill for nature, daily life, engineering and industr
 - **One global production installation.** Projects retain data and rule-hash locks, without Skill copies. The installed Skill is also the Git working tree; maintenance happens directly in that directory. On continuation, read global changes, migrate explicitly and retain old execution records.
 - **Open with context and a reason to watch.** Work backward from the first body observation; design the opening's final sentence/frame together with the body's first sentence/frame and continuously review through that observation. Topic and route may flow naturally in one sentence; do not split them merely for time fields.
 - **Carry viewers to the end, then stop cleanly.** Follow the hook with a concrete viewing promise by about 8 s, keep the main question open through the `payoff_steps` open-loop ledger until a late final answer, and end cleanly right after explaining the mechanism without tacking on a trailing question or outro filler. `retention_timeline.py` locates payoff gaps, empty-question intervals and long tails on actual cuts without adding a gate. See [keep a reason to stay](references/viral-appeal-and-packaging.md#keep-a-reason-to-stay).
-- **Vertical feed package.** Keep the 1920×1080 master; `feed_package.py` derives a 1080×1920 upload for the Douyin composer group and Xiaohongshu on a dark, glare-checked band, with a persistent topic/question header above the picture and larger re-wrapped captions below it. See [vertical feeds](references/viral-appeal-and-packaging.md#package-the-landscape-master-for-vertical-feeds).
+- **Vertical feed package.** Keep the 1920×1080 master (used directly for Xiaohongshu and YouTube); `feed_package.py` derives a 1080×1920 upload for the Douyin composer group on a dark, glare-checked band, with a persistent topic/question header above the picture and larger re-wrapped captions below it. See [vertical feeds](references/viral-appeal-and-packaging.md#package-the-landscape-master-for-vertical-feeds).
 - **No mandatory video duration; tell the story clearly.** Organize the requested explanation and causal chain cleanly by topic scope. Clarity, complete reasoning and observation determine duration — never pad or cut necessary steps to hit a fixed length.
 - **Sample before expanding.** Verify subject, action, voice and joins at actual playback rhythm. Low-frame-rate layout proxies remain internal; the complete film still needs full viewing/listening.
 - **Precision annotation and strictly uniform covers.** Distinguish location, direction and range. Arrow heads/shafts are continuous, tips sharp, with no shaft overshoot. Compose each commissioned cover ratio independently with a [realistic background](references/visual-system.md#realistic-backgrounds-for-every-cover) and typeset strictly through `scripts/compose_cover.py` using the locked `Noto Sans SC` font (`850`/`740`), exact per-ratio pixel sizes (zero auto-shrink) and closed background-matched color presets (`cover_typography` in `config/production-policy.json`, validated by `scripts/cover_guard.py`), then inspect the phone thumbnails.
@@ -32,12 +32,15 @@ Start at [SKILL.md](SKILL.md) and read responsibility bodies for the actual comm
 
 | Need | Body |
 | --- | --- |
-| Research and select a topic before scripting | [Standalone topic-selection Skill](skills/science-video-topic-selection/SKILL.md) |
+| Research and select a topic before scripting | [Standalone Topic Selection Skill](skills/science-video-topic-selection/SKILL.md) (`science-video-topic-selection`) |
+| Produce, voice, edit, cover, and verify the video | [Production Skill](SKILL.md) (`science-video-production`) |
+| Vertical feed packaging, platform release, archive & data retrospective | [Standalone Publishing Skill](skills/science-video-publishing/SKILL.md) (`science-video-publishing`) |
+| Sync top-level companion skills & custom agents | `scripts/sync_companion_skills.py`, `scripts/sync_video_agents.py` |
 | Original topic, complete chain and opening | [Topic contract](references/topic-contract.md), [opening/transitions](references/viewer-retention-design.md) |
-| Actual tools and execution stages | [Tool routing](references/tool-routing.md), [production checkpoints](references/production-checkpoints.md) |
-| Realistic craft & Google Flow | [Realistic direction](references/realistic-direction.md), [Google Flow production](references/google-flow-production.md) |
+| Actual tools and execution stages (Controlled 3D / Local Realistic only) | [Tool routing](references/tool-routing.md), [production checkpoints](references/production-checkpoints.md) |
+| Realistic craft & Google Flow (route-isolated) | [Realistic direction](references/realistic-direction.md), [Google Flow production](references/google-flow-production.md) |
 | Picture, annotations and covers | [Visual system](references/visual-system.md), [precision annotation](references/annotation-style.md) |
-| Sound | [Voice and actual listening](references/voice-reference.md) |
+| Sound & warm conversational narration | [Voice and actual listening](references/voice-reference.md) |
 | Failures and acceptance | [Quality acceptance](references/quality-acceptance.md) |
 | 3D asset reuse | [Blender and asset library](references/engineering-blender.md) |
 | Subagent ownership, installation and invocation | [Six roles and parent direction](references/subagent-orchestration.md), [installable TOML definitions](agents) |
@@ -63,4 +66,4 @@ python -X utf8 -m unittest discover -s scripts/tests
 
 Edit and validate in the installed `science-video-production` directory. Fetch and reconcile `origin/main` there before changing files, then commit and push when authorized. Do not create temporary editing directories, candidate trees, separate maintenance clones or worktrees. See [in-place maintenance](references/global-skill-installation.md#maintain-the-installed-git-working-tree) and [repository instructions](AGENTS.md).
 
-The section index maintains body links, hashes and anchors only. READMEs for `scripts/bounded_blender` and `scripts/bounded_i2v` define their bounded execution/recovery scope. `third-party` retains original licenses and pinned provenance. Historical paper examples and `references/learning-candidates` are unverified research records, not current production permission or passing evidence. Git history retains prior revisions.
+The section index maintains body links, hashes and anchors only. Historical structural test fixtures in `examples/blue-sky/` remain strictly for offline schema testing, not current production permission or passing evidence. Git history retains prior revisions.

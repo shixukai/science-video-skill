@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.47",
+  "version": "1.6.48",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -30,14 +30,9 @@
     "scope_discipline": "Scope each unassigned feed episode tightly to one core visible contradiction and primary mechanism; let clear explanation determine duration without any mandatory floor or ceiling."
   },
   "design": {
-    "tokens": "../assets/style/bright-nature.tokens.json",
     "direction": "Route by finished style and commission: local realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), controlled 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit, and commissioned cloud production uses Google Flow with paired Chinese and English editions. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
     "design_board": "project_specific_board_based_on_selected_style",
-    "design_board_scope": "record the actual current board version/hash and reviewed scope; the bundled reference selects appearance only",
-    "art_direction": "../assets/style/bright-nature.art-direction.json",
-    "style_reference": "../assets/style/accepted-style-reference.png",
-    "style_reference_sha256": "d7a43878e348893804216aceca29004945d05b81e4c68abf934a8f0aa52c8a77",
-    "style_reference_scope": "legacy_2d_only; not approval for realistic main footage",
+    "design_board_scope": "record the actual current board version/hash and reviewed scope; palettes and art guides set direction only",
     "lighting_material_standard": {
       "owner": "references/art-direction.md",
       "target": "well_lit_clear_subject_premium_material_finish",
@@ -134,8 +129,8 @@
     "rate": "+4%",
     "pitch": "+0Hz",
     "volume": "+0%",
-    "instruct": "用平静、温和而克制的中文口语，像向身边人解释一件事情一样连续讲述。中文默认通过本地 IndexTTS-2.5 个人音色克隆（scripts/synthesize_indextts2.py，使用 <=15 s 私人参考音、duration_factor=1.0、interval_silence=220、paragraph_silence_s=0.55、关闭自动文本情绪 use_emo_text=false）与 #5 人声润色预设（prepare_voice_master.py --polish，mandarin-clone-polish-v1，无混响回声）完成整稿母带，不逐字念、不争辩、不鼓动，严禁使用“凭什么”“凭啥”等挑衅式反问句式，严禁短视频营销号反差腔、生造四字缩略词、对称口号式排比或押韵收尾；英文版或云端兜底仍使用 edge-tts（en-US-AndrewMultilingualNeural +4% / zh-CN-YunxiNeural +4%）。",
-    "runtime_parameters": "Default Mandarin across all routes: local IndexTTS-2.5 voice clone (IndexTeam/IndexTTS-2.5, duration_factor=1.0, interval_silence=220, paragraph_silence_s=0.55, use_emo_text=false) via scripts/synthesize_indextts2.py + #5 whole-track speech polish (mandarin-clone-polish-v1) via scripts/prepare_voice_master.py --polish; Microsoft Edge edge-tts handles paired English (en-US-AndrewMultilingualNeural +4%) and cloud Mandarin fallback (zh-CN-YunxiNeural +4%) via scripts/synthesize_edge_tts.py; optional legacy local Qwen applies only when explicitly selected.",
+    "instruct": "用自然、温和、平视交流的中文口语，像站在朋友身边聊一件日常里很有意思的现象那样从容讲述。句式舒展连贯，保留自然的呼吸停顿与轻重缓急，用准确克制的日常动词讲清物理过程；不逐字念稿、不端播音腔或说明书腔、不压缩成生硬电报短句，也不争辩、不质问、不命令说教、不用粗暴夸张措辞，严禁“凭什么”“凭啥”“偏要”“别傻了”等挑衅或硬邦邦的反问与营销号反差腔、生造缩略词、对称排比或口号式收尾。",
+    "runtime_parameters": "Default Mandarin across all routes: local IndexTTS-2.5 voice clone (IndexTeam/IndexTTS-2.5, duration_factor=1.0, interval_silence=220, paragraph_silence_s=0.55, use_emo_text=false) via scripts/synthesize_indextts2.py + #5 whole-track speech polish (mandarin-clone-polish-v1) via scripts/prepare_voice_master.py --polish; Microsoft Edge edge-tts handles paired English (en-US-AndrewMultilingualNeural +4%) and cloud Mandarin fallback (zh-CN-YunxiNeural +4%) via scripts/synthesize_edge_tts.py.",
     "reuse_matching_audio": true,
     "backend": "local_indextts2",
     "provider": "IndexTTS",
@@ -187,19 +182,6 @@
       "service_endpoint": "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1",
       "scope": "default_english_edition_and_cloud_chinese_fallback_when_local_clone_unavailable_or_overridden"
     },
-    "local_adapter_example": {
-      "scope": "optional_local_adapter_only",
-      "provider": "Qwen",
-      "model_id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-      "speaker": "Serena",
-      "model_revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
-      "runtime": {
-        "device": "cpu",
-        "dtype": "float32",
-        "attn_implementation": "eager"
-      },
-      "generation_params": {}
-    },
     "voice_preset_id": "mandarin-indextts25-clone-polished-v1",
     "speech_polish_preset": {
       "id": "mandarin-clone-polish-v1",
@@ -216,21 +198,6 @@
       "filter_chain": "highpass=f=75,equalizer=f=160:t=q:w=1.2:g=1.5,equalizer=f=3200:t=q:w=1.5:g=-1.5,equalizer=f=9000:t=q:w=1.0:g=1,acompressor=threshold=-20dB:ratio=2:attack=15:release=120",
       "final_mix_policy": "config/production-policy.json defaults.mix; whole final encode after music/effects",
       "acceptance": "Measured technical result only; timbre/register/joins and final mix require actual listening; no new voice audition for unchanged preferences"
-    },
-    "model_revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
-    "seed": 42,
-    "generation_params": {
-      "do_sample": true,
-      "max_new_tokens": 4096,
-      "non_streaming_mode": true,
-      "repetition_penalty": 1.05,
-      "subtalker_dosample": true,
-      "subtalker_temperature": 0.9,
-      "subtalker_top_k": 50,
-      "subtalker_top_p": 1.0,
-      "temperature": 0.9,
-      "top_k": 50,
-      "top_p": 1.0
     },
     "mix_preset": {
       "id": "mandarin-continuous-master-v1",
@@ -254,32 +221,6 @@
       "acceptance": "Measured technical result only; timbre/register/joins and final mix require actual listening; no new voice audition for unchanged preferences"
     }
   },
-  "captions": {
-    "canvas": [
-      1080,
-      1920
-    ],
-    "revision": "raise-cumulative-200-v1",
-    "baselines": {
-      "narration": {
-        "original": 1815,
-        "previous": 1715,
-        "target": 1615
-      },
-      "real_footage": {
-        "original": 1890,
-        "previous": 1790,
-        "target": 1690
-      }
-    },
-    "increment_y": -100,
-    "total_y": -200,
-    "apply_once": true,
-    "scale_policy": "Same aspect ratio: multiply vertical values by output_height/1920, record rounding; different layout requires review.",
-    "exclude": "Published or already-approved-for-publication versions are not changed by this setting.",
-    "move_scope": "Captions and tight background only; document any necessary local label reflow.",
-    "scope": "legacy_portrait_revision_only; not the default for new landscape work"
-  },
   "delivery": {
     "canvas": [
       1920,
@@ -297,13 +238,11 @@
     "no_friend_mentions": true,
     "aspect_ratio": "16:9",
     "caption_layout": "landscape_captions",
-    "default_scope": "New productions default to 1920x1080 landscape; preserve approved/published portrait identities and media."
+    "default_scope": "New productions default to 1920x1080 landscape; vertical feeds derive a 1080x1920 feed package."
   },
   "permissions": "Follow the current task, version approvals, pauses and cancellations; config adoption grants none.",
   "operations": {
     "timezone": "Asia/Shanghai",
-    "daily_actual_unique_target": 10,
-    "additional_requests_separate": true,
     "no_schedule_change_from_adoption": true,
     "publication_spacing": {
       "recommended_min_gap_hours": 6,
@@ -403,26 +342,7 @@
       "scope": "Default to disabled download/save on every destination exposing a control for each authorized future publication, without asking again for the same setting; honor current explicit overrides and enforced approvals, verify actual states, distinguish unavailable/unverified, and never auto-edit published works.",
       "include_all_connected_supported_destinations": true
     },
-    "daily_completed_unique_target": 10,
-    "daily_counting": {
-      "counters_independent": true,
-      "completion_basis": "unique_full_episode_completed_and_G5_passed_today",
-      "publication_basis": "unique_first_publication_with_verified_G7_readback_today",
-      "publication_evidence_source": "user_provided_on_request",
-      "excluded_credits": [
-        "failed",
-        "sample",
-        "draft",
-        "rendering",
-        "old_video",
-        "duplicate",
-        "previous_day_completion",
-        "previously_published_reupload"
-      ],
-      "new_work_eligibility": "current_new_work_scope_with_source_and_version_evidence",
-      "unpublished_inventory": "not_automatically_eligible; determine new-work scope from source/version evidence"
-    },
-    "scope": "Historical series planning defaults; apply targets only when the current task requests this production cadence. No task or automation is created by loading this Skill.",
+    "scope": "Standing series operational defaults for authorized releases. No task or automation is created by loading this Skill.",
     "video_monetization": {
       "enabled": true,
       "select_all_relevant_eligible_available_options": true,

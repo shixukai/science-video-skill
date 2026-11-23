@@ -11,7 +11,7 @@ The table distinguishes actual asset provenance, not freedom to substitute prima
 | modality | Meaning | When to choose |
 | --- | --- | --- |
 | `real_footage` | Continuous original footage with verified user authorship/use authorization | Real phenomenon anchors, observation evidence or explicit capture requests |
-| `pure_2d` | Pure-2D mechanisms/diagrams (e.g. controlled huashu animation) | Supporting layers or specifically approved nonrealistic scope |
+| `pure_2d` | Pure-2D mechanisms/diagrams (e.g. Manim, Remotion or custom vector animation) | Supporting layers or specifically approved nonrealistic scope |
 | `controlled_3d` | Controlled Blender 3D animation/rendering | 3D-animation style or explicit 3D mixed-project sections; realistic materials do not change route or permit capture claims |
 | `ai_generated` | Continuous local video-model output, not still pans posing as video | Needed AI assets for the realistic route; actual MoneyPrinterTurbo production remains required and cannot replace Blender 3D animation |
 

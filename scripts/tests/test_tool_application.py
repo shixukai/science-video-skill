@@ -3,7 +3,6 @@ import copy,hashlib,json,sys,tempfile,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from stage_checks import Checks,context_sha256
-from check_reference_system import caption_baselines
 
 class ToolApplicationTests(unittest.TestCase):
  def setUp(self):
@@ -66,9 +65,8 @@ class ToolApplicationTests(unittest.TestCase):
   self.d['tool_applications']=[self.row,dict(self.row,shot_ids=['B'],artifact_evidence=dict(self.e,sha256='0'*64))]
   c=Checks(self.d,self.root);c.tool_applications(True,{'A'});self.assertEqual(c.errors,[])
   c.tool_applications(True);self.assertTrue(c.errors)
- def test_landscape_default_preserves_portrait_recovery(self):
-  p=json.loads((Path(__file__).resolve().parents[2]/'config/series-profile.json').read_text())
+ def test_landscape_default_has_no_legacy_portrait_baselines(self):
+  p=json.loads((Path(__file__).resolve().parents[2]/'config/series-profile.json').read_text(encoding='utf-8'))
   self.assertEqual(p['delivery']['canvas'],[1920,1080]);self.assertEqual(p['landscape_captions']['canvas'],[1920,1080]);self.assertIsNone(p['landscape_captions']['baselines'])
-  self.assertEqual(caption_baselines(p,1080,1920),{'narration':1615,'real_footage':1690})
-  with self.assertRaises(ValueError):caption_baselines(p,1920,1080)
+  self.assertNotIn('captions',p)
 if __name__=='__main__':unittest.main()

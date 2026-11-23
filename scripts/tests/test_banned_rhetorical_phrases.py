@@ -21,7 +21,22 @@ class TestBannedRhetoricalPhrases(unittest.TestCase):
 
     def test_google_flow_audit_rejects_pingshenme(self):
         self.assertIsNotNone(google_flow_audit.CLICKBAIT_HOOK_RE.search("砸一块陶瓷，凭什么生出几千伏高压？"))
-        self.assertIsNone(google_flow_audit.CLICKBAIT_HOOK_RE.search("砸一块陶瓷，怎么会生出几千伏高压？"))
+        self.assertIsNone(google_flow_audit.CLICKBAIT_HOOK_RE.search("打火机里这块小陶瓷，一按就能压出几千伏高压？"))
+
+    def test_google_flow_audit_flags_blunt_or_harsh_tone(self):
+        for harsh in (
+            "油这么热，它为什么不悄悄蒸发，偏要炸？",
+            "别傻了，涂层根本不是靠胶水粘住的。",
+            "听好了，先说结论，一秒看懂它的原理。",
+            "这股压力直接把油面干爆。",
+        ):
+            self.assertIsNotNone(google_flow_audit.BLUNT_HARSH_TONE_RE.search(harsh), harsh)
+        for warm in (
+            "油这么烫，水为什么不慢慢蒸发掉，反而会一下子溅出来呢？",
+            "打火机里这块小陶瓷，手指轻轻一按，怎么就能压出几千伏高压？",
+            "我们先拿一杯凉油试试，滴进一滴染过色的水。",
+        ):
+            self.assertIsNone(google_flow_audit.BLUNT_HARSH_TONE_RE.search(warm), warm)
 
     def test_presentation_checks_rejects_pingshenme(self):
         for surface in ("voiceover", "caption", "cover", "frame"):

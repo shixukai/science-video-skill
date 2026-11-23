@@ -30,9 +30,6 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_legacy_pure_2d_cannot_be_default_main_picture(self):
         self.edit("config/series-profile.json", lambda d: d["medium"].update(mechanism="pure_2d"))
         self.errors("realistic main footage")
-    def test_legacy_style_must_not_claim_realistic_approval(self):
-        self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference_scope="visual_style_only"))
-        self.errors("scoped to legacy 2D")
     def test_clean_system(self):
         self.assertEqual(m.check(self.root), [])
     def test_audience_cannot_be_restored_as_production_requirement(self):
@@ -47,9 +44,6 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_voice_location_must_not_create_a_new_environment_automatically(self):
         self.edit("config/series-profile.json", lambda d: d["audio"]["execution_policy"].update(auto_create_environment=True))
         self.errors("invocation confirmation policy")
-    def test_moving_model_revision_is_not_a_fixed_default(self):
-        self.edit("config/series-profile.json", lambda d: d["audio"]["local_adapter_example"].update(model_revision="main"))
-        self.errors("optional local adapter fixed revision")
     def test_indextts2_private_paths_cannot_be_hardcoded_in_public_profile(self):
         self.edit("config/series-profile.json", lambda d: d["audio"]["indextts2"].update(project_dir="/private/indextts2"))
         self.errors("private local paths")
@@ -65,10 +59,6 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_external_sources_are_immutable(self):
         self.edit("indexes/external-skills.json", lambda d: d["entries"][0].update(commit="main"))
         self.errors("immutable commit")
-    def test_modified_copied_reference_needs_explicit_update(self):
-        p = self.root / "third-party/videozero-motion-canvas/TWEENING.md"
-        p.write_text(p.read_text() + "\nAltered example\n")
-        self.errors("copied external reference hash mismatch")
     def test_optional_feedback_cannot_be_mandatory(self):
         self.edit("config/production-policy.json", lambda d: d["optional_audience_feedback"].update(required=True))
         self.errors("must not depend on audience")
@@ -102,42 +92,15 @@ class ReferenceSystemTests(unittest.TestCase):
     def test_missing_reference_file(self):
         (self.root / "references/shotbook.md").unlink()
         self.errors("owner file")
-    def test_caption_idempotence_and_scaling(self):
-        p = json.loads((self.root / "config/series-profile.json").read_text())
-        self.assertEqual(m.caption_baselines(p, 1080, 1920), {"narration": 1615, "real_footage": 1690})
-        self.assertEqual(m.caption_baselines(p, 1080, 1920), m.caption_baselines(copy.deepcopy(p), 1080, 1920))
-        self.assertEqual(m.caption_baselines(p, 540, 960), {"narration": 808, "real_footage": 845})
-        with self.assertRaises(ValueError):
-            m.caption_baselines(p, 1920, 1080)
-    def test_repeated_caption_increment_rejected(self):
-        self.edit("config/series-profile.json", lambda d: d["captions"]["baselines"]["narration"].update(target=1515))
-        self.errors("increment inconsistent")
     def test_real_video_required(self):
         self.edit("config/series-profile.json", lambda d: d["medium"].update(real_anchor="photo"))
         self.errors("real video")
     def test_reference_not_media_license(self):
         self.edit("indexes/aesthetic-references.json", lambda d: d["entries"][0].update(production_use="granted"))
         self.errors("does not grant")
-    def test_selected_style_image_cannot_be_replaced_without_rebinding(self):
-        path = self.root / "assets/style/accepted-style-reference.png"
-        path.write_bytes(path.read_bytes() + b"altered-reference")
-        self.errors("selected style image hash mismatch")
-        self.errors("local aesthetic reference hash mismatch")
-    def test_selected_style_path_cannot_escape_the_skill(self):
-        self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference="../../outside.png"))
+    def test_palette_path_cannot_escape_the_skill(self):
+        self.edit("config/series-profile.json", lambda d: d["design"]["lighting_material_standard"].update(palette_start_points="../../outside.json"))
         self.errors("path escapes Skill")
-    def test_selected_style_does_not_approve_science_or_motion(self):
-        self.edit("config/series-profile.json", lambda d: d["design"].update(style_reference_scope="complete_episode"))
-        self.errors("scoped to legacy 2D")
-    def test_art_brief_cannot_silently_bind_a_different_reference(self):
-        self.edit("assets/style/bright-nature.art-direction.json", lambda d: d["reference"].update(sha256="0" * 64))
-        self.errors("art direction reference binding mismatch")
-    def test_local_style_reference_is_not_a_cleared_production_asset(self):
-        self.edit("indexes/aesthetic-references.json", lambda d: d["entries"][-1].update(production_use="granted"))
-        self.errors("does not grant")
-    def test_local_reference_cannot_have_two_conflicting_locations(self):
-        self.edit("indexes/aesthetic-references.json", lambda d: d["entries"][-1].update(url="https://example.com/other-style"))
-        self.errors("exactly one URL or local file")
     def test_changed_component_needs_new_hash(self):
         p = self.root / "assets/style/leader-and-arrow.svg"
         p.write_text(p.read_text().replace("<svg ", '<svg data-test-mutation="1" ', 1))
@@ -153,14 +116,8 @@ class ReferenceSystemTests(unittest.TestCase):
         self.edit("indexes/reusable-assets.json", lambda d: d["entries"].append(copy.deepcopy(d["entries"][0])))
         self.errors("duplicate asset")
     def test_science_color_priority(self):
-        self.edit("assets/style/bright-nature.tokens.json", lambda d: d.update(science_color_priority=False))
+        self.edit("config/series-profile.json", lambda d: d["design"]["lighting_material_standard"].update(material_identity_and_scientific_colors_preserved=False))
         self.errors("science colors")
-    def test_ratio_not_universal_gate(self):
-        self.edit("assets/style/bright-nature.tokens.json", lambda d: d["suggested_scene_ratio"].update(status="mandatory"))
-        self.errors("adjustable")
-    def test_invalid_hex_rejected(self):
-        self.edit("assets/style/bright-nature.tokens.json", lambda d: d["colors"]["sky"].update(hex="blue"))
-        self.errors("palette")
     def test_private_id_rejected(self):
         (self.root / "leak.md").write_text("libfile_" + "a" * 32)
         self.errors("private identity")
@@ -329,6 +286,42 @@ class ReferenceSystemTests(unittest.TestCase):
         sections = {row["file"]: row for row in registry["sections"]}
         self.assertEqual(sections["references/tool-routing.md"]["owner_id"], "tools")
         self.assertIn("colab-cli-and-remote-gpu-integration", sections["references/tool-routing.md"]["anchors"])
+
+    def test_google_flow_route_isolation_excludes_moneyprinter_and_vork(self):
+        skill = (self.root / "SKILL.md").read_text(encoding="utf-8")
+        frontmatter = skill.split("---", 2)[1]
+        self.assertNotIn("MoneyPrinterTurbo", frontmatter)
+        self.assertNotIn("vork", frontmatter.lower())
+        self.assertIn("## Route isolation (load only the active route)", skill)
+        self.assertIn("Never load", skill)
+        flow_reachable = (
+            "references/google-flow-production.md",
+            "references/voice-reference.md",
+            "references/viral-appeal-and-packaging.md",
+            "references/realistic-direction.md",
+            "references/topic-contract.md",
+            "references/viewer-retention-design.md",
+            "references/production-checkpoints.md",
+            "references/quality-acceptance.md",
+            "references/visual-system.md",
+            "references/science-and-rights.md",
+            "references/shotbook.md",
+            "references/subagent-orchestration.md",
+        )
+        for rel in flow_reachable:
+            text = (self.root / rel).read_text(encoding="utf-8")
+            with self.subTest(file=rel):
+                self.assertNotIn("MoneyPrinterTurbo", text)
+                self.assertNotRegex(text, r"(?i)\bvork\b")
+                self.assertNotRegex(text, r"\]\([^)]*tool-routing\.md")
+                self.assertNotRegex(text, r"\]\([^)]*ai-generated-video\.md")
+        for toml in sorted((self.root / "agents").glob("*.toml")):
+            text = toml.read_text(encoding="utf-8")
+            with self.subTest(agent=toml.name):
+                self.assertIn("Route Isolation gate", text)
+                self.assertIn("google_flow", text)
+                self.assertNotIn("MoneyPrinterTurbo", text)
+                self.assertNotRegex(text, r"(?i)\bvork\b")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "everyday-mechanism-visualization-v1",
+  "status": "active_editorial_focus",
+  "preserves_user_commissioned_topics": true,
+  "scope": "Default editorial positioning for unassigned topic discovery, framing and series identity; never overrides an explicit user-commissioned topic.",
+  "core_proposition": "Reveal the hidden physical or structural mechanism behind familiar everyday objects, common devices and observable natural phenomena through concrete visual demonstration.",
+  "content_mix_guidance": {
+    "primary_pillar": {
+      "id": "everyday_objects_and_mechanisms",
+      "share_guidance": "~80%",
+      "focus": "Recognizable everyday objects, household or daily devices, packaging, kitchen physics, common materials and everyday safety/mechanical structures identifiable at frame 0."
+    },
+    "secondary_pillar": {
+      "id": "observable_scale_or_physical_paradoxes",
+      "share_guidance": "~20%",
+      "focus": "Immediately recognizable natural or physical phenomena framed around a stark concrete contradiction or physical limit (mass, height, force, pressure, phase or scale)."
+    },
+    "deprioritized_editorial_defaults": [
+      "standalone_animal_trivia",
+      "abstract_invisible_instrument_tutorials"
+    ]
+  },
+  "question_framing": "Lead with a concrete physical or structural contradiction rather than a flat encyclopedia 'how does X work' overview.",
+  "scope_discipline": "Scope each unassigned feed episode tightly to one core visible contradiction and primary mechanism; let clear explanation determine duration without any mandatory floor or ceiling."
+}

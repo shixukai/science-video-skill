@@ -286,45 +286,21 @@ class FeedbackContractTests(unittest.TestCase):
             self.assertTrue(any('static retest dimensions' in error for error in self.check(expanding=True)))
 
     def operations_profile(self):
-        profile = json.loads((Path(__file__).resolve().parents[2] / 'config/series-profile.json').read_text())
+        profile = json.loads((Path(__file__).resolve().parents[2] / 'config/series-profile.json').read_text(encoding='utf-8'))
         return profile
 
-    def test_current_daily_targets_are_ten_and_independent(self):
+    def test_current_operations_preserve_spacing_collections_and_no_auto_schedule(self):
         from check_reference_system import check_operations
         profile = self.operations_profile()
         self.assertEqual(check_operations(profile['operations']), [])
-        self.assertEqual(profile['operations']['daily_completed_unique_target'], 10)
-        self.assertEqual(profile['operations']['daily_actual_unique_target'], 10)
-        self.assertTrue(profile['operations']['daily_counting']['counters_independent'])
+        self.assertNotIn('daily_completed_unique_target', profile['operations'])
+        self.assertNotIn('daily_actual_unique_target', profile['operations'])
         self.assertTrue(profile['operations']['no_schedule_change_from_adoption'])
 
-    def test_daily_target_regression_rejects_old_five_or_combined_counter(self):
-        from check_reference_system import check_operations
-        for field in ('daily_completed_unique_target', 'daily_actual_unique_target'):
-            for value in (5, '10', True, None):
-                operations = copy.deepcopy(self.operations_profile()['operations'])
-                operations[field] = value
-                self.assertTrue(check_operations(operations), (field, value))
-        operations = copy.deepcopy(self.operations_profile()['operations'])
-        operations['daily_counting']['counters_independent'] = False
-        self.assertTrue(check_operations(operations))
-
-    def test_daily_counts_cannot_credit_failures_samples_or_old_results(self):
-        from check_reference_system import check_operations
-        original = self.operations_profile()['operations']
-        for excluded in original['daily_counting']['excluded_credits']:
-            operations = copy.deepcopy(original)
-            operations['daily_counting']['excluded_credits'].remove(excluded)
-            self.assertTrue(check_operations(operations), excluded)
-        for field in ('completion_basis', 'publication_basis', 'new_work_eligibility', 'unpublished_inventory'):
-            operations = copy.deepcopy(original)
-            operations['daily_counting'][field] = 'attempts_or_old_files'
-            self.assertTrue(check_operations(operations), field)
-
-    def test_daily_template_keeps_two_unknown_actual_counters(self):
-        ledger = json.loads((Path(__file__).resolve().parents[2] / 'assets/project-ledger-template.json').read_text())
-        self.assertEqual(ledger['production_ledger']['daily_target'], 10)
-        self.assertEqual(ledger['publication_ledger']['daily_target'], 10)
+    def test_ledger_template_keeps_unknown_counters_without_hardcoded_daily_quota(self):
+        ledger = json.loads((Path(__file__).resolve().parents[2] / 'assets/project-ledger-template.json').read_text(encoding='utf-8'))
+        self.assertIsNone(ledger['production_ledger']['daily_target'])
+        self.assertIsNone(ledger['publication_ledger']['daily_target'])
         self.assertIsNone(ledger['production_ledger']['actual_unique_completed'])
         self.assertIsNone(ledger['publication_ledger']['actual_unique'])
         self.assertIsNone(ledger['production_ledger']['gap'])
@@ -332,10 +308,8 @@ class FeedbackContractTests(unittest.TestCase):
         self.assertEqual(ledger['record_formats']['episode']['new_work_eligibility']['status'], 'pending')
         self.assertEqual(ledger['record_formats']['episode']['quality_evidence'], [])
         self.assertEqual(ledger['record_formats']['episode']['publication_readback_evidence'], [])
-        policy = json.loads((Path(__file__).resolve().parents[2] / 'config/production-policy.json').read_text())
-        self.assertEqual(policy['capacity']['routine_batch_start'], 5)
 
-    def test_daily_target_update_cannot_grant_schedule_authority(self):
+    def test_operations_adoption_cannot_grant_schedule_authority(self):
         from check_reference_system import check_operations
         operations = copy.deepcopy(self.operations_profile()['operations'])
         operations['no_schedule_change_from_adoption'] = False

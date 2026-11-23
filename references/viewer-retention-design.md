@@ -1,210 +1,94 @@
 # Sustained viewing: organize explanation as rewarding discovery
 
-Use this for openings, section handoffs and sound-and-picture roughcuts; reuse `opening`, `payoff_steps`, action cards and stage QA. Original-topic scope is governed by the [topic contract](topic-contract.md); actual acceptance by [quality standards](quality-acceptance.md).
+Own whole-film narrative flow, newcomer orientation, opening-to-body bridges, section progression, and competing-attention diagnosis — reusing `opening`, `payoff_steps`, action cards, and stage QA without extra forms.
 
 ## Direct the whole film before polishing its parts
 
-The parent owns one coherent explanation, including when other agents draft the script. Use the existing brief, current topic, `payoff_steps` and ending to connect these levels; do not create another form:
+The parent owns one coherent story across five levels before delegating shots: **Overall context** (why care) → **This episode** (concrete question & post-watch takeaway) → **Case/demonstration** (why this object/example) → **Development** (what each beat adds & why the next follows) → **Resolution** (how the earned answer reframes the opening).
 
-| Level | Decision the director must make |
-| --- | --- |
-| Overall context | What recognizable activity, system or human need makes this worth watching? A series name or broad topic word alone does not establish that context. |
-| This episode | Which concrete question will this film answer, and what will viewers understand or judge afterward? Keep this promise within the actual evidence and requested scope. |
-| Case or demonstration | Why does this particular object, event or operation help answer that question? Establish its role before asking viewers to inspect a local detail. |
-| Development | What does each section establish, what remains unresolved, and why does the next section follow? A new angle or asset is not necessarily new understanding. |
-| Resolution | What answer has the film earned, and how does it change the viewer's understanding of the opening situation? Do not leave the ending at an isolated detail or replace it with an unrelated reminder. |
-
-Write and read the complete script as a connected argument before splitting production work. In the existing outline, express the progression as **recognizable situation → specific question → useful observations/explanation → supported answer → meaning for the original situation**. This describes relationships, not five compulsory sections: a clear cold open, direct answer or short commissioned excerpt may organize them differently. There is no mandatory runtime, chapter-count, shot-count, or word-count target: tell the story clearly at whatever length the explanation needs. Do not pad a concise, clear explanation to stretch its runtime, and do not compress necessary causal stages into a rushed checklist of disconnected standalone clips. Place any counterexample or boundary condition inside the section whose physical variable it tests (never tacked onto the closing shot with a semicolon), and keep each spatial world sustained across consecutive shots as needed instead of ping-ponging between exterior live scenes and dark interior 3D cutaways on isolated single shots. A local episode needs enough system context to orient viewers, not an encyclopedic introduction or an unsolicited expansion into the whole series.
-
-Compare what the opening promises with what the body actually explains and the ending concludes. Mentioning a large field does not repair a story whose case still has no purpose. Conversely, do not promise to explain an entire mechanism when the film only establishes what one observation can support. Rephrase the promise or complete the missing explanation within the authorized scope. Hypothetical alternatives must be introduced as hypothetical, and the conclusion must not exceed them.
-
-At G1, the parent reads the current whole draft without relying on its title, task chat or shot annotations to supply missing meaning. Check whether the audience can identify the subject and episode question, follow why each section is needed, and connect the final answer to the opening. Mark the first missing connection in the existing script/QA and repair that structure before full narration synthesis or batch refinement. An accepted voice sample, attractive model or technically successful run does not approve the manuscript. Voice auditions and scoped feasibility work can continue independently; known narrative defects must not be sent to the user as a routine listening test.
-
-G2 checks this same progression in the complete sound-and-picture rough cut, using the existing normal-speed viewing; G5 checks the final film. Judge what the work conveys, not what its author intended. If only the first sentence has changed while the promise, case and conclusion still disagree, return the whole affected script for revision. Reuse valid assets and evidence; this is part of the existing gates, not an added approval stage or fixed timing quota.
+Read the complete G1 script without leaning on titles or task chat; fix any promise/body/ending disconnect BEFORE full narration synthesis or batch refinement. No fixed runtime, chapter count, or word count — let clear explanation set length, keep spatial worlds sustained across consecutive shots (never ping-pong exterior/studio single shots), and place boundary/edge cases inside the beat whose variable they test. G2/G5 verify what the finished media actually conveys.
 
 ## Establish context and a reason to watch before explaining
 
-A complete new film establishes a recognizable object and real interest before dependent terminology or procedures. Follow the [opening workbench](viral-appeal-and-packaging.md#win-the-first-two-seconds) for candidate selection, exact timing and the applicable 0–5 s host-to-part bridge. At 2 s inspect recognition and interest, not completion of the natural first sentence. Orientation must be present when the detail needs it; body sections and explicitly commissioned excerpts follow their scope.
-
-| Opening responsibility | What viewers should gain | Corresponding sound/picture design |
-| --- | --- | --- |
-| Recognize context | What object or host system is present, where inside it does this happen, or what is it for? | Enter through a concrete object, active host, product application, complete phenomenon or supported result that is already moving in the hook shot; for a part inside a larger system apply the [host-to-part bridge](viral-appeal-and-packaging.md#anchor-a-part-inside-its-host). Recognition happens inside the 0–5 s opening and its caption, not in a slow distant exterior, an unrecognizable fragment or a list of technical terms |
-| See a worthwhile question | What real difficulty, difference, constraint or phenomenon needs understanding? | Use visible goals, comparisons, operational difficulty or a result/process question. Lead with the topic's strongest real surprise, spectacle or stakes; do not manufacture counterintuitive claims, crises or spectacle |
-| Understand the viewing promise | What does the film explain, and what can viewers understand/judge afterward? | Narrow overall context to the original concrete question/scope and a clear benefit in one [concrete viewing promise](viral-appeal-and-packaging.md#lock-a-concrete-viewing-promise-by-about-8-seconds) that names something the film will visibly deliver; retain only orienting route information rather than reciting a full contents list |
-| Enter the first step naturally | Why inspect this detail/process now? | Move from the opening object/goal into the first necessary observation/explanation with identity, scale and state continuity; do not jump from a lively teaser to an unexplained teaching model |
-
-Retain only background needed to recognize the object, understand use/constraints and form the question. Cut series introductions, praise, scenery and repeated previews whose removal loses no understanding or expectation; move history, definitions and parameters to their use. Determine opening length from an actual roughcut.
-
-Engineering/manufacturing openings prioritize product tasks, performance requirements or concrete manufacturing difficulties. For one process alone, establish its place in the whole; do not repeat full openings between chapters. A result preview establishes a goal but cannot replace process explanation.
-
-`opening.voiceover` stores the full opening, `curiosity_gap` its real point of interest, `viewer_payoff` the benefit, `visual_handoff` the bridge to the first body observation, and `shot_ids` the actual opening/handoff shots. Without audio record semantic order first; add real times after audio exists.
+Give newcomers a recognizable object and concrete interest before dependent terms or procedures, using [the opening workbench](viral-appeal-and-packaging.md#win-the-first-two-seconds) and [host-to-part bridge](viral-appeal-and-packaging.md#anchor-a-part-inside-its-host):
+- **Recognize context** on moving Frame 0 (or recognizable working host bay within 0–5 s).
+- **See a worthwhile question** grounded in a real visible difficulty, contrast, or stakes.
+- **Lock the [concrete viewing promise](viral-appeal-and-packaging.md#lock-a-concrete-viewing-promise-by-about-8-seconds)** by ~8 s without reciting a table of contents.
+- **Enter step 1 smoothly** with continuous object/scale anchors; move history and definitions to their point of use.
 
 ### Orient the viewer before introducing a detail
 
-A viewer arriving without the title, cover, description or task chat must be able to tell **what this is about, what is happening or being asked, and why the first detail matters**. Establish that minimum shared context in the opening picture and words before a component, procedure, unexplained number or technical term depends on it. An unfamiliar instrument silhouette or spectacular microscopic image may not identify the subject for a general viewer. Name the object or its everyday function naturally when the picture alone cannot do that work. Necessary naming is not a title echo or throat-clearing.
+A viewer arriving **without the title, cover, description or task chat** must tell **what this is about, what is happening or being asked, and why the first detail matters** — establishing minimum shared context **before a component, procedure, unexplained number or technical term depends on it**. Name an unfamiliar object or function naturally when picture alone cannot; **Necessary naming is not a title echo** or throat-clearing.
 
-Design the first line and first readable shot together. An object-led observation, a familiar task with a difficulty, a clearly identified result, or a genuine question can all work. They need not use the same sentence order; the full answer need not appear immediately. A demonstrative such as "this" or "these" needs a recognizable referent before technical detail, and the adjoining picture and narration must make clear why the first detail helps address the opening event or question. Do not repair missing orientation by merely adding "Today we discuss...", a title plate, a long definition/history, repeated questions or a second miniature introduction. If the opening cannot orient and interest a newcomer at the existing natural pace, change the chosen hook or simplify its idea rather than deleting the subject or accelerating speech.
+Design first line and first readable shot together. **They need not use the same sentence order**, and the full answer need not appear upfront; simply ensure demonstratives ("this"/"these") have a visible referent and avoid fixing missing orientation with greetings, history, or title plates.
 
-Within the existing G1 script read and G2/G5 cold-view review, hide external packaging and paraphrase the subject and question from the opening itself before reading the author's explanation. Identify the first noun/pronoun, image or mechanism step whose meaning depends on missing context. Repair the opening and adjoining first body step together. Separate the subject being explained, the visible clue that makes it interesting, and the tool that captured it. If the subject is the specimen or phenomenon, open on it and make the clue legible; name the capture method only as needed for provenance or interpretation. If the subject is how the tool works, connect the tool, what it observes and the specific result it must explain. Do not let an instrument label substitute for identifying the clue, or an appealing image claim more than its source supports. Leave the explanation open; do not demand spoken repetition of what the picture already makes clear. Use the actual combined medium for the final judgment; a script-only check cannot approve a planned image. This is an existing comprehension check, not a new gate, fixed sentence template or extra timing quota.
+In G1 reads and G2/G5 cold views, hide external packaging, paraphrase subject + question from the opening alone, and flag the first unsupported referent. Distinguish subject, visible clue, and capture tool: **If the subject is the specimen or phenomenon**, open on it and make the clue legible; **If the subject is how the tool works**, connect tool, target, and result. **Leave the explanation open**; **do not demand spoken repetition** of what the picture already shows, and judge final openings on combined audiovisual media (**a script-only check cannot approve a planned image**). This is **not a new gate, fixed sentence template or extra timing quota**.
 
-Synthetic contrast cases for reviewer calibration (not quotations from user works or audience-effect evidence):
+Calibration cases:
 
 | Case | Opening and picture | Expected diagnosis / bounded repair |
 | --- | --- | --- |
-| Detail without an object | Sharp electron-microscope texture or unlabeled dots; "The beam scans one row at a time." | Detail alone does not identify object, instrument or purpose. Establish the sample/result relationship and the actual question before the scan procedure. If explaining the specimen rather than the microscope, do not force a whole-machine exterior; choose the appropriate `host_relation`. |
-| Instrument and question together | Instrument/sample context; "How does an electron microscope make a picture with electrons?" followed by the first necessary observation | Candidate orientation pass: the instrument, task and question connect. Scientific claims and actual picture readability remain separate checks; this is not a required wording. |
-| Same image, different subject | For a film about a crystal: a verified micrograph identifies the sample and points to the repeating pattern. For a film about microscopy: link that sample and pattern to the instrument and ask how it resolves the pattern. | In the first film, the instrument can stay offscreen; the pattern and its meaning carry the hook. In the second, the instrument-to-image relationship matters. Name what the marks represent only if the source identifies them; do not call anonymous bright spots individual atoms. |
-| A recognizable everyday object | A visible zipper opening; "Why does this zip split behind the slider?" | Candidate orientation pass without repeating "zipper" as a formal definition; the image supplies the referent. |
-| Topic word without a connection | "Electron microscope." over anonymous dots, immediately followed by an unexplained detector parameter | Still fails: naming alone has not connected the object, result and explanatory task. Repair the relation, not only the first noun. |
-| Background instead of orientation | "Today we will discuss a very important instrument, with a long history..." | Cut format/history; combine the needed subject/function with the concrete event or question. Do not cure the delay by returning to anonymous technical detail. |
+| Detail without an object | Sharp electron-microscope texture or unlabeled dots; "The beam scans one row at a time." | Fails orientation: establish sample/result and real question before scan procedure; choose proper `host_relation`. |
+| Instrument and question together | Instrument/sample context; "How does an electron microscope make a picture with electrons?" + first observation | Orientation pass: instrument, task, and question connect. |
+| Same image, different subject | Crystal film: verified micrograph identifies sample & pattern. Microscopy film: links sample/pattern to instrument resolving it. | In the first film **the instrument can stay offscreen**; name what marks represent **only if the source identifies them**. |
+| A recognizable everyday object | Visible zipper opening; "Why does this zip split behind the slider?" | Orientation pass without repeating formal definitions; image supplies referent. |
+| Topic word without a connection | "Electron microscope." over anonymous dots + unexplained detector parameter | Still fails: naming alone doesn't link object, result, and question. |
+| Background instead of orientation | "Today we will discuss a very important instrument, with a long history..." | Cut format/history; pair needed subject with concrete event/question. |
 
 ### Make opening pictures deliver the application context
 
-When narration describes use, show recognizable application objects/actions before materials or microscopic relationships. Device screens, instruments and interfaces are contextual assets too: show identifiable task states/feedback consistent with that spoken use, not later film shots or the same subject screenshot in every display. Dark material blocks, texture close-ups and titles cannot replace whole-machine context. Obtain/create imagery under current scientific conditions/style; arbitrary equipment footage is not evidence of a specific application.
-
-Before expansion, continuously watch/listen to the opening at normal speed through delivery of the first body observation; check first-screen recognition, reason to watch, speech rate, detail and handoff. Repair specific failures using the table below and recheck the same interval before expansion. Subtitle/cover revisions cannot close voice, subject or motion defects.
+When narrating everyday use, show recognizable real objects/working interfaces rather than dark blocks or generic textures; review continuously through the first body observation before expansion.
 
 ## Select an opening point of interest from this topic
 
-Select using the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-films-material) and [candidate comparison](viral-appeal-and-packaging.md#run-the-hook-lab-at-g1). If a detail needs later context merely to identify the subject, it is not yet an opening: repair picture/first line or choose another event. Preserve credible production, rights and the evidence promised in the body. The following section owns that handoff, rather than a second opening-selection procedure.
+Use the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-films-material) and [hook lab](viral-appeal-and-packaging.md#run-the-hook-lab-at-g1). If a detail needs later context merely to identify the subject, **it is not yet an opening** — fix picture/first line or pick another moment.
 
 ## Connect the opening to the first body observation
 
-Write **the last opening sentence → the first body sentence** together and state **the just-seen result/constraint → the necessary part/relationship → the evidence actually visible in the first body shot**. If the cut already locates the subject, let it do that work. The next spoken sentence adds an observation, cause or constraint that advances the explanation. Apply the [spoken-script edit](voice-reference.md#edit-narration-and-dialogue-for-the-ear) to both sides of the cut.
+Write the opening's final line and the body's first line together under [spoken-script editing](voice-reference.md#edit-narration-and-dialogue-for-the-ear), pairing `final_state` → `initial_state` in `visual_handoff` / `handoff`:
+- **Whole-to-local:** locate target in whole, then enter close/sectional view keeping orientation.
+- **Graphic/action match:** match silhouette or motion phase across the cut without implying false causation.
+- **Product back to manufacturing:** signal time reversal explicitly after a result preview.
+- **J/L-cut sound bridge:** overlap continuous ambience/speech smoothly across cuts without restarting narration mid-breath.
 
-Pair opening end/body start in `visual_handoff` / `handoff` or the action card: what remains, where to look, which shape/location/action anchor continues, and how changed object/time/scale correspond. Locate before cutting/enlarging. Clearly mark a return from product to manufacturing; attractive morphing is not real process continuity.
-
-| Handoff method | Execution | Misreading to prevent |
-| --- | --- | --- |
-| Whole-to-local view of one object | Locate the target in the whole, then cut close/sectional while preserving orientation, features or recognizable location | A push-in alone is not knowledge; the detail must perform the next observation, without pretending the camera physically enters invisible structures |
-| Graphic/action match | Make subject position, silhouette or action phase correspond between opening end/body start, then continue change | Similarity does not prove identical object, material or causation; explain changed-object mapping and avoid unjustified action reversal |
-| Product back to manufacturing start | Show the product feature clearly, then explicitly enter material/blank and the first relevant operation | Signal the time reversal after the preview; product-to-blank transition is not an actual process |
-| Sound across a cut | Use next-scene sound early (J-cut) or previous sound into the next picture (L-cut), based on semantics and real sources | Do not mechanically restart narration mid-sound. Ambience/effects need provenance and must not alter explanatory thunder delays, mechanical responses or other evidence |
-
-Use straight cuts when they already explain the relationship. Dissolves, occlusion, zooms or graphic transitions must aid space/time/mapping recognition. Avoid changing object, scale, terms, music and observation task at once. Continuous narration may cross cuts; reduce music at the first explanation. Do not default to impacts, black screens or opening logos.
-
-Transitions follow the [selected route](tool-routing.md#lock-the-primary-tool-by-final-film-style). Check actual timeline and adapter capabilities. If an effect is unavailable, use a clear straight-cut handoff when it preserves the relationship.
+Use straight cuts when relationships already read clearly; follow the single commissioned route under [SKILL.md's Route Isolation gate](../SKILL.md#route-isolation-load-only-the-active-route).
 
 ### Engineering example: from application to chip etching
 
-Adapt the example to actual equipment, material and process. Combine/expand semantic sections as needed without fixed shots/seconds. The hook lab must select an already oriented opening, not put anonymous fine lines first and promise chip/application context later. For example, show an identifiable chip and its patterned region together while asking, "How do manufacturers remove material only where this chip needs openings?" A close-up can then reveal the target openings before the first removal step. The picture may establish the chip while the words establish the manufacturing question; neither must mechanically repeat the other. Verify the represented process and scale rather than relying on a sensational size comparison. The table is a coherent alternative application-led route, not mandatory background to append after a contextless macro hook.
-
-| Narrative task | Planned main image | Example narration and handoff |
-| --- | --- | --- |
-| Recognize whole/use | Press a phone shutter, show its photo on-screen, then locate the device's chip; imply only topic-supported relationships | “按下快门，照片出现在屏幕上。支持这些功能的芯片，制造时需要在一层层材料中做出结构。” |
-| Reveal the difficulty | Explicitly enter manufacturing, locate the thin layer, and distinguish target openings from areas that must remain | “在这一步，有些地方要去掉，有些地方必须留下。难的不是一股脑去除，而是只改变指定位置。” |
-| Narrow the question and enter observation | Retain target orientation/location before entering its matching section | “保护层遮住要保留的区域，开口把需要刻蚀的材料露出来。” |
-| Deliver the observation immediately | Match the located area to its section, establish mask/opening/layer relationships, then show evidenced removal | “刻蚀开始后，露出的位置逐渐下凹，原先平整的薄层出现了图形。” |
-
-When the opening establishes protection/openings, show those objects and the relevant change in the body; do not insert a welcome, long contents list or another etching definition. Actual processes determine masking/removal mechanisms; not every etch has identical selectivity, vertical sidewalls or an entirely unaffected underlying layer.
-
-For nature, a handoff may follow recognizable frost location → evidenced crystal features → same-region location retained into growth. Between chapters, use the previous result to enter the next observation.
+The hook lab must select an oriented opening and **not put anonymous fine lines first** while promising chip context later. The compact flow below is a **coherent alternative application-led route** (not mandatory preamble):
+1. Phone shutter → photo on screen → locate chip: “随手按下快门，照片马上就出现在屏幕上。背后干活的这枚芯片，制造时要在极薄的材料里一层层雕出精细结构。”
+2. Reveal difficulty on thin layer: “到了这一步，有些地方要刻掉，旁边的区域又必须完好留下来。真正讲究的地方，是只动指定的那一小块，不能波及周围。”
+3. Narrow to mask + opening: “办法其实很巧：先盖上一层保护膜挡住要保留的地方，只把需要刻蚀的位置从开口处露出来。”
+4. Immediate visible removal: “刻蚀一开始，露出来的材料就一点点往下凹进去，原本平整的薄层上，慢慢就显出了想要的图形。”
 
 ## Locate resistance to continued viewing first
 
-Mark concrete sticking points in a normal-speed short sample, revise under this table and recheck the same interval:
-
-| Observed problem | Resistance to check | First possible revision |
-| --- | --- | --- |
-| Definitions, conclusions or operations start immediately before object/use is known | Missing context, motivation and reason to continue | Establish object/task and real difficulty, then narrow the question; create identifiable audiovisual interest, not just “did you know?” |
-| A clear opening question is followed by prolonged background/terminology | Unclear relevance to the question | Place prerequisites at use and establish one useful piece of evidence/relationship early; do not merely move an unintelligible result forward |
-| The overall answer is stated, then endlessly repeated | No visible benefit from continuing | Advance from answer to evidence, process or conditions, selecting a needed route for this topic |
-| Sections are individually clear but require object re-recognition | Excess tracking cost | Carry the previous state/question into the next observation with object/reference continuity |
-| Animation/comparison exists, but differences are tiny or text explains them prematurely | Recognition effort without clear discovery | Adjust change region/timing until the stated result reads at target size; see [animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence) |
-| Cuts, terms, legends and narration all advance simultaneously | Too little time to locate/digest | Reduce competing tasks and give the result an observation window; do not begin with acceleration, effects or more labels |
-| Multi-stage mechanical cutaway dumps 4–6 nested internal parts at once (tiny balls, sleeves, springs, diaphragms and fluid paths crammed into one crowded cross-section) | Non-engineers lose track of what moves what on a single phone-size watch | Break the chain into 2–3 clean causal beats, visually dim/ghost/simplify inactive surrounding shells, and frame each active interface large enough to read without captions |
-| The question is answered but ending prolongs summary or opens another topic | Closed content still consumes time | Return to the phenomenon for recognition/judgment and aesthetic closure, then end; put necessary qualifications beside the relevant conclusion |
+Check normal-speed samples for sticking points: missing context before definitions, prolonged terminology after a good question, repeating an already-given answer, lost object identity across cuts, tiny unreadable changes ([animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence)), overloaded 4–6-part cutaways, or dragging after the answer.
 
 ## Why watch the next section after this one?
 
-Connect **what is understood → what still needs inspection → the next evidence** through `payoff_steps[].contribution` and `handoff`. The same steps carry the [open-loop ledger](viral-appeal-and-packaging.md#keep-one-question-open-until-the-final-answer) (`opens_question`, `closes_question`, `time_s`): each section should open its next concrete question before or as it closes the current one, and the main question stays open until the final answer. Reference identical content once; short shots need no separate table.
-
-Choose among these forms of progression as the topic requires:
-
-- **Follow the process**: Keep the evolving object or result recognizable. For a transfer chain, track the relevant material, signal or energy through connected subsystems: show each stage's input, action and output, then carry that output into the next stage using a recognizable location, interface or direction. Make a change of carrier or energy form explicit instead of implying that the same substance simply continues unchanged.
-- **Parallel inputs converge**: When distinct preparation paths contribute to one operation, establish each path's input/output, use a split view or route diagram only as needed, and carry both outputs into their actual junction. Guide attention between branches before showing the convergence. Diagram simultaneity must not imply synchronized real production when only a dependency relationship is known.
-- **Test the explanation:** Establish a relationship, then inspect whether an evidenced condition change produces the predicted result; do not invent claims that everyone guesses wrong.
-- **Return from local to whole:** After one action point is understood, locate how it forms the whole or appears in corresponding parts.
-- **Explain limits:** Once the main explanation holds, use genuinely necessary comparison to show when it differs; optional side branches are not new mysteries.
-- **Revisit the phenomenon:** End on features initially appreciated as beauty whose meaning viewers can now identify.
-
-Deliver the current observation before introducing the next necessary one; “more amazing next” or “watch to the end” cannot replace a concrete task. A concrete re-hook that opens the next specific question is encouraged; see [keep a reason to stay](viral-appeal-and-packaging.md#keep-a-reason-to-stay) for payoff cadence and escalation. Keep a cause-and-effect operation sequence continuous. Put essential equipment/background knowledge at its first point of use; place an optional technology comparison after the current operation loop has produced its result. When returning from an aside, re-establish the same workpiece and state rather than silently jumping backward in the process.
+Link each section in `payoff_steps` (`contribution`, `opens_question`, `closes_question`, `time_s`) under [open-loop retention](viral-appeal-and-packaging.md#keep-one-question-open-until-the-final-answer) and [payoff cadence](viral-appeal-and-packaging.md#keep-a-reason-to-stay) using real discovery moves: follow the process/carrier, converge parallel paths, test a condition change, return local → whole, show limits, or revisit the opening phenomenon.
 
 ## Express relationships through shots; use montage as needed
 
-Design objects, changes and before/after relationships before deciding on text. Whole location → same-object/reference local entry → continuous key change → whole result usually needs motivated continuity editing; one continuous push-in is not itself montage. If removing “what is being shown” sentences destroys orientation, repair shots/actions rather than adding another title box.
-
-Montage organizes information through purposeful shot combinations, often compressing time or summarizing a process; see [AFI's editing explanation](https://www.afi.com/news/what-is-film-editing-and-what-does-a-film-editor-do/). Select by science-communication purpose:
-
-- **Compress repetition:** Explain/show one complete key cycle, then use progress-bearing shots to summarize repetition. Preserve workpiece identity, direction and stage differences; narration/existing progress information explains time compression. Unrelated fast machine cuts cannot replace process.
-- **Establish comparison/parallel paths:** Clarify compared items/conditions or the junction of two preparation paths. Adjacency does not prove cause and co-display does not prove synchronization; conclusions require scientific basis and visible evidence.
-- **Bridge scale/action:** Connect views through stable location, shape, direction or action phase. Let necessary change happen and be understood before results/next tasks. Cutting rate follows understanding, not compulsory “cinematic” fast cuts, white flashes or effects.
-
-Preserve necessary uncertainty, applicability and illustration/empirical distinctions accurately in relevant narration, subtitles or existing disclosure channels; deleting picture text must not turn uncertainty into fact. Use existing action cards, `handoff` and edit timelines for mapping. G2/G3/G5 inspect orientation, state change and audiovisual correspondence without another text inventory/approval stage.
+Prefer continuity editing for orientation → local entry → key change → whole result; use purposeful montage ([AFI](https://www.afi.com/news/what-is-film-editing-and-what-does-a-film-editor-do/)) to compress repeated cycles (after teaching one complete cycle), compare parallel paths, or bridge scales — preserving qualifiers in narration/captions.
 
 ## Stage key discoveries in sound and picture
 
-For explanatory growth, comparison, structural reveals or prediction tests, design visible delivery before decorating shots:
-
-1. **Establish the observation:** Make object/reference and upcoming comparison recognizable through framing, prior structures or brief guidance; do not require arrows or text beyond subtitles.
-2. **Establish evidence:** Subject changes/differences read in the actual image while conditions remain trackable. Camera, music and narration must not move attention to another task prematurely.
-3. **Connect meaning:** Match the observed result to the conclusion, retaining a recognizable state before the next task. Observation may overlap narration; actual viewing/listening determines whether viewers can follow.
-
-All three may fit one continuous action; schedule against actual audio/readability, not fixed three beats/cuts.
-
-**Chunk multi-stage mechanical chains into 2–3 isolated causal beats.** When an internal mechanism links four or more sequential sub-parts (for example sensing port → Venturi suction → vacuum chamber → flexible diaphragm → ball latch → spring-loaded main valve), never expose the entire dense nested assembly in one crowded cutaway and race through every sub-part in one unbroken run. Stage the explanation as **2–3 unmistakable cause-and-effect beats** where each beat isolates one moving interface at phone-readable scale while dimming, desaturating or temporarily ghosting inactive housings and sleeves (so tiny components such as lock balls, sensing holes or latch seats never shrink to unreadable specks inside a busy metallic shell). Once the core mechanism answers the opening question, return cleanly to the opening phenomenon and end promptly—integrate brief secondary edge cases (such as premature shutoff from splashes) inside the beat whose physical variable they test rather than bolting a detached tangent onto the tail.
-
-**The first effective information** may be use, constraint, difficulty, relationship or evidence, but must advance the original topic. Titles, push-ins and attractive assets are not automatic explanations; distinguish previews from actual explanation.
-
-**Predictive observation** is optional only when knowledge, conditions and references suffice, e.g. watching new growth against fixed older branches. Alternatives need scientific meaning; no compulsory answers, pauses or interaction.
-
-**Aesthetic holds** specify what to appreciate, such as crystal planes or complete structure. Restrain decoration at difficult points and provide observation space after a result holds.
+Sequence discovery cleanly: **establish target & reference → show readable change while conditions stay trackable → connect result to meaning**. For multi-stage internal mechanisms (4+ linked parts), **chunk into 2–3 isolated causal beats**, dimming/ghosting inactive housings so tiny active interfaces stay unmistakable at phone size, and fold secondary edge cases into the beat they test.
 
 ## Let the roughcut determine order and duration
 
-Use current assets/audio to revise actual repetition, delay or difficult progression; verify order before art refinement. Without audio, judge only paper dependencies and leave voice rhythm unreviewed.
-
-| Operation | Comparison | Decision |
-| --- | --- | --- |
-| Delete/combine | Does removal lose promise, prerequisites, visible evidence, spatial location or useful appreciation/integration? | Remove only without concrete loss; otherwise retain the necessary part and improve its presentation. Shorter is not automatically better |
-| Move to use | Does nearby background make the explained change clearer, and is advance recognition lost? | Follow prerequisite dependencies; later knowledge must not become an earlier implicit prerequisite |
-| Bring evidence forward | Does a topic-advancing observation hold earlier, with genuine progress afterward? | Preserve location/conditions; do not flash spoilers then return to lengthy setup |
-| Extend observation | Can viewers locate, compare and infer after a difference appears, or are they waiting after reading it? | Improve composition/referents first, then hold; reduce concurrent narration if needed rather than forcing a fixed duration |
-| Combine similar whole views | What does each return add? | Combine title-only changes; retain identification of new corresponding structures or whole integration |
-| Compress a learned cycle | Has one necessary cycle already been understood, and what accumulates or differs on later passes? | Use a short montage, time compression or layered overview to show the accumulating result with a stable reference. Keep new operations/constraints readable; do not merely replay old shots faster or prescribe one duration/count for all processes |
-
-Keep before/after versions and principal variables for revisions so the cause of improvement can be judged.
+Edit the voiced rough cut by comprehension value: delete/combine what loses zero prerequisites or evidence, move background to point of use, pull evidence earlier without spoiling, extend holds only after framing is clear, and compress already-learned cycles.
 
 ## Make the opening image understandable by the ending
 
-`ending.answer` answers the original question through renewed recognition/judgment of the opening object/relationships; finish cleanly once the mechanism is explained—do not repeat the whole film, tack on a trailing question/comment prompt, or prolong closure with a new topic. Deliver it late and end soon after it, under the [ending timing](viral-appeal-and-packaging.md#end-fast-after-explaining-the-mechanism) recorded in `ending.answer_time_s`. Use a compact causal/process overview when the ending needs integration, then return the explained object or result to the opening application through a recognizable scale/location handoff. A grid is useful only if the relations remain readable on a phone. Reused footage must now reveal a relation or answer the initial question; a slow recap of already understood shots adds no closure by itself.
-
-For example, a snow-crystal case may progress from appreciating six ornate branches to recognizing similar structures from corresponding stages and local differences. Aesthetic holds serve that final observation. Music resolution, branding or repeating the title cannot alone supply satisfaction.
+Return to the opening subject/image with renewed understanding and finish promptly under [ending timing](viral-appeal-and-packaging.md#end-fast-after-explaining-the-mechanism) (`ending.answer_time_s`) — zero trailing questions, recaps, or new topics.
 
 ## Handoff to production agents and internal review
 
-Give the next author/reviewer the current version, specific problem, shots/interval, preserved conditions, intended visible change and existing evidence. List new ideas as unvalidated rather than inventing prior failures.
-
-Reuse these records:
-
-| Content | Existing record |
-| --- | --- |
-| Opening context, interest and body bridge | `opening.voiceover / curiosity_gap / viewer_payoff / visual_handoff / shot_ids`, referencing existing brief/action cards without new required JSON |
-| Continued-viewing task and section contribution | `topic_alignment.opening.payoff_steps[].contribution`, referencing `scope_id`, `shot_ids` |
-| Previous result as next prerequisite | `coverage[].explanation_steps` fields `prerequisites`, `handoff` and existing shot handoffs |
-| Key discovery and inferable conclusion | `expression_cards.visual_action / inferable_outcome`, action cards and real semantic beats |
-| Uncertain-approach revision comparison | Existing selection/repair records; use `variants/selection` only for uncertain key difficulties |
-| Actual whole-film viewing/listening result | G2 `qa.expression_plan`, G3 existing representative records, G5 `qa.explanation_review / expression_review` |
-| Real audience results | Existing publication ledger and original platform receipts under [review conventions](production-checkpoints.md#capacity-cost-and-retrospectives) |
-
-Independent reviewers first continuously watch/listen at normal speed and record the first unidentified object, lost relationship or unclear sound, then diagnose against design. Muting/extracting frames diagnoses problems but cannot replace sound-and-picture review.
-
-With real retention curves, inspect whether dips correspond to unmet expectation, difficulty, repetition or task completion; peaks may reflect rewatching. Consider audience/traffic conditions rather than automatically cutting necessary steps.
+Pass exact version, defect interval, preserved conditions, and intended visible change using existing `opening`, `payoff_steps`, `explanation_steps`, `expression_cards`, and G2/G5 QA records. Reviewers watch/listen cold at 1.0× speed first and log the first breakdown before consulting author intent.
 
 ## Diagnose competing attention before making the edit faster
 
-When a continuous interval is hard to follow, identify what the viewer is being asked to locate, hear, read and compare **at the same moment**. Reuse the action card and actual timeline. A fast voice may be fine over one clear action and fail when a cutaway, new term, subtitle and camera move arrive together; do not prescribe a universal speech or cut rate.
-
-Choose the smallest repair for the observed conflict: introduce the referent before its new term, keep orientation while revealing the causal change, delay a decorative camera move, or move a spoken qualification next to its comparison. Let captions preserve the spoken meaning, but do not make reading them the only way to resolve an otherwise avoidable referent conflict. Diagnose source narration, visual timing and final mix separately before resynthesizing a whole track or changing the accepted voice.
-
-Compare the changed interval with its joins at normal speed. Muted picture, transcript or isolated audio may locate a problem but do not establish the integrated result. If the interval is already clear and only platform data is low, leave this diagnosis as unconfirmed rather than manufacturing a cognitive-overload defect.
+When a segment feels hard to follow, check what the viewer must locate, hear, read, and compare **simultaneously**. Fix the smallest conflict first (introduce referent before term, delay decorative camera moves, pair qualification beside comparison, separate narration/visual/mix issues) before speeding up edits or resynthesizing tracks.

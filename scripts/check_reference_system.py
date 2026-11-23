@@ -27,41 +27,11 @@ def slug(text):
                    if not unicodedata.category(c).startswith("P") or c in "_-").replace(" ", "-")
 
 
-def caption_baselines(profile, width, height):
-    """Read absolute targets for this revision, never apply the increment again."""
-    c = profile["captions"]
-    w, h = c["canvas"]
-    if width <= 0 or height <= 0 or width * h != height * w:
-        raise ValueError("new aspect ratio needs layout review")
-    return {name: round(record["target"] * height / h)
-            for name, record in c["baselines"].items()}
-
-
 def check_operations(operations):
-    """Current project targets and accounting declarations, not measured output."""
+    """Current standing release spacing and Douyin collection defaults, not measured output."""
     errors = []
     if not isinstance(operations, dict):
         return ["operations must be an object"]
-    for key in ("daily_completed_unique_target", "daily_actual_unique_target"):
-        if type(operations.get(key)) is not int or operations[key] != 10:
-            errors.append("current series " + key + " must be 10")
-    counting = operations.get("daily_counting", {})
-    if not isinstance(counting, dict):
-        return errors + ["daily_counting must be an object"]
-    if counting.get("counters_independent") is not True:
-        errors.append("completion and actual publication must be counted separately")
-    if counting.get("completion_basis") != "unique_full_episode_completed_and_G5_passed_today":
-        errors.append("completion counter must require a newly completed quality-passed full episode")
-    if counting.get("publication_basis") != "unique_first_publication_with_verified_G7_readback_today":
-        errors.append("publication counter must require a new unique verified publication")
-    excluded = counting.get("excluded_credits")
-    required = {"failed", "sample", "draft", "rendering", "old_video", "duplicate", "previous_day_completion", "previously_published_reupload"}
-    if not isinstance(excluded, list) or not all(isinstance(v, str) for v in excluded) or not required <= set(excluded):
-        errors.append("daily counters must exclude failed, sample, draft, rendering, duplicate and old-video credits")
-    if counting.get("new_work_eligibility") != "current_new_work_scope_with_source_and_version_evidence":
-        errors.append("new-work eligibility requires source and version evidence")
-    if counting.get("unpublished_inventory") != "not_automatically_eligible; determine new-work scope from source/version evidence":
-        errors.append("old/unpublished inventory cannot automatically satisfy the new-work target")
     if operations.get("no_schedule_change_from_adoption") is not True:
         errors.append("profile target changes do not create or change a schedule")
     spacing = operations.get("publication_spacing")
@@ -246,17 +216,6 @@ def check(root):
              and execution.get("auto_download_model") is False
              and set(execution.get("modes", [])) == {"local_project", "service"},
              "voice invocation confirmation policy required")
-        example = voice.get("local_adapter_example", {})
-        need(isinstance(example, dict) and example.get("scope") == "optional_local_adapter_only"
-             and bool(re.fullmatch(r"[0-9a-f]{40}", str(example.get("model_revision", "")))),
-             "optional local adapter fixed revision required")
-        c = profile["captions"]
-        need(c["apply_once"] is True and bool(c["revision"]), "caption revision must be idempotent")
-        for k in ("narration", "real_footage"):
-            record = c["baselines"][k]
-            need(record["target"] == record["previous"] + c["increment_y"], "caption increment inconsistent")
-            need(record["target"] == record["original"] + c["total_y"], "caption total inconsistent")
-        need(caption_baselines(profile, 1080, 1920) == {"narration": 1615, "real_footage": 1690}, "current series baseline mismatch")
         limits = profile["delivery"]
         need(limits.get("canvas") == [1920, 1080] and limits.get("aspect_ratio") == "16:9",
              "new production default must be HD landscape")
@@ -264,48 +223,15 @@ def check(root):
         need(limits.get("caption_layout") == "landscape_captions" and landscape.get("canvas") == [1920, 1080]
              and landscape.get("status") == "project_layout_review_required" and landscape.get("baselines") is None,
              "landscape captions need independent actual layout review, not portrait baseline scaling")
-        need(str(c.get("scope", "")).startswith("legacy_portrait_revision_only"), "old caption coordinates must be scoped to legacy portrait")
         need(limits["title_max_codepoints"] == 30 and limits["description_and_tags_max_codepoints"] == 1000,
              "series limits must remain aligned with packet checker")
-        tokens_path = local_path(root, root / "config", profile["design"]["tokens"])
-        tokens = json.loads(tokens_path.read_text(encoding="utf-8"))
-        need(tokens["status"] == "working_baseline_v1" and tokens["science_color_priority"] is True,
-             "style defaults must preserve science colors and scoped adoption")
-        direction_path = local_path(root, root / "config", profile["design"]["art_direction"])
-        direction = json.loads(direction_path.read_text(encoding="utf-8"))
-        style_path = local_path(root, root / "config", profile["design"]["style_reference"])
-        selected_style_hash = profile["design"].get("style_reference_sha256")
-        need(style_path.is_file() and style_path.suffix == ".png", "selected style image missing")
-        if style_path.is_file():
-            need(hashlib.sha256(style_path.read_bytes()).hexdigest() == selected_style_hash,
-                 "selected style image hash mismatch")
-        need(profile["design"].get("style_reference_scope") == "legacy_2d_only; not approval for realistic main footage",
-             "selected historical style must remain scoped to legacy 2D appearance")
-        reference = direction["reference"]
-        need(local_path(root, direction_path.parent, reference["file"]) == style_path
-             and reference["sha256"] == selected_style_hash, "art direction reference binding mismatch")
-        need(local_path(root, tokens_path.parent, tokens["art_direction"]) == direction_path,
-             "tokens art direction binding mismatch")
-        fields = direction["input_fields"]
-        need(isinstance(fields, dict) and bool(fields) and all(isinstance(v, str) and v.strip() for v in fields.values()),
-             "art brief input fields missing")
-        templates = direction["brief_templates"]
-        need(set(templates) == {"whole_scene", "object", "mechanism"}, "art brief modes missing")
-        for template in templates.values():
-            prompt = template["prompt_template"]
-            need(isinstance(prompt, list) and bool(prompt) and all(isinstance(s, str) and s.strip() for s in prompt),
-                 "art brief template malformed")
-            slots = set(re.findall(r"\{\{([a-z_]+)\}\}", "\n".join(prompt)))
-            need(slots == set(fields), "art brief template inputs inconsistent")
-        for color in tokens["colors"].values():
-            need(bool(HEX.fullmatch(color["hex"])) and bool(color["role"]), "invalid palette color/role")
-        ratio = tokens["suggested_scene_ratio"]
-        need(ratio["status"] == "adjustable_starting_point", "scene ratio must be adjustable")
-        values = [ratio[k] for k in ("air_and_light", "vegetation", "structure", "emphasis")]
-        need(all(type(v) in (int, float) and 0 <= v <= 100 for v in values) and sum(values) == 100,
-             "starting ratio must sum to 100")
-        need("caption_baseline_y" not in tokens["spacing"], "caption position duplicated outside series profile")
-        need(tokens["type"]["font_files_bundled"] is False, "font license requires separate verification")
+        lms = profile.get("design", {}).get("lighting_material_standard", {})
+        palettes_path = local_path(root, root / "config", lms.get("palette_start_points"))
+        need(palettes_path.is_file() and palettes_path.suffix == ".json", "bright premium palettes file missing")
+        if palettes_path.is_file():
+            json.loads(palettes_path.read_text(encoding="utf-8"))
+        need(lms.get("material_identity_and_scientific_colors_preserved") is True,
+             "style defaults must preserve science colors and material identity")
 
         policy = read("config/production-policy.json")
         audience = policy["audience_text"]
@@ -475,7 +401,6 @@ def check(root):
                      "aesthetic reference URL must use HTTPS")
             need(bool(r["version"]) and bool(r["viewing_status"]), "reference version/viewing scope required")
         need(len(ref_ids) == len(set(ref_ids)), "duplicate aesthetic reference id")
-        need((style_path, selected_style_hash) in local_styles, "selected style missing from aesthetic references")
         assets = read("indexes/reusable-assets.json")
         need(assets["catalog"] == "reusable_assets", "wrong reusable asset catalog")
         ids = []
