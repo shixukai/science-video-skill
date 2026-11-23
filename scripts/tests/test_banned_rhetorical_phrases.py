@@ -38,6 +38,26 @@ class TestBannedRhetoricalPhrases(unittest.TestCase):
         ):
             self.assertIsNone(google_flow_audit.BLUNT_HARSH_TONE_RE.search(warm), warm)
 
+    def test_google_flow_audit_flags_abrupt_camera_stage_direction(self):
+        for abrupt in (
+            "钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。顺着截面往里看，里面藏着两股互相拉扯的力。",
+            "切开它的截面，里面藏着两股互相拉扯的力。",
+            "剖开锅底就能看到一块感温磁铁。",
+            "放大锅底截面，就能看到底层的微米小坑。",
+            "放大这个小切口，诀窍就藏在缺口最尖端那一点。",
+            "凑近门里这层金属网，奥妙就在尺寸差里。",
+            "把冰放大到分子这一层，你会看到很多小空隙。",
+            "仔细看拉头里面，藏着一道丫字形通道。",
+        ):
+            self.assertIsNotNone(google_flow_audit.ABRUPT_CAMERA_DIRECTION_RE.search(abrupt), abrupt)
+        for natural in (
+            "同一块玻璃反差这么大，是因为它内部早就藏着两股互相拉扯的力。",
+            "算上卷进来的空气，最终吹出的风量能放大十几倍。",
+            "第一级杠杆先把指力放大近十倍，尖端受力被成倍放大。",
+            "同是电磁波却待遇不同，正好卡在小孔和波长的尺寸差上。",
+        ):
+            self.assertIsNone(google_flow_audit.ABRUPT_CAMERA_DIRECTION_RE.search(natural), natural)
+
     def test_presentation_checks_rejects_pingshenme(self):
         for surface in ("voiceover", "caption", "cover", "frame"):
             item = {"surface": surface, "text": "涂层凭什么粘在锅上？", "purposes": ["topic"]}

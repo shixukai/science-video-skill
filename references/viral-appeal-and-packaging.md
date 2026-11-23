@@ -29,7 +29,7 @@ For complete new feed films, design, produce, and test the 0–5 s opening FIRST
 
 The anti-preamble rule rejects delaying background, **not necessary subject naming** ([minimum viewer orientation](viewer-retention-design.md#orient-the-viewer-before-introducing-a-detail)). Repair these failures before body polish:
 - **Context-first delay or AI clickbait slogan** (`圆出口竟能拉出方便便…怎么做到的？`) → lead with the concrete observation in warm everyday speech (`<= 20` spoken units / `~3.5 s`).
-- **Throat-clearing / look-directions** (`大家好`, `你知道吗`, `先看这个`, `接下来我们来看看`) → cut and start on the visible event.
+- **Throat-clearing / abrupt look-or-camera directions** (`大家好`, `你知道吗`, `先看这个`, `接下来我们来看看`, `顺着截面往里看`, `剖开就能看到`, `放大截面`) → cut the stage command; start on the visible event and bridge through causal curiosity while the picture executes the cutaway or push-in.
 - **Static/fading start, black lead, logo, late caption, or conditioning-still head** → hard start: fully exposed moving Frame 0, sound present at frame 0, first syllable `<= 0.35 s`, first caption on at frame 0 (trim `>= 0.15 s` off AI video ramp heads).
 - **Disembodied internal fragment or tiny distant shell** → use the [host-to-part bridge](#anchor-a-part-inside-its-host) within 0–5 s.
 - **Stacked-modifier phrasing or post-hook 5–10 s clutter drop** → keep direct everyday verbs and visually isolate the first focal interface.
@@ -77,11 +77,11 @@ List the film's 3–5 strongest visual moments (climax reveal, cutaway, breakage
 
 ### Keep the hook honest
 
-Hook footage must belong to the film and be explained by the body. Cut empty look-directions (“想知道它怎么动？先看这个轮子。” → “当凸起正好转到顶杆下方时，顶杆就被顺势顶了起来。”) and apply [spoken-script editing](voice-reference.md#edit-narration-and-dialogue-for-the-ear).
+Hook footage must belong to the film and be explained by the body. Cut empty look-directions and abrupt narrator camera/cutaway commands (“想知道它怎么动？先看这个轮子。” → “当凸起正好转到顶杆下方时，顶杆就被顺势顶了起来。”; “顺着截面往里看，里面藏着两股力。” → “同一块玻璃反差这么大，是因为它内部早就藏着两股互相拉扯的力。”) and apply [spoken-script editing](voice-reference.md#edit-narration-and-dialogue-for-the-ear).
 
 ## Lock a concrete viewing promise by about 8 seconds
 
-Right after the payload (finishing by `promise_window_s` = `8 s`), state one concrete sentence naming what the viewer will visibly see or learn (`topic_alignment.opening.viewing_promise`: `line`, `fulfilled_by_scope_id`, `time_s`). Never use empty suspense (“揭开它的秘密” / “看到最后你就明白了”). Example: “把冰放大到分子这一层，你会看到它内部撑开了很多六边形的小空隙。”
+Right after the payload (finishing by `promise_window_s` = `8 s`), state one concrete sentence naming what physical change or inner cause explains the paradox (`topic_alignment.opening.viewing_promise`: `line`, `fulfilled_by_scope_id`, `time_s`). Never use empty suspense (“揭开它的秘密” / “看到最后你就明白了”) or abrupt zoom orders (“把冰放大到分子这一层”). Example: “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。”
 
 ## Keep a reason to stay
 

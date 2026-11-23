@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "50775f6ebe2cafc6a1b7979cb5d7d386ee248d8f9e4a47da2852c5b3238a3ba0",
+      "sha256": "db87fd0721bcd7b01e3cc72ca8aac6380e8e1e7fdaa673bd229782a92dfaa44e",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -23,7 +23,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "45dc3de45219c55162f78def4c3fb8b384ce972df24f3c682b7a84449cecd189",
+      "sha256": "2fe34937bcd5a50b290219502a0ecf648992bf5629b07779c51a48751b66d775",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -300,7 +300,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "cd2a00fc4d3fa7c351a5a46f6f24a05a71a3b6595d49e9207034478a80c34e37",
+      "sha256": "ab40673a7453d9e54cc88ec47a44a750db021b3947fb398f1400bee42304711c",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",

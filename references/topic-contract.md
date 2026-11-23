@@ -35,7 +35,7 @@ Examples of question-to-evidence openings (follow [SKILL.md's Route Isolation ga
 
 | Topic & warm conversational opening | Curiosity gap & payoff | Evidence & boundaries |
 | --- | --- | --- |
-| Ice floating (frame 0: ice cube dropping into water & bobbing up): “冰已经冻成硬块了，放进水里却还是稳稳浮在上面。明明都是水，结冰之后为什么反而变轻了？往里面放大到分子这一层，就能看清它的排列变化。” | Open ice lattice holds equal mass in larger volume. | Compare equal-mass liquid vs ordinary ice molecular packing ([USGS](https://www.usgs.gov/water-science-school/science/water-density/)). Molecules don't expand; limit to ordinary water ice at normal pressure. |
+| Ice floating (frame 0: ice cube dropping into water & bobbing up): “冰已经冻成硬块了，放进水里却还是稳稳浮在上面。同样是水，结冰之后反而变轻，是因为水分子重新排列时在内部撑开了很多小空隙。” | Open ice lattice holds equal mass in larger volume. | Compare equal-mass liquid vs ordinary ice molecular packing ([USGS](https://www.usgs.gov/water-science-school/science/water-density/)). Molecules don't expand; limit to ordinary water ice at normal pressure. |
 | Blue sky (frame 0: sunlit street tilting up to open blue sky): “阳光本身看起来近乎白色，可晴朗的天空为什么会是一整片蓝？跟着一束阳光穿过空气，就能看到蓝光是怎么拐进眼睛里的。” | White source vs blue sky from scattered light entering the eye. | Show sunlight → air → scattering → eye ([NASA](https://spaceplace.nasa.gov/blue-sky/en/)). Distinguish sky scattering from sunset path length. |
 | Delayed thunder (frame 0: lightning flash lighting clouds): “同一道闪电亮起来之后，雷声总要晚几秒才传到耳边。明明是同一次放电，为什么看到和听到会有时间差？其实光和声音走的是同一段路，只是赶路的速度差得太远了。” | Seeing/hearing delay comes from propagation speed, not delayed thunder creation. | Show heated air at discharge + light vs sound travel ([NOAA](https://www.nesdis.noaa.gov/about/k-12-education/severe-weather/what-causes-lightning-and-thunder)). Don't imply lightning waits to trigger thunder. |
 

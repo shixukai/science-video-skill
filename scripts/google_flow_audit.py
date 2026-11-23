@@ -34,6 +34,12 @@ CLICKBAIT_HOOK_RE = re.compile(
 BLUNT_HARSH_TONE_RE = re.compile(
     r"(?:偏要|别傻了|真以为|千万别再|听好了|看好了|说穿了|先说结论|一秒看懂|一句话告诉你|干爆|直接干掉)"
 )
+ABRUPT_CAMERA_DIRECTION_RE = re.compile(
+    r"(?:顺着[^，。！？\n]{0,8}往里看|"
+    r"(?:切开|剖开)[^，。！？\n]{0,8}(?:截面|外壳|底座|锅底|杯身|泵腔|就能看到|一看|来看)|"
+    r"把镜头拉近|镜头拉近|镜头切到|往里面?放大|把[^，。！？\n]{1,6}放大到|"
+    r"(?:^|[，。！？\n])\s*(?:放大(?:这个|这层|它的|锅底|链齿|晶体|截面|来看|看)|凑近[^，。！？\n]{1,10}|仔细看[^，。！？\n]{1,8}(?:里面|每颗|这层)))"
+)
 STRAWMAN_REVERSAL_RE = re.compile(
     r"(?:不是[^，。！？\n]{1,16}[，,]?而是|并非[^，。！？\n]{1,16}[，,]?而是|"
     r"你以为[^，。！？\n]{1,16}[，,]?其实|看似[^，。！？\n]{1,16}[，,]?实则)"
@@ -791,6 +797,8 @@ def _check_speech_and_holds(
                 ai_reasons.append("clickbait_contrast_hook")
             if BLUNT_HARSH_TONE_RE.search(script_source_text):
                 ai_reasons.append("blunt_or_harsh_tone")
+            if ABRUPT_CAMERA_DIRECTION_RE.search(script_source_text):
+                ai_reasons.append("abrupt_camera_stage_direction")
             if len(STRAWMAN_REVERSAL_RE.findall(script_source_text)) >= 2:
                 ai_reasons.append("strawman_reversal_density")
             zh_sents = [len(CJK_RE.findall(s)) for s in raw_sents if len(CJK_RE.findall(s)) > 0]

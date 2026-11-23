@@ -1,6 +1,6 @@
 # science-video-skill
 
-A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.48. The Git commit identifies the exact revision.
+A science-video production Skill for nature, daily life, engineering and industrial manufacturing. The current version is 1.6.49. The Git commit identifies the exact revision.
 
 - **Default editorial focus → everyday mechanisms × concrete visual demonstration.** Unassigned topic discovery anchors on recognizable everyday objects, devices and visible structural/physical mechanisms (~80%) plus observable concrete physical/scale paradoxes (~20%), using contradiction-first questions, tight single-mechanism scoping and staggered release spacing (`editorial_positioning` and `operations.publication_spacing` in `config/series-profile.json`) while always preserving explicit user-commissioned topics.
 - **Standing Douyin collections & publish-time assignment.** Every authorized public science release in the Douyin composer is assigned to its single matching standing collection (`operations.douyin_collections` in `config/series-profile.json`: `透视日常造物`, `解码巅峰工程`, `丈量天地寰宇`, `探秘生命法则`) by primary mechanism, excluding private/personal clips and supporting `1:1` (`1080×1080`) collection covers in `scripts/compose_cover.py`. See [Douyin collection assignment](references/production-checkpoints.md#assign-every-public-video-to-its-matching-douyin-collection).

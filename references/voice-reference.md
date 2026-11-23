@@ -15,28 +15,32 @@ Synthesize full narration only from the parent-integrated G1 script after checki
 Write and edit every spoken script in a **warm, unhurried, peer-level conversational register** — like an observant, knowledgeable friend standing next to the viewer looking at the same everyday object, never an impatient interrogator, lecturing textbook, clipped command list, or shouting short-video host. Read aloud in each language's natural spoken idiom (never force Mandarin sentence order into English) and resolve Mandarin polyphones (`<字|PINYIN4>` when needed) before synthesis.
 
 **Positive spoken-craft standard:**
-- **Speak with curiosity, not interrogation or lecturing.** Lead with shared everyday observation (`你会发现`, `有意思的是`, `仔细看的话`, `可仔细想想`) instead of challenging or scolding (`凭什么`, `凭啥`, `偏要`, `到底为什么`, `别傻了`, `真以为`, `千万别再`, `听好了`, `记住这一点`). For safety advice, explain the calm reason rather than barking bare imperatives.
-- **Let sentences breathe in relaxed everyday Mandarin.** Keep natural spoken connectors (`其实`, `这时候`, `慢慢地`, `顺着往里看`, `结果呢`, `原来`, `难怪`) instead of staccato 6–10 char headlines (`“冰是固体，却浮在水上。”`), rigid textbook nominalizations (`进行…`, `产生…作用`, `这一过程称为…`), or riddle-host clichés (`“答案藏在……里”`, `“接下来拆开看：”`).
+- **Speak with curiosity, not interrogation or lecturing.** Lead with shared everyday observation (`你会发现`, `有意思的是`, `可仔细想想`, `多半是`) instead of challenging or scolding (`凭什么`, `凭啥`, `偏要`, `到底为什么`, `别傻了`, `真以为`, `千万别再`, `听好了`, `记住这一点`). For safety advice, explain the calm reason rather than barking bare imperatives.
+- **Let sentences breathe in relaxed everyday Mandarin.** Keep natural spoken connectors (`其实`, `这时候`, `慢慢地`, `结果呢`, `原来`, `难怪`) instead of staccato 6–10 char headlines (`“冰是固体，却浮在水上。”`), rigid textbook nominalizations (`进行…`, `产生…作用`, `这一过程称为…`), or riddle-host clichés (`“答案藏在……里”`, `“接下来拆开看：”`).
+- **Bridge through causal curiosity, never abrupt camera or cutaway commands.** Let the **picture** execute the cutaway, zoom, or macro push-in while the **narration** stays inside the viewer's own chain of reasoning. Never interrupt a visible phenomenon with unmotivated stage-direction orders (`顺着截面往里看`, `切开它的截面`, `剖开锅底就能看到`, `放大锅底截面`, `把冰放大到分子这一层`, `凑近这层金属网`, `把镜头拉近`, `仔细看拉头里面`) — first motivate *why* the interior matters by naming the paradox or causal link, then describe what is physically happening inside.
 - **Use accurate, proportionate everyday verbs — zero crude force verbs.** Prefer vivid, accurate physics verbs (`轻轻一按`, `顺势被顶起来`, `把热油顶开并带出油面`) over crude shortcuts (`狠狠砸碎`, `干爆`, `直接干掉`, `直接掀翻`, `全靠它`, `说白了就一个原因`).
-- **Land transitions and endings softly.** Bridge sections through natural curiosity (`看到这儿，你可能会好奇…`, `顺着这条细缝往里看…`) and settle calmly back onto the opening scene after explaining the mechanism (no trailing filler question, no hard mid-breath cutoff).
+- **Land transitions and endings softly.** Bridge sections through natural curiosity (`看到这儿，你可能会好奇…`, `同样都是电磁波，微波怎么就被挡在里面了呢？`) and settle calmly back onto the opening scene after explaining the mechanism (no trailing filler question, no hard mid-breath cutoff).
 
 | Stiff or blunt draft (avoid) | Warm, natural conversational rewrite (target register) |
 | --- | --- |
 | “冰是固体，却浮在水上。” | “冰明明已经冻成硬块了，放进水里却还能稳稳浮在上面。” |
+| “钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。顺着截面往里看，里面藏着两股互相拉扯的力。” | “钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。同一块玻璃反差这么大，是因为它内部早就藏着两股互相拉扯的力。” |
+| “不粘锅连鸡蛋都粘不住，放大锅底截面，就能看到底层的微米小坑。” | “不粘锅连煎蛋都粘不住，要让这层滑溜材料站稳，得先在锅底打出微米小坑，再靠中间底漆拉住。” |
 | “砸一块陶瓷，凭什么生出几千伏高压？” | “打火机里这块小陶瓷，手指轻轻一按，怎么就能压出几千伏高压？” |
 | “凸轮一转，顶杆就抬起。” | “凸轮转到凸起那一侧时，上面的顶杆就会顺势被顶起来。” |
 | “它为什么不悄悄蒸发，偏要炸？” | “油这么烫，水为什么不慢慢蒸发掉，反而会一下子溅出来呢？” |
 | “先看冷油，水染了色。” | “我们先拿一杯凉油试试，滴进一滴染过色的水。” |
 | “别掀盖、别端锅，等它凉透。” | “盖严之后先别急着掀开，也别端着锅走动，等油温慢慢降下来就稳妥了。” |
 
-**Seven mechanical/editorial screens before synthesis** (screened by `scripts/google_flow_audit.py` and `scripts/opening_hook.py`):
+**Eight mechanical/editorial screens before synthesis** (screened by `scripts/google_flow_audit.py` and `scripts/opening_hook.py`):
 1. **`clickbait_contrast_hook`:** Zero `凭什么`/`凭啥` anywhere in titles, covers, feed headers, narration, or captions; zero marketing formulas (`圆出口竟能拉出方便便，袋熊是怎么做到的？`) or stacked pre-noun modifiers (`油一满，没电线的加油枪怎么知道该停？` → `加油枪怎么知道油加满了而跳枪？`).
 2. **`blunt_or_harsh_tone`:** Strip `偏要`, `别傻了`, `真以为`, `千万别再`, `听好了`, `看好了`, `说穿了`, `先说结论`, `一秒看懂`, `一句话告诉你`, bare imperative chains, and crude violent verbs (`干爆`/`直接干掉`/`狠狠砸碎`).
-3. **`telegraphic_short_sentences`:** No coined 2–4 char shorthand (`圆出口`, `拉方块`, `硬带压平`) or rapid-fire staccato clauses (`mean < 22` CJK chars/sentence).
-4. **`prompt_header_colon`:** Strip slide colons (`第一步靠…：`, `先打破一个常识误区：`, `核心在于：`, `关键在于：`, `原因如下：`, `说白了，`).
-5. **`strawman_reversal_density`:** Avoid repeating `不是 A，而是 B / 并非…而是… / 你以为…其实…` across paragraphs.
-6. **`semicolon_tail_stuffing`:** Never bolt an unpictured caveat onto a shot tail with `；`; put each condition test inside its matching chapter.
-7. **`slogan_closing_formula`:** No stacked 3+ symmetrical `[7–9 chars]，[7–9 chars]。` couplets or advertising slogans.
+3. **`abrupt_camera_stage_direction`:** Strip unmotivated narrator camera/cutaway/zoom orders (`顺着截面往里看`, `切开…截面`, `剖开…就能看到`, `放大…截面/小切口/来看`, `把…放大到…这一层`, `凑近…看`, `把镜头拉近`, `仔细看…里面`); let the visuals cut in while narration follows the causal reason.
+4. **`telegraphic_short_sentences`:** No coined 2–4 char shorthand (`圆出口`, `拉方块`, `硬带压平`) or rapid-fire staccato clauses (`mean < 22` CJK chars/sentence).
+5. **`prompt_header_colon`:** Strip slide colons (`第一步靠…：`, `先打破一个常识误区：`, `核心在于：`, `关键在于：`, `原因如下：`, `说白了，`).
+6. **`strawman_reversal_density`:** Avoid repeating `不是 A，而是 B / 并非…而是… / 你以为…其实…` across paragraphs.
+7. **`semicolon_tail_stuffing`:** Never bolt an unpictured caveat onto a shot tail with `；`; put each condition test inside its matching chapter.
+8. **`slogan_closing_formula`:** No stacked 3+ symmetrical `[7–9 chars]，[7–9 chars]。` couplets or advertising slogans.
 
 Also strip production syntax (`[pause]`, speaker tags, timestamps) before TTS, keep conditional claim meaning intact under [claim preservation](science-and-rights.md#preserve-claim-meaning-through-production-handoffs), and keep the opening `hook.first_line` payload within `payload_max_spoken_units` (`20` spoken units, `~3.5 s`) naturally (trim leading silence so first syllable starts by `audio_onset_max_s` without speeding speech). Editorial references: [Humanizer-zh](https://github.com/op7418/Humanizer-zh), [lieflat-less-ai-tone](https://github.com/larashero3-dotcom/lieflat-less-ai-tone).
 
