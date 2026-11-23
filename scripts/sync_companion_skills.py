@@ -17,6 +17,8 @@ import stat
 import sys
 
 SKILL_NAMES = ("science-video-topic-selection", "science-video-publishing")
+SOURCE_ENTRY_NAME = "SKILL.src.md"
+TARGET_ENTRY_NAME = "SKILL.md"
 BACKUP_DIR_NAME = ".science-video-skill-backups"
 SKIP_PARTS = {".git", "__pycache__"}
 
@@ -49,11 +51,22 @@ def _iter_source_files(skill_dir):
     return files
 
 
+def _target_rel(rel):
+    if rel.as_posix() == SOURCE_ENTRY_NAME:
+        return Path(TARGET_ENTRY_NAME)
+    return rel
+
+
 def validate_companion_source(source_root, name):
     skill_dir = Path(source_root) / name
-    skill_md = skill_dir / "SKILL.md"
+    nested_skill_md = skill_dir / TARGET_ENTRY_NAME
+    if nested_skill_md.exists():
+        raise ValueError(
+            f"Nested {TARGET_ENTRY_NAME} causes duplicate recursive skill discovery; store as {SOURCE_ENTRY_NAME}: {nested_skill_md}"
+        )
+    skill_md = skill_dir / SOURCE_ENTRY_NAME
     if not skill_md.is_file():
-        raise ValueError(f"Companion skill missing SKILL.md: {skill_dir}")
+        raise ValueError(f"Companion skill missing {SOURCE_ENTRY_NAME}: {skill_dir}")
     declared = parse_frontmatter_name(skill_md)
     if declared != name:
         raise ValueError(f"Frontmatter name mismatch in {skill_md}: {declared!r} != {name!r}")
@@ -106,7 +119,8 @@ def plan_sync(source_root, codex_home):
             status = "missing"
         for rel, src in files:
             src_bytes = src.read_bytes()
-            dst = target_dir / rel
+            trel = _target_rel(rel)
+            dst = target_dir / trel
             if dst.is_file():
                 dst_bytes = dst.read_bytes()
                 fstatus = "current" if dst_bytes == src_bytes else "differs"
@@ -118,7 +132,7 @@ def plan_sync(source_root, codex_home):
                 if status == "current":
                     status = "differs" if target_dir.exists() else "missing"
             file_plan.append({
-                "rel": rel.as_posix(),
+                "rel": trel.as_posix(),
                 "source": str(src),
                 "target": str(dst),
                 "source_sha256": sha(src_bytes),

@@ -7,7 +7,7 @@
     {
       "owner_id": "topic",
       "file": "references/topic-contract.md",
-      "sha256": "0105a04dc7c40acb2d34f4d6ae0cf8a948ee124c85265f8d905206e917098678",
+      "sha256": "50775f6ebe2cafc6a1b7979cb5d7d386ee248d8f9e4a47da2852c5b3238a3ba0",
       "anchors": [
         "preserve-the-original-topic-question-type-and-delivery-scope-during-local-revisions",
         "preserve-the-original-anchor",
@@ -23,7 +23,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "82f491778a3300281458984186faded7895e02be45667a0e9148c7a07fde39e2",
+      "sha256": "45dc3de45219c55162f78def4c3fb8b384ce972df24f3c682b7a84449cecd189",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",

@@ -10,9 +10,9 @@ Start from a concrete question and make its answer visible. Prioritize the openi
 ## Three-skill workflow suite
 
 This repository maintains **three independent top-level skills** synced via `scripts/sync_companion_skills.py`:
-1. **`science-video-topic-selection`** ([source](skills/science-video-topic-selection/SKILL.md)) — pre-script topic discovery, originality/overlap checks, titles, cover concepts, and 0–5 s Hook Lab → hands off a **Topic Decision Card**.
+1. **`science-video-topic-selection`** ([source](skills/science-video-topic-selection/SKILL.src.md)) — pre-script topic discovery, originality/overlap checks, titles, cover concepts, and 0–5 s Hook Lab → hands off a **Topic Decision Card**.
 2. **`science-video-production`** *(this skill)* — script craft, conversational narration & voice mastering, route-isolated media generation/editing, covers (`compose_cover.py`), G1–G5 quality review, and moving accepted finals to `release-candidate/`.
-3. **`science-video-publishing`** ([source](skills/science-video-publishing/SKILL.md)) — 9:16 vertical feed packaging (`feed_package.py`), Douyin/Xiaohongshu/YouTube submission & standing collections, post-confirmation archive moves (`release-candidate/` → `archive/`), and platform data retrospectives (`next_production_brief`).
+3. **`science-video-publishing`** ([source](skills/science-video-publishing/SKILL.src.md)) — 9:16 vertical feed packaging (`feed_package.py`), Douyin/Xiaohongshu/YouTube submission & standing collections, post-confirmation archive moves (`release-candidate/` → `archive/`), and platform data retrospectives (`next_production_brief`).
 
 Use the dedicated companion skill directly when a task is purely topic selection or purely publishing/retrospective — do not pull production rules into those tasks.
 
@@ -49,13 +49,13 @@ Use the dedicated companion skill directly when a task is purely topic selection
 | Local repair | Read current media, original request and latest feedback; preserve valid assets/audio and recheck [affected dependencies](references/quality-acceptance.md#handling-failures). |
 | Video only (`video_only`) | Set `delivery_scope=video_only` + `delivery_scope_note`; stop at G5 and [move accepted exports to `release-candidate`](references/production-checkpoints.md#move-accepted-and-published-videos). Complete Google Flow films still deliver paired `zh`/`en` editions. |
 | Covers / release package | Default `delivery_scope=release_package` includes independently composed 3:4 and 4:3 covers with realistic topic-matched backgrounds, typeset strictly via `scripts/compose_cover.py` (`Noto Sans SC`, fixed sizes, closed color presets, zero strokes/shadows). |
-| Platform release / direct publication | Prefer the standalone [`science-video-publishing`](skills/science-video-publishing/SKILL.md) skill directly. It covers checked `feed_package.py` 9:16 derivatives, direct publication without G1–G6 paperwork, Douyin single-composer multi-platform release (`#科普`, standing collections `透视日常造物`/`解码巅峰工程`/`丈量天地寰宇`/`探秘生命法则`, no-download, AI disclosure), Xiaohongshu user handoff, post-submit stop rule, and verified `release-candidate` → `archive` moves. |
+| Platform release / direct publication | Prefer the standalone [`science-video-publishing`](skills/science-video-publishing/SKILL.src.md) skill directly. It covers checked `feed_package.py` 9:16 derivatives, direct publication without G1–G6 paperwork, Douyin single-composer multi-platform release (`#科普`, standing collections `透视日常造物`/`解码巅峰工程`/`丈量天地寰宇`/`探秘生命法则`, no-download, AI disclosure), Xiaohongshu user handoff, post-submit stop rule, and verified `release-candidate` → `archive` moves. |
 
 ## Core production standards (shared summary)
 
 | Area | Essential rule (read linked owner body when acting) |
 | --- | --- |
-| Topic selection | For unassigned topics, follow `editorial_positioning` in [series profile](config/series-profile.json) (~80% everyday objects & visible physical mechanisms, ~20% observable scale/physical paradoxes) via [Topic Selection Skill](skills/science-video-topic-selection/SKILL.md). Always preserve user-commissioned topics. |
+| Topic selection | For unassigned topics, follow `editorial_positioning` in [series profile](config/series-profile.json) (~80% everyday objects & visible physical mechanisms, ~20% observable scale/physical paradoxes) via [Topic Selection Skill](skills/science-video-topic-selection/SKILL.src.md). Always preserve user-commissioned topics. |
 | Duration & depth | **No mandatory minimum or maximum duration or word count.** Let clear explanation and observation set runtime naturally; keep standalone feed episodes focused on one core contradiction and causal chain without padding or speeding up speech. |
 | HD output | Formal samples and finals on every route require short edge `>= 1080` matching `design.output` (default `1920×1080`, `24 fps` CFR on pure Google Flow timelines). `720p` exports are internal proxies only; verify streams with `ffprobe` and inspect full-res `1920×1080` Frame 0 and hero frames. |
 | Provenance & safety | Self-created visuals or verified authorized user capture only (licensed 3D model inputs permitted on 3D routes); third-party finished footage/stills stay research-only. Keep [potentially disturbing imagery](references/visual-system.md#handle-potentially-disturbing-imagery) clean — zero peeled-skin, carved-window, or body-horror cutaways in video or covers. |

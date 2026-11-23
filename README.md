@@ -32,9 +32,9 @@ Start at [SKILL.md](SKILL.md) and read responsibility bodies for the actual comm
 
 | Need | Body |
 | --- | --- |
-| Research and select a topic before scripting | [Standalone Topic Selection Skill](skills/science-video-topic-selection/SKILL.md) (`science-video-topic-selection`) |
+| Research and select a topic before scripting | [Standalone Topic Selection Skill](skills/science-video-topic-selection/SKILL.src.md) (`science-video-topic-selection`) |
 | Produce, voice, edit, cover, and verify the video | [Production Skill](SKILL.md) (`science-video-production`) |
-| Vertical feed packaging, platform release, archive & data retrospective | [Standalone Publishing Skill](skills/science-video-publishing/SKILL.md) (`science-video-publishing`) |
+| Vertical feed packaging, platform release, archive & data retrospective | [Standalone Publishing Skill](skills/science-video-publishing/SKILL.src.md) (`science-video-publishing`) |
 | Sync top-level companion skills & custom agents | `scripts/sync_companion_skills.py`, `scripts/sync_video_agents.py` |
 | Original topic, complete chain and opening | [Topic contract](references/topic-contract.md), [opening/transitions](references/viewer-retention-design.md) |
 | Actual tools and execution stages (Controlled 3D / Local Realistic only) | [Tool routing](references/tool-routing.md), [production checkpoints](references/production-checkpoints.md) |

@@ -4,7 +4,7 @@ Use this page to design honest hooks, viewing promises, open-loop retention, and
 
 ## Carry topic appeal into production
 
-Carry forward the Topic Decision Card's two core hooks from [science-video-topic-selection](../skills/science-video-topic-selection/SKILL.md): **what viewers see that earns a stop**, and **what they can explain/judge afterward**. Preserve commissioned topics as-is and find their strongest honest entry.
+Carry forward the Topic Decision Card's two core hooks from [science-video-topic-selection](../skills/science-video-topic-selection/SKILL.src.md): **what viewers see that earns a stop**, and **what they can explain/judge afterward**. Preserve commissioned topics as-is and find their strongest honest entry.
 
 ## Design the package before the script
 

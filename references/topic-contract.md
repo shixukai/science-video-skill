@@ -20,7 +20,7 @@ For narrow sample repairs (`scope.kind=local_sample`, `qa.visual_frames.animatio
 
 ## Topic selection for adult audiences
 
-Pre-script editorial discovery, channel positioning (~80% everyday objects & visible physical mechanisms, ~20% observable physical/scale paradoxes), closest-comparison novelty checks, and Hook Lab selection live in the standalone **[Science Video Topic Selection Skill](../skills/science-video-topic-selection/SKILL.md)** (`science-video-topic-selection`).
+Pre-script editorial discovery, channel positioning (~80% everyday objects & visible physical mechanisms, ~20% observable physical/scale paradoxes), closest-comparison novelty checks, and Hook Lab selection live in the standalone **[Science Video Topic Selection Skill](../skills/science-video-topic-selection/SKILL.src.md)** (`science-video-topic-selection`).
 
 Map its Topic Decision Card into `brief.topic_selection` (no duplicate form):
 - `audience_category` (default `ordinary_adults`), `conflict_or_question`, `adult_relevance`, `knowledge_increment`, primary `source_ids`, `causal_visualization`, `feasibility` (`materials_and_rights_plan`, `method`, `constraints`, `blocking_gaps`), `interest_basis` (`editorial_hypothesis` by default; `observed_audience_evidence` only with real evidence), `disqualifiers` (`common_knowledge_only`, `definition_only`, `title_only_change`, `asset_led`, `unsupported_hook`, `no_explanatory_payoff`, `unvisualizable`, `unfeasible`), and `review` (`status=selected|revise|rejected|pending`, `reviewer`, `reason`, `selection_context_sha256(data)`).

@@ -13,11 +13,19 @@ spec.loader.exec_module(sync)
 
 
 class CompanionSkillsContractTests(unittest.TestCase):
+    def test_no_nested_skill_md_prevents_recursive_duplicate_discovery(self):
+        found = [
+            p.relative_to(ROOT).as_posix()
+            for p in ROOT.rglob("SKILL.md")
+            if ".git" not in p.parts
+        ]
+        self.assertEqual(found, ["SKILL.md"])
+
     def test_companion_skills_are_self_contained_and_route_clean(self):
         for name in sync.SKILL_NAMES:
             with self.subTest(skill=name):
                 files = sync.validate_companion_source(ROOT / "skills", name)
-                self.assertTrue(any(rel.as_posix() == "SKILL.md" for rel, _ in files))
+                self.assertTrue(any(rel.as_posix() == sync.SOURCE_ENTRY_NAME for rel, _ in files))
                 for rel, path in files:
                     if path.suffix.lower() != ".md":
                         continue
@@ -59,7 +67,7 @@ class CompanionSkillsContractTests(unittest.TestCase):
         policy = json.loads((ROOT / "config/production-policy.json").read_text(encoding="utf-8"))
         self.assertEqual(policy["feed_package"]["destinations"], ["douyin_composer_group"])
         self.assertIn("xiaohongshu", policy["feed_package"]["master_destinations"])
-        pub_md = (ROOT / "skills/science-video-publishing/SKILL.md").read_text(encoding="utf-8")
+        pub_md = (ROOT / "skills/science-video-publishing/SKILL.src.md").read_text(encoding="utf-8")
         self.assertIn("Xiaohongshu (user-operated composer handoff, 16:9 landscape video)", pub_md)
         self.assertIn("NOT `-feed916.mp4`", pub_md)
 
@@ -89,7 +97,7 @@ class CompanionSkillsContractTests(unittest.TestCase):
             src = Path(tmp) / "skills"
             bad = src / "science-video-topic-selection"
             bad.mkdir(parents=True)
-            (bad / "SKILL.md").write_text(
+            (bad / "SKILL.src.md").write_text(
                 "---\nname: science-video-topic-selection\n---\n[escape](../../config/series-profile.json)\n",
                 encoding="utf-8",
             )
