@@ -282,10 +282,51 @@ class ReferenceSystemTests(unittest.TestCase):
         td = profile["video_generation"]["style_routing"]["three_d_animation"]
         self.assertEqual(td["blender_render_compute_policy"], "colab_first_with_local_fallback")
         self.assertEqual(td["blender_colab_entrypoint"], "scripts/colab_cli.py blender-render")
+        self.assertEqual(td["colab_default_visual_style"], "high_poly_industrial_3d")
+        self.assertEqual(td["colab_modeling_standard"], "high_poly_industrial_v1")
+        self.assertEqual(
+            td["colab_3d_default"]["modeling_guide"],
+            "references/engineering-blender.md#high-poly-industrial-modeling-standard-for-colab-3d",
+        )
         registry = json.loads((self.root / "indexes/standard-coverage.json").read_text(encoding="utf-8"))
         sections = {row["file"]: row for row in registry["sections"]}
         self.assertEqual(sections["references/tool-routing.md"]["owner_id"], "tools")
         self.assertIn("colab-cli-and-remote-gpu-integration", sections["references/tool-routing.md"]["anchors"])
+        self.assertIn(
+            "default-colab-3d-modeling-and-visual-style-high-poly-industrial",
+            sections["references/tool-routing.md"]["anchors"],
+        )
+        self.assertIn(
+            "high-poly-industrial-modeling-standard-for-colab-3d",
+            sections["references/engineering-blender.md"]["anchors"],
+        )
+
+    def test_colab_high_poly_segment_floor_cannot_be_weakened(self):
+        self.edit(
+            "config/series-profile.json",
+            lambda d: d["video_generation"]["style_routing"]["three_d_animation"]["colab_3d_default"]["geometry_standards"].update(
+                hero_cylinder_min_segments=16
+            ),
+        )
+        self.errors("high_poly_industrial_3d")
+
+    def test_colab_modeling_screening_cannot_claim_visual_acceptance(self):
+        self.edit(
+            "config/series-profile.json",
+            lambda d: d["video_generation"]["style_routing"]["three_d_animation"]["colab_3d_default"]["geometry_standards"].update(
+                screening_is_not_visual_acceptance=False
+            ),
+        )
+        self.errors("high_poly_industrial_3d")
+
+    def test_colab_oidn_albedo_normal_pass_cannot_be_dropped(self):
+        self.edit(
+            "config/series-profile.json",
+            lambda d: d["video_generation"]["style_routing"]["three_d_animation"]["colab_3d_default"]["cycles_defaults"].update(
+                denoising_input_passes="RGB"
+            ),
+        )
+        self.errors("high_poly_industrial_3d")
 
     def test_google_flow_route_isolation_excludes_moneyprinter_and_vork(self):
         skill = (self.root / "SKILL.md").read_text(encoding="utf-8")

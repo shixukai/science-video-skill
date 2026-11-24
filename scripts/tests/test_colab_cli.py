@@ -224,6 +224,9 @@ class ColabCliTests(unittest.TestCase):
         rec = json.loads(receipt.read_text(encoding="utf-8"))
         self.assertTrue(rec["dry_run"])
         self.assertEqual(rec["blender_render"]["selected_backend"], "CUDA")
+        self.assertEqual(rec["blender_render"]["modeling_profile"], "high_poly_industrial_v1")
+        self.assertEqual(rec["blender_render"]["adaptive_threshold"], 0.015)
+        self.assertEqual(rec["blender_render"]["denoising_input_passes"], "RGB_ALBEDO_NORMAL")
         self.assertEqual(rec["uploads"][0]["bytes"], len(b"BLENDER_FAKE_PACKED"))
         self.assertEqual(rec["review_status"], "complete_unreviewed")
         # Refuses overwriting existing receipt
@@ -288,6 +291,246 @@ class ColabCliTests(unittest.TestCase):
         self.assertEqual(rec["remote_blender_meta"]["gpu"], "NVIDIA A100-SXM4-80GB")
         self.assertEqual(calls[0], ["colab", "new", "-s", "ep02-sh3", "--gpu", "G4"])
         self.assertEqual(calls[-1], ["colab", "stop", "-s", "ep02-sh3"])
+
+    def test_evaluate_industrial_audit_passes_clean_high_poly_scene(self):
+        stats = {
+            "frame": 1,
+            "mesh_object_count": 3,
+            "evaluated_polygon_count": 48200,
+            "evaluated_triangle_count": 96400,
+            "meshes": [
+                {
+                    "name": "CNC_Housing_Main",
+                    "polygon_count": 32000,
+                    "triangle_count": 64000,
+                    "smooth_face_ratio": 0.92,
+                    "modifiers": ["BEVEL", "WEIGHTED_NORMAL"],
+                    "has_bevel": True,
+                    "has_subsurf": False,
+                    "has_weighted_normal": True,
+                    "has_solidify": False,
+                    "has_node_material": True,
+                },
+                {
+                    "name": "ISO4762_M6_Bolts",
+                    "polygon_count": 16199,
+                    "triangle_count": 32398,
+                    "smooth_face_ratio": 0.85,
+                    "modifiers": ["BEVEL", "EDGE_SPLIT"],
+                    "has_bevel": True,
+                    "has_subsurf": False,
+                    "has_weighted_normal": True,
+                    "has_solidify": False,
+                    "has_node_material": True,
+                },
+                {
+                    "name": "Graphite_Workbench_Floor",
+                    "polygon_count": 1,
+                    "triangle_count": 2,
+                    "smooth_face_ratio": 0.0,
+                    "modifiers": [],
+                    "has_bevel": False,
+                    "has_subsurf": False,
+                    "has_weighted_normal": False,
+                    "has_solidify": False,
+                    "has_node_material": True,
+                },
+            ],
+            "non_uniform_scale_objects": [],
+            "unapplied_uniform_scale_objects": [],
+            "viewport_only_material_objects": [],
+            "has_active_rigidbody_world": False,
+            "unpacked_external_images": [],
+            "missing_libraries": [],
+            "color_management": {"display_device": "sRGB", "view_transform": "AgX", "look": "None", "exposure": 0.0, "gamma": 1.0},
+            "cycles_bounces": {"max_bounces": 12, "glossy_bounces": 4, "transmission_bounces": 12, "diffuse_bounces": 4},
+        }
+        audit = colab_cli.evaluate_industrial_audit(stats, shards=2)
+        self.assertEqual(audit["profile"], "high_poly_industrial_v1")
+        self.assertEqual(audit["review_status"], "technical_screening_only_not_visual_acceptance")
+        self.assertTrue(audit["passed"])
+        self.assertTrue(audit["strict_passed"])
+        self.assertEqual(audit["blocking_issues"], [])
+        self.assertEqual(audit["warnings"], [])
+
+    def test_evaluate_industrial_audit_flags_low_poly_flat_unbaked_and_unpacked_defects(self):
+        stats = {
+            "frame": 1,
+            "mesh_object_count": 2,
+            "evaluated_polygon_count": 48,
+            "evaluated_triangle_count": 96,
+            "meshes": [
+                {
+                    "name": "Toy_Cylinder_16seg",
+                    "polygon_count": 32,
+                    "triangle_count": 64,
+                    "smooth_face_ratio": 0.0,
+                    "modifiers": [],
+                    "has_bevel": False,
+                    "has_subsurf": False,
+                    "has_weighted_normal": False,
+                    "has_solidify": False,
+                    "has_node_material": False,
+                },
+                {
+                    "name": "Beveled_Cap_NoWN",
+                    "polygon_count": 16,
+                    "triangle_count": 32,
+                    "smooth_face_ratio": 1.0,
+                    "modifiers": ["BEVEL"],
+                    "has_bevel": True,
+                    "has_subsurf": False,
+                    "has_weighted_normal": False,
+                    "has_solidify": False,
+                    "has_node_material": True,
+                },
+            ],
+            "non_uniform_scale_objects": [{"name": "Toy_Cylinder_16seg", "scale": [1.0, 1.0, 2.5]}],
+            "unapplied_uniform_scale_objects": [{"name": "Beveled_Cap_NoWN", "scale": [0.5, 0.5, 0.5]}],
+            "viewport_only_material_objects": ["Toy_Cylinder_16seg"],
+            "has_active_rigidbody_world": True,
+            "unpacked_external_images": ["brushed_metal.png"],
+            "missing_libraries": ["//missing_cad.blend"],
+        }
+        audit = colab_cli.evaluate_industrial_audit(stats, shards=2)
+        self.assertFalse(audit["passed"])
+        self.assertFalse(audit["strict_passed"])
+        blocking_codes = {item["code"] for item in audit["blocking_issues"]}
+        warning_codes = {item["code"] for item in audit["warnings"]}
+        self.assertEqual(
+            blocking_codes,
+            {
+                "unbaked_rigidbody_world",
+                "unpacked_external_images",
+                "missing_linked_libraries",
+                "viewport_only_materials",
+                "non_uniform_scale",
+            },
+        )
+        self.assertEqual(
+            warning_codes,
+            {
+                "low_poly_scene",
+                "flat_shaded_curved_meshes",
+                "unbeveled_low_detail_meshes",
+                "beveled_without_weighted_normal",
+                "unapplied_uniform_scale",
+            },
+        )
+
+        # Custom profile suppresses high-poly-specific geometry warnings while retaining Colab render blockers
+        custom_audit = colab_cli.evaluate_industrial_audit(stats, modeling_profile="custom", shards=2)
+        self.assertEqual(custom_audit["profile"], "custom")
+        self.assertFalse(custom_audit["passed"])
+        self.assertEqual({item["code"] for item in custom_audit["warnings"]}, {"unapplied_uniform_scale"})
+
+    def test_remote_blender_driver_compiles_with_oidn_albedo_normal_and_audit(self):
+        driver_src = colab_cli._build_remote_blender_driver(
+            remote_blend="/content/hero.blend",
+            remote_mp4="/content/out.mp4",
+            remote_meta="/content/meta.json",
+            frame_start=1,
+            frame_end=120,
+            samples=96,
+            width=1920,
+            height=1080,
+            fps=30,
+            crf=14,
+            shards=2,
+            backend="CUDA",
+            blender_url=colab_cli.DEFAULT_BLENDER_LINUX_URL,
+            adaptive_threshold=0.012,
+            modeling_profile="high_poly_industrial",
+            min_scene_triangles=40000,
+            strict_modeling_audit=True,
+        )
+        compile(driver_src, "<remote_blender_driver>", "exec")
+        compile(colab_cli._INDUSTRIAL_AUDIT_BLENDER_CODE, "<industrial_audit_blender>", "exec")
+        self.assertIn("RGB_ALBEDO_NORMAL", driver_src)
+        self.assertIn("industrial_modeling_audit", driver_src)
+        self.assertIn("0.012", driver_src)
+        self.assertIn("strict_modeling_audit", driver_src)
+
+    def test_audit_blend_cli_runs_headless_blender_and_enforces_strict_mode(self):
+        blend = self.tmp / "hero.blend"
+        blend.write_bytes(b"BLENDER_FAKE")
+        fake_blender = self.tmp / "blender.exe"
+        fake_blender.write_bytes(b"FAKE_BIN")
+        report_warn = self.tmp / "audit-warn.json"
+        report_strict = self.tmp / "audit-strict.json"
+
+        low_poly_stats = {
+            "frame": 10,
+            "mesh_object_count": 1,
+            "evaluated_polygon_count": 32,
+            "evaluated_triangle_count": 64,
+            "meshes": [{
+                "name": "LowPoly_Tube",
+                "polygon_count": 32,
+                "triangle_count": 64,
+                "smooth_face_ratio": 0.0,
+                "modifiers": [],
+                "has_bevel": False,
+                "has_subsurf": False,
+                "has_weighted_normal": False,
+                "has_solidify": False,
+                "has_node_material": True,
+            }],
+            "non_uniform_scale_objects": [],
+            "unapplied_uniform_scale_objects": [],
+            "viewport_only_material_objects": [],
+            "has_active_rigidbody_world": False,
+            "unpacked_external_images": [],
+            "missing_libraries": [],
+        }
+
+        def fake_blender_run(cmd, **_kwargs):
+            out_idx = cmd.index("--out-json") + 1
+            Path(cmd[out_idx]).write_text(json.dumps(low_poly_stats), encoding="utf-8")
+            return _FakeProc(0, stdout="INDUSTRIAL_AUDIT_STATS=" + json.dumps(low_poly_stats) + "\n")
+
+        # Non-strict mode passes (exit 0) when only advisory high-poly warnings exist
+        out1 = io.StringIO()
+        with mock.patch("sys.stdout", out1):
+            args1 = colab_cli.build_parser().parse_args([
+                "audit-blend",
+                "--blend", str(blend),
+                "--blender", str(fake_blender),
+                "--frame", "10",
+                "--report", str(report_warn),
+            ])
+            rc1 = colab_cli.cmd_audit_blend(args1, runner=fake_blender_run)
+        self.assertEqual(rc1, 0)
+        rec1 = json.loads(report_warn.read_text(encoding="utf-8"))
+        self.assertTrue(rec1["passed"])
+        self.assertFalse(rec1["strict_passed"])
+        self.assertTrue(any(w["code"] == "low_poly_scene" for w in rec1["warnings"]))
+
+        # Strict mode fails (exit 1) when high-poly industrial warnings exist
+        out2 = io.StringIO()
+        with mock.patch("sys.stdout", out2):
+            args2 = colab_cli.build_parser().parse_args([
+                "audit-blend",
+                "--blend", str(blend),
+                "--blender", str(fake_blender),
+                "--strict",
+                "--report", str(report_strict),
+            ])
+            rc2 = colab_cli.cmd_audit_blend(args2, runner=fake_blender_run)
+        self.assertEqual(rc2, 1)
+        self.assertTrue(report_strict.is_file())
+
+        # Existing report cannot be overwritten silently
+        err3 = io.StringIO()
+        with mock.patch("sys.stderr", err3):
+            args3 = colab_cli.build_parser().parse_args([
+                "audit-blend",
+                "--blend", str(blend),
+                "--blender", str(fake_blender),
+                "--report", str(report_strict),
+            ])
+            rc3 = colab_cli.cmd_audit_blend(args3, runner=fake_blender_run)
+        self.assertEqual(rc3, 2)
 
 
 if __name__ == "__main__":

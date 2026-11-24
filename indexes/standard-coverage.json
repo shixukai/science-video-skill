@@ -171,7 +171,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "4a7b76b2b2dd891a0b61ea296aff9090bca37112110aaeb49ac3333ba33869f5",
+      "sha256": "68830fa28d1f96eab465f2a5392c72d322580b3777c742489d5c31dbb16c65f9",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -433,11 +433,12 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "863b82fc1e8096b50d664017b6dce0e5eab5486539bc7b1a187ceeef5d06de91",
+      "sha256": "5b573b63bc1c1fb8a825905f269e2add27f36374761295953eed1da12528ce66",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
         "recognize-the-actual-object-before-explaining-its-interior",
+        "high-poly-industrial-modeling-standard-for-colab-3d",
         "actual-execution-of-bright-lighting-and-materials",
         "blender-backgrounds-and-spatial-completion",
         "character-rigging-motion-capture-and-lip-sync",
@@ -458,7 +459,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "b2fe29713d7a389887eb49a07f0047be2f9883c8a73f81a1e9f6b94062d2840c",
+      "sha256": "094fe3cfc943e4088134836edf95035c0bd677eab106f84c746a94c317869d3b",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -476,7 +477,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "cb6471a712b52f221e7e440aac87aa2f465c2a9970c58c324d9a0dd718f1c576",
+      "sha256": "3f6768450c37f9165bd6fb8ff4fdf4379d4cad3dcff7a732c9400e54fb2bb8c9",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -494,7 +495,7 @@
         "local-ai-toolkit-routing-and-license-gates",
         "colab-cli-and-remote-gpu-integration",
         "choose-between-two-authorized-access-modes-and-fall-back-locally",
-        "default-colab-3d-visual-style-industrial-exploded-view-keynote",
+        "default-colab-3d-modeling-and-visual-style-high-poly-industrial",
         "platform-preflight-authentication-and-non-interactive-agent-boundaries",
         "provisioning-execution-bandwidth-discipline-and-mandatory-teardown"
       ]

@@ -233,6 +233,31 @@ def check(root):
             json.loads(palettes_path.read_text(encoding="utf-8"))
         need(lms.get("material_identity_and_scientific_colors_preserved") is True,
              "style defaults must preserve science colors and material identity")
+        td_route = profile.get("video_generation", {}).get("style_routing", {}).get("three_d_animation", {})
+        colab_3d = td_route.get("colab_3d_default", {})
+        colab_geo = colab_3d.get("geometry_standards", {}) if isinstance(colab_3d, dict) else {}
+        colab_cyc = colab_3d.get("cycles_defaults", {}) if isinstance(colab_3d, dict) else {}
+        need(td_route.get("colab_default_visual_style") == "high_poly_industrial_3d"
+             and td_route.get("colab_modeling_standard") == "high_poly_industrial_v1"
+             and isinstance(colab_3d, dict)
+             and colab_3d.get("visual_style") == "high_poly_industrial_3d"
+             and colab_3d.get("modeling_standard") == "high_poly_industrial_v1"
+             and colab_3d.get("modeling_guide") == "references/engineering-blender.md#high-poly-industrial-modeling-standard-for-colab-3d"
+             and colab_3d.get("audit_command") == "scripts/colab_cli.py audit-blend"
+             and isinstance(colab_geo, dict)
+             and type(colab_geo.get("hero_cylinder_min_segments")) is int and colab_geo["hero_cylinder_min_segments"] >= 64
+             and type(colab_geo.get("secondary_part_min_segments")) is int and colab_geo["secondary_part_min_segments"] >= 32
+             and colab_geo.get("require_real_bevels_or_chamfers") is True
+             and colab_geo.get("require_applied_uniform_scale") is True
+             and colab_geo.get("require_physical_wall_thickness") is True
+             and colab_geo.get("require_weighted_normals_or_edge_split") is True
+             and type(colab_geo.get("scene_triangle_screening_floor")) is int and colab_geo["scene_triangle_screening_floor"] >= 10000
+             and colab_geo.get("screening_is_not_visual_acceptance") is True
+             and isinstance(colab_cyc, dict)
+             and type(colab_cyc.get("adaptive_threshold")) in (int, float) and 0 < colab_cyc["adaptive_threshold"] <= 0.02
+             and colab_cyc.get("denoiser") == "OPENIMAGEDENOISE"
+             and colab_cyc.get("denoising_input_passes") == "RGB_ALBEDO_NORMAL",
+             "colab_3d_default must lock high_poly_industrial_3d modeling standards, OIDN albedo/normal passes, and screening-only boundaries")
 
         policy = read("config/production-policy.json")
         audience = policy["audience_text"]

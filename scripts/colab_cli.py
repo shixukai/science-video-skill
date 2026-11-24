@@ -4,8 +4,12 @@
 Provides:
 - `preflight`: read-only detection of `colab` CLI (native or WSL2), version and optional auth/usage checks.
 - `sessions` / `status` / `usage` / `url` / `stop`: non-TTY session inspection and explicit teardown.
+- `audit-blend`: local offline headless-Blender preflight audit against the `high_poly_industrial_v1` modeling standard
+  (evaluated triangle density, non-uniform scales, flat-shaded curved meshes, bevel/modifier coverage, unbaked rigidbody
+  world for strided shards, unpacked images and node-based materials) before spending Colab GPU units.
 - `run-ephemeral`: bounded GPU Python job runner with minimal upload/download, SHA-256 receipts and guaranteed `colab stop`.
 - `blender-render`: headless Linux Blender Cycles GPU offload using packed `.blend`, automatic OPTIX/CUDA selection,
+  OIDN `RGB_ALBEDO_NORMAL` + `0.015` adaptive threshold for machined bevel fidelity, embedded modeling audit telemetry,
   on-VM Rec.709 MP4 encoding (keeping raw PNG sequences off the wire), local SHA-256 verification and guaranteed teardown.
 
 Never calls interactive subcommands (`repl`, bare `ssh`, `auth`, `drivemount`) and never prints or stores credentials.
@@ -33,6 +37,11 @@ SOURCE_ID = "google-colab-cli"
 SUPPORTED_GPUS = ("T4", "L4", "G4", "A100", "H100")
 NON_RT_DATACENTER_GPUS = {"A100", "H100", "T4"}
 DEFAULT_BLENDER_LINUX_URL = "https://download.blender.org/release/Blender4.5/blender-4.5.10-linux-x64.tar.xz"
+MODELING_PROFILE_HIGH_POLY = "high_poly_industrial_v1"
+MODELING_PROFILES = ("high_poly_industrial", "custom")
+DEFAULT_MIN_SCENE_TRIANGLES = 25000
+DEFAULT_ADAPTIVE_THRESHOLD = 0.015
+DEFAULT_DENOISING_INPUT_PASSES = "RGB_ALBEDO_NORMAL"
 SESSION_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 SECRET_PATTERNS = (
     re.compile(r"(Bearer\s+)[A-Za-z0-9._~+/=-]+", re.IGNORECASE),
@@ -96,6 +105,316 @@ def choose_cycles_backend(gpu: str, requested: str) -> str:
     if mode != "AUTO":
         raise ValueError(f"Unsupported Cycles backend {requested!r}; expected auto, OPTIX or CUDA")
     return "CUDA" if gpu.upper() in NON_RT_DATACENTER_GPUS else "OPTIX"
+
+
+def normalize_modeling_profile(profile: str) -> str:
+    val = profile.strip().lower()
+    if val in ("high_poly_industrial", "high_poly_industrial_v1"):
+        return MODELING_PROFILE_HIGH_POLY
+    if val == "custom":
+        return "custom"
+    raise ValueError(f"Unsupported --modeling-profile {profile!r}; expected high_poly_industrial or custom")
+
+
+_INDUSTRIAL_AUDIT_BLENDER_CODE = r'''
+import argparse, json, pathlib, sys, bpy
+
+argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+p = argparse.ArgumentParser()
+p.add_argument("--out-json", required=True)
+p.add_argument("--frame", type=int, default=None)
+a = p.parse_args(argv)
+
+scene = bpy.context.scene
+if a.frame is not None:
+    scene.frame_set(a.frame)
+
+depsgraph = bpy.context.evaluated_depsgraph_get()
+mesh_rows = []
+total_polys = 0
+total_tris = 0
+non_uniform_scale = []
+unapplied_uniform_scale = []
+viewport_only_mats = []
+
+for obj in scene.objects:
+    if obj.type != "MESH" or obj.hide_render:
+        continue
+    obj_eval = obj.evaluated_get(depsgraph)
+    mesh = obj_eval.to_mesh()
+    try:
+        poly_count = len(mesh.polygons)
+        tri_count = sum(max(1, len(poly.loop_indices) - 2) for poly in mesh.polygons)
+        smooth_count = sum(1 for poly in mesh.polygons if poly.use_smooth)
+        smooth_ratio = round(smooth_count / poly_count, 4) if poly_count else 1.0
+    finally:
+        obj_eval.to_mesh_clear()
+
+    total_polys += poly_count
+    total_tris += tri_count
+    sx, sy, sz = (abs(float(v)) for v in obj.scale)
+    is_non_uniform = max(abs(sx - sy), abs(sy - sz), abs(sx - sz)) > 1e-3
+    is_unapplied_uniform = (not is_non_uniform) and (abs(sx - 1.0) > 1e-3)
+    if is_non_uniform:
+        non_uniform_scale.append({"name": obj.name, "scale": [round(sx, 4), round(sy, 4), round(sz, 4)]})
+    elif is_unapplied_uniform:
+        unapplied_uniform_scale.append({"name": obj.name, "scale": [round(sx, 4), round(sy, 4), round(sz, 4)]})
+
+    mods = [m.type for m in obj.modifiers]
+    mats = [slot.material for slot in obj.material_slots if slot.material is not None]
+    has_node_mat = bool(mats) and all(bool(getattr(m, "use_nodes", False)) for m in mats)
+    if not has_node_mat:
+        viewport_only_mats.append(obj.name)
+
+    mesh_rows.append({
+        "name": obj.name,
+        "polygon_count": poly_count,
+        "triangle_count": tri_count,
+        "smooth_face_ratio": smooth_ratio,
+        "modifiers": mods,
+        "has_bevel": "BEVEL" in mods,
+        "has_subsurf": "SUBSURF" in mods,
+        "has_weighted_normal": ("WEIGHTED_NORMAL" in mods) or ("EDGE_SPLIT" in mods),
+        "has_solidify": "SOLIDIFY" in mods,
+        "has_node_material": has_node_mat,
+    })
+
+mesh_rows.sort(key=lambda r: r["triangle_count"], reverse=True)
+rbw = scene.rigidbody_world
+has_active_rbw = bool(
+    rbw is not None
+    and bool(getattr(rbw, "enabled", True))
+    and rbw.collection is not None
+    and len(rbw.collection.objects) > 0
+)
+unpacked_images = [
+    img.name
+    for img in bpy.data.images
+    if getattr(img, "source", "") in ("FILE", "SEQUENCE")
+    and img.packed_file is None
+    and bool(getattr(img, "filepath", "").strip())
+]
+missing_libs = [
+    lib.filepath
+    for lib in bpy.data.libraries
+    if not pathlib.Path(bpy.path.abspath(lib.filepath)).exists()
+]
+
+vs = scene.view_settings
+ds = scene.display_settings
+cyc = getattr(scene, "cycles", None)
+stats = {
+    "frame": int(scene.frame_current),
+    "mesh_object_count": len(mesh_rows),
+    "evaluated_polygon_count": total_polys,
+    "evaluated_triangle_count": total_tris,
+    "meshes": mesh_rows,
+    "non_uniform_scale_objects": non_uniform_scale,
+    "unapplied_uniform_scale_objects": unapplied_uniform_scale,
+    "viewport_only_material_objects": viewport_only_mats,
+    "has_active_rigidbody_world": has_active_rbw,
+    "unpacked_external_images": unpacked_images,
+    "missing_libraries": missing_libs,
+    "color_management": {
+        "display_device": getattr(ds, "display_device", None),
+        "view_transform": getattr(vs, "view_transform", None),
+        "look": getattr(vs, "look", None),
+        "exposure": round(float(getattr(vs, "exposure", 0.0)), 4),
+        "gamma": round(float(getattr(vs, "gamma", 1.0)), 4),
+    },
+    "cycles_bounces": {
+        "max_bounces": int(getattr(cyc, "max_bounces", 0)) if cyc else None,
+        "glossy_bounces": int(getattr(cyc, "glossy_bounces", 0)) if cyc else None,
+        "transmission_bounces": int(getattr(cyc, "transmission_bounces", 0)) if cyc else None,
+        "diffuse_bounces": int(getattr(cyc, "diffuse_bounces", 0)) if cyc else None,
+    },
+}
+
+out_path = pathlib.Path(a.out_json)
+out_path.parent.mkdir(parents=True, exist_ok=True)
+out_path.write_text(json.dumps(stats, ensure_ascii=False, indent=2), encoding="utf-8")
+print("INDUSTRIAL_AUDIT_STATS=" + json.dumps(stats, ensure_ascii=False))
+'''
+
+
+def evaluate_industrial_audit(
+    stats: dict[str, Any],
+    *,
+    modeling_profile: str = MODELING_PROFILE_HIGH_POLY,
+    min_scene_triangles: int = DEFAULT_MIN_SCENE_TRIANGLES,
+    shards: int = 1,
+    require_packed: bool = True,
+) -> dict[str, Any]:
+    """Evaluate collected Blender scene stats against high_poly_industrial_v1 screening rules.
+
+    Technical screening only; passing never certifies artistic, scientific, or motion quality.
+    """
+    profile = normalize_modeling_profile(modeling_profile)
+    meshes = list(stats.get("meshes") or [])
+    mesh_count = int(stats.get("mesh_object_count", len(meshes)))
+    total_polys = int(stats.get("evaluated_polygon_count", sum(int(m.get("polygon_count", 0)) for m in meshes)))
+    total_tris = int(stats.get("evaluated_triangle_count", sum(int(m.get("triangle_count", 0)) for m in meshes)))
+    non_uniform = list(stats.get("non_uniform_scale_objects") or [])
+    unapplied_uniform = list(stats.get("unapplied_uniform_scale_objects") or [])
+    viewport_only = list(stats.get("viewport_only_material_objects") or [])
+    has_rbw = bool(stats.get("has_active_rigidbody_world", False))
+    unpacked_imgs = list(stats.get("unpacked_external_images") or [])
+    missing_libs = list(stats.get("missing_libraries") or [])
+
+    blocking: list[dict[str, Any]] = []
+    warnings: list[dict[str, Any]] = []
+
+    if mesh_count == 0:
+        blocking.append({
+            "code": "no_visible_meshes",
+            "severity": "blocking",
+            "message": "Scene contains zero render-visible mesh objects.",
+        })
+    if shards > 1 and has_rbw:
+        blocking.append({
+            "code": "unbaked_rigidbody_world",
+            "severity": "blocking",
+            "message": (
+                f"Active rigidbody_world detected with shards={shards}; bake physics to quaternion F-curves "
+                "and remove rigidbody_world before strided Colab multi-shard rendering to prevent frame divergence."
+            ),
+        })
+    if require_packed and unpacked_imgs:
+        blocking.append({
+            "code": "unpacked_external_images",
+            "severity": "blocking",
+            "message": f"{len(unpacked_imgs)} external image(s) are not packed into the .blend (run bpy.ops.file.pack_all()).",
+            "items": unpacked_imgs[:20],
+        })
+    if missing_libs:
+        blocking.append({
+            "code": "missing_linked_libraries",
+            "severity": "blocking",
+            "message": f"{len(missing_libs)} linked .blend library path(s) are missing.",
+            "items": missing_libs[:20],
+        })
+    if viewport_only:
+        blocking.append({
+            "code": "viewport_only_materials",
+            "severity": "blocking",
+            "message": f"{len(viewport_only)} visible mesh object(s) lack active node-based materials.",
+            "items": viewport_only[:20],
+        })
+    if non_uniform:
+        blocking.append({
+            "code": "non_uniform_scale",
+            "severity": "blocking",
+            "message": (
+                f"{len(non_uniform)} visible mesh object(s) have unapplied non-uniform scale "
+                "(skews chamfers, brushed anisotropy, normals and mechanical linkages)."
+            ),
+            "items": non_uniform[:20],
+        })
+
+    if unapplied_uniform:
+        warnings.append({
+            "code": "unapplied_uniform_scale",
+            "severity": "warning",
+            "message": f"{len(unapplied_uniform)} visible mesh object(s) have unapplied uniform scale != (1, 1, 1).",
+            "items": unapplied_uniform[:20],
+        })
+
+    if profile == MODELING_PROFILE_HIGH_POLY:
+        if total_tris < min_scene_triangles:
+            warnings.append({
+                "code": "low_poly_scene",
+                "severity": "warning",
+                "message": (
+                    f"Visible evaluated triangle count ({total_tris}) is below the high-poly industrial screening floor "
+                    f"({min_scene_triangles}); verify hero curved segments (>=64), machined bevels and multi-part detail."
+                ),
+            })
+        flat_curved = [
+            m["name"]
+            for m in meshes
+            if int(m.get("polygon_count", 0)) >= 24 and float(m.get("smooth_face_ratio", 1.0)) == 0.0
+        ]
+        if flat_curved:
+            warnings.append({
+                "code": "flat_shaded_curved_meshes",
+                "severity": "warning",
+                "message": (
+                    f"{len(flat_curved)} visible mesh object(s) with >=24 faces are 100% flat-shaded "
+                    "(use smooth shading paired with WeightedNormal or angle-controlled EdgeSplit)."
+                ),
+                "items": flat_curved[:20],
+            })
+        unbeveled_low = [
+            m["name"]
+            for m in meshes
+            if int(m.get("polygon_count", 0)) >= 6
+            and not bool(m.get("has_bevel", False))
+            and not bool(m.get("has_subsurf", False))
+            and int(m.get("triangle_count", 0)) < 2000
+        ]
+        if unbeveled_low:
+            warnings.append({
+                "code": "unbeveled_low_detail_meshes",
+                "severity": "warning",
+                "message": (
+                    f"{len(unbeveled_low)} visible hard-surface mesh(es) lack Bevel/Subsurf modifiers and have <2000 triangles "
+                    "(verify real physical chamfers/fillets rather than razor-sharp 90-degree primitives)."
+                ),
+                "items": unbeveled_low[:20],
+            })
+        missing_wn = [
+            m["name"]
+            for m in meshes
+            if bool(m.get("has_bevel", False))
+            and not bool(m.get("has_weighted_normal", False))
+            and int(m.get("polygon_count", 0)) >= 12
+        ]
+        if missing_wn:
+            warnings.append({
+                "code": "beveled_without_weighted_normal",
+                "severity": "warning",
+                "message": (
+                    f"{len(missing_wn)} beveled mesh(es) have no WeightedNormal or EdgeSplit modifier "
+                    "(inspect flat CNC faces for pillow-shading distortion)."
+                ),
+                "items": missing_wn[:20],
+            })
+
+    return {
+        "schema_version": 1,
+        "profile": profile,
+        "review_status": "technical_screening_only_not_visual_acceptance",
+        "passed": len(blocking) == 0,
+        "strict_passed": len(blocking) == 0 and len(warnings) == 0,
+        "thresholds": {
+            "min_scene_triangles": min_scene_triangles,
+            "shards": shards,
+            "require_packed": require_packed,
+        },
+        "summary": {
+            "frame": stats.get("frame"),
+            "mesh_object_count": mesh_count,
+            "evaluated_polygon_count": total_polys,
+            "evaluated_triangle_count": total_tris,
+            "has_active_rigidbody_world": has_rbw,
+            "unpacked_external_image_count": len(unpacked_imgs),
+            "missing_library_count": len(missing_libs),
+            "color_management": stats.get("color_management"),
+            "cycles_bounces": stats.get("cycles_bounces"),
+            "top_meshes": [
+                {
+                    "name": m.get("name"),
+                    "triangle_count": m.get("triangle_count"),
+                    "polygon_count": m.get("polygon_count"),
+                    "smooth_face_ratio": m.get("smooth_face_ratio"),
+                    "modifiers": m.get("modifiers", []),
+                }
+                for m in sorted(meshes, key=lambda r: int(r.get("triangle_count", 0)), reverse=True)[:10]
+            ],
+        },
+        "blocking_issues": blocking,
+        "warnings": warnings,
+    }
 
 
 def parse_transfer_spec(spec: str, *, direction: str) -> tuple[str, str]:
@@ -418,7 +737,12 @@ def _build_remote_blender_driver(
     shards: int,
     backend: str,
     blender_url: str,
+    adaptive_threshold: float = DEFAULT_ADAPTIVE_THRESHOLD,
+    modeling_profile: str = MODELING_PROFILE_HIGH_POLY,
+    min_scene_triangles: int = DEFAULT_MIN_SCENE_TRIANGLES,
+    strict_modeling_audit: bool = False,
 ) -> str:
+    profile = normalize_modeling_profile(modeling_profile)
     cfg = {
         "remote_blend": remote_blend,
         "remote_mp4": remote_mp4,
@@ -426,6 +750,8 @@ def _build_remote_blender_driver(
         "frame_start": frame_start,
         "frame_end": frame_end,
         "samples": samples,
+        "adaptive_threshold": float(adaptive_threshold),
+        "denoising_input_passes": DEFAULT_DENOISING_INPUT_PASSES,
         "width": width,
         "height": height,
         "fps": fps,
@@ -433,6 +759,9 @@ def _build_remote_blender_driver(
         "shards": shards,
         "backend": backend,
         "blender_url": blender_url,
+        "modeling_profile": profile,
+        "min_scene_triangles": int(min_scene_triangles),
+        "strict_modeling_audit": bool(strict_modeling_audit),
     }
     return f"""#!/usr/bin/env python3
 import json, pathlib, shutil, subprocess, sys, time
@@ -443,6 +772,9 @@ BLENDER_BIN = BLENDER_DIR / "blender"
 WORK_DIR = pathlib.Path("/content/_sv_blender_work")
 FRAMES_DIR = WORK_DIR / "frames"
 DRIVER_PY = WORK_DIR / "_cycles_shard.py"
+AUDIT_PY = WORK_DIR / "_industrial_audit.py"
+AUDIT_JSON = WORK_DIR / "_industrial_audit_stats.json"
+AUDIT_CODE = {repr(_INDUSTRIAL_AUDIT_BLENDER_CODE)}
 
 SHARD_CODE = r'''
 import argparse, pathlib, sys, bpy
@@ -454,6 +786,7 @@ p.add_argument("--frame-start", type=int, required=True)
 p.add_argument("--frame-end", type=int, required=True)
 p.add_argument("--frame-step", type=int, default=1)
 p.add_argument("--samples", type=int, required=True)
+p.add_argument("--adaptive-threshold", type=float, default=0.015)
 p.add_argument("--width", type=int, required=True)
 p.add_argument("--height", type=int, required=True)
 p.add_argument("--backend", required=True)
@@ -464,9 +797,11 @@ scene.render.engine = "CYCLES"
 scene.render.use_persistent_data = True
 scene.cycles.samples = a.samples
 scene.cycles.use_adaptive_sampling = True
-scene.cycles.adaptive_threshold = 0.025
+scene.cycles.adaptive_threshold = a.adaptive_threshold
 scene.cycles.use_denoising = True
 scene.cycles.denoiser = "OPENIMAGEDENOISE"
+if hasattr(scene.cycles, "denoising_input_passes"):
+    scene.cycles.denoising_input_passes = "RGB_ALBEDO_NORMAL"
 if hasattr(scene.cycles, "denoising_use_gpu"):
     scene.cycles.denoising_use_gpu = True
 scene.render.resolution_x = a.width
@@ -498,7 +833,7 @@ for candidate in order:
 if selected == "CPU":
     raise RuntimeError("No CUDA/OPTIX Cycles GPU device found on Colab runtime")
 scene.cycles.device = "GPU"
-print(f"[CYCLES] backend={{selected}} frames={{a.frame_start}}..{{a.frame_end}} step={{a.frame_step}} samples={{a.samples}}", flush=True)
+print(f"[CYCLES] backend={{selected}} frames={{a.frame_start}}..{{a.frame_end}} step={{a.frame_step}} samples={{a.samples}} adaptive={{a.adaptive_threshold}} oidn=RGB_ALBEDO_NORMAL", flush=True)
 
 out_dir = pathlib.Path(a.out_dir)
 out_dir.mkdir(parents=True, exist_ok=True)
@@ -521,6 +856,68 @@ for fnum in range(a.frame_start, a.frame_end + 1, max(1, a.frame_step)):
             raise
 '''
 
+
+def _eval_remote_audit(stats, profile, min_tris, n_shards):
+    meshes = list(stats.get("meshes") or [])
+    mesh_count = int(stats.get("mesh_object_count", len(meshes)))
+    total_polys = int(stats.get("evaluated_polygon_count", 0))
+    total_tris = int(stats.get("evaluated_triangle_count", 0))
+    non_uniform = list(stats.get("non_uniform_scale_objects") or [])
+    unapplied_uniform = list(stats.get("unapplied_uniform_scale_objects") or [])
+    viewport_only = list(stats.get("viewport_only_material_objects") or [])
+    has_rbw = bool(stats.get("has_active_rigidbody_world", False))
+    unpacked_imgs = list(stats.get("unpacked_external_images") or [])
+    missing_libs = list(stats.get("missing_libraries") or [])
+    blocking = []
+    warnings = []
+    if mesh_count == 0:
+        blocking.append({{"code": "no_visible_meshes", "severity": "blocking", "message": "No render-visible mesh objects."}})
+    if n_shards > 1 and has_rbw:
+        blocking.append({{"code": "unbaked_rigidbody_world", "severity": "blocking", "message": f"Active rigidbody_world with shards={{n_shards}}; bake to quaternion F-curves first."}})
+    if unpacked_imgs:
+        blocking.append({{"code": "unpacked_external_images", "severity": "blocking", "message": f"{{len(unpacked_imgs)}} unpacked external image(s).", "items": unpacked_imgs[:20]}})
+    if missing_libs:
+        blocking.append({{"code": "missing_linked_libraries", "severity": "blocking", "message": f"{{len(missing_libs)}} missing linked library path(s).", "items": missing_libs[:20]}})
+    if viewport_only:
+        blocking.append({{"code": "viewport_only_materials", "severity": "blocking", "message": f"{{len(viewport_only)}} visible mesh(es) lack active node materials.", "items": viewport_only[:20]}})
+    if non_uniform:
+        blocking.append({{"code": "non_uniform_scale", "severity": "blocking", "message": f"{{len(non_uniform)}} visible mesh(es) have non-uniform scale.", "items": non_uniform[:20]}})
+    if unapplied_uniform:
+        warnings.append({{"code": "unapplied_uniform_scale", "severity": "warning", "message": f"{{len(unapplied_uniform)}} visible mesh(es) have unapplied uniform scale.", "items": unapplied_uniform[:20]}})
+    if profile == "high_poly_industrial_v1":
+        if total_tris < min_tris:
+            warnings.append({{"code": "low_poly_scene", "severity": "warning", "message": f"Evaluated triangles ({{total_tris}}) below screening floor ({{min_tris}})."}})
+        flat_curved = [m["name"] for m in meshes if int(m.get("polygon_count", 0)) >= 24 and float(m.get("smooth_face_ratio", 1.0)) == 0.0]
+        if flat_curved:
+            warnings.append({{"code": "flat_shaded_curved_meshes", "severity": "warning", "message": f"{{len(flat_curved)}} curved/multi-face mesh(es) are 100% flat-shaded.", "items": flat_curved[:20]}})
+        unbeveled = [m["name"] for m in meshes if int(m.get("polygon_count", 0)) >= 6 and not m.get("has_bevel") and not m.get("has_subsurf") and int(m.get("triangle_count", 0)) < 2000]
+        if unbeveled:
+            warnings.append({{"code": "unbeveled_low_detail_meshes", "severity": "warning", "message": f"{{len(unbeveled)}} hard-surface mesh(es) lack Bevel/Subsurf and have <2000 triangles.", "items": unbeveled[:20]}})
+        missing_wn = [m["name"] for m in meshes if m.get("has_bevel") and not m.get("has_weighted_normal") and int(m.get("polygon_count", 0)) >= 12]
+        if missing_wn:
+            warnings.append({{"code": "beveled_without_weighted_normal", "severity": "warning", "message": f"{{len(missing_wn)}} beveled mesh(es) lack WeightedNormal/EdgeSplit.", "items": missing_wn[:20]}})
+    return {{
+        "schema_version": 1,
+        "profile": profile,
+        "review_status": "technical_screening_only_not_visual_acceptance",
+        "passed": len(blocking) == 0,
+        "strict_passed": len(blocking) == 0 and len(warnings) == 0,
+        "summary": {{
+            "frame": stats.get("frame"),
+            "mesh_object_count": mesh_count,
+            "evaluated_polygon_count": total_polys,
+            "evaluated_triangle_count": total_tris,
+            "has_active_rigidbody_world": has_rbw,
+            "unpacked_external_image_count": len(unpacked_imgs),
+            "missing_library_count": len(missing_libs),
+            "color_management": stats.get("color_management"),
+            "cycles_bounces": stats.get("cycles_bounces"),
+        }},
+        "blocking_issues": blocking,
+        "warnings": warnings,
+    }}
+
+
 t0 = time.monotonic()
 gpu_info = subprocess.run(
     ["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader"],
@@ -540,16 +937,38 @@ if shutil.which("ffmpeg") is None:
     subprocess.run(["apt-get", "-qq", "install", "-y", "ffmpeg"], check=True)
 
 blender_version = subprocess.check_output([str(BLENDER_BIN), "--version"], text=True).splitlines()[0].strip()
-print(f"[COLAB-BLENDER] GPU={{gpu_info}} | {{blender_version}} | frames={{CFG['frame_start']}}..{{CFG['frame_end']}} | shards={{CFG['shards']}} | samples={{CFG['samples']}}", flush=True)
+print(f"[COLAB-BLENDER] GPU={{gpu_info}} | {{blender_version}} | profile={{CFG['modeling_profile']}} | frames={{CFG['frame_start']}}..{{CFG['frame_end']}} | shards={{CFG['shards']}} | samples={{CFG['samples']}}", flush=True)
 
 if FRAMES_DIR.exists():
     shutil.rmtree(FRAMES_DIR, ignore_errors=True)
 FRAMES_DIR.mkdir(parents=True, exist_ok=True)
 DRIVER_PY.write_text(SHARD_CODE, encoding="utf-8")
+AUDIT_PY.write_text(AUDIT_CODE, encoding="utf-8")
 
 f0, f1 = int(CFG["frame_start"]), int(CFG["frame_end"])
 total_frames = f1 - f0 + 1
 n_shards = max(1, min(int(CFG["shards"]), total_frames))
+
+industrial_audit = None
+audit_proc = subprocess.run(
+    [str(BLENDER_BIN), "-b", CFG["remote_blend"], "-P", str(AUDIT_PY), "--", "--out-json", str(AUDIT_JSON), "--frame", str(f0)],
+    capture_output=True, text=True, check=False,
+)
+if audit_proc.returncode == 0 and AUDIT_JSON.is_file():
+    raw_stats = json.loads(AUDIT_JSON.read_text(encoding="utf-8"))
+    industrial_audit = _eval_remote_audit(raw_stats, CFG["modeling_profile"], int(CFG["min_scene_triangles"]), n_shards)
+    print(
+        f"[COLAB-AUDIT] profile={{industrial_audit['profile']}} meshes={{industrial_audit['summary']['mesh_object_count']}} "
+        f"tris={{industrial_audit['summary']['evaluated_triangle_count']}} "
+        f"blocking={{len(industrial_audit['blocking_issues'])}} warnings={{len(industrial_audit['warnings'])}}",
+        flush=True,
+    )
+    if CFG["strict_modeling_audit"] and not industrial_audit["strict_passed"]:
+        raise RuntimeError("Strict industrial modeling audit failed before render: " + json.dumps(industrial_audit, ensure_ascii=False))
+else:
+    industrial_audit = {{"status": "audit_error", "returncode": audit_proc.returncode, "stderr_tail": (audit_proc.stderr or "")[-400:]}}
+    if CFG["strict_modeling_audit"]:
+        raise RuntimeError("Strict industrial modeling audit script failed: " + json.dumps(industrial_audit, ensure_ascii=False))
 
 procs = []
 log_files = []
@@ -564,6 +983,7 @@ for si in range(n_shards):
         "--frame-end", str(f1),
         "--frame-step", str(n_shards),
         "--samples", str(CFG["samples"]),
+        "--adaptive-threshold", str(CFG["adaptive_threshold"]),
         "--width", str(CFG["width"]),
         "--height", str(CFG["height"]),
         "--backend", CFG["backend"],
@@ -617,6 +1037,7 @@ meta = {{
     "gpu": gpu_info,
     "blender_version": blender_version,
     "requested_backend": CFG["backend"],
+    "modeling_profile": CFG["modeling_profile"],
     "frame_start": f0,
     "frame_end": f1,
     "total_frames": total_frames,
@@ -624,7 +1045,10 @@ meta = {{
     "height": CFG["height"],
     "fps": CFG["fps"],
     "samples": CFG["samples"],
+    "adaptive_threshold": CFG["adaptive_threshold"],
+    "denoising_input_passes": CFG["denoising_input_passes"],
     "shards": n_shards,
+    "industrial_modeling_audit": industrial_audit,
     "mp4_bytes": mp4_path.stat().st_size,
     "remote_elapsed_s": round(time.monotonic() - t0, 2),
 }}
@@ -878,14 +1302,107 @@ def cmd_run_ephemeral(args: argparse.Namespace, *, runner=subprocess.run) -> int
     return rc
 
 
+def cmd_audit_blend(args: argparse.Namespace, *, runner=subprocess.run) -> int:
+    try:
+        profile = normalize_modeling_profile(args.modeling_profile)
+        if args.min_scene_triangles < 0:
+            raise ValueError("--min-scene-triangles must be >= 0")
+        if args.shards < 1:
+            raise ValueError("--shards must be >= 1")
+    except ValueError as exc:
+        print(f"Input error: {exc}", file=sys.stderr)
+        return 2
+
+    blend_path = Path(args.blend).resolve()
+    if not blend_path.is_file():
+        print(f"Input error: .blend file not found: {blend_path}", file=sys.stderr)
+        return 2
+
+    report_path = Path(args.report).resolve() if args.report else None
+    if report_path is not None and report_path.exists() and not args.overwrite_report:
+        print(f"Input error: Report file already exists (use a new report filename): {report_path}", file=sys.stderr)
+        return 2
+
+    blender_exe = args.blender or shutil.which("blender")
+    if not blender_exe or (not Path(blender_exe).is_file() and shutil.which(blender_exe) is None):
+        print(
+            json.dumps({
+                "status": "blender_not_found",
+                "reason": "Local Blender executable not found; pass --blender <path-to-blender>.",
+            }, ensure_ascii=False),
+            file=sys.stderr,
+        )
+        return 2
+
+    with tempfile.TemporaryDirectory(prefix="sv-colab-audit-") as tmp_dir:
+        audit_py = Path(tmp_dir) / "industrial_audit.py"
+        stats_json = Path(tmp_dir) / "industrial_stats.json"
+        audit_py.write_text(_INDUSTRIAL_AUDIT_BLENDER_CODE, encoding="utf-8")
+        cmd = [str(blender_exe), "-b", str(blend_path), "-P", str(audit_py), "--", "--out-json", str(stats_json)]
+        if args.frame is not None:
+            cmd += ["--frame", str(args.frame)]
+        res = _run_cli(cmd, timeout=args.timeout, runner=runner)
+        if res["returncode"] != 0:
+            print(
+                json.dumps({
+                    "status": "blender_error",
+                    "returncode": res["returncode"],
+                    "stderr_tail": res["stderr"][-800:],
+                    "stdout_tail": res["stdout"][-400:],
+                }, ensure_ascii=False, indent=2),
+                file=sys.stderr,
+            )
+            return 2
+
+        stats: dict[str, Any] | None = None
+        if stats_json.is_file():
+            stats = json.loads(stats_json.read_text(encoding="utf-8"))
+        else:
+            for line in res["stdout"].splitlines():
+                if line.startswith("INDUSTRIAL_AUDIT_STATS="):
+                    stats = json.loads(line.split("=", 1)[1])
+                    break
+        if stats is None:
+            print("Blender completed without emitting industrial audit stats.", file=sys.stderr)
+            return 2
+
+    audit = evaluate_industrial_audit(
+        stats,
+        modeling_profile=profile,
+        min_scene_triangles=args.min_scene_triangles,
+        shards=args.shards,
+        require_packed=not args.allow_unpacked,
+    )
+    payload = {
+        "checked_at": _now_iso(),
+        "blend": {
+            "path": str(blend_path),
+            "bytes": blend_path.stat().st_size,
+            "sha256": sha256_file(blend_path),
+        },
+        "blender_executable": str(blender_exe),
+        "strict": bool(args.strict),
+        **audit,
+    }
+    _write_receipt(report_path, payload, overwrite=args.overwrite_report)
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+    ok = audit["strict_passed"] if args.strict else audit["passed"]
+    return 0 if ok else 1
+
+
 def cmd_blender_render(args: argparse.Namespace, *, runner=subprocess.run) -> int:
     try:
         session = validate_session_name(args.session)
         gpu = normalize_gpu(args.gpu)
         assert gpu is not None
         backend = choose_cycles_backend(gpu, args.backend)
+        modeling_profile = normalize_modeling_profile(args.modeling_profile)
         if args.frame_start > args.frame_end:
             raise ValueError(f"--frame-start ({args.frame_start}) must be <= --frame-end ({args.frame_end})")
+        if not (0 < args.adaptive_threshold < 1):
+            raise ValueError(f"--adaptive-threshold ({args.adaptive_threshold}) must be between 0 and 1")
+        if args.min_scene_triangles < 0:
+            raise ValueError("--min-scene-triangles must be >= 0")
         if min(args.width, args.height) < 1080 and not args.allow_proxy:
             raise ValueError(
                 f"Formal render dimensions {args.width}x{args.height} have short edge < 1080; "
@@ -936,6 +1453,10 @@ def cmd_blender_render(args: argparse.Namespace, *, runner=subprocess.run) -> in
         shards=args.shards,
         backend=backend,
         blender_url=args.blender_url,
+        adaptive_threshold=args.adaptive_threshold,
+        modeling_profile=modeling_profile,
+        min_scene_triangles=args.min_scene_triangles,
+        strict_modeling_audit=args.strict_modeling_audit,
     )
 
     with tempfile.TemporaryDirectory(prefix="sv-colab-blender-") as tmp_dir:
@@ -962,12 +1483,17 @@ def cmd_blender_render(args: argparse.Namespace, *, runner=subprocess.run) -> in
                 extra_meta={
                     "blender_render": {
                         "blend": str(blend_path),
+                        "modeling_profile": modeling_profile,
+                        "min_scene_triangles": args.min_scene_triangles,
+                        "strict_modeling_audit": bool(args.strict_modeling_audit),
                         "frame_start": args.frame_start,
                         "frame_end": args.frame_end,
                         "width": args.width,
                         "height": args.height,
                         "fps": args.fps,
                         "samples": args.samples,
+                        "adaptive_threshold": args.adaptive_threshold,
+                        "denoising_input_passes": DEFAULT_DENOISING_INPUT_PASSES,
                         "shards": args.shards,
                         "selected_backend": backend,
                         "proxy_mode": bool(args.allow_proxy),
@@ -1020,6 +1546,20 @@ def build_parser() -> argparse.ArgumentParser:
             p.add_argument("-s", "--session", help="Explicit Colab session name")
         p.set_defaults(func=cmd_simple_action)
 
+    p_aud = sub.add_parser("audit-blend", help="Run local offline headless-Blender preflight against high_poly_industrial_v1")
+    p_aud.add_argument("--blend", required=True, help="Local packed .blend scene to inspect")
+    p_aud.add_argument("--blender", help="Explicit local Blender executable path (default: blender on PATH)")
+    p_aud.add_argument("--frame", type=int, help="Optional frame number to evaluate before inspecting meshes")
+    p_aud.add_argument("--modeling-profile", choices=MODELING_PROFILES, default="high_poly_industrial", help="Modeling audit profile (default: high_poly_industrial)")
+    p_aud.add_argument("--min-scene-triangles", type=int, default=DEFAULT_MIN_SCENE_TRIANGLES, help=f"Visible evaluated triangle screening floor (default {DEFAULT_MIN_SCENE_TRIANGLES})")
+    p_aud.add_argument("--shards", type=int, default=2, help="Planned Colab shard count for strided physics check (default 2)")
+    p_aud.add_argument("--allow-unpacked", action="store_true", help="Do not block on unpacked external image files (for local-only draft inspection)")
+    p_aud.add_argument("--strict", action="store_true", help="Treat high-poly industrial advisory warnings as non-zero failures")
+    p_aud.add_argument("--timeout", type=int, default=180, help="Local Blender audit timeout in seconds")
+    p_aud.add_argument("--report", help="Write hash-bound JSON audit report to a new file")
+    p_aud.add_argument("--overwrite-report", action="store_true", help="Allow overwriting an existing audit report file")
+    p_aud.set_defaults(func=cmd_audit_blend)
+
     p_run = sub.add_parser("run-ephemeral", help="Provision, upload minimal inputs, execute script, download outputs and stop VM")
     p_run.add_argument("-s", "--session", required=True, help="Explicit unique session name")
     p_run.add_argument("--script", required=True, help="Local Python script (.py) or notebook (.ipynb) to run")
@@ -1047,6 +1587,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_bl.add_argument("--high-mem", action="store_true", help="Request high-RAM machine shape where supported")
     p_bl.add_argument("--backend", choices=("auto", "OPTIX", "CUDA"), default="auto", help="Cycles GPU backend (auto picks CUDA on A100/H100/T4, OPTIX on G4/L4)")
     p_bl.add_argument("--samples", type=int, default=64, help="Cycles samples per frame")
+    p_bl.add_argument("--adaptive-threshold", type=float, default=DEFAULT_ADAPTIVE_THRESHOLD, help=f"Cycles adaptive noise threshold (default {DEFAULT_ADAPTIVE_THRESHOLD} for crisp bevels/metals)")
+    p_bl.add_argument("--modeling-profile", choices=MODELING_PROFILES, default="high_poly_industrial", help="Modeling audit profile recorded in remote receipt (default: high_poly_industrial)")
+    p_bl.add_argument("--min-scene-triangles", type=int, default=DEFAULT_MIN_SCENE_TRIANGLES, help=f"Visible evaluated triangle screening floor (default {DEFAULT_MIN_SCENE_TRIANGLES})")
+    p_bl.add_argument("--strict-modeling-audit", action="store_true", help="Abort on Colab before rendering if high-poly industrial modeling audit reports blocking issues or warnings")
     p_bl.add_argument("--width", type=int, default=1920, help="Render width (default 1920)")
     p_bl.add_argument("--height", type=int, default=1080, help="Render height (default 1080)")
     p_bl.add_argument("--fps", type=int, default=30, help="Target CFR framerate")

@@ -196,7 +196,8 @@
         "deduplicated-asset-catalog-and-reuse-first",
         "exploded-view-and-cutaway-selection",
         "character-rigging-mocap-and-lipsync",
-        "complete-cycle-animation-repair"
+        "complete-cycle-animation-repair",
+        "colab-high-poly-industrial-modeling"
       ],
       "supporting_files": [
         "references/blender-execution.md"

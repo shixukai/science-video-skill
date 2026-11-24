@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.51",
+  "version": "1.6.52",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -104,14 +104,41 @@
         "blender_render_compute_policy": "colab_first_with_local_fallback",
         "blender_colab_entrypoint": "scripts/colab_cli.py blender-render",
         "colab_default_access_mode": "google_colab_cli",
-        "colab_default_visual_style": "industrial_exploded_3d_keynote",
+        "colab_default_visual_style": "high_poly_industrial_3d",
+        "colab_modeling_standard": "high_poly_industrial_v1",
         "colab_3d_default": {
           "access_mode": "google_colab_cli",
           "cli_helper": "scripts/colab_cli.py",
+          "audit_command": "scripts/colab_cli.py audit-blend",
           "fallback_access_modes": ["https_tunnel", "local_gpu"],
-          "visual_style": "industrial_exploded_3d_keynote",
-          "visual_benchmark": "Pure-3D industrial exploded-view keynote caliber (Apple Keynote / Branch Education): real open-source high-poly CAD + 1:1 studio-photo-guided multi-part CNC hard-surface assemblies (ISO fasteners, 3D knurling, lathe profiles, EdgeSplit, angle-limited bevels); neural 3D (TRELLIS.2 --geometry-only / Hunyuan3D 2.1) reserved strictly for organic, soft or matte sculpted props, never glossy machined metals; true optical refraction/birefringence with backlight visible_transmission=false and <=1 mm micro-optic force cues; deterministic baked Blender Bullet rigid-body, cloth or fluid physics converted to quaternion F-curves for strided multi-shard Colab parity; zero opaque plastic blocks, chunky textbook arrows or unbaked toy shatter cubes.",
-          "preflight_requirement": "Inspect full-resolution 1920x1080 hero preflight stills locally before dispatching packed .blend jobs via Colab CLI."
+          "visual_style": "high_poly_industrial_3d",
+          "modeling_standard": "high_poly_industrial_v1",
+          "modeling_guide": "references/engineering-blender.md#high-poly-industrial-modeling-standard-for-colab-3d",
+          "visual_benchmark": "High-poly industrial 3D hardware and mechanical teardown caliber (Apple Keynote teardown / Branch Education / industrial CAD studio photography) across whole assemblies, cross-sectional cutaways, exploded views, macro mechanism close-ups and grounded industrial workbenches: verified open-source high-poly CAD + multi-part procedural CNC/lathe assemblies (>=64-segment hero cylinders, 96-128 macro hero rings, physical 0.15-0.8 mm machined chamfers / angle-limited bevels, WeightedNormal/EdgeSplit flat-face control, real wall thickness, 0.15-0.5 mm panel shadow gaps, applied uniform scale, authentic ISO fasteners/knurling/fittings); neural 3D (TRELLIS.2 --geometry-only / Hunyuan3D 2.1) reserved strictly for organic, crinkled, soft or matte props, never glossy machined metals or optical glass; distinct CNC brushed/anodized/cast/polymer/rubber PBR under studio softboxes + negative fill, true optical refraction with backlight visible_transmission=false and <=1 mm micro-optic force cues; deterministic baked Blender physics converted to quaternion F-curves for strided multi-shard Colab parity.",
+          "geometry_standards": {
+            "hero_cylinder_min_segments": 64,
+            "macro_hero_ring_segments": [96, 128],
+            "secondary_part_min_segments": 32,
+            "spline_min_resolution_u": 24,
+            "spline_min_bevel_resolution": 8,
+            "require_real_bevels_or_chamfers": true,
+            "machined_chamfer_mm_range": [0.15, 0.8],
+            "cast_molded_fillet_mm_range": [1.0, 3.0],
+            "panel_seam_gap_mm_range": [0.15, 0.5],
+            "require_applied_uniform_scale": true,
+            "require_physical_wall_thickness": true,
+            "require_weighted_normals_or_edge_split": true,
+            "scene_triangle_screening_floor": 25000,
+            "screening_is_not_visual_acceptance": true
+          },
+          "neural_3d_boundary": "organic_crinkled_soft_or_matte_props_only; never_glossy_cnc_metals_or_optical_glass",
+          "cycles_defaults": {
+            "adaptive_threshold": 0.015,
+            "denoiser": "OPENIMAGEDENOISE",
+            "denoising_input_passes": "RGB_ALBEDO_NORMAL",
+            "strided_physics_mode": "baked_quaternion_fcurves_without_active_rigidbody_world"
+          },
+          "preflight_requirement": "Run local scripts/colab_cli.py audit-blend and inspect full-resolution 1920x1080 hero preflight stills across every beat locally before dispatching packed .blend jobs via Colab CLI."
         },
         "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_controlled_3d_rendering",
         "guide": "references/engineering-blender.md"

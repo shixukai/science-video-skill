@@ -8,7 +8,7 @@ Default to effective subject lighting that makes key forms bright, crisp, and fi
 
 ### Industrial Product Studio Material Standard
 
-Industrial products and hardware use clean industrial studio lighting: broad soft key gradients on curved surfaces, deep readable shadows, and fine bevel/edge highlights without glowing outlines. On Controlled 3D routes, pair with [general 3D material standards](material-rendering.md) (distinguish polished metal, satin paint, glossy plastic, and matte rubber; never flatten into category presets) and [Blender implementation](engineering-blender.md#actual-execution-of-bright-lighting-and-materials) / grouped lookdev evidence. Static stills verify static appearance only; continuous video verifies moving highlights.
+Industrial products and hardware use clean industrial studio lighting: broad soft key gradients on curved surfaces, deep readable shadows, and fine bevel/edge highlights without glowing outlines. On Controlled 3D routes, pair with [general 3D material standards](material-rendering.md) (distinguish polished metal, satin paint, glossy plastic, and matte rubber; never flatten into category presets), [high-poly industrial Colab 3D modeling](engineering-blender.md#high-poly-industrial-modeling-standard-for-colab-3d) (real machined bevels, `>= 64`-segment hero curves, weighted normals, wall thickness, seam gaps and studio-faithful CNC detail), and [Blender implementation](engineering-blender.md#actual-execution-of-bright-lighting-and-materials) / grouped lookdev evidence. Static stills verify static appearance only; continuous video verifies moving highlights.
 
 ## Current Baseline and References
 
