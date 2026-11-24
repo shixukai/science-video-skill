@@ -1766,8 +1766,15 @@ def cmd_blender_stills(args: argparse.Namespace, *, runner=subprocess.run) -> in
     with tempfile.TemporaryDirectory(prefix="sv-colab-stills-") as tmp_dir:
         driver_file = Path(tmp_dir) / f"{session}_stills_driver.py"
         driver_file.write_text(driver_src, encoding="utf-8")
-        tar_local = Path(tmp_dir) / f"{session}_stills.tar"
         meta_local = Path(tmp_dir) / f"{session}_stills_meta.json"
+        if not args.dry_run:
+            out_dir.mkdir(parents=True, exist_ok=True)
+        # Download each PNG individually (<3 MB each) to avoid >4 MB Jupyter Contents API download stalls!
+        per_still_downloads = [
+            (f"/content/_sv_blender_stills_work/stills/{stem}.png", out_dir / f"{stem}.png")
+            for stem, _ in frame_items
+        ]
+        per_still_downloads.append((remote_meta, meta_local))
         try:
             rc, receipt = _execute_ephemeral_workflow(
                 info=info,
@@ -1779,7 +1786,7 @@ def cmd_blender_stills(args: argparse.Namespace, *, runner=subprocess.run) -> in
                 keep_session=args.keep,
                 uploads=[(blend_path, remote_blend)],
                 script_path=driver_file,
-                downloads=[(remote_tar, tar_local), (remote_meta, meta_local)],
+                downloads=per_still_downloads,
                 env_pairs=[],
                 exec_timeout=args.timeout,
                 dry_run=args.dry_run,
@@ -1803,20 +1810,11 @@ def cmd_blender_stills(args: argparse.Namespace, *, runner=subprocess.run) -> in
                 runner=runner,
             )
             extracted: list[dict[str, Any]] = []
-            if rc == 0 and not args.dry_run and tar_local.is_file():
-                out_dir.mkdir(parents=True, exist_ok=True)
-                with tarfile.open(tar_local, "r") as tf:
-                    for member in tf.getmembers():
-                        if not member.isfile():
-                            continue
-                        safe_name = Path(member.name).name
-                        if not safe_name.lower().endswith(".png"):
-                            continue
-                        dest = out_dir / safe_name
-                        src_f = tf.extractfile(member)
-                        if src_f is not None:
-                            dest.write_bytes(src_f.read())
-                            extracted.append({"file": str(dest), "bytes": dest.stat().st_size, "sha256": sha256_file(dest)})
+            if rc == 0 and not args.dry_run:
+                for stem, _ in frame_items:
+                    dest = out_dir / f"{stem}.png"
+                    if dest.is_file():
+                        extracted.append({"file": str(dest), "bytes": dest.stat().st_size, "sha256": sha256_file(dest)})
                 receipt["extracted_stills"] = extracted
             if meta_local.is_file():
                 try:
