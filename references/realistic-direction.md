@@ -74,7 +74,7 @@ Convert abstract numbers into one everyday same-dimension comparison recorded in
 
 ### One new idea per shot, one task per moment
 
-Avoid piling a new referent, new term, camera move, and caption change onto one moment ([competing attention](viewer-retention-design.md#diagnose-competing-attention-before-making-the-edit-faster)).
+Avoid piling a new referent, new term, camera move, and caption change onto one moment ([competing attention](viewer-retention-design.md#diagnose-competing-attention-before-making-the-edit-faster)). Match the spoken **working-memory budget** (at most one causal step and one new entity or anchored number per sentence) and keep **visual-verbal counterpoint** (picture shows the action; voice explains the hidden cause or tension instead of repeating visible pixels).
 
 ### Let hands and familiar objects carry scale
 
@@ -126,7 +126,7 @@ Filter candidates strictly in order and stop at the first failure: **physics/sci
 
 Layer sound under the single narration master ([voice reference](voice-reference.md#one-narration-master-and-one-shared-processing-chain)):
 - **Room tone/ambience:** One continuous location bed carried across cuts with `150–400 ms` world crossfades — never digital zero between clips.
-- **Event sounds & perspective:** Nearby contacts within 1 frame (`-45..+125 ms`) with mid/high transients audible on phone speakers; match proximity to shot scale; keep realistic acoustic lags (e.g. thunder).
+- **Event sounds, foley-before-voice & perspective:** Nearby contacts within 1 frame (`-45..+125 ms`) with mid/high transients audible on phone speakers; match proximity to shot scale; keep realistic acoustic lags (e.g. thunder). At key attention turns (Frame 0, 40–60% false summit, climax reveal), let a crisp physical foley transient (`click`, `snap`, `sizzle`, `rush`) play cleanly in a `0.25–0.45 s` solo breath right before the spoken pivot to break vocal habituation.
 - **Instrument views, baked audio & music:** Give slowed shots a consistent stretched/softened treatment; mute baked-in AI speech/music; keep optional music ducked/out under key evidence; use J/L-cuts across scene changes.
 
 ## Pacing: cut by what the viewer needs

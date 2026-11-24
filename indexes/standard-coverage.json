@@ -23,7 +23,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "2f2d0edf0a362130b9de615a615395324e9a0111bf9f78efc2427f224cfd24c8",
+      "sha256": "7326e2558764e8dd792af5030d261d99873450a5680574a0db2b6081846f17da",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -88,7 +88,7 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "c4c57fa730a48febf9135d30b75d5fd233e1fa781cc79667f8025ed643256dd9",
+      "sha256": "4a78e6623195162a2b5a5c368d427137e56bb0981f5b79e24ca07fd76f759d0e",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
@@ -148,7 +148,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "e914ece2fe0b8177861ae5e5d8989cd7fffca633ad01329790e0740be84d1deb",
+      "sha256": "5112896b60b67e71713a705b0e4347be4f6abdfd525ba619ac2d84dd54ff4010",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -300,7 +300,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "a1ebf0f588ebdc624fab0581b4cb7c53d729f1e0191fd88ca67d7d159027377b",
+      "sha256": "21350c8bbf3d65ec712e9421775da251114c52a993ccf14232e89cd9e712dd74",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -383,7 +383,7 @@
     {
       "owner_id": "realism",
       "file": "references/realistic-direction.md",
-      "sha256": "88d5dbb4f0b97c140b63bdc10081282e7d3103c05c8aeb00205dc76c808723a8",
+      "sha256": "2e0717129f8d98ef6673f4ff5938c087cb6ea9cce5e6848ad1166da1cb29fc15",
       "anchors": [
         "realistic-direction-honest-clear-told-heard-paced-and-finished",
         "use-this-page-by-stage",

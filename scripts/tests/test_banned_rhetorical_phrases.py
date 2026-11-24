@@ -96,10 +96,39 @@ class TestBannedRhetoricalPhrases(unittest.TestCase):
         )
         self.assertIsNone(google_flow_audit.EN_CURIOSITY_KILLER_RE.search(good_en))
 
+        for early_dump in (
+            "先来了解一下它的基本结构。",
+            "它主要由主阀、副管和薄膜三部分组成。",
+            "整个过程分为以下三个部分。",
+        ):
+            self.assertIsNotNone(google_flow_audit.EARLY_STRUCTURE_DUMP_RE.search(early_dump), early_dump)
+
+        for end_sig in (
+            "总结一下，这就是加油枪为什么会自动跳枪的原因。",
+            "所以说到底，一切都靠这股小气流。",
+            "讲到这里，你应该明白了它的秘密。",
+        ):
+            self.assertIsNotNone(google_flow_audit.PREMATURE_ENDING_SIGNAL_RE.search(end_sig), end_sig)
+        self.assertIsNone(
+            google_flow_audit.PREMATURE_ENDING_SIGNAL_RE.search(
+                "下次听见油枪那声清脆的咔哒，其实不是机器算准了油量，而是那股刚好被油面封住的小气流替你按下了开关。"
+            )
+        )
+
+        for bad_en_end in (
+            "In conclusion, that is how ice stays afloat.",
+            "To summarize, pressure closes the valve.",
+            "Now you know why it clicks shut.",
+        ):
+            self.assertIsNotNone(google_flow_audit.EN_ENDING_SIGNAL_RE.search(bad_en_end), bad_en_end)
+        bad_en_list = "The valve drops. Furthermore, air enters the tube. Moreover, suction builds up."
+        self.assertGreaterEqual(len(google_flow_audit.EN_ADDITIVE_LIST_RE.findall(bad_en_list)), 2)
+
     def test_opening_hook_rejects_preamble_and_premature_spoiler(self):
         for bad_line in (
             "大家好，今天我们来聊聊冰块为什么会浮起来。",
             "你知道吗，其实原理很简单。",
+            "先来了解一下它的基本结构。",
             "看到最后你就明白了。",
         ):
             self.assertIsNotNone(opening_hook.OPENING_FILLER_RE.search(bad_line), bad_line)

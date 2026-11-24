@@ -232,6 +232,71 @@ class SynthesizeIndexTTS2Tests(unittest.TestCase):
             )
         self.assertIn("use_qwen_emo=True", str(ctx.exception))
 
+    def test_edge_silence_trimming_prevents_double_stacked_gaps_and_late_onset(self) -> None:
+        def _write_padded_wav(path: Path, lead_s: float, tone_s: float, trail_s: float, rate: int = 22050) -> None:
+            frames = bytearray()
+            lead_n = int(round(lead_s * rate))
+            tone_n = int(round(tone_s * rate))
+            trail_n = int(round(trail_s * rate))
+            frames.extend(b"\x00\x00" * lead_n)
+            for i in range(tone_n):
+                val = int(round(0.2 * math.sin(2 * math.pi * 220.0 * i / rate) * 32767))
+                frames.extend(struct.pack("<h", val))
+            frames.extend(b"\x00\x00" * trail_n)
+            with wave.open(str(path), "wb") as wf:
+                wf.setnchannels(1)
+                wf.setsampwidth(2)
+                wf.setframerate(rate)
+                wf.writeframes(bytes(frames))
+
+        p1 = self.root / "p1.wav"
+        p2 = self.root / "p2.wav"
+        _write_padded_wav(p1, lead_s=0.45, tone_s=0.50, trail_s=0.35)
+        _write_padded_wav(p2, lead_s=0.30, tone_s=0.50, trail_s=0.30)
+
+        out_trimmed = self.root / "joined_trimmed.wav"
+        timings = idx_adapter.concat_wavs_with_silence([p1, p2], out_trimmed, 0.55, trim_edge_silence=True)
+        # p1 active 0.50 + 0.03 head + 0.04 tail ≈ 0.57; gap 0.55; p2 active 0.50 + 0.04 + 0.04 ≈ 0.58 => ~1.70 s (vs 2.95 s raw)
+        info = idx_adapter.probe_wav_info(out_trimmed)
+        self.assertAlmostEqual(info["duration_seconds"], 1.70, delta=0.04)
+        self.assertGreater(timings[0]["trimmed_leading_s"], 0.35)
+        self.assertGreater(timings[0]["trimmed_trailing_s"], 0.25)
+        self.assertGreater(timings[1]["trimmed_leading_s"], 0.20)
+
+        out_raw = self.root / "joined_raw.wav"
+        timings_raw = idx_adapter.concat_wavs_with_silence([p1, p2], out_raw, 0.55, trim_edge_silence=False)
+        self.assertAlmostEqual(idx_adapter.probe_wav_info(out_raw)["duration_seconds"], 2.95, delta=0.02)
+        self.assertEqual(timings_raw[0]["trimmed_leading_s"], 0.0)
+
+    def test_anti_spoiler_zh_clause_splitting_and_pause_weighted_srt(self) -> None:
+        text = "油面刚一封住小孔，按理说油会继续喷——可枪口反而立刻断油了。因为负压把薄膜吸住了。"
+        clauses = idx_adapter._split_zh_clauses(text, max_chars=22)
+        self.assertEqual(clauses, ["油面刚一封住小孔，按理说油会继续喷", "可枪口反而立刻断油了", "因为负压把薄膜吸住了"])
+
+        # Reversal starter after comma also splits cleanly instead of merging into setup cue
+        clauses_comma = idx_adapter._split_zh_clauses("冰是固体，却浮在水上。", max_chars=22)
+        self.assertEqual(clauses_comma, ["冰是固体", "却浮在水上"])
+
+        srt = idx_adapter.build_srt_from_paragraphs(
+            [text],
+            [{"start_s": 0.0, "end_s": 6.0}],
+            interval_silence_ms=220,
+        )
+        # Verify 3 non-overlapping cues with pause gap after the dash and sentence end
+        times = []
+        for line in srt.splitlines():
+            if "-->" in line:
+                a, b = [s.strip() for s in line.split("-->")]
+                def _sec(ts: str) -> float:
+                    h, m, rest = ts.split(":")
+                    sec, ms = rest.split(",")
+                    return int(h) * 3600 + int(m) * 60 + int(sec) + int(ms) / 1000.0
+                times.append((_sec(a), _sec(b)))
+        self.assertEqual(len(times), 3)
+        self.assertGreaterEqual(times[1][0] - times[0][1], 0.12)
+        self.assertGreaterEqual(times[2][0] - times[1][1], 0.18)
+        self.assertAlmostEqual(times[-1][1], 6.0, delta=0.01)
+
 
 if __name__ == "__main__":
     unittest.main()

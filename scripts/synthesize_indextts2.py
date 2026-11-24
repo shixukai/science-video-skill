@@ -252,10 +252,79 @@ def probe_wav_info(path: Path) -> dict[str, Any]:
         }
 
 
+def _trim_edge_silence_pcm(
+    data: bytes,
+    params: Any,
+    *,
+    threshold_dbfs: float = -45.0,
+    keep_head_s: float = 0.04,
+    keep_tail_s: float = 0.04,
+) -> tuple[bytes, float, float]:
+    """Trim excess leading/trailing silence while keeping a short natural breath margin."""
+    sampwidth = params.sampwidth
+    channels = params.nchannels
+    rate = params.framerate
+    frame_bytes = sampwidth * channels
+    if sampwidth not in (1, 2, 4) or frame_bytes <= 0 or rate <= 0:
+        return data, 0.0, 0.0
+    nframes = len(data) // frame_bytes
+    if nframes <= 0:
+        return data, 0.0, 0.0
+
+    if sampwidth == 2:
+        arr = array.array("h")
+        arr.frombytes(data[: nframes * frame_bytes])
+        if sys.byteorder != "little":
+            arr.byteswap()
+        scale = 1.0 / 32768.0
+        samples = [v * scale for v in arr]
+    elif sampwidth == 4:
+        arr_i = array.array("i")
+        arr_i.frombytes(data[: nframes * frame_bytes])
+        if sys.byteorder != "little":
+            arr_i.byteswap()
+        scale = 1.0 / 2147483648.0
+        samples = [v * scale for v in arr_i]
+    else:
+        samples = [(b - 128) / 128.0 for b in data[: nframes * frame_bytes]]
+
+    threshold_rms = 10.0 ** (threshold_dbfs / 20.0)
+    win_frames = max(1, int(round(rate * 0.01)))
+    first_active: int | None = None
+    last_active_end: int | None = None
+    for f_start in range(0, nframes, win_frames):
+        f_end = min(nframes, f_start + win_frames)
+        s_lo = f_start * channels
+        s_hi = f_end * channels
+        seg = samples[s_lo:s_hi]
+        if not seg:
+            continue
+        rms = math.sqrt(sum(v * v for v in seg) / len(seg))
+        if rms >= threshold_rms:
+            if first_active is None:
+                first_active = f_start
+            last_active_end = f_end
+
+    if first_active is None or last_active_end is None:
+        return data, 0.0, 0.0
+
+    head_margin = int(round(max(0.0, keep_head_s) * rate))
+    tail_margin = int(round(max(0.0, keep_tail_s) * rate))
+    new_start = max(0, first_active - head_margin)
+    new_end = min(nframes, last_active_end + tail_margin)
+    if new_start >= new_end:
+        return data, 0.0, 0.0
+    trimmed_head_s = new_start / float(rate)
+    trimmed_tail_s = (nframes - new_end) / float(rate)
+    return data[new_start * frame_bytes : new_end * frame_bytes], trimmed_head_s, trimmed_tail_s
+
+
 def concat_wavs_with_silence(
     wav_paths: list[Path],
     out_path: Path,
     silence_s: float,
+    *,
+    trim_edge_silence: bool = True,
 ) -> list[dict[str, Any]]:
     if not wav_paths:
         raise SynthesisError("No synthesized paragraph WAVs to concatenate.")
@@ -299,6 +368,15 @@ def concat_wavs_with_silence(
             if nframes <= 0:
                 raise SynthesisError(f"Synthesized paragraph audio is empty: {p}")
             data = wf.readframes(nframes)
+        trimmed_head_s, trimmed_tail_s = 0.0, 0.0
+        if trim_edge_silence:
+            data, trimmed_head_s, trimmed_tail_s = _trim_edge_silence_pcm(
+                data,
+                params,
+                keep_head_s=0.03 if idx == 0 else 0.04,
+                keep_tail_s=0.04,
+            )
+            nframes = len(data) // (params.nchannels * params.sampwidth)
         chunks.append(data)
         start_s = cursor_frames / float(params.framerate)
         cursor_frames += nframes
@@ -310,6 +388,8 @@ def concat_wavs_with_silence(
                 "end_s": round(end_s, 4),
                 "duration_s": round(end_s - start_s, 4),
                 "gap_after_s": round(silence_dur_s, 4) if idx < len(wav_paths) - 1 else 0.0,
+                "trimmed_leading_s": round(trimmed_head_s, 4),
+                "trimmed_trailing_s": round(trimmed_tail_s, 4),
             }
         )
 
@@ -338,39 +418,97 @@ def _strip_pinyin_markup(text: str) -> str:
     return re.sub(r"<([^|>]+)\|[^>]+>", r"\1", text)
 
 
-def _split_zh_clauses(sentence: str, max_chars: int = 22) -> list[str]:
+_ZH_PIVOT_START_RE = re.compile(
+    r"^(?:可是|可|却|但是|但|然而|反而|结果|偏偏|于是|竟然|居然|其实|原来|没想到|问题在于|关键在于|真正)"
+)
+_ZH_SPLIT_TOKEN_RE = re.compile(r"(——|—{2,}|[，、。！？；：]+)")
+
+
+def _split_zh_clauses_with_pauses(sentence: str, max_chars: int = 22) -> list[tuple[str, str]]:
+    """Split Mandarin narration into anti-spoiler cues with trailing pause kinds."""
     cleaned = re.sub(r"\s+", "", _strip_pinyin_markup(sentence).strip())
     if not cleaned:
         return []
-    raw_parts = [
-        p.strip("，、。！？；：")
-        for p in re.split(r"[，、。！？；：]+", cleaned)
-        if p.strip("，、。！？；：")
-    ]
-    merged: list[str] = []
-    for part in raw_parts:
-        if merged and len(merged[-1]) + 1 + len(part) <= max_chars:
-            merged[-1] = f"{merged[-1]}，{part}"
+    tokens = _ZH_SPLIT_TOKEN_RE.split(cleaned)
+    raw_items: list[tuple[str, str]] = []
+    i = 0
+    while i < len(tokens):
+        part = tokens[i].strip("，、。！？；：—-")
+        delim = tokens[i + 1] if i + 1 < len(tokens) else ""
+        i += 2
+        if not part:
+            continue
+        if "—" in delim:
+            pause_kind = "dash"
+        elif any(ch in delim for ch in "。！？"):
+            pause_kind = "sentence"
+        elif delim:
+            pause_kind = "comma"
         else:
-            merged.append(part)
-    return merged or [cleaned]
+            pause_kind = "none"
+        raw_items.append((part, pause_kind))
+
+    if not raw_items:
+        return [(cleaned, "none")]
+
+    merged: list[list[str]] = []
+    for part, pause_kind in raw_items:
+        if merged:
+            prev_text, prev_pause = merged[-1]
+            # Never merge across sentence boundaries, em-dash suspense pivots, or reversal starters.
+            can_merge = (
+                prev_pause == "comma"
+                and not _ZH_PIVOT_START_RE.match(part)
+                and len(prev_text) + 1 + len(part) <= max_chars
+            )
+            if can_merge:
+                merged[-1][0] = f"{prev_text}，{part}"
+                merged[-1][1] = pause_kind
+                continue
+        merged.append([part, pause_kind])
+    merged[-1][1] = "none"
+    return [(txt, pk) for txt, pk in merged]
 
 
-def build_srt_from_paragraphs(paragraphs: list[str], timings: list[dict[str, Any]]) -> str:
+def _split_zh_clauses(sentence: str, max_chars: int = 22) -> list[str]:
+    return [txt for txt, _ in _split_zh_clauses_with_pauses(sentence, max_chars=max_chars)]
+
+
+def build_srt_from_paragraphs(
+    paragraphs: list[str],
+    timings: list[dict[str, Any]],
+    *,
+    interval_silence_ms: int = 220,
+) -> str:
     cues: list[tuple[float, float, str]] = []
+    sent_pause_s = max(0.0, float(interval_silence_ms) / 1000.0)
+    dash_pause_s = min(0.20, max(0.14, sent_pause_s * 0.85)) if sent_pause_s > 0 else 0.14
+    comma_pause_s = 0.05
+    pause_map = {"sentence": sent_pause_s, "dash": dash_pause_s, "comma": comma_pause_s, "none": 0.0}
+
     for para, timing in zip(paragraphs, timings):
         start_s = float(timing["start_s"])
         end_s = float(timing["end_s"])
         dur_s = max(0.25, end_s - start_s)
-        clauses = _split_zh_clauses(para)
+        clauses = _split_zh_clauses_with_pauses(para)
         if not clauses:
             continue
-        total_weight = max(1, sum(len(c) for c in clauses))
+        raw_pauses = [pause_map.get(pk, 0.0) for _, pk in clauses]
+        raw_pause_total = sum(raw_pauses)
+        max_pause_budget = dur_s * 0.35
+        pause_scale = (max_pause_budget / raw_pause_total) if raw_pause_total > max_pause_budget and raw_pause_total > 0 else 1.0
+        eff_pauses = [p * pause_scale for p in raw_pauses]
+        speech_budget = max(0.15, dur_s - sum(eff_pauses))
+        total_weight = max(1, sum(len(txt) for txt, _ in clauses))
         cursor = start_s
-        for idx, clause in enumerate(clauses):
-            span = (end_s - cursor) if idx == len(clauses) - 1 else dur_s * (len(clause) / total_weight)
-            cues.append((cursor, max(cursor + 0.15, cursor + span), clause))
-            cursor += span
+        for idx, ((clause, _), pause_after) in enumerate(zip(clauses, eff_pauses)):
+            if idx == len(clauses) - 1:
+                cue_end = max(cursor + 0.15, end_s)
+            else:
+                span = speech_budget * (len(clause) / total_weight)
+                cue_end = max(cursor + 0.15, cursor + span)
+            cues.append((cursor, cue_end, clause))
+            cursor = cue_end + pause_after
     blocks = []
     for idx, (st, ed, line) in enumerate(cues, 1):
         blocks.append(f"{idx}\n{_format_srt_ts(st)} --> {_format_srt_ts(ed)}\n{line}\n")
@@ -448,6 +586,7 @@ def synthesize_indextts2(
     emo_alpha: float | None = None,
     seed: int | None = None,
     srt_out: Path | None = None,
+    trim_edge_silence: bool = True,
     allow_model_download: bool = False,
 ) -> dict[str, Any]:
     text_file = Path(text_file).expanduser().resolve()
@@ -636,7 +775,12 @@ def synthesize_indextts2(
                 rec_temp = Path(rec_handle.name)
                 temps.append(rec_temp)
 
-                timings = concat_wavs_with_silence(part_paths, wav_temp, eff_para_silence)
+                timings = concat_wavs_with_silence(
+                    part_paths,
+                    wav_temp,
+                    eff_para_silence,
+                    trim_edge_silence=trim_edge_silence,
+                )
                 for para, row in zip(paragraphs, timings):
                     row["char_count"] = len(_strip_pinyin_markup(para))
 
@@ -646,7 +790,11 @@ def synthesize_indextts2(
                 if srt_resolved is not None:
                     srt_resolved.parent.mkdir(parents=True, exist_ok=True)
                     srt_resolved.write_text(
-                        build_srt_from_paragraphs(paragraphs, timings),
+                        build_srt_from_paragraphs(
+                            paragraphs,
+                            timings,
+                            interval_silence_ms=eff_interval_silence,
+                        ),
                         encoding="utf-8",
                         newline="\n",
                     )
@@ -665,6 +813,7 @@ def synthesize_indextts2(
                     "duration_factor": eff_duration_factor,
                     "interval_silence": eff_interval_silence,
                     "paragraph_silence_s": eff_para_silence,
+                    "trim_edge_silence": bool(trim_edge_silence),
                     "use_emo_text": eff_use_emo_text,
                 }
                 if eff_use_emo_text and emo_alpha is not None:
@@ -786,6 +935,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--emo-alpha", type=float)
     p.add_argument("--seed", type=int)
     p.add_argument("--srt-out", type=Path, help="Optional clause-aligned .srt output path.")
+    p.add_argument(
+        "--trim-edge-silence",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Trim excess per-paragraph leading/trailing silence (keeping ~30-40 ms breath margin) before joining.",
+    )
     p.add_argument("--allow-model-download", action="store_true", help="Allow HF downloads if weights are missing.")
     return p
 
@@ -816,6 +971,7 @@ def main(argv: list[str] | None = None) -> int:
             emo_alpha=args.emo_alpha,
             seed=args.seed,
             srt_out=args.srt_out,
+            trim_edge_silence=args.trim_edge_silence,
             allow_model_download=args.allow_model_download,
         )
     except Exception as exc:

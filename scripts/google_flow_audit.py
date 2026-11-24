@@ -58,10 +58,29 @@ EMPTY_SUSPENSE_RE = re.compile(
 ADDITIVE_LIST_TRANSITION_RE = re.compile(
     r"(?:^|[，。！？\n])\s*(?:此外|另外|与此同时|除此之外|不仅如此|其次|值得注意的是|总而言之)[，,]?"
 )
+EARLY_STRUCTURE_DUMP_RE = re.compile(
+    r"(?:(?:它|这个[^，。！？\n]{1,6})主要由[^，。！？\n]{1,12}组成|"
+    r"先(?:来)?了解(?:一下)?它的(?:基本)?(?:结构|构造|历史|原理)|"
+    r"分为(?:以下)?(?:几|两|三|四)个部分)"
+)
+PREMATURE_ENDING_SIGNAL_RE = re.compile(
+    r"(?:总结一下|综上所述|总而言之|说到这儿|讲到这里|"
+    r"到这里[^，。！？\n]{0,6}(?:明白|懂|清楚)了|所以说到底|归根结底|"
+    r"好了[，,]今天|这(?:也)?就是为什么[^，。！？\n]{0,14}(?:的原因|吧|了))"
+)
 EN_CURIOSITY_KILLER_RE = re.compile(
     r"\b(?:welcome back to|in this video we(?:'ll| will)|let's dive right in|"
     r"the short answer is|here'?s the secret|you won't believe|"
     r"stay until the end|what happens next will)\b",
+    re.IGNORECASE,
+)
+EN_ENDING_SIGNAL_RE = re.compile(
+    r"\b(?:in conclusion|to summarize|to sum up|so in short|"
+    r"and that'?s basically why|thanks for watching|now you know why)\b",
+    re.IGNORECASE,
+)
+EN_ADDITIVE_LIST_RE = re.compile(
+    r"(?:^|[.!?]\s+)(?:furthermore|moreover|additionally|in addition|secondly|thirdly|lastly)\b",
     re.IGNORECASE,
 )
 PCT_RATE_RE = re.compile(r"^\s*([+-]?\d+(?:\.\d+)?)\s*%\s*$")
@@ -823,6 +842,10 @@ def _check_speech_and_holds(
                 ai_reasons.append("empty_suspense_filler")
             if len(ADDITIVE_LIST_TRANSITION_RE.findall(script_source_text)) >= 3:
                 ai_reasons.append("additive_list_transition_density")
+            early_count = max(2, int(len(raw_sents) * 0.4)) if raw_sents else 0
+            early_text = "。".join(raw_sents[:early_count]) if raw_sents else script_source_text[:180]
+            if EARLY_STRUCTURE_DUMP_RE.search(early_text):
+                ai_reasons.append("early_structure_dump")
             if len(STRAWMAN_REVERSAL_RE.findall(script_source_text)) >= 2:
                 ai_reasons.append("strawman_reversal_density")
             zh_sents = [len(CJK_RE.findall(s)) for s in raw_sents if len(CJK_RE.findall(s)) > 0]
@@ -831,12 +854,19 @@ def _check_speech_and_holds(
                 short_ratio = sum(1 for n in zh_sents if n <= 18) / len(zh_sents)
                 if mean_cjk < 22.0 or short_ratio >= 0.55:
                     ai_reasons.append(f"telegraphic_short_sentences:mean={mean_cjk:.1f},short_ratio={short_ratio:.2f}")
-            tail_text = "。".join(raw_sents[-2:]) if raw_sents else ""
+            tail_count = max(2, int(len(raw_sents) * 0.35)) if raw_sents else 0
+            tail_text = "。".join(raw_sents[-tail_count:]) if raw_sents else ""
+            if PREMATURE_ENDING_SIGNAL_RE.search(tail_text):
+                ai_reasons.append("premature_ending_signal")
             if SLOGAN_CLOSING_RE.search(tail_text):
                 ai_reasons.append("slogan_closing_formula")
         elif edition == "en":
             if EN_CURIOSITY_KILLER_RE.search(script_source_text):
                 ai_reasons.append("empty_suspense_or_preamble_en")
+            if EN_ENDING_SIGNAL_RE.search(script_source_text):
+                ai_reasons.append("premature_ending_signal_en")
+            if len(EN_ADDITIVE_LIST_RE.findall(script_source_text)) >= 2:
+                ai_reasons.append("additive_list_transition_density_en")
         semi_count = len(re.findall(r"[；;]", script_source_text))
         tail_semi = any(re.search(r"[；;]", s) for s in raw_sents[-2:]) if raw_sents else False
         if semi_count >= 2 or tail_semi:

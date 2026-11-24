@@ -24,10 +24,10 @@
 - **Hook lab (0–5 s, `topic_alignment.opening.hook`)**:
   - `host_relation`: `standalone` | `part_of_host` (`host_system` + `whole_to_part_bridge` if inside a larger host)
   - 3+ candidates across 2+ patterns (and why losers lost)
-  - Selected Frame 0 (already moving) / first sound / first spoken line + payload clause (`<= 3.5 s`, priming shared intuition against visible contradiction) / muted & phone read
-  - ~8 s concrete **non-spoiling** viewing promise (physical puzzle/clue named without prematurely revealing the core answer)
-  - Opening-to-body handoff (final opening line + first body observation written together)
-- **Body payoff map (`payoff_steps`) & ending return (`answer_time_s`)**: chain beats via "Therefore / But" causal pivots and escalating obstacles (False Summits) instead of flat additive lists; deliver final answer late (`>= 75%`) and end cleanly within `6 s`.
+  - Selected Frame 0 (already moving) / first sound / first spoken line + payload clause (`<= 3.5 s`, priming shared intuition + sensory anchor against visible contradiction; visual-verbal counterpoint — never narrate visible pixels) / muted & phone read
+  - ~8 s concrete **non-spoiling** viewing promise kept in **the same opening `\n\n` TTS paragraph** as the hook (physical puzzle/clue named without prematurely revealing the core answer)
+  - Opening-to-body handoff (final opening line + first body observation written together; enter the first active test/action immediately at 8–15 s with zero static parts list)
+- **Body payoff map (`payoff_steps`) & ending return (`answer_time_s`)**: chain beats via "Therefore / But" causal pivots, gentle 0.5 s micro-predictions, one-new-entity-per-breath pacing, solo `0.25–0.45 s` foley micro-breaths before key turns, and escalating obstacles (False Summits) instead of flat additive lists; deliver final answer late (`>= 75%`), ban premature ending signals (`总结一下`/`所以说到底`/`in conclusion`), and land the closing sentence on an everyday reframing takeaway within `6 s`.
 
 ## 4. Script, Shots & Route Execution
 - **Script & audio master**: path / hash / actual spoken duration (time shots from real audio, never guesses)

@@ -42,38 +42,92 @@ def _format_srt_ts(seconds: float) -> str:
     return f"{hrs:02d}:{mins:02d}:{secs:02d},{ms:03d}"
 
 
+_ZH_PIVOT_START_RE = re.compile(
+    r"^(?:可是|可|却|但是|但|然而|反而|结果|偏偏|于是|竟然|居然|其实|原来|没想到|问题在于|关键在于|真正)"
+)
+_ZH_SPLIT_TOKEN_RE = re.compile(r"(——|—{2,}|[，、。！？；：]+)")
+_EN_PIVOT_WORDS = {"but", "yet", "except", "until", "instead", "which", "however"}
+
+
 def _split_zh_clauses(sentence: str, max_chars: int = 22) -> list[str]:
     cleaned = re.sub(r"\s+", "", sentence.strip())
     if not cleaned:
         return []
-    raw_parts = [p.strip("，、。！？；：") for p in re.split(r"[，、。！？；：]+", cleaned) if p.strip("，、。！？；：")]
-    merged: list[str] = []
-    for part in raw_parts:
-        if merged and len(merged[-1]) + 1 + len(part) <= max_chars:
-            merged[-1] = f"{merged[-1]}，{part}"
+    tokens = _ZH_SPLIT_TOKEN_RE.split(cleaned)
+    raw_items: list[tuple[str, str]] = []
+    i = 0
+    while i < len(tokens):
+        part = tokens[i].strip("，、。！？；：—-")
+        delim = tokens[i + 1] if i + 1 < len(tokens) else ""
+        i += 2
+        if not part:
+            continue
+        if "—" in delim:
+            pause_kind = "dash"
+        elif any(ch in delim for ch in "。！？"):
+            pause_kind = "sentence"
+        elif delim:
+            pause_kind = "comma"
         else:
-            merged.append(part)
-    return merged or [cleaned]
+            pause_kind = "none"
+        raw_items.append((part, pause_kind))
+    if not raw_items:
+        return [cleaned]
+    merged: list[list[str]] = []
+    for part, pause_kind in raw_items:
+        if merged:
+            prev_text, prev_pause = merged[-1]
+            if (
+                prev_pause == "comma"
+                and not _ZH_PIVOT_START_RE.match(part)
+                and len(prev_text) + 1 + len(part) <= max_chars
+            ):
+                merged[-1][0] = f"{prev_text}，{part}"
+                merged[-1][1] = pause_kind
+                continue
+        merged.append([part, pause_kind])
+    return [txt for txt, _ in merged]
 
 
 def _split_en_clauses(sentence: str, max_words: int = 12) -> list[str]:
-    words = sentence.strip().split()
-    if not words:
+    # Hard-break on em-dash / double-hyphen pivots so setup and surprise reveal don't spoil in one cue.
+    dash_parts = [seg.strip() for seg in re.split(r"\s*(?:—|--)\s*", sentence.strip()) if seg.strip()]
+    if not dash_parts:
         return []
-    if len(words) <= max_words:
-        return [" ".join(words)]
     chunks: list[str] = []
-    cur: list[str] = []
-    for w in words:
-        cur.append(w)
-        if len(cur) >= max_words or (len(cur) >= 6 and w.endswith((",", ";", ":", "."))):
-            chunks.append(" ".join(cur))
-            cur = []
-    if cur:
-        if chunks and len(cur) <= 3:
-            chunks[-1] = f"{chunks[-1]} {' '.join(cur)}"
-        else:
-            chunks.append(" ".join(cur))
+    for seg in dash_parts:
+        words = seg.split()
+        if not words:
+            continue
+        if len(words) <= max_words:
+            # Split at a clear mid-sentence pivot if there is room on both sides.
+            split_at = None
+            for idx in range(4, len(words) - 3):
+                if words[idx].lower().strip(",;:") in _EN_PIVOT_WORDS and words[idx - 1].endswith((",", ";", ":")):
+                    split_at = idx
+                    break
+            if split_at is not None:
+                chunks.append(" ".join(words[:split_at]))
+                chunks.append(" ".join(words[split_at:]))
+            else:
+                chunks.append(" ".join(words))
+            continue
+        cur: list[str] = []
+        seg_chunks: list[str] = []
+        for w in words:
+            if len(cur) >= 4 and w.lower().strip(",;:") in _EN_PIVOT_WORDS and cur[-1].endswith((",", ";", ":")):
+                seg_chunks.append(" ".join(cur))
+                cur = []
+            cur.append(w)
+            if len(cur) >= max_words or (len(cur) >= 6 and w.endswith((",", ";", ":", "."))):
+                seg_chunks.append(" ".join(cur))
+                cur = []
+        if cur:
+            if seg_chunks and len(cur) <= 3:
+                seg_chunks[-1] = f"{seg_chunks[-1]} {' '.join(cur)}"
+            else:
+                seg_chunks.append(" ".join(cur))
+        chunks.extend(seg_chunks)
     return chunks
 
 

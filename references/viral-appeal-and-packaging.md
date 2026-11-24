@@ -84,6 +84,7 @@ Hook footage must belong to the film and be explained by the body. Cut empty loo
 Right after the payload (finishing by `promise_window_s` = `8 s`), state one concrete sentence naming **the exact physical puzzle, observable clue, or test arena** that makes the answer feel within reach (`topic_alignment.opening.viewing_promise`: `line`, `fulfilled_by_scope_id`, `time_s`) — **without prematurely spoiling the final causal mechanism**. Giving away the punchline at 6 s collapses the information gap and causes an immediate swipe-off; conversely, empty suspense (“揭开它的秘密” / “看到最后你就明白了”) or abrupt zoom orders (“把冰放大到分子这一层”) fail to earn trust.
 - **Avoid (premature payoff collapse):** “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。” *(explains the core answer at 6 s — nothing left to discover)*
 - **Target (concrete arena, gap stays open):** “同样重的一杯水，冻成冰以后居然会胀大一圈——温度越低，水分子怎么反而越排越松？” *(names the concrete physical paradox and clue while keeping the mechanism open for the body)*
+- **Prevent the 5–15 s post-hook dip:** Keep the entire 0–8 s hook + viewing promise inside **one continuous `\n\n` TTS paragraph** (zero inter-paragraph stall right at 3.5 s), then enter the first visible physical test or active state change immediately — never stall into a static parts inventory (“先来了解一下它的结构，它主要由三部分组成……”). Introduce a component only when it physically acts or triggers a hurdle.
 
 ## Keep a reason to stay
 
@@ -108,7 +109,7 @@ Run `python -X utf8 scripts/retention_timeline.py measure <export.mp4> --episode
 
 ## End fast after explaining the mechanism
 
-Deliver the final answer late (`ending.answer_time_s`), reconnect cleanly to the opening image, and **land calmly within `answer_to_end_review_s` (`6 s`) right after explaining the mechanism** — zero trailing questions (“你平时遇到过吗？”), comment prompts, recaps, slogans, or like/follow CTAs unless explicitly commissioned.
+Deliver the final answer late (`ending.answer_time_s`), **eliminate verbal ending signals** (`总结一下`, `所以说到底`, `到这里你就明白了`, `这就是为什么…的原因`; English `"in conclusion"`, `"to summarize"`, `"now you know why"`) that trigger viewers to swipe off 5–8 s early, land the closing sentence on an everyday **reframing takeaway** reconnecting cleanly to the opening image, and **stop calmly within `answer_to_end_review_s` (`6 s`)** — zero trailing questions (“你平时遇到过吗？”), comment prompts, recaps, slogans, or like/follow CTAs unless explicitly commissioned.
 
 ## Duration, format and series identity
 
@@ -122,7 +123,7 @@ For the Douyin composer group (Douyin and native cross-posts), compose a `1080×
 
 ## Scroll-viewer appeal check
 
-On G2 rough cuts and G5 finals, an independent reviewer watches from frame 0 with no context and records in `qa.expression_plan` / `qa.expression_review`: (1) frame 0–1 s stop power, (2) 2 s named object + intuition-vs-evidence tension (muted & voiced), (3) ~8 s concrete **non-spoiling** viewing promise (arena/clue named without prematurely dumping the core answer), (4) exact swipe-risk timestamps & causes (including flat "and then" transitions or jargon before visible behavior), and (5) clean fast ending + promise honesty.
+On G2 rough cuts and G5 finals, an independent reviewer watches from frame 0 with no context and records in `qa.expression_plan` / `qa.expression_review`: (1) frame 0–1 s stop power, (2) 2 s named object + intuition-vs-evidence tension (muted & voiced) with visual-verbal counterpoint (no pixel-narrating voiceover), (3) ~8 s concrete **non-spoiling** viewing promise flowing straight into action with zero 5–15 s structure-dump dip, (4) exact swipe-risk timestamps & causes (flat "and then" transitions, working-memory overload, anti-spoiler caption leaks, or monotone stretches), and (5) zero premature ending signals + crisp reframing closing line + promise honesty.
 
 ## Learn from what actually performs
 

@@ -450,6 +450,37 @@ def analyze_continuity(path, boundaries=None, window_seconds=3.0, peak_limited=F
     if isolated_transients and (peak_limited or target_shortfall_lu > 2.0):
         flags.append("isolated_transient_limiting_gain")
 
+    opening_leading_silence_s = round(duration, 3)
+    for f in frames:
+        if f["rms_db"] >= -45.0:
+            opening_leading_silence_s = round(max(0.0, f["t"] - 0.5 * frame_step), 3)
+            break
+
+    longest_unbroken_speech_s = 0.0
+    cur_speech_start = None
+    inactive_run = 0
+    for f in frames:
+        if f["active"]:
+            if cur_speech_start is None:
+                cur_speech_start = max(0.0, f["t"] - 0.5 * frame_step)
+            inactive_run = 0
+            span_s = (f["t"] + 0.5 * frame_step) - cur_speech_start
+            if span_s > longest_unbroken_speech_s:
+                longest_unbroken_speech_s = span_s
+        else:
+            inactive_run += 1
+            if inactive_run >= 3:
+                cur_speech_start = None
+    longest_unbroken_speech_s = round(longest_unbroken_speech_s, 3)
+
+    engagement_notes = []
+    if opening_leading_silence_s > 0.35:
+        engagement_notes.append("late_opening_voice_onset")
+    if duration >= 15.0 and len(f0_vals) >= 4 and f0_spread_st < 1.2:
+        engagement_notes.append("low_prosodic_variation")
+    if longest_unbroken_speech_s > 14.0:
+        engagement_notes.append("long_unbroken_speech_wall")
+
     isolated_transients.sort(key=lambda item: item["peak_dbfs"], reverse=True)
     return {
         "window_seconds": round(eff_window, 3),
@@ -468,6 +499,12 @@ def analyze_continuity(path, boundaries=None, window_seconds=3.0, peak_limited=F
         "boundary_checks": boundary_checks,
         "flags": flags,
         "status": "flagged_for_review" if flags else "within_nominal_bounds",
+        "engagement_diagnostics": {
+            "opening_leading_silence_s": opening_leading_silence_s,
+            "longest_unbroken_speech_s": longest_unbroken_speech_s,
+            "engagement_notes": engagement_notes,
+            "scope": "Advisory opening-onset and prosodic-energy screen only; does not alter continuity status or replace actual listening.",
+        },
     }
 
 

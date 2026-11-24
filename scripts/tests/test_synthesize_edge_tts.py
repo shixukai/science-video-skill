@@ -78,6 +78,16 @@ class SynthesizeEdgeTtsTests(unittest.TestCase):
         self.assertTrue(out_wav.is_file() and out_wav.stat().st_size > 1000)
         self.assertTrue(srt_out.is_file() and "稳稳停着几颗方方正正的粪粒" in srt_out.read_text(encoding="utf-8"))
 
+    def test_anti_spoiler_clause_splits_on_dashes_and_pivots_for_zh_and_en(self) -> None:
+        zh_cues = edge_adapter._split_zh_clauses("按理说东西越冷越紧实——可冰块放进水里，却稳稳浮在上面。")
+        self.assertEqual(zh_cues, ["按理说东西越冷越紧实", "可冰块放进水里", "却稳稳浮在上面"])
+
+        en_dash = edge_adapter._split_en_clauses("By all rights, frozen water should sink — yet an ice cube bobs right back up.")
+        self.assertEqual(en_dash, ["By all rights, frozen water should sink", "yet an ice cube bobs right back up."])
+
+        en_pivot = edge_adapter._split_en_clauses("That seals the hole nicely, but it creates a brand new snag right away.")
+        self.assertEqual(en_pivot, ["That seals the hole nicely,", "but it creates a brand new snag right away."])
+
 
 if __name__ == "__main__":
     unittest.main()

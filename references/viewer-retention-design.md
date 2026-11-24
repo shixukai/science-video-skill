@@ -46,6 +46,8 @@ Use the [hook inventory](viral-appeal-and-packaging.md#find-the-hook-in-this-fil
 ## Connect the opening to the first body observation
 
 Write the opening's final line and the body's first line together under [spoken-script editing](voice-reference.md#edit-narration-and-dialogue-for-the-ear), pairing `final_state` → `initial_state` in `visual_handoff` / `handoff`:
+- **Guard the 5–15 s post-hook dip:** Move directly from the ~8 s viewing promise into the first visible action, comparison, or micro-prediction test — never drop into a static multi-part structure overview (`主要由三部分组成`). Keep 0–8 s hook + promise inside one continuous TTS paragraph.
+- **Visual-verbal counterpoint:** Let the picture carry the literal visible motion while narration adds hidden cause, stakes, or expectancy tension (never "narrate the pixels").
 - **Whole-to-local:** locate target in whole, then enter close/sectional view keeping orientation.
 - **Graphic/action match:** match silhouette or motion phase across the cut without implying false causation.
 - **Product back to manufacturing:** signal time reversal explicitly after a result preview.
@@ -63,7 +65,7 @@ The hook lab must select an oriented opening and **not put anonymous fine lines 
 
 ## Locate resistance to continued viewing first
 
-Check normal-speed samples for sticking points: missing context before definitions, **prematurely spoiling the core answer inside the 0–8 s opening**, prolonged terminology before visible intuition, **flat additive ("and then" / `此外`/`另外`) transitions without causal or tension pull**, repeating an already-given answer, lost object identity across cuts, tiny unreadable changes ([animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence)), overloaded 4–6-part cutaways, or dragging after the answer.
+Check normal-speed samples for sticking points: missing context before definitions, **prematurely spoiling the core answer inside the 0–8 s opening**, **5–15 s static structure-inventory sag**, **redundant pixel-narrating voiceover** (repeating what the image already shows without adding causal insight), **auditory working-memory overload** (`> 1` new entity or unanchored number in one spoken sentence), prolonged terminology before visible intuition, **flat additive ("and then" / `此外`/`另外`) transitions without causal or tension pull**, repeating an already-given answer, lost object identity across cuts, tiny unreadable changes ([animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence)), overloaded 4–6-part cutaways, **premature verbal ending signals** (`总结一下`/`所以说到底`/`in conclusion`) before the cut, or dragging after the answer.
 
 ## Why watch the next section after this one?
 

@@ -569,8 +569,9 @@ class GoogleFlowAuditTests(unittest.TestCase):
         bad_zh = self.root / "curiosity_bad_zh.txt"
         bad_zh.write_text(
             "冰块浮在水上，其实原理很简单，下面我们一起来看它的内部结构。"
+            "先来了解一下它的基本结构，它主要由氧原子和氢键组成。"
             "此外，水分子会重新排列成六边形网格。另外，网格中间留出了大量空隙。"
-            "与此同时，同等质量下冰的体积随之变大，于是冰块稳稳浮在水面上。\n",
+            "与此同时，同等质量下冰的体积随之变大。总结一下，这就是冰为什么会浮在水上的原因。\n",
             encoding="utf-8",
         )
         ep_zh_data["narration"]["script_file"] = "curiosity_bad_zh.txt"
@@ -579,7 +580,8 @@ class GoogleFlowAuditTests(unittest.TestCase):
         bad_en = self.root / "curiosity_bad_en.txt"
         bad_en.write_text(
             "Welcome back to the channel, the short answer is density drop. "
-            "Stay until the end to see how cold water forms an open crystal lattice.\n",
+            "Furthermore, water molecules line up in rings. Moreover, those rings hold open space. "
+            "In conclusion, stay until the end to see why ice floats.\n",
             encoding="utf-8",
         )
         ep_en_data["narration"]["script_file"] = "curiosity_bad_en.txt"
@@ -597,7 +599,11 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("premature_answer_spoiler", zh_flag["reasons"])
         self.assertIn("empty_suspense_filler", zh_flag["reasons"])
         self.assertIn("additive_list_transition_density", zh_flag["reasons"])
+        self.assertIn("early_structure_dump", zh_flag["reasons"])
+        self.assertIn("premature_ending_signal", zh_flag["reasons"])
         self.assertIn("empty_suspense_or_preamble_en", en_flag["reasons"])
+        self.assertIn("premature_ending_signal_en", en_flag["reasons"])
+        self.assertIn("additive_list_transition_density_en", en_flag["reasons"])
 
 
 if __name__ == "__main__":

@@ -433,6 +433,57 @@ class ContinuityDiagnosticsTests(Fixtures):
         self.assertFalse(self.out.exists())
         self.assertFalse(self.rec.exists())
 
+    def test_engagement_diagnostics_detect_late_onset_monotone_and_speech_wall(self):
+        rate = 24000
+        # 16.5 s total: 0.6 s leading silence + 15.9 s continuous 190 Hz monotone without breaths
+        data = bytearray()
+        lead_frames = int(0.6 * rate)
+        tone_frames = int(15.9 * rate)
+        data.extend(b"\x00\x00" * lead_frames)
+        for n in range(tone_frames):
+            val = 0.08 * math.sin(2 * math.pi * 190.0 * n / rate)
+            data.extend(struct.pack("<h", round(val * 32767)))
+        with wave.open(str(self.src), "wb") as output:
+            output.setnchannels(1)
+            output.setsampwidth(2)
+            output.setframerate(rate)
+            output.writeframes(data)
+
+        diag = master.analyze_continuity(self.src)
+        # Advisory engagement diagnostics must not alter nominal continuity status/flags
+        self.assertEqual(diag["status"], "within_nominal_bounds")
+        self.assertEqual(diag["flags"], [])
+        eng = diag["engagement_diagnostics"]
+        self.assertGreater(eng["opening_leading_silence_s"], 0.5)
+        self.assertGreater(eng["longest_unbroken_speech_s"], 14.0)
+        self.assertIn("late_opening_voice_onset", eng["engagement_notes"])
+        self.assertIn("low_prosodic_variation", eng["engagement_notes"])
+        self.assertIn("long_unbroken_speech_wall", eng["engagement_notes"])
+
+    def test_engagement_diagnostics_clean_on_crisp_varied_phrasing_with_breaths(self):
+        rate = 24000
+        # 16 s total: crisp 0.05 s start, alternating pitch (165 / 195 / 175 / 205 Hz) with 0.3 s breath valleys every 3.7 s
+        data = bytearray()
+        freqs = (165.0, 195.0, 175.0, 205.0)
+        for idx, freq in enumerate(freqs):
+            lead = int(0.05 * rate) if idx == 0 else int(0.30 * rate)
+            data.extend(b"\x00\x00" * lead)
+            seg_frames = int(3.7 * rate)
+            for n in range(seg_frames):
+                val = 0.08 * math.sin(2 * math.pi * freq * n / rate)
+                data.extend(struct.pack("<h", round(val * 32767)))
+        with wave.open(str(self.src), "wb") as output:
+            output.setnchannels(1)
+            output.setsampwidth(2)
+            output.setframerate(rate)
+            output.writeframes(data)
+
+        diag = master.analyze_continuity(self.src)
+        eng = diag["engagement_diagnostics"]
+        self.assertLessEqual(eng["opening_leading_silence_s"], 0.1)
+        self.assertLess(eng["longest_unbroken_speech_s"], 5.0)
+        self.assertEqual(eng["engagement_notes"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
