@@ -215,10 +215,11 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "3564f6f0d7bff33ab04d648431c7bd223543025bd6e05664f1c9fde33df70c53",
+      "sha256": "1511915ab126bec2267ce0e46b524533036418710fadbd2d6404879951101488",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
+        "beat-by-beat-visual-density-never-let-the-body-go-hollow-after-second-5",
         "distinguish-missing-from-insufficiently-visible",
         "work-order-action-intent-before-detailed-art",
         "distinguish-holds-from-sustained-contact-before-hand-editing-curves",
@@ -434,12 +435,13 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "cc264c17a47607823a567d91fed253a486c5fd376d427876b483aec0b88118a2",
+      "sha256": "65c61a75fb26e6c01fc9b1c52faa6562f16264d470aedb87d6d66c3c14d62803",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
         "recognize-the-actual-object-before-explaining-its-interior",
         "high-poly-industrial-modeling-standard-for-colab-3d",
+        "prevent-high-poly-emptiness-multi-stage-visual-density-and-shot-choreography",
         "actual-execution-of-bright-lighting-and-materials",
         "blender-backgrounds-and-spatial-completion",
         "character-rigging-motion-capture-and-lip-sync",
@@ -478,7 +480,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "3f6768450c37f9165bd6fb8ff4fdf4379d4cad3dcff7a732c9400e54fb2bb8c9",
+      "sha256": "7453064472eda4609aed3659a1915eb6464a8fab3a4d3c3e7ae0c17f47558eef",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",

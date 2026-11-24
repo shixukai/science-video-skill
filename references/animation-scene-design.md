@@ -15,6 +15,14 @@ For substantial animation or turning static assets into animation, design subjec
 
 Distinguish necessary negative space from missing content: state the region's observation, motion, comparison or text role, then check real usefulness. Large quiet backgrounds are allowed; do not fill them when subject, relationship and payoff hold. Complete Blender videos also follow [background/spatial completion](engineering-blender.md#blender-backgrounds-and-spatial-completion): local negative space/minimal inspection does not authorize omitted environments or identical backgrounds/platforms throughout.
 
+## Beat-by-Beat Visual Density: Never Let the Body Go Hollow After Second 5
+
+A vivid 0–4 s hook followed by 30 s of one lone prop changing tint on an empty dark table causes immediate viewer drop-off. Before building or rendering body shots, verify every explanatory beat (roughly every `4–7 s`) against three visual-density questions:
+
+1. **Fresh visual world, scale, or comparison:** What genuinely NEW environment, scale jump (macro / cross-section / microscopic), controlled split-screen comparison (A vs. B), or unmistakable physical transformation enters the frame in this beat that was NOT already on screen 5 s ago?
+2. **Spoken-verb dominance at phone scale:** Does the exact physical action the narrator describes (heating, cooling, bending, latching, breaching, flowing) visibly occupy and drive the center of a 360 px phone frame during those exact spoken seconds—rather than leaving a static object idling while voiceover carries the story alone?
+3. **Purposeful multi-layer richness:** Do foreground, midground, and background each contribute real context, depth, lighting atmosphere, or visual contrast—avoiding the "sterile CAD bench in a pitch-black box" look across consecutive beats?
+
 ### Distinguish missing from insufficiently visible
 
 When inspecting existing work, classify each item as present and clear / present but inconspicuous / missing / unreviewed before choosing repair. Existing growth, close-ups or two-object differences do not justify generic tasks to add them again. Record precise times, preserved structure, actual change and observation method. If sparse frames do not reveal change, add key-state/continuous observation first; not clearly seen does not mean absent.

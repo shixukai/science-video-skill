@@ -203,8 +203,54 @@ missing_libs = [
 vs = scene.view_settings
 ds = scene.display_settings
 cyc = getattr(scene, "cycles", None)
+
+import math
+from mathutils import Vector as _Vec
+orig_frame = int(scene.frame_current)
+f_start = int(scene.frame_start)
+f_end = int(scene.frame_end)
+fps_val = float(getattr(scene.render, "fps", 30) or 30) / float(getattr(scene.render, "fps_base", 1.0) or 1.0)
+dur_s = max(0.0, (f_end - f_start + 1) / fps_val) if f_end >= f_start else 0.0
+cam_cuts = []
+prev_cam = None
+prev_loc = None
+prev_dir = None
+prev_fr = f_start
+step = max(1, int(round(fps_val / 6.0))) if dur_s > 0 else 1
+sample_frames = list(range(f_start, f_end + 1, step))
+if sample_frames and sample_frames[-1] != f_end:
+    sample_frames.append(f_end)
+for fr in sample_frames:
+    scene.frame_set(fr)
+    cam_obj = scene.camera
+    if cam_obj is None:
+        continue
+    mw = cam_obj.matrix_world
+    loc = mw.translation.copy()
+    fwd = (mw.to_3x3() @ _Vec((0.0, 0.0, -1.0))).normalized()
+    if prev_cam is not None:
+        dt_s = max(1e-6, (fr - prev_fr) / fps_val)
+        loc_jump = (loc - prev_loc).length
+        dot = max(-1.0, min(1.0, prev_dir.dot(fwd)))
+        ang_deg = math.degrees(math.acos(dot))
+        if (cam_obj.name != prev_cam) or (loc_jump >= 0.35 and (loc_jump / dt_s) >= 2.0) or (ang_deg >= 22.0 and (ang_deg / dt_s) >= 120.0):
+            cam_cuts.append(round((fr - f_start) / fps_val, 2))
+    prev_cam, prev_loc, prev_dir, prev_fr = cam_obj.name, loc, fwd, fr
+scene.frame_set(orig_frame)
+cut_edges = [0.0] + cam_cuts + [round(dur_s, 2)]
+longest_shot_s = round(max((b - a for a, b in zip(cut_edges, cut_edges[1:])), default=dur_s), 2)
+camera_staging = {
+    "fps": round(fps_val, 3),
+    "frame_start": f_start,
+    "frame_end": f_end,
+    "duration_s": round(dur_s, 2),
+    "hard_cut_count": len(cam_cuts),
+    "hard_cut_times_s": cam_cuts,
+    "longest_unbroken_shot_s": longest_shot_s,
+}
+
 stats = {
-    "frame": int(scene.frame_current),
+    "frame": orig_frame,
     "mesh_object_count": len(mesh_rows),
     "evaluated_polygon_count": total_polys,
     "evaluated_triangle_count": total_tris,
@@ -215,6 +261,7 @@ stats = {
     "has_active_rigidbody_world": has_active_rbw,
     "unpacked_external_images": unpacked_images,
     "missing_libraries": missing_libs,
+    "camera_staging": camera_staging,
     "color_management": {
         "display_device": getattr(ds, "display_device", None),
         "view_transform": getattr(vs, "view_transform", None),
@@ -380,6 +427,46 @@ def evaluate_industrial_audit(
                 "items": missing_wn[:20],
             })
 
+    cam_stage = stats.get("camera_staging") if isinstance(stats.get("camera_staging"), dict) else None
+    if cam_stage is not None:
+        cam_dur = float(cam_stage.get("duration_s") or 0.0)
+        cam_cuts = int(cam_stage.get("hard_cut_count") or 0)
+        cam_longest = float(cam_stage.get("longest_unbroken_shot_s") or 0.0)
+        if cam_dur >= 25.0 and (cam_cuts < 3 or cam_longest > 14.0):
+            warnings.append({
+                "code": "hollow_single_stage_glide",
+                "severity": "warning",
+                "message": (
+                    f"Timeline spans {cam_dur:.1f}s with only {cam_cuts} discrete camera cut(s) and a "
+                    f"{cam_longest:.1f}s unbroken camera shot; avoid 'high-poly emptiness' from a 20-40s single-workbench "
+                    "Bezier glide by staging >=3 distinct visual arenas/scales/comparisons with discrete hard cuts."
+                ),
+            })
+
+    summary_out = {
+        "frame": stats.get("frame"),
+        "mesh_object_count": mesh_count,
+        "evaluated_polygon_count": total_polys,
+        "evaluated_triangle_count": total_tris,
+        "has_active_rigidbody_world": has_rbw,
+        "unpacked_external_image_count": len(unpacked_imgs),
+        "missing_library_count": len(missing_libs),
+        "color_management": stats.get("color_management"),
+        "cycles_bounces": stats.get("cycles_bounces"),
+        "top_meshes": [
+            {
+                "name": m.get("name"),
+                "triangle_count": m.get("triangle_count"),
+                "polygon_count": m.get("polygon_count"),
+                "smooth_face_ratio": m.get("smooth_face_ratio"),
+                "modifiers": m.get("modifiers", []),
+            }
+            for m in sorted(meshes, key=lambda r: int(r.get("triangle_count", 0)), reverse=True)[:10]
+        ],
+    }
+    if cam_stage is not None:
+        summary_out["camera_staging"] = cam_stage
+
     return {
         "schema_version": 1,
         "profile": profile,
@@ -391,27 +478,7 @@ def evaluate_industrial_audit(
             "shards": shards,
             "require_packed": require_packed,
         },
-        "summary": {
-            "frame": stats.get("frame"),
-            "mesh_object_count": mesh_count,
-            "evaluated_polygon_count": total_polys,
-            "evaluated_triangle_count": total_tris,
-            "has_active_rigidbody_world": has_rbw,
-            "unpacked_external_image_count": len(unpacked_imgs),
-            "missing_library_count": len(missing_libs),
-            "color_management": stats.get("color_management"),
-            "cycles_bounces": stats.get("cycles_bounces"),
-            "top_meshes": [
-                {
-                    "name": m.get("name"),
-                    "triangle_count": m.get("triangle_count"),
-                    "polygon_count": m.get("polygon_count"),
-                    "smooth_face_ratio": m.get("smooth_face_ratio"),
-                    "modifiers": m.get("modifiers", []),
-                }
-                for m in sorted(meshes, key=lambda r: int(r.get("triangle_count", 0)), reverse=True)[:10]
-            ],
-        },
+        "summary": summary_out,
         "blocking_issues": blocking,
         "warnings": warnings,
     }
@@ -896,6 +963,13 @@ def _eval_remote_audit(stats, profile, min_tris, n_shards):
         missing_wn = [m["name"] for m in meshes if m.get("has_bevel") and not m.get("has_weighted_normal") and int(m.get("polygon_count", 0)) >= 12]
         if missing_wn:
             warnings.append({{"code": "beveled_without_weighted_normal", "severity": "warning", "message": f"{{len(missing_wn)}} beveled mesh(es) lack WeightedNormal/EdgeSplit.", "items": missing_wn[:20]}})
+    cam_stage = stats.get("camera_staging") if isinstance(stats.get("camera_staging"), dict) else None
+    if cam_stage is not None:
+        cam_dur = float(cam_stage.get("duration_s") or 0.0)
+        cam_cuts = int(cam_stage.get("hard_cut_count") or 0)
+        cam_longest = float(cam_stage.get("longest_unbroken_shot_s") or 0.0)
+        if cam_dur >= 25.0 and (cam_cuts < 3 or cam_longest > 14.0):
+            warnings.append({{"code": "hollow_single_stage_glide", "severity": "warning", "message": f"Timeline spans {{cam_dur:.1f}}s with {{cam_cuts}} hard cut(s) and {{cam_longest:.1f}}s longest shot; avoid hollow single-workbench Bezier glides."}})
     return {{
         "schema_version": 1,
         "profile": profile,

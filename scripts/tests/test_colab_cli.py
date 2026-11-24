@@ -532,6 +532,48 @@ class ColabCliTests(unittest.TestCase):
             rc3 = colab_cli.cmd_audit_blend(args3, runner=fake_blender_run)
         self.assertEqual(rc3, 2)
 
+    def test_industrial_audit_flags_hollow_single_stage_glide(self):
+        base_stats = {
+            "frame": 1,
+            "mesh_object_count": 2,
+            "evaluated_polygon_count": 20000,
+            "evaluated_triangle_count": 40000,
+            "meshes": [{
+                "name": "HeroAssembly",
+                "polygon_count": 20000,
+                "triangle_count": 40000,
+                "smooth_face_ratio": 0.9,
+                "modifiers": ["BEVEL", "WEIGHTED_NORMAL"],
+                "has_bevel": True,
+                "has_subsurf": False,
+                "has_weighted_normal": True,
+                "has_solidify": True,
+                "has_node_material": True,
+            }],
+            "non_uniform_scale_objects": [],
+            "unapplied_uniform_scale_objects": [],
+            "viewport_only_material_objects": [],
+            "has_active_rigidbody_world": False,
+            "unpacked_external_images": [],
+            "missing_libraries": [],
+        }
+        hollow = dict(base_stats, camera_staging={
+            "fps": 30.0, "frame_start": 0, "frame_end": 1200,
+            "duration_s": 40.0, "hard_cut_count": 1, "hard_cut_times_s": [4.3],
+            "longest_unbroken_shot_s": 35.7,
+        })
+        res_hollow = colab_cli.evaluate_industrial_audit(hollow)
+        self.assertTrue(any(w["code"] == "hollow_single_stage_glide" for w in res_hollow["warnings"]))
+
+        multi_cut = dict(base_stats, camera_staging={
+            "fps": 30.0, "frame_start": 0, "frame_end": 1200,
+            "duration_s": 40.0, "hard_cut_count": 6, "hard_cut_times_s": [4.0, 9.5, 16.0, 22.0, 28.5, 34.0],
+            "longest_unbroken_shot_s": 6.5,
+        })
+        res_multi = colab_cli.evaluate_industrial_audit(multi_cut)
+        self.assertFalse(any(w["code"] == "hollow_single_stage_glide" for w in res_multi["warnings"]))
+        self.assertTrue(res_multi["strict_passed"])
+
 
 if __name__ == "__main__":
     unittest.main()
