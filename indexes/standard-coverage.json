@@ -435,13 +435,14 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "65c61a75fb26e6c01fc9b1c52faa6562f16264d470aedb87d6d66c3c14d62803",
+      "sha256": "17f6d342208c54a0d2c68d25b68a9caa2e49f306cf19014685cc8a0fe38edd97",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
         "recognize-the-actual-object-before-explaining-its-interior",
         "high-poly-industrial-modeling-standard-for-colab-3d",
         "prevent-high-poly-emptiness-multi-stage-visual-density-and-shot-choreography",
+        "cinema-grade-blender-visual-richness-replicating-live-action-magnetism-in-cycles",
         "actual-execution-of-bright-lighting-and-materials",
         "blender-backgrounds-and-spatial-completion",
         "character-rigging-motion-capture-and-lip-sync",
@@ -480,7 +481,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "7453064472eda4609aed3659a1915eb6464a8fab3a4d3c3e7ae0c17f47558eef",
+      "sha256": "9a90e63f4872f3d9f2d3d3a0dd5a5d1d848cfe641f30354e472ca1923c6c1ee1",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
