@@ -435,7 +435,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "17f6d342208c54a0d2c68d25b68a9caa2e49f306cf19014685cc8a0fe38edd97",
+      "sha256": "e2e3ca5a973553b6f644905be41d4ae754637c8b61beebd48a8e95ed6123dda8",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
@@ -463,7 +463,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "094fe3cfc943e4088134836edf95035c0bd677eab106f84c746a94c317869d3b",
+      "sha256": "ff5e4b9d62b22ce27d8909e3ed10f7a5c8b04c80a3767792eeb69fa8d8c1932b",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -481,7 +481,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "9a90e63f4872f3d9f2d3d3a0dd5a5d1d848cfe641f30354e472ca1923c6c1ee1",
+      "sha256": "f9611dbbe79bb21819f15e7e4300c3481a54d973e421ba4929c796860601ea6a",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",

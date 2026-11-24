@@ -574,6 +574,35 @@ class ColabCliTests(unittest.TestCase):
         self.assertFalse(any(w["code"] == "hollow_single_stage_glide" for w in res_multi["warnings"]))
         self.assertTrue(res_multi["strict_passed"])
 
+    def test_blender_stills_dry_run_and_frame_spec_parser(self):
+        parsed = colab_cli.parse_still_frames_spec("01_hook:16, 02_shatter:84, 200")
+        self.assertEqual(parsed, [("01_hook_f0016", 16), ("02_shatter_f0084", 84), ("frame_0200", 200)])
+        with self.assertRaises(ValueError):
+            colab_cli.parse_still_frames_spec("bad:abc")
+
+        blend = self.tmp / "lookdev.blend"
+        blend.write_bytes(b"BLENDER_STILLS_TEST")
+        out_dir = self.tmp / "stills_out"
+        receipt = self.tmp / "stills-receipt.json"
+        out = io.StringIO()
+        with mock.patch("sys.stdout", out):
+            args = colab_cli.build_parser().parse_args([
+                "blender-stills",
+                "-s", "stills-test",
+                "--blend", str(blend),
+                "--frames", "hook:16,quench:350",
+                "--out-dir", str(out_dir),
+                "--gpu", "G4",
+                "--dry-run",
+                "--receipt", str(receipt),
+            ])
+            rc = colab_cli.cmd_blender_stills(args)
+        self.assertEqual(rc, 0)
+        rec = json.loads(receipt.read_text(encoding="utf-8"))
+        self.assertEqual(rec["status"], "dry_run")
+        self.assertEqual(rec["blender_stills"]["selected_backend"], "OPTIX")
+        self.assertEqual(rec["blender_stills"]["frames"], [["hook_f0016", 16], ["quench_f0350", 350]])
+
 
 if __name__ == "__main__":
     unittest.main()

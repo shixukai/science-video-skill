@@ -8,6 +8,9 @@ Provides:
   (evaluated triangle density, non-uniform scales, flat-shaded curved meshes, bevel/modifier coverage, unbaked rigidbody
   world for strided shards, unpacked images and node-based materials) before spending Colab GPU units.
 - `run-ephemeral`: bounded GPU Python job runner with minimal upload/download, SHA-256 receipts and guaranteed `colab stop`.
+- `blender-stills`: headless Linux Blender Cycles GPU render of selected sparse hero/lookdev frames (`--frames`)
+  from a packed `.blend` across strided GPU shards, bundled into a single tar download and unpacked into `--out-dir`
+  so even 1080p lookdev stills run on Colab GPU instead of a slow local machine.
 - `blender-render`: headless Linux Blender Cycles GPU offload using packed `.blend`, automatic OPTIX/CUDA selection,
   OIDN `RGB_ALBEDO_NORMAL` + `0.015` adaptive threshold for machined bevel fidelity, embedded modeling audit telemetry,
   on-VM Rec.709 MP4 encoding (keeping raw PNG sequences off the wire), local SHA-256 verification and guaranteed teardown.
@@ -29,6 +32,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import time
 from typing import Any
@@ -1464,6 +1468,370 @@ def cmd_audit_blend(args: argparse.Namespace, *, runner=subprocess.run) -> int:
     return 0 if ok else 1
 
 
+def parse_still_frames_spec(spec: str) -> list[tuple[str, int]]:
+    """Parse `--frames` spec (`16,84,200` or `01_hook:16,02_shatter:84`) into validated `(filename_stem, frame_int)` pairs."""
+    items: list[tuple[str, int]] = []
+    seen_stems: set[str] = set()
+    for raw_tok in (spec or "").split(","):
+        tok = raw_tok.strip()
+        if not tok:
+            continue
+        if ":" in tok:
+            label_part, frame_part = tok.rsplit(":", 1)
+            label = re.sub(r"[^A-Za-z0-9._-]+", "_", label_part.strip()).strip("._-")
+            if not label:
+                raise ValueError(f"Invalid frame label in {tok!r}")
+            try:
+                fnum = int(frame_part.strip())
+            except ValueError as exc:
+                raise ValueError(f"Invalid frame integer in {tok!r}") from exc
+            stem = f"{label}_f{fnum:04d}"
+        else:
+            try:
+                fnum = int(tok)
+            except ValueError as exc:
+                raise ValueError(f"Invalid frame integer {tok!r}") from exc
+            stem = f"frame_{fnum:04d}"
+        if fnum < 0:
+            raise ValueError(f"Frame number must be >= 0 (got {fnum})")
+        if stem in seen_stems:
+            continue
+        seen_stems.add(stem)
+        items.append((stem, fnum))
+    if not items:
+        raise ValueError("--frames must specify at least one frame integer (e.g. '16,84,200' or 'hook:16,peak:84')")
+    return items
+
+
+def _build_remote_blender_stills_driver(
+    *,
+    remote_blend: str,
+    remote_tar: str,
+    remote_meta: str,
+    frame_items: list[tuple[str, int]],
+    samples: int,
+    width: int,
+    height: int,
+    shards: int,
+    backend: str,
+    blender_url: str,
+    adaptive_threshold: float = DEFAULT_ADAPTIVE_THRESHOLD,
+) -> str:
+    cfg = {
+        "remote_blend": remote_blend,
+        "remote_tar": remote_tar,
+        "remote_meta": remote_meta,
+        "frame_items": [[stem, fnum] for stem, fnum in frame_items],
+        "samples": samples,
+        "adaptive_threshold": float(adaptive_threshold),
+        "denoising_input_passes": DEFAULT_DENOISING_INPUT_PASSES,
+        "width": width,
+        "height": height,
+        "shards": shards,
+        "backend": backend,
+        "blender_url": blender_url,
+    }
+    return f"""#!/usr/bin/env python3
+import json, pathlib, shutil, subprocess, sys, tarfile, time
+
+CFG = {json.dumps(cfg, ensure_ascii=False)}
+BLENDER_DIR = pathlib.Path("/content/blender")
+BLENDER_BIN = BLENDER_DIR / "blender"
+WORK_DIR = pathlib.Path("/content/_sv_blender_stills_work")
+STILLS_DIR = WORK_DIR / "stills"
+DRIVER_PY = WORK_DIR / "_cycles_stills_shard.py"
+
+SHARD_CODE = r'''
+import argparse, json, pathlib, sys, bpy
+
+argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+p = argparse.ArgumentParser()
+p.add_argument("--out-dir", required=True)
+p.add_argument("--items-json", required=True)
+p.add_argument("--samples", type=int, required=True)
+p.add_argument("--adaptive-threshold", type=float, default=0.015)
+p.add_argument("--width", type=int, required=True)
+p.add_argument("--height", type=int, required=True)
+p.add_argument("--backend", required=True)
+a = p.parse_args(argv)
+
+items = json.loads(pathlib.Path(a.items_json).read_text(encoding="utf-8"))
+scene = bpy.context.scene
+scene.render.engine = "CYCLES"
+scene.render.use_persistent_data = True
+scene.cycles.samples = a.samples
+scene.cycles.use_adaptive_sampling = True
+scene.cycles.adaptive_threshold = a.adaptive_threshold
+scene.cycles.use_denoising = True
+scene.cycles.denoiser = "OPENIMAGEDENOISE"
+if hasattr(scene.cycles, "denoising_input_passes"):
+    scene.cycles.denoising_input_passes = "RGB_ALBEDO_NORMAL"
+if hasattr(scene.cycles, "denoising_use_gpu"):
+    scene.cycles.denoising_use_gpu = True
+scene.render.resolution_x = a.width
+scene.render.resolution_y = a.height
+scene.render.resolution_percentage = 100
+scene.render.image_settings.file_format = "PNG"
+scene.render.image_settings.color_mode = "RGB"
+scene.render.image_settings.color_depth = "8"
+
+prefs = bpy.context.preferences.addons["cycles"].preferences
+order = ("OPTIX", "CUDA") if a.backend == "OPTIX" else ("CUDA",)
+selected = "CPU"
+for candidate in order:
+    try:
+        prefs.compute_device_type = candidate
+        prefs.get_devices()
+        found = False
+        for dev in prefs.devices:
+            if dev.type == candidate:
+                dev.use = True
+                found = True
+            else:
+                dev.use = False
+        if found:
+            selected = candidate
+            break
+    except Exception:
+        continue
+if selected == "CPU":
+    raise RuntimeError("No CUDA/OPTIX Cycles GPU device found on Colab runtime")
+scene.cycles.device = "GPU"
+print(f"[CYCLES-STILLS] backend={{selected}} count={{len(items)}} samples={{a.samples}} adaptive={{a.adaptive_threshold}}", flush=True)
+
+out_dir = pathlib.Path(a.out_dir)
+out_dir.mkdir(parents=True, exist_ok=True)
+for stem, fnum in items:
+    dst = out_dir / f"{{stem}}.png"
+    scene.frame_set(int(fnum))
+    cam_name = scene.camera.name if scene.camera else "NONE"
+    scene.render.filepath = str(dst)
+    try:
+        bpy.ops.render.render(write_still=True)
+    except RuntimeError as exc:
+        if selected == "OPTIX":
+            print(f"[CYCLES-STILLS] OPTIX failed ({{exc}}); switching to CUDA", flush=True)
+            prefs.compute_device_type = "CUDA"
+            prefs.get_devices()
+            for dev in prefs.devices:
+                dev.use = (dev.type == "CUDA")
+            selected = "CUDA"
+            bpy.ops.render.render(write_still=True)
+        else:
+            raise
+    print(f"[STILL OK] {{dst.name}} frame={{fnum}} cam={{cam_name}}", flush=True)
+'''
+
+t0 = time.monotonic()
+gpu_info = subprocess.run(
+    ["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader"],
+    capture_output=True, text=True, check=False,
+).stdout.strip()
+
+if not BLENDER_BIN.is_file():
+    print("[COLAB-STILLS] Downloading Blender Linux runtime ...", flush=True)
+    BLENDER_DIR.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["curl", "-fsSL", CFG["blender_url"], "-o", "/tmp/blender.tar.xz"], check=True)
+    subprocess.run(["tar", "-xf", "/tmp/blender.tar.xz", "-C", str(BLENDER_DIR), "--strip-components=1"], check=True)
+    pathlib.Path("/tmp/blender.tar.xz").unlink(missing_ok=True)
+
+blender_version = subprocess.check_output([str(BLENDER_BIN), "--version"], text=True).splitlines()[0].strip()
+all_items = CFG["frame_items"]
+n_shards = max(1, min(int(CFG["shards"]), len(all_items)))
+print(f"[COLAB-STILLS] GPU={{gpu_info}} | {{blender_version}} | stills={{len(all_items)}} | shards={{n_shards}} | samples={{CFG['samples']}}", flush=True)
+
+if STILLS_DIR.exists():
+    shutil.rmtree(STILLS_DIR, ignore_errors=True)
+STILLS_DIR.mkdir(parents=True, exist_ok=True)
+DRIVER_PY.write_text(SHARD_CODE, encoding="utf-8")
+
+procs = []
+log_files = []
+for si in range(n_shards):
+    shard_items = all_items[si::n_shards]
+    items_json = WORK_DIR / f"shard_{{si}}_items.json"
+    items_json.write_text(json.dumps(shard_items), encoding="utf-8")
+    log_p = WORK_DIR / f"stills_shard_{{si}}.log"
+    lf = log_p.open("w", encoding="utf-8", errors="replace")
+    log_files.append((si, log_p, lf))
+    cmd = [
+        str(BLENDER_BIN), "-b", CFG["remote_blend"], "-P", str(DRIVER_PY), "--",
+        "--out-dir", str(STILLS_DIR),
+        "--items-json", str(items_json),
+        "--samples", str(CFG["samples"]),
+        "--adaptive-threshold", str(CFG["adaptive_threshold"]),
+        "--width", str(CFG["width"]),
+        "--height", str(CFG["height"]),
+        "--backend", CFG["backend"],
+    ]
+    procs.append(subprocess.Popen(cmd, stdout=lf, stderr=subprocess.STDOUT))
+
+rcs = [p.wait() for p in procs]
+for _, _, lf in log_files:
+    lf.close()
+
+rendered_files = sorted(STILLS_DIR.glob("*.png"))
+if any(rc != 0 for rc in rcs) or len(rendered_files) != len(all_items):
+    tails = []
+    for si, log_p, _ in log_files:
+        if rcs[si] != 0 and log_p.is_file():
+            tails.append(f"shard_{{si}} rc={{rcs[si]}}: " + log_p.read_text(encoding="utf-8", errors="replace")[-500:])
+    raise RuntimeError(f"Blender stills render failed: rcs={{rcs}}, rendered={{len(rendered_files)}}/{{len(all_items)}}; " + " | ".join(tails))
+
+tar_path = pathlib.Path(CFG["remote_tar"])
+tar_path.parent.mkdir(parents=True, exist_ok=True)
+with tarfile.open(tar_path, "w") as tf:
+    for png in rendered_files:
+        tf.add(png, arcname=png.name)
+
+meta = {{
+    "gpu": gpu_info,
+    "blender_version": blender_version,
+    "requested_backend": CFG["backend"],
+    "stills_count": len(rendered_files),
+    "files": [p.name for p in rendered_files],
+    "width": CFG["width"],
+    "height": CFG["height"],
+    "samples": CFG["samples"],
+    "adaptive_threshold": CFG["adaptive_threshold"],
+    "denoising_input_passes": CFG["denoising_input_passes"],
+    "shards": n_shards,
+    "tar_bytes": tar_path.stat().st_size,
+    "remote_elapsed_s": round(time.monotonic() - t0, 2),
+}}
+pathlib.Path(CFG["remote_meta"]).write_text(json.dumps(meta, indent=2), encoding="utf-8")
+print("COLAB_BLENDER_STILLS_META=" + json.dumps(meta, ensure_ascii=False))
+"""
+
+
+def cmd_blender_stills(args: argparse.Namespace, *, runner=subprocess.run) -> int:
+    try:
+        session = validate_session_name(args.session)
+        gpu = normalize_gpu(args.gpu)
+        assert gpu is not None
+        backend = choose_cycles_backend(gpu, args.backend)
+        frame_items = parse_still_frames_spec(args.frames)
+        if not (0 < args.adaptive_threshold < 1):
+            raise ValueError(f"--adaptive-threshold ({args.adaptive_threshold}) must be between 0 and 1")
+        if min(args.width, args.height) < 1080 and not args.allow_proxy:
+            raise ValueError(
+                f"Formal still dimensions {args.width}x{args.height} have short edge < 1080; "
+                "pass --allow-proxy only for explicitly internal low-res diagnostics."
+            )
+    except ValueError as exc:
+        print(f"Input error: {exc}", file=sys.stderr)
+        return 2
+
+    blend_path = Path(args.blend).resolve()
+    if not blend_path.is_file():
+        print(f"Input error: packed .blend not found: {blend_path}", file=sys.stderr)
+        return 2
+    out_dir = Path(args.out_dir).resolve()
+    receipt_path = Path(args.receipt).resolve() if args.receipt else None
+    if receipt_path is not None and receipt_path.exists() and not args.overwrite_receipt:
+        print(f"Input error: Receipt file already exists (use a new receipt filename): {receipt_path}", file=sys.stderr)
+        return 2
+
+    info = resolve_transport(
+        transport=args.transport,
+        colab_bin=args.colab_bin,
+        wsl_distro=args.wsl_distro,
+        runner=runner,
+    )
+    if not info["available"]:
+        if args.dry_run:
+            info = {"available": True, "transport": "dry_run_placeholder", "prefix": ["colab"], "host_os": platform.system()}
+        else:
+            print(json.dumps({"status": "unavailable", "reason": info.get("reason")}, ensure_ascii=False), file=sys.stderr)
+            return 1
+
+    remote_blend = f"/content/{blend_path.name}"
+    remote_tar = f"/content/{session}_stills.tar"
+    remote_meta = f"/content/{session}_stills_meta.json"
+
+    driver_src = _build_remote_blender_stills_driver(
+        remote_blend=remote_blend,
+        remote_tar=remote_tar,
+        remote_meta=remote_meta,
+        frame_items=frame_items,
+        samples=args.samples,
+        width=args.width,
+        height=args.height,
+        shards=args.shards,
+        backend=backend,
+        blender_url=args.blender_url,
+        adaptive_threshold=args.adaptive_threshold,
+    )
+
+    with tempfile.TemporaryDirectory(prefix="sv-colab-stills-") as tmp_dir:
+        driver_file = Path(tmp_dir) / f"{session}_stills_driver.py"
+        driver_file.write_text(driver_src, encoding="utf-8")
+        tar_local = Path(tmp_dir) / f"{session}_stills.tar"
+        meta_local = Path(tmp_dir) / f"{session}_stills_meta.json"
+        try:
+            rc, receipt = _execute_ephemeral_workflow(
+                info=info,
+                common=_extract_common(args),
+                session=session,
+                gpu=gpu,
+                high_mem=args.high_mem,
+                reuse_session=args.reuse_session,
+                keep_session=args.keep,
+                uploads=[(blend_path, remote_blend)],
+                script_path=driver_file,
+                downloads=[(remote_tar, tar_local), (remote_meta, meta_local)],
+                env_pairs=[],
+                exec_timeout=args.timeout,
+                dry_run=args.dry_run,
+                receipt_path=None,
+                overwrite_receipt=args.overwrite_receipt,
+                extra_meta={
+                    "blender_stills": {
+                        "blend": str(blend_path),
+                        "out_dir": str(out_dir),
+                        "frames": [[stem, fnum] for stem, fnum in frame_items],
+                        "width": args.width,
+                        "height": args.height,
+                        "samples": args.samples,
+                        "adaptive_threshold": args.adaptive_threshold,
+                        "denoising_input_passes": DEFAULT_DENOISING_INPUT_PASSES,
+                        "shards": args.shards,
+                        "selected_backend": backend,
+                        "proxy_mode": bool(args.allow_proxy),
+                    }
+                },
+                runner=runner,
+            )
+            extracted: list[dict[str, Any]] = []
+            if rc == 0 and not args.dry_run and tar_local.is_file():
+                out_dir.mkdir(parents=True, exist_ok=True)
+                with tarfile.open(tar_local, "r") as tf:
+                    for member in tf.getmembers():
+                        if not member.isfile():
+                            continue
+                        safe_name = Path(member.name).name
+                        if not safe_name.lower().endswith(".png"):
+                            continue
+                        dest = out_dir / safe_name
+                        src_f = tf.extractfile(member)
+                        if src_f is not None:
+                            dest.write_bytes(src_f.read())
+                            extracted.append({"file": str(dest), "bytes": dest.stat().st_size, "sha256": sha256_file(dest)})
+                receipt["extracted_stills"] = extracted
+            if meta_local.is_file():
+                try:
+                    receipt["remote_stills_meta"] = json.loads(meta_local.read_text(encoding="utf-8"))
+                except ValueError:
+                    pass
+            _write_receipt(receipt_path, receipt, overwrite=args.overwrite_receipt)
+        except (FileNotFoundError, FileExistsError, ValueError) as exc:
+            print(f"Input error: {exc}", file=sys.stderr)
+            return 2
+
+    print(json.dumps(receipt, ensure_ascii=False, indent=2))
+    return rc
+
+
 def cmd_blender_render(args: argparse.Namespace, *, runner=subprocess.run) -> int:
     try:
         session = validate_session_name(args.session)
@@ -1650,6 +2018,29 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--receipt", help="Write hash-bound JSON execution receipt to a new file")
     p_run.add_argument("--overwrite-receipt", action="store_true", help="Allow overwriting an existing receipt file")
     p_run.set_defaults(func=cmd_run_ephemeral)
+
+    p_st = sub.add_parser("blender-stills", help="Headless packed-.blend Cycles GPU render of selected lookdev stills + tar download + teardown")
+    p_st.add_argument("-s", "--session", required=True, help="Explicit unique session name")
+    p_st.add_argument("--blend", required=True, help="Self-contained packed .blend file to upload")
+    p_st.add_argument("--frames", required=True, help="Comma-separated frame ints or label:frame pairs (e.g. '16,84,200' or 'hook:16,shatter:84')")
+    p_st.add_argument("--out-dir", required=True, help="Local destination directory for unpacked PNG stills")
+    p_st.add_argument("--gpu", default="A100", help="Colab GPU accelerator (T4, L4, G4, A100, H100)")
+    p_st.add_argument("--high-mem", action="store_true", help="Request high-RAM machine shape where supported")
+    p_st.add_argument("--backend", choices=("auto", "OPTIX", "CUDA"), default="auto", help="Cycles GPU backend (auto picks CUDA on A100/H100/T4, OPTIX on G4/L4)")
+    p_st.add_argument("--samples", type=int, default=64, help="Cycles samples per frame")
+    p_st.add_argument("--adaptive-threshold", type=float, default=DEFAULT_ADAPTIVE_THRESHOLD, help=f"Cycles adaptive noise threshold (default {DEFAULT_ADAPTIVE_THRESHOLD})")
+    p_st.add_argument("--width", type=int, default=1920, help="Render width (default 1920)")
+    p_st.add_argument("--height", type=int, default=1080, help="Render height (default 1080)")
+    p_st.add_argument("--shards", type=int, default=4, help="Concurrent Blender GPU shards (default 4)")
+    p_st.add_argument("--blender-url", default=DEFAULT_BLENDER_LINUX_URL, help="Official Linux Blender tarball URL")
+    p_st.add_argument("--allow-proxy", action="store_true", help="Allow short edge < 1080 for internal low-res diagnostics only")
+    p_st.add_argument("--reuse-session", action="store_true", help="Attach to an existing session without new/stop")
+    p_st.add_argument("--keep", action="store_true", help="Keep newly allocated session alive after completion")
+    p_st.add_argument("--timeout", type=int, default=1800, help="Execution timeout in seconds")
+    p_st.add_argument("--dry-run", action="store_true", help="Validate inputs and print plan without allocating a Colab VM")
+    p_st.add_argument("--receipt", help="Write hash-bound JSON execution receipt to a new file")
+    p_st.add_argument("--overwrite-receipt", action="store_true", help="Allow overwriting an existing receipt file")
+    p_st.set_defaults(func=cmd_blender_stills)
 
     p_bl = sub.add_parser("blender-render", help="Headless packed-.blend Cycles GPU render + on-VM MP4 encode + teardown")
     p_bl.add_argument("-s", "--session", required=True, help="Explicit unique session name")
