@@ -34,7 +34,7 @@ For the winning or commissioned topic, deliver the pre-script package:
 - **0–5 s Hook Lab:**
   - Identify 3–5 strongest honest visible moments from the film; compare **at least 3 hook candidates across >= 2 patterns** (e.g., striking visible consequence, physical scale/expectation contradiction, everyday object anomaly, process-in-motion reveal) and state why each loser lost.
   - Classify `host_relation`: `standalone` or `part_of_host` (when inside a larger machine/body/appliance, specify `host_system` + `whole_to_part_bridge` showing recognizable host/working bay → real mounting site within 0–5 s).
-  - Lock **Frame 0** (subject already moving, readable inside phone-feed width), **first sound**, **first spoken line** (warm conversational tone, payload front-loaded naturally within `<= 20` spoken units / `<= 3.5 s`, orienting newcomers without relying on the title/cover), and the **~8 s concrete viewing promise**.
+  - Lock **Frame 0** (subject already moving, readable inside phone-feed width), **first sound**, **first spoken line** (warm conversational tone priming shared everyday intuition against a visible contradiction, payload front-loaded naturally within `<= 20` spoken units / `<= 3.5 s`, orienting newcomers without relying on the title/cover), and the **~8 s concrete non-spoiling viewing promise** (naming the physical puzzle/clue without dumping the core mechanism early).
 
 ## 4. Decide and hand off to production
 

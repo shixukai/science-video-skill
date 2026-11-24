@@ -323,6 +323,23 @@ class ReferenceSystemTests(unittest.TestCase):
                 self.assertNotIn("MoneyPrinterTurbo", text)
                 self.assertNotRegex(text, r"(?i)\bvork\b")
 
+    def test_proprietary_feed_font_candidate_is_rejected(self):
+        self.edit("config/production-policy.json", lambda d: d["feed_package"]["font_candidates"].append("C:/Windows/Fonts/msyhbd.ttc"))
+        self.errors("non-proprietary fonts only")
+
+    def test_proprietary_en_cover_font_is_rejected(self):
+        self.edit("config/production-policy.json", lambda d: d["cover_typography"]["fonts"]["en"].update(family="Segoe UI", candidates=["C:/Windows/Fonts/segoeuib.ttf"]))
+        self.errors("without proprietary fonts")
+
+    def test_proprietary_annotation_token_font_is_rejected(self):
+        self.edit("assets/style/precision-annotations.tokens.json", lambda d: d["type"]["fallbacks"].append("Microsoft YaHei"))
+        self.errors("must not reference proprietary fonts")
+
+    def test_proprietary_annotation_svg_font_is_rejected(self):
+        p = self.root / "assets/style/leader-and-arrow.svg"
+        p.write_text(p.read_text(encoding="utf-8").replace("Noto Sans SC", "Microsoft YaHei"), encoding="utf-8")
+        self.errors("must not reference proprietary fonts")
+
 
 if __name__ == "__main__":
     unittest.main()

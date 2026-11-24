@@ -24,9 +24,10 @@
 - **Hook lab (0–5 s, `topic_alignment.opening.hook`)**:
   - `host_relation`: `standalone` | `part_of_host` (`host_system` + `whole_to_part_bridge` if inside a larger host)
   - 3+ candidates across 2+ patterns (and why losers lost)
-  - Selected Frame 0 (already moving) / first sound / first spoken line + payload clause (`<= 3.8 s`) / muted & phone read
+  - Selected Frame 0 (already moving) / first sound / first spoken line + payload clause (`<= 3.5 s`, priming shared intuition against visible contradiction) / muted & phone read
+  - ~8 s concrete **non-spoiling** viewing promise (physical puzzle/clue named without prematurely revealing the core answer)
   - Opening-to-body handoff (final opening line + first body observation written together)
-- **Body payoff map (`payoff_steps`) & ending return (`answer_time_s`)**:
+- **Body payoff map (`payoff_steps`) & ending return (`answer_time_s`)**: chain beats via "Therefore / But" causal pivots and escalating obstacles (False Summits) instead of flat additive lists; deliver final answer late (`>= 75%`) and end cleanly within `6 s`.
 
 ## 4. Script, Shots & Route Execution
 - **Script & audio master**: path / hash / actual spoken duration (time shots from real audio, never guesses)

@@ -6,10 +6,10 @@
   "entries": [
     {
       "id": "leader-arrow-example",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "kind": "graphic",
       "file": "assets/style/leader-and-arrow.svg",
-      "sha256": "cdd9b54177d5fc082c5fda04812724f1abd1e8ec14b8cd1f02b3100438e3bd77",
+      "sha256": "ce43c9f9f68bebab293348f8e09e65fe8a913356bcb49b1e822ca02a7fb144f6",
       "status": "implementation_example",
       "source": "Original generic vector constructed for this repository",
       "rights": {
@@ -40,10 +40,10 @@
     },
     {
       "id": "precision-annotation-parameters",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "kind": "configuration",
       "file": "assets/style/precision-annotations.tokens.json",
-      "sha256": "b4f62b44c391453d5c87a9dc34d97b0a5a92f33ed64abbbaaea3cba3207e6270",
+      "sha256": "7e0bb5ef3b152b20a2fadbbd18f7ca129ab897cda163f0a7b8ab02c4fd0d5e3e",
       "status": "adjustable_series_baseline",
       "source": "Original project annotation settings",
       "rights": {

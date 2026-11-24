@@ -86,6 +86,31 @@ class LedgerTests(unittest.TestCase):
         self.assertIn("feed_package", template["qa"])
 
 
+class FontResolutionTests(unittest.TestCase):
+    def test_font_candidates_are_non_proprietary_and_vf_pins_bold_weight(self):
+        from PIL import Image, ImageDraw, ImageFont
+        proprietary = ("msyh", "microsoft yahei", "pingfang", "segoe", "arial", "simhei", "simsun")
+        for cand in FEED["font_candidates"]:
+            self.assertFalse(any(p in cand.lower() for p in proprietary), cand)
+        try:
+            font_path = feed_package.find_font(FEED)
+        except ValueError:
+            self.skipTest("no CJK bold font installed on this host")
+        self.assertFalse(any(p in str(font_path).lower() for p in proprietary), str(font_path))
+        pal, _ = feed_package.check_palette(FEED, FEED["default_palette"])
+        renderer = feed_package.Renderer(FEED, font_path, pal)
+        self.assertGreater(renderer.width("浮冰", renderer.topic_font), 0)
+        vf = next((Path(c) for c in FEED["font_candidates"] if "VF" in c and Path(c).is_file()), None)
+        if vf is not None and hasattr(renderer.topic_font, "get_variation_axes"):
+            vf_renderer = feed_package.Renderer(FEED, vf, pal)
+            default_thin = ImageFont.truetype(str(vf), FEED["header"]["topic_size"])
+            img_bold = Image.new("L", (260, 140), 0)
+            img_thin = Image.new("L", (260, 140), 0)
+            ImageDraw.Draw(img_bold).text((10, 10), "浮冰", font=vf_renderer.topic_font, fill=255)
+            ImageDraw.Draw(img_thin).text((10, 10), "浮冰", font=default_thin, fill=255)
+            self.assertGreater(sum(img_bold.tobytes()), sum(img_thin.tobytes()) * 2)
+
+
 class FeedLayoutTests(unittest.TestCase):
     def test_default_layout_keeps_full_width_without_crop(self):
         geo = feed_package.layout(FEED, 1920, 1080, 1.0)

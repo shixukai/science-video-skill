@@ -259,6 +259,31 @@ def _text_width(draw, text, font):
     return box[2] - box[0]
 
 
+def _load_bold_font(image_font_mod, font_path, size, weight=700):
+    """Load font and pin variable-font weight axis to bold when available."""
+    font = image_font_mod.truetype(str(font_path), size)
+    if hasattr(font, "get_variation_axes") and hasattr(font, "set_variation_by_axes"):
+        try:
+            axes = font.get_variation_axes() or []
+            if axes:
+                vals = []
+                for ax in axes:
+                    raw_name = ax.get("name")
+                    name = (
+                        raw_name.decode("utf-8", errors="ignore").lower()
+                        if isinstance(raw_name, bytes)
+                        else str(raw_name or "").lower()
+                    )
+                    if "weight" in name or name == "wght":
+                        vals.append(max(ax["minimum"], min(ax["maximum"], weight)))
+                    else:
+                        vals.append(ax["default"])
+                font.set_variation_by_axes(vals)
+        except Exception:
+            pass
+    return font
+
+
 class Renderer:
     def __init__(self, policy, font_path, palette):
         from PIL import Image, ImageDraw, ImageFont
@@ -266,9 +291,9 @@ class Renderer:
         self.policy = policy
         self.palette = palette
         h = policy["header"]
-        self.topic_font = ImageFont.truetype(str(font_path), h["topic_size"])
-        self.question_font = ImageFont.truetype(str(font_path), h["question_size"])
-        self.caption_font = ImageFont.truetype(str(font_path), policy["caption_band"]["size"])
+        self.topic_font = _load_bold_font(ImageFont, font_path, h["topic_size"], weight=700)
+        self.question_font = _load_bold_font(ImageFont, font_path, h["question_size"], weight=700)
+        self.caption_font = _load_bold_font(ImageFont, font_path, policy["caption_band"]["size"], weight=700)
         self._probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
 
     def width(self, text, font):

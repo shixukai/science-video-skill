@@ -13,7 +13,7 @@
       <path d="M0 0 H180"/>
     </g>
   </defs>
-  <g font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif" font-size="60" font-weight="500" dominant-baseline="middle">
+  <g font-family="Noto Sans CJK SC, Source Han Sans SC, Noto Sans SC, sans-serif" font-size="60" font-weight="500" dominant-baseline="middle">
     <g id="light-example">
       <rect width="1920" height="540" fill="#E9EEEC"/>
       <text x="96" y="92" fill="#192E3A">浅景</text>

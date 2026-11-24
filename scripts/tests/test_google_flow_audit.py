@@ -561,6 +561,44 @@ class GoogleFlowAuditTests(unittest.TestCase):
         mismatches = [f for f in data["flags"] if f["code"] == "export_stream_mismatch"]
         self.assertEqual({f["edition"] for f in mismatches}, {"zh", "en"})
 
+    def test_catches_curiosity_killing_spoilers_hype_and_flat_lists_in_zh_and_en(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+
+        bad_zh = self.root / "curiosity_bad_zh.txt"
+        bad_zh.write_text(
+            "冰块浮在水上，其实原理很简单，下面我们一起来看它的内部结构。"
+            "此外，水分子会重新排列成六边形网格。另外，网格中间留出了大量空隙。"
+            "与此同时，同等质量下冰的体积随之变大，于是冰块稳稳浮在水面上。\n",
+            encoding="utf-8",
+        )
+        ep_zh_data["narration"]["script_file"] = "curiosity_bad_zh.txt"
+        write_json(ep_zh, ep_zh_data)
+
+        bad_en = self.root / "curiosity_bad_en.txt"
+        bad_en.write_text(
+            "Welcome back to the channel, the short answer is density drop. "
+            "Stay until the end to see how cold water forms an open crystal lattice.\n",
+            encoding="utf-8",
+        )
+        ep_en_data["narration"]["script_file"] = "curiosity_bad_en.txt"
+        write_json(ep_en, ep_en_data)
+
+        rep = self.root / "report_curiosity_killers.json"
+        code, data, err = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep),
+        ])
+        self.assertEqual(code, 1, (err, data))
+        zh_flag = next(f for f in data["flags"] if f["code"] == "script_ai_tone_markers" and f["edition"] == "zh")
+        en_flag = next(f for f in data["flags"] if f["code"] == "script_ai_tone_markers" and f["edition"] == "en")
+        self.assertIn("premature_answer_spoiler", zh_flag["reasons"])
+        self.assertIn("empty_suspense_filler", zh_flag["reasons"])
+        self.assertIn("additive_list_transition_density", zh_flag["reasons"])
+        self.assertIn("empty_suspense_or_preamble_en", en_flag["reasons"])
+
 
 if __name__ == "__main__":
     unittest.main()

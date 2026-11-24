@@ -16,23 +16,27 @@ Write and edit every spoken script in a **warm, unhurried, peer-level conversati
 
 **Positive spoken-craft standard:**
 - **Speak with curiosity, not interrogation or lecturing.** Lead with shared everyday observation (`你会发现`, `有意思的是`, `可仔细想想`, `多半是`) instead of challenging or scolding (`凭什么`, `凭啥`, `偏要`, `到底为什么`, `别傻了`, `真以为`, `千万别再`, `听好了`, `记住这一点`). For safety advice, explain the calm reason rather than barking bare imperatives.
-- **Let sentences breathe in relaxed everyday Mandarin.** Keep natural spoken connectors (`其实`, `这时候`, `慢慢地`, `结果呢`, `原来`, `难怪`) instead of staccato 6–10 char headlines (`“冰是固体，却浮在水上。”`), rigid textbook nominalizations (`进行…`, `产生…作用`, `这一过程称为…`), or riddle-host clichés (`“答案藏在……里”`, `“接下来拆开看：”`).
+- **Prime shared intuition before breaking it (honest expectancy violation).** Curiosity peaks in the "tip-of-the-tongue" sweet spot (Loewenstein's Information Gap Theory) when a viewer's sane physical intuition clashes with a visible reality. Calmly validate what everyday intuition predicts (`按理说……`, `照常理看……`, `换作平时……`) right before the visible contradiction (`可……却/反而……`), instead of using combative strawmen (`你以为……其实……` / `别傻了`).
+- **Protect the information gap — promise the clue or arena, never spoil the core answer early.** In the 0–8 s opening and viewing promise, name the exact physical puzzle or observable change worth watching (`温度越低，水分子怎么反而越排越松？`), NOT the final mechanism (`是因为撑开了六边形空隙`) or spoiler crutches (`其实原理很简单`, `说到底就是因为`, `简单来说就是`). Let the body earn the mechanism late.
+- **Drive beat transitions with "Therefore / But" causal momentum and escalating obstacles (False Summits).** Replace flat encyclopedia listing (`此外`, `另外`, `与此同时`, `除此之外`, `不仅如此`, `其次`) with physical consequence (`于是`, `这么一来`, `正因为这样`) or an immediate new constraint (`可新问题马上来了`, `光靠这一步还不够`, `如果只做到这儿，高温一煎还是会……`). When answering one sub-question naturally triggers the next physical hurdle, viewers stay for guided discovery rather than passive fact-dumping.
+- **Let sentences breathe with end-weight suspense, physical agency, and felt scale.** Keep natural spoken connectors (`其实`, `这时候`, `慢慢地`, `结果呢`, `原来`, `难怪`) instead of staccato 6–10 char headlines (`“冰是固体，却浮在水上。”`), rigid textbook nominalizations (`进行…`, `产生…作用`, `这一过程称为…`), or riddle-host clichés (`“答案藏在……里”`, `“接下来拆开看：”`). Place the physical buildup before the surprising clue (end-weight syntax), let parts act with vivid proportionate physics verbs (`轻轻一按`, `顺势被顶起来`, `把热油顶开并带出油面` — zero crude shortcuts like `狠狠砸碎`, `干爆`, `直接干掉`, `直接掀翻`, `全靠它`, `说白了就一个原因`), anchor abstract numbers to felt everyday scale (`胀成一千六百倍大的蒸汽团，就像在锅底瞬间吹开一只气球`), and **introduce the visible behavior before the technical term** (or skip jargon when plain speech is clearer).
 - **Bridge through causal curiosity, never abrupt camera or cutaway commands.** Let the **picture** execute the cutaway, zoom, or macro push-in while the **narration** stays inside the viewer's own chain of reasoning. Never interrupt a visible phenomenon with unmotivated stage-direction orders (`顺着截面往里看`, `切开它的截面`, `剖开锅底就能看到`, `放大锅底截面`, `把冰放大到分子这一层`, `凑近这层金属网`, `把镜头拉近`, `仔细看拉头里面`) — first motivate *why* the interior matters by naming the paradox or causal link, then describe what is physically happening inside.
-- **Use accurate, proportionate everyday verbs — zero crude force verbs.** Prefer vivid, accurate physics verbs (`轻轻一按`, `顺势被顶起来`, `把热油顶开并带出油面`) over crude shortcuts (`狠狠砸碎`, `干爆`, `直接干掉`, `直接掀翻`, `全靠它`, `说白了就一个原因`).
-- **Land transitions and endings softly.** Bridge sections through natural curiosity (`看到这儿，你可能会好奇…`, `同样都是电磁波，微波怎么就被挡在里面了呢？`) and settle calmly back onto the opening scene after explaining the mechanism (no trailing filler question, no hard mid-breath cutoff).
+- **Shape spoken prosody and rhythmic contrast for neural TTS.** Because continuous synthesis (`IndexTTS-2.5` with `use_emo_text=False`, or `edge-tts` `+4%`) derives vocal phrasing from sentence structure and punctuation, alternate flowing setup sentences (`~22–34` CJK chars) with crisp pivot/reveal clauses (`~10–18` CJK chars), using a clean comma, single `——`, or chapter-level `\n\n` before a genuine twist so the ear feels a micro-beat of anticipation. Apply the same native curiosity rhythm in paired English (`"By all rights..."`, `"Except something strange happens —"`, `"Which immediately creates a new problem:"`), never stiff Mandarin calques. Land endings calmly back onto the opening scene right after explaining the mechanism (no trailing filler question, no hard mid-breath cutoff).
 
-| Stiff or blunt draft (avoid) | Warm, natural conversational rewrite (target register) |
+| Stiff, flat, or spoiling draft (avoid) | Warm, curiosity-driving conversational rewrite (target register) |
 | --- | --- |
-| “冰是固体，却浮在水上。” | “冰明明已经冻成硬块了，放进水里却还能稳稳浮在上面。” |
-| “钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。顺着截面往里看，里面藏着两股互相拉扯的力。” | “钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。同一块玻璃反差这么大，是因为它内部早就藏着两股互相拉扯的力。” |
-| “不粘锅连鸡蛋都粘不住，放大锅底截面，就能看到底层的微米小坑。” | “不粘锅连煎蛋都粘不住，要让这层滑溜材料站稳，得先在锅底打出微米小坑，再靠中间底漆拉住。” |
+| “冰是固体，却浮在水上。” | “按理说东西越冷越紧实，可冰明明已经冻成硬块了，放进水里却还是稳稳浮在上面。” |
+| “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。” *(spoils core answer at 6 s)* | “同样重的一杯水，冻成冰以后居然会胀大一圈——温度越低，水分子怎么反而越排越松？” *(keeps gap open)* |
+| “钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。顺着截面往里看，里面藏着两股互相拉扯的力。” | “钢化玻璃正面敲不破，边角轻轻一磕却碎成一片。同一块玻璃反差这么大，是因为它内部早就藏着两股互相拉扯的力——可为什么偏偏一碰边角就全盘失守？” |
+| “不粘锅连鸡蛋都粘不住，放大锅底截面，就能看到底层的微米小坑。” | “不粘锅连煎蛋都粘不住，它自己是怎么牢牢挂在金属锅底上的？光靠粗糙的小坑咬住还不够，高温反复煎炒一样会掉。” |
+| “此外，油面上升后会封住小孔。另外，薄膜受到负压作用发生位移。” *(flat "and then" + nominalization)* | “油面一漫过来封住小孔，细管里的空气瞬间被抽空，薄膜立刻往里一吸，顺势就把开关顶开了。” *(causal + physical agency)* |
 | “砸一块陶瓷，凭什么生出几千伏高压？” | “打火机里这块小陶瓷，手指轻轻一按，怎么就能压出几千伏高压？” |
 | “凸轮一转，顶杆就抬起。” | “凸轮转到凸起那一侧时，上面的顶杆就会顺势被顶起来。” |
 | “它为什么不悄悄蒸发，偏要炸？” | “油这么烫，水为什么不慢慢蒸发掉，反而会一下子溅出来呢？” |
 | “先看冷油，水染了色。” | “我们先拿一杯凉油试试，滴进一滴染过色的水。” |
 | “别掀盖、别端锅，等它凉透。” | “盖严之后先别急着掀开，也别端着锅走动，等油温慢慢降下来就稳妥了。” |
 
-**Eight mechanical/editorial screens before synthesis** (screened by `scripts/google_flow_audit.py` and `scripts/opening_hook.py`):
+**Ten mechanical/editorial screens before synthesis** (screened by `scripts/google_flow_audit.py` and `scripts/opening_hook.py`):
 1. **`clickbait_contrast_hook`:** Zero `凭什么`/`凭啥` anywhere in titles, covers, feed headers, narration, or captions; zero marketing formulas (`圆出口竟能拉出方便便，袋熊是怎么做到的？`) or stacked pre-noun modifiers (`油一满，没电线的加油枪怎么知道该停？` → `加油枪怎么知道油加满了而跳枪？`).
 2. **`blunt_or_harsh_tone`:** Strip `偏要`, `别傻了`, `真以为`, `千万别再`, `听好了`, `看好了`, `说穿了`, `先说结论`, `一秒看懂`, `一句话告诉你`, bare imperative chains, and crude violent verbs (`干爆`/`直接干掉`/`狠狠砸碎`).
 3. **`abrupt_camera_stage_direction`:** Strip unmotivated narrator camera/cutaway/zoom orders (`顺着截面往里看`, `切开…截面`, `剖开…就能看到`, `放大…截面/小切口/来看`, `把…放大到…这一层`, `凑近…看`, `把镜头拉近`, `仔细看…里面`); let the visuals cut in while narration follows the causal reason.
@@ -41,6 +45,8 @@ Write and edit every spoken script in a **warm, unhurried, peer-level conversati
 6. **`strawman_reversal_density`:** Avoid repeating `不是 A，而是 B / 并非…而是… / 你以为…其实…` across paragraphs.
 7. **`semicolon_tail_stuffing`:** Never bolt an unpictured caveat onto a shot tail with `；`; put each condition test inside its matching chapter.
 8. **`slogan_closing_formula`:** No stacked 3+ symmetrical `[7–9 chars]，[7–9 chars]。` couplets or advertising slogans.
+9. **`premature_answer_spoiler` & `empty_suspense_filler`:** Never dump opening spoiler crutches (`其实原理很简单`, `说到底就是因为`, `简单来说就是因为`, `直接告诉你答案`) or empty hype/preamble (`揭开…秘密`, `看到最后你就明白了`, `下面我们一起来看`, `带你一探究竟`, `一起揭秘`; English: `"welcome back"`, `"in this video we will"`, `"the short answer is"`, `"here's the secret"`, `"you won't believe"`, `"stay until the end"`).
+10. **`additive_list_transition_density`:** Avoid piling up `>= 3` flat encyclopedia list connectors (`此外`, `另外`, `与此同时`, `除此之外`, `不仅如此`, `其次`, `值得注意的是`, `总而言之`) in one script; replace additive listing with causal (`于是`/`正因为这样`) or tension-raising (`可问题是`/`光靠这一步还不够`) pivots.
 
 Also strip production syntax (`[pause]`, speaker tags, timestamps) before TTS, keep conditional claim meaning intact under [claim preservation](science-and-rights.md#preserve-claim-meaning-through-production-handoffs), and keep the opening `hook.first_line` payload within `payload_max_spoken_units` (`20` spoken units, `~3.5 s`) naturally (trim leading silence so first syllable starts by `audio_onset_max_s` without speeding speech). Editorial references: [Humanizer-zh](https://github.com/op7418/Humanizer-zh), [lieflat-less-ai-tone](https://github.com/larashero3-dotcom/lieflat-less-ai-tone).
 

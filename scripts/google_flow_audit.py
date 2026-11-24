@@ -47,6 +47,23 @@ STRAWMAN_REVERSAL_RE = re.compile(
 SLOGAN_CLOSING_RE = re.compile(
     r"(?:只有[^，。！？\n]{1,14}配[^，。！？\n]{1,14}[，,]才|正是[^，。！？\n]{1,20}造就了)"
 )
+PREMATURE_SPOILER_RE = re.compile(
+    r"(?:(?:其实|说到底|简单来说)?(?:原理|原因|答案)(?:其实)?很简单|"
+    r"简单来说就是因为|说到底就是因为|直接告诉你答案)"
+)
+EMPTY_SUSPENSE_RE = re.compile(
+    r"(?:揭开[^，。！？\n]{0,6}秘密|看到最后你就(?:明白|知道)了|"
+    r"(?:下面|接下来)我们一起来看|带你一探究竟|一起揭秘)"
+)
+ADDITIVE_LIST_TRANSITION_RE = re.compile(
+    r"(?:^|[，。！？\n])\s*(?:此外|另外|与此同时|除此之外|不仅如此|其次|值得注意的是|总而言之)[，,]?"
+)
+EN_CURIOSITY_KILLER_RE = re.compile(
+    r"\b(?:welcome back to|in this video we(?:'ll| will)|let's dive right in|"
+    r"the short answer is|here'?s the secret|you won't believe|"
+    r"stay until the end|what happens next will)\b",
+    re.IGNORECASE,
+)
 PCT_RATE_RE = re.compile(r"^\s*([+-]?\d+(?:\.\d+)?)\s*%\s*$")
 
 
@@ -799,6 +816,13 @@ def _check_speech_and_holds(
                 ai_reasons.append("blunt_or_harsh_tone")
             if ABRUPT_CAMERA_DIRECTION_RE.search(script_source_text):
                 ai_reasons.append("abrupt_camera_stage_direction")
+            opening_text = "。".join(raw_sents[:2]) if raw_sents else script_source_text[:120]
+            if PREMATURE_SPOILER_RE.search(opening_text):
+                ai_reasons.append("premature_answer_spoiler")
+            if EMPTY_SUSPENSE_RE.search(script_source_text):
+                ai_reasons.append("empty_suspense_filler")
+            if len(ADDITIVE_LIST_TRANSITION_RE.findall(script_source_text)) >= 3:
+                ai_reasons.append("additive_list_transition_density")
             if len(STRAWMAN_REVERSAL_RE.findall(script_source_text)) >= 2:
                 ai_reasons.append("strawman_reversal_density")
             zh_sents = [len(CJK_RE.findall(s)) for s in raw_sents if len(CJK_RE.findall(s)) > 0]
@@ -810,6 +834,9 @@ def _check_speech_and_holds(
             tail_text = "。".join(raw_sents[-2:]) if raw_sents else ""
             if SLOGAN_CLOSING_RE.search(tail_text):
                 ai_reasons.append("slogan_closing_formula")
+        elif edition == "en":
+            if EN_CURIOSITY_KILLER_RE.search(script_source_text):
+                ai_reasons.append("empty_suspense_or_preamble_en")
         semi_count = len(re.findall(r"[；;]", script_source_text))
         tail_semi = any(re.search(r"[；;]", s) for s in raw_sents[-2:]) if raw_sents else False
         if semi_count >= 2 or tail_semi:

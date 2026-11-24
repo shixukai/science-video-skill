@@ -348,9 +348,11 @@
       "stroke_shadow_or_backing": false
     },
     "font_candidates": [
-      "C:/Windows/Fonts/msyhbd.ttc",
+      "C:/Windows/Fonts/Noto Sans SC Bold (TrueType).otf",
+      "C:/Windows/Fonts/NotoSansSC-VF.ttf",
       "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
-      "/System/Library/Fonts/PingFang.ttc"
+      "/usr/share/fonts/truetype/noto/NotoSansSC-Bold.ttf",
+      "/Library/Fonts/NotoSansSC-VF.ttf"
     ],
     "tool": "scripts/feed_package.py",
     "derivative_does_not_reopen_g5": true,
@@ -382,15 +384,18 @@
         ]
       },
       "en": {
-        "family": "Segoe UI / Noto Sans",
+        "family": "Noto Sans / Noto Sans SC",
         "main_weight": 800,
         "subtitle_weight": 700,
         "allow_fallback_family": false,
         "candidates": [
-          "C:/Windows/Fonts/segoeuib.ttf",
+          "C:/Windows/Fonts/NotoSans-Bold.ttf",
+          "C:/Windows/Fonts/NotoSansSC-VF.ttf",
+          "C:/Windows/Fonts/Noto Sans SC Bold (TrueType).otf",
           "/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
+          "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
           "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-          "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
+          "/Library/Fonts/NotoSansSC-VF.ttf"
         ]
       }
     },

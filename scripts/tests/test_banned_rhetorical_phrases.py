@@ -58,6 +58,53 @@ class TestBannedRhetoricalPhrases(unittest.TestCase):
         ):
             self.assertIsNone(google_flow_audit.ABRUPT_CAMERA_DIRECTION_RE.search(natural), natural)
 
+    def test_google_flow_audit_flags_curiosity_killers_and_flat_additive_lists(self):
+        for spoiler in (
+            "冰块浮在水上，其实原理很简单，就是密度变小了。",
+            "说到底就是因为水分子之间撑开了空隙。",
+            "简单来说就是因为光速比声速快得多。",
+            "直接告诉你答案，里面藏着一块磁铁。",
+        ):
+            self.assertIsNotNone(google_flow_audit.PREMATURE_SPOILER_RE.search(spoiler), spoiler)
+        for hype in (
+            "今天我们来揭开微波炉的秘密。",
+            "看到最后你就明白了。",
+            "接下来我们一起来看它的内部结构。",
+            "带你一探究竟，一起揭秘不粘锅。",
+        ):
+            self.assertIsNotNone(google_flow_audit.EMPTY_SUSPENSE_RE.search(hype), hype)
+        flat_list = "此外，锅底涂了氟塑料。另外，中间还有底漆。与此同时，金属表面做了喷砂。"
+        self.assertGreaterEqual(len(google_flow_audit.ADDITIVE_LIST_TRANSITION_RE.findall(flat_list)), 3)
+        causal_story = (
+            "按理说东西越冷越紧实，可冰块扔进水里却稳稳浮在上面。"
+            "温度越低，水分子怎么反而越排越松？"
+            "于是水分子开始排成规则的六边形，可新问题马上来了，这些空隙直接把整体体积撑大了一圈。"
+        )
+        self.assertIsNone(google_flow_audit.PREMATURE_SPOILER_RE.search(causal_story))
+        self.assertIsNone(google_flow_audit.EMPTY_SUSPENSE_RE.search(causal_story))
+        self.assertLess(len(google_flow_audit.ADDITIVE_LIST_TRANSITION_RE.findall(causal_story)), 3)
+
+        for bad_en in (
+            "Welcome back to our channel, let's dive right in.",
+            "The short answer is pressure drop, stay until the end.",
+            "You won't believe what happens next will shock you.",
+        ):
+            self.assertIsNotNone(google_flow_audit.EN_CURIOSITY_KILLER_RE.search(bad_en), bad_en)
+        good_en = (
+            "By all rights, frozen water should sink like any other solid — yet an ice cube bobs right back to the surface. "
+            "Which immediately creates a puzzle: why do cooling water molecules spread farther apart instead of packing tighter?"
+        )
+        self.assertIsNone(google_flow_audit.EN_CURIOSITY_KILLER_RE.search(good_en))
+
+    def test_opening_hook_rejects_preamble_and_premature_spoiler(self):
+        for bad_line in (
+            "大家好，今天我们来聊聊冰块为什么会浮起来。",
+            "你知道吗，其实原理很简单。",
+            "看到最后你就明白了。",
+        ):
+            self.assertIsNotNone(opening_hook.OPENING_FILLER_RE.search(bad_line), bad_line)
+        self.assertIsNone(opening_hook.OPENING_FILLER_RE.search("按理说东西越冷越紧实，可冰块放进水里却稳稳浮在上面。"))
+
     def test_presentation_checks_rejects_pingshenme(self):
         for surface in ("voiceover", "caption", "cover", "frame"):
             item = {"surface": surface, "text": "涂层凭什么粘在锅上？", "purposes": ["topic"]}

@@ -84,6 +84,7 @@ class ComposeCoverTests(unittest.TestCase):
             raw_169, "cover_16_9", "Fuel Nozzles", "Zero Wires Inside:\nHow Does It Click Off?", out169, rep169,
             palette="daylight_navy", lang="en",
         )
+        self.assertEqual(r169["typography"]["font_family"], "Noto Sans / Noto Sans SC")
         self.assertEqual(r169["typography"]["main_size_px"], 108)
         self.assertEqual(r169["typography"]["subtitle_size_px"], 54)
         self.assertEqual(r169["typography"]["main_color_hex"], "#1E3246")
@@ -160,6 +161,7 @@ class ComposeCoverTests(unittest.TestCase):
         payload = json.loads(proc.stdout)
         self.assertEqual(payload["default_palette"], "daylight_terracotta")
         self.assertEqual(payload["fonts"]["zh"]["family"], "Noto Sans SC")
+        self.assertEqual(payload["fonts"]["en"]["family"], "Noto Sans / Noto Sans SC")
         self.assertEqual(set(payload["color_presets"]), {
             "daylight_terracotta", "daylight_navy", "dark_terracotta", "dark_ocean_gold"
         })

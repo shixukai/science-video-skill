@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "precision-annotations",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "status": "series_style_baseline",
   "scope": "Scientific-video annotation appearance only; not captions, covers, scientific evidence or media approval. Values are adjustable starting points, subordinate to actual local contrast and viewing tests.",
   "reference_canvas": [1920, 1080],
@@ -11,7 +11,7 @@
   },
   "type": {
     "family": "Noto Sans CJK SC",
-    "fallbacks": ["Source Han Sans SC", "Microsoft YaHei", "sans-serif"],
+    "fallbacks": ["Source Han Sans SC", "Noto Sans SC", "sans-serif"],
     "font_files_bundled": false,
     "label_px": 60,
     "label_adjustable_range_px": [52, 64],

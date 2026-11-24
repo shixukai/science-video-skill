@@ -41,6 +41,12 @@ CLICKBAIT_HOOK_RE = re.compile(
     r"凭什么|凭啥|"
     r"^\s*(?:你以为|很多人以为|不是[^，。！？\n]{1,14}[，,]?而是))"
 )
+OPENING_FILLER_RE = re.compile(
+    r"(?:^\s*(?:大家好|嗨大家好|你知道吗|今天我们来聊)|"
+    r"看到最后你就(?:明白|知道)了|揭开[^，。！？\n]{0,6}秘密|"
+    r"(?:其实|说到底|简单来说)?(?:原理|原因|答案)(?:其实)?很简单|"
+    r"简单来说就是因为|说到底就是因为|直接告诉你答案)"
+)
 FRAME_W, FRAME_H, FRAME_FPS = 64, 36, 10
 AUDIO_RATE, AUDIO_WINDOW_S = 16000, 0.01
 
@@ -105,6 +111,12 @@ def check_hook_plan(opening, policy):
     if concrete(line):
         need(not CLICKBAIT_HOOK_RE.search(line),
              "avoid formulaic AI/clickbait contrast slogans in hook.first_line; describe the concrete observation in natural everyday grammar")
+        need(not OPENING_FILLER_RE.search(line),
+             "avoid throat-clearing, empty suspense, or premature answer spoilers in hook.first_line; open on the concrete physical contradiction")
+    promise_line = obj(opening.get("viewing_promise")).get("line")
+    if concrete(promise_line):
+        need(not OPENING_FILLER_RE.search(promise_line),
+             "avoid empty suspense or premature answer spoilers in viewing_promise.line; name the concrete physical puzzle or clue without dumping the final answer")
     if concrete(line) and concrete(payload):
         position = line.find(payload)
         need(position >= 0, "hook.payload_clause must be quoted verbatim from hook.first_line")

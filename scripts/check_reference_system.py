@@ -11,6 +11,7 @@ import xml.etree.ElementTree as ET
 OWNER_IDS = {"topic", "science-rights", "ai-generated-video", "google-flow", "production", "visual", "voice", "shotbook", "quality", "realism", "engineering", "tools", "render-evidence"}
 HEX = re.compile(r"#[0-9A-Fa-f]{6}$")
 PRIVATE_ID = re.compile(r"(?:libfile_|Sentinel_)[0-9a-f]{20,}|file_[0-9a-f]{24,}")
+PROPRIETARY_FONT = re.compile(r"(?i)(?:msyh|microsoft\s+yahei|pingfang|segoe\s*ui|segoeuib|arial|simhei|simsun|kaiti|fangsong|dengxian|helvetica|calibri)")
 
 
 def local_path(root, base, relative):
@@ -301,6 +302,10 @@ def check(root):
              and feed.get("default_palette") not in feed.get("contrast", {}).get("exempt_palettes", [None])
              and 0 < feed.get("contrast", {}).get("band_max_relative_luminance", 1) <= 0.1,
              "vertical feed package must stay a reviewed derivative of the landscape master")
+        need(isinstance(feed.get("font_candidates"), list) and bool(feed.get("font_candidates"))
+             and all(isinstance(c, str) and bool(c.strip()) and PROPRIETARY_FONT.search(c) is None
+                     for c in feed.get("font_candidates", [])),
+             "feed_package.font_candidates must contain commercially cleared non-proprietary fonts only")
         cov_t = policy.get("cover_typography", {})
         need(cov_t.get("owner") == "references/visual-system.md#finished-cover-standards-for-engineering-and-manufacturing-topics"
              and cov_t.get("tool") == "scripts/compose_cover.py" and (root / str(cov_t.get("tool"))).is_file()
@@ -314,10 +319,13 @@ def check(root):
         need(isinstance(cov_fonts, dict) and {"zh", "en"} <= set(cov_fonts)
              and cov_fonts["zh"].get("family") == "Noto Sans SC"
              and cov_fonts["zh"].get("allow_fallback_family") is False
+             and cov_fonts["en"].get("allow_fallback_family") is False
              and all(type(cov_fonts[l].get(k)) is int and cov_fonts[l][k] > 0
                      for l in ("zh", "en") for k in ("main_weight", "subtitle_weight"))
-             and all(isinstance(cov_fonts[l].get("candidates"), list) and bool(cov_fonts[l]["candidates"]) for l in ("zh", "en")),
-             "cover_typography must lock Noto Sans SC (zh) and en font specs without silent fallback")
+             and all(isinstance(cov_fonts[l].get("candidates"), list) and bool(cov_fonts[l]["candidates"]) for l in ("zh", "en"))
+             and all(isinstance(cov_fonts[l].get("family"), str) and PROPRIETARY_FONT.search(cov_fonts[l].get("family", "")) is None for l in ("zh", "en"))
+             and all(isinstance(c, str) and PROPRIETARY_FONT.search(c) is None for l in ("zh", "en") for c in cov_fonts[l].get("candidates", [])),
+             "cover_typography must lock commercially cleared Noto Sans SC (zh) and en font specs without proprietary fonts or silent fallback")
         cov_ratios = cov_t.get("ratios", {})
         need(isinstance(cov_ratios, dict) and {"cover_1_1", "cover_3_4", "cover_4_3", "cover_16_9"} <= set(cov_ratios)
              and cov_ratios["cover_1_1"].get("canvas") == [1080, 1080]
@@ -421,6 +429,19 @@ def check(root):
                         if key.split("}")[-1] in ("href", "src"):
                             need(value.startswith("#"), "SVG external dependency")
         need(len(ids) == len(set(ids)), "duplicate asset id")
+        ann_tokens = read("assets/style/precision-annotations.tokens.json")
+        ann_type = ann_tokens.get("type", {})
+        need(isinstance(ann_type, dict)
+             and isinstance(ann_type.get("family"), str) and PROPRIETARY_FONT.search(ann_type["family"]) is None
+             and isinstance(ann_type.get("fallbacks"), list)
+             and all(isinstance(f, str) and PROPRIETARY_FONT.search(f) is None for f in ann_type["fallbacks"]),
+             "precision-annotations.tokens.json must not reference proprietary fonts")
+        ann_svg_path = root / "assets/style/leader-and-arrow.svg"
+        if ann_svg_path.is_file():
+            for node in ET.fromstring(ann_svg_path.read_text(encoding="utf-8")).iter():
+                ff = node.attrib.get("font-family")
+                if ff is not None:
+                    need(PROPRIETARY_FONT.search(ff) is None, "leader-and-arrow.svg must not reference proprietary fonts")
 
         external = read("indexes/external-skills.json")
         need(external["catalog"] == "external_skills" and len(external["entries"]) == external["entry_count"],

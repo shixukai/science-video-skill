@@ -114,6 +114,23 @@ class HookPlanTests(unittest.TestCase):
         errors = check_hook_plan(bad, POLICY)
         self.assertTrue(any("clickbait contrast slogans" in e for e in errors), errors)
 
+    def test_opening_filler_and_premature_spoiler_in_promise_are_rejected(self):
+        bad_line = good_opening()
+        bad_line["hook"]["first_line"] = "你知道吗，冰其实原理很简单。"
+        bad_line["hook"]["payload_clause"] = "冰其实原理很简单"
+        bad_line["voiceover"] = bad_line["hook"]["first_line"]
+        errors = check_hook_plan(bad_line, POLICY)
+        self.assertTrue(any("premature answer spoilers" in e for e in errors), errors)
+
+        bad_promise = good_opening()
+        bad_promise["viewing_promise"] = {"line": "其实原理很简单，就是密度变小了。", "fulfilled_by_scope_id": "R1", "time_s": 6.0}
+        errors_p = check_hook_plan(bad_promise, POLICY)
+        self.assertTrue(any("viewing_promise.line" in e for e in errors_p), errors_p)
+
+        good_promise = good_opening()
+        good_promise["viewing_promise"] = {"line": "温度越低，水分子怎么反而越排越松？", "fulfilled_by_scope_id": "R1", "time_s": 6.0}
+        self.assertEqual(check_hook_plan(good_promise, POLICY), [])
+
 
 class FakeChecks:
     def __init__(self, root, qa):

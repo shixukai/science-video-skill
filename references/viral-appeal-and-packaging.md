@@ -81,7 +81,9 @@ Hook footage must belong to the film and be explained by the body. Cut empty loo
 
 ## Lock a concrete viewing promise by about 8 seconds
 
-Right after the payload (finishing by `promise_window_s` = `8 s`), state one concrete sentence naming what physical change or inner cause explains the paradox (`topic_alignment.opening.viewing_promise`: `line`, `fulfilled_by_scope_id`, `time_s`). Never use empty suspense (“揭开它的秘密” / “看到最后你就明白了”) or abrupt zoom orders (“把冰放大到分子这一层”). Example: “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。”
+Right after the payload (finishing by `promise_window_s` = `8 s`), state one concrete sentence naming **the exact physical puzzle, observable clue, or test arena** that makes the answer feel within reach (`topic_alignment.opening.viewing_promise`: `line`, `fulfilled_by_scope_id`, `time_s`) — **without prematurely spoiling the final causal mechanism**. Giving away the punchline at 6 s collapses the information gap and causes an immediate swipe-off; conversely, empty suspense (“揭开它的秘密” / “看到最后你就明白了”) or abrupt zoom orders (“把冰放大到分子这一层”) fail to earn trust.
+- **Avoid (premature payoff collapse):** “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。” *(explains the core answer at 6 s — nothing left to discover)*
+- **Target (concrete arena, gap stays open):** “同样重的一杯水，冻成冰以后居然会胀大一圈——温度越低，水分子怎么反而越排越松？” *(names the concrete physical paradox and clue while keeping the mechanism open for the body)*
 
 ## Keep a reason to stay
 
@@ -91,10 +93,14 @@ Track `opens_question`, `closes_question`, and `time_s` inside `payoff_steps[]`:
 - Keep the `main` question open until the last 10–20% of runtime.
 - Open the next concrete question before or as each section closes the current one so viewers never hit a "nothing left to find out" dead zone.
 
-### Payoff cadence and re-hooks
+### Payoff cadence, causal pivots, and re-hooks
 
 - Land a fresh visible payoff or sharper question regularly (review stretches `> 20 s` without payoff).
-- Bridge beats with concrete curiosity (“铜线圈已经通上电了，可它自己并没有发烫——那锅底的热量又是从哪儿来的呢？”), place a strong honest visual reveal around 40–60%, trim dead air without losing warm conversational connectors, and plan at least one crisp shareable visual moment where supported.
+- **Drive every transition with "Therefore / But" momentum, never flat "And Then" listing:** Each beat should either follow as a direct physical consequence (`于是`, `这么一来`) or expose a fresh physical snag (`可新问题马上来了`, `光靠这一步还不够`) — strip additive encyclopedia filler (`此外`, `另外`, `与此同时`, `其次`).
+- **Use False Summits (escalating obstacles) around 40–60%:** Right when a partial clue seems to explain the phenomenon, reveal why that surface step alone fails or creates a new constraint, pulling the viewer into the deeper visual reveal:
+  - *ZH example:* “铜线圈已经通上电了，可它自己并没有发烫——那锅底的热量又是从哪儿来的呢？” / “如果只靠粗糙小坑咬住涂层，高温反复煎炒还是会脱落——真正拉住它的，还得看中间那一层。”
+  - *EN example:* “That seals the hole — but it immediately creates a new problem: what stops the valve from tripping before the tank is actually full?”
+- Trim dead air without losing warm conversational connectors, introduce **visible physical behavior before technical terms**, and plan at least one crisp shareable visual moment or felt-scale comparison where supported.
 
 ### Locate retention risks on the actual cut
 
@@ -116,7 +122,7 @@ For the Douyin composer group (Douyin and native cross-posts), compose a `1080×
 
 ## Scroll-viewer appeal check
 
-On G2 rough cuts and G5 finals, an independent reviewer watches from frame 0 with no context and records in `qa.expression_plan` / `qa.expression_review`: (1) frame 0–1 s stop power, (2) 2 s named object + tension (muted & voiced), (3) ~8 s concrete promise, (4) exact swipe-risk timestamps & causes, and (5) clean fast ending + promise honesty.
+On G2 rough cuts and G5 finals, an independent reviewer watches from frame 0 with no context and records in `qa.expression_plan` / `qa.expression_review`: (1) frame 0–1 s stop power, (2) 2 s named object + intuition-vs-evidence tension (muted & voiced), (3) ~8 s concrete **non-spoiling** viewing promise (arena/clue named without prematurely dumping the core answer), (4) exact swipe-risk timestamps & causes (including flat "and then" transitions or jargon before visible behavior), and (5) clean fast ending + promise honesty.
 
 ## Learn from what actually performs
 

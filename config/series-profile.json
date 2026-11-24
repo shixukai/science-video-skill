@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.49",
+  "version": "1.6.50",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -129,7 +129,7 @@
     "rate": "+4%",
     "pitch": "+0Hz",
     "volume": "+0%",
-    "instruct": "用自然、温和、平视交流的中文口语，像站在朋友身边聊一件日常里很有意思的现象那样从容讲述。句式舒展连贯，保留自然的呼吸停顿与轻重缓急，用准确克制的日常动词讲清物理过程；让画面自然切入剖面或微距，旁白顺着观众的因果好奇往下讲，严禁“顺着截面往里看”“切开截面”“剖开就能看到”“放大这个小切口”“把镜头拉近”等突兀的旁白镜头指令；不逐字念稿、不端播音腔或说明书腔、不压缩成生硬电报短句，也不争辩、不质问、不命令说教、不用粗暴夸张措辞，严禁“凭什么”“凭啥”“偏要”“别傻了”等挑衅或硬邦邦的反问与营销号反差腔、生造缩略词、对称排比或口号式收尾。",
+    "instruct": "用自然、温和、平视交流的中文口语，像站在朋友身边聊一件日常里很有意思的现象那样从容讲述。先立常理再破反差（用“按理说……可……”替代抬杠式“你以为”），前8秒给出具体线索或观测悬念但绝不提前剧透谜底；用“于是/这么一来/可问题是/光靠这一步还不够”的因果递进与连锁难题推进节奏，先演物理现象再落专业术语，以长短句交替和揭示前自然停顿带出好奇韵律；让画面自然切入剖面或微距，旁白顺着观众的因果好奇往下讲，严禁“顺着截面往里看”“切开截面”“剖开就能看到”“放大这个小切口”“把镜头拉近”等突兀的旁白镜头指令，也不堆砌“此外/另外/与此同时”式百科罗列或“其实原理很简单/揭开秘密”式剧透空话；不逐字念稿、不端播音腔或说明书腔、不压缩成生硬电报短句，也不争辩、不质问、不命令说教、不用粗暴夸张措辞，严禁“凭什么”“凭啥”“偏要”“别傻了”等挑衅或硬邦邦的反问与营销号反差腔、生造缩略词、对称排比或口号式收尾。",
     "runtime_parameters": "Default Mandarin across all routes: local IndexTTS-2.5 voice clone (IndexTeam/IndexTTS-2.5, duration_factor=1.0, interval_silence=220, paragraph_silence_s=0.55, use_emo_text=false) via scripts/synthesize_indextts2.py + #5 whole-track speech polish (mandarin-clone-polish-v1) via scripts/prepare_voice_master.py --polish; Microsoft Edge edge-tts handles paired English (en-US-AndrewMultilingualNeural +4%) and cloud Mandarin fallback (zh-CN-YunxiNeural +4%) via scripts/synthesize_edge_tts.py.",
     "reuse_matching_audio": true,
     "backend": "local_indextts2",

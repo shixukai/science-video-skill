@@ -63,11 +63,11 @@ The hook lab must select an oriented opening and **not put anonymous fine lines 
 
 ## Locate resistance to continued viewing first
 
-Check normal-speed samples for sticking points: missing context before definitions, prolonged terminology after a good question, repeating an already-given answer, lost object identity across cuts, tiny unreadable changes ([animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence)), overloaded 4–6-part cutaways, or dragging after the answer.
+Check normal-speed samples for sticking points: missing context before definitions, **prematurely spoiling the core answer inside the 0–8 s opening**, prolonged terminology before visible intuition, **flat additive ("and then" / `此外`/`另外`) transitions without causal or tension pull**, repeating an already-given answer, lost object identity across cuts, tiny unreadable changes ([animation scene design](animation-scene-design.md#make-existing-change-readable-as-evidence)), overloaded 4–6-part cutaways, or dragging after the answer.
 
 ## Why watch the next section after this one?
 
-Link each section in `payoff_steps` (`contribution`, `opens_question`, `closes_question`, `time_s`) under [open-loop retention](viral-appeal-and-packaging.md#keep-one-question-open-until-the-final-answer) and [payoff cadence](viral-appeal-and-packaging.md#keep-a-reason-to-stay) using real discovery moves: follow the process/carrier, converge parallel paths, test a condition change, return local → whole, show limits, or revisit the opening phenomenon.
+Link each section in `payoff_steps` (`contribution`, `opens_question`, `closes_question`, `time_s`) under [open-loop retention](viral-appeal-and-packaging.md#keep-one-question-open-until-the-final-answer) and [payoff cadence](viral-appeal-and-packaging.md#keep-a-reason-to-stay) using real discovery moves driven by **"Therefore / But" causal momentum** (never flat encyclopedia lists): follow the physical consequence (`Therefore`), hit an unexpected constraint or false summit (`But — solving step 1 creates a new hurdle`), converge parallel paths, test a condition change, return local → whole, show limits, or revisit the opening phenomenon. Always **show and narrate the visible physical behavior before introducing its technical term** so cognitive fluency stays effortless while the curiosity gap stays taut.
 
 ## Express relationships through shots; use montage as needed
 
