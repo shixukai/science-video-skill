@@ -35,6 +35,13 @@ import tempfile
 
 CLOSING = set("，。！？、；：,.!?;:”’）)》」』】…—%")
 OPENING = set("“‘（(《「『【")
+# Abstract textbook/discipline labels weaken 1-second scroll recognition in vertical feeds;
+# top-tier feed headers should name the concrete everyday object or visible phenomenon matching the cover.
+ABSTRACT_DISCIPLINE_TOPIC_RE = re.compile(
+    r"^(?:磁性物理|机械结构|流体气压|几何光学|电磁屏蔽|材料力学|表面材料|压电效应|"
+    r"空气动力学|虹吸原理|杠杆力学|传热学|流体阻尼|热力学|流体力学|光学原理|"
+    r"物理原理|力学原理|电磁学|声学原理|化学原理|生物力学|机械原理|科学原理|物理知识)$"
+)
 CJK_UNITS = ("摄氏度", "毫米", "厘米", "微米", "纳米", "千米", "公里", "毫升", "千克", "公斤", "千瓦", "兆帕",
              "赫兹", "分钟", "小时", "米", "升", "克", "吨", "度", "秒", "倍", "伏", "瓦", "帕", "层", "次", "年", "天")
 NUMBER_RE = re.compile(
@@ -313,6 +320,12 @@ class Renderer:
 
     def check_header(self, topic, question_lines):
         h = self.policy["header"]
+        if ABSTRACT_DISCIPLINE_TOPIC_RE.fullmatch(topic.strip()):
+            raise ValueError(
+                "abstract textbook/discipline label is forbidden as the vertical-feed topic noun; "
+                "name the concrete everyday object or visible event matching the cover (e.g. '钢化玻璃', '饮料瓶盖'): "
+                + topic
+            )
         for text, font in [(topic, self.topic_font)] + [(line, self.question_font) for line in question_lines]:
             if re.search(r"凭什么|凭啥", text):
                 raise ValueError(

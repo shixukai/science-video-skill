@@ -13,6 +13,10 @@ intervals worth rewatching at normal speed:
 - ``final_answer_early``: the main question closes early in the runtime.
 - ``long_tail_after_answer``: the film continues long after the final answer.
 - ``long_low_change_shot``: one shot runs long with little visual change.
+- ``mid_video_black_or_blank_frame``: pitch-black camera clip-through frames or
+  sustained low-detail blank/off-subject background stretches inside the body.
+- ``low_cut_density``: a >= 25 s film averages very few scene cuts per 10 s,
+  flagging risk of single-shot orbiting monotony.
 - ``silent_mix_interval``: the mixed soundtrack is silent for a while.
 
 Untimed ledger fields are reported under ``missing``, never as passed. The
@@ -33,7 +37,8 @@ import sys
 SCHEMA_VERSION = 1
 FLAGS = (
     "late_viewing_promise", "payoff_gap_over_review", "no_open_question_interval",
-    "final_answer_early", "long_tail_after_answer", "long_low_change_shot", "silent_mix_interval",
+    "final_answer_early", "long_tail_after_answer", "long_low_change_shot",
+    "mid_video_black_or_blank_frame", "low_cut_density", "silent_mix_interval",
 )
 MAIN = "main"
 
@@ -214,7 +219,7 @@ def _probe(path):
     return duration, video, audio
 
 
-def _motion(path, fps, size):
+def _decode_luma_stats(path, fps, size):
     w, h = size
     run = _run(["ffmpeg", "-v", "error", "-i", str(path), "-an",
                 "-vf", f"fps={fps},scale={w}:{h}:flags=area,format=gray",
@@ -224,7 +229,58 @@ def _motion(path, fps, size):
     frames = [raw[i * n:(i + 1) * n] for i in range(len(raw) // n)]
     if len(frames) < 2:
         raise ValueError("export frames could not be decoded")
-    return [sum(abs(x - y) for x, y in zip(a, b)) / (255.0 * n) for a, b in zip(frames, frames[1:])]
+    motion = [sum(abs(x - y) for x, y in zip(a, b)) / (255.0 * n) for a, b in zip(frames, frames[1:])]
+    means, stds = [], []
+    for frame in frames:
+        mean = sum(frame) / (255.0 * n)
+        var = sum((b / 255.0 - mean) ** 2 for b in frame) / n
+        means.append(mean)
+        stds.append(math.sqrt(var))
+    return motion, means, stds
+
+
+def _motion(path, fps, size):
+    motion, _, _ = _decode_luma_stats(path, fps, size)
+    return motion
+
+
+def blank_or_black_intervals(means, stds, fps, duration, policy):
+    """Locate mid-video pitch-black clip-through frames or sustained low-detail blank stretches."""
+    black_max = policy.get("blank_frame_luma_max", 0.03)
+    std_max = policy.get("low_detail_std_max", 0.045)
+    low_min_s = policy.get("low_detail_min_s", 1.0)
+    margin = 0.5
+    findings = []
+
+    # 1. Mid-video pitch-black frames (camera clipping through opaque walls/doors)
+    b_start = None
+    for idx, mean in enumerate(means):
+        t = idx / fps
+        if margin <= t <= duration - margin and mean < black_max:
+            if b_start is None:
+                b_start = t
+        elif b_start is not None:
+            findings.append({"kind": "mid_video_black_frame", "interval": [round(b_start, 3), round(t, 3)]})
+            b_start = None
+    if b_start is not None:
+        findings.append({"kind": "mid_video_black_frame", "interval": [round(b_start, 3), round(min(duration, len(means) / fps), 3)]})
+
+    # 2. Sustained low-detail blank/off-subject background stretches (e.g. empty fabric/wall)
+    l_start = None
+    for idx, std in enumerate(stds):
+        t = idx / fps
+        if margin <= t <= duration - margin and std < std_max and means[idx] >= black_max:
+            if l_start is None:
+                l_start = t
+        elif l_start is not None:
+            if t - l_start >= low_min_s:
+                findings.append({"kind": "low_detail_blank_stretch", "interval": [round(l_start, 3), round(t, 3)]})
+            l_start = None
+    if l_start is not None:
+        end_t = min(duration, len(stds) / fps)
+        if end_t - l_start >= low_min_s:
+            findings.append({"kind": "low_detail_blank_stretch", "interval": [round(l_start, 3), round(end_t, 3)]})
+    return findings
 
 
 def _cuts(path, threshold):
@@ -321,7 +377,7 @@ def measure(video, episode, policy, preview_dir=None, report_path=None):
     data = json.loads(episode.read_text(encoding="utf-8"))
     duration, vstream, astream = _probe(video)
     fps, size = policy["sample_fps"], policy["sample_size"]
-    motion = _motion(video, fps, size)
+    motion, luma_means, luma_stds = _decode_luma_stats(video, fps, size)
     cuts = _cuts(video, policy["scene_cut_threshold"])
     spans = shot_spans(cuts, duration)
     silences = _silences(video, policy["silence_dbfs"], policy["silence_min_s"]) if astream else []
@@ -332,6 +388,15 @@ def measure(video, episode, policy, preview_dir=None, report_path=None):
     if long_shots:
         flags.append("long_low_change_shot")
         intervals["long_low_change_shot"] = long_shots
+    blanks = blank_or_black_intervals(luma_means, luma_stds, fps, duration, policy)
+    if blanks:
+        flags.append("mid_video_black_or_blank_frame")
+        intervals["mid_video_black_or_blank_frame"] = blanks
+    cuts_per_10s = round(len(cuts) / (duration / 10.0), 3) if duration > 0 else 0.0
+    min_cuts = policy.get("min_cuts_per_10s_review")
+    if finite(min_cuts) and duration >= 25.0 and cuts_per_10s < min_cuts:
+        flags.append("low_cut_density")
+        intervals["low_cut_density"] = [[0.0, round(duration, 3)]]
     audible_silences = [s for s in silences if s[1] - s[0] >= policy["silence_min_s"]]
     if audible_silences:
         flags.append("silent_mix_interval")
@@ -346,11 +411,13 @@ def measure(video, episode, policy, preview_dir=None, report_path=None):
         "policy": {k: policy[k] for k in (
             "promise_window_s", "payoff_gap_review_s", "no_open_question_min_s", "final_answer_min_ratio",
             "answer_to_end_review_s", "long_shot_review_s", "long_shot_low_change_mae",
-            "scene_cut_threshold", "silence_dbfs", "silence_min_s", "sample_fps", "sample_size")},
+            "blank_frame_luma_max", "low_detail_std_max", "low_detail_min_s", "min_cuts_per_10s_review",
+            "scene_cut_threshold", "silence_dbfs", "silence_min_s", "sample_fps", "sample_size") if k in policy},
         "measurements": {
             "audio_stream": astream is not None,
             "cut_times_s": cuts,
             "shot_count": len(spans),
+            "cuts_per_10s": cuts_per_10s,
             "median_shot_s": round(lengths[len(lengths) // 2], 3) if lengths else None,
             "longest_shot_s": round(lengths[-1], 3) if lengths else None,
             "viewing_promise_time_s": ledger["promise_time_s"],

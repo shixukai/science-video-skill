@@ -150,14 +150,47 @@ class TestBannedRhetoricalPhrases(unittest.TestCase):
         self.assertEqual(title, "老电饭煲")
         self.assertEqual(len(lines), 2)
 
-    def test_feed_package_header_rejects_pingshenme(self):
+    def test_feed_package_header_rejects_pingshenme_and_abstract_discipline_topics(self):
         policy = feed_package.load_policy()
         font_path = feed_package.find_font(policy)
         pal, _ = feed_package.check_palette(policy, "slate")
         renderer = feed_package.Renderer(policy, font_path, pal)
         with self.assertRaises(ValueError):
-            renderer.check_header("磁性物理", ["老电饭煲没有芯片，", "饭熟凭什么自动跳保温？"])
-        renderer.check_header("磁性物理", ["老电饭煲没有芯片，", "饭熟怎么自动跳保温？"])
+            renderer.check_header("老电饭煲", ["老电饭煲没有芯片，", "饭熟凭什么自动跳保温？"])
+        for abstract_topic in ("磁性物理", "材料力学", "流体气压", "几何光学", "机械结构", "电磁屏蔽"):
+            with self.assertRaises(ValueError, msg=abstract_topic):
+                renderer.check_header(abstract_topic, ["砸正面不破，", "轻磕边角怎么瞬间全碎？"])
+        for concrete_topic in ("钢化玻璃", "老电饭煲", "饮料瓶盖", "加油枪自动跳枪"):
+            renderer.check_header(concrete_topic, ["砸正面不破，", "轻磕边角怎么瞬间全碎？"])
+
+    def test_retention_timeline_blank_frame_and_tight_tail_detection(self):
+        import retention_timeline
+        policy = retention_timeline.load_policy()
+        self.assertLessEqual(policy["answer_to_end_review_s"], 3.5)
+        # 4.5s post-answer tail must trigger long_tail_after_answer
+        ledger = retention_timeline.ledger_from_episode({
+            "topic_alignment": {
+                "opening": {"viewing_promise": {"time_s": 6.0}, "payoff_steps": []},
+                "ending": {"answer_time_s": 39.5},
+            }
+        })
+        flags, _, _ = retention_timeline.ledger_flags(ledger, 44.5, policy)
+        self.assertIn("long_tail_after_answer", flags)
+        flags_tight, _, _ = retention_timeline.ledger_flags(ledger, 41.0, policy)
+        self.assertNotIn("long_tail_after_answer", flags_tight)
+
+        # Synthetic 4 fps stats: 10 seconds (40 frames), pitch-black clip at 3.5-4.0s and flat blank at 6.0-7.5s
+        means = [0.4] * 40
+        stds = [0.18] * 40
+        for i in range(14, 16):
+            means[i] = 0.01
+            stds[i] = 0.005
+        for i in range(24, 30):
+            means[i] = 0.35
+            stds[i] = 0.02
+        findings = retention_timeline.blank_or_black_intervals(means, stds, 4, 10.0, policy)
+        kinds = {item["kind"] for item in findings}
+        self.assertEqual(kinds, {"mid_video_black_frame", "low_detail_blank_stretch"})
 
 
 if __name__ == "__main__":

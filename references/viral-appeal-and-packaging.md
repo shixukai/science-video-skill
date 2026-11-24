@@ -30,9 +30,10 @@ For complete new feed films, design, produce, and test the 0–5 s opening FIRST
 The anti-preamble rule rejects delaying background, **not necessary subject naming** ([minimum viewer orientation](viewer-retention-design.md#orient-the-viewer-before-introducing-a-detail)). Repair these failures before body polish:
 - **Context-first delay or AI clickbait slogan** (`圆出口竟能拉出方便便…怎么做到的？`) → lead with the concrete observation in warm everyday speech (`<= 20` spoken units / `~3.5 s`).
 - **Throat-clearing / abrupt look-or-camera directions** (`大家好`, `你知道吗`, `先看这个`, `接下来我们来看看`, `顺着截面往里看`, `剖开就能看到`, `放大截面`) → cut the stage command; start on the visible event and bridge through causal curiosity while the picture executes the cutaway or push-in.
-- **Static/fading start, black lead, logo, late caption, or conditioning-still head** → hard start: fully exposed moving Frame 0, sound present at frame 0, first syllable `<= 0.35 s`, first caption on at frame 0 (trim `>= 0.15 s` off AI video ramp heads).
+- **Static/fading start, black lead, logo, late caption, or conditioning-still head** → hard start: fully exposed moving Frame 0, sound present at frame 0, first syllable `<= 0.35 s`, first caption on at frame 0 (trim `>= 0.15 s` off AI video ramp heads). **Physical action must visibly occur within `0.0–1.5 s`** (break, snap, dim, separate, spray, deflect)—never spend `1.5–2.0 s` slowly zooming into a static exterior shell before anything happens, and never freeze on a dead post-event frame for `5+ s`.
+- **Three-way promise mismatch (title vs. header vs. first 10 s)** → platform title, vertical-feed header question, and the actual `0–10 s` opening beat must promise and immediately investigate the exact same visible mechanism; never hook on one feature in the title while spending the first 25–30 s explaining a different sub-mechanism.
 - **Disembodied internal fragment or tiny distant shell** → use the [host-to-part bridge](#anchor-a-part-inside-its-host) within 0–5 s.
-- **Stacked-modifier phrasing or post-hook 5–10 s clutter drop** → keep direct everyday verbs and visually isolate the first focal interface.
+- **Stacked-modifier phrasing or post-hook 5–10 s clutter drop** → keep direct everyday verbs, cut stacked double-negation premises (`没通电也没拉黑帘`, `没通电没气泵`), and visually isolate the first focal interface.
 
 ### The opening beat sheet
 
@@ -82,8 +83,8 @@ Hook footage must belong to the film and be explained by the body. Cut empty loo
 ## Lock a concrete viewing promise by about 8 seconds
 
 Right after the payload (finishing by `promise_window_s` = `8 s`), state one concrete sentence naming **the exact physical puzzle, observable clue, or test arena** that makes the answer feel within reach (`topic_alignment.opening.viewing_promise`: `line`, `fulfilled_by_scope_id`, `time_s`) — **without prematurely spoiling the final causal mechanism**. Giving away the punchline at 6 s collapses the information gap and causes an immediate swipe-off; conversely, empty suspense (“揭开它的秘密” / “看到最后你就明白了”) or abrupt zoom orders (“把冰放大到分子这一层”) fail to earn trust.
-- **Avoid (premature payoff collapse):** “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。” *(explains the core answer at 6 s — nothing left to discover)*
-- **Target (concrete arena, gap stays open):** “同样重的一杯水，冻成冰以后居然会胀大一圈——温度越低，水分子怎么反而越排越松？” *(names the concrete physical paradox and clue while keeping the mechanism open for the body)*
+- **Avoid (premature payoff collapse):** “同样是水，结冰反而变轻，是因为水分子结冰时撑开了很多六边形的小空隙。” or repetitive formulaic secret-spoilers at 5 s (“里面没有芯片/电机，管着开关的是锅底一块会失磁的小磁铁/一颗小玻璃珠”) *(explains or names the punchline before the viewer even sees the mechanism — nothing left to discover)*
+- **Target (concrete arena, gap stays open):** “同样重的一杯水，冻成冰以后居然会胀大一圈——温度越低，水分子怎么反而越排越松？” / “看同一个小卡扣，往下和往上，各碰到了哪儿。” *(names the concrete physical paradox or visible focal clue while keeping the mechanism open for the body)*
 - **Prevent the 5–15 s post-hook dip:** Keep the entire 0–8 s hook + viewing promise inside **one continuous `\n\n` TTS paragraph** (zero inter-paragraph stall right at 3.5 s), then enter the first visible physical test or active state change immediately — never stall into a static parts inventory (“先来了解一下它的结构，它主要由三部分组成……”). Introduce a component only when it physically acts or triggers a hurdle.
 
 ## Keep a reason to stay
@@ -105,21 +106,23 @@ Track `opens_question`, `closes_question`, and `time_s` inside `payoff_steps[]`:
 
 ### Locate retention risks on the actual cut
 
-Run `python -X utf8 scripts/retention_timeline.py measure <export.mp4> --episode <episode.json> --report <new.json>` on G2/G5 cuts to pinpoint payoff gaps, closed-loop stretches, early answers, long tails, or static/silent holes (locator only, never a gate).
+Run `python -X utf8 scripts/retention_timeline.py measure <export.mp4> --episode <episode.json> --report <new.json>` on G2/G5 cuts to pinpoint payoff gaps, closed-loop stretches, early answers, long post-answer tails (`> 3.5 s`), mid-video black/blank clip-through frames, low shot-cut density (`< 1.2 cuts/10 s` on `>= 25 s` films), or static/silent holes (locator only, never a gate).
 
 ## End fast after explaining the mechanism
 
-Deliver the final answer late (`ending.answer_time_s`), **eliminate verbal ending signals** (`总结一下`, `所以说到底`, `到这里你就明白了`, `这就是为什么…的原因`; English `"in conclusion"`, `"to summarize"`, `"now you know why"`) that trigger viewers to swipe off 5–8 s early, land the closing sentence on an everyday **reframing takeaway** reconnecting cleanly to the opening image, and **stop calmly within `answer_to_end_review_s` (`6 s`)** — zero trailing questions (“你平时遇到过吗？”), comment prompts, recaps, slogans, or like/follow CTAs unless explicitly commissioned.
+Deliver the final answer late (`ending.answer_time_s`), **eliminate verbal ending signals** (`总结一下`, `所以说到底`, `到这里你就明白了`, `这就是为什么…的原因`; English `"in conclusion"`, `"to summarize"`, `"now you know why"`) that trigger viewers to swipe off 5–8 s early, land the closing sentence cleanly on the mechanism's visible resolution, and **stop calmly within `answer_to_end_review_s` (`3.5 s`)** — zero trailing questions (“你平时遇到过吗？”), comment prompts, recaps, slogans, like/follow CTAs, or **post-answer life-tip / trivia tangents** (`难怪…`, `新买回来的…`, `平时记得…`, `汽车安全锤专门…`, `换把木铲更耐用…`). Never add a 1-second silence + cut back to the exterior after answering to tack on an 8–15 s bonus tip (that combination signals "episode over" and triggers steep end-of-video drop-off); move genuine everyday tips either into the **0–3 s opening resonance** or into a **pinned comment**.
 
 ## Duration, format and series identity
 
-No duration floor or ceiling: let clear explanation set runtime while keeping standalone everyday feed episodes tightly focused on one core contradiction. Master canvas is `1920×1080` landscape; align topic lane, contradiction-first titles, locked covers, and accepted voice for recognizable series identity.
+No duration floor or ceiling: let clear explanation set runtime while keeping standalone everyday feed episodes tightly focused on one core contradiction (avoid padding single-mechanism explainers past ~55–60 s with slow setup holds or post-answer tangents). Master canvas is `1920×1080` landscape; align topic lane, contradiction-first titles, locked covers, and accepted voice for recognizable series identity.
 
 ## Package the landscape master for vertical feeds
 
 For the Douyin composer group (Douyin and native cross-posts), compose a `1080×1920` dark night-viewing derivative from the accepted `-textless` 16:9 master + formal captions via `scripts/feed_package.py` (handing the accepted 16:9 landscape master directly to Xiaohongshu and YouTube; see companion `science-video-publishing` Skill for release execution):
-- **Layout:** Full-width `1080 px` picture + dark flat bands (`slate` default; `night`/`navy`/`warm_charcoal` options; zero strokes/shadows/boxes/stickers) with persistent 1-line topic + 2-line question header above and larger re-wrapped captions below (preserving final-line baseline and never splitting numbers/units).
-- **Command:** `python -X utf8 scripts/feed_package.py compose <textless.mp4> --captions <srt> --topic <noun> --question <line1\nline2> --output <feed916.mp4> --report <new.json>` (keep `--ending-question` off by default). View at phone size and bind `deliverables.textless_master`, `deliverables.feed_package`, and `qa.feed_package` (does not reopen G5).
+- **Concrete object header (zero textbook jargon):** `--topic` MUST name the **concrete everyday object or visible event** matching the cover (`钢化玻璃`, `饮料瓶盖`, `加油枪自动跳枪`, `老式电饭煲`), never an abstract textbook discipline label (`材料力学`, `磁性物理`, `流体气压`, `几何光学`, `机械结构`, `电磁屏蔽`, programmatically rejected by `feed_package.py`). Keep `--question` concise (target `<= 16` CJK chars where natural), free of stacked double-negation premises, and 100% aligned with the platform title and first 10 s of the film.
+- **Layout & phone-screen presence:** Full-width `1080 px` picture + dark flat bands (`slate` default; `night`/`navy`/`warm_charcoal` options; zero strokes/shadows/boxes/stickers; commercially cleared `Noto Sans SC Bold` only) with persistent 1-line concrete topic + 2-line question header above and larger re-wrapped captions below (preserving final-line baseline and never splitting numbers/units). When the hero mechanism is framed center-safe without vital edge detail, consider `--zoom 1.15–1.333` (4:3 taller center window, raising active picture screen share from ~32% to ~42%) verified via actual phone-size `crop_check` so the subject reads large and magnetic in vertical feeds.
+- **Zero batch bypass of cold tests:** Batch-rendered episodes still require an actual completed `opening_hook.py` cold test (`cold_test.status` cannot stay `pending`) plus a quick full-timeline frame skim to confirm zero camera clip-through or blank/off-subject stretches before publishing.
+- **Command:** `python -X utf8 scripts/feed_package.py compose <textless.mp4> --captions <srt> --topic <concrete-object> --question <line1\nline2> --output <feed916.mp4> --report <new.json>` (keep `--ending-question` off by default). View at phone size and bind `deliverables.textless_master`, `deliverables.feed_package`, and `qa.feed_package` (does not reopen G5).
 
 ## Scroll-viewer appeal check
 

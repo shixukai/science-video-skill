@@ -23,7 +23,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "7326e2558764e8dd792af5030d261d99873450a5680574a0db2b6081846f17da",
+      "sha256": "3530d24d9844c4da869288b652d1bc76c39dce1eefc038610593ac42d9fd09ab",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -148,7 +148,7 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "5112896b60b67e71713a705b0e4347be4f6abdfd525ba619ac2d84dd54ff4010",
+      "sha256": "b03530a1318f4ba3bc37a0b4c20dc66a1a0e9581d8694531a4e85839b71b0801",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
@@ -248,10 +248,11 @@
     {
       "owner_id": "visual",
       "file": "references/art-direction.md",
-      "sha256": "2092aac44ad9b94bee29a84e2eb1905b9ea3306142b8adb554df4508a737f0b0",
+      "sha256": "3638d1c9c31777b717d229de9696d54a81b47ea328b1a84f9483d29c8b27d8d0",
       "anchors": [
         "professional-art-direction-and-clean-rendering",
         "bright-style-and-premium-materials",
+        "scroll-stopping-editorial-style-escape-the-sterile-dark-box-cad-look",
         "color-composition-and-space-design-the-viewing-order-first",
         "color-roles-and-visible-hierarchy",
         "foreground-midground-and-background-each-have-a-job",
@@ -433,7 +434,7 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "5b573b63bc1c1fb8a825905f269e2add27f36374761295953eed1da12528ce66",
+      "sha256": "cc264c17a47607823a567d91fed253a486c5fd376d427876b483aec0b88118a2",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
