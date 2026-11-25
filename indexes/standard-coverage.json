@@ -215,7 +215,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "1511915ab126bec2267ce0e46b524533036418710fadbd2d6404879951101488",
+      "sha256": "7980cd00f9750d59926225f00654163a262828f69de3d7c13cdf33781f913adf",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
@@ -249,7 +249,7 @@
     {
       "owner_id": "visual",
       "file": "references/art-direction.md",
-      "sha256": "3638d1c9c31777b717d229de9696d54a81b47ea328b1a84f9483d29c8b27d8d0",
+      "sha256": "8e46378b2becb43fb41e6dcf8e44b09c493747f039fedb3f6b330d94547dc9ca",
       "anchors": [
         "professional-art-direction-and-clean-rendering",
         "bright-style-and-premium-materials",
@@ -435,12 +435,13 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "e2e3ca5a973553b6f644905be41d4ae754637c8b61beebd48a8e95ed6123dda8",
+      "sha256": "82794c1a53c090d1d30b718ebf866d0c4900628a7757f172d7f3e3232966f2d1",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
         "recognize-the-actual-object-before-explaining-its-interior",
         "high-poly-industrial-modeling-standard-for-colab-3d",
+        "real-life-grounded-provenance-draw-scenes-from-real-life-never-imaginary-void-sets",
         "prevent-high-poly-emptiness-multi-stage-visual-density-and-shot-choreography",
         "cinema-grade-blender-visual-richness-replicating-live-action-magnetism-in-cycles",
         "actual-execution-of-bright-lighting-and-materials",

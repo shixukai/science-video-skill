@@ -22,6 +22,7 @@ A vivid 0–4 s hook followed by 30 s of one lone prop changing tint on an empty
 1. **Fresh visual world, scale, or comparison:** What genuinely NEW environment, scale jump (macro / cross-section / microscopic), controlled split-screen comparison (A vs. B), or unmistakable physical transformation enters the frame in this beat that was NOT already on screen 5 s ago?
 2. **Spoken-verb dominance at phone scale:** Does the exact physical action the narrator describes (heating, cooling, bending, latching, breaching, flowing) visibly occupy and drive the center of a 360 px phone frame during those exact spoken seconds—rather than leaving a static object idling while voiceover carries the story alone?
 3. **Purposeful multi-layer richness:** Do foreground, midground, and background each contribute real context, depth, lighting atmosphere, or visual contrast—avoiding the "sterile CAD bench in a pitch-black box" look across consecutive beats?
+4. **Real-life grounding & Mute Test (`素材来源于生活`):** Does every prop, vehicle, tool, and architectural backdrop come from real everyday life or real manufacturing rather than an imaginary neon void, mismatched vehicle, or generic lab stand-in—and can a muted viewer instantly recognize both the real-world setting and the active physical event within `< 1 s`?
 
 ### Distinguish missing from insufficiently visible
 
