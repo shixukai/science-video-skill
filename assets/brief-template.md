@@ -31,13 +31,14 @@
   - Opening-to-body handoff (final opening line + first body observation written together; enter the first active test/action immediately at 8–15 s with zero static parts list)
 - **Body payoff map (`payoff_steps`), breathing-point cadence & ending return (`answer_time_s`)**: chain beats via "Therefore / But" causal pivots, one-new-entity-per-breath pacing, and escalating obstacles (False Summits) instead of flat additive lists; control information density by landing a concrete **breathing-point micro-climax** every ~15–25 s (never `> 30 s`: animated visual reveal + `0.25–0.45 s` foley micro-breath, mini controlled experiment/comparison, or gentle 0.5 s micro-prediction question) where **pictures replace prose** for every abstract mechanism; deliver final answer late (`>= 75%`), ban premature ending signals (`总结一下`/`所以说到底`/`in conclusion`), land the closing sentence on an everyday reframing takeaway within `<= 3.5 s`, and draft 1 off-video **pinned-comment / copy engagement seed** (experience extension question or same-collection next-episode teaser) for `science-video-publishing`.
 
-## 4. Script, Shots & Route Execution
-- **Script & audio master**: path / hash / actual spoken duration (time shots from real audio, never guesses)
-- **Key expression difficulties (`expression_cards`)**: fixed vs changed variables, visible outcome, low-cost comparison if `uncertain=true`
-- **Route artifacts**:
+## 4. Silent Visual Storyboard, Script & Route Execution
+- **Silent causal visual plan (design BEFORE locking prose):** 4–6 continuous visual cause-and-effect beats inside ONE persistent, bright real-world environment & recognizable physical host (name the real host asset / open-licensed glTF, the in-situ cutaway showing driver + mechanism + outcome + host anchor in `28–60 mm` storytelling lenses, and the controlled side-by-side comparison — zero flat gray/black void backdrops, zero box hero substitutes, zero blind `> 75 mm` 2 cm slivers, zero legacy episode template reuse).
+- **Script & audio master (lean narration pointing to verified visuals):** path / hash / actual spoken duration (time shots from real audio after muted visual preflight passes, never write prose to patch unreadable visuals)
+- **Key expression difficulties (`expression_cards`):** fixed vs changed variables, visible outcome, low-cost comparison if `uncertain=true`
+- **Route artifacts:**
   - *Google Flow*: cloud backend (`gemini_api_cli` via `scripts/gemini_api_cli.py` | `google_flow_web`), disk prompt ledger (with `response_id` or card index), `>= 1080p` clip probes, paired `episode.zh.json` & `episode.en.json` (`max(span_zh, span_en)`), `48 kHz` audio disposition (`keep foley` vs `mute`), `google_flow_audit.py` report
-  - *Controlled 3D / Local Realistic*: locked tool/project version, scene/asset manifest, `render_gate.py` receipts
-- **Text deletion test (`presentation_text`)**: list only kept in-picture items and required notices (default AI disclosure off-frame / platform control).
+  - *Controlled 3D / Local Realistic*: locked tool/project version, open-licensed 3D host & CAD silhouette manifest, `scripts/colab_cli.py audit-blend --strict` report (Frame 0 + body frames), muted `1920×1080` Colab `blender-stills` preflight + `build_visual_review.py beat-board` receipt, `render_gate.py` receipts
+- **Text deletion test (`presentation_text`):** list only kept in-picture items and required notices (default AI disclosure off-frame / platform control).
 
 ## 5. Review, Packaging & Delivery
 - **Hook sample (0–5 s) & G3 representative sample**: file, `opening_hook.py` report, cold 2 s test, continuous audiovisual notes

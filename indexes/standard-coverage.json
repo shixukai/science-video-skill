@@ -175,7 +175,7 @@
     {
       "owner_id": "visual",
       "file": "references/visual-system.md",
-      "sha256": "68830fa28d1f96eab465f2a5392c72d322580b3777c742489d5c31dbb16c65f9",
+      "sha256": "404eadaea8cceb1d04a875a3e40e22f2e99311fbc53dda1c5b043363b9da9643",
       "anchors": [
         "visual-design-system",
         "bright-style-and-premium-materials",
@@ -219,7 +219,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "c7a868cba07deb16fc729eb5f4f29e689afa191e4d79bafab67f6b5399680137",
+      "sha256": "9365068c023c02df083676231af2bd3c17935e9255062ab0aa62d7a509a029fb",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
@@ -348,7 +348,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "ceb9c9cb3738fdaf42631aa30f751571c6cc0afc7ddde5fd2144d9b54bf7c367",
+      "sha256": "1c0760c1564ab4718c5a820165d4d297757d3e940274927966afdaab71e2adf6",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -441,31 +441,23 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "6ae186669b2e7476f22f1c1c9a13300851d2a6e437987bb8bd2c5e69d68d1a0c",
+      "sha256": "ec4449e66f0585bf2dcfd51af62434d941db862c06dc6bcc608634187d5eb6b3",
       "anchors": [
-        "3d-animation-production-blender-and-3d-asset-reuse",
+        "3d-animation-production-high-poly-industrial-blender--visual-first-craft-v20",
+        "five-iron-laws-of-controlled-3d-zero-exceptions",
         "scope-of-asset-only-tasks",
-        "recognize-the-actual-object-before-explaining-its-interior",
         "high-poly-industrial-modeling-standard-for-colab-3d",
         "real-life-grounded-provenance-draw-scenes-from-real-life-never-imaginary-void-sets",
+        "cinema-grade-blender-visual-richness-replicating-live-action-magnetism-in-cycles",
         "mandatory-captioned-sentence-to-keyframe-beat-review-before-full-colab-render",
         "physical-state-integrity-f-curve-semantics-and-pre-colab-numerical-audit",
-        "prevent-high-poly-emptiness-multi-stage-visual-density-and-shot-choreography",
-        "cinema-grade-blender-visual-richness-replicating-live-action-magnetism-in-cycles",
         "actual-execution-of-bright-lighting-and-materials",
         "blender-backgrounds-and-spatial-completion",
         "character-rigging-motion-capture-and-lip-sync",
-        "select-character-tools-as-needed",
-        "shared-geometry-and-orientation-baseline",
-        "move-continuously-from-the-whole-into-the-local-view",
-        "choose-exploded-views-or-cutaways",
-        "visible-connections-in-cooling-and-piping-mechanisms",
         "bounded-trials-and-reliable-reuse",
         "qualify-critical-assets-before-whole-film-integration",
-        "design-3d-film-and-series-covers-separately",
         "archive-used-3d-assets-in-one-library",
         "standing-authorization-for-library-archiving",
-        "find-and-select-existing-assets",
         "open-licensed-models-may-be-adopted-directly"
       ]
     },
@@ -491,7 +483,7 @@
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "9116513db6421fffd59cf1a75a31531394bd4bb3dd7cc41376f24e15998d2bff",
+      "sha256": "743e47f5bac32ac8a57d42bc01a50c1ab40ebb6dfef9fb8b9b59243ba8b36128",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",

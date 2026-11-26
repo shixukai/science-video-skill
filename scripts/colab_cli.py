@@ -121,13 +121,78 @@ def normalize_modeling_profile(profile: str) -> str:
 
 
 _INDUSTRIAL_AUDIT_BLENDER_CODE = r'''
-import argparse, json, pathlib, sys, bpy
+import argparse, json, math, pathlib, re, sys, bpy
+from mathutils import Vector as _Vec
 
 argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 p = argparse.ArgumentParser()
 p.add_argument("--out-json", required=True)
 p.add_argument("--frame", type=int, default=None)
 a = p.parse_args(argv)
+
+_FAKE_BACKDROP_RE = re.compile(
+    r"(?:macro|void|flat|studio|stage|cardboard|grey|gray|dummy|fake).{0,20}(?:backdrop|backwall|bg_?plane|bg_?card|cyc|sweep)"
+    r"|(?:backdrop|backwall)_?(?:macro|void|flat|card|plane)",
+    re.IGNORECASE,
+)
+_HERO_HOUSING_RE = re.compile(
+    r"(?:caliper|cal(?:full|cut|body|jaw|bridge)|brake_?body|hero_?body|housing|valve_?body|lock_?body|casing|knuckle|rotor_?carrier|nozzle_?body)",
+    re.IGNORECASE,
+)
+_PLANAR_EXEMPT_RE = re.compile(
+    r"(?:floor|wall|ceiling|desk|table|shelf|bench|plate|block|base|frame|panel|door|cabinet|book|crate|tile|board|pad|shim|bracket|disc|rotor|washer|flange|cover|lid|cap)",
+    re.IGNORECASE,
+)
+
+
+def _check_box_hero(obj, mesh, tri_count):
+    if not _HERO_HOUSING_RE.search(obj.name) or _PLANAR_EXEMPT_RE.search(obj.name):
+        return None
+    if len(mesh.polygons) < 6:
+        return None
+    dims = sorted(abs(float(v)) for v in obj.dimensions)
+    if dims[-1] <= 1e-6 or (dims[0] / dims[-1]) < 0.15:
+        return None
+    buckets = {}
+    total_area = 0.0
+    for poly in mesh.polygons:
+        area = float(poly.area)
+        if area <= 1e-12:
+            continue
+        total_area += area
+        n = poly.normal
+        key = (int(round(n.x * 12.0)), int(round(n.y * 12.0)), int(round(n.z * 12.0)))
+        buckets[key] = buckets.get(key, 0.0) + area
+    if total_area <= 1e-9:
+        return None
+    top6_ratio = sum(sorted(buckets.values(), reverse=True)[:6]) / total_area
+    if (top6_ratio >= 0.75 and len(mesh.polygons) < 600) or top6_ratio >= 0.88:
+        return {
+            "name": obj.name,
+            "top6_planar_area_ratio": round(top6_ratio, 4),
+            "triangle_count": tri_count,
+        }
+    return None
+
+
+def _scene_bbox_diag(objs):
+    mins = [float("inf"), float("inf"), float("inf")]
+    maxs = [float("-inf"), float("-inf"), float("-inf")]
+    found = False
+    for obj in objs:
+        mw = obj.matrix_world
+        for corner in obj.bound_box:
+            wc = mw @ _Vec(corner)
+            found = True
+            for idx in range(3):
+                if wc[idx] < mins[idx]:
+                    mins[idx] = wc[idx]
+                if wc[idx] > maxs[idx]:
+                    maxs[idx] = wc[idx]
+    if not found:
+        return 0.0
+    return round((_Vec(maxs) - _Vec(mins)).length, 4)
+
 
 scene = bpy.context.scene
 if a.frame is not None:
@@ -140,10 +205,14 @@ total_tris = 0
 non_uniform_scale = []
 unapplied_uniform_scale = []
 viewport_only_mats = []
+fake_backdrops = {}
+box_heroes = {}
+frame0_vis_objs = []
 
 for obj in scene.objects:
     if obj.type != "MESH" or obj.hide_render:
         continue
+    frame0_vis_objs.append(obj)
     obj_eval = obj.evaluated_get(depsgraph)
     mesh = obj_eval.to_mesh()
     try:
@@ -151,8 +220,15 @@ for obj in scene.objects:
         tri_count = sum(max(1, len(poly.loop_indices) - 2) for poly in mesh.polygons)
         smooth_count = sum(1 for poly in mesh.polygons if poly.use_smooth)
         smooth_ratio = round(smooth_count / poly_count, 4) if poly_count else 1.0
+        box_hit = _check_box_hero(obj, mesh, tri_count)
     finally:
         obj_eval.to_mesh_clear()
+
+    if _FAKE_BACKDROP_RE.search(obj.name) and tri_count <= 256:
+        fake_backdrops[obj.name] = {"name": obj.name, "frame": int(scene.frame_current), "triangle_count": tri_count}
+    if box_hit is not None:
+        box_hit["frame"] = int(scene.frame_current)
+        box_heroes[obj.name] = box_hit
 
     total_polys += poly_count
     total_tris += tri_count
@@ -184,6 +260,7 @@ for obj in scene.objects:
     })
 
 mesh_rows.sort(key=lambda r: r["triangle_count"], reverse=True)
+frame0_bbox_diag = _scene_bbox_diag(frame0_vis_objs)
 rbw = scene.rigidbody_world
 has_active_rbw = bool(
     rbw is not None
@@ -208,18 +285,75 @@ vs = scene.view_settings
 ds = scene.display_settings
 cyc = getattr(scene, "cycles", None)
 
-import math
-from mathutils import Vector as _Vec
 orig_frame = int(scene.frame_current)
 f_start = int(scene.frame_start)
 f_end = int(scene.frame_end)
 fps_val = float(getattr(scene.render, "fps", 30) or 30) / float(getattr(scene.render, "fps_base", 1.0) or 1.0)
 dur_s = max(0.0, (f_end - f_start + 1) / fps_val) if f_end >= f_start else 0.0
+
+body_rows = []
+if f_end > f_start:
+    body_frames = sorted({int(round(f_start + (f_end - f_start) * r)) for r in (0.20, 0.40, 0.60, 0.80)} - {orig_frame})
+    for bf in body_frames:
+        scene.frame_set(bf)
+        dg_b = bpy.context.evaluated_depsgraph_get()
+        b_tris = 0
+        b_vis = []
+        for obj in scene.objects:
+            if obj.type != "MESH" or obj.hide_render:
+                continue
+            b_vis.append(obj) if not _FAKE_BACKDROP_RE.search(obj.name) else None
+            oe = obj.evaluated_get(dg_b)
+            me = oe.to_mesh()
+            try:
+                tc = sum(max(1, len(poly.loop_indices) - 2) for poly in me.polygons)
+                box_hit = None if obj.name in box_heroes else _check_box_hero(obj, me, tc)
+            finally:
+                oe.to_mesh_clear()
+            b_tris += tc
+            if obj.name not in fake_backdrops and _FAKE_BACKDROP_RE.search(obj.name) and tc <= 256:
+                fake_backdrops[obj.name] = {"name": obj.name, "frame": bf, "triangle_count": tc}
+            if box_hit is not None:
+                box_hit["frame"] = bf
+                box_heroes[obj.name] = box_hit
+        body_rows.append({"frame": bf, "triangles": b_tris, "bbox_diag": _scene_bbox_diag(b_vis)})
+
+if body_rows:
+    min_body_tris = min(r["triangles"] for r in body_rows)
+    min_body_diag = min(r["bbox_diag"] for r in body_rows)
+    min_body_diag_ratio = round(min_body_diag / frame0_bbox_diag, 4) if frame0_bbox_diag > 1e-6 else 1.0
+    env_vanished = bool(
+        total_tris >= 20000
+        and frame0_bbox_diag >= 0.5
+        and (
+            min_body_tris < max(12000, int(total_tris * 0.20))
+            or (min_body_diag_ratio < 0.20 and min_body_tris < int(total_tris * 0.50))
+        )
+    )
+else:
+    min_body_tris = total_tris
+    min_body_diag = frame0_bbox_diag
+    min_body_diag_ratio = 1.0
+    env_vanished = False
+
+body_scene_persistence = {
+    "sampled_frames": body_rows,
+    "frame0_triangles": total_tris,
+    "min_body_triangles": min_body_tris,
+    "frame0_bbox_diag": frame0_bbox_diag,
+    "min_body_bbox_diag": min_body_diag,
+    "min_body_bbox_ratio": min_body_diag_ratio,
+    "environment_vanished": env_vanished,
+}
+
 cam_cuts = []
 prev_cam = None
 prev_loc = None
 prev_dir = None
 prev_fr = f_start
+min_lens_mm = None
+max_lens_mm = None
+max_lens_frame = None
 step = max(1, int(round(fps_val / 6.0))) if dur_s > 0 else 1
 sample_frames = list(range(f_start, f_end + 1, step))
 if sample_frames and sample_frames[-1] != f_end:
@@ -229,6 +363,12 @@ for fr in sample_frames:
     cam_obj = scene.camera
     if cam_obj is None:
         continue
+    lens_mm = float(getattr(cam_obj.data, "lens", 50.0) or 50.0)
+    if min_lens_mm is None or lens_mm < min_lens_mm:
+        min_lens_mm = round(lens_mm, 2)
+    if max_lens_mm is None or lens_mm > max_lens_mm:
+        max_lens_mm = round(lens_mm, 2)
+        max_lens_frame = fr
     mw = cam_obj.matrix_world
     loc = mw.translation.copy()
     fwd = (mw.to_3x3() @ _Vec((0.0, 0.0, -1.0))).normalized()
@@ -251,6 +391,9 @@ camera_staging = {
     "hard_cut_count": len(cam_cuts),
     "hard_cut_times_s": cam_cuts,
     "longest_unbroken_shot_s": longest_shot_s,
+    "min_lens_mm": min_lens_mm,
+    "max_lens_mm": max_lens_mm,
+    "max_lens_frame": max_lens_frame,
 }
 
 stats = {
@@ -265,6 +408,9 @@ stats = {
     "has_active_rigidbody_world": has_active_rbw,
     "unpacked_external_images": unpacked_images,
     "missing_libraries": missing_libs,
+    "fake_backdrop_objects": list(fake_backdrops.values()),
+    "body_scene_persistence": body_scene_persistence,
+    "primitive_box_hero_objects": list(box_heroes.values()),
     "camera_staging": camera_staging,
     "color_management": {
         "display_device": getattr(ds, "display_device", None),
@@ -371,6 +517,40 @@ def evaluate_industrial_audit(
         })
 
     if profile == MODELING_PROFILE_HIGH_POLY:
+        fake_backdrops = list(stats.get("fake_backdrop_objects") or [])
+        if fake_backdrops:
+            blocking.append({
+                "code": "fake_backdrop_plane_detected",
+                "severity": "blocking",
+                "message": (
+                    f"{len(fake_backdrops)} flat studio/macro backdrop plane(s) detected (e.g. Stage_MacroBackdrop); "
+                    "keep the real-world environment and physical host visible in depth of field across in-situ cutaways."
+                ),
+                "items": fake_backdrops[:20],
+            })
+        body_persist = stats.get("body_scene_persistence") if isinstance(stats.get("body_scene_persistence"), dict) else None
+        if body_persist is not None and bool(body_persist.get("environment_vanished", False)):
+            blocking.append({
+                "code": "environment_vanished_mid_episode",
+                "severity": "blocking",
+                "message": (
+                    f"Real-world scene vanished during body frames (Frame 0: {body_persist.get('frame0_triangles')} tris, "
+                    f"bbox diag {body_persist.get('frame0_bbox_diag')} m -> body min: {body_persist.get('min_body_triangles')} tris, "
+                    f"bbox ratio {body_persist.get('min_body_bbox_ratio')}); keep the real room/host continuously visible."
+                ),
+                "items": body_persist.get("sampled_frames", []),
+            })
+        box_heroes = list(stats.get("primitive_box_hero_objects") or [])
+        if box_heroes:
+            blocking.append({
+                "code": "primitive_box_hero_detected",
+                "severity": "blocking",
+                "message": (
+                    f"{len(box_heroes)} curved/cast hero housing mesh(es) have >=75% surface area on <=6 flat planes "
+                    "(rectangular box substitute detected); replace with true sculpted curved/cast CAD silhouettes or open-licensed glTF."
+                ),
+                "items": box_heroes[:20],
+            })
         if total_tris < min_scene_triangles:
             warnings.append({
                 "code": "low_poly_scene",
@@ -446,6 +626,17 @@ def evaluate_industrial_audit(
                     "Bezier glide by staging >=3 distinct visual arenas/scales/comparisons with discrete hard cuts."
                 ),
             })
+        max_lens = cam_stage.get("max_lens_mm")
+        if profile == MODELING_PROFILE_HIGH_POLY and max_lens is not None and float(max_lens) > 75.0:
+            warnings.append({
+                "code": "extreme_blind_macro_lens",
+                "severity": "warning",
+                "message": (
+                    f"Camera focal length reaches {float(max_lens):.1f} mm (frame {cam_stage.get('max_lens_frame')}), "
+                    "exceeding the 28-60 mm causal storytelling ceiling (75 mm limit); pull back to keep driver, "
+                    "mechanism, outcome and recognizable host anchor readable together in one frame."
+                ),
+            })
 
     summary_out = {
         "frame": stats.get("frame"),
@@ -470,6 +661,8 @@ def evaluate_industrial_audit(
     }
     if cam_stage is not None:
         summary_out["camera_staging"] = cam_stage
+    if isinstance(stats.get("body_scene_persistence"), dict):
+        summary_out["body_scene_persistence"] = stats["body_scene_persistence"]
 
     return {
         "schema_version": 1,
@@ -956,6 +1149,15 @@ def _eval_remote_audit(stats, profile, min_tris, n_shards):
     if unapplied_uniform:
         warnings.append({{"code": "unapplied_uniform_scale", "severity": "warning", "message": f"{{len(unapplied_uniform)}} visible mesh(es) have unapplied uniform scale.", "items": unapplied_uniform[:20]}})
     if profile == "high_poly_industrial_v1":
+        fake_backdrops = list(stats.get("fake_backdrop_objects") or [])
+        if fake_backdrops:
+            blocking.append({{"code": "fake_backdrop_plane_detected", "severity": "blocking", "message": f"{{len(fake_backdrops)}} flat studio/macro backdrop plane(s) detected.", "items": fake_backdrops[:20]}})
+        body_persist = stats.get("body_scene_persistence") if isinstance(stats.get("body_scene_persistence"), dict) else None
+        if body_persist is not None and bool(body_persist.get("environment_vanished", False)):
+            blocking.append({{"code": "environment_vanished_mid_episode", "severity": "blocking", "message": "Real-world scene vanished during body frames.", "items": body_persist.get("sampled_frames", [])}})
+        box_heroes = list(stats.get("primitive_box_hero_objects") or [])
+        if box_heroes:
+            blocking.append({{"code": "primitive_box_hero_detected", "severity": "blocking", "message": f"{{len(box_heroes)}} rectangular box hero substitute(s) detected.", "items": box_heroes[:20]}})
         if total_tris < min_tris:
             warnings.append({{"code": "low_poly_scene", "severity": "warning", "message": f"Evaluated triangles ({{total_tris}}) below screening floor ({{min_tris}})."}})
         flat_curved = [m["name"] for m in meshes if int(m.get("polygon_count", 0)) >= 24 and float(m.get("smooth_face_ratio", 1.0)) == 0.0]
@@ -974,6 +1176,9 @@ def _eval_remote_audit(stats, profile, min_tris, n_shards):
         cam_longest = float(cam_stage.get("longest_unbroken_shot_s") or 0.0)
         if cam_dur >= 25.0 and (cam_cuts < 3 or cam_longest > 14.0):
             warnings.append({{"code": "hollow_single_stage_glide", "severity": "warning", "message": f"Timeline spans {{cam_dur:.1f}}s with {{cam_cuts}} hard cut(s) and {{cam_longest:.1f}}s longest shot; avoid hollow single-workbench Bezier glides."}})
+        max_lens = cam_stage.get("max_lens_mm")
+        if profile == "high_poly_industrial_v1" and max_lens is not None and float(max_lens) > 75.0:
+            warnings.append({{"code": "extreme_blind_macro_lens", "severity": "warning", "message": f"Camera focal length reaches {{float(max_lens):.1f}}mm (>75mm blind macro limit); pull back to 28-60mm causal framing."}})
     return {{
         "schema_version": 1,
         "profile": profile,

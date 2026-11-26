@@ -366,6 +366,38 @@ class ReferenceSystemTests(unittest.TestCase):
         )
         self.errors("high_poly_industrial_3d")
 
+    def test_v2_visual_first_and_anti_void_anti_box_gates_cannot_be_weakened(self):
+        for field, bad_val in (
+            ("workflow_order", "script_first"),
+            ("require_strict_audit_blend", False),
+            ("require_real_host_in_cutaways", False),
+            ("ban_void_backdrop_planes", False),
+            ("ban_primitive_box_hero_substitutes", False),
+            ("ban_blind_contextless_macro_slivers", False),
+            ("ban_legacy_episode_template_reuse", False),
+        ):
+            with self.subTest(field=field):
+                self.edit(
+                    "config/series-profile.json",
+                    lambda d, k=field, v=bad_val: d["video_generation"]["style_routing"]["three_d_animation"]["colab_3d_default"].update({k: v}),
+                )
+                self.errors("high_poly_industrial_3d")
+                # restore via ReferenceOverlay isolation on next subTest? No — edit persists inside same test method!
+                # Reset cleanly after each assertion:
+                self.edit(
+                    "config/series-profile.json",
+                    lambda d, k=field: d["video_generation"]["style_routing"]["three_d_animation"]["colab_3d_default"].update(
+                        {k: "silent_visual_causality_first" if k == "workflow_order" else True}
+                    ),
+                )
+
+    def test_lighting_background_value_cannot_restore_black_void_backdoor(self):
+        self.edit(
+            "config/series-profile.json",
+            lambda d: d["design"]["lighting_material_standard"].update(background_value="light_mid_dark_or_black_allowed"),
+        )
+        self.errors("ban flat void backdrops")
+
     def test_google_flow_route_isolation_excludes_moneyprinter_and_vork(self):
         skill = (self.root / "SKILL.md").read_text(encoding="utf-8")
         frontmatter = skill.split("---", 2)[1]

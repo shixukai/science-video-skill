@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.60",
-  "status": "working_baseline_v1",
+  "version": "2.0.0",
+  "status": "working_baseline_v2",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
     "id": "everyday-mechanism-visualization-v1",
@@ -30,7 +30,7 @@
     "scope_discipline": "Scope each unassigned feed episode tightly to one core visible contradiction and primary mechanism; let clear explanation determine duration without any mandatory floor or ceiling."
   },
   "design": {
-    "direction": "Route by finished style and commission: local realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), controlled 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit, and commissioned cloud production uses Google Flow with paired Chinese and English editions. Effective lighting makes the subject clear and bright, with readable volume/necessary shadows and layered highlights. Background may be light or dark; retain needed shadows and black levels. Render actual exposed finishes finely, with credible structures, scientific relationships and continuous action.",
+    "direction": "Visual-first science videos — never illustrated audiobooks. Route by finished style and commission: local realistic video uses MoneyPrinterTurbo (automatically adding supporting vork 3D/simulation passes when needed), controlled 3D animation uses Blender or vork selected automatically by the agent by mechanism, field/simulation and asset fit, and commissioned cloud production uses Google Flow with paired Chinese and English editions. Ground every episode in an authentic, bright, lived-in real-world environment and true physical host; use dark environments ONLY when the explained physical phenomenon genuinely occurs in darkness (never flat gray/black studio void backdrops). Render actual exposed finishes finely, with true sculpted silhouettes, causal context-preserving framing, scientific relationships and continuous action.",
     "design_board": "project_specific_board_based_on_selected_style",
     "design_board_scope": "record the actual current board version/hash and reviewed scope; palettes and art guides set direction only",
     "lighting_material_standard": {
@@ -44,9 +44,9 @@
       "material_identity_and_scientific_colors_preserved": true,
       "review": "existing_G3_and_G5_actual_media; statistics_and_parameters_do_not_approve_appearance",
       "palette_start_points": "../assets/style/bright-premium-palettes.json",
-      "composition": "specific_observation_target; color_roles; meaningful_depth; quiet_supporting_background; no_texture_or_bright_spot_competition",
+      "composition": "specific_observation_target; causal_context_preserving_framing_28_to_60mm; color_roles; meaningful_depth; authentic_real_world_environment_in_depth_of_field; no_texture_or_bright_spot_competition",
       "cleanliness": "diagnose_sampling_grain_fireflies_shader_texture_aliasing_denoise_and_encoding_separately; no_default_film_grain",
-      "background_value": "independent_design_choice; light_mid_dark_or_black_allowed; preserve_subject_form_action_and_material_readability",
+      "background_value": "authentic_real_world_environment_default; dark_only_when_phenomenon_requires_darkness; zero_flat_void_backdrops",
       "lighting": "shape_with_key_light; fill_only_needed_structure; control_spill_and_reflection_shapes; preserve_shadows_blacks_and_highlight_detail; no_background_or_global_exposure_brightness_substitute",
       "low_light_observation": "preserve_actual_scientific_observation_conditions; do_not_add_light_that_changes_the_explained_phenomenon"
     }
@@ -133,7 +133,14 @@
           "visual_style": "high_poly_industrial_3d",
           "modeling_standard": "high_poly_industrial_v1",
           "modeling_guide": "references/engineering-blender.md#high-poly-industrial-modeling-standard-for-colab-3d",
-          "visual_benchmark": "High-poly industrial 3D hardware and mechanical teardown caliber (Apple Keynote teardown / Branch Education / industrial CAD studio photography) across whole assemblies, cross-sectional cutaways, exploded views, macro mechanism close-ups and grounded industrial workbenches: verified open-source high-poly CAD + multi-part procedural CNC/lathe assemblies (>=64-segment hero cylinders, 96-128 macro hero rings, physical 0.15-0.8 mm machined chamfers / angle-limited bevels, WeightedNormal/EdgeSplit flat-face control, real wall thickness, 0.15-0.5 mm panel shadow gaps, applied uniform scale, authentic ISO fasteners/knurling/fittings); neural 3D (TRELLIS.2 --geometry-only / Hunyuan3D 2.1) reserved strictly for organic, crinkled, soft or matte props, never glossy machined metals or optical glass; distinct CNC brushed/anodized/cast/polymer/rubber PBR under studio softboxes + negative fill, true optical refraction with backlight visible_transmission=false and <=1 mm micro-optic force cues; deterministic baked Blender physics converted to quaternion F-curves for strided multi-shard Colab parity.",
+          "workflow_order": "silent_visual_causality_first",
+          "require_strict_audit_blend": true,
+          "require_real_host_in_cutaways": true,
+          "ban_void_backdrop_planes": true,
+          "ban_primitive_box_hero_substitutes": true,
+          "ban_blind_contextless_macro_slivers": true,
+          "ban_legacy_episode_template_reuse": true,
+          "visual_benchmark": "True high-poly industrial 3D teardown caliber grounded continuously in bright real-world spaces and recognizable hosts (Apple Keynote teardown / Branch Education / real automotive & mechanical CAD): import verified open-licensed high-poly glTF/CAD hosts FIRST (e.g. CarConcept.glb, Poly Haven CC0) + multi-part curved/cast/CNC sculpted mechanisms (>=64-segment hero cylinders, 96-128 hero rings, real 0.15-0.8 mm machined chamfers & 1-3 mm cast fillets, WeightedNormal/EdgeSplit, real wall thickness, 0.15-0.5 mm panel shadow gaps, applied uniform scale, authentic ISO fasteners/knurling/fittings; ZERO rectangular box substitutes for curved hardware); keep real-world rooms/hosts continuously visible in depth of field across in-situ cutaways (ZERO hidden environments or flat gray/black backdrop planes); frame driver + mechanism + outcome + host anchor together in 28-60 mm storytelling lenses (ZERO blind >75 mm 2 cm corner slivers); neural 3D (TRELLIS.2 --geometry-only / Hunyuan3D 2.1) strictly for organic/soft/matte props; distinct anodized/cast/machined/polymer/rubber PBR with backlight visible_transmission=false and phone-legible (>=1.5%-3% frame height) physical deformation & directional flow cues; deterministic quaternion-baked Blender physics for strided Colab parity.",
           "geometry_standards": {
             "hero_cylinder_min_segments": 64,
             "macro_hero_ring_segments": [96, 128],
@@ -147,7 +154,9 @@
             "require_applied_uniform_scale": true,
             "require_physical_wall_thickness": true,
             "require_weighted_normals_or_edge_split": true,
-            "scene_triangle_screening_floor": 25000,
+            "scene_triangle_screening_floor": 50000,
+            "storytelling_lens_mm_range": [28, 60],
+            "max_camera_lens_warning_mm": 75,
             "screening_is_not_visual_acceptance": true
           },
           "neural_3d_boundary": "organic_crinkled_soft_or_matte_props_only; never_glossy_cnc_metals_or_optical_glass",
@@ -157,7 +166,7 @@
             "denoising_input_passes": "RGB_ALBEDO_NORMAL",
             "strided_physics_mode": "baked_quaternion_fcurves_without_active_rigidbody_world"
           },
-          "preflight_requirement": "Synthesize real narration and timed captions.srt first, run local scripts/colab_cli.py audit-blend, render full-resolution 1920x1080 Colab preflight stills across every spoken beat via scripts/colab_cli.py blender-stills, and pass the 1-Second Layperson Pointing Test on the internal captioned beat board (scripts/build_visual_review.py beat-board) before dispatching full-sequence Colab GPU renders."
+          "preflight_requirement": "Visual-First order: (1) design the complete silent causal visual storyboard and lock real open-licensed 3D host silhouettes + sculpted high-poly CAD mechanism (zero void backdrops, zero box substitutes, zero legacy templates); (2) pass local scripts/colab_cli.py audit-blend --strict across Frame 0 + body frames; (3) render 1920x1080 Colab preflight stills across every beat via scripts/colab_cli.py blender-stills and pass a 100% muted <1 s recognition and principle check BEFORE locking narration; (4) synthesize lean continuous narration + timed captions.srt, run scripts/build_visual_review.py beat-board to pass the 1-Second Layperson Pointing Test on every beat, verify the 0-5 s hook sample, then dispatch full-sequence Colab GPU renders."
         },
         "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_controlled_3d_rendering",
         "guide": "references/engineering-blender.md"

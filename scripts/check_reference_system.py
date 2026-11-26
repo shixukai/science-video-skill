@@ -233,6 +233,9 @@ def check(root):
             json.loads(palettes_path.read_text(encoding="utf-8"))
         need(lms.get("material_identity_and_scientific_colors_preserved") is True,
              "style defaults must preserve science colors and material identity")
+        need("black_allowed" not in str(lms.get("background_value", "")).lower()
+             and "zero_flat_void_backdrops" in str(lms.get("background_value", "")).lower(),
+             "lighting_material_standard.background_value must enforce real-world environments and ban flat void backdrops")
         td_route = profile.get("video_generation", {}).get("style_routing", {}).get("three_d_animation", {})
         colab_3d = td_route.get("colab_3d_default", {})
         colab_geo = colab_3d.get("geometry_standards", {}) if isinstance(colab_3d, dict) else {}
@@ -244,6 +247,13 @@ def check(root):
              and colab_3d.get("modeling_standard") == "high_poly_industrial_v1"
              and colab_3d.get("modeling_guide") == "references/engineering-blender.md#high-poly-industrial-modeling-standard-for-colab-3d"
              and colab_3d.get("audit_command") == "scripts/colab_cli.py audit-blend"
+             and colab_3d.get("workflow_order") == "silent_visual_causality_first"
+             and colab_3d.get("require_strict_audit_blend") is True
+             and colab_3d.get("require_real_host_in_cutaways") is True
+             and colab_3d.get("ban_void_backdrop_planes") is True
+             and colab_3d.get("ban_primitive_box_hero_substitutes") is True
+             and colab_3d.get("ban_blind_contextless_macro_slivers") is True
+             and colab_3d.get("ban_legacy_episode_template_reuse") is True
              and isinstance(colab_geo, dict)
              and type(colab_geo.get("hero_cylinder_min_segments")) is int and colab_geo["hero_cylinder_min_segments"] >= 64
              and type(colab_geo.get("secondary_part_min_segments")) is int and colab_geo["secondary_part_min_segments"] >= 32
@@ -251,13 +261,13 @@ def check(root):
              and colab_geo.get("require_applied_uniform_scale") is True
              and colab_geo.get("require_physical_wall_thickness") is True
              and colab_geo.get("require_weighted_normals_or_edge_split") is True
-             and type(colab_geo.get("scene_triangle_screening_floor")) is int and colab_geo["scene_triangle_screening_floor"] >= 10000
+             and type(colab_geo.get("scene_triangle_screening_floor")) is int and colab_geo["scene_triangle_screening_floor"] >= 50000
              and colab_geo.get("screening_is_not_visual_acceptance") is True
              and isinstance(colab_cyc, dict)
              and type(colab_cyc.get("adaptive_threshold")) in (int, float) and 0 < colab_cyc["adaptive_threshold"] <= 0.02
              and colab_cyc.get("denoiser") == "OPENIMAGEDENOISE"
              and colab_cyc.get("denoising_input_passes") == "RGB_ALBEDO_NORMAL",
-             "colab_3d_default must lock high_poly_industrial_3d modeling standards, OIDN albedo/normal passes, and screening-only boundaries")
+             "colab_3d_default must lock high_poly_industrial_3d visual-first, real-host, anti-void/anti-box/anti-blind-macro, strict audit, OIDN albedo/normal passes, and screening-only boundaries")
         cloud_route = profile.get("video_generation", {}).get("cloud_route", {})
         gemini_cli = cloud_route.get("gemini_api_cli", {}) if isinstance(cloud_route, dict) else {}
         need(isinstance(cloud_route, dict)

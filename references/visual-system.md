@@ -4,7 +4,7 @@ This page owns visual craft, lighting/materials, disturbing-imagery safety, in-p
 
 ## Bright Style and Premium Materials
 
-Default to effective subject lighting that makes key forms bright, crisp, and finely finished while preserving true colors, readable dark structure, and controlled highlights. Choose background value independently (dark/black sets are valid; never equate "bright" with a white backdrop or lifted exposure). Use [art direction](art-direction.md) for color roles, light hierarchy, and noise diagnosis, and return review media via [verified local links](../SKILL.md#local-review-links-and-bandwidth-conservation).
+Default to bright, well-lit real-world environments and crisp industrial subject lighting that make key forms, silhouettes, and finely finished materials immediately readable while preserving true colors, grounded contact shadows, and controlled highlights. **Never substitute a flat gray cardboard wall or pitch-black studio void for a real everyday/industrial setting** (dark environments are allowed ONLY when the actual explained physical phenomenon occurs in darkness, such as nighttime headlights or astronomy). Use [art direction](art-direction.md) for color roles, light hierarchy, and noise diagnosis, and return review media via [verified local links](../SKILL.md#local-review-links-and-bandwidth-conservation).
 
 ### Industrial Product Studio Material Standard
 

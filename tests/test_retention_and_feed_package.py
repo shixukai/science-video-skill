@@ -24,7 +24,7 @@ FEED = POLICY["feed_package"]
 HAVE_FFMPEG = bool(shutil.which("ffmpeg") and shutil.which("ffprobe"))
 
 
-def episode(steps, promise=6.0, answer=52.0):
+def episode(steps, promise=6.0, answer=53.0):
     return {"topic_alignment": {
         "opening": {"viewing_promise": {"line": "答案藏在冰晶的空隙里。", "fulfilled_by_scope_id": "R2", "time_s": promise},
                     "payoff_steps": steps},

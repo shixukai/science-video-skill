@@ -574,6 +574,83 @@ class ColabCliTests(unittest.TestCase):
         self.assertFalse(any(w["code"] == "hollow_single_stage_glide" for w in res_multi["warnings"]))
         self.assertTrue(res_multi["strict_passed"])
 
+    def test_industrial_audit_blocks_fake_backdrops_vanished_env_box_heroes_and_warns_blind_macro(self):
+        stats = {
+            "frame": 0,
+            "mesh_object_count": 4,
+            "evaluated_polygon_count": 30000,
+            "evaluated_triangle_count": 60000,
+            "meshes": [{
+                "name": "Caliper_Hero_Housing",
+                "polygon_count": 30000,
+                "triangle_count": 60000,
+                "smooth_face_ratio": 0.9,
+                "modifiers": ["BEVEL", "WEIGHTED_NORMAL"],
+                "has_bevel": True,
+                "has_subsurf": False,
+                "has_weighted_normal": True,
+                "has_solidify": True,
+                "has_node_material": True,
+            }],
+            "non_uniform_scale_objects": [],
+            "unapplied_uniform_scale_objects": [],
+            "viewport_only_material_objects": [],
+            "has_active_rigidbody_world": False,
+            "unpacked_external_images": [],
+            "missing_libraries": [],
+            "fake_backdrop_objects": [{"name": "Stage_MacroBackdrop", "frame": 120, "triangle_count": 2}],
+            "body_scene_persistence": {
+                "sampled_frames": [{"frame": 240, "triangles": 4000, "bbox_diag": 0.4}],
+                "frame0_triangles": 60000,
+                "min_body_triangles": 4000,
+                "frame0_bbox_diag": 7.5,
+                "min_body_bbox_diag": 0.4,
+                "min_body_bbox_ratio": 0.0533,
+                "environment_vanished": True,
+            },
+            "primitive_box_hero_objects": [{"name": "Caliper_Hero_Housing", "frame": 0, "top6_planar_area_ratio": 0.94, "triangle_count": 108}],
+            "camera_staging": {
+                "fps": 30.0, "frame_start": 0, "frame_end": 1200,
+                "duration_s": 40.0, "hard_cut_count": 5, "hard_cut_times_s": [5.0, 12.0, 20.0, 28.0, 35.0],
+                "longest_unbroken_shot_s": 8.0,
+                "min_lens_mm": 35.0, "max_lens_mm": 95.0, "max_lens_frame": 420,
+            },
+        }
+        res = colab_cli.evaluate_industrial_audit(stats)
+        self.assertFalse(res["passed"])
+        self.assertFalse(res["strict_passed"])
+        blocking_codes = {item["code"] for item in res["blocking_issues"]}
+        warning_codes = {item["code"] for item in res["warnings"]}
+        self.assertEqual(
+            blocking_codes,
+            {
+                "fake_backdrop_plane_detected",
+                "environment_vanished_mid_episode",
+                "primitive_box_hero_detected",
+            },
+        )
+        self.assertIn("extreme_blind_macro_lens", warning_codes)
+
+        # Clean real-world persistent scene with 45 mm lens passes strictly
+        clean = dict(
+            stats,
+            fake_backdrop_objects=[],
+            body_scene_persistence={
+                "sampled_frames": [{"frame": 240, "triangles": 58000, "bbox_diag": 7.4}],
+                "frame0_triangles": 60000,
+                "min_body_triangles": 58000,
+                "frame0_bbox_diag": 7.5,
+                "min_body_bbox_diag": 7.4,
+                "min_body_bbox_ratio": 0.9867,
+                "environment_vanished": False,
+            },
+            primitive_box_hero_objects=[],
+            camera_staging=dict(stats["camera_staging"], max_lens_mm=50.0),
+        )
+        res_clean = colab_cli.evaluate_industrial_audit(clean)
+        self.assertTrue(res_clean["passed"])
+        self.assertTrue(res_clean["strict_passed"])
+
     def test_blender_stills_dry_run_and_frame_spec_parser(self):
         parsed = colab_cli.parse_still_frames_spec("01_hook:16, 02_shatter:84, 200")
         self.assertEqual(parsed, [("01_hook_f0016", 16), ("02_shatter_f0084", 84), ("frame_0200", 200)])
