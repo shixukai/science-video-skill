@@ -81,7 +81,8 @@
         "analogy-to-mechanism-mapping",
         "parallel-process-handoff-and-cycle-editing",
         "platform-entry-intent-payoff-diagnosis",
-        "review-to-next-production-change"
+        "review-to-next-production-change",
+        "two-part-mental-model-and-referent-lock"
       ],
       "supporting_files": [
         "references/viewer-retention-design.md"
@@ -112,7 +113,8 @@
         "bright-style-and-material-finish",
         "color-depth-and-clean-render-art-direction",
         "necessary-spatial-3d-body-typography",
-        "general-3d-material-rendering"
+        "general-3d-material-rendering",
+        "non-text-visual-pointing-and-widescreen-framing"
       ],
       "supporting_files": [
         "references/animation-scene-design.md",
@@ -164,7 +166,8 @@
         "subject-motion-continuity",
         "user-feedback-dimension-isolation",
         "internal-engagement-review",
-        "full-hd-render-and-delivery"
+        "full-hd-render-and-delivery",
+        "anti-metric-gaming-and-human-comprehension-p1-blockers"
       ]
     },
     {
@@ -198,7 +201,8 @@
         "exploded-view-and-cutaway-selection",
         "character-rigging-mocap-and-lipsync",
         "complete-cycle-animation-repair",
-        "colab-high-poly-industrial-modeling"
+        "colab-high-poly-industrial-modeling",
+        "pre-render-captioned-beat-board-review"
       ],
       "supporting_files": [
         "references/blender-execution.md"

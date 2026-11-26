@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "bright-nature-series",
-  "version": "1.6.52",
+  "version": "1.6.60",
   "status": "working_baseline_v1",
   "adoption_scope": "Guidance and implementation defaults; not media, motion, science, platform or publication approval.",
   "editorial_positioning": {
@@ -157,7 +157,7 @@
             "denoising_input_passes": "RGB_ALBEDO_NORMAL",
             "strided_physics_mode": "baked_quaternion_fcurves_without_active_rigidbody_world"
           },
-          "preflight_requirement": "Run local scripts/colab_cli.py audit-blend and inspect full-resolution 1920x1080 hero preflight stills across every beat locally before dispatching packed .blend jobs via Colab CLI."
+          "preflight_requirement": "Synthesize real narration and timed captions.srt first, run local scripts/colab_cli.py audit-blend, render full-resolution 1920x1080 Colab preflight stills across every spoken beat via scripts/colab_cli.py blender-stills, and pass the 1-Second Layperson Pointing Test on the internal captioned beat board (scripts/build_visual_review.py beat-board) before dispatching full-sequence Colab GPU renders."
         },
         "postproduction": "existing_audio_caption_mix_encode_tools; not_a_replacement_for_controlled_3d_rendering",
         "guide": "references/engineering-blender.md"
@@ -175,7 +175,7 @@
     "rate": "+4%",
     "pitch": "+0Hz",
     "volume": "+0%",
-    "instruct": "用自然、温和、平视交流的中文口语，像站在朋友身边聊一件日常里很有意思的现象那样从容讲述。画面负责演发生了什么，旁白负责讲为什么反常、内部受力与临界代价，绝不“看图说话”复述表层画面；先立常理再破反差（用“按理说……可……”与生活体感切入替代抬杠式“你以为”），前8秒钩子与观看承诺同段连合、抛线索绝不提前剧透谜底，8–15秒直入首个实测动作，严禁静态“主要由三部分组成”式构造盘点；用“于是/可问题是/光靠这一步还不够”的因果递进、0.5秒温和脑内预判与连锁难题推进节奏，每句最多推进一个新实体或带体感参照的数字、先演物理现象再落专业术语，以长短句交替和揭示前自然停顿带出好奇韵律；让画面自然切入剖面或微距，旁白顺着观众的因果好奇往下讲，严禁“顺着截面往里看”“切开截面”“剖开就能看到”“放大这个小切口”“把镜头拉近”等突兀的旁白镜头指令，也不堆砌“此外/另外/与此同时”式百科罗列或“其实原理很简单/揭开秘密”式剧透空话；结尾严禁“总结一下/所以说到底/这就是为什么”等提前收尾信号词，最后一句直接落到改变日常眼光的认知翻转上干净收口；不逐字念稿、不端播音腔或说明书腔、不压缩成生硬电报短句，也不争辩、不质问、不命令说教、不用粗暴夸张措辞，严禁“里面既没插电也没装传感器”“既没插电也没装电机/芯片”等套路化伪悬念废话，严禁“凭什么”“凭啥”“偏要”“别傻了”等挑衅或硬邦邦的反问与营销号反差腔、生造缩略词、对称排比或口号式收尾。",
+    "instruct": "用自然、温和、平视交流的中文口语，像站在朋友身边聊一件日常里很有意思的现象那样从容讲述。画面负责演发生了什么，旁白负责讲为什么反常、内部受力与临界代价，绝不“看图说话”复述表层画面；拆解复杂内部机械前先用大白话定清“谁不动、谁在动”的两部分心智模型和日常直觉基准，每句提到的部件、动作与受力必须与当前画面一一指代锁定、一眼能指出来，严禁自说自话；先立常理再破反差（用“按理说……可……”与生活体感切入替代抬杠式“你以为”），前8秒钩子与观看承诺同段连合、抛线索绝不提前剧透谜底，8–15秒直入首个实测动作，严禁静态“主要由三部分组成”式构造盘点；用“于是/可问题是/光靠这一步还不够”的因果递进、0.5秒温和脑内预判与连锁难题推进节奏，每句最多推进一个新实体或带体感参照的数字、先演物理现象再落专业术语，以长短句交替和揭示前自然停顿带出好奇韵律；让画面自然切入剖面或微距，旁白顺着观众的因果好奇往下讲，严禁“顺着截面往里看”“切开截面”“剖开就能看到”“放大这个小切口”“把镜头拉近”等突兀的旁白镜头指令，也不堆砌“此外/另外/与此同时”式百科罗列或“其实原理很简单/揭开秘密”式剧透空话；结尾严禁“总结一下/所以说到底/这就是为什么”等提前收尾信号词，最后一句直接落到改变日常眼光的认知翻转上干净收口；不逐字念稿、不端播音腔或说明书腔、不压缩成生硬电报短句，也不争辩、不质问、不命令说教、不用粗暴夸张措辞，严禁“里面既没插电也没装传感器”“既没插电也没装电机/芯片”等套路化伪悬念废话，严禁“凭什么”“凭啥”“偏要”“别傻了”等挑衅或硬邦邦的反问与营销号反差腔、生造缩略词、对称排比或口号式收尾。",
     "runtime_parameters": "Default Mandarin across all routes: local IndexTTS-2.5 voice clone (IndexTeam/IndexTTS-2.5, duration_factor=1.0, interval_silence=220, paragraph_silence_s=0.55, use_emo_text=false) via scripts/synthesize_indextts2.py + #5 whole-track speech polish (mandarin-clone-polish-v1) via scripts/prepare_voice_master.py --polish; Microsoft Edge edge-tts handles paired English (en-US-AndrewMultilingualNeural +4%) and cloud Mandarin fallback (zh-CN-YunxiNeural +4%) via scripts/synthesize_edge_tts.py.",
     "reuse_matching_audio": true,
     "backend": "local_indextts2",

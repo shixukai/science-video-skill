@@ -150,11 +150,12 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "35f110bf6bad381985e6a026ae4b969dcef7280cc2091e06d8740228fb2554ef",
+      "sha256": "6218eaf161bf70c609a4dcc21374fc85aacb0f5afcb52d0562d8497eb2c781db",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
         "frame-knowledge-as-problem-solving-or-story-never-a-lecture",
+        "explain-like-a-human-two-part-mental-model-and-strict-referent-lock",
         "establish-context-and-a-reason-to-watch-before-explaining",
         "orient-the-viewer-before-introducing-a-detail",
         "make-opening-pictures-deliver-the-application-context",
@@ -218,11 +219,12 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "a74b9d61ebb63827917621579000d9b59638030bdc0993f3af0ada10d3ca0219",
+      "sha256": "c7a868cba07deb16fc729eb5f4f29e689afa191e4d79bafab67f6b5399680137",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
         "beat-by-beat-visual-density-never-let-the-body-go-hollow-after-second-5",
+        "non-text-visual-pointing-grammar-and-widescreen-aspect-ratio-framing",
         "distinguish-missing-from-insufficiently-visible",
         "work-order-action-intent-before-detailed-art",
         "distinguish-holds-from-sustained-contact-before-hand-editing-curves",
@@ -275,7 +277,7 @@
     {
       "owner_id": "visual",
       "file": "references/spatial-typography.md",
-      "sha256": "8d5880a042ebba48c79bf12de50e6468acd031de32b3f017ddb127e428ecacfc",
+      "sha256": "120a3a7b8c331f574c8b670ca3f867ee8d43721874b2e88d497c9070f7649ece",
       "anchors": [
         "letter-markers-only-in-3d-picture",
         "scope-and-prohibition",
@@ -305,7 +307,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "3118df0b90d1fac35cb047a05355eb9da5ef0f93736ba5862da1a3b7723c50e7",
+      "sha256": "d2f9576412b05722b8146752ec5f937acf202301daf1ba1d53e289d1bdf5eb9f",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -346,7 +348,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "2bd632f1294cd021083320670dd4674c90c4db6c86167f34192b4171cadfe7a2",
+      "sha256": "ceb9c9cb3738fdaf42631aa30f751571c6cc0afc7ddde5fd2144d9b54bf7c367",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -363,6 +365,7 @@
         "handling-failures",
         "register-user-feedback-item-by-item-and-keep-dimensions-separate",
         "full-quality-diagnostic-scores-and-internal-explanation-review",
+        "anti-metric-gaming-principle-and-human-comprehension-p1-blockers",
         "using-stage-evidence-checks-and-their-limits",
         "levels-of-fine-finish-and-itemized-evidence",
         "stage-evidence-for-art-methods",
@@ -438,13 +441,14 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "3934a7c2d4aefb652673d27fae0ac48a8bb2d1c4e401ba49863cc1396179e671",
+      "sha256": "6ae186669b2e7476f22f1c1c9a13300851d2a6e437987bb8bd2c5e69d68d1a0c",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
         "recognize-the-actual-object-before-explaining-its-interior",
         "high-poly-industrial-modeling-standard-for-colab-3d",
         "real-life-grounded-provenance-draw-scenes-from-real-life-never-imaginary-void-sets",
+        "mandatory-captioned-sentence-to-keyframe-beat-review-before-full-colab-render",
         "physical-state-integrity-f-curve-semantics-and-pre-colab-numerical-audit",
         "prevent-high-poly-emptiness-multi-stage-visual-density-and-shot-choreography",
         "cinema-grade-blender-visual-richness-replicating-live-action-magnetism-in-cycles",
