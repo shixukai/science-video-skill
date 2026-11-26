@@ -319,6 +319,21 @@ class VoiceSegmentTests(unittest.TestCase):
         errors_ok, _ = checks.check(packet, self.root, "plan")
         self.assertFalse(any(e.startswith("narration:") for e in errors_ok), errors_ok)
 
+        # (c1b) Continuous gemini-api-cli (Gemini 3.8 Flash TTS) + scripts/gemini_api_cli.py postprocess also passes
+        packet, record = self.cloud_single_packet("Chinese")
+        packet["narration"]["execution"]["location"] = "https://generativelanguage.googleapis.com/v1beta/interactions"
+        record["execution"]["location"] = "https://generativelanguage.googleapis.com/v1beta/interactions"
+        record.update(provider="Google Gemini API", backend="gemini-api-cli", model_id="gemini-3.8-flash-tts")
+        packet["narration"]["generation_record"] = self.write_json("gemini-cli-zh.json", record)
+        post_cli = {
+            "schema_version": 1, "status": "processed",
+            "source": self.ref("assembled.wav"), "output": self.ref("assembled.wav"),
+            "steps": [{"tool": "scripts/gemini_api_cli.py", "version": "1.6.59", "parameters": {"action": "tts"}}],
+        }
+        packet["narration"]["postprocess_record"] = self.write_json("gemini-cli-post.json", post_cli)
+        errors_cli, _ = checks.check(packet, self.root, "plan")
+        self.assertFalse(any(e.startswith("narration:") for e in errors_cli), errors_cli)
+
         # (c2) Local synthesize_voice/Qwen tool in postprocess_record is still rejected
         post_bad = {
             "schema_version": 1, "status": "processed",

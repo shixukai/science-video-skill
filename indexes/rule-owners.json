@@ -51,6 +51,7 @@
       "file": "references/google-flow-production.md",
       "owns": [
         "google-flow-cloud-generation",
+        "gemini-api-cli-cloud-execution",
         "flow-mechanism-coverage-and-explanation-led-timing",
         "bilingual-clip-budget-and-24fps-cadence",
         "serial-1080p-upscaled-staging",

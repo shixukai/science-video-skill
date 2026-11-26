@@ -75,7 +75,7 @@ This entry governs assembled stage media (`roughcut`, `sample`, `full`). Interme
   - `roughcut` (`execution.roughcut_receipt`, `contract_version=2`): full voiced rough cut after G1; apply [moving animatics](quality-acceptance.md#moving-animatics-and-user-review) before user review.
   - `sample` (`execution.sample_receipt`): high-risk representative segment (for feed films, first build the 0–5 s [hook sample](viral-appeal-and-packaging.md#produce-and-test-the-hook-first), measured via `opening_hook.py` and cold-tested before G3 expansion).
   - `full` (`execution.full_receipt`): requires current G3 pass, matching style comparison, and zero blocking failures across all episode shots.
-- **Google Flow route:** Follow [Google Flow production](google-flow-production.md) directly (disk prompt ledger, `1080p Upscaled`, `24 fps` CFR, paired `zh`/`en` records, IndexTTS-2.5 `#5` Mandarin clone / Edge English whole-track mastering, `google_flow_audit.py` + `check_episode.py` on both sibling editions).
+- **Google Flow route:** Follow [Google Flow production](google-flow-production.md) directly (`gemini_api_cli` via `scripts/gemini_api_cli.py` or `google_flow_web`, disk prompt ledger, `>= 1080p` / `1080p Upscaled`, `24 fps` CFR, paired `zh`/`en` records, IndexTTS-2.5 `#5` Mandarin clone / Edge English whole-track mastering, `google_flow_audit.py` + `check_episode.py` on both sibling editions).
 - **Failure discipline:** Diagnose concrete causes before rerunning; never blindly repeat identical failing runs or invent unsupported wrapper gates.
 
 ## 5. Sole entry for quality judgments

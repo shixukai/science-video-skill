@@ -143,11 +143,17 @@ def _is_google_flow_tool(tool_val):
         "google_ai_studio",
         "google ai studio",
         "gemini_tts",
+        "gemini-api",
+        "gemini_api",
+        "gemini-api-cli",
+        "gemini_api_cli",
+        "gemini_api_cli.py",
+        "scripts/gemini_api_cli.py",
         "ffmpeg",
         "prepare_voice_master",
         "prepare_voice_master.py",
         "scripts/prepare_voice_master.py",
-    ) or stem in ("indextts2", "synthesize_indextts2", "edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
+    ) or stem in ("indextts2", "synthesize_indextts2", "edge-tts", "synthesize_edge_tts", "gemini-api", "gemini_api_cli", "ffmpeg", "prepare_voice_master"):
         return True
     return _is_google_flow_url(raw)
 
@@ -225,10 +231,10 @@ def check_cloud_voice_generation(generated, need, evidence, label, language):
     provider = generated.get("provider")
     bad_backend = any(tok in backend.lower() for tok in ("local", "qwen", "os_tts"))
     need(generated.get("schema_version") == 1 and generated.get("status") == "generated"
-         and provider in ("Microsoft Edge", "Google Flow", "Google AI Studio", "Google")
+         and provider in ("Microsoft Edge", "Google Flow", "Google AI Studio", "Google Gemini API", "Google")
          and substantive(backend) and not bad_backend
          and substantive(generated.get("model_id")),
-         label + " actual edge-tts (Microsoft Edge), Google AI Studio, or Google Flow voice synthesis provider/backend/model required")
+         label + " actual edge-tts (Microsoft Edge), Google AI Studio, Google Gemini API, or Google Flow voice synthesis provider/backend/model required")
     voice = generated.get("voice")
     need(isinstance(voice, dict) and language is not None and voice.get("language") == language,
          label + " cloud voice language must match the narration version")

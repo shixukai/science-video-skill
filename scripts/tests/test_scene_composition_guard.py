@@ -204,6 +204,19 @@ class SceneCompositionTests(unittest.TestCase):
         self.assertEqual({s["file"] for s in registry["sections"] if s["file"].startswith("references/")},
                          {p.relative_to(root).as_posix() for p in (root / "references").glob("*.md")})
 
+    def test_physical_state_and_resilient_colab_rules_codified(self):
+        root = Path(motion.__file__).resolve().parents[1]
+        eng = (root / "references/engineering-blender.md").read_text(encoding="utf-8")
+        bex = (root / "references/blender-execution.md").read_text(encoding="utf-8")
+        qa = (root / "references/quality-acceptance.md").read_text(encoding="utf-8")
+        self.assertIn("Physical-State Integrity, F-Curve Semantics and Pre-Colab Numerical Audit", eng)
+        self.assertIn("hide_render = True", eng)
+        self.assertIn('interp="CONSTANT"', eng)
+        self.assertIn("Resilient Colab execution, chunked transfer and frame-exact patch splicing", bex)
+        self.assertIn("nohup", bex)
+        self.assertIn("trim=start_frame=A:end_frame=B", bex)
+        self.assertIn("2×2 chronological 4-panel motion-transition contact strip", qa)
+
 
 if __name__ == "__main__":
     unittest.main()

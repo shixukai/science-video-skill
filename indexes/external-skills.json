@@ -2,10 +2,10 @@
   "schema_version": 1,
   "catalog": "external_skills",
   "version": "2.0.0",
-  "checked_at": "2026-11-23",
+  "checked_at": "2026-11-25",
   "timezone": "Asia/Shanghai",
   "purpose": "Scoped external source/function/license references; not an install list, current runtime inventory or independent production authority.",
-  "entry_count": 6,
+  "entry_count": 7,
   "copied_reference_count": 0,
   "policy": {
     "no_global_install_from_reference_curation_alone": true,
@@ -573,6 +573,99 @@
       "execution": {
         "routing_reference": "references/tool-routing.md#colab-cli-and-remote-gpu-integration",
         "skill_path": "skills/colab-operator",
+        "source_relation": "primary_repository_verified",
+        "installation_required": true
+      }
+    },
+    {
+      "id": "google-gemini-api-cli",
+      "repository": "https://github.com/google-gemini/gemini-api-cli",
+      "commit": "8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3",
+      "review_scope": "repository metadata, LICENSE, README.md, model catalog and video/image/music/tts command implementations at pinned commit; no live billable API request executed during Skill maintenance",
+      "classification": "complementary_runtime_cli",
+      "production_stages": [
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "adopt": "Headless, stateless Gemini Interactions API CLI for the google_flow cloud route: 1080p/4k video generation and multi-turn editing (gemini-omni-1.2-flash with -i/--input conditioning, --previous-interaction-id, --async/--resume, and --dry-run), 2K text-free keyframes and cover art (gemini-nano-banana-2.1), Files API >14 MB media uploads, optional ducked BGM stems (lyria-3.5), optional cloud TTS (gemini-3.8-flash-tts), and bounded multimodal transcription/inspection",
+      "limitations": "Beta CLI evolving alongside the Gemini Interactions API (pin releases in automated pipelines). Upstream `gemini-api video` defaults to 720p unless `--resolution 1080p` (or `4k`) is passed explicitly; formal google_flow clips must enforce >= 1080p via `scripts/gemini_api_cli.py`. Local inline inputs are capped under 20 MiB base64 (~14 MB raw) and require `files upload --wait` (48 h retention) above that threshold. Interactive `configure --interactive`, `auth login`, and `explore` must not be called by non-interactive agents. Billable API usage requires user credentials (`GEMINI_API_KEY` or configured auth) and explicit task authorization; Veo 3.1 web-only controls still route to Google Flow Web UI.",
+      "license": {
+        "classification": "Apache-2.0",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/LICENSE",
+            "sha256": "fea26e329e7dd773fbee25b903a6fcdd6a38d689f7983b62592cbd470a004450",
+            "bytes": 11355,
+            "local_copy": null
+          }
+        ],
+        "metadata_spdx": "Apache-2.0",
+        "repository_tree_complete": true
+      },
+      "source_files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/LICENSE",
+          "sha256": "fea26e329e7dd773fbee25b903a6fcdd6a38d689f7983b62592cbd470a004450",
+          "bytes": 11355,
+          "local_copy": null
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/README.md",
+          "sha256": "9862f4dc84fb9a5c459e887d800d204e43a0b8330d576581d0307e5138a7a24a",
+          "bytes": 19491,
+          "local_copy": null
+        },
+        {
+          "path": "internal/cli/catalog.go",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/internal/cli/catalog.go",
+          "sha256": "ed45a3a84df03b8723038d3adb5e2556a6d9551caeaf94a64890c3537046da0b",
+          "bytes": 16940,
+          "local_copy": null
+        },
+        {
+          "path": "internal/cli/agent/intent_video.go",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/internal/cli/agent/intent_video.go",
+          "sha256": "dc5b4c2d3c66f71de2673a3678271a2e2e792557453861b7a44e8570e14a7cc6",
+          "bytes": 14009,
+          "local_copy": null
+        },
+        {
+          "path": "internal/cli/agent/intent_image.go",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/internal/cli/agent/intent_image.go",
+          "sha256": "7b213fd6791fa2888c3979d7e7f61f04ba497a30e39706b9e24c5a931057fd84",
+          "bytes": 14642,
+          "local_copy": null
+        },
+        {
+          "path": "internal/cli/agent/intent_music.go",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/internal/cli/agent/intent_music.go",
+          "sha256": "499bd575996905826a52131af39f7742296e52a9b0724292b1fea73f34470939",
+          "bytes": 10523,
+          "local_copy": null
+        },
+        {
+          "path": "internal/cli/custom/tts.go",
+          "url": "https://raw.githubusercontent.com/google-gemini/gemini-api-cli/8c8dd8d4dad2001aea6da022cf7c3b403d3dccc3/internal/cli/custom/tts.go",
+          "sha256": "49f3af28b0b68662cf7aa7aba06248abb1fdb18b5c3903ef614e9ca3ef9d52d9",
+          "bytes": 25870,
+          "local_copy": null
+        }
+      ],
+      "runtime": {
+        "engine": "gemini-api-cli (gemini-api)",
+        "license_classification": "Apache-2.0_CLI_plus_Gemini_API_Terms_of_Service",
+        "primary_reference": "https://github.com/google-gemini/gemini-api-cli",
+        "validation_status": "source_and_docs_verified_runtime_checked_per_host"
+      },
+      "data_transfer_and_cost": "Calls billable Gemini Interactions API endpoints over HTTPS and uploads only explicit active-shot conditioning assets (>14 MB via Files API 48h TTL); requires explicit user API key/auth and task authorization, --dry-run payload validation, and minimal outbound transfer.",
+      "media_quality_validation": "cli_generation_completion_is_not_science_motion_or_audiovisual_acceptance",
+      "checked_at": "2026-11-25",
+      "execution": {
+        "routing_reference": "references/google-flow-production.md#gemini-api-cli-headless-cloud-execution",
         "source_relation": "primary_repository_verified",
         "installation_required": true
       }

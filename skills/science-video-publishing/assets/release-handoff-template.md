@@ -6,7 +6,9 @@
 - **9:16 Feed Package (`-feed916`) Path & SHA-256** (Douyin composer group):
 - **Covers (`3:4` / `4:3` / `16:9` / `1:1`) Paths & SHA-256**:
 - **Final Title (`<= 30` codepoints)**:
-- **Final Description & Tags (`<= 1000` codepoints, `#科普` included, zero production credits/mentions)**:
+- **Final Description & Tags (`<= 1000` codepoints, `#科普` included, lines 1–2 non-spoiling, optional extension question / teaser below line 2, zero production credits/mentions)**:
+- **Pinned Comment (`置顶评论`, required for feed releases — 1 concrete experience extension question, same-collection next-episode teaser, or bonus everyday tip; kept off the video tail to protect completion rate)**:
+- **Creative Tags (for later retrospective comparison)**: `hook.pattern` / `narrative_frame` / dominant emotional payoff / timing tie-in / title search words
 
 ## 2. Destination Controls Checked Pre-Submit
 - **Douyin Creator Center**:

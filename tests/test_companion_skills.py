@@ -70,6 +70,20 @@ class CompanionSkillsContractTests(unittest.TestCase):
         pub_md = (ROOT / "skills/science-video-publishing/SKILL.src.md").read_text(encoding="utf-8")
         self.assertIn("Xiaohongshu (user-operated composer handoff, 16:9 landscape video)", pub_md)
         self.assertIn("NOT `-feed916.mp4`", pub_md)
+        self.assertIn("pinned comment (`置顶评论`)", pub_md)
+        topic_md = (ROOT / "skills/science-video-topic-selection/SKILL.src.md").read_text(encoding="utf-8")
+        self.assertIn("everyday_pain_point", topic_md)
+        self.assertIn("overlooked_detail", topic_md)
+        self.assertIn("narrative_frame", topic_md)
+        self.assertIn("Audience pull check", topic_md)
+        self.assertIn("Title–cover division of labor", topic_md)
+        self.assertIn("Search findability & creative tags", pub_md)
+        retro = (ROOT / "skills/science-video-publishing/references/platform-retrospective.md").read_text(encoding="utf-8")
+        self.assertIn("Compare creative patterns across episodes", retro)
+        viral = (ROOT / "references/viral-appeal-and-packaging.md").read_text(encoding="utf-8")
+        self.assertIn("## Engineer the emotional payoff, aha frame and share triggers", viral)
+        self.assertIn("Loop-friendly last frame", viral)
+        self.assertIn("<= 3.5 s", viral)
 
     def test_sync_install_check_and_backup_in_temp_home(self):
         with tempfile.TemporaryDirectory() as tmp:

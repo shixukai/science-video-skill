@@ -258,6 +258,18 @@ def check(root):
              and colab_cyc.get("denoiser") == "OPENIMAGEDENOISE"
              and colab_cyc.get("denoising_input_passes") == "RGB_ALBEDO_NORMAL",
              "colab_3d_default must lock high_poly_industrial_3d modeling standards, OIDN albedo/normal passes, and screening-only boundaries")
+        cloud_route = profile.get("video_generation", {}).get("cloud_route", {})
+        gemini_cli = cloud_route.get("gemini_api_cli", {}) if isinstance(cloud_route, dict) else {}
+        need(isinstance(cloud_route, dict)
+             and {"gemini_api_cli", "google_flow_web"} <= set(cloud_route.get("execution_modes", []))
+             and isinstance(gemini_cli, dict)
+             and gemini_cli.get("source_id") == "google-gemini-api-cli"
+             and gemini_cli.get("cli_binary") == "gemini-api"
+             and gemini_cli.get("cli_helper") == "scripts/gemini_api_cli.py"
+             and (root / "scripts/gemini_api_cli.py").is_file()
+             and gemini_cli.get("default_video_resolution") in ("1080p", "4k")
+             and gemini_cli.get("guide") == "references/google-flow-production.md#gemini-api-cli-headless-cloud-execution",
+             "google_flow cloud_route must bind gemini_api_cli helper, >=1080p video resolution default, and canonical handbook anchor")
 
         policy = read("config/production-policy.json")
         audience = policy["audience_text"]

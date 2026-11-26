@@ -327,9 +327,14 @@ class Renderer:
                 + topic
             )
         for text, font in [(topic, self.topic_font)] + [(line, self.question_font) for line in question_lines]:
-            if re.search(r"凭什么|凭啥", text):
+            if re.search(
+                r"凭什么|凭啥|"
+                r"既?[没不]有?(?:插电|通电|接电|带电|接电源|用电|电线)[，,、\s]*(?:也|又)?[没不]有?(?:装|带|接|连|配|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑|电子|探头|雷达|开关|遮光)|"
+                r"既?[没不]有?(?:装|带|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑)[，,、\s]*(?:也|又)?[没不]有?(?:插电|通电|接电|带电|用电|电线)",
+                text,
+            ):
                 raise ValueError(
-                    "banned confrontational interrogative ('凭什么'/'凭啥') is forbidden in vertical-feed headers; "
+                    "banned confrontational interrogative or 'no-power/no-sensor' cliché is forbidden in vertical-feed headers; "
                     "rewrite in calm everyday Chinese: " + text
                 )
             if self.width(text, font) > h["max_width"]:

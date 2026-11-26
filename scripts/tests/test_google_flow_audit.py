@@ -605,6 +605,65 @@ class GoogleFlowAuditTests(unittest.TestCase):
         self.assertIn("premature_ending_signal_en", en_flag["reasons"])
         self.assertIn("additive_list_transition_density_en", en_flag["reasons"])
 
+    def test_allows_gemini_api_cli_cloud_tts_and_postprocess_tools(self) -> None:
+        zh_vid, en_vid, ep_zh, ep_en, _, _ = self._build_clean_project()
+        ep_zh_data = json.loads(ep_zh.read_text(encoding="utf-8"))
+        ep_en_data = json.loads(ep_en.read_text(encoding="utf-8"))
+
+        gem_gen_zh = self.root / "gemini_cli_gen_zh.json"
+        write_json(
+            gem_gen_zh,
+            {
+                "provider": "Google Gemini API",
+                "backend": "gemini-api-cli",
+                "model_id": "gemini-3.8-flash-tts",
+                "voice": {"speaker": "Kore", "language": "Chinese"},
+            },
+        )
+        gem_post_zh = self.root / "gemini_cli_post_zh.json"
+        write_json(
+            gem_post_zh,
+            {"steps": [{"tool": "scripts/gemini_api_cli.py"}, {"tool": "prepare_voice_master.py"}, {"tool": "ffmpeg"}]},
+        )
+        ep_zh_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "service",
+            "location": "https://generativelanguage.googleapis.com/v1beta/interactions",
+        }
+        ep_zh_data["narration"]["generation_record"] = {"file": "gemini_cli_gen_zh.json"}
+        ep_zh_data["narration"]["postprocess_record"] = {"file": "gemini_cli_post_zh.json"}
+        write_json(ep_zh, ep_zh_data)
+
+        gem_gen_en = self.root / "gemini_cli_gen_en.json"
+        write_json(
+            gem_gen_en,
+            {
+                "provider": "Google",
+                "backend": "gemini-api-cli",
+                "model_id": "gemini-3.8-flash-tts",
+                "voice": {"speaker": "Kore", "language": "English"},
+            },
+        )
+        gem_post_en = self.root / "gemini_cli_post_en.json"
+        write_json(gem_post_en, {"steps": [{"tool": "gemini-api"}, {"tool": "ffmpeg"}]})
+        ep_en_data["narration"]["execution"] = {
+            "status": "confirmed",
+            "mode": "service",
+            "location": "https://generativelanguage.googleapis.com/v1beta/interactions",
+        }
+        ep_en_data["narration"]["generation_record"] = {"file": "gemini_cli_gen_en.json"}
+        ep_en_data["narration"]["postprocess_record"] = {"file": "gemini_cli_post_en.json"}
+        write_json(ep_en, ep_en_data)
+
+        rep = self.root / "report_gemini_cli_ok.json"
+        code, data, err = run_audit([
+            str(zh_vid), "--en-video", str(en_vid),
+            "--episode-zh", str(ep_zh), "--episode-en", str(ep_en),
+            "--clips-dir", str(self.clips_dir), "--report", str(rep),
+        ])
+        self.assertEqual(code, 0, f"gemini-api-cli metadata should pass cleanly: {err} {data}")
+        self.assertEqual(data["flags"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

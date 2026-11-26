@@ -131,6 +131,36 @@ class HookPlanTests(unittest.TestCase):
         good_promise["viewing_promise"] = {"line": "温度越低，水分子怎么反而越排越松？", "fulfilled_by_scope_id": "R1", "time_s": 6.0}
         self.assertEqual(check_hook_plan(good_promise, POLICY), [])
 
+    def test_everyday_pain_point_and_overlooked_detail_patterns_pass_while_definition_and_percentage_clickbait_fail(self):
+        pain = good_opening()
+        pain["hook"]["pattern"] = "everyday_pain_point"
+        pain["hook"]["first_line"] = "端起敞口杯慢倒水，水反而顺着杯壁往下淌。"
+        pain["hook"]["payload_clause"] = "水反而顺着杯壁往下淌"
+        pain["voiceover"] = pain["hook"]["first_line"]
+        pain["hook"]["candidates"][0]["pattern"] = "everyday_pain_point"
+        pain["hook"]["candidates"][1]["pattern"] = "overlooked_detail"
+        self.assertEqual(check_hook_plan(pain, POLICY), [])
+
+        detail = good_opening()
+        detail["hook"]["pattern"] = "overlooked_detail"
+        detail["hook"]["first_line"] = "加油枪嘴旁这颗小圆孔，决定了油满就自动停。"
+        detail["hook"]["payload_clause"] = "决定了油满就自动停"
+        detail["voiceover"] = detail["hook"]["first_line"]
+        detail["hook"]["candidates"][0]["pattern"] = "overlooked_detail"
+        self.assertEqual(check_hook_plan(detail, POLICY), [])
+
+        bad_def = good_opening()
+        bad_def["hook"]["first_line"] = "所谓康达效应是指流体贴壁流动。"
+        bad_def["hook"]["payload_clause"] = "流体贴壁流动"
+        bad_def["voiceover"] = bad_def["hook"]["first_line"]
+        self.assertTrue(any("premature answer spoilers" in e or "throat-clearing" in e for e in check_hook_plan(bad_def, POLICY)))
+
+        bad_pct = good_opening()
+        bad_pct["hook"]["first_line"] = "冰浮在水上，90%的人都被误导了。"
+        bad_pct["hook"]["payload_clause"] = "90%的人都被误导了"
+        bad_pct["voiceover"] = bad_pct["hook"]["first_line"]
+        self.assertTrue(any("clickbait contrast slogans" in e for e in check_hook_plan(bad_pct, POLICY)))
+
 
 class FakeChecks:
     def __init__(self, root, qa):

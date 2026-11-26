@@ -23,7 +23,7 @@
     {
       "owner_id": "topic",
       "file": "references/viral-appeal-and-packaging.md",
-      "sha256": "3530d24d9844c4da869288b652d1bc76c39dce1eefc038610593ac42d9fd09ab",
+      "sha256": "b171b90fef6f2479e36ab0ac20abc40350379d577f0b13693ceacbcdb3c2af94",
       "anchors": [
         "viral-appeal-honest-hooks-packaging-and-retention",
         "carry-topic-appeal-into-production",
@@ -41,6 +41,7 @@
         "keep-one-question-open-until-the-final-answer",
         "payoff-cadence-causal-pivots-and-re-hooks",
         "locate-retention-risks-on-the-actual-cut",
+        "engineer-the-emotional-payoff-aha-frame-and-share-triggers",
         "end-fast-after-explaining-the-mechanism",
         "duration-format-and-series-identity",
         "package-the-landscape-master-for-vertical-feeds",
@@ -88,10 +89,11 @@
     {
       "owner_id": "google-flow",
       "file": "references/google-flow-production.md",
-      "sha256": "4a78e6623195162a2b5a5c368d427137e56bb0981f5b79e24ca07fd76f759d0e",
+      "sha256": "dcce541362160d6a40f0a715112e7f3c31177cbb21b55e4f4d9a9e18aaa894c0",
       "anchors": [
         "google-flow-cloud-production",
         "select-the-route-and-budget-bilingual-chains-at-g1",
+        "gemini-api-cli-headless-cloud-execution",
         "start-with-active-project-controls-pacing-and-1080p-upscaled-staging",
         "prompting-conditioning-clean-phantoms-and-native-foley",
         "build-a-cloud-generated-narration-master-for-each-language",
@@ -103,7 +105,7 @@
     {
       "owner_id": "production",
       "file": "references/production-checkpoints.md",
-      "sha256": "a44555fb4e3bc02ec89d2571ef47545eb62b1503533245c7328a28d483a3dc00",
+      "sha256": "789672cb38bece09d75f593657c4789cbd31d83225b5f64765b8111195f8ffe2",
       "anchors": [
         "production-checkpoints-from-research-to-execution",
         "1-decide-the-one-thing-viewers-should-understand",
@@ -148,10 +150,11 @@
     {
       "owner_id": "production",
       "file": "references/viewer-retention-design.md",
-      "sha256": "b03530a1318f4ba3bc37a0b4c20dc66a1a0e9581d8694531a4e85839b71b0801",
+      "sha256": "35f110bf6bad381985e6a026ae4b969dcef7280cc2091e06d8740228fb2554ef",
       "anchors": [
         "sustained-viewing-organize-explanation-as-rewarding-discovery",
         "direct-the-whole-film-before-polishing-its-parts",
+        "frame-knowledge-as-problem-solving-or-story-never-a-lecture",
         "establish-context-and-a-reason-to-watch-before-explaining",
         "orient-the-viewer-before-introducing-a-detail",
         "make-opening-pictures-deliver-the-application-context",
@@ -215,7 +218,7 @@
     {
       "owner_id": "visual",
       "file": "references/animation-scene-design.md",
-      "sha256": "7980cd00f9750d59926225f00654163a262828f69de3d7c13cdf33781f913adf",
+      "sha256": "a74b9d61ebb63827917621579000d9b59638030bdc0993f3af0ada10d3ca0219",
       "anchors": [
         "animation-scene-design-from-physical-state-to-complete-shots",
         "diagnose-what-is-missing-first",
@@ -302,7 +305,7 @@
     {
       "owner_id": "voice",
       "file": "references/voice-reference.md",
-      "sha256": "21350c8bbf3d65ec712e9421775da251114c52a993ccf14232e89cd9e712dd74",
+      "sha256": "3118df0b90d1fac35cb047a05355eb9da5ef0f93736ba5862da1a3b7723c50e7",
       "anchors": [
         "narration-voice-invocation-and-actual-listening",
         "invocation-location-and-confirmation",
@@ -343,7 +346,7 @@
     {
       "owner_id": "quality",
       "file": "references/quality-acceptance.md",
-      "sha256": "a4a568109978fe06aee64892bef5d670c30ca17748f2b80207abd0f3cfc575ca",
+      "sha256": "2bd632f1294cd021083320670dd4674c90c4db6c86167f34192b4171cadfe7a2",
       "anchors": [
         "quality-acceptance-references-behavior-evidence-and-return-conditions",
         "establish-traceable-references-first",
@@ -435,13 +438,14 @@
     {
       "owner_id": "engineering",
       "file": "references/engineering-blender.md",
-      "sha256": "82794c1a53c090d1d30b718ebf866d0c4900628a7757f172d7f3e3232966f2d1",
+      "sha256": "3934a7c2d4aefb652673d27fae0ac48a8bb2d1c4e401ba49863cc1396179e671",
       "anchors": [
         "3d-animation-production-blender-and-3d-asset-reuse",
         "scope-of-asset-only-tasks",
         "recognize-the-actual-object-before-explaining-its-interior",
         "high-poly-industrial-modeling-standard-for-colab-3d",
         "real-life-grounded-provenance-draw-scenes-from-real-life-never-imaginary-void-sets",
+        "physical-state-integrity-f-curve-semantics-and-pre-colab-numerical-audit",
         "prevent-high-poly-emptiness-multi-stage-visual-density-and-shot-choreography",
         "cinema-grade-blender-visual-richness-replicating-live-action-magnetism-in-cycles",
         "actual-execution-of-bright-lighting-and-materials",
@@ -464,7 +468,7 @@
     {
       "owner_id": "engineering",
       "file": "references/blender-execution.md",
-      "sha256": "ff5e4b9d62b22ce27d8909e3ed10f7a5c8b04c80a3767792eeb69fa8d8c1932b",
+      "sha256": "aa25d63646868246d834a59fbacabfe3b5334bf37005ddac92f0976ab585a3b1",
       "anchors": [
         "reusable-blender-sequence-execution",
         "prepare-one-job-per-shot-or-coherent-scene",
@@ -476,13 +480,14 @@
         "task-bound-diagnostic-admission",
         "device-ownership-and-recovery",
         "integrity-validation-without-repeated-visual-review",
-        "rendering-cost-and-scheduling"
+        "rendering-cost-and-scheduling",
+        "resilient-colab-execution-chunked-transfer-and-frame-exact-patch-splicing"
       ]
     },
     {
       "owner_id": "tools",
       "file": "references/tool-routing.md",
-      "sha256": "f9611dbbe79bb21819f15e7e4300c3481a54d973e421ba4929c796860601ea6a",
+      "sha256": "9116513db6421fffd59cf1a75a31531394bd4bb3dd7cc41376f24e15998d2bff",
       "anchors": [
         "invoke-tools-by-production-scenario",
         "lock-the-primary-tool-by-final-film-style",
@@ -530,7 +535,7 @@
     {
       "owner_id": "tools",
       "file": "references/subagent-orchestration.md",
-      "sha256": "8ef6178da2d2e8c12dea212d178e7d79235bfc63a7df3ba3f767e7cc0a7d31cc",
+      "sha256": "0c5fb07ef58317816fcc13f86254b6e5c5d9e0cc23a93e22272cea6d32836104",
       "anchors": [
         "video-subagents",
         "roles-and-ownership",

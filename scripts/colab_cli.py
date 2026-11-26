@@ -837,7 +837,7 @@ def _build_remote_blender_driver(
     return f"""#!/usr/bin/env python3
 import json, pathlib, shutil, subprocess, sys, time
 
-CFG = {json.dumps(cfg, ensure_ascii=False)}
+CFG = json.loads({json.dumps(json.dumps(cfg, ensure_ascii=False))})
 BLENDER_DIR = pathlib.Path("/content/blender")
 BLENDER_BIN = BLENDER_DIR / "blender"
 WORK_DIR = pathlib.Path("/content/_sv_blender_work")
@@ -1534,7 +1534,7 @@ def _build_remote_blender_stills_driver(
     return f"""#!/usr/bin/env python3
 import json, pathlib, shutil, subprocess, sys, tarfile, time
 
-CFG = {json.dumps(cfg, ensure_ascii=False)}
+CFG = json.loads({json.dumps(json.dumps(cfg, ensure_ascii=False))})
 BLENDER_DIR = pathlib.Path("/content/blender")
 BLENDER_BIN = BLENDER_DIR / "blender"
 WORK_DIR = pathlib.Path("/content/_sv_blender_stills_work")

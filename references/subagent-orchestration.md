@@ -15,7 +15,7 @@ Delegate to specialized roles only when complex production, parallel independent
 | [`video_producer_windows`](../agents/video_producer_windows.toml) | Local/cloud execution queue, hook-first rendering/audits, storage moves, authorized release prep | Verified exports, `opening_hook.py` / `google_flow_audit.py` / `check_episode.py` receipts, verified local links |
 | [`video_reviewer`](../agents/video_reviewer.toml) | Independent explanation, expression, cold 2 s hook test, or scroll-viewer appeal review | Scoped time-coded report bound to exact media/SHA-256 and stated perception capability |
 
-For [Google Flow](google-flow-production.md), the parent owns UI preflight, the disk prompt ledger, strict 1-by-1 serial cloud submission/upscaling/download, and immediate stop on anti-bot/CAPTCHA gates; coordinate IndexTTS-2.5 `#5` Mandarin clone / Edge English whole-track mastering, FFmpeg compositing, audits, and independent bilingual review across roles as needed.
+For [Google Flow](google-flow-production.md), the parent owns backend selection (`gemini_api_cli` via `scripts/gemini_api_cli.py` vs `google_flow_web`), preflight/UI lock, the disk prompt ledger, headless CLI `video`/`image`/`resume` jobs or strict 1-by-1 serial Web UI submission/upscaling/download, and immediate stop on anti-bot/CAPTCHA or auth gates; coordinate IndexTTS-2.5 `#5` Mandarin clone / Edge English whole-track mastering, FFmpeg compositing, audits, and independent bilingual review across roles as needed.
 
 ## Shared assignment contract
 

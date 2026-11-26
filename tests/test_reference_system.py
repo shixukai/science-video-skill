@@ -301,6 +301,44 @@ class ReferenceSystemTests(unittest.TestCase):
             sections["references/engineering-blender.md"]["anchors"],
         )
 
+    def test_gemini_api_cli_catalog_and_google_flow_routing_stay_linked(self):
+        external = json.loads((self.root / "indexes/external-skills.json").read_text(encoding="utf-8"))
+        entries = {row["id"]: row for row in external["entries"]}
+        self.assertIn("google-gemini-api-cli", entries)
+        cli_entry = entries["google-gemini-api-cli"]
+        self.assertEqual(cli_entry["repository"], "https://github.com/google-gemini/gemini-api-cli")
+        self.assertEqual(
+            cli_entry["execution"]["routing_reference"],
+            "references/google-flow-production.md#gemini-api-cli-headless-cloud-execution",
+        )
+        self.assertTrue((self.root / "scripts/gemini_api_cli.py").is_file())
+        profile = json.loads((self.root / "config/series-profile.json").read_text(encoding="utf-8"))
+        cloud = profile["video_generation"]["cloud_route"]
+        self.assertIn("gemini_api_cli", cloud["execution_modes"])
+        self.assertIn("google_flow_web", cloud["execution_modes"])
+        gcli = cloud["gemini_api_cli"]
+        self.assertEqual(gcli["source_id"], "google-gemini-api-cli")
+        self.assertEqual(gcli["cli_helper"], "scripts/gemini_api_cli.py")
+        self.assertEqual(gcli["default_video_resolution"], "1080p")
+        self.assertEqual(
+            gcli["guide"],
+            "references/google-flow-production.md#gemini-api-cli-headless-cloud-execution",
+        )
+        registry = json.loads((self.root / "indexes/standard-coverage.json").read_text(encoding="utf-8"))
+        sections = {row["file"]: row for row in registry["sections"]}
+        self.assertEqual(sections["references/google-flow-production.md"]["owner_id"], "google-flow")
+        self.assertIn(
+            "gemini-api-cli-headless-cloud-execution",
+            sections["references/google-flow-production.md"]["anchors"],
+        )
+
+    def test_gemini_api_cli_default_video_resolution_cannot_drop_to_720p(self):
+        self.edit(
+            "config/series-profile.json",
+            lambda d: d["video_generation"]["cloud_route"]["gemini_api_cli"].update(default_video_resolution="720p"),
+        )
+        self.errors("gemini_api_cli helper")
+
     def test_colab_high_poly_segment_floor_cannot_be_weakened(self):
         self.edit(
             "config/series-profile.json",

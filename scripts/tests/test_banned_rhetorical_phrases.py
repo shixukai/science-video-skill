@@ -124,15 +124,80 @@ class TestBannedRhetoricalPhrases(unittest.TestCase):
         bad_en_list = "The valve drops. Furthermore, air enters the tube. Moreover, suction builds up."
         self.assertGreaterEqual(len(google_flow_audit.EN_ADDITIVE_LIST_RE.findall(bad_en_list)), 2)
 
+    def test_no_power_sensor_cliche_is_hard_banned_everywhere(self):
+        banned_samples = (
+            "里面既没插电也没装传感器，它怎么会跑到对面？",
+            "可它既没插电也没装传感器，怎么反倒稳住了？",
+            "没插电也没装电机，马桶盖怎么会慢慢落？",
+            "既没通电，也没装芯片，水开怎么跳闸？",
+            "既没插电也没连电脑，安全带怎么锁住？",
+            "没插电也没遮光，拨片怎么变暗？",
+            "既没装传感器也没插电，它怎么认出方向？",
+        )
+        clean_samples = (
+            "洗衣机空晃哗啦响，里头故意封了半圈盐水。",
+            "老电饭煲没有芯片，饭熟怎么自动跳保温？",
+            "按理说离心力该把水甩向重的那一侧，可高速一转它反而全跑去了对面。",
+        )
+        for bad in banned_samples:
+            self.assertIsNotNone(google_flow_audit.NO_POWER_SENSOR_CLICHE_RE.search(bad), bad)
+            self.assertIsNotNone(opening_hook.NO_POWER_SENSOR_CLICHE_RE.search(bad), bad)
+            self.assertTrue(
+                presentation_checks.prohibited_cue({"surface": "voiceover", "text": bad, "purposes": ["topic"]}, {}, {}),
+                bad,
+            )
+            with self.assertRaises(ValueError, msg=bad):
+                compose_cover.parse_lines("波轮洗衣机", f"{bad}\n甩干怎么跑对面？")
+        policy = feed_package.load_policy()
+        font_path = feed_package.find_font(policy)
+        pal, _ = feed_package.check_palette(policy, "slate")
+        renderer = feed_package.Renderer(policy, font_path, pal)
+        with self.assertRaises(ValueError):
+            renderer.check_header("波轮洗衣机", ["里面既没插电也没装传感器", "甩干怎么跑对面？"])
+        for ok in clean_samples:
+            self.assertIsNone(google_flow_audit.NO_POWER_SENSOR_CLICHE_RE.search(ok), ok)
+            self.assertIsNone(opening_hook.NO_POWER_SENSOR_CLICHE_RE.search(ok), ok)
+            self.assertFalse(
+                presentation_checks.prohibited_cue({"surface": "voiceover", "text": ok, "purposes": ["topic"]}, {}, {}),
+                ok,
+            )
+
     def test_opening_hook_rejects_preamble_and_premature_spoiler(self):
         for bad_line in (
             "大家好，今天我们来聊聊冰块为什么会浮起来。",
             "你知道吗，其实原理很简单。",
             "先来了解一下它的基本结构。",
             "看到最后你就明白了。",
+            "什么是伯努利原理？",
+            "所谓热胀冷缩是指物体受热体积增大。",
+            "从物理学上讲，密度等于质量除以体积。",
+            "根据牛顿第二定律，力等于质量乘以加速度。",
         ):
             self.assertIsNotNone(opening_hook.OPENING_FILLER_RE.search(bad_line), bad_line)
         self.assertIsNone(opening_hook.OPENING_FILLER_RE.search("按理说东西越冷越紧实，可冰块放进水里却稳稳浮在上面。"))
+
+    def test_clickbait_percentage_and_opening_definition_or_formula_are_flagged(self):
+        for bad_pct in ("90%的人都被误导了。", "99%的人不知道这个原理。", "其实95%的人都做错了。"):
+            self.assertIsNotNone(google_flow_audit.CLICKBAIT_HOOK_RE.search(bad_pct), bad_pct)
+            self.assertIsNotNone(opening_hook.CLICKBAIT_HOOK_RE.search(bad_pct), bad_pct)
+        self.assertIsNone(google_flow_audit.CLICKBAIT_HOOK_RE.search("大约90%的热量会散失到空气里。"))
+        for bad_def in (
+            "什么是康达效应？",
+            "所谓表面张力是指液体表面分子的互相吸引。",
+            "从物理学上讲，液体压强随深度增加。",
+            "根据伯努利公式，流速越快压强越低。",
+        ):
+            self.assertIsNotNone(google_flow_audit.OPENING_DEFINITION_FORMULA_RE.search(bad_def), bad_def)
+        for bad_en_def in (
+            "By definition, density is mass per unit volume.",
+            "According to the formula, pressure drops as flow accelerates.",
+        ):
+            self.assertIsNotNone(google_flow_audit.EN_OPENING_DEFINITION_FORMULA_RE.search(bad_en_def), bad_en_def)
+        self.assertIsNone(
+            google_flow_audit.OPENING_DEFINITION_FORMULA_RE.search(
+                "每次给敞口杯倒水，倒得越慢，水反而越爱顺着外壁往下淌。"
+            )
+        )
 
     def test_presentation_checks_rejects_pingshenme(self):
         for surface in ("voiceover", "caption", "cover", "frame"):

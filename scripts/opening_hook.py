@@ -32,21 +32,29 @@ FLAGS = (
 PATTERNS = (
     "result_first", "strange_phenomenon", "extreme_contrast", "question_with_evidence",
     "satisfying_process", "stakes_in_action", "extreme_scale", "failure_or_breakage",
+    "everyday_pain_point", "overlooked_detail",
 )
 HOST_RELATIONS = ("standalone", "part_of_host")
 COLD_METHODS = ("normal_speed_continuous_av",)
 CLICKBAIT_HOOK_RE = re.compile(
     r"(?:竟能?[^，。！？\n]{1,12}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
     r"明明[^，。！？\n]{1,10}却[^，。！？\n]{1,10}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
+    r"\d{2,3}\s*%\s*的人(?:都)?(?:被误导|不知道|做错了|搞错了|猜错了)|"
     r"凭什么|凭啥|"
     r"^\s*(?:你以为|很多人以为|不是[^，。！？\n]{1,14}[，,]?而是))"
 )
 OPENING_FILLER_RE = re.compile(
     r"(?:^\s*(?:大家好|嗨大家好|你知道吗|今天我们来聊)|"
+    r"(?:^|[，。！？\n])\s*(?:什么是[^，。！？\n]{1,12}|所谓[^，。！？\n]{1,12}是指|"
+    r"从(?:定义|物理学|科学)上(?:来说|来讲|讲|看)|根据[^，。！？\n]{1,12}(?:公式|定律))|"
     r"看到最后你就(?:明白|知道)了|揭开[^，。！？\n]{0,6}秘密|"
     r"先(?:来)?了解(?:一下)?它的(?:基本)?(?:结构|构造|历史|原理)|"
     r"(?:其实|说到底|简单来说)?(?:原理|原因|答案)(?:其实)?很简单|"
     r"简单来说就是因为|说到底就是因为|直接告诉你答案)"
+)
+NO_POWER_SENSOR_CLICHE_RE = re.compile(
+    r"(?:既?[没不]有?(?:插电|通电|接电|带电|接电源|用电|电线)[，,、\s]*(?:也|又)?[没不]有?(?:装|带|接|连|配|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑|电子|探头|雷达|开关|遮光)|"
+    r"既?[没不]有?(?:装|带|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑)[，,、\s]*(?:也|又)?[没不]有?(?:插电|通电|接电|带电|用电|电线))"
 )
 FRAME_W, FRAME_H, FRAME_FPS = 64, 36, 10
 AUDIO_RATE, AUDIO_WINDOW_S = 16000, 0.01
@@ -114,10 +122,14 @@ def check_hook_plan(opening, policy):
              "avoid formulaic AI/clickbait contrast slogans in hook.first_line; describe the concrete observation in natural everyday grammar")
         need(not OPENING_FILLER_RE.search(line),
              "avoid throat-clearing, empty suspense, or premature answer spoilers in hook.first_line; open on the concrete physical contradiction")
+        need(not NO_POWER_SENSOR_CLICHE_RE.search(line),
+             "banned cliché ('既没插电也没装传感器/电机/芯片') is forbidden in hook.first_line; state the real physical contradiction directly")
     promise_line = obj(opening.get("viewing_promise")).get("line")
     if concrete(promise_line):
         need(not OPENING_FILLER_RE.search(promise_line),
              "avoid empty suspense or premature answer spoilers in viewing_promise.line; name the concrete physical puzzle or clue without dumping the final answer")
+        need(not NO_POWER_SENSOR_CLICHE_RE.search(promise_line),
+             "banned cliché ('既没插电也没装传感器/电机/芯片') is forbidden in viewing_promise.line")
     if concrete(line) and concrete(payload):
         position = line.find(payload)
         need(position >= 0, "hook.payload_clause must be quoted verbatim from hook.first_line")
@@ -127,6 +139,9 @@ def check_hook_plan(opening, policy):
             need(units <= limit, f"hook payload ends after {units} spoken units; front-load it within "
                  f"{limit} so it lands by about {policy['payload_deadline_s']} s at series pace")
     voiceover = opening.get("voiceover")
+    if concrete(voiceover):
+        need(not NO_POWER_SENSOR_CLICHE_RE.search(voiceover),
+             "banned cliché ('既没插电也没装传感器/电机/芯片') is forbidden in opening.voiceover")
     if concrete(line) and concrete(voiceover):
         need(voiceover.strip().startswith(line.strip()), "opening.voiceover must start with hook.first_line")
     candidates = hook.get("candidates")

@@ -29,10 +29,15 @@ PROMPT_COLON_RE = re.compile(
 CLICKBAIT_HOOK_RE = re.compile(
     r"(?:竟能?[^，。！？\n]{1,12}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
     r"明明[^，。！？\n]{1,10}却[^，。！？\n]{1,10}[，,][^，。！？\n]{0,14}怎么(?:做到的|回事)|"
+    r"\d{2,3}\s*%\s*的人(?:都)?(?:被误导|不知道|做错了|搞错了|猜错了)|"
     r"凭什么|凭啥)"
 )
 BLUNT_HARSH_TONE_RE = re.compile(
     r"(?:偏要|别傻了|真以为|千万别再|听好了|看好了|说穿了|先说结论|一秒看懂|一句话告诉你|干爆|直接干掉)"
+)
+NO_POWER_SENSOR_CLICHE_RE = re.compile(
+    r"(?:既?[没不]有?(?:插电|通电|接电|带电|接电源|用电|电线)[，,、\s]*(?:也|又)?[没不]有?(?:装|带|接|连|配|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑|电子|探头|雷达|开关|遮光)|"
+    r"既?[没不]有?(?:装|带|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑)[，,、\s]*(?:也|又)?[没不]有?(?:插电|通电|接电|带电|用电|电线))"
 )
 ABRUPT_CAMERA_DIRECTION_RE = re.compile(
     r"(?:顺着[^，。！？\n]{0,8}往里看|"
@@ -63,6 +68,10 @@ EARLY_STRUCTURE_DUMP_RE = re.compile(
     r"先(?:来)?了解(?:一下)?它的(?:基本)?(?:结构|构造|历史|原理)|"
     r"分为(?:以下)?(?:几|两|三|四)个部分)"
 )
+OPENING_DEFINITION_FORMULA_RE = re.compile(
+    r"(?:^|[，。！？\n])\s*(?:什么是[^，。！？\n]{1,12}|所谓[^，。！？\n]{1,12}是指|"
+    r"从(?:定义|物理学|科学)上(?:来说|来讲|讲|看)|根据[^，。！？\n]{1,12}(?:公式|定律))"
+)
 PREMATURE_ENDING_SIGNAL_RE = re.compile(
     r"(?:总结一下|综上所述|总而言之|说到这儿|讲到这里|"
     r"到这里[^，。！？\n]{0,6}(?:明白|懂|清楚)了|所以说到底|归根结底|"
@@ -72,6 +81,10 @@ EN_CURIOSITY_KILLER_RE = re.compile(
     r"\b(?:welcome back to|in this video we(?:'ll| will)|let's dive right in|"
     r"the short answer is|here'?s the secret|you won't believe|"
     r"stay until the end|what happens next will)\b",
+    re.IGNORECASE,
+)
+EN_OPENING_DEFINITION_FORMULA_RE = re.compile(
+    r"\b(?:by definition|is defined as|according to (?:the )?(?:formula|equation|law of))\b",
     re.IGNORECASE,
 )
 EN_ENDING_SIGNAL_RE = re.compile(
@@ -591,11 +604,17 @@ def _is_google_flow_tool(tool_val: Any) -> bool:
         "google_ai_studio",
         "google ai studio",
         "gemini_tts",
+        "gemini-api",
+        "gemini_api",
+        "gemini-api-cli",
+        "gemini_api_cli",
+        "gemini_api_cli.py",
+        "scripts/gemini_api_cli.py",
         "ffmpeg",
         "prepare_voice_master",
         "prepare_voice_master.py",
         "scripts/prepare_voice_master.py",
-    ) or stem in ("indextts2", "synthesize_indextts2", "edge-tts", "synthesize_edge_tts", "ffmpeg", "prepare_voice_master"):
+    ) or stem in ("indextts2", "synthesize_indextts2", "edge-tts", "synthesize_edge_tts", "gemini-api", "gemini_api_cli", "ffmpeg", "prepare_voice_master"):
         return True
     return _is_google_flow_url(raw)
 
@@ -652,6 +671,7 @@ def _check_flow_origin_purity(
             "Microsoft Edge",
             "Google Flow",
             "Google AI Studio",
+            "Google Gemini API",
             "Google",
         ):
             reasons.append(f"non_flow_provider:{prov}")
@@ -833,11 +853,15 @@ def _check_speech_and_holds(
                 ai_reasons.append("clickbait_contrast_hook")
             if BLUNT_HARSH_TONE_RE.search(script_source_text):
                 ai_reasons.append("blunt_or_harsh_tone")
+            if NO_POWER_SENSOR_CLICHE_RE.search(script_source_text):
+                ai_reasons.append("no_power_sensor_cliche")
             if ABRUPT_CAMERA_DIRECTION_RE.search(script_source_text):
                 ai_reasons.append("abrupt_camera_stage_direction")
             opening_text = "。".join(raw_sents[:2]) if raw_sents else script_source_text[:120]
             if PREMATURE_SPOILER_RE.search(opening_text):
                 ai_reasons.append("premature_answer_spoiler")
+            if OPENING_DEFINITION_FORMULA_RE.search(opening_text):
+                ai_reasons.append("opening_definition_or_formula")
             if EMPTY_SUSPENSE_RE.search(script_source_text):
                 ai_reasons.append("empty_suspense_filler")
             if len(ADDITIVE_LIST_TRANSITION_RE.findall(script_source_text)) >= 3:
@@ -861,8 +885,12 @@ def _check_speech_and_holds(
             if SLOGAN_CLOSING_RE.search(tail_text):
                 ai_reasons.append("slogan_closing_formula")
         elif edition == "en":
+            en_sents = [s.strip() for s in re.split(r"[.!?]+", script_source_text) if s.strip()]
+            opening_text_en = ". ".join(en_sents[:2]) if en_sents else script_source_text[:200]
             if EN_CURIOSITY_KILLER_RE.search(script_source_text):
                 ai_reasons.append("empty_suspense_or_preamble_en")
+            if EN_OPENING_DEFINITION_FORMULA_RE.search(opening_text_en):
+                ai_reasons.append("opening_definition_or_formula_en")
             if EN_ENDING_SIGNAL_RE.search(script_source_text):
                 ai_reasons.append("premature_ending_signal_en")
             if len(EN_ADDITIVE_LIST_RE.findall(script_source_text)) >= 2:

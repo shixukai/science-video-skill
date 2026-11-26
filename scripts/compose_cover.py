@@ -113,7 +113,11 @@ def load_truetype(font_path: Path, size: int, weight: int) -> ImageFont.FreeType
     return font
 
 
-BANNED_RHETORICAL_RE = re.compile(r"凭什么|凭啥")
+BANNED_RHETORICAL_RE = re.compile(
+    r"凭什么|凭啥|"
+    r"既?[没不]有?(?:插电|通电|接电|带电|接电源|用电|电线)[，,、\s]*(?:也|又)?[没不]有?(?:装|带|接|连|配|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑|电子|探头|雷达|开关|遮光)|"
+    r"既?[没不]有?(?:装|带|用)?(?:传感器|感应器|电机|马达|芯片|电路|电脑)[，,、\s]*(?:也|又)?[没不]有?(?:插电|通电|接电|带电|用电|电线)"
+)
 
 
 def parse_lines(title: str, question: str) -> tuple[str, list[str]]:
@@ -128,8 +132,9 @@ def parse_lines(title: str, question: str) -> tuple[str, list[str]]:
         )
     if BANNED_RHETORICAL_RE.search(clean_title) or any(BANNED_RHETORICAL_RE.search(ln) for ln in q_lines):
         raise ValueError(
-            "Banned confrontational interrogative ('凭什么'/'凭啥') is forbidden in cover titles and questions; "
-            "rewrite in calm plain spoken Chinese (e.g. '怎么' / '为什么')."
+            "Banned confrontational interrogative ('凭什么'/'凭啥') or 'no-power/no-sensor' cliché "
+            "('既没插电也没装传感器/电机/芯片') is forbidden in cover titles and questions; "
+            "rewrite in calm plain spoken Chinese."
         )
     return clean_title, q_lines
 
